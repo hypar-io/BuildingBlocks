@@ -1,5 +1,0 @@
-C:\Users\Anthony\GitHub\EnvelopeMaker\test\bin\Debug\netcoreapp2.1\EnvelopeMaker.dll
-C:\Users\Anthony\GitHub\EnvelopeMaker\test\obj\Debug\netcoreapp2.1\EnvelopeMaker.tests.csprojAssemblyReference.cache
-C:\Users\Anthony\GitHub\EnvelopeMaker\test\obj\Debug\netcoreapp2.1\EnvelopeMaker.tests.csproj.CoreCompileInputs.cache
-C:\Users\Anthony\GitHub\EnvelopeMaker\test\obj\Debug\netcoreapp2.1\EnvelopeMaker.tests.AssemblyInfoInputs.cache
-C:\Users\Anthony\GitHub\EnvelopeMaker\test\obj\Debug\netcoreapp2.1\EnvelopeMaker.tests.AssemblyInfo.cs
