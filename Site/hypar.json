@@ -1,0 +1,85 @@
+{
+  "$schema": "https://hypar.io/schemas/function.json",
+  "description": "Supports site selection and building footprint configuration.",
+  "id": "a41f8202-530e-4292-8a8d-4017a7c72c53",
+  "name": "Site",
+  "repository_url": "https://github.com/hypar-io/function",
+  "inputs": [
+    {
+      "name": "Lot",
+      "description": "Selected site including boundary and topography.",
+      "mapbox_origin": [
+        34.005765,
+        -118.405961
+      ],
+      "type": "location"
+    },
+    {
+      "name": "Site Setback",
+      "description": "Position of the building footprint relative to the site boundary.",
+      "type": "range",
+      "min": 1.0,
+      "max": 10.0,
+      "step": 0.5
+    },
+    {
+      "name": "Building Length",
+      "description": "Dimension of the bounding box for a building footprint.",
+      "type": "range",
+      "min": 10.0,
+      "max": 100.0,
+      "step": 1.0
+    },
+    {
+      "name": "Building Width",
+      "description": "Dimension of the bounding box for a building footprint.",
+      "type": "range",
+      "min": 10.0,
+      "max": 100.0,
+      "step": 1.0
+    },
+    {
+      "name": "Search Grid Resolution",
+      "description": "Interval for trial placements of building footprints within the site boundary.",
+      "type": "range",
+      "min": 1.0,
+      "max": 10.0,
+      "step": 0.5
+    },
+    {
+      "name": "Search Seed",
+      "description": "Tandom seed determining the order of placement point search in the grid.",
+      "type": "range",
+      "min": 1.0,
+      "max": 100.0,
+      "step": 1.0
+    }
+  ],
+  "outputs": [
+    {
+      "name": "Lot Coverage Ratio",
+      "description": "Ratio of footprint area to site area.",
+      "type": "number"
+    },
+    {
+      "name": "Length",
+      "description": "The Length",
+      "type": "number"
+    },
+    {
+      "name": "Width",
+      "description": "The Width",
+      "type": "number"
+    },
+    {
+      "name": "Site Area",
+      "description": "Site Area",
+      "type": "number"
+    },
+    {
+      "name": "Builing Area",
+      "description": "Building Area",
+      "type": "number"
+    }
+  ]
+}

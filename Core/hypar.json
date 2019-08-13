@@ -1,0 +1,45 @@
+{
+  "$schema": "https://hypar.io/schemas/function.json",
+  "description": "Adds a Mass named 'core' to one or more Masses named 'envelope'.",
+  "id": "02bc1134-79d6-455e-a429-ef3d131dd1d1",
+  "name": "Core",
+  "repository_url": "https://github.com/hypar-io/function",
+  "inputs": [
+    {
+      "min": 5.0,
+      "max": 10.0,
+      "step": 0.5,
+      "name": "Length",
+      "description": "Core plan length.",
+      "type": "range"
+    },
+    {
+      "min": 5.0,
+      "max": 10.0,
+      "step": 0.5,
+      "name": "Width",
+      "description": "Core plan width.",
+      "type": "range"
+    },
+    {
+      "min": -1.0,
+      "max": 3.0,
+      "step": 0.5,
+      "name": "Height Offset",
+      "description": "Offset from the height of the building envelope.",
+      "type": "range"
+    },
+  ],
+  "outputs": [
+    {
+      "name": "Area",
+      "description": "Core area.",
+      "type": "number"
+    },
+    {
+      "name": "Height",
+      "description": "Core height.",
+      "type": "number"
+    }
+  ]
+}

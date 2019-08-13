@@ -1,0 +1,190 @@
+{
+  "extensions": ["hypar.elements"],
+  "materials": {
+  "5672f21e-6c6d-42e6-b272-0e283bbe00b1": {
+    "id": "5672f21e-6c6d-42e6-b272-0e283bbe00b1",
+    "color": {
+      "red": 0.1,
+      "green": 0.1,
+      "blue": 0.1,
+      "alpha": 1.0
+    },
+    "specularFactor": 0.0,
+    "glossinessFactor": 0.0,
+    "name": "edges",
+    "doubleSided": false
+  },
+  "e078f4eb-4243-49c7-83fa-4dffac3fea24": {
+    "id": "e078f4eb-4243-49c7-83fa-4dffac3fea24",
+    "color": {
+      "red": 0.19531,
+      "green": 0.65625,
+      "blue": 0.0,
+      "alpha": 1.0
+    },
+    "specularFactor": 0.0,
+    "glossinessFactor": 0.0,
+    "name": "site",
+    "doubleSided": false
+  },
+  "05817841-b27a-4cdc-8fc6-7a18399a4940": {
+    "id": "05817841-b27a-4cdc-8fc6-7a18399a4940",
+    "color": {
+      "red": 0.5,
+      "green": 0.5,
+      "blue": 0.5,
+      "alpha": 1.0
+    },
+    "specularFactor": 0.0,
+    "glossinessFactor": 0.0,
+    "name": "concrete",
+    "doubleSided": false
+  }
+},
+  "elementTypes": {},
+  "profiles": {
+  "f111db81-c685-40f3-90dc-7dd426100c64": {
+    "id": "f111db81-c685-40f3-90dc-7dd426100c64",
+    "perimeter": {
+      "type": "elements.geometry.polygon",
+      "vertices": [
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        {
+          "x": 94.844206155277789,
+          "y": -49.568362544290721,
+          "z": 0.0
+        },
+        {
+          "x": 77.58968508336693,
+          "y": -90.850022589787841,
+          "z": 0.0
+        },
+        {
+          "x": 64.453985169529915,
+          "y": -239.55290417652577,
+          "z": 0.0
+        },
+        {
+          "x": -93.1744137937203,
+          "y": -223.43223863095045,
+          "z": 0.0
+        }
+      ]
+    }
+  },
+  "2f8ecfd4-18fb-486b-b098-0ff6b092f3c7": {
+    "id": "2f8ecfd4-18fb-486b-b098-0ff6b092f3c7",
+    "perimeter": {
+      "type": "elements.geometry.polygon",
+      "vertices": [
+        {
+          "x": -22.5,
+          "y": -16.0,
+          "z": 0.0
+        },
+        {
+          "x": 22.5,
+          "y": -16.0,
+          "z": 0.0
+        },
+        {
+          "x": 22.5,
+          "y": 16.0,
+          "z": 0.0
+        },
+        {
+          "x": -22.5,
+          "y": 16.0,
+          "z": 0.0
+        }
+      ]
+    }
+  }
+},
+  "elements": {
+  "8c368bbe-b2ca-4619-9942-2e1bbcd4fbff": {
+    "id": "8c368bbe-b2ca-4619-9942-2e1bbcd4fbff",
+    "type": "elements.mass",
+    "profile": "f111db81-c685-40f3-90dc-7dd426100c64",
+    "height": 1.0,
+    "material": "e078f4eb-4243-49c7-83fa-4dffac3fea24",
+    "extrudeDirection": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 1.0
+    },
+    "extrudeDepth": 1.0,
+    "bothSides": false,
+    "properties": {},
+    "transform": {
+      "matrix": {
+        "xAxis": {
+          "x": 1.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "yAxis": {
+          "x": 0.0,
+          "y": 1.0,
+          "z": 0.0
+        },
+        "zAxis": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 1.0
+        },
+        "translation": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": -1.0
+        }
+      }
+    },
+    "name": "site"
+  },
+  "ebee48fc-160f-4229-a623-0bf15b1d289a": {
+    "id": "ebee48fc-160f-4229-a623-0bf15b1d289a",
+    "type": "elements.mass",
+    "profile": "2f8ecfd4-18fb-486b-b098-0ff6b092f3c7",
+    "height": 0.1,
+    "material": "05817841-b27a-4cdc-8fc6-7a18399a4940",
+    "extrudeDirection": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 1.0
+    },
+    "extrudeDepth": 0.1,
+    "bothSides": false,
+    "properties": {},
+    "transform": {
+      "matrix": {
+        "xAxis": {
+          "x": 1.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "yAxis": {
+          "x": 0.0,
+          "y": 1.0,
+          "z": 0.0
+        },
+        "zAxis": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 1.0
+        },
+        "translation": {
+          "x": -37.721258053567361,
+          "y": -202.01573944529667,
+          "z": 0.0
+        }
+      }
+    },
+    "name": "footprint"
+  }
+}
+}

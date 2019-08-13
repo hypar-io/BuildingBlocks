@@ -1,0 +1,17 @@
+C:\Users\Anthony\GitHub\EnvelopeMaker\test\bin\Release\netcoreapp2.1\linux-x64\xunit.runner.visualstudio.dotnetcore.testadapter.dll
+C:\Users\Anthony\GitHub\EnvelopeMaker\test\bin\Release\netcoreapp2.1\linux-x64\xunit.runner.reporters.netcoreapp10.dll
+C:\Users\Anthony\GitHub\EnvelopeMaker\test\bin\Release\netcoreapp2.1\linux-x64\xunit.runner.utility.netcoreapp10.dll
+C:\Users\Anthony\GitHub\EnvelopeMaker\test\bin\Release\netcoreapp2.1\linux-x64\EnvelopeMaker.tests.deps.json
+C:\Users\Anthony\GitHub\EnvelopeMaker\test\bin\Release\netcoreapp2.1\linux-x64\EnvelopeMaker.tests.runtimeconfig.json
+C:\Users\Anthony\GitHub\EnvelopeMaker\test\bin\Release\netcoreapp2.1\linux-x64\EnvelopeMaker.tests.runtimeconfig.dev.json
+C:\Users\Anthony\GitHub\EnvelopeMaker\test\bin\Release\netcoreapp2.1\linux-x64\EnvelopeMaker.tests.dll
+C:\Users\Anthony\GitHub\EnvelopeMaker\test\bin\Release\netcoreapp2.1\linux-x64\EnvelopeMaker.tests.pdb
+C:\Users\Anthony\GitHub\EnvelopeMaker\test\bin\Release\netcoreapp2.1\linux-x64\EnvelopeMaker.dll
+C:\Users\Anthony\GitHub\EnvelopeMaker\test\bin\Release\netcoreapp2.1\linux-x64\EnvelopeMaker.pdb
+C:\Users\Anthony\GitHub\EnvelopeMaker\test\obj\Release\netcoreapp2.1\linux-x64\EnvelopeMaker.tests.csprojAssemblyReference.cache
+C:\Users\Anthony\GitHub\EnvelopeMaker\test\obj\Release\netcoreapp2.1\linux-x64\EnvelopeMaker.tests.csproj.CoreCompileInputs.cache
+C:\Users\Anthony\GitHub\EnvelopeMaker\test\obj\Release\netcoreapp2.1\linux-x64\EnvelopeMaker.tests.AssemblyInfoInputs.cache
+C:\Users\Anthony\GitHub\EnvelopeMaker\test\obj\Release\netcoreapp2.1\linux-x64\EnvelopeMaker.tests.AssemblyInfo.cs
+C:\Users\Anthony\GitHub\EnvelopeMaker\test\obj\Release\netcoreapp2.1\linux-x64\EnvelopeMaker.tests.csproj.CopyComplete
+C:\Users\Anthony\GitHub\EnvelopeMaker\test\obj\Release\netcoreapp2.1\linux-x64\EnvelopeMaker.tests.dll
+C:\Users\Anthony\GitHub\EnvelopeMaker\test\obj\Release\netcoreapp2.1\linux-x64\EnvelopeMaker.tests.pdb

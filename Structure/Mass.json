@@ -1,0 +1,526 @@
+{
+  "extensions": ["hypar.elements"],
+  "materials": {
+  "557823ad-f24e-4ba6-a4fe-153fc847c515": {
+    "id": "557823ad-f24e-4ba6-a4fe-153fc847c515",
+    "color": {
+      "red": 0.1,
+      "green": 0.1,
+      "blue": 0.1,
+      "alpha": 1.0
+    },
+    "specularFactor": 0.0,
+    "glossinessFactor": 0.0,
+    "name": "edges",
+    "doubleSided": false
+  },
+  "fa20a0bb-0723-49cf-9d50-cd330bfccb13": {
+    "id": "fa20a0bb-0723-49cf-9d50-cd330bfccb13",
+    "color": {
+      "red": 0.19531,
+      "green": 0.65625,
+      "blue": 0.0,
+      "alpha": 1.0
+    },
+    "specularFactor": 0.0,
+    "glossinessFactor": 0.0,
+    "name": "site",
+    "doubleSided": false
+  },
+  "d7aa3575-29cb-43b1-ab58-0fd80de1212d": {
+    "id": "d7aa3575-29cb-43b1-ab58-0fd80de1212d",
+    "color": {
+      "red": 0.5,
+      "green": 0.5,
+      "blue": 0.5,
+      "alpha": 1.0
+    },
+    "specularFactor": 0.0,
+    "glossinessFactor": 0.0,
+    "name": "concrete",
+    "doubleSided": false
+  },
+  "a51f921a-f93f-46a0-bb7f-7029846a8f6a": {
+    "id": "a51f921a-f93f-46a0-bb7f-7029846a8f6a",
+    "color": {
+      "red": 0.1,
+      "green": 0.1,
+      "blue": 0.1,
+      "alpha": 1.0
+    },
+    "specularFactor": 0.0,
+    "glossinessFactor": 0.0,
+    "name": "edges",
+    "doubleSided": false
+  },
+  "a9a1f8a0-c71c-4178-b3ff-ba2a6fac7ce4": {
+    "id": "a9a1f8a0-c71c-4178-b3ff-ba2a6fac7ce4",
+    "color": {
+      "red": 0.8,
+      "green": 0.9,
+      "blue": 0.3,
+      "alpha": 0.1
+    },
+    "specularFactor": 0.1,
+    "glossinessFactor": 0.1,
+    "name": "void",
+    "doubleSided": false
+  },
+  "56b98f0f-5c86-4b30-9038-0231fdd94354": {
+    "id": "56b98f0f-5c86-4b30-9038-0231fdd94354",
+    "color": {
+      "red": 0.5,
+      "green": 0.5,
+      "blue": 0.5,
+      "alpha": 0.6
+    },
+    "specularFactor": 0.0,
+    "glossinessFactor": 0.0,
+    "name": "basement",
+    "doubleSided": false
+  },
+  "b19e36d8-6803-420d-9896-932cfadff3f3": {
+    "id": "b19e36d8-6803-420d-9896-932cfadff3f3",
+    "color": {
+      "red": 0.3,
+      "green": 0.7,
+      "blue": 0.7,
+      "alpha": 0.6
+    },
+    "specularFactor": 0.0,
+    "glossinessFactor": 0.0,
+    "name": "envelope",
+    "doubleSided": false
+  }
+},
+  "elementTypes": {},
+  "profiles": {
+  "3aad3157-55e2-471f-9c8c-758f89e8f435": {
+    "id": "3aad3157-55e2-471f-9c8c-758f89e8f435",
+    "perimeter": {
+      "type": "elements.geometry.polygon",
+      "vertices": [
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        {
+          "x": 94.844206155277789,
+          "y": -49.568362544290721,
+          "z": 0.0
+        },
+        {
+          "x": 77.58968508336693,
+          "y": -90.850022589787841,
+          "z": 0.0
+        },
+        {
+          "x": 64.453985169529915,
+          "y": -239.55290417652577,
+          "z": 0.0
+        },
+        {
+          "x": -93.1744137937203,
+          "y": -223.43223863095045,
+          "z": 0.0
+        }
+      ]
+    }
+  },
+  "78bff1b9-b9e1-490a-b04e-d9813f5d0f4b": {
+    "id": "78bff1b9-b9e1-490a-b04e-d9813f5d0f4b",
+    "perimeter": {
+      "type": "elements.geometry.polygon",
+      "vertices": [
+        {
+          "x": -22.5,
+          "y": -16.0,
+          "z": 0.0
+        },
+        {
+          "x": 22.5,
+          "y": -16.0,
+          "z": 0.0
+        },
+        {
+          "x": 22.5,
+          "y": 16.0,
+          "z": 0.0
+        },
+        {
+          "x": -22.5,
+          "y": 16.0,
+          "z": 0.0
+        }
+      ]
+    }
+  },
+  "e475a7be-ee47-43e2-9b67-67d8098a31fa": {
+    "id": "e475a7be-ee47-43e2-9b67-67d8098a31fa",
+    "perimeter": {
+      "type": "elements.geometry.polygon",
+      "vertices": [
+        {
+          "x": 17.5,
+          "y": 11.0,
+          "z": 0.0
+        },
+        {
+          "x": -17.5,
+          "y": 11.0,
+          "z": 0.0
+        },
+        {
+          "x": -17.5,
+          "y": -11.0,
+          "z": 0.0
+        },
+        {
+          "x": 17.5,
+          "y": -11.0,
+          "z": 0.0
+        }
+      ]
+    }
+  },
+  "3ab32488-fd73-4626-900b-80adca8940d1": {
+    "id": "3ab32488-fd73-4626-900b-80adca8940d1",
+    "perimeter": {
+      "type": "elements.geometry.polygon",
+      "vertices": [
+        {
+          "x": 12.5,
+          "y": 6.0,
+          "z": 0.0
+        },
+        {
+          "x": -12.5,
+          "y": 6.0,
+          "z": 0.0
+        },
+        {
+          "x": -12.5,
+          "y": -6.0,
+          "z": 0.0
+        },
+        {
+          "x": 12.5,
+          "y": -6.0,
+          "z": 0.0
+        }
+      ]
+    }
+  },
+  "55c08928-1b11-4e8b-9363-cd6e845502f4": {
+    "id": "55c08928-1b11-4e8b-9363-cd6e845502f4",
+    "perimeter": {
+      "type": "elements.geometry.polygon",
+      "vertices": [
+        {
+          "x": 7.5,
+          "y": 1.0,
+          "z": 0.0
+        },
+        {
+          "x": -7.5,
+          "y": 1.0,
+          "z": 0.0
+        },
+        {
+          "x": -7.5,
+          "y": -1.0,
+          "z": 0.0
+        },
+        {
+          "x": 7.5,
+          "y": -1.0,
+          "z": 0.0
+        }
+      ]
+    }
+  }
+},
+  "elements": {
+  "9ceb5384-1db0-44fb-ab69-8226dfa9d154": {
+    "id": "9ceb5384-1db0-44fb-ab69-8226dfa9d154",
+    "type": "elements.mass",
+    "profile": "3aad3157-55e2-471f-9c8c-758f89e8f435",
+    "height": 1.0,
+    "material": "fa20a0bb-0723-49cf-9d50-cd330bfccb13",
+    "extrudeDirection": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 1.0
+    },
+    "extrudeDepth": 1.0,
+    "bothSides": false,
+    "properties": {},
+    "transform": {
+      "matrix": {
+        "xAxis": {
+          "x": 1.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "yAxis": {
+          "x": 0.0,
+          "y": 1.0,
+          "z": 0.0
+        },
+        "zAxis": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 1.0
+        },
+        "translation": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": -1.0
+        }
+      }
+    },
+    "name": "site"
+  },
+  "da7c0c64-ca9b-46ac-9176-234da357a2f2": {
+    "id": "da7c0c64-ca9b-46ac-9176-234da357a2f2",
+    "type": "elements.mass",
+    "profile": "78bff1b9-b9e1-490a-b04e-d9813f5d0f4b",
+    "height": 0.1,
+    "material": "d7aa3575-29cb-43b1-ab58-0fd80de1212d",
+    "extrudeDirection": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 1.0
+    },
+    "extrudeDepth": 0.1,
+    "bothSides": false,
+    "properties": {},
+    "transform": {
+      "matrix": {
+        "xAxis": {
+          "x": 0.8191520442889918,
+          "y": 0.573576436351046,
+          "z": 0.0
+        },
+        "yAxis": {
+          "x": -0.573576436351046,
+          "y": 0.8191520442889918,
+          "z": 0.0
+        },
+        "zAxis": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 1.0
+        },
+        "translation": {
+          "x": -43.8505859375,
+          "y": -181.2587890625,
+          "z": 0.0
+        }
+      }
+    },
+    "name": "footprint"
+  },
+  "2c7dd1a7-4c19-4ab5-b88b-079749546a6b": {
+    "id": "2c7dd1a7-4c19-4ab5-b88b-079749546a6b",
+    "type": "elements.mass",
+    "profile": "78bff1b9-b9e1-490a-b04e-d9813f5d0f4b",
+    "height": 20.0,
+    "material": "56b98f0f-5c86-4b30-9038-0231fdd94354",
+    "extrudeDirection": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 1.0
+    },
+    "extrudeDepth": 20.0,
+    "bothSides": false,
+    "properties": {},
+    "transform": {
+      "matrix": {
+        "xAxis": {
+          "x": 0.8191520442889918,
+          "y": 0.573576436351046,
+          "z": 0.0
+        },
+        "yAxis": {
+          "x": -0.573576436351046,
+          "y": 0.8191520442889918,
+          "z": 0.0
+        },
+        "zAxis": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 1.0
+        },
+        "translation": {
+          "x": -43.8505859375,
+          "y": -181.2587890625,
+          "z": -20.1
+        }
+      }
+    },
+    "name": "envelope"
+  },
+  "52cb4e2b-d301-490c-b46c-4990d5642e45": {
+    "id": "52cb4e2b-d301-490c-b46c-4990d5642e45",
+    "type": "elements.mass",
+    "profile": "78bff1b9-b9e1-490a-b04e-d9813f5d0f4b",
+    "height": 50.0,
+    "material": "b19e36d8-6803-420d-9896-932cfadff3f3",
+    "extrudeDirection": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 1.0
+    },
+    "extrudeDepth": 50.0,
+    "bothSides": false,
+    "properties": {},
+    "transform": {
+      "matrix": {
+        "xAxis": {
+          "x": 0.8191520442889918,
+          "y": 0.573576436351046,
+          "z": 0.0
+        },
+        "yAxis": {
+          "x": -0.573576436351046,
+          "y": 0.8191520442889918,
+          "z": 0.0
+        },
+        "zAxis": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 1.0
+        },
+        "translation": {
+          "x": -43.8505859375,
+          "y": -181.2587890625,
+          "z": -0.1
+        }
+      }
+    },
+    "name": "envelope"
+  },
+  "50dcd397-56e2-4c03-b79e-5ba259584ccb": {
+    "id": "50dcd397-56e2-4c03-b79e-5ba259584ccb",
+    "type": "elements.mass",
+    "profile": "e475a7be-ee47-43e2-9b67-67d8098a31fa",
+    "height": 50.0,
+    "material": "b19e36d8-6803-420d-9896-932cfadff3f3",
+    "extrudeDirection": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 1.0
+    },
+    "extrudeDepth": 50.0,
+    "bothSides": false,
+    "properties": {},
+    "transform": {
+      "matrix": {
+        "xAxis": {
+          "x": 0.8191520442889918,
+          "y": 0.573576436351046,
+          "z": 0.0
+        },
+        "yAxis": {
+          "x": -0.573576436351046,
+          "y": 0.8191520442889918,
+          "z": 0.0
+        },
+        "zAxis": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 1.0
+        },
+        "translation": {
+          "x": -43.8505859375,
+          "y": -181.2587890625,
+          "z": 50.0
+        }
+      }
+    },
+    "name": "envelope"
+  },
+  "0332acda-6a20-4445-b53b-177e58f40c94": {
+    "id": "0332acda-6a20-4445-b53b-177e58f40c94",
+    "type": "elements.mass",
+    "profile": "3ab32488-fd73-4626-900b-80adca8940d1",
+    "height": 50.0,
+    "material": "b19e36d8-6803-420d-9896-932cfadff3f3",
+    "extrudeDirection": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 1.0
+    },
+    "extrudeDepth": 50.0,
+    "bothSides": false,
+    "properties": {},
+    "transform": {
+      "matrix": {
+        "xAxis": {
+          "x": 0.8191520442889918,
+          "y": 0.573576436351046,
+          "z": 0.0
+        },
+        "yAxis": {
+          "x": -0.573576436351046,
+          "y": 0.8191520442889918,
+          "z": 0.0
+        },
+        "zAxis": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 1.0
+        },
+        "translation": {
+          "x": -43.8505859375,
+          "y": -181.2587890625,
+          "z": 100.0
+        }
+      }
+    },
+    "name": "envelope"
+  },
+  "448f14f8-0f6b-474a-855e-6996a3d3e9c8": {
+    "id": "448f14f8-0f6b-474a-855e-6996a3d3e9c8",
+    "type": "elements.mass",
+    "profile": "55c08928-1b11-4e8b-9363-cd6e845502f4",
+    "height": 50.0,
+    "material": "b19e36d8-6803-420d-9896-932cfadff3f3",
+    "extrudeDirection": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 1.0
+    },
+    "extrudeDepth": 50.0,
+    "bothSides": false,
+    "properties": {},
+    "transform": {
+      "matrix": {
+        "xAxis": {
+          "x": 0.8191520442889918,
+          "y": 0.573576436351046,
+          "z": 0.0
+        },
+        "yAxis": {
+          "x": -0.573576436351046,
+          "y": 0.8191520442889918,
+          "z": 0.0
+        },
+        "zAxis": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 1.0
+        },
+        "translation": {
+          "x": -43.8505859375,
+          "y": -181.2587890625,
+          "z": 150.0
+        }
+      }
+    },
+    "name": "envelope"
+  }
+}
+}

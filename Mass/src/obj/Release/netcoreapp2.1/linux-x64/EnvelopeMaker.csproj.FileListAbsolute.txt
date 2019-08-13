@@ -1,0 +1,11 @@
+C:\Users\Anthony\GitHub\EnvelopeMaker\src\bin\Release\netcoreapp2.1\linux-x64\EnvelopeMaker.deps.json
+C:\Users\Anthony\GitHub\EnvelopeMaker\src\bin\Release\netcoreapp2.1\linux-x64\EnvelopeMaker.runtimeconfig.json
+C:\Users\Anthony\GitHub\EnvelopeMaker\src\bin\Release\netcoreapp2.1\linux-x64\EnvelopeMaker.runtimeconfig.dev.json
+C:\Users\Anthony\GitHub\EnvelopeMaker\src\bin\Release\netcoreapp2.1\linux-x64\EnvelopeMaker.dll
+C:\Users\Anthony\GitHub\EnvelopeMaker\src\bin\Release\netcoreapp2.1\linux-x64\EnvelopeMaker.pdb
+C:\Users\Anthony\GitHub\EnvelopeMaker\src\obj\Release\netcoreapp2.1\linux-x64\EnvelopeMaker.csprojAssemblyReference.cache
+C:\Users\Anthony\GitHub\EnvelopeMaker\src\obj\Release\netcoreapp2.1\linux-x64\EnvelopeMaker.csproj.CoreCompileInputs.cache
+C:\Users\Anthony\GitHub\EnvelopeMaker\src\obj\Release\netcoreapp2.1\linux-x64\EnvelopeMaker.AssemblyInfoInputs.cache
+C:\Users\Anthony\GitHub\EnvelopeMaker\src\obj\Release\netcoreapp2.1\linux-x64\EnvelopeMaker.AssemblyInfo.cs
+C:\Users\Anthony\GitHub\EnvelopeMaker\src\obj\Release\netcoreapp2.1\linux-x64\EnvelopeMaker.dll
+C:\Users\Anthony\GitHub\EnvelopeMaker\src\obj\Release\netcoreapp2.1\linux-x64\EnvelopeMaker.pdb

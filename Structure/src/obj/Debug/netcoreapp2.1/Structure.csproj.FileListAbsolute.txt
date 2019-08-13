@@ -1,0 +1,9 @@
+C:\Users\Anthony\GitHub\Structure\src\bin\Debug\netcoreapp2.1\Structure.deps.json
+C:\Users\Anthony\GitHub\Structure\src\bin\Debug\netcoreapp2.1\Structure.dll
+C:\Users\Anthony\GitHub\Structure\src\obj\Debug\netcoreapp2.1\Structure.csproj.CoreCompileInputs.cache
+C:\Users\Anthony\GitHub\Structure\src\obj\Debug\netcoreapp2.1\Structure.AssemblyInfoInputs.cache
+C:\Users\Anthony\GitHub\Structure\src\obj\Debug\netcoreapp2.1\Structure.AssemblyInfo.cs
+C:\Users\Anthony\GitHub\Structure\src\bin\Debug\netcoreapp2.1\Structure.pdb
+C:\Users\Anthony\GitHub\Structure\src\obj\Debug\netcoreapp2.1\Structure.dll
+C:\Users\Anthony\GitHub\Structure\src\obj\Debug\netcoreapp2.1\Structure.pdb
+C:\Users\Anthony\GitHub\Structure\src\obj\Debug\netcoreapp2.1\Structure.csprojAssemblyReference.cache

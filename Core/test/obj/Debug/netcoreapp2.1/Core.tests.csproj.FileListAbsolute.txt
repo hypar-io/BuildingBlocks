@@ -1,0 +1,17 @@
+C:\Users\Anthony\GitHub\Core\test\bin\Debug\netcoreapp2.1\xunit.runner.visualstudio.dotnetcore.testadapter.dll
+C:\Users\Anthony\GitHub\Core\test\bin\Debug\netcoreapp2.1\xunit.runner.reporters.netcoreapp10.dll
+C:\Users\Anthony\GitHub\Core\test\bin\Debug\netcoreapp2.1\xunit.runner.utility.netcoreapp10.dll
+C:\Users\Anthony\GitHub\Core\test\bin\Debug\netcoreapp2.1\Core.tests.deps.json
+C:\Users\Anthony\GitHub\Core\test\bin\Debug\netcoreapp2.1\Core.tests.runtimeconfig.json
+C:\Users\Anthony\GitHub\Core\test\bin\Debug\netcoreapp2.1\Core.tests.runtimeconfig.dev.json
+C:\Users\Anthony\GitHub\Core\test\bin\Debug\netcoreapp2.1\Core.tests.dll
+C:\Users\Anthony\GitHub\Core\test\bin\Debug\netcoreapp2.1\Core.tests.pdb
+C:\Users\Anthony\GitHub\Core\test\bin\Debug\netcoreapp2.1\Core.dll
+C:\Users\Anthony\GitHub\Core\test\bin\Debug\netcoreapp2.1\Core.pdb
+C:\Users\Anthony\GitHub\Core\test\obj\Debug\netcoreapp2.1\Core.tests.csprojAssemblyReference.cache
+C:\Users\Anthony\GitHub\Core\test\obj\Debug\netcoreapp2.1\Core.tests.csproj.CoreCompileInputs.cache
+C:\Users\Anthony\GitHub\Core\test\obj\Debug\netcoreapp2.1\Core.tests.AssemblyInfoInputs.cache
+C:\Users\Anthony\GitHub\Core\test\obj\Debug\netcoreapp2.1\Core.tests.AssemblyInfo.cs
+C:\Users\Anthony\GitHub\Core\test\obj\Debug\netcoreapp2.1\Core.tests.csproj.CopyComplete
+C:\Users\Anthony\GitHub\Core\test\obj\Debug\netcoreapp2.1\Core.tests.dll
+C:\Users\Anthony\GitHub\Core\test\obj\Debug\netcoreapp2.1\Core.tests.pdb

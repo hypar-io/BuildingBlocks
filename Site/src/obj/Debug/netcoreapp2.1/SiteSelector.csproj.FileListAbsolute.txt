@@ -1,0 +1,9 @@
+C:\Users\Anthony\GitHub\SiteSelector\src\obj\Debug\netcoreapp2.1\SiteSelector.csproj.CoreCompileInputs.cache
+C:\Users\Anthony\GitHub\SiteSelector\src\obj\Debug\netcoreapp2.1\SiteSelector.AssemblyInfoInputs.cache
+C:\Users\Anthony\GitHub\SiteSelector\src\obj\Debug\netcoreapp2.1\SiteSelector.AssemblyInfo.cs
+C:\Users\Anthony\GitHub\SiteSelector\src\bin\Debug\netcoreapp2.1\SiteSelector.deps.json
+C:\Users\Anthony\GitHub\SiteSelector\src\bin\Debug\netcoreapp2.1\SiteSelector.dll
+C:\Users\Anthony\GitHub\SiteSelector\src\bin\Debug\netcoreapp2.1\SiteSelector.pdb
+C:\Users\Anthony\GitHub\SiteSelector\src\obj\Debug\netcoreapp2.1\SiteSelector.dll
+C:\Users\Anthony\GitHub\SiteSelector\src\obj\Debug\netcoreapp2.1\SiteSelector.pdb
+C:\Users\Anthony\GitHub\SiteSelector\src\obj\Debug\netcoreapp2.1\SiteSelector.csprojAssemblyReference.cache

@@ -1,0 +1,8 @@
+C:\Users\Anthony\GitHub\Core\src\bin\Debug\netcoreapp2.1\Core.deps.json
+C:\Users\Anthony\GitHub\Core\src\bin\Debug\netcoreapp2.1\Core.dll
+C:\Users\Anthony\GitHub\Core\src\bin\Debug\netcoreapp2.1\Core.pdb
+C:\Users\Anthony\GitHub\Core\src\obj\Debug\netcoreapp2.1\Core.csproj.CoreCompileInputs.cache
+C:\Users\Anthony\GitHub\Core\src\obj\Debug\netcoreapp2.1\Core.AssemblyInfoInputs.cache
+C:\Users\Anthony\GitHub\Core\src\obj\Debug\netcoreapp2.1\Core.AssemblyInfo.cs
+C:\Users\Anthony\GitHub\Core\src\obj\Debug\netcoreapp2.1\Core.dll
+C:\Users\Anthony\GitHub\Core\src\obj\Debug\netcoreapp2.1\Core.pdb
