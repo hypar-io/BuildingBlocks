@@ -3,6 +3,8 @@
   "description": "Adds Masses representing rooms and corridors to one or more Masses named 'envelope'.",
   "id": "b4105629-97ae-4419-b717-0cecd166297d",
   "name": "Story",
+  "model_dependencies": ["envelope"],
+  "model_output": "story",
   "repository_url": "https://github.com/hypar-io/function",
   "inputs": [
     {

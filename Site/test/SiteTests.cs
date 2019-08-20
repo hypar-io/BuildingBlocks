@@ -5,6 +5,7 @@ using Hypar.Functions.Execution.Local;
 using Elements.Serialization.glTF;
 using Elements.Serialization.JSON;
 using GeometryEx;
+using System.Collections.Generic;
 
 namespace Site.tests
 {
@@ -60,11 +61,10 @@ namespace Site.tests
         public void Footprint()
         {
             var mapData = JsonConvert.DeserializeObject<Elements.GeoJSON.Feature[]>(feature);
-            var inputs = new SiteInputs(mapData, 3.0, 45.0, 32.0, 5.0, 20.0, "", "", "", "", "");
-            var model = new Model();
-            var outputs = Site.Execute(model, inputs);
-            model.ToGlTF("../../../../Site.glb");
-            System.IO.File.WriteAllText("../../../../Site.json", model.ToJson());
+            var inputs = new SiteInputs(mapData, 3.0, 45.0, 32.0, 5.0, 20.0, "", "", new Dictionary<string, string>(), "", "", "");
+            var outputs = Site.Execute(new Dictionary<string, Model>(), inputs);
+            outputs.model.ToGlTF("../../../../Site.glb");
+            System.IO.File.WriteAllText("../../../../Site.json", outputs.model.ToJson());
         }
     }
 }

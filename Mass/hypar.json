@@ -3,6 +3,8 @@
   "description": "Creates a building envelope by fitting a shape to a footprint boundary.",
   "id": "68c01fb0-5980-4947-93bd-a801cdd9a509",
   "name": "Mass",
+  "model_dependencies": ["site"],
+  "model_output": "envelope",
   "repository_url": "https://github.com/hypar-io/function",
   "inputs": [
     {

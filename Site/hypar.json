@@ -3,6 +3,7 @@
   "description": "Supports site selection and building footprint configuration.",
   "id": "a41f8202-530e-4292-8a8d-4017a7c72c53",
   "name": "Site",
+  "model_output": "site",
   "repository_url": "https://github.com/hypar-io/function",
   "inputs": [
     {

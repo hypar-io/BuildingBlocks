@@ -15,10 +15,12 @@ namespace Core
 		/// Add elements to the model to have them persisted.</param>
 		/// <param name="input">The arguments to the execution.</param>
 		/// <returns>A CoreOutputs instance containing computed results.</returns>
-		public static CoreOutputs Execute(Model model, CoreInputs input)
+		public static CoreOutputs Execute(Dictionary<string, Model> models, CoreInputs input)
 		{
-            var envelope = model.ElementsOfType<Mass>().ToList().FindAll(m => m.Name == "envelope").OrderBy(m => m.Transform.Origin.Z).ToList();
-            if (envelope.Count == 0)
+            var envelope = models.ContainsKey("envelope") ?
+                models["envelope"].ElementsOfType<Mass>().ToList().FindAll(m => m.Name == "envelope").OrderBy(m => m.Transform.Origin.Z).ToList()
+                : null;
+            if (envelope == null || envelope.Count == 0)
             {
                 envelope = new List<Mass>
                 {
@@ -26,7 +28,6 @@ namespace Core
                              75.0,
                              new Material("envelope", Palette.Aqua, 0.0f, 0.0f))
                 };
-                model.AddElement(envelope.First());
             }
             var height = 0.0;
             foreach (var item in envelope)
@@ -40,8 +41,8 @@ namespace Core
             {
                 Name = "core"
             };
-            model.AddElement(mass);
             var output = new CoreOutputs(input.Length * input.Width, height);
+            output.model.AddElement(mass);
 			return output;
 		}
     }

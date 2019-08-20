@@ -16,11 +16,11 @@ namespace Structure
 		/// Add elements to the model to have them persisted.</param>
 		/// <param name="input">The arguments to the execution.</param>
 		/// <returns>A StructureOutputs instance containing computed results.</returns>
-		public static StructureOutputs Execute(Model model, StructureInputs input)
+		public static StructureOutputs Execute(Dictionary<string, Model> models, StructureInputs input)
 		{
-            var envelope = model.ElementsOfType<Mass>().ToList().FindAll(m => m.Name == "envelope");
-            var core = model.ElementsOfType<Mass>().ToList().Find(m => m.Name == "core");
-            if (envelope.Count == 0)
+            var envelope = models.ContainsKey("envelope") ? models["envelope"].ElementsOfType<Mass>().ToList().FindAll(m => m.Name == "envelope") : null;
+            var core = models.ContainsKey("core") ? models["core"].ElementsOfType<Mass>().ToList().Find(m => m.Name == "core") : null;
+            if (envelope == null || envelope.Count == 0)
             {
                 envelope = new List<Mass>
                 {
@@ -31,9 +31,9 @@ namespace Structure
                         Name = "envelope"
                     }
                 };
-                model.AddElement(envelope.First());
             }
             var columns = 0;
+            var outputModel = new Model();
             foreach (var mass in envelope)
             {
                 var height = mass.Height;
@@ -52,11 +52,12 @@ namespace Structure
                     {
                         continue;
                     }
-                    model.AddElement(new Mass(new Profile(polygon), height, BuiltInMaterials.Concrete, t));
+                    outputModel.AddElement(new Mass(new Profile(polygon), height, BuiltInMaterials.Concrete, t));
                     columns++;
                 }
             }
 			var output = new StructureOutputs(columns);
+            output.model = outputModel;
 			return output;
 		}
   	}

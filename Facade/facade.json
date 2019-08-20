@@ -1,8 +1,8 @@
 {
   "extensions": ["hypar.elements"],
   "materials": {
-  "5672f21e-6c6d-42e6-b272-0e283bbe00b1": {
-    "id": "5672f21e-6c6d-42e6-b272-0e283bbe00b1",
+  "6984e350-6d38-40a9-a65a-463a2c6ee4de": {
+    "id": "6984e350-6d38-40a9-a65a-463a2c6ee4de",
     "color": {
       "red": 0.1,
       "green": 0.1,
@@ -14,112 +14,8 @@
     "name": "edges",
     "doubleSided": false
   },
-  "e078f4eb-4243-49c7-83fa-4dffac3fea24": {
-    "id": "e078f4eb-4243-49c7-83fa-4dffac3fea24",
-    "color": {
-      "red": 0.19531,
-      "green": 0.65625,
-      "blue": 0.0,
-      "alpha": 1.0
-    },
-    "specularFactor": 0.0,
-    "glossinessFactor": 0.0,
-    "name": "site",
-    "doubleSided": false
-  },
-  "05817841-b27a-4cdc-8fc6-7a18399a4940": {
-    "id": "05817841-b27a-4cdc-8fc6-7a18399a4940",
-    "color": {
-      "red": 0.5,
-      "green": 0.5,
-      "blue": 0.5,
-      "alpha": 1.0
-    },
-    "specularFactor": 0.0,
-    "glossinessFactor": 0.0,
-    "name": "concrete",
-    "doubleSided": false
-  },
-  "5d2175c6-5a01-4a7a-8754-fe2e653f7e4a": {
-    "id": "5d2175c6-5a01-4a7a-8754-fe2e653f7e4a",
-    "color": {
-      "red": 0.1,
-      "green": 0.1,
-      "blue": 0.1,
-      "alpha": 1.0
-    },
-    "specularFactor": 0.0,
-    "glossinessFactor": 0.0,
-    "name": "edges",
-    "doubleSided": false
-  },
-  "1887f9c7-49de-4cdb-a0c1-95949909dd27": {
-    "id": "1887f9c7-49de-4cdb-a0c1-95949909dd27",
-    "color": {
-      "red": 0.8,
-      "green": 0.9,
-      "blue": 0.3,
-      "alpha": 0.1
-    },
-    "specularFactor": 0.1,
-    "glossinessFactor": 0.1,
-    "name": "void",
-    "doubleSided": false
-  },
-  "193d6d1a-b857-4048-b51a-91c93c3a7d35": {
-    "id": "193d6d1a-b857-4048-b51a-91c93c3a7d35",
-    "color": {
-      "red": 0.5,
-      "green": 0.5,
-      "blue": 0.5,
-      "alpha": 0.6
-    },
-    "specularFactor": 0.0,
-    "glossinessFactor": 0.0,
-    "name": "basement",
-    "doubleSided": false
-  },
-  "380c49e5-e1cb-4478-840b-afacd0487728": {
-    "id": "380c49e5-e1cb-4478-840b-afacd0487728",
-    "color": {
-      "red": 1.0,
-      "green": 1.0,
-      "blue": 1.0,
-      "alpha": 0.2
-    },
-    "specularFactor": 1.0,
-    "glossinessFactor": 1.0,
-    "name": "glass",
-    "doubleSided": false
-  },
-  "05deda80-b2b4-478a-9806-820dbef94867": {
-    "id": "05deda80-b2b4-478a-9806-820dbef94867",
-    "color": {
-      "red": 0.1,
-      "green": 0.1,
-      "blue": 0.1,
-      "alpha": 1.0
-    },
-    "specularFactor": 0.0,
-    "glossinessFactor": 0.0,
-    "name": "edges",
-    "doubleSided": false
-  },
-  "d57339b0-ae08-4a89-9c0e-a61a8e73f3a8": {
-    "id": "d57339b0-ae08-4a89-9c0e-a61a8e73f3a8",
-    "color": {
-      "red": 0.8,
-      "green": 0.9,
-      "blue": 0.3,
-      "alpha": 0.1
-    },
-    "specularFactor": 0.1,
-    "glossinessFactor": 0.1,
-    "name": "void",
-    "doubleSided": false
-  },
-  "270cb1e9-8c60-492b-9d10-6074c4325ae5": {
-    "id": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+  "6697b89a-91bb-4615-9788-5e1810c5b108": {
+    "id": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "color": {
       "red": 0.3,
       "green": 0.7,
@@ -133,436 +29,10 @@
   }
 },
   "elementTypes": {},
-  "profiles": {
-  "f111db81-c685-40f3-90dc-7dd426100c64": {
-    "id": "f111db81-c685-40f3-90dc-7dd426100c64",
-    "perimeter": {
-      "type": "elements.geometry.polygon",
-      "vertices": [
-        {
-          "x": 0.0,
-          "y": 0.0,
-          "z": 0.0
-        },
-        {
-          "x": 94.844206155277789,
-          "y": -49.568362544290721,
-          "z": 0.0
-        },
-        {
-          "x": 77.58968508336693,
-          "y": -90.850022589787841,
-          "z": 0.0
-        },
-        {
-          "x": 64.453985169529915,
-          "y": -239.55290417652577,
-          "z": 0.0
-        },
-        {
-          "x": -93.1744137937203,
-          "y": -223.43223863095045,
-          "z": 0.0
-        }
-      ]
-    }
-  },
-  "2f8ecfd4-18fb-486b-b098-0ff6b092f3c7": {
-    "id": "2f8ecfd4-18fb-486b-b098-0ff6b092f3c7",
-    "perimeter": {
-      "type": "elements.geometry.polygon",
-      "vertices": [
-        {
-          "x": -22.5,
-          "y": -16.0,
-          "z": 0.0
-        },
-        {
-          "x": 22.5,
-          "y": -16.0,
-          "z": 0.0
-        },
-        {
-          "x": 22.5,
-          "y": 16.0,
-          "z": 0.0
-        },
-        {
-          "x": -22.5,
-          "y": 16.0,
-          "z": 0.0
-        }
-      ]
-    }
-  },
-  "7cb6f517-b9ef-46fd-a39a-82777dc939ef": {
-    "id": "7cb6f517-b9ef-46fd-a39a-82777dc939ef",
-    "perimeter": {
-      "type": "elements.geometry.polygon",
-      "vertices": [
-        {
-          "x": 17.5,
-          "y": 11.0,
-          "z": 0.0
-        },
-        {
-          "x": -17.5,
-          "y": 11.0,
-          "z": 0.0
-        },
-        {
-          "x": -17.5,
-          "y": -11.0,
-          "z": 0.0
-        },
-        {
-          "x": 17.5,
-          "y": -11.0,
-          "z": 0.0
-        }
-      ]
-    }
-  },
-  "ca857556-b225-46a8-b622-06d225cda16e": {
-    "id": "ca857556-b225-46a8-b622-06d225cda16e",
-    "perimeter": {
-      "type": "elements.geometry.polygon",
-      "vertices": [
-        {
-          "x": 12.5,
-          "y": 6.0,
-          "z": 0.0
-        },
-        {
-          "x": -12.5,
-          "y": 6.0,
-          "z": 0.0
-        },
-        {
-          "x": -12.5,
-          "y": -6.0,
-          "z": 0.0
-        },
-        {
-          "x": 12.5,
-          "y": -6.0,
-          "z": 0.0
-        }
-      ]
-    }
-  },
-  "8adf1bbb-9d67-4c8b-a191-af47a6c31040": {
-    "id": "8adf1bbb-9d67-4c8b-a191-af47a6c31040",
-    "perimeter": {
-      "type": "elements.geometry.polygon",
-      "vertices": [
-        {
-          "x": 7.5,
-          "y": 1.0,
-          "z": 0.0
-        },
-        {
-          "x": -7.5,
-          "y": 1.0,
-          "z": 0.0
-        },
-        {
-          "x": -7.5,
-          "y": -1.0,
-          "z": 0.0
-        },
-        {
-          "x": 7.5,
-          "y": -1.0,
-          "z": 0.0
-        }
-      ]
-    }
-  }
-},
+  "profiles": {},
   "elements": {
-  "8c368bbe-b2ca-4619-9942-2e1bbcd4fbff": {
-    "id": "8c368bbe-b2ca-4619-9942-2e1bbcd4fbff",
-    "type": "elements.mass",
-    "profile": "f111db81-c685-40f3-90dc-7dd426100c64",
-    "height": 1.0,
-    "material": "e078f4eb-4243-49c7-83fa-4dffac3fea24",
-    "extrudeDirection": {
-      "x": 0.0,
-      "y": 0.0,
-      "z": 1.0
-    },
-    "extrudeDepth": 1.0,
-    "bothSides": false,
-    "properties": {},
-    "transform": {
-      "matrix": {
-        "xAxis": {
-          "x": 1.0,
-          "y": 0.0,
-          "z": 0.0
-        },
-        "yAxis": {
-          "x": 0.0,
-          "y": 1.0,
-          "z": 0.0
-        },
-        "zAxis": {
-          "x": 0.0,
-          "y": 0.0,
-          "z": 1.0
-        },
-        "translation": {
-          "x": 0.0,
-          "y": 0.0,
-          "z": -1.0
-        }
-      }
-    },
-    "name": "site"
-  },
-  "ebee48fc-160f-4229-a623-0bf15b1d289a": {
-    "id": "ebee48fc-160f-4229-a623-0bf15b1d289a",
-    "type": "elements.mass",
-    "profile": "2f8ecfd4-18fb-486b-b098-0ff6b092f3c7",
-    "height": 0.1,
-    "material": "05817841-b27a-4cdc-8fc6-7a18399a4940",
-    "extrudeDirection": {
-      "x": 0.0,
-      "y": 0.0,
-      "z": 1.0
-    },
-    "extrudeDepth": 0.1,
-    "bothSides": false,
-    "properties": {},
-    "transform": {
-      "matrix": {
-        "xAxis": {
-          "x": 1.0,
-          "y": 0.0,
-          "z": 0.0
-        },
-        "yAxis": {
-          "x": 0.0,
-          "y": 1.0,
-          "z": 0.0
-        },
-        "zAxis": {
-          "x": 0.0,
-          "y": 0.0,
-          "z": 1.0
-        },
-        "translation": {
-          "x": -37.721258053567361,
-          "y": -202.01573944529667,
-          "z": 0.0
-        }
-      }
-    },
-    "name": "footprint"
-  },
-  "f140dfae-708c-4859-96be-973e8c49b682": {
-    "id": "f140dfae-708c-4859-96be-973e8c49b682",
-    "type": "elements.mass",
-    "profile": "2f8ecfd4-18fb-486b-b098-0ff6b092f3c7",
-    "height": 20.0,
-    "material": "193d6d1a-b857-4048-b51a-91c93c3a7d35",
-    "extrudeDirection": {
-      "x": 0.0,
-      "y": 0.0,
-      "z": 1.0
-    },
-    "extrudeDepth": 20.0,
-    "bothSides": false,
-    "properties": {},
-    "transform": {
-      "matrix": {
-        "xAxis": {
-          "x": 1.0,
-          "y": 0.0,
-          "z": 0.0
-        },
-        "yAxis": {
-          "x": 0.0,
-          "y": 1.0,
-          "z": 0.0
-        },
-        "zAxis": {
-          "x": 0.0,
-          "y": 0.0,
-          "z": 1.0
-        },
-        "translation": {
-          "x": -37.721258053567361,
-          "y": -202.01573944529667,
-          "z": -20.1
-        }
-      }
-    },
-    "name": "envelope"
-  },
-  "5c0deddd-4f39-45e8-8845-0c43b41a9b6c": {
-    "id": "5c0deddd-4f39-45e8-8845-0c43b41a9b6c",
-    "type": "elements.mass",
-    "profile": "2f8ecfd4-18fb-486b-b098-0ff6b092f3c7",
-    "height": 50.0,
-    "material": "380c49e5-e1cb-4478-840b-afacd0487728",
-    "extrudeDirection": {
-      "x": 0.0,
-      "y": 0.0,
-      "z": 1.0
-    },
-    "extrudeDepth": 50.0,
-    "bothSides": false,
-    "properties": {},
-    "transform": {
-      "matrix": {
-        "xAxis": {
-          "x": 1.0,
-          "y": 0.0,
-          "z": 0.0
-        },
-        "yAxis": {
-          "x": 0.0,
-          "y": 1.0,
-          "z": 0.0
-        },
-        "zAxis": {
-          "x": 0.0,
-          "y": 0.0,
-          "z": 1.0
-        },
-        "translation": {
-          "x": -37.721258053567361,
-          "y": -202.01573944529667,
-          "z": -0.1
-        }
-      }
-    },
-    "name": "envelope"
-  },
-  "850128e2-cc37-44d2-9db6-ed390b90c3e9": {
-    "id": "850128e2-cc37-44d2-9db6-ed390b90c3e9",
-    "type": "elements.mass",
-    "profile": "7cb6f517-b9ef-46fd-a39a-82777dc939ef",
-    "height": 50.0,
-    "material": "380c49e5-e1cb-4478-840b-afacd0487728",
-    "extrudeDirection": {
-      "x": 0.0,
-      "y": 0.0,
-      "z": 1.0
-    },
-    "extrudeDepth": 50.0,
-    "bothSides": false,
-    "properties": {},
-    "transform": {
-      "matrix": {
-        "xAxis": {
-          "x": 1.0,
-          "y": 0.0,
-          "z": 0.0
-        },
-        "yAxis": {
-          "x": 0.0,
-          "y": 1.0,
-          "z": 0.0
-        },
-        "zAxis": {
-          "x": 0.0,
-          "y": 0.0,
-          "z": 1.0
-        },
-        "translation": {
-          "x": -37.721258053567361,
-          "y": -202.01573944529667,
-          "z": 50.0
-        }
-      }
-    },
-    "name": "envelope"
-  },
-  "c3ca10f1-6f89-43b6-b5bf-f074816eb336": {
-    "id": "c3ca10f1-6f89-43b6-b5bf-f074816eb336",
-    "type": "elements.mass",
-    "profile": "ca857556-b225-46a8-b622-06d225cda16e",
-    "height": 50.0,
-    "material": "380c49e5-e1cb-4478-840b-afacd0487728",
-    "extrudeDirection": {
-      "x": 0.0,
-      "y": 0.0,
-      "z": 1.0
-    },
-    "extrudeDepth": 50.0,
-    "bothSides": false,
-    "properties": {},
-    "transform": {
-      "matrix": {
-        "xAxis": {
-          "x": 1.0,
-          "y": 0.0,
-          "z": 0.0
-        },
-        "yAxis": {
-          "x": 0.0,
-          "y": 1.0,
-          "z": 0.0
-        },
-        "zAxis": {
-          "x": 0.0,
-          "y": 0.0,
-          "z": 1.0
-        },
-        "translation": {
-          "x": -37.721258053567361,
-          "y": -202.01573944529667,
-          "z": 100.0
-        }
-      }
-    },
-    "name": "envelope"
-  },
-  "b091ab1c-fdbc-402b-ad63-0fdfb6fc1383": {
-    "id": "b091ab1c-fdbc-402b-ad63-0fdfb6fc1383",
-    "type": "elements.mass",
-    "profile": "8adf1bbb-9d67-4c8b-a191-af47a6c31040",
-    "height": 50.0,
-    "material": "380c49e5-e1cb-4478-840b-afacd0487728",
-    "extrudeDirection": {
-      "x": 0.0,
-      "y": 0.0,
-      "z": 1.0
-    },
-    "extrudeDepth": 50.0,
-    "bothSides": false,
-    "properties": {},
-    "transform": {
-      "matrix": {
-        "xAxis": {
-          "x": 1.0,
-          "y": 0.0,
-          "z": 0.0
-        },
-        "yAxis": {
-          "x": 0.0,
-          "y": 1.0,
-          "z": 0.0
-        },
-        "zAxis": {
-          "x": 0.0,
-          "y": 0.0,
-          "z": 1.0
-        },
-        "translation": {
-          "x": -37.721258053567361,
-          "y": -202.01573944529667,
-          "z": 150.0
-        }
-      }
-    },
-    "name": "envelope"
-  },
-  "80865592-bfa7-4bbd-a545-d1163456829b": {
-    "id": "80865592-bfa7-4bbd-a545-d1163456829b",
+  "612a295c-c24d-41d4-88e5-5c99c69c7351": {
+    "id": "612a295c-c24d-41d4-88e5-5c99c69c7351",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -589,7 +59,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -616,8 +86,8 @@
       }
     }
   },
-  "462a9f96-2dce-4bd1-b475-0bcff6ad2b4f": {
-    "id": "462a9f96-2dce-4bd1-b475-0bcff6ad2b4f",
+  "eca175e0-296a-40d5-bb98-121a3b732eb1": {
+    "id": "eca175e0-296a-40d5-bb98-121a3b732eb1",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -644,7 +114,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -671,8 +141,8 @@
       }
     }
   },
-  "33fb9074-e336-4975-bb6b-67dcbd07f90e": {
-    "id": "33fb9074-e336-4975-bb6b-67dcbd07f90e",
+  "752d4ef7-c0f1-4ad9-a4ed-91d9d6890f3e": {
+    "id": "752d4ef7-c0f1-4ad9-a4ed-91d9d6890f3e",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -699,7 +169,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -726,8 +196,8 @@
       }
     }
   },
-  "d4db8989-f258-4117-bd3b-251074637793": {
-    "id": "d4db8989-f258-4117-bd3b-251074637793",
+  "e5848939-e525-4f8f-a37a-1a272f7d1fc5": {
+    "id": "e5848939-e525-4f8f-a37a-1a272f7d1fc5",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -754,7 +224,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -781,8 +251,8 @@
       }
     }
   },
-  "41916084-2eda-41c4-9105-6ba4d08ea4f8": {
-    "id": "41916084-2eda-41c4-9105-6ba4d08ea4f8",
+  "66aa5a3e-43b3-4882-8153-eb87a9a4fdf8": {
+    "id": "66aa5a3e-43b3-4882-8153-eb87a9a4fdf8",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -809,7 +279,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -836,8 +306,8 @@
       }
     }
   },
-  "55025272-26c6-43ef-97da-6a385ac60f62": {
-    "id": "55025272-26c6-43ef-97da-6a385ac60f62",
+  "2360a693-7155-48ea-863b-56e1f4bb52e0": {
+    "id": "2360a693-7155-48ea-863b-56e1f4bb52e0",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -864,7 +334,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -891,8 +361,8 @@
       }
     }
   },
-  "2a1de3be-7866-4133-9c4c-fac42aac1c06": {
-    "id": "2a1de3be-7866-4133-9c4c-fac42aac1c06",
+  "814fd286-23bd-4345-9951-6995a58a404b": {
+    "id": "814fd286-23bd-4345-9951-6995a58a404b",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -919,7 +389,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -946,8 +416,8 @@
       }
     }
   },
-  "6a5b33f8-1491-4861-b7aa-77b8c0c7be46": {
-    "id": "6a5b33f8-1491-4861-b7aa-77b8c0c7be46",
+  "aa0ffd1b-3b8d-410d-ab0b-be3ec361b728": {
+    "id": "aa0ffd1b-3b8d-410d-ab0b-be3ec361b728",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -974,7 +444,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -1001,8 +471,8 @@
       }
     }
   },
-  "15dba6bc-03fd-4b62-afd8-c47e5fa0473f": {
-    "id": "15dba6bc-03fd-4b62-afd8-c47e5fa0473f",
+  "79a8ea6b-8a47-4d4a-a6d8-3e6007c2b5ff": {
+    "id": "79a8ea6b-8a47-4d4a-a6d8-3e6007c2b5ff",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -1029,7 +499,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -1056,8 +526,8 @@
       }
     }
   },
-  "96c5873d-b9c9-4dfd-ae6c-688bf8cfa4fe": {
-    "id": "96c5873d-b9c9-4dfd-ae6c-688bf8cfa4fe",
+  "216eb764-d0a0-4556-a22a-96dbae1672dd": {
+    "id": "216eb764-d0a0-4556-a22a-96dbae1672dd",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -1084,7 +554,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -1111,8 +581,8 @@
       }
     }
   },
-  "3558a46b-7e07-411e-9e70-9d029d19d9cd": {
-    "id": "3558a46b-7e07-411e-9e70-9d029d19d9cd",
+  "e7adb833-1a49-4010-b993-5474bd4c2652": {
+    "id": "e7adb833-1a49-4010-b993-5474bd4c2652",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -1139,7 +609,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -1166,8 +636,8 @@
       }
     }
   },
-  "27851a99-6cc4-413f-8939-cc6bd78548a0": {
-    "id": "27851a99-6cc4-413f-8939-cc6bd78548a0",
+  "55f6bd94-78f6-4dc2-a862-2525d6828906": {
+    "id": "55f6bd94-78f6-4dc2-a862-2525d6828906",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -1194,7 +664,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -1221,8 +691,8 @@
       }
     }
   },
-  "a3b610bd-79b5-4355-b971-db7c7e8a0b6d": {
-    "id": "a3b610bd-79b5-4355-b971-db7c7e8a0b6d",
+  "598105e2-9fef-4fd6-9e76-d10d4dff54cb": {
+    "id": "598105e2-9fef-4fd6-9e76-d10d4dff54cb",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -1249,7 +719,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -1276,8 +746,8 @@
       }
     }
   },
-  "0bcdeced-af1f-4b4b-9a3e-62909ee993ba": {
-    "id": "0bcdeced-af1f-4b4b-9a3e-62909ee993ba",
+  "f6ac6def-e768-488f-aa51-4de537f0cd06": {
+    "id": "f6ac6def-e768-488f-aa51-4de537f0cd06",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -1304,7 +774,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -1331,8 +801,8 @@
       }
     }
   },
-  "1ad3d38a-afbf-45eb-b876-68577fd84bdc": {
-    "id": "1ad3d38a-afbf-45eb-b876-68577fd84bdc",
+  "05493c3a-9582-44d4-a8f3-f3cfb8e91cd0": {
+    "id": "05493c3a-9582-44d4-a8f3-f3cfb8e91cd0",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -1359,7 +829,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -1386,8 +856,8 @@
       }
     }
   },
-  "dac1b3d0-f51c-4021-8b84-03ffc25349a0": {
-    "id": "dac1b3d0-f51c-4021-8b84-03ffc25349a0",
+  "58aa7f87-a1b6-480b-a483-c65e456c5a88": {
+    "id": "58aa7f87-a1b6-480b-a483-c65e456c5a88",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -1414,7 +884,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -1441,8 +911,8 @@
       }
     }
   },
-  "0c99fd55-8c46-4bae-aa3a-556149e960c6": {
-    "id": "0c99fd55-8c46-4bae-aa3a-556149e960c6",
+  "ea0b871f-5300-471d-b664-1a61cab16012": {
+    "id": "ea0b871f-5300-471d-b664-1a61cab16012",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -1469,7 +939,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -1496,8 +966,8 @@
       }
     }
   },
-  "31767bb7-c76c-49d8-aab2-46a7165086ea": {
-    "id": "31767bb7-c76c-49d8-aab2-46a7165086ea",
+  "0efed132-3da4-4b75-8958-332fb6948439": {
+    "id": "0efed132-3da4-4b75-8958-332fb6948439",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -1524,7 +994,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -1551,8 +1021,8 @@
       }
     }
   },
-  "45c90c7b-ca07-478e-ae6f-fc6c4f872bc8": {
-    "id": "45c90c7b-ca07-478e-ae6f-fc6c4f872bc8",
+  "146744ac-1cde-4726-88fa-93dd020a3c40": {
+    "id": "146744ac-1cde-4726-88fa-93dd020a3c40",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -1579,7 +1049,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -1606,8 +1076,8 @@
       }
     }
   },
-  "f4bcae70-87cd-4bb9-8878-f2ed9c0295f6": {
-    "id": "f4bcae70-87cd-4bb9-8878-f2ed9c0295f6",
+  "8c3b23fb-ed48-486c-93fb-1363f1bb4ebf": {
+    "id": "8c3b23fb-ed48-486c-93fb-1363f1bb4ebf",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -1634,7 +1104,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -1661,8 +1131,8 @@
       }
     }
   },
-  "cdc4166e-2fb2-4028-9b97-48bf05489063": {
-    "id": "cdc4166e-2fb2-4028-9b97-48bf05489063",
+  "2b601244-43c4-44b6-9451-7633ea77ba9c": {
+    "id": "2b601244-43c4-44b6-9451-7633ea77ba9c",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -1689,7 +1159,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -1716,8 +1186,8 @@
       }
     }
   },
-  "ec94dcb8-df29-4b56-accf-bba82a8e2436": {
-    "id": "ec94dcb8-df29-4b56-accf-bba82a8e2436",
+  "d22fbc93-f397-49d6-8e7f-c77a3291b50e": {
+    "id": "d22fbc93-f397-49d6-8e7f-c77a3291b50e",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -1744,7 +1214,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -1771,8 +1241,8 @@
       }
     }
   },
-  "e55b20f5-07fe-494d-8888-a20964d692dc": {
-    "id": "e55b20f5-07fe-494d-8888-a20964d692dc",
+  "c40e5bc2-5312-4e42-bb80-630a6e458470": {
+    "id": "c40e5bc2-5312-4e42-bb80-630a6e458470",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -1799,7 +1269,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -1826,8 +1296,8 @@
       }
     }
   },
-  "b7464acd-5565-411f-bb18-34338752de9c": {
-    "id": "b7464acd-5565-411f-bb18-34338752de9c",
+  "298a4a22-94c8-4749-a6fd-23ecd404c26f": {
+    "id": "298a4a22-94c8-4749-a6fd-23ecd404c26f",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -1854,7 +1324,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -1881,8 +1351,8 @@
       }
     }
   },
-  "ab940139-0c33-41d3-95cb-318855b7f30c": {
-    "id": "ab940139-0c33-41d3-95cb-318855b7f30c",
+  "67b36a83-68c7-4582-9246-930ace8354d3": {
+    "id": "67b36a83-68c7-4582-9246-930ace8354d3",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -1909,7 +1379,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -1936,8 +1406,8 @@
       }
     }
   },
-  "84d65dd6-0189-4672-8587-b6e900a37bf9": {
-    "id": "84d65dd6-0189-4672-8587-b6e900a37bf9",
+  "d8db6d97-7480-46ff-a330-7a557fedfa12": {
+    "id": "d8db6d97-7480-46ff-a330-7a557fedfa12",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -1964,7 +1434,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -1991,8 +1461,8 @@
       }
     }
   },
-  "627dab44-ddd1-4011-be28-44a8923b280e": {
-    "id": "627dab44-ddd1-4011-be28-44a8923b280e",
+  "56b89886-cc5a-4439-bd70-fc3fc081fb89": {
+    "id": "56b89886-cc5a-4439-bd70-fc3fc081fb89",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -2019,7 +1489,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -2046,8 +1516,8 @@
       }
     }
   },
-  "fdb5cf02-0b63-455b-87cd-575bcafc6f0e": {
-    "id": "fdb5cf02-0b63-455b-87cd-575bcafc6f0e",
+  "8933f8c6-4b10-4dc6-a17c-b1e3169139ec": {
+    "id": "8933f8c6-4b10-4dc6-a17c-b1e3169139ec",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -2074,7 +1544,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -2101,8 +1571,8 @@
       }
     }
   },
-  "60fe1e01-e2d5-477e-9a4d-f42e2cb51410": {
-    "id": "60fe1e01-e2d5-477e-9a4d-f42e2cb51410",
+  "38026afb-6cd0-4785-b02a-46805a47fd4d": {
+    "id": "38026afb-6cd0-4785-b02a-46805a47fd4d",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -2129,7 +1599,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -2156,8 +1626,8 @@
       }
     }
   },
-  "d0c98cdc-866c-41f0-871b-8fb75c62a3fd": {
-    "id": "d0c98cdc-866c-41f0-871b-8fb75c62a3fd",
+  "b08dfa53-9575-42cb-affb-433488504a19": {
+    "id": "b08dfa53-9575-42cb-affb-433488504a19",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -2184,7 +1654,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -2211,8 +1681,8 @@
       }
     }
   },
-  "4fe9f0a2-4f64-4858-9dd1-27742cee3419": {
-    "id": "4fe9f0a2-4f64-4858-9dd1-27742cee3419",
+  "f956dcc1-f02f-4e05-a1d1-0725fb1acd3e": {
+    "id": "f956dcc1-f02f-4e05-a1d1-0725fb1acd3e",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -2239,7 +1709,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -2266,8 +1736,8 @@
       }
     }
   },
-  "022f2d2c-1ff0-4ef3-9a02-704b27e83c2b": {
-    "id": "022f2d2c-1ff0-4ef3-9a02-704b27e83c2b",
+  "ef745544-4e01-40b3-8031-35317764e5a0": {
+    "id": "ef745544-4e01-40b3-8031-35317764e5a0",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -2294,7 +1764,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -2321,8 +1791,8 @@
       }
     }
   },
-  "3723c01d-4f5a-4fa2-85c2-cba1c564a2d5": {
-    "id": "3723c01d-4f5a-4fa2-85c2-cba1c564a2d5",
+  "607f2619-8cfb-4479-9970-0b4ed7450e67": {
+    "id": "607f2619-8cfb-4479-9970-0b4ed7450e67",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -2349,7 +1819,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -2376,8 +1846,8 @@
       }
     }
   },
-  "d1108184-0d92-4aab-9d02-d863210c09e7": {
-    "id": "d1108184-0d92-4aab-9d02-d863210c09e7",
+  "bdc68dd4-2d49-483a-927f-83d47e345fd9": {
+    "id": "bdc68dd4-2d49-483a-927f-83d47e345fd9",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -2404,7 +1874,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -2431,8 +1901,8 @@
       }
     }
   },
-  "a1880922-b847-4e1b-bb6f-91437756d050": {
-    "id": "a1880922-b847-4e1b-bb6f-91437756d050",
+  "0900b0e0-1bc2-4286-960d-d6e23c147187": {
+    "id": "0900b0e0-1bc2-4286-960d-d6e23c147187",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -2459,7 +1929,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -2486,8 +1956,8 @@
       }
     }
   },
-  "607e4a66-d23b-4db4-b0e3-cca2dbd53f6b": {
-    "id": "607e4a66-d23b-4db4-b0e3-cca2dbd53f6b",
+  "6171ca88-71e4-4748-ad1d-50497d04cd53": {
+    "id": "6171ca88-71e4-4748-ad1d-50497d04cd53",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -2514,7 +1984,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -2541,8 +2011,8 @@
       }
     }
   },
-  "87cc7ee4-bd91-4acd-b111-67415f312a74": {
-    "id": "87cc7ee4-bd91-4acd-b111-67415f312a74",
+  "2310255d-b237-43b9-ab63-9c32c6e96ba9": {
+    "id": "2310255d-b237-43b9-ab63-9c32c6e96ba9",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -2569,7 +2039,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -2596,8 +2066,8 @@
       }
     }
   },
-  "6237baad-e785-4735-9282-f57d6684fa21": {
-    "id": "6237baad-e785-4735-9282-f57d6684fa21",
+  "6bfcc600-245a-4477-8058-6c5fd3f36ba5": {
+    "id": "6bfcc600-245a-4477-8058-6c5fd3f36ba5",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -2624,7 +2094,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -2651,8 +2121,8 @@
       }
     }
   },
-  "7ff580c0-2f29-44dd-ac0e-2c03addefc3f": {
-    "id": "7ff580c0-2f29-44dd-ac0e-2c03addefc3f",
+  "a777ba87-ca3a-4508-b2a3-329ff600724d": {
+    "id": "a777ba87-ca3a-4508-b2a3-329ff600724d",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -2679,7 +2149,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -2706,8 +2176,8 @@
       }
     }
   },
-  "c71c8b2c-75b9-4d6d-9e21-bf394a7a8e5e": {
-    "id": "c71c8b2c-75b9-4d6d-9e21-bf394a7a8e5e",
+  "9d14ef0f-e4a3-4634-a941-15c2357ce40a": {
+    "id": "9d14ef0f-e4a3-4634-a941-15c2357ce40a",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -2734,7 +2204,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -2761,8 +2231,8 @@
       }
     }
   },
-  "fa2b7280-073d-4042-b4b9-8e4e5d46bca0": {
-    "id": "fa2b7280-073d-4042-b4b9-8e4e5d46bca0",
+  "883c7a4b-53f5-4745-b75e-c1751851d3c4": {
+    "id": "883c7a4b-53f5-4745-b75e-c1751851d3c4",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -2789,7 +2259,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -2816,8 +2286,8 @@
       }
     }
   },
-  "d1a33ef7-5051-426c-baa1-f574bb0aee54": {
-    "id": "d1a33ef7-5051-426c-baa1-f574bb0aee54",
+  "cbc6b277-4a1d-49d3-8374-b62437c931b7": {
+    "id": "cbc6b277-4a1d-49d3-8374-b62437c931b7",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -2844,7 +2314,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -2871,8 +2341,8 @@
       }
     }
   },
-  "294cca98-7875-4276-b6ec-3e6682028435": {
-    "id": "294cca98-7875-4276-b6ec-3e6682028435",
+  "446d5340-9c3b-43fd-8d07-afc222fc6430": {
+    "id": "446d5340-9c3b-43fd-8d07-afc222fc6430",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -2899,7 +2369,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -2926,8 +2396,8 @@
       }
     }
   },
-  "ce8514a4-cfcd-4f3f-837f-0bd9087e8d03": {
-    "id": "ce8514a4-cfcd-4f3f-837f-0bd9087e8d03",
+  "4453e00f-5f9e-468c-98c5-5927bb058200": {
+    "id": "4453e00f-5f9e-468c-98c5-5927bb058200",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -2954,7 +2424,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -2981,8 +2451,8 @@
       }
     }
   },
-  "339f9fa4-086a-4488-8675-6ac1b635f8ba": {
-    "id": "339f9fa4-086a-4488-8675-6ac1b635f8ba",
+  "37bb2840-2320-4ab3-9c40-ff1c94ad787e": {
+    "id": "37bb2840-2320-4ab3-9c40-ff1c94ad787e",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -3009,7 +2479,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -3036,8 +2506,8 @@
       }
     }
   },
-  "34581c15-8f6d-4a54-9cef-4fe9efe8d30e": {
-    "id": "34581c15-8f6d-4a54-9cef-4fe9efe8d30e",
+  "1e6c56fb-d7e9-4d4f-9840-a49c613234a1": {
+    "id": "1e6c56fb-d7e9-4d4f-9840-a49c613234a1",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -3064,7 +2534,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -3091,8 +2561,8 @@
       }
     }
   },
-  "c8351040-5a06-42ed-b86b-0927ec7aad38": {
-    "id": "c8351040-5a06-42ed-b86b-0927ec7aad38",
+  "763bea4e-4e1c-4d1e-a931-0f4d430d0b53": {
+    "id": "763bea4e-4e1c-4d1e-a931-0f4d430d0b53",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -3119,7 +2589,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -3146,8 +2616,8 @@
       }
     }
   },
-  "b2e3ce9d-b526-41c2-a0c3-be9bf4157484": {
-    "id": "b2e3ce9d-b526-41c2-a0c3-be9bf4157484",
+  "745fa3e0-3841-4f3a-a6e7-2b4bf24a8cb1": {
+    "id": "745fa3e0-3841-4f3a-a6e7-2b4bf24a8cb1",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -3174,7 +2644,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -3201,8 +2671,8 @@
       }
     }
   },
-  "396166c3-5bcf-4c8a-8c0d-4f8253fc4bfe": {
-    "id": "396166c3-5bcf-4c8a-8c0d-4f8253fc4bfe",
+  "9a3f677d-80a2-41e4-8864-d1d425243bca": {
+    "id": "9a3f677d-80a2-41e4-8864-d1d425243bca",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -3229,7 +2699,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -3256,8 +2726,8 @@
       }
     }
   },
-  "9e53688c-ecff-4f90-aecf-1e2b6a1a9f59": {
-    "id": "9e53688c-ecff-4f90-aecf-1e2b6a1a9f59",
+  "a1797c30-5166-4009-b6b9-71cf1a249754": {
+    "id": "a1797c30-5166-4009-b6b9-71cf1a249754",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -3284,7 +2754,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -3311,8 +2781,8 @@
       }
     }
   },
-  "537863dc-e067-4ff5-81b5-bc8e08dd9f60": {
-    "id": "537863dc-e067-4ff5-81b5-bc8e08dd9f60",
+  "e0e749ef-9425-4af0-af0d-42c96974bf81": {
+    "id": "e0e749ef-9425-4af0-af0d-42c96974bf81",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -3339,7 +2809,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -3366,8 +2836,8 @@
       }
     }
   },
-  "fd82d4b5-14bf-45f4-8245-5960b1472bee": {
-    "id": "fd82d4b5-14bf-45f4-8245-5960b1472bee",
+  "6e06b0a1-2e63-4708-8c87-8eb9a22e49ee": {
+    "id": "6e06b0a1-2e63-4708-8c87-8eb9a22e49ee",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -3394,7 +2864,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -3421,8 +2891,8 @@
       }
     }
   },
-  "eb15aa68-544f-4ab8-b979-434f6aec37e4": {
-    "id": "eb15aa68-544f-4ab8-b979-434f6aec37e4",
+  "27b0e232-fefc-4582-b173-57076d540110": {
+    "id": "27b0e232-fefc-4582-b173-57076d540110",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -3449,7 +2919,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -3476,8 +2946,8 @@
       }
     }
   },
-  "6f54a139-fd36-4a88-9199-45d9e7d4b8f6": {
-    "id": "6f54a139-fd36-4a88-9199-45d9e7d4b8f6",
+  "b3a9ab93-f901-4e6b-a3dd-3fd563e8ed44": {
+    "id": "b3a9ab93-f901-4e6b-a3dd-3fd563e8ed44",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -3504,7 +2974,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -3531,8 +3001,8 @@
       }
     }
   },
-  "3ac8c0c8-f4b8-4755-a81c-4ddfe536a6f8": {
-    "id": "3ac8c0c8-f4b8-4755-a81c-4ddfe536a6f8",
+  "aaebe62d-67f7-4a96-a91d-fa553fd4532d": {
+    "id": "aaebe62d-67f7-4a96-a91d-fa553fd4532d",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -3559,7 +3029,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -3586,8 +3056,8 @@
       }
     }
   },
-  "5d93177d-79af-40a7-a962-26dc93098a87": {
-    "id": "5d93177d-79af-40a7-a962-26dc93098a87",
+  "ce175b49-5786-434b-b148-c620cf6cb1d6": {
+    "id": "ce175b49-5786-434b-b148-c620cf6cb1d6",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -3614,7 +3084,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -3641,8 +3111,8 @@
       }
     }
   },
-  "f2551908-c51c-429e-ab88-e7b72b1a7600": {
-    "id": "f2551908-c51c-429e-ab88-e7b72b1a7600",
+  "c07e9b63-ad4f-4122-974b-993810c6ef4d": {
+    "id": "c07e9b63-ad4f-4122-974b-993810c6ef4d",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -3669,7 +3139,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -3696,8 +3166,8 @@
       }
     }
   },
-  "d7a1c12d-2619-4999-93b1-53610ce9f36b": {
-    "id": "d7a1c12d-2619-4999-93b1-53610ce9f36b",
+  "f10fb8c8-776d-4051-9ea9-9e0f0dcc3815": {
+    "id": "f10fb8c8-776d-4051-9ea9-9e0f0dcc3815",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -3724,7 +3194,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -3751,8 +3221,8 @@
       }
     }
   },
-  "bdb549bf-e86a-4664-b13b-3711a9fc68ac": {
-    "id": "bdb549bf-e86a-4664-b13b-3711a9fc68ac",
+  "f72e39aa-d35a-48a0-adc8-f5140e8431a3": {
+    "id": "f72e39aa-d35a-48a0-adc8-f5140e8431a3",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -3779,7 +3249,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -3806,8 +3276,8 @@
       }
     }
   },
-  "418d132f-730d-4689-b6b2-8bf027454fa4": {
-    "id": "418d132f-730d-4689-b6b2-8bf027454fa4",
+  "3e5e0565-6ec9-4e07-8865-a522487a02e3": {
+    "id": "3e5e0565-6ec9-4e07-8865-a522487a02e3",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -3834,7 +3304,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -3861,8 +3331,8 @@
       }
     }
   },
-  "a794f7f8-fbb8-4e2a-84a8-9ee823bea3c6": {
-    "id": "a794f7f8-fbb8-4e2a-84a8-9ee823bea3c6",
+  "3d57ab02-baad-4565-82a6-dec1d2298462": {
+    "id": "3d57ab02-baad-4565-82a6-dec1d2298462",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -3889,7 +3359,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -3916,8 +3386,8 @@
       }
     }
   },
-  "2be3621c-ebf1-4870-963c-2840d30cece4": {
-    "id": "2be3621c-ebf1-4870-963c-2840d30cece4",
+  "accf3760-84dc-4edb-9697-4ae2fd3dcd9f": {
+    "id": "accf3760-84dc-4edb-9697-4ae2fd3dcd9f",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -3944,7 +3414,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -3971,8 +3441,8 @@
       }
     }
   },
-  "0d6724ee-d2d4-4b40-8fb9-0c12df0b22a9": {
-    "id": "0d6724ee-d2d4-4b40-8fb9-0c12df0b22a9",
+  "968f7dfd-be40-436e-a4a9-c3cb351e1b6c": {
+    "id": "968f7dfd-be40-436e-a4a9-c3cb351e1b6c",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -3999,7 +3469,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -4026,8 +3496,8 @@
       }
     }
   },
-  "8f755d7f-1c7d-4e9d-bd88-481ee756a12a": {
-    "id": "8f755d7f-1c7d-4e9d-bd88-481ee756a12a",
+  "de272782-0ec7-410d-8cfb-c370e241283b": {
+    "id": "de272782-0ec7-410d-8cfb-c370e241283b",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -4054,7 +3524,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -4081,8 +3551,8 @@
       }
     }
   },
-  "c96104a0-d079-4ec9-9d41-6d7aa33b91f8": {
-    "id": "c96104a0-d079-4ec9-9d41-6d7aa33b91f8",
+  "79db1d8d-e80a-4329-b5c0-71d2e4e2922c": {
+    "id": "79db1d8d-e80a-4329-b5c0-71d2e4e2922c",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -4109,7 +3579,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -4136,8 +3606,8 @@
       }
     }
   },
-  "fcf30599-c266-406f-ab0c-362f7d109523": {
-    "id": "fcf30599-c266-406f-ab0c-362f7d109523",
+  "41b43dc9-8958-49a5-9af2-a069c47f10fa": {
+    "id": "41b43dc9-8958-49a5-9af2-a069c47f10fa",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -4164,7 +3634,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -4191,8 +3661,8 @@
       }
     }
   },
-  "059e163e-b7ac-4c98-8a27-11c75a8817a3": {
-    "id": "059e163e-b7ac-4c98-8a27-11c75a8817a3",
+  "3ff48cc7-d200-4141-97fa-4e54a8f70de3": {
+    "id": "3ff48cc7-d200-4141-97fa-4e54a8f70de3",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -4219,7 +3689,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -4246,8 +3716,8 @@
       }
     }
   },
-  "574eb012-938b-4880-975f-15d977d3029f": {
-    "id": "574eb012-938b-4880-975f-15d977d3029f",
+  "1d359cce-7ac1-4bd4-a2da-77ae086eae86": {
+    "id": "1d359cce-7ac1-4bd4-a2da-77ae086eae86",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -4274,7 +3744,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -4301,8 +3771,8 @@
       }
     }
   },
-  "fa21efc2-8576-42a2-8b02-b52d42f99d59": {
-    "id": "fa21efc2-8576-42a2-8b02-b52d42f99d59",
+  "2b6f2d7a-9908-42e0-be1f-9101442375c9": {
+    "id": "2b6f2d7a-9908-42e0-be1f-9101442375c9",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -4329,7 +3799,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -4356,8 +3826,8 @@
       }
     }
   },
-  "298489e4-e963-4074-be59-c6d29b4efef1": {
-    "id": "298489e4-e963-4074-be59-c6d29b4efef1",
+  "569cb4a5-7b14-4fb0-9b73-7c823052fc67": {
+    "id": "569cb4a5-7b14-4fb0-9b73-7c823052fc67",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -4384,7 +3854,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -4411,8 +3881,8 @@
       }
     }
   },
-  "7ee745f9-b967-4308-b0cc-01706f310e77": {
-    "id": "7ee745f9-b967-4308-b0cc-01706f310e77",
+  "02ccc595-bc88-44f7-9ded-b606c0fe9d85": {
+    "id": "02ccc595-bc88-44f7-9ded-b606c0fe9d85",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -4439,7 +3909,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -4466,8 +3936,8 @@
       }
     }
   },
-  "7c79ff81-34c3-4eff-a341-1df8c5fc4653": {
-    "id": "7c79ff81-34c3-4eff-a341-1df8c5fc4653",
+  "892a8d3b-abe4-4a22-ab24-98b4df15cf02": {
+    "id": "892a8d3b-abe4-4a22-ab24-98b4df15cf02",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -4494,7 +3964,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -4521,8 +3991,8 @@
       }
     }
   },
-  "a5b72917-5f33-41b4-84b4-05667252aefb": {
-    "id": "a5b72917-5f33-41b4-84b4-05667252aefb",
+  "af021a0a-0ce1-46eb-9de1-cf5d291e99d9": {
+    "id": "af021a0a-0ce1-46eb-9de1-cf5d291e99d9",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -4549,7 +4019,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -4576,8 +4046,8 @@
       }
     }
   },
-  "ce19758f-2b38-4af1-ae4f-a13db134415e": {
-    "id": "ce19758f-2b38-4af1-ae4f-a13db134415e",
+  "5bb18c03-1331-486a-8d78-515218489851": {
+    "id": "5bb18c03-1331-486a-8d78-515218489851",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -4604,7 +4074,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -4631,8 +4101,8 @@
       }
     }
   },
-  "50ab2919-0ac9-42ae-a2cb-7a02563b8b55": {
-    "id": "50ab2919-0ac9-42ae-a2cb-7a02563b8b55",
+  "5644115c-bdce-409b-b426-d6565e283e15": {
+    "id": "5644115c-bdce-409b-b426-d6565e283e15",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -4659,7 +4129,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -4686,8 +4156,8 @@
       }
     }
   },
-  "ccb27495-cc20-45ac-b914-cedfec9bde51": {
-    "id": "ccb27495-cc20-45ac-b914-cedfec9bde51",
+  "0e47dfa2-c71f-4bdf-8237-fb14f87d6084": {
+    "id": "0e47dfa2-c71f-4bdf-8237-fb14f87d6084",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -4714,7 +4184,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -4741,8 +4211,8 @@
       }
     }
   },
-  "9f428abc-ee22-4c1f-bd64-3affc9f74445": {
-    "id": "9f428abc-ee22-4c1f-bd64-3affc9f74445",
+  "220e39e2-9800-4ce3-9df1-29eb2ec22ac0": {
+    "id": "220e39e2-9800-4ce3-9df1-29eb2ec22ac0",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -4769,7 +4239,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -4796,8 +4266,8 @@
       }
     }
   },
-  "84eaa31f-e4c9-4a69-941f-41eab377c837": {
-    "id": "84eaa31f-e4c9-4a69-941f-41eab377c837",
+  "4b8d35f7-69c7-44e0-9d1e-fec99c358332": {
+    "id": "4b8d35f7-69c7-44e0-9d1e-fec99c358332",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -4824,7 +4294,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -4851,8 +4321,8 @@
       }
     }
   },
-  "f5127139-4cd1-4faf-96e7-13b5238b85c3": {
-    "id": "f5127139-4cd1-4faf-96e7-13b5238b85c3",
+  "944c1742-68b5-4e49-9de8-38a4134bf6d8": {
+    "id": "944c1742-68b5-4e49-9de8-38a4134bf6d8",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -4879,7 +4349,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -4906,8 +4376,8 @@
       }
     }
   },
-  "b1b5cabb-e04b-40dc-b717-f51cebd36808": {
-    "id": "b1b5cabb-e04b-40dc-b717-f51cebd36808",
+  "2f5945f2-49e3-41c1-97f5-806f1695fcdc": {
+    "id": "2f5945f2-49e3-41c1-97f5-806f1695fcdc",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -4934,7 +4404,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -4961,8 +4431,8 @@
       }
     }
   },
-  "1c02971a-9262-4f06-952a-e592594df8a6": {
-    "id": "1c02971a-9262-4f06-952a-e592594df8a6",
+  "ffc7d1aa-bfd8-4e0a-8650-8b49268c49fc": {
+    "id": "ffc7d1aa-bfd8-4e0a-8650-8b49268c49fc",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -4989,7 +4459,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -5016,8 +4486,8 @@
       }
     }
   },
-  "5c6cb7d4-e7f2-43e9-8526-0b9cf4e10550": {
-    "id": "5c6cb7d4-e7f2-43e9-8526-0b9cf4e10550",
+  "0b622f6d-8d42-4283-b052-b54b3491e185": {
+    "id": "0b622f6d-8d42-4283-b052-b54b3491e185",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -5044,7 +4514,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -5071,8 +4541,8 @@
       }
     }
   },
-  "d98b0606-5698-4f72-889e-9c3c780bb580": {
-    "id": "d98b0606-5698-4f72-889e-9c3c780bb580",
+  "e753436b-2099-4371-bb6f-129d7cac4ee6": {
+    "id": "e753436b-2099-4371-bb6f-129d7cac4ee6",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -5099,7 +4569,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -5126,8 +4596,8 @@
       }
     }
   },
-  "87491ccf-1f2b-4bbc-8945-944b57e2b522": {
-    "id": "87491ccf-1f2b-4bbc-8945-944b57e2b522",
+  "09a48691-507a-449f-87de-7ad17da25ef8": {
+    "id": "09a48691-507a-449f-87de-7ad17da25ef8",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -5154,7 +4624,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -5181,8 +4651,8 @@
       }
     }
   },
-  "46ced0d8-3b38-4532-9746-33a70b35526c": {
-    "id": "46ced0d8-3b38-4532-9746-33a70b35526c",
+  "824a2344-19bf-4340-8462-a7d53458266f": {
+    "id": "824a2344-19bf-4340-8462-a7d53458266f",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -5209,7 +4679,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -5236,8 +4706,8 @@
       }
     }
   },
-  "fb3ec96f-4656-472d-b891-818e7cef18cd": {
-    "id": "fb3ec96f-4656-472d-b891-818e7cef18cd",
+  "b3b1f616-4a5e-48f4-b037-594fd606e817": {
+    "id": "b3b1f616-4a5e-48f4-b037-594fd606e817",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -5264,7 +4734,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -5291,8 +4761,8 @@
       }
     }
   },
-  "035caa7c-fcd9-4820-a004-7861dad862ba": {
-    "id": "035caa7c-fcd9-4820-a004-7861dad862ba",
+  "d15b19bc-f461-4a49-8505-ddef28fe216e": {
+    "id": "d15b19bc-f461-4a49-8505-ddef28fe216e",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -5319,7 +4789,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -5346,8 +4816,8 @@
       }
     }
   },
-  "adce629b-c6d0-4a7a-a597-bc4496484e7b": {
-    "id": "adce629b-c6d0-4a7a-a597-bc4496484e7b",
+  "2332e46f-dcab-4676-b2d5-51b8428cf623": {
+    "id": "2332e46f-dcab-4676-b2d5-51b8428cf623",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -5374,7 +4844,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -5401,8 +4871,8 @@
       }
     }
   },
-  "257bccaa-1229-4967-8670-76e3d249eb6d": {
-    "id": "257bccaa-1229-4967-8670-76e3d249eb6d",
+  "a2f0cd2a-a1c7-45bc-8551-00ebb3a0b3d1": {
+    "id": "a2f0cd2a-a1c7-45bc-8551-00ebb3a0b3d1",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -5429,7 +4899,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -5456,8 +4926,8 @@
       }
     }
   },
-  "da4f0eeb-35af-46f5-8057-b26caecaffd2": {
-    "id": "da4f0eeb-35af-46f5-8057-b26caecaffd2",
+  "d8318cf3-ac0b-45e7-9044-8d3b3ce890a5": {
+    "id": "d8318cf3-ac0b-45e7-9044-8d3b3ce890a5",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -5484,7 +4954,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -5511,8 +4981,8 @@
       }
     }
   },
-  "37e137f6-84ef-4f0b-b759-eb2eba4d878d": {
-    "id": "37e137f6-84ef-4f0b-b759-eb2eba4d878d",
+  "49f0bb00-4bad-4c9c-a661-279c8f77297e": {
+    "id": "49f0bb00-4bad-4c9c-a661-279c8f77297e",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -5539,7 +5009,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -5566,8 +5036,8 @@
       }
     }
   },
-  "b502c4da-3333-46b1-9d01-6772d244304c": {
-    "id": "b502c4da-3333-46b1-9d01-6772d244304c",
+  "ab38f357-518b-430d-abcf-7a3b1b0d89cb": {
+    "id": "ab38f357-518b-430d-abcf-7a3b1b0d89cb",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -5594,7 +5064,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -5621,8 +5091,8 @@
       }
     }
   },
-  "cbaba2ee-f0c9-42bb-b3e2-f56f01872619": {
-    "id": "cbaba2ee-f0c9-42bb-b3e2-f56f01872619",
+  "cb772c8e-24dd-4451-a91b-d98ad17a5baf": {
+    "id": "cb772c8e-24dd-4451-a91b-d98ad17a5baf",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -5649,7 +5119,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -5676,8 +5146,8 @@
       }
     }
   },
-  "440ff417-3ac7-454d-8093-0834e5111e2e": {
-    "id": "440ff417-3ac7-454d-8093-0834e5111e2e",
+  "d8ad2d47-6d99-4fa4-9932-e633bc5f2024": {
+    "id": "d8ad2d47-6d99-4fa4-9932-e633bc5f2024",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -5704,7 +5174,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -5731,8 +5201,8 @@
       }
     }
   },
-  "75058d03-585d-4e08-906b-142fd1ef9b15": {
-    "id": "75058d03-585d-4e08-906b-142fd1ef9b15",
+  "54b95c94-71ce-442e-a824-bf57ea2b98d2": {
+    "id": "54b95c94-71ce-442e-a824-bf57ea2b98d2",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -5759,7 +5229,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -5786,8 +5256,8 @@
       }
     }
   },
-  "0f1bc9b9-8d24-4b75-a7c7-56a8030afae1": {
-    "id": "0f1bc9b9-8d24-4b75-a7c7-56a8030afae1",
+  "a212f27a-8ee2-41e4-b18c-c3b1598ecd64": {
+    "id": "a212f27a-8ee2-41e4-b18c-c3b1598ecd64",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -5814,7 +5284,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -5841,8 +5311,8 @@
       }
     }
   },
-  "c066c417-101b-411c-8431-960a311ec897": {
-    "id": "c066c417-101b-411c-8431-960a311ec897",
+  "227e6793-4c52-4fdb-9450-ca083adc82d5": {
+    "id": "227e6793-4c52-4fdb-9450-ca083adc82d5",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -5869,7 +5339,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -5896,8 +5366,8 @@
       }
     }
   },
-  "ec84efa4-dcfe-406c-85fa-e6bc794a460c": {
-    "id": "ec84efa4-dcfe-406c-85fa-e6bc794a460c",
+  "2ab92ca1-421d-44db-bbe9-72994e15c422": {
+    "id": "2ab92ca1-421d-44db-bbe9-72994e15c422",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -5924,7 +5394,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -5951,8 +5421,8 @@
       }
     }
   },
-  "7910fcfd-0ff4-415b-b124-c67d08b3d67d": {
-    "id": "7910fcfd-0ff4-415b-b124-c67d08b3d67d",
+  "a85268a4-0081-49be-b99f-aa0eafc62350": {
+    "id": "a85268a4-0081-49be-b99f-aa0eafc62350",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -5979,7 +5449,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -6006,8 +5476,8 @@
       }
     }
   },
-  "5d8b630e-3e8d-42b4-8364-e4d776ef7e97": {
-    "id": "5d8b630e-3e8d-42b4-8364-e4d776ef7e97",
+  "c0c88c3c-268a-485b-8956-62c83e3b3e6a": {
+    "id": "c0c88c3c-268a-485b-8956-62c83e3b3e6a",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -6034,7 +5504,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -6061,8 +5531,8 @@
       }
     }
   },
-  "a788f26d-bbcc-41c8-8e52-fc509eb6d2a6": {
-    "id": "a788f26d-bbcc-41c8-8e52-fc509eb6d2a6",
+  "92e45505-246a-4544-a254-12e223384093": {
+    "id": "92e45505-246a-4544-a254-12e223384093",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -6089,7 +5559,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -6116,8 +5586,8 @@
       }
     }
   },
-  "a1e6c3c3-f482-4f26-9bad-e20dd1a39b79": {
-    "id": "a1e6c3c3-f482-4f26-9bad-e20dd1a39b79",
+  "cb0fab76-c567-44fa-9687-e372ef37bf2e": {
+    "id": "cb0fab76-c567-44fa-9687-e372ef37bf2e",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -6144,7 +5614,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -6171,8 +5641,8 @@
       }
     }
   },
-  "c903ff13-9389-48b5-b045-ce6d4a594562": {
-    "id": "c903ff13-9389-48b5-b045-ce6d4a594562",
+  "796bae26-8682-4b59-9fc8-54b99e821179": {
+    "id": "796bae26-8682-4b59-9fc8-54b99e821179",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -6199,7 +5669,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -6226,8 +5696,8 @@
       }
     }
   },
-  "934739b7-8a6e-4491-ae88-ba2ca84008d7": {
-    "id": "934739b7-8a6e-4491-ae88-ba2ca84008d7",
+  "0737ed95-fd52-48de-a33c-36ec52077ddf": {
+    "id": "0737ed95-fd52-48de-a33c-36ec52077ddf",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -6254,7 +5724,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -6281,8 +5751,8 @@
       }
     }
   },
-  "e193e682-36c9-4f04-a2a3-9b6cb12073d2": {
-    "id": "e193e682-36c9-4f04-a2a3-9b6cb12073d2",
+  "681ce38b-4112-4d58-a137-f8cd8a51b32b": {
+    "id": "681ce38b-4112-4d58-a137-f8cd8a51b32b",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -6309,7 +5779,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -6336,8 +5806,8 @@
       }
     }
   },
-  "db98c5b3-23a0-4b34-a6cc-dfd2848d0a60": {
-    "id": "db98c5b3-23a0-4b34-a6cc-dfd2848d0a60",
+  "a151e882-4f0f-47f9-8c38-d2368e92d939": {
+    "id": "a151e882-4f0f-47f9-8c38-d2368e92d939",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -6364,7 +5834,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -6391,8 +5861,8 @@
       }
     }
   },
-  "ab10e56c-0f6d-4a4f-bdba-23c9488f55a6": {
-    "id": "ab10e56c-0f6d-4a4f-bdba-23c9488f55a6",
+  "bc207418-c80b-40fc-94be-a97996c6ac01": {
+    "id": "bc207418-c80b-40fc-94be-a97996c6ac01",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -6419,7 +5889,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -6446,8 +5916,8 @@
       }
     }
   },
-  "f312c40a-d9fc-43f2-90d1-00002b220c74": {
-    "id": "f312c40a-d9fc-43f2-90d1-00002b220c74",
+  "02619eae-bda8-4689-9192-bf28ceedb27f": {
+    "id": "02619eae-bda8-4689-9192-bf28ceedb27f",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -6474,7 +5944,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -6501,8 +5971,8 @@
       }
     }
   },
-  "c22f1a7a-55fa-4017-9c2a-10f27fc03b40": {
-    "id": "c22f1a7a-55fa-4017-9c2a-10f27fc03b40",
+  "970d8cce-3811-4dfe-a15a-8c274e4a394f": {
+    "id": "970d8cce-3811-4dfe-a15a-8c274e4a394f",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -6529,7 +5999,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -6556,8 +6026,8 @@
       }
     }
   },
-  "b713b47a-bfe5-4319-aad0-78a4489b823b": {
-    "id": "b713b47a-bfe5-4319-aad0-78a4489b823b",
+  "bac7ee96-5d94-46cf-8af7-d42e1bfe879e": {
+    "id": "bac7ee96-5d94-46cf-8af7-d42e1bfe879e",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -6584,7 +6054,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -6611,8 +6081,8 @@
       }
     }
   },
-  "6158e603-b9e4-42bf-b4a6-d1b8c4f038a0": {
-    "id": "6158e603-b9e4-42bf-b4a6-d1b8c4f038a0",
+  "a94d9205-4d71-4a36-9c20-15e1c9f994a2": {
+    "id": "a94d9205-4d71-4a36-9c20-15e1c9f994a2",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -6639,7 +6109,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -6666,8 +6136,8 @@
       }
     }
   },
-  "12409af2-d525-4aeb-8ca1-6bd514d8f1a4": {
-    "id": "12409af2-d525-4aeb-8ca1-6bd514d8f1a4",
+  "87b80390-538f-4e70-a8d4-d885c45712c0": {
+    "id": "87b80390-538f-4e70-a8d4-d885c45712c0",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -6694,7 +6164,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -6721,8 +6191,8 @@
       }
     }
   },
-  "1ef6828e-6005-4b8f-8e26-c78c857df0e2": {
-    "id": "1ef6828e-6005-4b8f-8e26-c78c857df0e2",
+  "82a9e620-a3b3-4382-af09-7e9fac3e5234": {
+    "id": "82a9e620-a3b3-4382-af09-7e9fac3e5234",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -6749,7 +6219,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -6776,8 +6246,8 @@
       }
     }
   },
-  "54043467-25bb-4f95-bd2e-f0f3b4a9e341": {
-    "id": "54043467-25bb-4f95-bd2e-f0f3b4a9e341",
+  "51edebf7-c58a-44bd-b939-cafc07d64d71": {
+    "id": "51edebf7-c58a-44bd-b939-cafc07d64d71",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -6804,7 +6274,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -6831,8 +6301,8 @@
       }
     }
   },
-  "40092ce3-eb02-4e24-96a9-a895476310fc": {
-    "id": "40092ce3-eb02-4e24-96a9-a895476310fc",
+  "4621740b-b834-4d37-9eb7-a3f5012d16b4": {
+    "id": "4621740b-b834-4d37-9eb7-a3f5012d16b4",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -6859,7 +6329,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -6886,8 +6356,8 @@
       }
     }
   },
-  "f78544a9-1315-4636-b026-2559806299f7": {
-    "id": "f78544a9-1315-4636-b026-2559806299f7",
+  "bea783cb-b199-4476-9c65-6fc3e48c5ca0": {
+    "id": "bea783cb-b199-4476-9c65-6fc3e48c5ca0",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -6914,7 +6384,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -6941,8 +6411,8 @@
       }
     }
   },
-  "fbd7d1da-72bb-4bd2-aec8-3de95b481a64": {
-    "id": "fbd7d1da-72bb-4bd2-aec8-3de95b481a64",
+  "4507726e-a277-4b88-af6f-580dccab2d1a": {
+    "id": "4507726e-a277-4b88-af6f-580dccab2d1a",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -6969,7 +6439,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -6996,8 +6466,8 @@
       }
     }
   },
-  "f6b00f72-e70f-4eac-aba7-f7ce3cd4aa1b": {
-    "id": "f6b00f72-e70f-4eac-aba7-f7ce3cd4aa1b",
+  "290870d7-9667-43b4-b41c-162f2454a22a": {
+    "id": "290870d7-9667-43b4-b41c-162f2454a22a",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -7024,7 +6494,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -7051,8 +6521,8 @@
       }
     }
   },
-  "6254f3f1-914a-4475-8eee-55ea07015468": {
-    "id": "6254f3f1-914a-4475-8eee-55ea07015468",
+  "3025b47d-eed2-42f3-84bf-6e74c89a6eaf": {
+    "id": "3025b47d-eed2-42f3-84bf-6e74c89a6eaf",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -7079,7 +6549,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -7106,8 +6576,8 @@
       }
     }
   },
-  "31a055db-efde-424d-93f7-b28752a44106": {
-    "id": "31a055db-efde-424d-93f7-b28752a44106",
+  "7a311b98-334a-473f-8163-d1276f76d126": {
+    "id": "7a311b98-334a-473f-8163-d1276f76d126",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -7134,7 +6604,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -7161,8 +6631,8 @@
       }
     }
   },
-  "576cd92d-ca2e-45e4-a15a-0de7033ce12d": {
-    "id": "576cd92d-ca2e-45e4-a15a-0de7033ce12d",
+  "21e0ebc7-0c8f-4b88-8456-dbdfc459f4e4": {
+    "id": "21e0ebc7-0c8f-4b88-8456-dbdfc459f4e4",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -7189,7 +6659,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -7216,8 +6686,8 @@
       }
     }
   },
-  "7fcdafbe-eccc-46ea-aa26-e20903d37af7": {
-    "id": "7fcdafbe-eccc-46ea-aa26-e20903d37af7",
+  "c6c1af9f-3667-4921-bc6c-375ccd343973": {
+    "id": "c6c1af9f-3667-4921-bc6c-375ccd343973",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -7244,7 +6714,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -7271,8 +6741,8 @@
       }
     }
   },
-  "fa3b649d-ac68-40c5-b3d1-313109f849a6": {
-    "id": "fa3b649d-ac68-40c5-b3d1-313109f849a6",
+  "15140b51-e815-48c6-a97d-f3ea3aff6e00": {
+    "id": "15140b51-e815-48c6-a97d-f3ea3aff6e00",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -7299,7 +6769,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -7326,8 +6796,8 @@
       }
     }
   },
-  "3c0af117-3216-4593-994a-24de6bc03033": {
-    "id": "3c0af117-3216-4593-994a-24de6bc03033",
+  "8f062dd7-fd4f-4621-ae1f-254960fdfc39": {
+    "id": "8f062dd7-fd4f-4621-ae1f-254960fdfc39",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -7354,7 +6824,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -7381,8 +6851,8 @@
       }
     }
   },
-  "cb010e26-9300-4788-9e52-2ea2b9fb8fc3": {
-    "id": "cb010e26-9300-4788-9e52-2ea2b9fb8fc3",
+  "5f91cd3c-3f18-46f2-a057-46177a1c7103": {
+    "id": "5f91cd3c-3f18-46f2-a057-46177a1c7103",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -7409,7 +6879,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -7436,8 +6906,8 @@
       }
     }
   },
-  "375ecb24-25b1-4874-90f0-7120b457a480": {
-    "id": "375ecb24-25b1-4874-90f0-7120b457a480",
+  "392f255e-3350-46ba-b0f9-d936802e8fad": {
+    "id": "392f255e-3350-46ba-b0f9-d936802e8fad",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -7464,7 +6934,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -7491,8 +6961,8 @@
       }
     }
   },
-  "216e612c-62e9-4bfe-8e42-b32af9c5a634": {
-    "id": "216e612c-62e9-4bfe-8e42-b32af9c5a634",
+  "53fba321-d1eb-459c-896e-9474e364aead": {
+    "id": "53fba321-d1eb-459c-896e-9474e364aead",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -7519,7 +6989,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -7546,8 +7016,8 @@
       }
     }
   },
-  "665b10b6-98a5-42c3-ae0f-76d9f81b85fa": {
-    "id": "665b10b6-98a5-42c3-ae0f-76d9f81b85fa",
+  "8f638727-f1c8-4a09-89d8-a9d78ac4337d": {
+    "id": "8f638727-f1c8-4a09-89d8-a9d78ac4337d",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -7574,7 +7044,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -7601,8 +7071,8 @@
       }
     }
   },
-  "9462f066-27fe-4c6a-8b07-d717b7cee0b7": {
-    "id": "9462f066-27fe-4c6a-8b07-d717b7cee0b7",
+  "2a4965c6-6727-42c1-8c1a-2f10525774fd": {
+    "id": "2a4965c6-6727-42c1-8c1a-2f10525774fd",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -7629,7 +7099,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -7656,8 +7126,8 @@
       }
     }
   },
-  "6ca7aada-34ea-48c4-a2f0-6e8972476c52": {
-    "id": "6ca7aada-34ea-48c4-a2f0-6e8972476c52",
+  "6fe76765-044d-40dc-a961-6168e72a1b5b": {
+    "id": "6fe76765-044d-40dc-a961-6168e72a1b5b",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -7684,7 +7154,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -7711,8 +7181,8 @@
       }
     }
   },
-  "8390367a-e425-4ecc-a7ca-83d09d5f30b6": {
-    "id": "8390367a-e425-4ecc-a7ca-83d09d5f30b6",
+  "314f8c17-e92e-411d-be12-994661bf518a": {
+    "id": "314f8c17-e92e-411d-be12-994661bf518a",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -7739,7 +7209,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -7766,8 +7236,8 @@
       }
     }
   },
-  "c001eab4-2fe4-435f-ab53-7b595c76c3f7": {
-    "id": "c001eab4-2fe4-435f-ab53-7b595c76c3f7",
+  "f6bc639c-0616-48d7-b1d1-3a38e38f4179": {
+    "id": "f6bc639c-0616-48d7-b1d1-3a38e38f4179",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -7794,7 +7264,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -7821,8 +7291,8 @@
       }
     }
   },
-  "d4a41098-eb1f-49eb-8589-8e4785c8f484": {
-    "id": "d4a41098-eb1f-49eb-8589-8e4785c8f484",
+  "79b4f7bb-dcc8-43ef-b1a7-67eef01f210f": {
+    "id": "79b4f7bb-dcc8-43ef-b1a7-67eef01f210f",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -7849,7 +7319,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -7876,8 +7346,8 @@
       }
     }
   },
-  "c83b6a0f-9fd3-49be-b1df-5903b49da167": {
-    "id": "c83b6a0f-9fd3-49be-b1df-5903b49da167",
+  "27eede83-2072-4fc0-b0bd-7893fccb885f": {
+    "id": "27eede83-2072-4fc0-b0bd-7893fccb885f",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -7904,7 +7374,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -7931,8 +7401,8 @@
       }
     }
   },
-  "0c1c9092-182b-41bd-840f-188ce37febe1": {
-    "id": "0c1c9092-182b-41bd-840f-188ce37febe1",
+  "bb039208-e21d-44b3-aa39-8a3ddf6f0cb4": {
+    "id": "bb039208-e21d-44b3-aa39-8a3ddf6f0cb4",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -7959,7 +7429,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -7986,8 +7456,8 @@
       }
     }
   },
-  "4e05c1cb-6841-4c28-98eb-b06b0821f2a7": {
-    "id": "4e05c1cb-6841-4c28-98eb-b06b0821f2a7",
+  "ec391756-95a4-41a2-8d51-9bc4be46fdbe": {
+    "id": "ec391756-95a4-41a2-8d51-9bc4be46fdbe",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -8014,7 +7484,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -8041,8 +7511,8 @@
       }
     }
   },
-  "0608dd6b-0155-4767-81b4-c0cdc2f24cc8": {
-    "id": "0608dd6b-0155-4767-81b4-c0cdc2f24cc8",
+  "8d57cbba-40c1-47ca-b787-28867f67ebb9": {
+    "id": "8d57cbba-40c1-47ca-b787-28867f67ebb9",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -8069,7 +7539,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -8096,8 +7566,8 @@
       }
     }
   },
-  "314de0a4-e43f-4193-9781-838a5f4f0e03": {
-    "id": "314de0a4-e43f-4193-9781-838a5f4f0e03",
+  "39f09fd1-fe4c-43a6-b40b-46c8681c039c": {
+    "id": "39f09fd1-fe4c-43a6-b40b-46c8681c039c",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -8124,7 +7594,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -8151,8 +7621,8 @@
       }
     }
   },
-  "a11bec73-1974-4b36-8b2c-6b87aa1fed17": {
-    "id": "a11bec73-1974-4b36-8b2c-6b87aa1fed17",
+  "b67d9aba-4706-4b99-ac81-7ecb3c99af0f": {
+    "id": "b67d9aba-4706-4b99-ac81-7ecb3c99af0f",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -8179,7 +7649,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -8206,8 +7676,8 @@
       }
     }
   },
-  "a2b3bf40-aace-4757-8eec-9808af885459": {
-    "id": "a2b3bf40-aace-4757-8eec-9808af885459",
+  "79ba7dd8-35c4-48ec-9153-27ecd6bcf212": {
+    "id": "79ba7dd8-35c4-48ec-9153-27ecd6bcf212",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -8234,7 +7704,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -8261,8 +7731,8 @@
       }
     }
   },
-  "80597a52-b472-4c88-8033-146a98cbfbe2": {
-    "id": "80597a52-b472-4c88-8033-146a98cbfbe2",
+  "aef59874-ad8c-4ea9-9b59-52adc95e020b": {
+    "id": "aef59874-ad8c-4ea9-9b59-52adc95e020b",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -8289,7 +7759,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -8316,8 +7786,8 @@
       }
     }
   },
-  "30e2d3a9-13b3-425a-9490-7b0cac849b46": {
-    "id": "30e2d3a9-13b3-425a-9490-7b0cac849b46",
+  "b49a7a28-7edc-47e3-ac3a-df5ba1594ad4": {
+    "id": "b49a7a28-7edc-47e3-ac3a-df5ba1594ad4",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -8344,7 +7814,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -8371,8 +7841,8 @@
       }
     }
   },
-  "afe3d52e-7eb7-4e27-88be-a454c88f6440": {
-    "id": "afe3d52e-7eb7-4e27-88be-a454c88f6440",
+  "dc502f4c-2a04-42ec-8206-15f6a3497590": {
+    "id": "dc502f4c-2a04-42ec-8206-15f6a3497590",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -8399,7 +7869,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -8426,8 +7896,8 @@
       }
     }
   },
-  "19f9a2ab-1318-440a-85e2-39e1ab69ad4f": {
-    "id": "19f9a2ab-1318-440a-85e2-39e1ab69ad4f",
+  "3d534268-e22e-4e81-9905-93b05ffe26f4": {
+    "id": "3d534268-e22e-4e81-9905-93b05ffe26f4",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -8454,7 +7924,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -8481,8 +7951,8 @@
       }
     }
   },
-  "8efd6171-0ebb-4541-8947-67fa499465f8": {
-    "id": "8efd6171-0ebb-4541-8947-67fa499465f8",
+  "4f23c063-becc-4f80-ab4b-7fbcfcb2e39a": {
+    "id": "4f23c063-becc-4f80-ab4b-7fbcfcb2e39a",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -8509,7 +7979,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -8536,8 +8006,8 @@
       }
     }
   },
-  "cff28917-e04d-4833-baaf-207216848a99": {
-    "id": "cff28917-e04d-4833-baaf-207216848a99",
+  "f8007ab2-c08a-4346-9573-b48e045c8b7a": {
+    "id": "f8007ab2-c08a-4346-9573-b48e045c8b7a",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -8564,7 +8034,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -8591,8 +8061,8 @@
       }
     }
   },
-  "c86b0e89-984c-4018-bc66-cf4be54b1876": {
-    "id": "c86b0e89-984c-4018-bc66-cf4be54b1876",
+  "e70ba2d2-ccd8-45c0-b2af-f190abc98ad4": {
+    "id": "e70ba2d2-ccd8-45c0-b2af-f190abc98ad4",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -8619,7 +8089,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -8646,8 +8116,8 @@
       }
     }
   },
-  "9eca2c74-72b5-43ae-a521-8880520d3612": {
-    "id": "9eca2c74-72b5-43ae-a521-8880520d3612",
+  "cc3ec8e4-13ab-4e0d-baa1-1589e9126850": {
+    "id": "cc3ec8e4-13ab-4e0d-baa1-1589e9126850",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -8674,7 +8144,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -8701,8 +8171,8 @@
       }
     }
   },
-  "084a18fa-e405-46e2-a8bf-12006d4adec0": {
-    "id": "084a18fa-e405-46e2-a8bf-12006d4adec0",
+  "828a8416-3061-4f70-bdca-63a9bf784609": {
+    "id": "828a8416-3061-4f70-bdca-63a9bf784609",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -8729,7 +8199,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -8756,8 +8226,8 @@
       }
     }
   },
-  "82f70e56-9725-43a1-a8ed-b658f88678f2": {
-    "id": "82f70e56-9725-43a1-a8ed-b658f88678f2",
+  "0b9e7189-5818-415e-9612-759e434340c6": {
+    "id": "0b9e7189-5818-415e-9612-759e434340c6",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -8784,7 +8254,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -8811,8 +8281,8 @@
       }
     }
   },
-  "83a4445b-a781-4904-9c73-a8796a89bae7": {
-    "id": "83a4445b-a781-4904-9c73-a8796a89bae7",
+  "d35d3006-5985-4f2f-a7cb-c0ac3273738e": {
+    "id": "d35d3006-5985-4f2f-a7cb-c0ac3273738e",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -8839,7 +8309,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -8866,8 +8336,8 @@
       }
     }
   },
-  "71288289-8742-4662-8d25-117f49750b0a": {
-    "id": "71288289-8742-4662-8d25-117f49750b0a",
+  "968a585b-0e53-4f7d-960f-fa24012860ad": {
+    "id": "968a585b-0e53-4f7d-960f-fa24012860ad",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -8894,7 +8364,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -8921,8 +8391,8 @@
       }
     }
   },
-  "c25b77f4-eb70-4e74-ba0f-e38949a51126": {
-    "id": "c25b77f4-eb70-4e74-ba0f-e38949a51126",
+  "362e695e-5b98-4024-9253-75feb0b88584": {
+    "id": "362e695e-5b98-4024-9253-75feb0b88584",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -8949,7 +8419,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -8976,8 +8446,8 @@
       }
     }
   },
-  "77d4955a-e768-43df-bd44-c65680026f97": {
-    "id": "77d4955a-e768-43df-bd44-c65680026f97",
+  "3dcea955-39c2-4d99-a96a-7c7ad7e930ba": {
+    "id": "3dcea955-39c2-4d99-a96a-7c7ad7e930ba",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -9004,7 +8474,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -9031,8 +8501,8 @@
       }
     }
   },
-  "6e53c384-f50d-4f25-ba8a-547520547650": {
-    "id": "6e53c384-f50d-4f25-ba8a-547520547650",
+  "6dbc90b6-afbe-417c-a58d-d9282dae74de": {
+    "id": "6dbc90b6-afbe-417c-a58d-d9282dae74de",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -9059,7 +8529,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -9086,8 +8556,8 @@
       }
     }
   },
-  "9d56c579-e225-4ede-9d25-e5e1970c3deb": {
-    "id": "9d56c579-e225-4ede-9d25-e5e1970c3deb",
+  "a500b77d-7ef9-4943-96fd-c4c69d9204f7": {
+    "id": "a500b77d-7ef9-4943-96fd-c4c69d9204f7",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -9114,7 +8584,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -9141,8 +8611,8 @@
       }
     }
   },
-  "d45b0276-3182-4e9d-ba04-7209dad47432": {
-    "id": "d45b0276-3182-4e9d-ba04-7209dad47432",
+  "d1120f11-63f1-4923-ac3e-08bf4d18a275": {
+    "id": "d1120f11-63f1-4923-ac3e-08bf4d18a275",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -9169,7 +8639,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -9196,8 +8666,8 @@
       }
     }
   },
-  "d69fcdde-03b4-45e3-b271-7ac814ddd28e": {
-    "id": "d69fcdde-03b4-45e3-b271-7ac814ddd28e",
+  "c9f79df5-386b-4dcc-ad85-b64883e3ad12": {
+    "id": "c9f79df5-386b-4dcc-ad85-b64883e3ad12",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -9224,7 +8694,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -9251,8 +8721,8 @@
       }
     }
   },
-  "127b367a-8633-4a68-94a6-311c3d986c37": {
-    "id": "127b367a-8633-4a68-94a6-311c3d986c37",
+  "dc40d481-d58a-4ef4-b7e3-ca5c1ba3573d": {
+    "id": "dc40d481-d58a-4ef4-b7e3-ca5c1ba3573d",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -9279,7 +8749,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -9306,8 +8776,8 @@
       }
     }
   },
-  "2dc4be46-650d-4282-8f29-ee326ef10b38": {
-    "id": "2dc4be46-650d-4282-8f29-ee326ef10b38",
+  "3cd190f6-ebb0-4fb8-8f64-14978ad2d27e": {
+    "id": "3cd190f6-ebb0-4fb8-8f64-14978ad2d27e",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -9334,7 +8804,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -9361,8 +8831,8 @@
       }
     }
   },
-  "0822d1c1-fc7d-4240-b609-975e6e7f9179": {
-    "id": "0822d1c1-fc7d-4240-b609-975e6e7f9179",
+  "a528b01d-8f77-47e4-98a0-5aa47d9eebf7": {
+    "id": "a528b01d-8f77-47e4-98a0-5aa47d9eebf7",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -9389,7 +8859,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -9416,8 +8886,8 @@
       }
     }
   },
-  "cb0ed7ec-783f-4401-9934-20e82e514dd6": {
-    "id": "cb0ed7ec-783f-4401-9934-20e82e514dd6",
+  "e25e1ffd-b14a-468f-9f58-7f9cd5148ace": {
+    "id": "e25e1ffd-b14a-468f-9f58-7f9cd5148ace",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -9444,7 +8914,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -9471,8 +8941,8 @@
       }
     }
   },
-  "e071bd39-5f19-4d64-a1a2-945512c5d236": {
-    "id": "e071bd39-5f19-4d64-a1a2-945512c5d236",
+  "ee229d7d-4c4a-4db6-a65a-08e2e4e6424c": {
+    "id": "ee229d7d-4c4a-4db6-a65a-08e2e4e6424c",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -9499,7 +8969,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -9526,8 +8996,8 @@
       }
     }
   },
-  "b474e5d5-b52c-4e57-a684-ceb370ff7064": {
-    "id": "b474e5d5-b52c-4e57-a684-ceb370ff7064",
+  "a261edf3-0dbb-4c76-9325-925a8496a077": {
+    "id": "a261edf3-0dbb-4c76-9325-925a8496a077",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -9554,7 +9024,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -9581,8 +9051,8 @@
       }
     }
   },
-  "95c0b96a-985a-4400-8935-0951c4ca9c89": {
-    "id": "95c0b96a-985a-4400-8935-0951c4ca9c89",
+  "dd5115d9-bf32-4049-8c6d-268f8e7569d9": {
+    "id": "dd5115d9-bf32-4049-8c6d-268f8e7569d9",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -9609,7 +9079,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -9636,8 +9106,8 @@
       }
     }
   },
-  "67710983-6fb3-4bc4-87c5-7dc44b1bb8f9": {
-    "id": "67710983-6fb3-4bc4-87c5-7dc44b1bb8f9",
+  "abf73be4-f7cd-4bde-ba5f-a01bd491f4ac": {
+    "id": "abf73be4-f7cd-4bde-ba5f-a01bd491f4ac",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -9664,7 +9134,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -9691,8 +9161,8 @@
       }
     }
   },
-  "35ce6c03-ac9f-4cc5-9282-a43f3c794aba": {
-    "id": "35ce6c03-ac9f-4cc5-9282-a43f3c794aba",
+  "f79a4b73-43c2-4749-a7c4-cd850d214b60": {
+    "id": "f79a4b73-43c2-4749-a7c4-cd850d214b60",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -9719,7 +9189,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -9746,8 +9216,8 @@
       }
     }
   },
-  "c18cf112-ea43-421b-a1b7-109a65293541": {
-    "id": "c18cf112-ea43-421b-a1b7-109a65293541",
+  "e0368887-224b-4a36-b758-72d317476f5d": {
+    "id": "e0368887-224b-4a36-b758-72d317476f5d",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -9774,7 +9244,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -9801,8 +9271,8 @@
       }
     }
   },
-  "c98f8203-fd2f-458c-96ef-d699df9cbfce": {
-    "id": "c98f8203-fd2f-458c-96ef-d699df9cbfce",
+  "b7182292-a59a-45ee-9e3c-bb003b849091": {
+    "id": "b7182292-a59a-45ee-9e3c-bb003b849091",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -9829,7 +9299,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -9856,8 +9326,8 @@
       }
     }
   },
-  "51ffd3e3-ab07-449d-9482-a5bfd04d534e": {
-    "id": "51ffd3e3-ab07-449d-9482-a5bfd04d534e",
+  "e48f25c2-0e92-4690-a1fa-44784730cc97": {
+    "id": "e48f25c2-0e92-4690-a1fa-44784730cc97",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -9884,7 +9354,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -9911,8 +9381,8 @@
       }
     }
   },
-  "a8560158-44d8-4e11-8e9d-dda6f64134df": {
-    "id": "a8560158-44d8-4e11-8e9d-dda6f64134df",
+  "76866364-db28-470a-bf63-27d478023faa": {
+    "id": "76866364-db28-470a-bf63-27d478023faa",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -9939,7 +9409,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -9966,8 +9436,8 @@
       }
     }
   },
-  "4e89fd24-3056-41fb-bdc5-f8cb3b2a370e": {
-    "id": "4e89fd24-3056-41fb-bdc5-f8cb3b2a370e",
+  "4553c28a-96c1-468e-a48c-23b53dcc4784": {
+    "id": "4553c28a-96c1-468e-a48c-23b53dcc4784",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -9994,7 +9464,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -10021,8 +9491,8 @@
       }
     }
   },
-  "6d8d2296-2786-4c6e-8e33-f55088f2c9e8": {
-    "id": "6d8d2296-2786-4c6e-8e33-f55088f2c9e8",
+  "48465397-d7c9-47ec-935f-0c5d8697af70": {
+    "id": "48465397-d7c9-47ec-935f-0c5d8697af70",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -10049,7 +9519,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -10076,8 +9546,8 @@
       }
     }
   },
-  "9b0432be-6730-446e-8c5d-4e57105de71a": {
-    "id": "9b0432be-6730-446e-8c5d-4e57105de71a",
+  "e4148c4a-4187-40b5-ac53-160bf79e3331": {
+    "id": "e4148c4a-4187-40b5-ac53-160bf79e3331",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -10104,7 +9574,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -10131,8 +9601,8 @@
       }
     }
   },
-  "234c5147-f742-49d8-ab42-a9352b84f8c9": {
-    "id": "234c5147-f742-49d8-ab42-a9352b84f8c9",
+  "39040068-0303-470e-b694-7a6737323497": {
+    "id": "39040068-0303-470e-b694-7a6737323497",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -10159,7 +9629,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -10186,8 +9656,8 @@
       }
     }
   },
-  "a20cefa7-bfa7-460b-9b7e-a16e79a0704a": {
-    "id": "a20cefa7-bfa7-460b-9b7e-a16e79a0704a",
+  "f03eba9b-0140-4cf5-b50c-b19d5e55d74c": {
+    "id": "f03eba9b-0140-4cf5-b50c-b19d5e55d74c",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -10214,7 +9684,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -10241,8 +9711,8 @@
       }
     }
   },
-  "5fdc80d5-de72-423f-ad5b-7e539614b519": {
-    "id": "5fdc80d5-de72-423f-ad5b-7e539614b519",
+  "27a8798a-714a-45a9-9aed-d715b2565141": {
+    "id": "27a8798a-714a-45a9-9aed-d715b2565141",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -10269,7 +9739,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -10296,8 +9766,8 @@
       }
     }
   },
-  "10bd9b2a-ee11-4d68-b921-630e5d0e0832": {
-    "id": "10bd9b2a-ee11-4d68-b921-630e5d0e0832",
+  "538ea2f0-35b0-4ce2-b084-ab0001874363": {
+    "id": "538ea2f0-35b0-4ce2-b084-ab0001874363",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -10324,7 +9794,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -10351,8 +9821,8 @@
       }
     }
   },
-  "e9fd17e7-19f9-44b7-9474-bb71a915a527": {
-    "id": "e9fd17e7-19f9-44b7-9474-bb71a915a527",
+  "9b3df519-1b82-4fda-8b03-72946eb45798": {
+    "id": "9b3df519-1b82-4fda-8b03-72946eb45798",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -10379,7 +9849,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -10406,8 +9876,8 @@
       }
     }
   },
-  "a94667b7-1763-4b1f-98ff-fb95867b4c78": {
-    "id": "a94667b7-1763-4b1f-98ff-fb95867b4c78",
+  "9bebe41c-e1c5-4f4c-8957-b006e21862da": {
+    "id": "9bebe41c-e1c5-4f4c-8957-b006e21862da",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -10434,7 +9904,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -10461,8 +9931,8 @@
       }
     }
   },
-  "1f4a5da7-0b3d-4582-b35d-a352cc3b989c": {
-    "id": "1f4a5da7-0b3d-4582-b35d-a352cc3b989c",
+  "891d7d12-ad31-4618-bf26-4b078547d8d5": {
+    "id": "891d7d12-ad31-4618-bf26-4b078547d8d5",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -10489,7 +9959,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -10516,8 +9986,8 @@
       }
     }
   },
-  "dd511094-68a8-4059-85cd-ef51cbd989c6": {
-    "id": "dd511094-68a8-4059-85cd-ef51cbd989c6",
+  "d168e3ed-f85a-4b83-bd3a-7f26e7af3499": {
+    "id": "d168e3ed-f85a-4b83-bd3a-7f26e7af3499",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -10544,7 +10014,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -10571,8 +10041,8 @@
       }
     }
   },
-  "086d8544-4de0-4ba7-9d06-c2eca8078a26": {
-    "id": "086d8544-4de0-4ba7-9d06-c2eca8078a26",
+  "ec0f281b-c2cc-48d8-ae5e-c8791a6931fa": {
+    "id": "ec0f281b-c2cc-48d8-ae5e-c8791a6931fa",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -10599,7 +10069,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -10626,8 +10096,8 @@
       }
     }
   },
-  "6d54ca53-8d08-4433-adcc-8545c82bea60": {
-    "id": "6d54ca53-8d08-4433-adcc-8545c82bea60",
+  "468ff9ac-1b69-44f8-a521-42dfb31ad62b": {
+    "id": "468ff9ac-1b69-44f8-a521-42dfb31ad62b",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -10654,7 +10124,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -10681,8 +10151,8 @@
       }
     }
   },
-  "093f2cec-46d3-4115-bb3f-bcb963269d72": {
-    "id": "093f2cec-46d3-4115-bb3f-bcb963269d72",
+  "f11544f4-9cd1-4667-b734-7d256ae3571b": {
+    "id": "f11544f4-9cd1-4667-b734-7d256ae3571b",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -10709,7 +10179,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -10736,8 +10206,8 @@
       }
     }
   },
-  "6ae2c1aa-cbc7-4b79-a0e4-589916445c21": {
-    "id": "6ae2c1aa-cbc7-4b79-a0e4-589916445c21",
+  "effab149-e090-4754-a8d9-2c4fb4106d8c": {
+    "id": "effab149-e090-4754-a8d9-2c4fb4106d8c",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -10764,7 +10234,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -10791,8 +10261,8 @@
       }
     }
   },
-  "47f469e1-d430-4c23-954b-30686f6a3af3": {
-    "id": "47f469e1-d430-4c23-954b-30686f6a3af3",
+  "39c52a4f-8281-4927-9520-9f812e542bf5": {
+    "id": "39c52a4f-8281-4927-9520-9f812e542bf5",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -10819,7 +10289,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -10846,8 +10316,8 @@
       }
     }
   },
-  "f8be04ee-f610-42ae-ae36-7141a09c65a3": {
-    "id": "f8be04ee-f610-42ae-ae36-7141a09c65a3",
+  "bdc1ac00-a87a-4ebc-8e3b-7cadb6a4e685": {
+    "id": "bdc1ac00-a87a-4ebc-8e3b-7cadb6a4e685",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -10874,7 +10344,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -10901,8 +10371,8 @@
       }
     }
   },
-  "993115a1-9688-4d52-9052-7e2c7a25be6f": {
-    "id": "993115a1-9688-4d52-9052-7e2c7a25be6f",
+  "c83a4c0b-2f87-4937-9109-483203fc86d8": {
+    "id": "c83a4c0b-2f87-4937-9109-483203fc86d8",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -10929,7 +10399,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -10956,8 +10426,8 @@
       }
     }
   },
-  "313f2288-e6ff-4e51-aecf-4ab18824a8e4": {
-    "id": "313f2288-e6ff-4e51-aecf-4ab18824a8e4",
+  "b4be521d-f78e-4891-a1d1-d9c878e2bfb0": {
+    "id": "b4be521d-f78e-4891-a1d1-d9c878e2bfb0",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -10984,7 +10454,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -11011,8 +10481,8 @@
       }
     }
   },
-  "89970fd8-4788-4edb-a9fe-f309a1b15b88": {
-    "id": "89970fd8-4788-4edb-a9fe-f309a1b15b88",
+  "1b32ee9f-d00d-40a6-b274-18da4ec5f2ca": {
+    "id": "1b32ee9f-d00d-40a6-b274-18da4ec5f2ca",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -11039,7 +10509,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {
@@ -11066,8 +10536,8 @@
       }
     }
   },
-  "35341d6a-f560-49fd-8fc8-b483675105ac": {
-    "id": "35341d6a-f560-49fd-8fc8-b483675105ac",
+  "4d555f0b-15cd-40f9-bfd1-966bccf5587f": {
+    "id": "4d555f0b-15cd-40f9-bfd1-966bccf5587f",
     "type": "elements.panel",
     "perimeter": {
       "type": "elements.geometry.polygon",
@@ -11094,7 +10564,7 @@
         }
       ]
     },
-    "material": "270cb1e9-8c60-492b-9d10-6074c4325ae5",
+    "material": "6697b89a-91bb-4615-9788-5e1810c5b108",
     "properties": {},
     "transform": {
       "matrix": {

@@ -17,9 +17,9 @@ namespace Story
 		/// Add elements to the model to have them persisted.</param>
 		/// <param name="input">The arguments to the execution.</param>
 		/// <returns>A StoryOutputs instance containing computed results.</returns>
-		public static StoryOutputs Execute(Model model, StoryInputs input)
+		public static StoryOutputs Execute(Dictionary<string, Model> models, StoryInputs input)
 		{
-            var masses = model.ElementsOfType<Mass>().ToList().FindAll(m => m.Name == "envelope");
+            var masses = models.ContainsKey("envelope") ? models["envelope"].ElementsOfType<Mass>().ToList().FindAll(m => m.Name == "envelope") : new List<Mass>();
             if (masses.Count() == 0)
             {
                 var mass = new Mass(Polygon.Rectangle(50.0, 50.0),
@@ -74,6 +74,7 @@ namespace Story
             }
 
             var core = masses.Find(m => m.Name == "core");
+            var outputModel = new Model();
             foreach (var story in stories)
             {
                 if (core != null)
@@ -94,18 +95,19 @@ namespace Story
                                         new Vector3(box.E.X - 0.5, box.E.Y)).Thicken(input.CorridorWidth);
                 story.AddCorridor(new Room(perimeter: corridor, height: story.Height - 1.0));
                 story.Rotate(story.Perimeter.Centroid(), angle);
-                model.AddElement(story.EnvelopeAsMass);
-                model.AddElement(story.Slab);
+                outputModel.AddElement(story.EnvelopeAsMass);
+                outputModel.AddElement(story.Slab);
                 foreach(var room in story.Rooms)
                 {
-                    model.AddElement(room.AsMass);
+                    outputModel.AddElement(room.AsMass);
                 }
                 foreach (var room in story.Corridors)
                 {
-                    model.AddElement(room.AsMass);
+                    outputModel.AddElement(room.AsMass);
                 }
             }
             var output = new StoryOutputs(stories.Count, stories.Count * input.RoomsPerStory);
+            output.model = outputModel;
 			return output;
 		}
 

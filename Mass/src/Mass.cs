@@ -17,13 +17,12 @@ namespace Mass
 		/// Add elements to the model to keep them persistent.</param>
 		/// <param name="input">The arguments to the execution.</param>
 		/// <returns>A MassOutputs instance containing computed results.</returns>
-		public static MassOutputs Execute(Model model, MassInputs input)
+		public static MassOutputs Execute(Dictionary<string, Model> models, MassInputs input)
 		{
-            var footprint = model.ElementsOfType<Elements.Mass>().ToList().Find(m => m.Name == "footprint");
+            var footprint = models.ContainsKey("site") ? models["site"].ElementsOfType<Elements.Mass>().ToList().Find(m => m.Name == "footprint") : null;
             if (footprint == null)
             {
                 footprint = new Elements.Mass(Polygon.Rectangle(50.0, 50.0), 0.1, BuiltInMaterials.Concrete);
-                model.AddElement(footprint);
             }
             var basement = new Elements.Mass(footprint.Profile,
                                              input.FoundationDepth,
@@ -75,15 +74,15 @@ namespace Mass
                     break;
                 }
             }
-            foreach (var mass in masses)
-            {
-                model.AddElement(mass);
-            }
             var output = new MassOutputs(bldgHeight,
                                          input.FoundationDepth,
                                          input.SetbackInterval,
                                          input.SetbackDepth,
                                          volume);
+            foreach (var mass in masses)
+            {
+                output.model.AddElement(mass);
+            }
             return output;
         }
     }

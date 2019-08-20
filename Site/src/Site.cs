@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Elements;
 using Elements.Geometry;
@@ -15,8 +16,9 @@ namespace Site
 		/// Add elements to the model to preserve them.</param>
 		/// <param name="input">The arguments to the execution.</param>
 		/// <returns>A SiteSelectorOutputs instance containing computed results.</returns>
-		public static SiteOutputs Execute(Model model, SiteInputs input)
+		public static SiteOutputs Execute(Dictionary<string, Model> models, SiteInputs input)
 		{
+            Model outputModel = new Model();
             var site = new SiteMaker(input.Lot);
             var boundary = site.Boundary;
             var land = new Mass(new Profile(boundary),
@@ -26,7 +28,7 @@ namespace Site
             {
                 Name = "site"
             };
-            model.AddElement(land);
+            outputModel.AddElement(land);
             var offset = boundary.Offset(input.SiteSetback * -1);
             if (offset.Count() == 0)
             {
@@ -43,7 +45,7 @@ namespace Site
             var places = grid.Available.OrderBy(v => rnd.Next()).ToArray();
             Polygon tstBldg = null;
             var locate = input.Lot[0].Geometry as Elements.GeoJSON.Polygon;
-            model.Origin = locate.Coordinates[0][0];
+            outputModel.Origin = locate.Coordinates[0][0];
             var lotCover = 0.0;
             for (int i = 0; i < places.Count(); i++)
             {
@@ -59,17 +61,19 @@ namespace Site
                         };
                         bldg.Transform.Rotate(Vector3.ZAxis, j);
                         bldg.Transform.Move(places[i]);
-                        model.AddElement(bldg);
+                        outputModel.AddElement(bldg);
                         i = places.Count();
                         break;
                     }
                 }
             }
-            return new SiteOutputs(lotCover, 
-                                   input.BuildingLength, 
-                                   input.BuildingWidth, 
-                                   boundary.Area(), 
-                                   building.Area());
+            var outputs = new SiteOutputs(lotCover, 
+                                          input.BuildingLength, 
+                                          input.BuildingWidth, 
+                                          boundary.Area(), 
+                                          building.Area());
+            outputs.model = outputModel;
+            return outputs;
 		}
   	}
 }

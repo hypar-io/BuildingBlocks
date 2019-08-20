@@ -3,6 +3,8 @@
   "description": "Adds a grid of Masses representing columns to one or more Masses named 'envelope'.",
   "id": "530886d2-1c18-4a6d-ad21-da4a0db0f37e",
   "name": "Structure",
+  "model_dependencies": ["core", "envelope"],
+  "model_output": "structure",
   "repository_url": "https://github.com/hypar-io/function",
   "inputs": [
     {

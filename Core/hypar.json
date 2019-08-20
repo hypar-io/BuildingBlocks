@@ -3,6 +3,8 @@
   "description": "Adds a Mass named 'core' to one or more Masses named 'envelope'.",
   "id": "02bc1134-79d6-455e-a429-ef3d131dd1d1",
   "name": "Core",
+  "model_dependencies": ["envelope"],
+  "model_output": "core",
   "repository_url": "https://github.com/hypar-io/function",
   "inputs": [
     {

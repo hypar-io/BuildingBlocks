@@ -18,7 +18,7 @@ namespace Site
 
         public SiteMaker(Feature[] location)
         {
-            var boundary = location[0].Geometry as Elements.GeoJSON.Polygon;
+            var boundary = location != null ? location[0].Geometry as Elements.GeoJSON.Polygon : null;
             if (boundary == null)
             {
                 throw new ArgumentException("Site Boundary is not a Polygon.");
