@@ -18,6 +18,10 @@ namespace Site
 
         public SiteMaker(Feature[] location)
         {
+            if (location == null || location.Length == 0) {
+                throw new Exception("The supplied Feature array must have at least one feature.");
+            }
+            
             var boundary = location != null ? location[0].Geometry as Elements.GeoJSON.Polygon : null;
             if (boundary == null)
             {
