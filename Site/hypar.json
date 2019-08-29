@@ -10,8 +10,8 @@
       "name": "Lot",
       "description": "Selected site including boundary and topography.",
       "mapbox_origin": [
-        34.005765,
-        -118.405961
+        -118.405961,
+        34.005765
       ],
       "type": "location"
     },
