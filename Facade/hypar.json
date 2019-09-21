@@ -9,7 +9,7 @@
   "inputs": [
     {
       "min": 1.0,
-      "max": 20.0,
+      "max": 30.0,
       "step": 1.0,
       "name": "Vertical Panels Per Facade",
       "description": "Vertical divisions of each facade.",
@@ -35,7 +35,7 @@
   "outputs": [
     {
       "name": "Panel Quantity",
-      "description": "Total facade paenls.",
+      "description": "Total facade panels.",
       "type": "number"
     }
   ]

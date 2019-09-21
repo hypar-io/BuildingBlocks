@@ -9,38 +9,45 @@ using Hypar.Functions;
 using Hypar.Functions.Execution;
 using Hypar.Functions.Execution.AWS;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using System.Collections.Generic;
 
 namespace Facade
 {
-	public class FacadeOutputs: ResultsBase
-	{
+    public class FacadeOutputs: ResultsBase
+    {
 		/// <summary>
-		/// Total facade paenls.
+		/// Total facade panels.
 		/// </summary>
 		[JsonProperty("Panel Quantity")]
 		public double PanelQuantity {get;}
 
 
-		
-		/// <summary>
-		/// Construct a FacadeOutputs with default inputs.
-		/// This should be used only for testing.
-		/// </summary>
-		public FacadeOutputs() : base()
-		{
+        
+        /// <summary>
+        /// Construct a FacadeOutputs with default inputs.
+        /// This should be used only for testing.
+        /// </summary>
+        public FacadeOutputs() : base()
+        {
 
-		}
-		
-		/// <summary>
-		/// Construct a FacadeOutputs specifying all inputs.
-		/// </summary>
-		/// <returns></returns>
-		[JsonConstructor]
-		public FacadeOutputs(double panelquantity): base()
-		{
+        }
+        
+        /// <summary>
+        /// Construct a FacadeOutputs specifying all inputs.
+        /// </summary>
+        /// <returns></returns>
+        [JsonConstructor]
+        public FacadeOutputs(double panelquantity): base()
+        {
 			this.PanelQuantity = panelquantity;
 
+		}
+
+		public override string ToString()
+		{
+			var json = JsonConvert.SerializeObject(this);
+			return json;
 		}
 	}
 }
