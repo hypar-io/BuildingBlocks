@@ -32,13 +32,13 @@ namespace Site
             var offset = boundary.Offset(input.SiteSetback * -1);
             if (offset.Count() == 0)
             {
-                return new SiteOutputs(0.0, input.BuildingLength, input.BuildingWidth, boundary.Area(), 0.0);
+                throw new InvalidOperationException("Site setback value exceeds available site distance.");
             }
             var setback = offset.OrderByDescending(s => s.Area()).First();
             var building = Polygon.Rectangle(input.BuildingLength, input.BuildingWidth);
             if (setback.Area() < building.Area())
             {
-                return new SiteOutputs(0.0, input.BuildingLength, input.BuildingWidth, boundary.Area(), building.Area());
+                throw new InvalidOperationException("Building area exceeds available site area.");
             }
             var grid = new CoordGrid(setback, input.SearchGridResolution, input.SearchGridResolution);
             var rnd = new Random((int)input.SearchSeed);
@@ -67,12 +67,18 @@ namespace Site
                     }
                 }
             }
-            var outputs = new SiteOutputs(lotCover, 
-                                          input.BuildingLength, 
-                                          input.BuildingWidth, 
-                                          boundary.Area(), 
-                                          building.Area());
-            outputs.model = outputModel;
+            if(outputModel.GetElementByName("footprint") == null)
+            {
+                throw new InvalidOperationException("Unable to fit the requested building footprint to the selected site.");
+            }
+            var outputs = new SiteOutputs(lotCover,
+                                          input.BuildingLength,
+                                          input.BuildingWidth,
+                                          boundary.Area(),
+                                          building.Area())
+            {
+                model = outputModel
+            };
             return outputs;
 		}
   	}
