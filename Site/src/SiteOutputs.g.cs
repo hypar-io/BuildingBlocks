@@ -9,12 +9,13 @@ using Hypar.Functions;
 using Hypar.Functions.Execution;
 using Hypar.Functions.Execution.AWS;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using System.Collections.Generic;
 
 namespace Site
 {
-	public class SiteOutputs: ResultsBase
-	{
+    public class SiteOutputs: ResultsBase
+    {
 		/// <summary>
 		/// Ratio of footprint area to site area.
 		/// </summary>
@@ -46,29 +47,35 @@ namespace Site
 		public double BuilingArea {get;}
 
 
-		
-		/// <summary>
-		/// Construct a SiteOutputs with default inputs.
-		/// This should be used only for testing.
-		/// </summary>
-		public SiteOutputs() : base()
-		{
+        
+        /// <summary>
+        /// Construct a SiteOutputs with default inputs.
+        /// This should be used only for testing.
+        /// </summary>
+        public SiteOutputs() : base()
+        {
 
-		}
-		
-		/// <summary>
-		/// Construct a SiteOutputs specifying all inputs.
-		/// </summary>
-		/// <returns></returns>
-		[JsonConstructor]
-		public SiteOutputs(double lotcoverageratio, double length, double width, double sitearea, double builingarea): base()
-		{
+        }
+        
+        /// <summary>
+        /// Construct a SiteOutputs specifying all inputs.
+        /// </summary>
+        /// <returns></returns>
+        [JsonConstructor]
+        public SiteOutputs(double lotcoverageratio, double length, double width, double sitearea, double builingarea): base()
+        {
 			this.LotCoverageRatio = lotcoverageratio;
 			this.Length = length;
 			this.Width = width;
 			this.SiteArea = sitearea;
 			this.BuilingArea = builingarea;
 
+		}
+
+		public override string ToString()
+		{
+			var json = JsonConvert.SerializeObject(this);
+			return json;
 		}
 	}
 }

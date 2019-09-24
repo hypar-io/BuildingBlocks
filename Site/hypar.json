@@ -7,12 +7,8 @@
   "repository_url": "https://github.com/hypar-io/function",
   "inputs": [
     {
-      "name": "Lot",
-      "description": "Selected site including boundary and topography.",
-      "mapbox_origin": [
-        34.005765,
-        -118.405961
-      ],
+      "name": "location",
+      "description": "The location of the object on the planet Earth.",
       "type": "location"
     },
     {
@@ -43,8 +39,8 @@
       "name": "Search Grid Resolution",
       "description": "Interval for trial placements of building footprints within the site boundary.",
       "type": "range",
-      "min": 1.0,
-      "max": 10.0,
+      "min": 10.0,
+      "max": 50.0,
       "step": 0.5
     },
     {
