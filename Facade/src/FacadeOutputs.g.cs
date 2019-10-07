@@ -17,7 +17,7 @@ namespace Facade
     public class FacadeOutputs: ResultsBase
     {
 		/// <summary>
-		/// Total facade paenls.
+		/// Total facade panels.
 		/// </summary>
 		[JsonProperty("Panel Quantity")]
 		public double PanelQuantity {get;}

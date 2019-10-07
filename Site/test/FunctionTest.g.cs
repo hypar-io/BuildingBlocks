@@ -26,15 +26,15 @@ namespace Site.Tests
         {
             var store = new FileModelStore<SiteInputs>("./",true);
 
-			// Create an input object with default values.
+            // Create an input object with default values.
             var input = new SiteInputs();
 
-			// Invoke the function.
-			// The function invocation uses a FileModelStore
-			// which will write the resulting model to disk.
-			// You'll find the model at "./model.gltf"
-			var l = new InvocationWrapper<SiteInputs,SiteOutputs>(store, Site.Execute);
-			var output = await l.InvokeAsync(input);
+            // Invoke the function.
+            // The function invocation uses a FileModelStore
+            // which will write the resulting model to disk.
+            // You'll find the model at "./model.gltf"
+            var l = new InvocationWrapper<SiteInputs,SiteOutputs>(store, Site.Execute);
+            var output = await l.InvokeAsync(input);
         }
     }
 }

@@ -1,8 +1,8 @@
 {
   "extensions": ["hypar.elements"],
   "materials": {
-  "c67c15b6-e56e-4cec-b1b4-6a8a9c64726d": {
-    "id": "c67c15b6-e56e-4cec-b1b4-6a8a9c64726d",
+  "c6b88a02-6b8c-46e2-b16e-f27abc9a0e03": {
+    "id": "c6b88a02-6b8c-46e2-b16e-f27abc9a0e03",
     "color": {
       "red": 0.1,
       "green": 0.1,
@@ -14,21 +14,21 @@
     "name": "edges",
     "doubleSided": false
   },
-  "eee89be1-7d98-460b-b6f1-02ac97a14fbb": {
-    "id": "eee89be1-7d98-460b-b6f1-02ac97a14fbb",
+  "a15ecdd3-9859-4043-822c-d11be3616d15": {
+    "id": "a15ecdd3-9859-4043-822c-d11be3616d15",
     "color": {
-      "red": 0.19531,
-      "green": 0.65625,
-      "blue": 0.0,
+      "red": 0.457,
+      "green": 0.707,
+      "blue": 0.468,
       "alpha": 1.0
     },
     "specularFactor": 0.0,
     "glossinessFactor": 0.0,
-    "name": "site",
+    "name": "field",
     "doubleSided": false
   },
-  "794412b8-8469-43b4-8213-3462fa928757": {
-    "id": "794412b8-8469-43b4-8213-3462fa928757",
+  "fee93ad4-5221-4137-b2ff-16e28fc71399": {
+    "id": "fee93ad4-5221-4137-b2ff-16e28fc71399",
     "color": {
       "red": 0.5,
       "green": 0.5,
@@ -43,8 +43,8 @@
 },
   "elementTypes": {},
   "profiles": {
-  "93752d15-b345-47c0-abfc-4fa78ba74558": {
-    "id": "93752d15-b345-47c0-abfc-4fa78ba74558",
+  "20949afe-02d5-43ff-8d23-ea5c5d77013f": {
+    "id": "20949afe-02d5-43ff-8d23-ea5c5d77013f",
     "perimeter": {
       "type": "elements.geometry.polygon",
       "vertices": [
@@ -54,30 +54,30 @@
           "z": 0.0
         },
         {
-          "x": 94.844206155277789,
-          "y": -49.568362544290721,
-          "z": 0.0
-        },
-        {
-          "x": 77.58968508336693,
-          "y": -90.850022589787841,
+          "x": -93.17441379558295,
+          "y": -222.61318675987422,
           "z": 0.0
         },
         {
           "x": 64.453985169529915,
-          "y": -239.55290417652577,
+          "y": -238.67475611623377,
           "z": 0.0
         },
         {
-          "x": -93.1744137937203,
-          "y": -223.43223863095045,
+          "x": 77.589685082435608,
+          "y": -90.516991677694023,
+          "z": 0.0
+        },
+        {
+          "x": 94.844206154346466,
+          "y": -49.386659502051771,
           "z": 0.0
         }
       ]
     }
   },
-  "09115558-d2a7-42c9-849d-f080f91b6054": {
-    "id": "09115558-d2a7-42c9-849d-f080f91b6054",
+  "d5c7b8ab-476d-49db-a5de-a43db1c7a356": {
+    "id": "d5c7b8ab-476d-49db-a5de-a43db1c7a356",
     "perimeter": {
       "type": "elements.geometry.polygon",
       "vertices": [
@@ -106,52 +106,12 @@
   }
 },
   "elements": {
-  "4935bc22-78e6-40e3-8c41-0d340b924e91": {
-    "id": "4935bc22-78e6-40e3-8c41-0d340b924e91",
+  "534d3d42-ab0d-4115-b28b-cc120e7008b1": {
+    "id": "534d3d42-ab0d-4115-b28b-cc120e7008b1",
     "type": "elements.mass",
-    "profile": "93752d15-b345-47c0-abfc-4fa78ba74558",
-    "height": 1.0,
-    "material": "eee89be1-7d98-460b-b6f1-02ac97a14fbb",
-    "extrudeDirection": {
-      "x": 0.0,
-      "y": 0.0,
-      "z": 1.0
-    },
-    "extrudeDepth": 1.0,
-    "bothSides": false,
-    "properties": {},
-    "transform": {
-      "matrix": {
-        "xAxis": {
-          "x": 1.0,
-          "y": 0.0,
-          "z": 0.0
-        },
-        "yAxis": {
-          "x": 0.0,
-          "y": 1.0,
-          "z": 0.0
-        },
-        "zAxis": {
-          "x": 0.0,
-          "y": 0.0,
-          "z": 1.0
-        },
-        "translation": {
-          "x": 0.0,
-          "y": 0.0,
-          "z": -1.0
-        }
-      }
-    },
-    "name": "site"
-  },
-  "8829ad67-f04b-4377-a5fa-d63f555ee7d5": {
-    "id": "8829ad67-f04b-4377-a5fa-d63f555ee7d5",
-    "type": "elements.mass",
-    "profile": "09115558-d2a7-42c9-849d-f080f91b6054",
+    "profile": "20949afe-02d5-43ff-8d23-ea5c5d77013f",
     "height": 0.1,
-    "material": "794412b8-8469-43b4-8213-3462fa928757",
+    "material": "a15ecdd3-9859-4043-822c-d11be3616d15",
     "extrudeDirection": {
       "x": 0.0,
       "y": 0.0,
@@ -178,13 +138,56 @@
           "z": 1.0
         },
         "translation": {
-          "x": -37.721258053567361,
-          "y": -202.01573944529667,
+          "x": 0.0,
+          "y": 0.0,
+          "z": -0.1
+        }
+      }
+    }
+  },
+  "1be1796b-459f-4861-a841-6ba1bc6a1561": {
+    "id": "1be1796b-459f-4861-a841-6ba1bc6a1561",
+    "type": "elements.mass",
+    "profile": "d5c7b8ab-476d-49db-a5de-a43db1c7a356",
+    "height": 0.1,
+    "material": "fee93ad4-5221-4137-b2ff-16e28fc71399",
+    "extrudeDirection": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 1.0
+    },
+    "extrudeDepth": 0.1,
+    "bothSides": false,
+    "properties": {},
+    "transform": {
+      "matrix": {
+        "xAxis": {
+          "x": 1.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "yAxis": {
+          "x": 0.0,
+          "y": 1.0,
+          "z": 0.0
+        },
+        "zAxis": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 1.0
+        },
+        "translation": {
+          "x": 0.50957031249999929,
+          "y": -207.5291015625,
           "z": 0.0
         }
       }
     },
     "name": "footprint"
   }
-}
+},
+  "origin": [
+  0.0,
+  0.0
+]
 }
