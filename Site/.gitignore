@@ -3,3 +3,4 @@ obj/
 *.glb
 output.json
 input.json
+.vs/**/*.*

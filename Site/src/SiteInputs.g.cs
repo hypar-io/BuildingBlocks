@@ -9,12 +9,13 @@ using Hypar.Functions;
 using Hypar.Functions.Execution;
 using Hypar.Functions.Execution.AWS;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using System.Collections.Generic;
 
 namespace Site
 {
-	public class SiteInputs: S3Args
-	{
+    public class SiteInputs: S3Args
+    {
 		/// <summary>
 		/// Selected site including boundary and topography.
 		/// </summary>
@@ -52,28 +53,41 @@ namespace Site
 		public double SearchSeed {get;}
 
 
-		
-		/// <summary>
-		/// Construct a SiteInputs with default inputs.
-		/// This should be used only for testing.
-		/// </summary>
-		public SiteInputs() : base()
-		{
+        
+        /// <summary>
+        /// Construct a SiteInputs with default inputs.
+        /// This should be used only for testing.
+        /// </summary>
+        public SiteInputs() : base()
+        {
+			this.Lot = new Elements.GeoJSON.Feature[]{ 
+                new Elements.GeoJSON.Feature(
+                    new Elements.GeoJSON.Polygon(
+                        new Elements.GeoJSON.Position[][]{
+                            new Elements.GeoJSON.Position[]{
+                                new Elements.GeoJSON.Position(-96.78204,32.78411),
+                                new Elements.GeoJSON.Position(-96.78191,32.78359),
+                                new Elements.GeoJSON.Position(-96.78050,32.78383),
+                                new Elements.GeoJSON.Position(-96.78063,32.784),
+                                new Elements.GeoJSON.Position(-96.78204,32.78411)
+                            }
+                        }), null)
+            };;
 			this.SiteSetback = 10;
 			this.BuildingLength = 100;
 			this.BuildingWidth = 100;
 			this.SearchGridResolution = 10;
 			this.SearchSeed = 100;
 
-		}
-		
-		/// <summary>
-		/// Construct a SiteInputs specifying all inputs.
-		/// </summary>
-		/// <returns></returns>
-		[JsonConstructor]
-		public SiteInputs(Feature[] lot, double sitesetback, double buildinglength, double buildingwidth, double searchgridresolution, double searchseed, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
-		{
+        }
+        
+        /// <summary>
+        /// Construct a SiteInputs specifying all inputs.
+        /// </summary>
+        /// <returns></returns>
+        [JsonConstructor]
+        public SiteInputs(Feature[] lot, double sitesetback, double buildinglength, double buildingwidth, double searchgridresolution, double searchseed, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
+        {
 			this.Lot = lot;
 			this.SiteSetback = sitesetback;
 			this.BuildingLength = buildinglength;
@@ -81,6 +95,12 @@ namespace Site
 			this.SearchGridResolution = searchgridresolution;
 			this.SearchSeed = searchseed;
 
+		}
+
+		public override string ToString()
+		{
+			var json = JsonConvert.SerializeObject(this);
+			return json;
 		}
 	}
 }

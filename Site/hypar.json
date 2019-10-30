@@ -78,7 +78,7 @@
       "type": "number"
     },
     {
-      "name": "Builing Area",
+      "name": "Building Area",
       "description": "Building Area",
       "type": "number"
     }

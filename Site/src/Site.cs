@@ -7,7 +7,7 @@ using GeometryEx;
 
 namespace Site
 {
-  	public static class Site
+    public static class Site
 	{
 		/// <summary>
 		/// The SiteSelector function.
@@ -21,9 +21,10 @@ namespace Site
             Model outputModel = new Model();
             var site = new SiteMaker(input.Lot);
             var boundary = site.Boundary;
+
             var land = new Mass(new Profile(boundary),
                                 1.0,
-                                new Material("site", new Color(0.19531f, 0.65625f, 0.0f, 1.0f), 0.0f, 0.0f),
+                                new Material("site", new Color(0.19531f, 0.65625f, 1.0f, 1.0f), 0.0f, 0.0f),
                                 new Transform(0.0, 0.0, -1.0))
             {
                 Name = "site"
