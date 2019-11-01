@@ -1,26 +1,19 @@
-
+<img src="preview.png" width="512">
             
 # Site
 
-Supports site selection and building footprint configuration.
+Get topographic and map data for the specified origin.
 
 |Input Name|Type|Description|
 |---|---|---|
-|Lot|Location|Selected site including boundary and topography.|
-|Site Setback|Range|Position of the building footprint relative to the site boundary.|
-|Building Length|Range|Dimension of the bounding box for a building footprint.|
-|Building Width|Range|Dimension of the bounding box for a building footprint.|
-|Search Grid Resolution|Range|Interval for trial placements of building footprints within the site boundary.|
-|Search Seed|Range|Tandom seed determining the order of placement point search in the grid.|
+|Origin|Location|The selected origin of the site.|
 
 
 <br>
 
 |Output Name|Type|Description|
 |---|---|---|
-|Lot Coverage Ratio|Number|Ratio of footprint area to site area.|
-|Length|Number|The Length|
-|Width|Number|The Width|
-|Site Area|Number|Site Area|
-|Building Area|Number|Building Area|
+|Latitude|Number|The latitude of the origin.|
+|Longitude|Number|The longitude of the origin.|
+|Elevation|Number|The elevation of the origin as it intersects with the topography.|
 

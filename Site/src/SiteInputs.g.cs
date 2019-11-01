@@ -17,83 +17,32 @@ namespace Site
     public class SiteInputs: S3Args
     {
 		/// <summary>
-		/// Selected site including boundary and topography.
+		/// The selected origin of the site.
 		/// </summary>
-		[JsonProperty("Lot")]
-		public Feature[] Lot {get;}
-
-		/// <summary>
-		/// Position of the building footprint relative to the site boundary.
-		/// </summary>
-		[JsonProperty("Site Setback")]
-		public double SiteSetback {get;}
-
-		/// <summary>
-		/// Dimension of the bounding box for a building footprint.
-		/// </summary>
-		[JsonProperty("Building Length")]
-		public double BuildingLength {get;}
-
-		/// <summary>
-		/// Dimension of the bounding box for a building footprint.
-		/// </summary>
-		[JsonProperty("Building Width")]
-		public double BuildingWidth {get;}
-
-		/// <summary>
-		/// Interval for trial placements of building footprints within the site boundary.
-		/// </summary>
-		[JsonProperty("Search Grid Resolution")]
-		public double SearchGridResolution {get;}
-
-		/// <summary>
-		/// Tandom seed determining the order of placement point search in the grid.
-		/// </summary>
-		[JsonProperty("Search Seed")]
-		public double SearchSeed {get;}
+		[JsonProperty("Origin")]
+		public Elements.GeoJSON.Point Origin {get;}
 
 
         
         /// <summary>
         /// Construct a SiteInputs with default inputs.
-        /// This should be used only for testing.
+        /// This should be used for testing only.
         /// </summary>
         public SiteInputs() : base()
         {
-			this.Lot = new Elements.GeoJSON.Feature[]{ 
-                new Elements.GeoJSON.Feature(
-                    new Elements.GeoJSON.Polygon(
-                        new Elements.GeoJSON.Position[][]{
-                            new Elements.GeoJSON.Position[]{
-                                new Elements.GeoJSON.Position(-96.78204,32.78411),
-                                new Elements.GeoJSON.Position(-96.78191,32.78359),
-                                new Elements.GeoJSON.Position(-96.78050,32.78383),
-                                new Elements.GeoJSON.Position(-96.78063,32.784),
-                                new Elements.GeoJSON.Position(-96.78204,32.78411)
-                            }
-                        }), null)
-            };;
-			this.SiteSetback = 10;
-			this.BuildingLength = 100;
-			this.BuildingWidth = 100;
-			this.SearchGridResolution = 10;
-			this.SearchSeed = 100;
+			this.Origin = new Elements.GeoJSON.Point(new Elements.GeoJSON.Position(32.78411, -96.78204));
 
         }
-        
+
+
         /// <summary>
         /// Construct a SiteInputs specifying all inputs.
         /// </summary>
         /// <returns></returns>
         [JsonConstructor]
-        public SiteInputs(Feature[] lot, double sitesetback, double buildinglength, double buildingwidth, double searchgridresolution, double searchseed, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
+        public SiteInputs(Elements.GeoJSON.Point origin, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
         {
-			this.Lot = lot;
-			this.SiteSetback = sitesetback;
-			this.BuildingLength = buildinglength;
-			this.BuildingWidth = buildingwidth;
-			this.SearchGridResolution = searchgridresolution;
-			this.SearchSeed = searchseed;
+			this.Origin = origin;
 
 		}
 

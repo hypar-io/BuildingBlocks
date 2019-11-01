@@ -1,56 +1,35 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Reflection;
 using RestSharp;
+using RestSharp.Extensions;
 using ImageMagick;
-using Elements.GeoJSON;
 using Elements.Geometry;
+using Elements;
+using System.IO;
 
 namespace Site
 {
     public class SiteMaker
     {
-        private const string _mapboxToken = "pk.eyJ1IjoiaWtlb3VnaCIsImEiOiJjamc4ZzFucnoxdmQ0MnBxZDY5dW8za3c4In0.fQy46phspOdUtJleHvrqlg";
-        private const string _mapboxBaseUri = "https://api.mapbox.com/v4";
         private const double _earthRadius = 6378137;
         private const double _originShift = 2 * Math.PI * _earthRadius / 2;
         private const double _webMercMax = 20037508.342789244;
 
-        public SiteMaker(Feature[] location)
-        {
-            if (location == null || location.Length == 0) {
-                throw new Exception("The supplied Feature array must have at least one feature.");
-            }
-            
-            var boundary = location != null ? location[0].Geometry as Elements.GeoJSON.Polygon : null;
-            if (boundary == null)
-            {
-                throw new ArgumentException("Site Boundary is not a Polygon.");
-            }
-            var origin = boundary.Coordinates[0][0];
-            var offset = LatLonToMeters(origin.Latitude, origin.Longitude);
-            var verts = new List<Vector3>();
-            foreach (var vertex in boundary.Coordinates[0].Skip(1))
-            {
-                verts.Add(LatLonToMeters(vertex.Latitude, vertex.Longitude) - offset);
-            }
-            verts.Reverse();
-            Boundary = new Elements.Geometry.Polygon(verts.ToArray());
-            Topography = CreateTopographyFromMapbox(origin.Latitude, origin.Longitude, _mapboxBaseUri, _mapboxToken, offset);
-        }
-
-        private Elements.Topography CreateTopographyFromMapbox(double latitude, 
+        internal static Elements.Topography CreateTopographyFromMapbox(double latitude, 
                                                                double longitude, 
                                                                string mapboxUri, 
                                                                string mapboxToken, 
-                                                               Vector3 offset)
+                                                               Vector3 offset,
+                                                               int x,
+                                                               int y,
+                                                               int imageSize,
+                                                               string imagePath)
         {
             // Get map tiles from Mapbox
             var client = new RestSharp.RestClient(mapboxUri);
             var zoom = 16;
-            var x = Long2Tile(longitude, zoom);
-            var y = Lat2Tile(latitude, zoom);
-            var req = new RestRequest($"mapbox.terrain-rgb/{zoom}/{x}/{y}@2x.pngraw");
+            
+            var req = new RestRequest($"v4/mapbox.terrain-rgb/{zoom}/{x}/{y}@2x.pngraw");
             req.AddQueryParameter("access_token", mapboxToken);
             var response = client.DownloadData(req);
             double[] elevationData;
@@ -62,24 +41,40 @@ namespace Site
             using (var image = new MagickImage(response))
             {
                 image.Format = MagickFormat.Png;
-                elevationData = GetElevationData(image, 512, 512, sampleSize);
+                elevationData = GetElevationData(image, imageSize, imageSize, sampleSize);
             };
             var tileSize = GetTileSizeMeters(zoom);
-            var cellSize = tileSize / ((512 / sampleSize) - 1);
+            var cellSize = tileSize / ((imageSize / sampleSize) - 1);
             var colorizer = new Func<Triangle, Elements.Geometry.Color>((t) => {
-                return Colors.Brown;
+                return Colors.White;
             });
             var origin = TileIdToCenterWebMercator(x, y, zoom) - new Vector3(tileSize / 2, tileSize / 2) - offset;
-            var topo = new Elements.Topography(origin, 
-                                               cellSize, 
-                                               cellSize, 
-                                               elevationData, 
-                                               (512 / sampleSize) - 1, 
-                                               colorizer);
+            var topoMaterial = new Material($"Topo_{Guid.NewGuid().ToString()}", Colors.White, 0.5f, 0.0f, imagePath);
+            var topo = new Topography(origin, 
+                                    cellSize, 
+                                    cellSize, 
+                                    elevationData, 
+                                    (imageSize / sampleSize) - 1, 
+                                    colorizer,
+                                    topoMaterial);
             return topo;
         }
 
-        private double[] GetElevationData(MagickImage image, int imageWidth, int imageHeight, int step)
+        internal static string GetMapImage(double latitude, double longitude, int x, int y, string mapboxUri, string mapboxToken, int imageSize)
+        {
+            var client = new RestSharp.RestClient(mapboxUri);
+            var zoom = 16;
+            var styleId = "mapbox/streets-v11";
+            // var styleId = "ikeough/cjy4r0l2h00ig1dmuk7zeximh";
+            var imageTileUrl = $"styles/v1/{styleId}/tiles/{imageSize}/{zoom}/{x}/{y}@2x";
+            var req = new RestRequest(imageTileUrl);
+            req.AddQueryParameter("access_token", mapboxToken);
+            var tmpImagePath = Path.Combine(Path.GetTempPath(), $"Texture_{Guid.NewGuid().ToString()}.jpg");
+            client.DownloadData(req).SaveAs(tmpImagePath);
+            return tmpImagePath;
+        }
+
+        private static double[] GetElevationData(MagickImage image, int imageWidth, int imageHeight, int step)
         {
             var result = new double[imageWidth / step * imageHeight / step];
             var i = 0;
@@ -103,14 +98,14 @@ namespace Site
             return result;
         }
 
-        private double GetTileSizeMeters(int zoom)
+        internal static double GetTileSizeMeters(int zoom)
         {
             // Circumference of the earth divided by 2^zoom
             // return (2* Math.PI * EarthRadius)/ Math.pow(2,zoom)
             return 40075016.685578 / Math.Pow(2, zoom);
         }
 
-        private Vector3 LatLonToMeters(double lat, double lon)
+        internal static Vector3 LatLonToMeters(double lat, double lon)
         {
             var posx = lon * _originShift / 180.0;
             var posy = Math.Log(Math.Tan((90.0 + lat) * Math.PI / 360.0)) / (Math.PI / 180.0);
@@ -118,17 +113,17 @@ namespace Site
             return new Vector3(posx, posy);
         }
 
-        private int Long2Tile(double lon, int zoom)
+        internal static int Long2Tile(double lon, int zoom)
         {
             return (int)Math.Floor((lon + 180) / 360 * Math.Pow(2, zoom));
         }
 
-        private int Lat2Tile(double lat, int zoom)
+        internal static int Lat2Tile(double lat, int zoom)
         {
             return (int)Math.Floor((1 - Math.Log(Math.Tan(lat * Math.PI / 180) + 1 / Math.Cos(lat * Math.PI / 180)) / Math.PI) / 2 * Math.Pow(2, zoom));
         }
 
-        private Vector3 TileIdToCenterWebMercator(int x, int y, int zoom)
+        internal static Vector3 TileIdToCenterWebMercator(int x, int y, int zoom)
         {
             var tileCnt = Math.Pow(2, zoom);
             var centerX = x + 0.5;
@@ -138,8 +133,5 @@ namespace Site
             centerY = (1 - (centerY / tileCnt * 2)) * _webMercMax;
             return new Vector3(centerX, centerY);
         }
-
-        public Elements.Geometry.Polygon Boundary { get; }
-        public Elements.Topography Topography { get; }
     }
 }

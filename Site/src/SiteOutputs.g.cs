@@ -17,58 +17,45 @@ namespace Site
     public class SiteOutputs: ResultsBase
     {
 		/// <summary>
-		/// Ratio of footprint area to site area.
+		/// The latitude of the origin.
 		/// </summary>
-		[JsonProperty("Lot Coverage Ratio")]
-		public double LotCoverageRatio {get;}
+		[JsonProperty("Latitude")]
+		public double Latitude {get;}
 
 		/// <summary>
-		/// The Length
+		/// The longitude of the origin.
 		/// </summary>
-		[JsonProperty("Length")]
-		public double Length {get;}
+		[JsonProperty("Longitude")]
+		public double Longitude {get;}
 
 		/// <summary>
-		/// The Width
+		/// The elevation of the origin as it intersects with the topography.
 		/// </summary>
-		[JsonProperty("Width")]
-		public double Width {get;}
-
-		/// <summary>
-		/// Site Area
-		/// </summary>
-		[JsonProperty("Site Area")]
-		public double SiteArea {get;}
-
-		/// <summary>
-		/// Building Area
-		/// </summary>
-		[JsonProperty("Building Area")]
-		public double BuildingArea {get;}
+		[JsonProperty("Elevation")]
+		public double Elevation {get;}
 
 
         
         /// <summary>
         /// Construct a SiteOutputs with default inputs.
-        /// This should be used only for testing.
+        /// This should be used for testing only.
         /// </summary>
         public SiteOutputs() : base()
         {
 
         }
-        
+
+
         /// <summary>
         /// Construct a SiteOutputs specifying all inputs.
         /// </summary>
         /// <returns></returns>
         [JsonConstructor]
-        public SiteOutputs(double lotcoverageratio, double length, double width, double sitearea, double buildingarea): base()
+        public SiteOutputs(double latitude, double longitude, double elevation): base()
         {
-			this.LotCoverageRatio = lotcoverageratio;
-			this.Length = length;
-			this.Width = width;
-			this.SiteArea = sitearea;
-			this.BuildingArea = buildingarea;
+			this.Latitude = latitude;
+			this.Longitude = longitude;
+			this.Elevation = elevation;
 
 		}
 
