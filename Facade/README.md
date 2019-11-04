@@ -15,5 +15,5 @@ Adds facade Panels to one or more Masses named 'envelope'.
 
 |Output Name|Type|Description|
 |---|---|---|
-|Panel Quantity|Number|Total facade paenls.|
+|Panel Quantity|Number|Total facade panels.|
 
