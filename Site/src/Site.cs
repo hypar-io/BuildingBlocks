@@ -80,6 +80,9 @@ namespace Site
             // Draw something at the origin
             var m = new Mass(Elements.Geometry.Polygon.Rectangle(1.0, 1.0), 1.0, new Material("Origin", Colors.Pink, 0.0f, 0.0f), new Transform(0,0,result.Point.Z));
             outputModel.AddElement(m);
+            
+            var projectOrigin = new Origin(origin, result.Point.Z, new Transform(), Guid.NewGuid(), "Origin");
+            outputModel.AddElement(projectOrigin);
 
             var outputs = new SiteOutputs(origin.Latitude, origin.Longitude, result.Point.Z);
             outputs.model = outputModel;
@@ -179,6 +182,7 @@ namespace Site
                 P.IsAlmostEqualTo(tri.Vertices[1].Position) || 
                 P.IsAlmostEqualTo(tri.Vertices[2].Position))
             {
+                // Intersection occurs at a vertex of the triangle.
                 result = new IntersectionResult(P, IntersectionResultType.IntersectsAtVertex);
                 return true;
             }
