@@ -1,0 +1,34 @@
+{
+  "$schema": "https://hypar.io/Schemas/Function.json",
+  "description": "The FootprintFromDXF function.",
+  "id": "9e1ca023-da73-4a01-9f79-faf20740cba3",
+  "name": "FootprintFromDXF",
+  "repository_url": "https://github.com/hypar-io/function",
+  "inputs": [
+    {
+      "min": 1.0,
+      "max": 10.0,
+      "step": 1.0,
+      "name": "Length",
+      "description": "The length.",
+      "type": "range"
+    },
+    {
+      "min": 1.0,
+      "max": 10.0,
+      "step": 1.0,
+      "name": "Width",
+      "description": "The width.",
+      "type": "range"
+    }
+  ],
+  "outputs": [
+    {
+      "name": "Volume",
+      "description": "The volume.",
+      "type": "number"
+    }
+  ],
+  "preview_image": null,
+  "element_types": null
+}
