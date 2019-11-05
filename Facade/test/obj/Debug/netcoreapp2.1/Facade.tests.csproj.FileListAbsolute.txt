@@ -1,0 +1,17 @@
+c:\Users\aahau\GitHub\BuildingBlocks\Facade\test\bin\Debug\netcoreapp2.1\xunit.runner.visualstudio.dotnetcore.testadapter.dll
+c:\Users\aahau\GitHub\BuildingBlocks\Facade\test\bin\Debug\netcoreapp2.1\xunit.runner.reporters.netcoreapp10.dll
+c:\Users\aahau\GitHub\BuildingBlocks\Facade\test\bin\Debug\netcoreapp2.1\xunit.runner.utility.netcoreapp10.dll
+c:\Users\aahau\GitHub\BuildingBlocks\Facade\test\bin\Debug\netcoreapp2.1\Facade.tests.deps.json
+c:\Users\aahau\GitHub\BuildingBlocks\Facade\test\bin\Debug\netcoreapp2.1\Facade.tests.runtimeconfig.json
+c:\Users\aahau\GitHub\BuildingBlocks\Facade\test\bin\Debug\netcoreapp2.1\Facade.tests.runtimeconfig.dev.json
+c:\Users\aahau\GitHub\BuildingBlocks\Facade\test\bin\Debug\netcoreapp2.1\Facade.tests.dll
+c:\Users\aahau\GitHub\BuildingBlocks\Facade\test\bin\Debug\netcoreapp2.1\Facade.tests.pdb
+c:\Users\aahau\GitHub\BuildingBlocks\Facade\test\bin\Debug\netcoreapp2.1\Facade.dll
+c:\Users\aahau\GitHub\BuildingBlocks\Facade\test\bin\Debug\netcoreapp2.1\Facade.pdb
+c:\Users\aahau\GitHub\BuildingBlocks\Facade\test\obj\Debug\netcoreapp2.1\Facade.tests.csprojAssemblyReference.cache
+c:\Users\aahau\GitHub\BuildingBlocks\Facade\test\obj\Debug\netcoreapp2.1\Facade.tests.csproj.CoreCompileInputs.cache
+c:\Users\aahau\GitHub\BuildingBlocks\Facade\test\obj\Debug\netcoreapp2.1\Facade.tests.AssemblyInfoInputs.cache
+c:\Users\aahau\GitHub\BuildingBlocks\Facade\test\obj\Debug\netcoreapp2.1\Facade.tests.AssemblyInfo.cs
+c:\Users\aahau\GitHub\BuildingBlocks\Facade\test\obj\Debug\netcoreapp2.1\Facade.tests.csproj.CopyComplete
+c:\Users\aahau\GitHub\BuildingBlocks\Facade\test\obj\Debug\netcoreapp2.1\Facade.tests.dll
+c:\Users\aahau\GitHub\BuildingBlocks\Facade\test\obj\Debug\netcoreapp2.1\Facade.tests.pdb

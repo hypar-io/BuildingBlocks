@@ -17,7 +17,7 @@ namespace Facade
     public class FacadeInputs: S3Args
     {
 		/// <summary>
-		/// Vertical of each facade.
+		/// Vertical divisions of each facade.
 		/// </summary>
 		[JsonProperty("Vertical Panels Per Facade")]
 		public double VerticalPanelsPerFacade {get;}
@@ -42,8 +42,8 @@ namespace Facade
         /// </summary>
         public FacadeInputs() : base()
         {
-			this.VerticalPanelsPerFacade = 30;
-			this.HorizontalPanelsPerFacade = 20;
+			this.VerticalPanelsPerFacade = 10;
+			this.HorizontalPanelsPerFacade = 15;
 			this.MullionWidth = 3;
 
         }
