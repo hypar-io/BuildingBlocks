@@ -20,16 +20,19 @@ namespace Story
 		public static StoryOutputs Execute(Dictionary<string, Model> models, StoryInputs input)
 		{
             var masses = models.ContainsKey("envelope") ? models["envelope"].AllElementsOfType<Mass>().ToList().FindAll(m => m.Name == "envelope") : new List<Mass>();
+            var outputModel = new Model();
             if (masses.Count() == 0)
             {
                 var mass = new Mass(Polygon.Rectangle(50.0, 50.0),
                                     10.0,
                                     new Material("basement", Palette.Gray, 0.0f, 0.0f), name: "envelope");
                 masses.Add(mass);
+                outputModel.AddElement(mass);
                 mass = new Mass(Polygon.Rectangle(50.0, 50.0),
                                 75.0,
                                 new Material("envelope", Palette.Aqua, 0.0f, 0.0f), name: "envelope");
                 masses.Add(mass);
+                outputModel.AddElement(mass);
             }
             var storyHeight = input.StoryHeight;
             var stories = new List<RoomKit.Story>();
@@ -66,9 +69,7 @@ namespace Story
                 stack.Stack();
                 stories.AddRange(stack.Stories);
             }
-
             var core = masses.Find(m => m.Name == "core");
-            var outputModel = new Model();
             foreach (var story in stories)
             {
                 if (core != null)
@@ -85,24 +86,25 @@ namespace Story
                 story.Rotate(story.Perimeter.Centroid(), angle * -1);
                 story.RoomsByDivision((int)input.RoomsPerStory / 2, 2, story.Height - 1.0, 0.5);
                 var box = new TopoBox(story.Perimeter);
-                var corridor = new Line(new Vector3(box.W.X + 0.5, box.W.Y), 
+                var corridor = new Line(new Vector3(box.W.X + 0.5, box.W.Y),
                                         new Vector3(box.E.X - 0.5, box.E.Y)).Thicken(input.CorridorWidth);
                 story.AddCorridor(new Room(perimeter: corridor, height: story.Height - 1.0));
                 story.Rotate(story.Perimeter.Centroid(), angle);
                 outputModel.AddElement(story.EnvelopeAsMass);
                 outputModel.AddElement(story.Slab);
-                foreach(var room in story.Rooms)
+                foreach (var room in story.Rooms)
                 {
-                    outputModel.AddElement(room.AsMass);
+                    outputModel.AddElement(room.AsSpace);
                 }
                 foreach (var room in story.Corridors)
                 {
-                    outputModel.AddElement(room.AsMass);
+                    outputModel.AddElement(room.AsSpace);
                 }
             }
-            var output = new StoryOutputs(stories.Count, stories.Count * input.RoomsPerStory);
-            output.model = outputModel;
-			return output;
+            return new StoryOutputs(stories.Count, stories.Count * input.RoomsPerStory)
+            {
+                model = outputModel
+            };
 		}
 
     }
