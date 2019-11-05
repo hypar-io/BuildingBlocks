@@ -1,5 +1,7 @@
-bin/
-obj/
+[Bb]in/
+[Oo]bj/
+.vs/
+.vscode/
 *.glb
 output.json
 input.json
