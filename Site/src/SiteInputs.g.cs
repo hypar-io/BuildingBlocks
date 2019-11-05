@@ -51,11 +51,5 @@ namespace Site
 			var json = JsonConvert.SerializeObject(this);
 			return json;
 		}
-
-		public override string ToString()
-		{
-			var json = JsonConvert.SerializeObject(this);
-			return json;
-		}
 	}
 }
