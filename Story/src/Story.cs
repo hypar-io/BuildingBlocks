@@ -19,22 +19,16 @@ namespace Story
 		/// <returns>A StoryOutputs instance containing computed results.</returns>
 		public static StoryOutputs Execute(Dictionary<string, Model> models, StoryInputs input)
 		{
-            var masses = models.ContainsKey("envelope") ? models["envelope"].ElementsOfType<Mass>().ToList().FindAll(m => m.Name == "envelope") : new List<Mass>();
+            var masses = models.ContainsKey("envelope") ? models["envelope"].AllElementsOfType<Mass>().ToList().FindAll(m => m.Name == "envelope") : new List<Mass>();
             if (masses.Count() == 0)
             {
                 var mass = new Mass(Polygon.Rectangle(50.0, 50.0),
                                     10.0,
-                                    new Material("basement", Palette.Gray, 0.0f, 0.0f))
-                {
-                    Name = "envelope"
-                };
+                                    new Material("basement", Palette.Gray, 0.0f, 0.0f), name: "envelope");
                 masses.Add(mass);
                 mass = new Mass(Polygon.Rectangle(50.0, 50.0),
                                 75.0,
-                                new Material("envelope", Palette.Aqua, 0.0f, 0.0f))
-                {
-                    Name = "envelope"
-                };
+                                new Material("envelope", Palette.Aqua, 0.0f, 0.0f), name: "envelope");
                 masses.Add(mass);
             }
             var storyHeight = input.StoryHeight;

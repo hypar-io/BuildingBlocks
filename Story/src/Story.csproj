@@ -5,11 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="GeometryEx" Version="1.6.2" />
-    <PackageReference Include="Hypar.Elements" Version="0.3.2" />
-    <ProjectReference Include="..\..\..\Hypar\Functions\src\Hypar.Functions.csproj" />
+    <PackageReference Include="GeometryEx" Version="1.10.0-alpha1" />
+    <PackageReference Include="Hypar.Elements" Version="0.4.0-alpha.4" />
+    <PackageReference Include="Hypar.Functions" Version="0.4.0-alpha.4" />
     <PackageReference Include="ParagonClipper" Version="6.4.2" />
-    <PackageReference Include="RoomKit" Version="1.7.0" />
+    <PackageReference Include="RoomKit" Version="2.3.0-alpha1" />
   </ItemGroup>
 
 </Project>
