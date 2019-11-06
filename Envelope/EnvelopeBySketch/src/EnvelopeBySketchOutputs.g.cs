@@ -40,12 +40,6 @@ namespace EnvelopeBySketch
 		[JsonProperty("Setback")]
 		public double Setback {get;}
 
-		/// <summary>
-		/// Building envelope volume including subgrade section.
-		/// </summary>
-		[JsonProperty("Volume")]
-		public double Volume {get;}
-
 
         
         /// <summary>
@@ -63,13 +57,12 @@ namespace EnvelopeBySketch
         /// </summary>
         /// <returns></returns>
         [JsonConstructor]
-        public EnvelopeBySketchOutputs(double height, double subgrade, double interval, double setback, double volume): base()
+        public EnvelopeBySketchOutputs(double height, double subgrade, double interval, double setback): base()
         {
 			this.Height = height;
 			this.Subgrade = subgrade;
 			this.Interval = interval;
 			this.Setback = setback;
-			this.Volume = volume;
 
 		}
 

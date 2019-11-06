@@ -21,5 +21,4 @@ The EnvelopeBySketch function.
 |Subgrade|Number|Depth of the subgrade section.|
 |Interval|Number|Vertical distance between setbacks.|
 |Setback|Number|Setback offset from previous interval.|
-|Volume|Number|Building envelope volume including subgrade section.|
 

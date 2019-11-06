@@ -64,11 +64,6 @@
       "name": "Setback",
       "description": "Setback offset from previous interval.",
       "type": "number"
-    },
-    {
-      "name": "Volume",
-      "description": "Building envelope volume including subgrade section.",
-      "type": "number"
     }
   ],
   "preview_image": null,
