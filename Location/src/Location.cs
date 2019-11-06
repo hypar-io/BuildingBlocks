@@ -4,7 +4,7 @@ using Elements;
 using Elements.GeoJSON;
 using Elements.Geometry;
 
-namespace Site
+namespace Location
 {
     public static class Location
     {
@@ -12,13 +12,12 @@ namespace Site
         private const string _mapboxBaseUri = "https://api.mapbox.com";
 
         /// <summary>
-        /// The Site function.
+        /// The Location function.
         /// </summary>
-        /// <param name="model">The model. 
-        /// Add elements to the model to preserve them.</param>
+        /// <param name="model">The input model.</param>
         /// <param name="input">The arguments to the execution.</param>
-        /// <returns>A SiteSelectorOutputs instance containing computed results.</returns>
-        public static SiteOutputs Execute(Dictionary<string, Model> models, SiteInputs input)
+        /// <returns>A LocationOutputs instance containing computed results and the model with any new elements.</returns>
+        public static LocationOutputs Execute(Dictionary<string, Model> inputModels, LocationInputs input)
         {
             var origin = input.Origin.Coordinates;
             var outputModel = new Model(new Position(origin.Latitude, origin.Longitude), new Dictionary<Guid, Element>());
@@ -77,13 +76,16 @@ namespace Site
             }
 
             // Draw something at the origin
-            var m = new Mass(Elements.Geometry.Polygon.Rectangle(1.0, 1.0), 1.0, new Material("Origin", Colors.Pink, 0.0f, 0.0f), new Transform(0,0,result.Point.Z));
+            var m = new Mass(Marker(Vector3.Origin, new Vector3(15.0, 15.0), 1.0), 
+                             1.0, 
+                             new Material("Origin", Colors.Black, 0.0f, 0.0f), 
+                             new Transform(0, 0, result.Point.Z));
             outputModel.AddElement(m);
-            
+
             var projectOrigin = new Origin(origin, result.Point.Z, new Transform(), Guid.NewGuid(), "Origin");
             outputModel.AddElement(projectOrigin);
 
-            var outputs = new SiteOutputs(origin.Latitude, origin.Longitude, result.Point.Z)
+            var outputs = new LocationOutputs(origin.Latitude, origin.Longitude, result.Point.Z)
             {
                 model = outputModel
             };
@@ -101,6 +103,41 @@ namespace Site
         {
             var ray = new Ray(Vector3.Origin, Vector3.ZAxis);
             return null;
+        }
+
+        /// <summary>
+        /// Creates an X-shaped Polygon within a specified rectangle.
+        /// </summary>
+        /// <param name="origin">The initial enclosing box corner.</param>
+        /// <param name="size">The positive x and y delta defining the size of the enclosing box.</param>
+        /// <param name="width">Width of each stroke of the shape.</param>
+        /// <returns>
+        /// A new Polygon.
+        /// </returns>
+        public static Elements.Geometry.Polygon Marker(Vector3 origin, Vector3 size, double width)
+        {
+            var halfWidth = width * 0.5;
+            var xAxis = origin.Y + (size.Y * 0.5);
+            var yAxis = origin.X + (size.X * 0.5);
+            return
+                new Elements.Geometry.Polygon
+                (
+                    new[]
+                    {
+                        new Vector3(yAxis - halfWidth, Vector3.Origin.Y),
+                        new Vector3(yAxis + halfWidth, Vector3.Origin.Y),
+                        new Vector3(yAxis + halfWidth, xAxis - halfWidth),
+                        new Vector3(size.X, xAxis - halfWidth),
+                        new Vector3(size.X, xAxis + halfWidth),
+                        new Vector3(yAxis + halfWidth, xAxis + halfWidth),
+                        new Vector3(yAxis + halfWidth, size.Y),
+                        new Vector3(yAxis - halfWidth, size.Y),
+                        new Vector3(yAxis - halfWidth, xAxis + halfWidth),
+                        new Vector3(Vector3.Origin.X, xAxis + halfWidth),
+                        new Vector3(Vector3.Origin.X, xAxis - halfWidth),
+                        new Vector3(yAxis - halfWidth, xAxis - halfWidth)
+                    }
+                );
         }
     }
 
@@ -178,8 +215,8 @@ namespace Site
             var C1 = P - tri.Vertices[1].Position;
             var C2 = P - tri.Vertices[2].Position;
 
-            if(P.IsAlmostEqualTo(tri.Vertices[0].Position) || 
-               P.IsAlmostEqualTo(tri.Vertices[1].Position) || 
+            if (P.IsAlmostEqualTo(tri.Vertices[0].Position) ||
+               P.IsAlmostEqualTo(tri.Vertices[1].Position) ||
                P.IsAlmostEqualTo(tri.Vertices[2].Position))
             {
                 // Intersection occurs at a vertex of the triangle.

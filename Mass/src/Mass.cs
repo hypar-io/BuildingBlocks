@@ -83,6 +83,7 @@ namespace Mass
             {
                 output.model.AddElement(mass);
             }
+            output.model.AddElement(new Polygon(new Vector3[] { new Vector3(0.0, 0.0), });
             return output;
         }
     }
