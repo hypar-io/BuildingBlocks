@@ -12,9 +12,9 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System.Collections.Generic;
 
-namespace Site
+namespace Location
 {
-    public class SiteInputs: S3Args
+    public class LocationInputs: S3Args
     {
 		/// <summary>
 		/// The selected origin of the site.
@@ -28,7 +28,7 @@ namespace Site
         /// Construct a LocationInputs with default inputs.
         /// This should be used for testing only.
         /// </summary>
-        public SiteInputs() : base()
+        public LocationInputs() : base()
         {
 			this.Origin = new Elements.GeoJSON.Point(new Elements.GeoJSON.Position(32.78411, -96.78204));
 
@@ -36,11 +36,11 @@ namespace Site
 
 
         /// <summary>
-        /// Construct a SiteInputs specifying all inputs.
+        /// Construct a LocationInputs specifying all inputs.
         /// </summary>
         /// <returns></returns>
         [JsonConstructor]
-        public SiteInputs(Elements.GeoJSON.Point origin, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
+        public LocationInputs(Elements.GeoJSON.Point origin, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
         {
 			this.Origin = origin;
 
