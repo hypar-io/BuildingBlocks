@@ -5,15 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="GeometryEx" Version="1.11.0-alpha5" />
     <PackageReference Include="Hypar.Elements" Version="0.4.0-alpha.5" />
     <PackageReference Include="Hypar.Functions" Version="0.4.0-alpha.5" />
     <PackageReference Include="RoomKit" Version="2.3.0-alpha5-2" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="GeometryEx">
-      <HintPath>..\..\..\..\GeometryEx\GeometryEx\bin\Debug\netcoreapp2.1\GeometryEx.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
 </Project>

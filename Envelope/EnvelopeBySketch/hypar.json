@@ -72,5 +72,5 @@
     }
   ],
   "preview_image": null,
-  "element_types": null
+  "element_types": [ "../schemas/envelope.json" ]
 }
