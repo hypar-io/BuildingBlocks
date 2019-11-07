@@ -7,7 +7,7 @@ using GeometryEx;
 
 namespace EnvelopeBySketch
 {
-      public static class EnvelopeBySketch
+    public static class EnvelopeBySketch
     {
         /// <summary>
         /// The EnvelopeBySketch function.
@@ -21,7 +21,16 @@ namespace EnvelopeBySketch
             var extrude = new Elements.Geometry.Solids.Extrude(input.Perimeter, input.FoundationDepth, Vector3.ZAxis * -1, 0.0, false);
             var geoRep = new Representation(new List<Elements.Geometry.Solids.SolidOperation>() { extrude });
             var fndMatl = new Material("envelope", Palette.Gray, 0.0f, 0.0f);
-            var foundation = new Envelope(new Transform(), fndMatl, geoRep, Guid.NewGuid(), "");
+            var foundation =
+                new Envelope(input.Perimeter,
+                             input.FoundationDepth,
+                             Vector3.ZAxis * -1,
+                             0.0,
+                             new Transform(),
+                             fndMatl,
+                             geoRep,
+                             Guid.NewGuid(), 
+                             "");
             var envelope = new List<Envelope>() { foundation };
 
             // Create the envelope at the location's zero plane.
@@ -29,23 +38,39 @@ namespace EnvelopeBySketch
             extrude = new Elements.Geometry.Solids.Extrude(input.Perimeter, bldgHeight, Vector3.ZAxis, 0.0, false);
             geoRep = new Representation(new List<Elements.Geometry.Solids.SolidOperation>() { extrude });
             var strMatl = new Material("envelope", Palette.Aqua, 0.0f, 0.0f);
-            var story = new Envelope(new Transform(), fndMatl, geoRep, Guid.NewGuid(), "");
+            var story =
+                new Envelope(input.Perimeter,
+                             bldgHeight,
+                             Vector3.ZAxis,
+                             0.0,
+                             new Transform(),
+                             strMatl,
+                             geoRep,
+                             Guid.NewGuid(),
+                             "");
             envelope.Add(story);
 
             // Create the remaining envelope elements.
             var offsetFactor = -1;
             while (bldgHeight < input.BuildingHeight)
             {
-                var transf = new Transform(story.Transform.Matrix);
                 var height = input.BuildingHeight - bldgHeight < input.SetbackInterval ? input.BuildingHeight - bldgHeight : input.SetbackInterval;
                 var tryPer = input.Perimeter.Offset(input.SetbackDepth * offsetFactor);
-                
                 if (tryPer.Count() > 0)
                 {
                     var profile = new Profile(tryPer.OrderByDescending(p => p.Area()).First());
                     extrude = new Elements.Geometry.Solids.Extrude(profile, height, Vector3.ZAxis, 0.0, false);
                     geoRep = new Representation(new List<Elements.Geometry.Solids.SolidOperation>() { extrude });
-                    story = new Envelope(new Transform(0.0, 0.0, bldgHeight), strMatl, geoRep, Guid.NewGuid(), "");
+                    story =
+                        new Envelope(profile,
+                                     bldgHeight,
+                                     Vector3.ZAxis,
+                                     0.0,
+                                     new Transform(0.0, 0.0, bldgHeight),
+                                     strMatl,
+                                     geoRep,
+                                     Guid.NewGuid(),
+                                     "");
                     envelope.Add(story);
                     offsetFactor--;
                     bldgHeight += height;
@@ -65,5 +90,5 @@ namespace EnvelopeBySketch
             }
             return output;
         }
-      }
+    }
 }

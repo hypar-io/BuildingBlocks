@@ -1,0 +1,48 @@
+{
+  "$schema": "https://hypar.io/Schemas/Function.json",
+  "description": "The FloorsByEnvelope function.",
+  "id": "a9f774fa-ae42-4838-a00e-73eb299fae10",
+  "name": "FloorsByEnvelope",
+  "model_dependencies": [ "Envelope" ],
+  "model_output": "Floors",
+  "repository_url": "https://github.com/hypar-io/function",
+  "inputs": [
+    {
+      "min": 4.0,
+      "max": 5.0,
+      "step": 0.1,
+      "name": "Floor to Floor Height",
+      "description": "Standard height of repeated floors.",
+      "type": "range"
+    },
+    {
+      "min": 1.0,
+      "max": 2.0,
+      "step": 0.1,
+      "name": "Mechanical Floor Height Ratio",
+      "description": "Multiplier of standard floor height for mechanical floors.",
+      "type": "range"
+    }
+  ],
+  "outputs": [
+    {
+      "name": "Total Floor Area",
+      "description": "Floor area of all floors.",
+      "type": "number"
+    },
+    {
+      "name": "Envelope Count",
+      "description": "Count of the Envelopes in all the models.",
+      "type": "number"
+    },
+    {
+      "name": "Element Count",
+      "description": "Count of the Elements in all the models.",
+      "type": "number"
+    }
+  ],
+  "preview_image": null,
+  "element_types": [
+    "../schemas/Envelope.json"
+  ]
+}

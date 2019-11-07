@@ -3,6 +3,7 @@
   "description": "The EnvelopeBySketch function.",
   "id": "0c8d0526-9490-4d53-896b-88a1515de583",
   "name": "EnvelopeBySketch",
+  "model_output": "Envelope",
   "repository_url": "https://github.com/hypar-io/function",
   "inputs": [
     {
@@ -67,5 +68,8 @@
     }
   ],
   "preview_image": null,
-  "element_types": [ "../schemas/envelope.json" ]
+  "element_types": [
+    "../schemas/Origin.json",
+    "../schemas/Envelope.json"
+  ]
 }
