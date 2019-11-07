@@ -17,16 +17,28 @@ namespace FloorsByEnvelope
     public class FloorsByEnvelopeInputs: S3Args
     {
 		/// <summary>
+		/// Height of ground floor.
+		/// </summary>
+		[JsonProperty("Ground Floor Height")]
+		public double GroundFloorHeight {get;}
+
+		/// <summary>
 		/// Standard height of repeated floors.
 		/// </summary>
-		[JsonProperty("Floor to Floor Height")]
-		public double FloorToFloorHeight {get;}
+		[JsonProperty("Standard Floor Height")]
+		public double StandardFloorHeight {get;}
 
 		/// <summary>
 		/// Multiplier of standard floor height for mechanical floors.
 		/// </summary>
 		[JsonProperty("Mechanical Floor Height Ratio")]
 		public double MechanicalFloorHeightRatio {get;}
+
+		/// <summary>
+		/// Setback of slab edges from envelope.
+		/// </summary>
+		[JsonProperty("Floor setback")]
+		public double FloorSetback {get;}
 
 
         
@@ -36,8 +48,10 @@ namespace FloorsByEnvelope
         /// </summary>
         public FloorsByEnvelopeInputs() : base()
         {
-			this.FloorToFloorHeight = 5;
-			this.MechanicalFloorHeightRatio = 2;
+			this.GroundFloorHeight = 7;
+			this.StandardFloorHeight = 5;
+			this.MechanicalFloorHeightRatio = 2.5;
+			this.FloorSetback = 1.5;
 
         }
 
@@ -47,10 +61,12 @@ namespace FloorsByEnvelope
         /// </summary>
         /// <returns></returns>
         [JsonConstructor]
-        public FloorsByEnvelopeInputs(double floortofloorheight, double mechanicalfloorheightratio, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
+        public FloorsByEnvelopeInputs(double groundfloorheight, double standardfloorheight, double mechanicalfloorheightratio, double floorsetback, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
         {
-			this.FloorToFloorHeight = floortofloorheight;
+			this.GroundFloorHeight = groundfloorheight;
+			this.StandardFloorHeight = standardfloorheight;
 			this.MechanicalFloorHeightRatio = mechanicalfloorheightratio;
+			this.FloorSetback = floorsetback;
 
 		}
 

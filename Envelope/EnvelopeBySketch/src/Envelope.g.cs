@@ -26,16 +26,17 @@ namespace Elements
 	public partial class Envelope : GeometricElement
     {
         [Newtonsoft.Json.JsonConstructor]
-        public Envelope(Profile @profile, double @height, Vector3 @direction, double @rotation, Transform @transform, Material @material, Representation @representation, System.Guid @id, string @name)
+        public Envelope(Profile @profile, double @elevation, double @height, Vector3 @direction, double @rotation, Transform @transform, Material @material, Representation @representation, System.Guid @id, string @name)
             : base(transform, material, representation, id, name)
         {
             var validator = Validator.Instance.GetFirstValidatorForType<Envelope>();
             if(validator != null)
             {
-                validator.Validate(new object[]{ @profile, @height, @direction, @rotation, @transform, @material, @representation, @id, @name});
+                validator.Validate(new object[]{ @profile, @elevation, @height, @direction, @rotation, @transform, @material, @representation, @id, @name});
             }
         
             this.Profile = @profile;
+            this.Elevation = @elevation;
             this.Height = @height;
             this.Direction = @direction;
             this.Rotation = @rotation;
@@ -44,6 +45,11 @@ namespace Elements
         /// <summary>The id of the profile to extrude.</summary>
         [Newtonsoft.Json.JsonProperty("Profile", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public Profile Profile { get; internal set; }
+    
+        /// <summary>The elevation of the extrusion.</summary>
+        [Newtonsoft.Json.JsonProperty("Elevation", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.Range(0, int.MaxValue)]
+        public double Elevation { get; internal set; }
     
         /// <summary>The height of the extrusion.</summary>
         [Newtonsoft.Json.JsonProperty("Height", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
@@ -54,7 +60,7 @@ namespace Elements
         [Newtonsoft.Json.JsonProperty("Direction", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public Vector3 Direction { get; internal set; }
     
-        /// <summary>The rotation, in degrees, of the profile.</summary>
+        /// <summary>The rotation in degrees of the profile.</summary>
         [Newtonsoft.Json.JsonProperty("Rotation", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public double Rotation { get; internal set; }
     

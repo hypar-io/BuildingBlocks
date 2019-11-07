@@ -22,15 +22,17 @@ namespace EnvelopeBySketch
             var geoRep = new Representation(new List<Elements.Geometry.Solids.SolidOperation>() { extrude });
             var fndMatl = new Material("envelope", Palette.Gray, 0.0f, 0.0f);
             var foundation =
-                new Envelope(input.Perimeter,
-                             input.FoundationDepth,
-                             Vector3.ZAxis * -1,
-                             0.0,
-                             new Transform(),
-                             fndMatl,
-                             geoRep,
-                             Guid.NewGuid(), 
-                             "");
+                new Envelope(
+                    input.Perimeter,
+                    input.FoundationDepth,
+                    input.FoundationDepth,
+                    Vector3.ZAxis * -1,
+                    0.0,
+                    new Transform(),
+                    fndMatl,
+                    geoRep,
+                    Guid.NewGuid(), 
+                    "");
             var envelope = new List<Envelope>() { foundation };
 
             // Create the envelope at the location's zero plane.
@@ -39,15 +41,17 @@ namespace EnvelopeBySketch
             geoRep = new Representation(new List<Elements.Geometry.Solids.SolidOperation>() { extrude });
             var strMatl = new Material("envelope", Palette.Aqua, 0.0f, 0.0f);
             var story =
-                new Envelope(input.Perimeter,
-                             bldgHeight,
-                             Vector3.ZAxis,
-                             0.0,
-                             new Transform(),
-                             strMatl,
-                             geoRep,
-                             Guid.NewGuid(),
-                             "");
+                new Envelope(
+                    input.Perimeter,
+                    0.0,
+                    bldgHeight,
+                    Vector3.ZAxis,
+                    0.0,
+                    new Transform(),
+                    strMatl,
+                    geoRep,
+                    Guid.NewGuid(),
+                    "");
             envelope.Add(story);
 
             // Create the remaining envelope elements.
@@ -62,15 +66,17 @@ namespace EnvelopeBySketch
                     extrude = new Elements.Geometry.Solids.Extrude(profile, height, Vector3.ZAxis, 0.0, false);
                     geoRep = new Representation(new List<Elements.Geometry.Solids.SolidOperation>() { extrude });
                     story =
-                        new Envelope(profile,
-                                     bldgHeight,
-                                     Vector3.ZAxis,
-                                     0.0,
-                                     new Transform(0.0, 0.0, bldgHeight),
-                                     strMatl,
-                                     geoRep,
-                                     Guid.NewGuid(),
-                                     "");
+                        new Envelope(
+                            profile,
+                            bldgHeight,
+                            bldgHeight,
+                            Vector3.ZAxis,
+                            0.0,
+                            new Transform(0.0, 0.0, bldgHeight),
+                            strMatl,
+                            geoRep,
+                            Guid.NewGuid(),
+                            "");
                     envelope.Add(story);
                     offsetFactor--;
                     bldgHeight += height;

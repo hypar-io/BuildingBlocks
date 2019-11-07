@@ -23,16 +23,10 @@ namespace FloorsByEnvelope
 		public double TotalFloorArea {get;}
 
 		/// <summary>
-		/// Count of the Envelopes in all the models.
+		/// Count of the Envelopes in the incoming Envelope model.
 		/// </summary>
 		[JsonProperty("Envelope Count")]
 		public double EnvelopeCount {get;}
-
-		/// <summary>
-		/// Count of the Elements in all the models.
-		/// </summary>
-		[JsonProperty("Element Count")]
-		public double ElementCount {get;}
 
 
         
@@ -51,11 +45,10 @@ namespace FloorsByEnvelope
         /// </summary>
         /// <returns></returns>
         [JsonConstructor]
-        public FloorsByEnvelopeOutputs(double totalfloorarea, double envelopecount, double elementcount): base()
+        public FloorsByEnvelopeOutputs(double totalfloorarea, double envelopecount): base()
         {
 			this.TotalFloorArea = totalfloorarea;
 			this.EnvelopeCount = envelopecount;
-			this.ElementCount = elementcount;
 
 		}
 

@@ -1,6 +1,8 @@
 using Elements;
 using Elements.Geometry;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace FloorsByEnvelope
 {
@@ -15,13 +17,36 @@ namespace FloorsByEnvelope
         public static FloorsByEnvelopeOutputs Execute(Dictionary<string, Model> inputModels, FloorsByEnvelopeInputs input)
         {
             var envelopes = new List<Envelope>();
-            var elementCount = 0.0;
-            foreach (var model in inputModels.Values)
+            inputModels.TryGetValue("Envelope", out var model);
+            envelopes.AddRange(model.AllElementsOfType<Envelope>());
+            var bldgHeight = 0.0;
+            var rentable = new List<Envelope>();
+            var subgrade = new List<Envelope>();
+            var floors = new List<Floor>();
+            foreach (var envelope in envelopes)
             {
-                envelopes.AddRange(model.AllElementsOfType<Envelope>());
-                elementCount += model.Elements.Count;
+                if (envelope.Direction == Vector3.ZAxis)
+                {
+                    rentable.Add(envelope);
+                    bldgHeight += envelope.Height;
+                }
+                else
+                {
+                    subgrade.Add(envelope);
+                }
             }
-            return new FloorsByEnvelopeOutputs(0.0, envelopes.Count, elementCount);
+            rentable.OrderBy(e => e.Elevation);
+            var perimeter = rentable.First().Profile.Perimeter;
+            var mechFloorHeight = input.FloorToFloorHeight * input.MechanicalFloorHeightRatio;
+            var mechFloorElevation = 0.0;
+            if (bldgHeight >= mechFloorHeight)
+            {
+                mechFloorElevation = bldgHeight - mechFloorHeight;
+            }
+            floors.Add(new Floor(perimeter, 0.15, mechFloorElevation - 0.15, 
+                                 new Transform(), BuiltInMaterials.Concrete, 
+                                 null, Guid.NewGuid(), ""));
+            return new FloorsByEnvelopeOutputs(0.0, envelopes.Count);
         }
       }
 }
