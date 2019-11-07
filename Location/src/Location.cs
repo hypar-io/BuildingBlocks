@@ -38,6 +38,9 @@ namespace Location
             var ray = new Ray(Vector3.Origin, Vector3.ZAxis);
             ray.Intersects(o, out IntersectionResult result);
 
+            var worldToLocalTransform = new Transform(new Vector3(0,0,-result.Point.Z));
+            o.Transform = worldToLocalTransform;
+            
             outputModel.AddElement(o);
 
             // Determine which quadrant the local origin is in
@@ -46,40 +49,51 @@ namespace Location
             {
                 // lower left
                 var w = GetTopoTile(x - 1, y, origin.Latitude, origin.Longitude, offset);
+                w.Transform = worldToLocalTransform;
                 var sw = GetTopoTile(x - 1, y - 1, origin.Latitude, origin.Longitude, offset);
+                sw.Transform = worldToLocalTransform;
                 var s = GetTopoTile(x, y - 1, origin.Latitude, origin.Longitude, offset);
+                s.Transform = worldToLocalTransform;
                 outputModel.AddElements(new[] { w, sw, s });
             }
             else if (localOrigin.X > tileCenter.X && localOrigin.Y < tileCenter.Y)
             {
                 // lower right
                 var e = GetTopoTile(x + 1, y, origin.Latitude, origin.Longitude, offset);
+                e.Transform = worldToLocalTransform;
                 var se = GetTopoTile(x + 1, y - 1, origin.Latitude, origin.Longitude, offset);
+                se.Transform = worldToLocalTransform;
                 var s = GetTopoTile(x, y - 1, origin.Latitude, origin.Longitude, offset);
+                s.Transform= worldToLocalTransform;
                 outputModel.AddElements(new[] { e, se, s });
             }
             else if (localOrigin.X > tileCenter.X && localOrigin.Y > tileCenter.Y)
             {
                 // upper right
                 var n = GetTopoTile(x, y + 1, origin.Latitude, origin.Longitude, offset);
+                n.Transform = worldToLocalTransform;
                 var se = GetTopoTile(x + 1, y + 1, origin.Latitude, origin.Longitude, offset);
+                se.Transform = worldToLocalTransform;
                 var e = GetTopoTile(x + 1, y, origin.Latitude, origin.Longitude, offset);
+                e.Transform = worldToLocalTransform;
                 outputModel.AddElements(new[] { n, se, e });
             }
             else if (localOrigin.X < tileCenter.X && localOrigin.Y > tileCenter.Y)
             {
                 // upper left
                 var n = GetTopoTile(x, y + 1, origin.Latitude, origin.Longitude, offset);
+                n.Transform = worldToLocalTransform;
                 var nw = GetTopoTile(x - 1, y + 1, origin.Latitude, origin.Longitude, offset);
+                nw.Transform = worldToLocalTransform;
                 var w = GetTopoTile(x - 1, y, origin.Latitude, origin.Longitude, offset);
+                w.Transform = worldToLocalTransform;
                 outputModel.AddElements(new[] { n, nw, w });
             }
 
             // Draw something at the origin
             var m = new Mass(Marker(Vector3.Origin, new Vector3(15.0, 15.0), 1.0), 
                              1.0, 
-                             new Material("Origin", Colors.Black, 0.0f, 0.0f), 
-                             new Transform(0, 0, result.Point.Z));
+                             new Material("Origin", Colors.Black, 0.0f, 0.0f));
             outputModel.AddElement(m);
 
             var projectOrigin = new Origin(origin, result.Point.Z, new Transform(), Guid.NewGuid(), "Origin");
