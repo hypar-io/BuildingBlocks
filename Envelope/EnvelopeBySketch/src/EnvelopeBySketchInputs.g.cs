@@ -34,18 +34,6 @@ namespace EnvelopeBySketch
 		[JsonProperty("Foundation Depth")]
 		public double FoundationDepth {get;}
 
-		/// <summary>
-		/// Vertical distance between setbacks.
-		/// </summary>
-		[JsonProperty("Setback Interval")]
-		public double SetbackInterval {get;}
-
-		/// <summary>
-		/// Depth of each setback from the previous plinth.
-		/// </summary>
-		[JsonProperty("Setback Depth")]
-		public double SetbackDepth {get;}
-
 
         
         /// <summary>
@@ -57,8 +45,6 @@ namespace EnvelopeBySketch
 			this.Perimeter = Elements.Geometry.Polygon.Rectangle(1, 1);
 			this.BuildingHeight = 200;
 			this.FoundationDepth = 20;
-			this.SetbackInterval = 50;
-			this.SetbackDepth = 10;
 
         }
 
@@ -68,13 +54,11 @@ namespace EnvelopeBySketch
         /// </summary>
         /// <returns></returns>
         [JsonConstructor]
-        public EnvelopeBySketchInputs(Elements.Geometry.Polygon perimeter, double buildingheight, double foundationdepth, double setbackinterval, double setbackdepth, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
+        public EnvelopeBySketchInputs(Elements.Geometry.Polygon perimeter, double buildingheight, double foundationdepth, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
         {
 			this.Perimeter = perimeter;
 			this.BuildingHeight = buildingheight;
 			this.FoundationDepth = foundationdepth;
-			this.SetbackInterval = setbackinterval;
-			this.SetbackDepth = setbackdepth;
 
 		}
 
