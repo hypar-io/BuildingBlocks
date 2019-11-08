@@ -28,18 +28,6 @@ namespace EnvelopeBySketch
 		[JsonProperty("Subgrade")]
 		public double Subgrade {get;}
 
-		/// <summary>
-		/// Vertical distance between setbacks.
-		/// </summary>
-		[JsonProperty("Interval")]
-		public double Interval {get;}
-
-		/// <summary>
-		/// Setback offset from previous interval.
-		/// </summary>
-		[JsonProperty("Setback")]
-		public double Setback {get;}
-
 
         
         /// <summary>
@@ -57,12 +45,10 @@ namespace EnvelopeBySketch
         /// </summary>
         /// <returns></returns>
         [JsonConstructor]
-        public EnvelopeBySketchOutputs(double height, double subgrade, double interval, double setback): base()
+        public EnvelopeBySketchOutputs(double height, double subgrade): base()
         {
 			this.Height = height;
 			this.Subgrade = subgrade;
-			this.Interval = interval;
-			this.Setback = setback;
 
 		}
 

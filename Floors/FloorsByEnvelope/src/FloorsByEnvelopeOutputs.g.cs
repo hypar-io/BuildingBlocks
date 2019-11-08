@@ -17,16 +17,34 @@ namespace FloorsByEnvelope
     public class FloorsByEnvelopeOutputs: ResultsBase
     {
 		/// <summary>
-		/// Floor area of all floors.
+		/// Aggregate area of non-mechanical floor above grade.
 		/// </summary>
-		[JsonProperty("Total Floor Area")]
-		public double TotalFloorArea {get;}
+		[JsonProperty("Total Rentable Floor Area")]
+		public double TotalRentableFloorArea {get;}
 
 		/// <summary>
-		/// Count of the Envelopes in the incoming Envelope model.
+		/// Height of the ground floor.
 		/// </summary>
-		[JsonProperty("Envelope Count")]
-		public double EnvelopeCount {get;}
+		[JsonProperty("Retail Floor Height")]
+		public double RetailFloorHeight {get;}
+
+		/// <summary>
+		/// Height of the repeated floors.
+		/// </summary>
+		[JsonProperty("Repeated Floor Height")]
+		public double RepeatedFloorHeight {get;}
+
+		/// <summary>
+		/// Height of the mechanical floor.
+		/// </summary>
+		[JsonProperty("Mechanical Floor Height")]
+		public double MechanicalFloorHeight {get;}
+
+		/// <summary>
+		/// Clearance between slab edge and building envelope.
+		/// </summary>
+		[JsonProperty("Floor Clearance")]
+		public double FloorClearance {get;}
 
 
         
@@ -45,10 +63,13 @@ namespace FloorsByEnvelope
         /// </summary>
         /// <returns></returns>
         [JsonConstructor]
-        public FloorsByEnvelopeOutputs(double totalfloorarea, double envelopecount): base()
+        public FloorsByEnvelopeOutputs(double totalrentablefloorarea, double retailfloorheight, double repeatedfloorheight, double mechanicalfloorheight, double floorclearance): base()
         {
-			this.TotalFloorArea = totalfloorarea;
-			this.EnvelopeCount = envelopecount;
+			this.TotalRentableFloorArea = totalrentablefloorarea;
+			this.RetailFloorHeight = retailfloorheight;
+			this.RepeatedFloorHeight = repeatedfloorheight;
+			this.MechanicalFloorHeight = mechanicalfloorheight;
+			this.FloorClearance = floorclearance;
 
 		}
 

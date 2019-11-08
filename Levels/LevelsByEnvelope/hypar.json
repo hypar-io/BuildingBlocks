@@ -1,0 +1,57 @@
+{
+  "$schema": "https://hypar.io/Schemas/Function.json",
+  "description": "The LevelsByEnvelope function.",
+  "id": "aa0b94eb-6a0d-4f17-b0eb-322bce98bb2a",
+  "name": "LevelsByEnvelope",
+  "model_dependencies": [ "Envelope" ],
+  "model_output": "Levels",
+  "repository_url": "https://github.com/hypar-io/function",
+  "inputs": [
+    {
+      "min": 4.0,
+      "max": 7.0,
+      "step": 0.1,
+      "name": "Ground Level Height",
+      "description": "Height of ground level.",
+      "type": "range"
+    },
+    {
+      "min": 4.0,
+      "max": 5.0,
+      "step": 0.1,
+      "name": "Standard Level Height",
+      "description": "Standard height of repeated levels.",
+      "type": "range"
+    },
+    {
+      "min": 1.5,
+      "max": 2.5,
+      "step": 0.1,
+      "name": "Mechanical Level Height Ratio",
+      "description": "Multiplier of standard level height for mechanical levels.",
+      "type": "range"
+    }
+  ],
+  "outputs": [
+    {
+      "name": "Entry Level Height",
+      "description": "Height of the ground level.",
+      "type": "number"
+    },
+    {
+      "name": "Repeated Level Height",
+      "description": "Height of the repeated levels.",
+      "type": "number"
+    },
+    {
+      "name": "Mechanical Level Height",
+      "description": "Height of the mechanical level.",
+      "type": "number"
+    }
+  ],
+  "preview_image": null,
+  "element_types": [
+    "../../schemas/Envelope.json",
+    "../../schemas/Level.json"
+  ]
+}
