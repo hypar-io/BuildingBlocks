@@ -9,38 +9,46 @@ using Hypar.Functions;
 using Hypar.Functions.Execution;
 using Hypar.Functions.Execution.AWS;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using System.Collections.Generic;
 
 namespace Structure
 {
-	public class StructureOutputs: ResultsBase
-	{
+    public class StructureOutputs: ResultsBase
+    {
 		/// <summary>
-		/// Quantity of columns.
+		/// The number of grid lines.
 		/// </summary>
-		[JsonProperty("Colums")]
-		public double Colums {get;}
+		[JsonProperty("Grids")]
+		public double Grids {get;}
 
 
-		
-		/// <summary>
-		/// Construct a StructureOutputs with default inputs.
-		/// This should be used only for testing.
-		/// </summary>
-		public StructureOutputs() : base()
-		{
+        
+        /// <summary>
+        /// Construct a StructureOutputs with default inputs.
+        /// This should be used for testing only.
+        /// </summary>
+        public StructureOutputs() : base()
+        {
+
+        }
+
+
+        /// <summary>
+        /// Construct a StructureOutputs specifying all inputs.
+        /// </summary>
+        /// <returns></returns>
+        [JsonConstructor]
+        public StructureOutputs(double grids): base()
+        {
+			this.Grids = grids;
 
 		}
-		
-		/// <summary>
-		/// Construct a StructureOutputs specifying all inputs.
-		/// </summary>
-		/// <returns></returns>
-		[JsonConstructor]
-		public StructureOutputs(double colums): base()
-		{
-			this.Colums = colums;
 
+		public override string ToString()
+		{
+			var json = JsonConvert.SerializeObject(this);
+			return json;
 		}
 	}
 }

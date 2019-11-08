@@ -11,22 +11,22 @@ using System.Threading.Tasks;
 [assembly: LambdaSerializer(typeof(Amazon.Lambda.Serialization.Json.JsonSerializer))]
 namespace Structure
 {
-	public class Function
-	{
-		// Cache the model store for use by subsequent
-		// executions of this lambda.
-		private IModelStore<StructureInputs> store;
+    public class Function
+    {
+        // Cache the model store for use by subsequent
+        // executions of this lambda.
+        private IModelStore<StructureInputs> store;
 
-		public async Task<StructureOutputs> Handler(StructureInputs args, ILambdaContext context)
-		{
-			if(this.store == null)
-			{
-				this.store = new S3ModelStore<StructureInputs>(RegionEndpoint.USWest1);
-			}
-			
-			var l = new InvocationWrapper<StructureInputs,StructureOutputs>(store, Structure.Execute);
-			var output = await l.InvokeAsync(args);
-			return output;
-		}
-  	}
+        public async Task<StructureOutputs> Handler(StructureInputs args, ILambdaContext context)
+        {
+            if(this.store == null)
+            {
+                this.store = new S3ModelStore<StructureInputs>(RegionEndpoint.USWest1);
+            }
+            
+            var l = new InvocationWrapper<StructureInputs,StructureOutputs>(store, Structure.Execute);
+            var output = await l.InvokeAsync(args);
+            return output;
+        }
+      }
 }

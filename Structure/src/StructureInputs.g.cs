@@ -9,55 +9,63 @@ using Hypar.Functions;
 using Hypar.Functions.Execution;
 using Hypar.Functions.Execution.AWS;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using System.Collections.Generic;
 
 namespace Structure
 {
-	public class StructureInputs: S3Args
-	{
+    public class StructureInputs: S3Args
+    {
 		/// <summary>
-		/// Center to center column distance.
+		/// Grid interval in the X direction.
 		/// </summary>
-		[JsonProperty("Column X-Axis Interval")]
-		public double ColumnXAxisInterval {get;}
+		[JsonProperty("Grid X-Axis Interval")]
+		public double GridXAxisInterval {get;}
 
 		/// <summary>
-		/// Center to center column distance.
+		/// Grid interval in the Y direction.
 		/// </summary>
-		[JsonProperty("Column Y-Axis Interval")]
-		public double ColumnYAxisInterval {get;}
+		[JsonProperty("Grid Y-Axis Interval")]
+		public double GridYAxisInterval {get;}
 
 		/// <summary>
-		/// Column diameter.
+		/// The amount to rotate the grid in degrees.
 		/// </summary>
-		[JsonProperty("Column Diameter")]
-		public double ColumnDiameter {get;}
+		[JsonProperty("Grid Rotation")]
+		public double GridRotation {get;}
 
 
-		
-		/// <summary>
-		/// Construct a StructureInputs with default inputs.
-		/// This should be used only for testing.
-		/// </summary>
-		public StructureInputs() : base()
-		{
-			this.ColumnXAxisInterval = 10;
-			this.ColumnYAxisInterval = 10;
-			this.ColumnDiameter = 1;
+        
+        /// <summary>
+        /// Construct a StructureInputs with default inputs.
+        /// This should be used for testing only.
+        /// </summary>
+        public StructureInputs() : base()
+        {
+			this.GridXAxisInterval = 10;
+			this.GridYAxisInterval = 10;
+			this.GridRotation = 90;
+
+        }
+
+
+        /// <summary>
+        /// Construct a StructureInputs specifying all inputs.
+        /// </summary>
+        /// <returns></returns>
+        [JsonConstructor]
+        public StructureInputs(double gridxaxisinterval, double gridyaxisinterval, double gridrotation, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
+        {
+			this.GridXAxisInterval = gridxaxisinterval;
+			this.GridYAxisInterval = gridyaxisinterval;
+			this.GridRotation = gridrotation;
 
 		}
-		
-		/// <summary>
-		/// Construct a StructureInputs specifying all inputs.
-		/// </summary>
-		/// <returns></returns>
-		[JsonConstructor]
-		public StructureInputs(double columnxaxisinterval, double columnyaxisinterval, double columndiameter, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
-		{
-			this.ColumnXAxisInterval = columnxaxisinterval;
-			this.ColumnYAxisInterval = columnyaxisinterval;
-			this.ColumnDiameter = columndiameter;
 
+		public override string ToString()
+		{
+			var json = JsonConvert.SerializeObject(this);
+			return json;
 		}
 	}
 }
