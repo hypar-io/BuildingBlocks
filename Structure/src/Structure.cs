@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using Elements;
 using Elements.Geometry;
+using Elements.Geometry.Profiles;
 
 namespace Structure
 {
   	public static class Structure
 	{
         private const string ENVELOPE_MODEL_NAME = "Envelope";
-
-		/// <summary>
+        private const string LEVELS_MODEL_NAME = "Levels";
+		
+        /// <summary>
 		/// The Structure function.
 		/// </summary>
 		/// <param name="model">The model. 
@@ -21,6 +23,7 @@ namespace Structure
 		{
             Polygon footprint = null;
             double height;
+            List<Level> levels = null;
             if(!models.ContainsKey(ENVELOPE_MODEL_NAME))
             {
                 // Make a default envelope for testing.
@@ -31,28 +34,42 @@ namespace Structure
                 footprint = new Polygon(new[]{a,b,c,d});
                 // footprint = Polygon.L(20, 30, 10);
                 height = 20;
+                levels = new List<Level>();
+                for(var i=0; i<20; i+=3)
+                {
+                    levels.Add(new Level(new Vector3(0,0,i), Vector3.ZAxis, i, new Transform(), null, null, Guid.NewGuid(), $"Level {i}"));
+                }
             }
             else
             {
-                var envelopeModel = models["Envelope"];
-                var envelope = envelopeModel.AllElementsOfType<Envelope>().FirstOrDefault();
-                if(envelope == null)
+                var envelopeModel = models[ENVELOPE_MODEL_NAME];
+                var envelopes = envelopeModel.AllElementsOfType<Envelope>();
+                if(envelopes.Count() == 0)
                 {
                     throw new Exception("No element of type 'Envelope' could be found in the supplied model.");
                 }
-                var footPrint = envelope.Profile;
-                if(footPrint == null)
+                var envelope = envelopes.First(e=>e.Direction.IsAlmostEqualTo(Vector3.ZAxis));
+                footprint = envelope.Profile.Perimeter;
+                if(footprint == null)
                 {
                     throw new Exception("The provided Envelope does not have a profile.");
                 }
                 height = envelope.Height;
+
+                var levelsModel = models[LEVELS_MODEL_NAME];
+                levels = levelsModel.AllElementsOfType<Level>().ToList();
             }
+
+            // Inset the footprint just a bit to keep the
+            // beams out of the plane.
+            var girderProfile = (WideFlangeProfile)WideFlangeProfileServer.Instance.GetProfileByName("W18x40");
+            footprint = footprint.Offset(-girderProfile.bf/2)[0];
 
             var transform = new Transform();
             transform.Rotate(Vector3.ZAxis, input.GridRotation);
 
             // Create a grid across the boundary
-            // var bounds = new BBox3(Vector3.Origin, Vector3.Origin);
+            // var bounds = new BBox3(Vector3.Origin, Vector3.Origin);>
             double minx = 10000; double miny = 10000;
             double maxx = -10000; double maxy = -10000;
 
@@ -110,80 +127,90 @@ namespace Structure
 
             var model = new Model();
 
-            var gridXMaterial = new Material("GridX", Colors.Red);
-            foreach(var gridSeg in xGridSegments)
-            {
-                var mc = new ModelCurve(gridSeg, gridXMaterial);
-                model.AddElement(mc);
-            }
+            // Uncomment to draw grid model curves.
+            // var gridXMaterial = new Material("GridX", Colors.Red);
+            // foreach(var gridSeg in xGridSegments)
+            // {
+            //     var mc = new ModelCurve(gridSeg, gridXMaterial);
+            //     model.AddElement(mc);
+            // }
 
-            var gridYMaterial = new Material("GridY", Colors.Green);
-            foreach(var gridSeg in yGridSegments)
+            // var gridYMaterial = new Material("GridY", Colors.Green);
+            // foreach(var gridSeg in yGridSegments)
+            // {
+            //     var mc = new ModelCurve(gridSeg, gridYMaterial);
+            //     model.AddElement(mc);
+            // }
+
+            // var footprintMaterial = new Material("Footprint", Colors.Blue);
+            // var footprintMc = new ModelCurve(footprint, footprintMaterial);
+            // model.AddElement(footprintMc);
+
+            double finalHeight = 0.0;
+            foreach(var l in levels.Skip(1))
             {
-                var mc = new ModelCurve(gridSeg, gridYMaterial);
-                model.AddElement(mc);
-            }
-            double floorToFloor = 3;
-            double finalHeight = height;
-            for(var i=floorToFloor; i<height; i+=floorToFloor)
-            {
-                var t = new Transform(0,0,i);
-                var framing = CreateFramingPlan(t, xGridSegments, yGridSegments, boundarySegements);
+                var t = new Transform(0,0,l.Elevation);
+                var framing = CreateGirders(girderProfile, t, xGridSegments, yGridSegments, boundarySegements);
                 model.AddElements(framing);
-                finalHeight = i;
+                finalHeight = l.Elevation > finalHeight ? l.Elevation : finalHeight;
             }
 
             var colProfile = new Profile(Polygon.Rectangle(0.2,0.2));
             foreach(var lc in columnIntersections)
             {
-                var column = new Column(lc, finalHeight, colProfile, BuiltInMaterials.Steel);
+                var column = new Column(lc, finalHeight, colProfile, BuiltInMaterials.Steel, null, 0,0, input.GridRotation);
                 model.AddElement(column); 
             }
-            
-            var footprintMaterial = new Material("Footprint", Colors.Blue);
-            var footprintMc = new ModelCurve(footprint, footprintMaterial);
-            model.AddElement(footprintMc);
 
 			var output = new StructureOutputs(trimmedXGrids.Count);
             output.model = model;
 			return output;
 		}
 
-        private static List<Element> CreateFramingPlan(Transform t, List<Line> xGridSegments, List<Line> yGridSegments, IList<Line> boundarySegements)
+        private static List<Element> CreateGirders(Profile p, Transform t, List<Line> xGridSegments, List<Line> yGridSegments, IList<Line> boundarySegments)
         {
             var beams = new List<Element>();
-
-            var beamProfile = new Profile(Polygon.Rectangle(0.1,0.25));
             var beamOffset = new Transform(0,0,-0.25/2);
             var levelTrans = new Transform(t);
             levelTrans.Concatenate(beamOffset);
             foreach(var x in xGridSegments)
             {
-                var beam = new Beam(x,
-                                    beamProfile,
-                                    BuiltInMaterials.Steel,
-                                    transform: levelTrans);
-                beams.Add(beam);
+                try
+                {
+                    var beam = new Beam(x,
+                                        p,
+                                        BuiltInMaterials.Steel,
+                                        transform: levelTrans);
+                    beams.Add(beam);
+                }
+                catch(Exception ex)
+                {
+                    Console.WriteLine("There was an error creating a beam.");
+                    Console.WriteLine(ex.Message);
+                    continue;
+                }
             }
             foreach(var y in yGridSegments)
             {
                 try
                 {
                     var beam = new Beam(y,
-                                        beamProfile,
+                                        p,
                                         BuiltInMaterials.Steel,
                                         transform: levelTrans);
                     beams.Add(beam);
                 }
-                catch
+                catch(Exception ex)
                 {
+                    Console.WriteLine("There was an error creating a beam.");
+                    Console.WriteLine(ex.Message);
                     continue;
                 }
             }
-            foreach(var s in boundarySegements)
+            foreach(var s in boundarySegments)
             {
                 var beam = new Beam(s,
-                                    beamProfile,
+                                    p,
                                     BuiltInMaterials.Steel,
                                     transform: levelTrans);
                 beams.Add(beam);

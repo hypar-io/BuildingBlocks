@@ -1,4 +1,4 @@
-
+<img src="preview.png" width="512">
             
 # Structure
 
