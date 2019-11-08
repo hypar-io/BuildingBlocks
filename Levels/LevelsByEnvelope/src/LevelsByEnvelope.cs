@@ -87,12 +87,7 @@ namespace LevelsByEnvelope
                 floorArea += perimeter.Area();
                 lvlElev += stdHeight;
             }
-            var output = new LevelsByEnvelopeOutputs(input.GroundLevelHeight, stdHeight, mechHeight);
-            foreach (var level in levels)
-            {
-                var panel = new Panel(perimeter, BuiltInMaterials.Glass, new Transform(0.0, 0.0, level.Elevation), geomRep, Guid.NewGuid(), "");
-                output.model.AddElement(panel);
-            }           
+            var output = new LevelsByEnvelopeOutputs(input.GroundLevelHeight, stdHeight, mechHeight);       
             output.model.AddElements(levels);
             return output;
         }
