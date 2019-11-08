@@ -13,7 +13,7 @@
       "type": "geometry"
     },
     {
-      "min": 50.0,
+      "min": 20.0,
       "max": 200.0,
       "step": 1.0,
       "name": "Building Height",
@@ -27,22 +27,6 @@
       "name": "Foundation Depth",
       "description": "Depth of the building envelope below grade.",
       "type": "range"
-    },
-    {
-      "min": 10.0,
-      "max": 50.0,
-      "step": 5.0,
-      "name": "Setback Interval",
-      "description": "Vertical distance between setbacks.",
-      "type": "range"
-    },
-    {
-      "min": 1.0,
-      "max": 10.0,
-      "step": 0.5,
-      "name": "Setback Depth",
-      "description": "Depth of each setback from the previous plinth.",
-      "type": "range"
     }
   ],
   "outputs": [
@@ -54,16 +38,6 @@
     {
       "name": "Subgrade",
       "description": "Depth of the subgrade section.",
-      "type": "number"
-    },
-    {
-      "name": "Interval",
-      "description": "Vertical distance between setbacks.",
-      "type": "number"
-    },
-    {
-      "name": "Setback",
-      "description": "Setback offset from previous interval.",
       "type": "number"
     }
   ],

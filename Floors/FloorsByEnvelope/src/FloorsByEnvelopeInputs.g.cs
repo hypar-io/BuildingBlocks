@@ -37,7 +37,7 @@ namespace FloorsByEnvelope
 		/// <summary>
 		/// Setback of slab edges from envelope.
 		/// </summary>
-		[JsonProperty("Floor setback")]
+		[JsonProperty("Floor Setback")]
 		public double FloorSetback {get;}
 
 

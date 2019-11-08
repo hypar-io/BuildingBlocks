@@ -33,27 +33,42 @@
     },
     {
       "min": 0.0,
-      "max": 1.5,
+      "max": 1.0,
       "step": 0.1,
-      "name": "Floor setback",
+      "name": "Floor Setback",
       "description": "Setback of slab edges from envelope.",
       "type": "range"
     }
   ],
   "outputs": [
     {
-      "name": "Total Floor Area",
-      "description": "Floor area of all floors.",
+      "name": "Total Rentable Floor Area",
+      "description": "Aggregate area of non-mechanical floor above grade.",
       "type": "number"
     },
     {
-      "name": "Envelope Count",
-      "description": "Count of the Envelopes in the incoming Envelope model.",
+      "name": "Retail Floor Height",
+      "description": "Height of the ground floor.",
+      "type": "number"
+    },
+    {
+      "name": "Repeated Floor Height",
+      "description": "Height of the repeated floors.",
+      "type": "number"
+    },
+    {
+      "name": "Mechanical Floor Height",
+      "description": "Height of the mechanical floor.",
+      "type": "number"
+    },
+    {
+      "name": "Floor Clearance",
+      "description": "Clearance between slab edge and building envelope.",
       "type": "number"
     }
   ],
   "preview_image": null,
   "element_types": [
-    "../../Schemas/Envelope.json"
+    "../../schemas/Envelope.json"
   ]
 }
