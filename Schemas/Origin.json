@@ -1,5 +1,5 @@
 {
-    "$id": "https://hypar.io/BuildingBlocks/Site/schemas/Origin.json",
+    "$id": "https://hypar.io/BuildingBlocks/schemas/Origin.json",
     "$schema": "http://json-schema.org/draft-07/schema#",
     "description": "The origin of a project.",
     "title": "Origin",
@@ -14,7 +14,7 @@
             "$ref": "https://hypar.io/Schemas/GeoJSON/Position.json"
         },
         "Elevation": {
-            "description": "The elevation in meters, of the origin.",
+            "description": "The elevation in meters of the Origin.",
             "type": "number",
             "minimum": 0.0
         },

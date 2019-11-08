@@ -3,7 +3,7 @@
   "description": "Adds facade Panels to one or more Masses named 'envelope'.",
   "id": "e578bbcb-c654-438d-be3a-a81cbeb1784f",
   "name": "Facade",
-  "model_dependencies": ["envelope"],
+  "model_dependencies": ["Envelope"],
   "model_output": "facade",
   "repository_url": "https://github.com/hypar-io/function",
   "inputs": [
