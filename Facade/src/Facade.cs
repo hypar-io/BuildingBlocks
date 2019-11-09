@@ -7,6 +7,22 @@ using Elements.Geometry.Solids;
 
 namespace Facade
 {
+    internal class LevelComparer : IComparer<Level>
+    {
+        public int Compare(Level x, Level y)
+        {
+            if(x.Elevation > y.Elevation)
+            {
+                return 1;
+            }
+            else if(x.Elevation < y.Elevation)
+            {
+                return -1;
+            }
+            return 0;
+        }
+    }
+
     public static class Facade
 	{
         private static string ENVELOPE_MODEL_NAME = "Envelope";
@@ -40,6 +56,8 @@ namespace Facade
                     levels.Add(new Level(new Vector3(0,0,i), Vector3.ZAxis, i, null, null, null, Guid.NewGuid(), $"Level {i}"));
                 }
             }
+
+            levels.Sort(new LevelComparer());
 
             var panelCount = 0;
 
