@@ -1,10 +1,12 @@
 ﻿using Xunit;
 using Hypar.Functions.Execution.Local;
-
+using Xunit.Abstractions;
+using System.Threading.Tasks;
+using Hypar.Functions.Execution;
 
 namespace Facade.tests
 {
-    public class FacadeTests
+    public class FunctionTests
     {
         private readonly ITestOutputHelper output;
 
@@ -16,7 +18,7 @@ namespace Facade.tests
         [Fact]
         public async Task InvokeFunction()
         {
-            var store = new FileModelStore<StructureInputs>("./",true);
+            var store = new FileModelStore<FacadeInputs>("./",true);
 
             // Create an input object with default values.
             var input = new FacadeInputs();
@@ -25,7 +27,7 @@ namespace Facade.tests
             // The function invocation uses a FileModelStore
             // which will write the resulting model to disk.
             // You'll find the model at "./model.gltf"
-            var l = new InvocationWrapper<StructureInputs,StructureOutputs>(store, Structure.Execute);
+            var l = new InvocationWrapper<FacadeInputs,FacadeOutputs>(store, Facade.Execute);
             var output = await l.InvokeAsync(input);
         }
     }
