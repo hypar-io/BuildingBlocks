@@ -72,11 +72,11 @@ namespace Location
                 // upper right
                 var n = GetTopoTile(x, y + 1, origin.Latitude, origin.Longitude, offset);
                 n.Transform = worldToLocalTransform;
-                var se = GetTopoTile(x + 1, y + 1, origin.Latitude, origin.Longitude, offset);
-                se.Transform = worldToLocalTransform;
+                var ne = GetTopoTile(x + 1, y + 1, origin.Latitude, origin.Longitude, offset);
+                ne.Transform = worldToLocalTransform;
                 var e = GetTopoTile(x + 1, y, origin.Latitude, origin.Longitude, offset);
                 e.Transform = worldToLocalTransform;
-                outputModel.AddElements(new[] { n, se, e });
+                outputModel.AddElements(new[] { n, ne, e });
             }
             else if (localOrigin.X < tileCenter.X && localOrigin.Y > tileCenter.Y)
             {
