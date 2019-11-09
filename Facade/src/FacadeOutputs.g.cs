@@ -26,13 +26,14 @@ namespace Facade
         
         /// <summary>
         /// Construct a FacadeOutputs with default inputs.
-        /// This should be used only for testing.
+        /// This should be used for testing only.
         /// </summary>
         public FacadeOutputs() : base()
         {
 
         }
-        
+
+
         /// <summary>
         /// Construct a FacadeOutputs specifying all inputs.
         /// </summary>

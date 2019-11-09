@@ -17,16 +17,10 @@ namespace Facade
     public class FacadeInputs: S3Args
     {
 		/// <summary>
-		/// Vertical divisions of each facade.
+		/// The panel width
 		/// </summary>
-		[JsonProperty("Vertical Panels Per Facade")]
-		public double VerticalPanelsPerFacade {get;}
-
-		/// <summary>
-		/// Horizontal divisions of each facade panel.
-		/// </summary>
-		[JsonProperty("Horizontal Panels Per Facade")]
-		public double HorizontalPanelsPerFacade {get;}
+		[JsonProperty("Panel Width")]
+		public double PanelWidth {get;}
 
 		/// <summary>
 		/// Width of each mullion.
@@ -34,30 +28,37 @@ namespace Facade
 		[JsonProperty("Mullion Width")]
 		public double MullionWidth {get;}
 
+		/// <summary>
+		/// The inset of the glass panel from the outer frame.
+		/// </summary>
+		[JsonProperty("Glass Inset")]
+		public double GlassInset {get;}
+
 
         
         /// <summary>
         /// Construct a FacadeInputs with default inputs.
-        /// This should be used only for testing.
+        /// This should be used for testing only.
         /// </summary>
         public FacadeInputs() : base()
         {
-			this.VerticalPanelsPerFacade = 10;
-			this.HorizontalPanelsPerFacade = 15;
-			this.MullionWidth = 3;
+			this.PanelWidth = 3;
+			this.MullionWidth = 0.5;
+			this.GlassInset = 1;
 
         }
-        
+
+
         /// <summary>
         /// Construct a FacadeInputs specifying all inputs.
         /// </summary>
         /// <returns></returns>
         [JsonConstructor]
-        public FacadeInputs(double verticalpanelsperfacade, double horizontalpanelsperfacade, double mullionwidth, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
+        public FacadeInputs(double panelwidth, double mullionwidth, double glassinset, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
         {
-			this.VerticalPanelsPerFacade = verticalpanelsperfacade;
-			this.HorizontalPanelsPerFacade = horizontalpanelsperfacade;
+			this.PanelWidth = panelwidth;
 			this.MullionWidth = mullionwidth;
+			this.GlassInset = glassinset;
 
 		}
 

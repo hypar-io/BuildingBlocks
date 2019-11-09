@@ -1,4 +1,4 @@
-
+<img src="preview.png" width="512">
             
 # Facade
 
@@ -6,9 +6,9 @@ Adds facade Panels to one or more Masses named 'envelope'.
 
 |Input Name|Type|Description|
 |---|---|---|
-|Vertical Panels Per Facade|Range|Vertical divisions of each facade.|
-|Horizontal Panels Per Facade|Range|Horizontal divisions of each facade panel.|
+|Panel Width|Range|The panel width|
 |Mullion Width|Range|Width of each mullion.|
+|Glass Inset|Range|The inset of the glass panel from the outer frame.|
 
 
 <br>

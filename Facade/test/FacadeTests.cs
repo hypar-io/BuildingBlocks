@@ -1,25 +1,32 @@
 ﻿using Xunit;
-using System.Linq;
-using Newtonsoft.Json;
-using Elements;
 using Hypar.Functions.Execution.Local;
-using Elements.Serialization.glTF;
-using Elements.Serialization.JSON;
-using System.Collections.Generic;
 
 
 namespace Facade.tests
 {
     public class FacadeTests
     {
-        [Fact]
-        public void FacadeTest()
+        private readonly ITestOutputHelper output;
+
+        public FunctionTests(ITestOutputHelper output)
         {
-            var model = Model.FromJson(System.IO.File.ReadAllText("../../../../mass.json"));
-            var inputs = new FacadeInputs(4.0, 3.0, 0.2, "", "", new Dictionary<string, string>(), "", "", "");
-            var outputs = Facade.Execute(new Dictionary<string, Model>{{"envelope", model}}, inputs);
-            System.IO.File.WriteAllText("../../../../facade.json", outputs.model.ToJson());
-            outputs.model.ToGlTF("../../../../facade.glb");
+            this.output = output;
+        }
+
+        [Fact]
+        public async Task InvokeFunction()
+        {
+            var store = new FileModelStore<StructureInputs>("./",true);
+
+            // Create an input object with default values.
+            var input = new FacadeInputs();
+
+            // Invoke the function.
+            // The function invocation uses a FileModelStore
+            // which will write the resulting model to disk.
+            // You'll find the model at "./model.gltf"
+            var l = new InvocationWrapper<StructureInputs,StructureOutputs>(store, Structure.Execute);
+            var output = await l.InvokeAsync(input);
         }
     }
 }
