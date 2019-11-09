@@ -8,12 +8,12 @@ using Elements.Serialization.JSON;
 using System.Collections.Generic;
 
 
-namespace LevelsByEnvelope.tests
+namespace LevelsByEnvelope.Tests
 {
     public class LevelsByEnvelopeTests
     {
         [Fact]
-        public void CoreTest()
+        public void LevelsByEnvelopeTest()
         {
             var model = Model.FromJson(System.IO.File.ReadAllText("../../../../../../TestOutput/EnvelopeBySketch.json"));
             var inputs = new LevelsByEnvelopeInputs(4.0, 4.0, 1.5, "", "", new Dictionary<string, string>(), "", "", "");
