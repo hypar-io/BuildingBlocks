@@ -60,9 +60,9 @@ namespace EnvelopeBySketch
             //}
             var output = new EnvelopeBySketchOutputs(input.BuildingHeight,
                                                      input.FoundationDepth);
-            foreach (var mass in envelope)
+            foreach (var item in envelope)
             {
-                output.model.AddElement(mass);
+                output.model.AddElement(item);
             }
             return output;
         }

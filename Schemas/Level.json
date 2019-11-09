@@ -5,7 +5,7 @@
     "title": "Level",
     "x-namespace": "Elements",
     "type": ["object", "null"],
-    "allOf": [{"$ref": "https://hypar.io/Schemas/GeometricElement.json"}],  
+    "allOf": [{"$ref": "https://hypar.io/Schemas/Element.json"}],  
     "required": ["discriminator", "Origin","Normal", "Elevation"],
     "discriminator": "discriminator",
     "properties": {

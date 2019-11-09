@@ -3,6 +3,7 @@ using Elements.Geometry;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using GeometryEx;
 
 namespace LevelsByEnvelope
 {
@@ -42,20 +43,15 @@ namespace LevelsByEnvelope
                 }
             }
             rentable = rentable.OrderBy(e => e.Elevation).ToList();
-            var perimeter = rentable.First().Profile.Perimeter;
-            var lamina = new Elements.Geometry.Solids.Lamina(perimeter);
-            var geomRep = new Representation(new List<Elements.Geometry.Solids.SolidOperation>() { lamina });
 
             var lvlElev = 0.0;
-            var floorArea = 0.0;
 
             // Add ground level
-            levels.Add(new Level(Vector3.Origin, Vector3.ZAxis, lvlElev, new Transform(), BuiltInMaterials.Glass, geomRep, Guid.NewGuid(), ""));
+            levels.Add(new Level(Vector3.Origin, Vector3.ZAxis, 0.0, Guid.NewGuid(), ""));
             if (bldgHeight >= input.GroundLevelHeight)
             {
                 lvlElev = input.GroundLevelHeight;
-                levels.Add(new Level(Vector3.Origin, Vector3.ZAxis, lvlElev, new Transform(), BuiltInMaterials.Glass, geomRep, Guid.NewGuid(), ""));
-                floorArea += perimeter.Area();
+                levels.Add(new Level(Vector3.Origin, Vector3.ZAxis, lvlElev, Guid.NewGuid(), ""));
                 remnHeight = bldgHeight - input.GroundLevelHeight;
             }
 
@@ -64,7 +60,7 @@ namespace LevelsByEnvelope
             if (remnHeight >= mechHeight)
             {
                 lvlElev = bldgHeight - mechHeight;
-                levels.Add(new Level(Vector3.Origin, Vector3.ZAxis, lvlElev, new Transform(), BuiltInMaterials.Glass, geomRep, Guid.NewGuid(), ""));
+                levels.Add(new Level(Vector3.Origin, Vector3.ZAxis, lvlElev, Guid.NewGuid(), ""));
                 remnHeight -= mechHeight;
             }
 
@@ -72,7 +68,7 @@ namespace LevelsByEnvelope
             if (remnHeight > input.StandardLevelHeight + 0.3)
             {
                 lvlElev = bldgHeight - mechHeight - input.StandardLevelHeight + 0.3;
-                levels.Add(new Level(Vector3.Origin, Vector3.ZAxis, lvlElev, new Transform(), BuiltInMaterials.Glass, geomRep, Guid.NewGuid(), ""));
+                levels.Add(new Level(Vector3.Origin, Vector3.ZAxis, lvlElev, Guid.NewGuid(), ""));
                 remnHeight -= input.StandardLevelHeight + 0.3;
             }
 
@@ -81,14 +77,28 @@ namespace LevelsByEnvelope
             remnHeight -= input.StandardLevelHeight;
             var lvlQty = Math.Floor(remnHeight / input.StandardLevelHeight);
             var stdHeight = remnHeight / lvlQty;
+            var perimeter = rentable.First().Profile.Perimeter;
+            
+            var floorArea = 0.0;
             for (int i = 0; i < lvlQty; i++)
             {
-                levels.Add(new Level(Vector3.Origin, Vector3.ZAxis, lvlElev, new Transform(), BuiltInMaterials.Glass, geomRep, Guid.NewGuid(), ""));
+                levels.Add(new Level(Vector3.Origin, Vector3.ZAxis, lvlElev, Guid.NewGuid(), ""));
                 floorArea += perimeter.Area();
                 lvlElev += stdHeight;
             }
-            var output = new LevelsByEnvelopeOutputs(input.GroundLevelHeight, stdHeight, mechHeight);       
+            var output = new LevelsByEnvelopeOutputs(input.GroundLevelHeight, stdHeight, mechHeight);
             output.model.AddElements(levels);
+
+            var extrude = new Elements.Geometry.Solids.Extrude(perimeter, 0.01, Vector3.ZAxis * -1, 0.0, false);
+            var geomRep = new Representation(new List<Elements.Geometry.Solids.SolidOperation>() { extrude });
+            //var geomRep = new Representation(new List<Elements.Geometry.Solids.SolidOperation>() { new Elements.Geometry.Solids.Lamina( perimeter) });
+            var matl = new Material(new Color(1.0f, 1.0f, 1.0f, 0.1f), 0.5f, 0.0f, Guid.NewGuid(), "Level");
+
+            foreach (var level in levels)
+            {
+                output.model.AddElement(new Panel(perimeter, matl, new Transform(0.0, 0.0, level.Elevation), geomRep, Guid.NewGuid(), ""));
+            }
+
             return output;
         }
     }
