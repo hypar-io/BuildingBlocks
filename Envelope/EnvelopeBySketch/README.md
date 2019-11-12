@@ -1,4 +1,4 @@
-
+<img src="preview.png" width="512">
             
 # EnvelopeBySketch
 
@@ -8,6 +8,9 @@ The EnvelopeBySketch function.
 |---|---|---|
 |Perimeter|Geometry|Perimeter of the building envelope.|
 |Building Height|Range|Overall height of the building from grade.|
+|Setback Interval|Range|Vertical distance between envelope setbacks.|
+|Setback Depth|Range|Offset depth from previous setback.|
+|Minimum Tier Area|Range|Minimum area allowed for a setback tier.|
 |Foundation Depth|Range|Depth of the building envelope below grade.|
 
 

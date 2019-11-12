@@ -29,6 +29,24 @@ namespace EnvelopeBySketch
 		public double BuildingHeight {get;}
 
 		/// <summary>
+		/// Vertical distance between envelope setbacks.
+		/// </summary>
+		[JsonProperty("Setback Interval")]
+		public double SetbackInterval {get;}
+
+		/// <summary>
+		/// Offset depth from previous setback.
+		/// </summary>
+		[JsonProperty("Setback Depth")]
+		public double SetbackDepth {get;}
+
+		/// <summary>
+		/// Minimum area allowed for a setback tier.
+		/// </summary>
+		[JsonProperty("Minimum Tier Area")]
+		public double MinimumTierArea {get;}
+
+		/// <summary>
 		/// Depth of the building envelope below grade.
 		/// </summary>
 		[JsonProperty("Foundation Depth")]
@@ -43,7 +61,10 @@ namespace EnvelopeBySketch
         public EnvelopeBySketchInputs() : base()
         {
 			this.Perimeter = Elements.Geometry.Polygon.Rectangle(1, 1);
-			this.BuildingHeight = 200;
+			this.BuildingHeight = 100;
+			this.SetbackInterval = 30;
+			this.SetbackDepth = 3;
+			this.MinimumTierArea = 100;
 			this.FoundationDepth = 20;
 
         }
@@ -54,10 +75,13 @@ namespace EnvelopeBySketch
         /// </summary>
         /// <returns></returns>
         [JsonConstructor]
-        public EnvelopeBySketchInputs(Elements.Geometry.Polygon perimeter, double buildingheight, double foundationdepth, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
+        public EnvelopeBySketchInputs(Elements.Geometry.Polygon perimeter, double buildingheight, double setbackinterval, double setbackdepth, double minimumtierarea, double foundationdepth, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
         {
 			this.Perimeter = perimeter;
 			this.BuildingHeight = buildingheight;
+			this.SetbackInterval = setbackinterval;
+			this.SetbackDepth = setbackdepth;
+			this.MinimumTierArea = minimumtierarea;
 			this.FoundationDepth = foundationdepth;
 
 		}

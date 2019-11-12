@@ -18,4 +18,5 @@ The LevelsByEnvelope function.
 |Entry Level Height|Number|Height of the ground level.|
 |Repeated Level Height|Number|Height of the repeated levels.|
 |Mechanical Level Height|Number|Height of the mechanical level.|
+|Total Level Area|Number|Total aggregate area of all levels.|
 

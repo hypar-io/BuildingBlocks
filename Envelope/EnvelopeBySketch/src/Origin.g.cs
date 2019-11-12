@@ -42,16 +42,16 @@ namespace Elements
     
         /// <summary>The latitude of the origin.</summary>
         [Newtonsoft.Json.JsonProperty("Position", Required = Newtonsoft.Json.Required.AllowNull)]
-        public Position Position { get; internal set; }
+        public Position Position { get; set; }
     
-        /// <summary>The elevation in meters, of the origin.</summary>
+        /// <summary>The elevation in meters of the Origin.</summary>
         [Newtonsoft.Json.JsonProperty("Elevation", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Range(0, int.MaxValue)]
-        public double Elevation { get; internal set; }
+        public double Elevation { get; set; }
     
         /// <summary>A coordinate system which defines the origin's rotation and translation relative to the latitude and longitude. The transform's Z translation will be equal to the Elevation</summary>
         [Newtonsoft.Json.JsonProperty("Transform", Required = Newtonsoft.Json.Required.AllowNull)]
-        public Transform Transform { get; internal set; }
+        public Transform Transform { get; set; }
     
     
     }

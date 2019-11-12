@@ -17,12 +17,12 @@
       "$ref": "https://hypar.io/Schemas/Geometry/Profile.json"
     },
     "Elevation": {
-      "description": "The elevation of the extrusion.",
+      "description": "The elevation of the envelope.",
       "type": "number",
       "minimum": 0
     },
     "Height": {
-      "description": "The height of the extrusion.",
+      "description": "The height of the envelope.",
       "type": "number",
       "minimum": 0
     },
@@ -31,7 +31,7 @@
       "$ref": "https://hypar.io/Schemas/Geometry/Vector3.json"
     },
     "Rotation": {
-      "description": "The rotation in degrees of the profile.",
+      "description": "The rotation in degrees of the envelope.",
       "type": "number"
     }
   },
