@@ -12,43 +12,45 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System.Collections.Generic;
 
-namespace EnvelopeBySite
+namespace CoreByLevels
 {
-    public class EnvelopeBySiteOutputs: ResultsBase
+    public class CoreByLevelsInputs: S3Args
     {
 		/// <summary>
-		/// Height of the building.
+		/// The length.
 		/// </summary>
-		[JsonProperty("Height")]
-		public double Height {get;}
+		[JsonProperty("Length")]
+		public double Length {get;}
 
 		/// <summary>
-		/// Depth of the subgrade section.
+		/// The width.
 		/// </summary>
-		[JsonProperty("Subgrade")]
-		public double Subgrade {get;}
+		[JsonProperty("Width")]
+		public double Width {get;}
 
 
         
         /// <summary>
-        /// Construct a EnvelopeBySiteOutputs with default inputs.
+        /// Construct a CoreByLevelsInputs with default inputs.
         /// This should be used for testing only.
         /// </summary>
-        public EnvelopeBySiteOutputs() : base()
+        public CoreByLevelsInputs() : base()
         {
+			this.Length = 10;
+			this.Width = 10;
 
         }
 
 
         /// <summary>
-        /// Construct a EnvelopeBySiteOutputs specifying all inputs.
+        /// Construct a CoreByLevelsInputs specifying all inputs.
         /// </summary>
         /// <returns></returns>
         [JsonConstructor]
-        public EnvelopeBySiteOutputs(double height, double subgrade): base()
+        public CoreByLevelsInputs(double length, double width, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
         {
-			this.Height = height;
-			this.Subgrade = subgrade;
+			this.Length = length;
+			this.Width = width;
 
 		}
 

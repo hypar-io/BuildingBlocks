@@ -17,16 +17,40 @@ namespace EnvelopeBySite
     public class EnvelopeBySiteInputs: S3Args
     {
 		/// <summary>
-		/// The length.
+		/// Distance from site boundary to building envelope.
 		/// </summary>
-		[JsonProperty("Length")]
-		public double Length {get;}
+		[JsonProperty("Site Setback")]
+		public double SiteSetback {get;}
 
 		/// <summary>
-		/// The width.
+		/// Overall height of the building from grade.
 		/// </summary>
-		[JsonProperty("Width")]
-		public double Width {get;}
+		[JsonProperty("Building Height")]
+		public double BuildingHeight {get;}
+
+		/// <summary>
+		/// Vertical distance between envelope setbacks.
+		/// </summary>
+		[JsonProperty("Setback Interval")]
+		public double SetbackInterval {get;}
+
+		/// <summary>
+		/// Offset depth from previous setback.
+		/// </summary>
+		[JsonProperty("Setback Depth")]
+		public double SetbackDepth {get;}
+
+		/// <summary>
+		/// Minimum area allowed for a setback tier.
+		/// </summary>
+		[JsonProperty("Minimum Tier Area")]
+		public double MinimumTierArea {get;}
+
+		/// <summary>
+		/// Depth of the building envelope below grade.
+		/// </summary>
+		[JsonProperty("Foundation Depth")]
+		public double FoundationDepth {get;}
 
 
         
@@ -36,8 +60,12 @@ namespace EnvelopeBySite
         /// </summary>
         public EnvelopeBySiteInputs() : base()
         {
-			this.Length = 10;
-			this.Width = 10;
+			this.SiteSetback = 30;
+			this.BuildingHeight = 100;
+			this.SetbackInterval = 30;
+			this.SetbackDepth = 3;
+			this.MinimumTierArea = 100;
+			this.FoundationDepth = 20;
 
         }
 
@@ -47,10 +75,14 @@ namespace EnvelopeBySite
         /// </summary>
         /// <returns></returns>
         [JsonConstructor]
-        public EnvelopeBySiteInputs(double length, double width, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
+        public EnvelopeBySiteInputs(double sitesetback, double buildingheight, double setbackinterval, double setbackdepth, double minimumtierarea, double foundationdepth, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
         {
-			this.Length = length;
-			this.Width = width;
+			this.SiteSetback = sitesetback;
+			this.BuildingHeight = buildingheight;
+			this.SetbackInterval = setbackinterval;
+			this.SetbackDepth = setbackdepth;
+			this.MinimumTierArea = minimumtierarea;
+			this.FoundationDepth = foundationdepth;
 
 		}
 

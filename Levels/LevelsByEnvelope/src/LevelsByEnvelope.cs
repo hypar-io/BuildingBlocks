@@ -90,19 +90,17 @@ namespace LevelsByEnvelope
             // Add standard height Levels.
             var lvlQty = Math.Floor(remnHeight / input.StandardLevelHeight) - 1;
             var stdHeight = remnHeight / lvlQty;
-            if (remnHeight >= stdHeight)
+            var lvlElev = input.GroundLevelHeight + input.StandardLevelHeight;
+            while (remnHeight >= stdHeight * 2)
             {
-                var lvlElev = input.GroundLevelHeight + input.StandardLevelHeight;
-                for (int i = 0; i < lvlQty; i++)
+                level = makeLevels.MakeLevel(lvlElev);
+                if (level != null)
                 {
-                    level = makeLevels.MakeLevel(lvlElev);
-                    if (level != null)
-                    {
-                        levels.Add(level);
-                        levelArea += level.Perimeter.Area();
-                    }
-                    lvlElev += stdHeight;
+                    levels.Add(level);
+                    levelArea += level.Perimeter.Area();
                 }
+                lvlElev += stdHeight;
+                remnHeight -= stdHeight;
             }
             levels = levels.OrderBy(l => l.Elevation).ToList();
             var matl = new Material(new Color(0.5f, 0.5f, 0.5f, 0.5f), 0.0f, 0.0f, Guid.NewGuid(), "Level");

@@ -12,43 +12,36 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System.Collections.Generic;
 
-namespace EnvelopeBySite
+namespace CoreByLevels
 {
-    public class EnvelopeBySiteOutputs: ResultsBase
+    public class CoreByLevelsOutputs: ResultsBase
     {
 		/// <summary>
-		/// Height of the building.
+		/// The volume.
 		/// </summary>
-		[JsonProperty("Height")]
-		public double Height {get;}
-
-		/// <summary>
-		/// Depth of the subgrade section.
-		/// </summary>
-		[JsonProperty("Subgrade")]
-		public double Subgrade {get;}
+		[JsonProperty("Volume")]
+		public double Volume {get;}
 
 
         
         /// <summary>
-        /// Construct a EnvelopeBySiteOutputs with default inputs.
+        /// Construct a CoreByLevelsOutputs with default inputs.
         /// This should be used for testing only.
         /// </summary>
-        public EnvelopeBySiteOutputs() : base()
+        public CoreByLevelsOutputs() : base()
         {
 
         }
 
 
         /// <summary>
-        /// Construct a EnvelopeBySiteOutputs specifying all inputs.
+        /// Construct a CoreByLevelsOutputs specifying all inputs.
         /// </summary>
         /// <returns></returns>
         [JsonConstructor]
-        public EnvelopeBySiteOutputs(double height, double subgrade): base()
+        public CoreByLevelsOutputs(double volume): base()
         {
-			this.Height = height;
-			this.Subgrade = subgrade;
+			this.Volume = volume;
 
 		}
 
