@@ -1,8 +1,8 @@
-
+<img src="preview.png" width="512">
             
 # LevelsByEnvelope
 
-The LevelsByEnvelope function.
+Creates Levels from one or more Envelopes supplied by other functions.
 
 |Input Name|Type|Description|
 |---|---|---|
@@ -16,7 +16,6 @@ The LevelsByEnvelope function.
 |Output Name|Type|Description|
 |---|---|---|
 |Entry Level Height|Number|Height of the ground level.|
-|Repeated Level Height|Number|Height of the repeated levels.|
 |Mechanical Level Height|Number|Height of the mechanical level.|
 |Total Level Area|Number|Total aggregate area of all levels.|
 

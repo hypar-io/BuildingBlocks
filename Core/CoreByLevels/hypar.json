@@ -1,9 +1,13 @@
 {
   "$schema": "https://hypar.io/Schemas/Function.json",
-  "description": "The CoreByLevels function.",
+  "description": "Creates a building core by referencing Levels supplied by another function.",
   "id": "99c9cad0-6de9-482a-a648-8aadfd4e2819",
   "name": "CoreByLevels",
   "repository_url": "https://github.com/hypar-io/function",
+  "model_dependencies": [
+    "Levels"
+  ],
+  "model_output": "Cores",  
   "inputs": [
     {
       "min": 1.0,
