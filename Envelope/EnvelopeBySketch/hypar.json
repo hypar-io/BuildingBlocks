@@ -37,6 +37,14 @@
       "type": "range"
     },
     {
+      "min": 10.0,
+      "max": 100.0,
+      "step": 1.0,
+      "name": "Minimum Tier Area",
+      "description": "Minimum area allowed for a setback tier.",
+      "type": "range"
+    },
+    {
       "min": 5.0,
       "max": 20.0,
       "step": 1.0,

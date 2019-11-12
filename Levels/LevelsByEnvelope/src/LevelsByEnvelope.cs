@@ -22,9 +22,6 @@ namespace LevelsByEnvelope
             envelopes.AddRange(model.AllElementsOfType<Envelope>());
             envelopes = envelopes.OrderBy(e => e.Elevation).ToList();
 
-
-            var rentable = new List<Envelope>();
-            var subgrade = new List<Envelope>();
             var levels = new List<Level>();
 
             var bldgHeight = 0.0;
@@ -34,104 +31,83 @@ namespace LevelsByEnvelope
             {
                 if (envelope.Elevation >= 0.0)
                 {
-                    rentable.Add(envelope);
                     bldgHeight += envelope.Height;
                     remnHeight += envelope.Height;
                 }
-                else
-                {
-                    subgrade.Add(envelope);
-                }
             }
+            var makeLevels = new MakeLevels(envelopes);
+            var levelArea = 0.0;
 
-            var makeLevels = new MakeLevels(rentable);
-
-            ////Add subgrade level.
-            //var level = makeLevels.MakeLevel(subgrade.First().Elevation);
-            //if (level != null)
-            //{
-            //    levels.Add(level);
-            //}
-
-            //// Add ground level.
-            //level = makeLevels.MakeLevel(0.0);
-            //if (level != null)
-            //{
-            //    levels.Add(level);
-            //}
-
-            // Add top level.
-            var level = makeLevels.MakeLevel(bldgHeight);
+            // Add subgrade Level.
+            var level = makeLevels.MakeLevel(envelopes.First().Elevation);
             if (level != null)
             {
                 levels.Add(level);
+                levelArea += level.Perimeter.Area();
             }
 
-            //// Add second level.
-            //if (bldgHeight >= input.GroundLevelHeight)
-            //{
-            //    level = makeLevels.MakeLevel(input.GroundLevelHeight);
-            //    if (level != null)
-            //    {
-            //        levels.Add(level);
-            //        remnHeight = bldgHeight - input.GroundLevelHeight;
-            //    }
-            //}
-
-            //// Add mechanical level.
-            //var mechHeight = input.StandardLevelHeight * input.MechanicalLevelHeightRatio;
-            //if (remnHeight >= mechHeight)
-            //{
-            //    level = makeLevels.MakeLevel(bldgHeight - mechHeight);
-            //    if (level != null)
-            //    {
-            //        levels.Add(level);
-            //        remnHeight -= mechHeight;
-            //    }
-            //}
-
-            /// 
-            //Add higher top occupied floor to accommodate piping under top mechanical floor.
-            //if (remnHeight > input.StandardLevelHeight + 0.3)
-            //{
-            //    level = makeLevels.MakeLevel(bldgHeight - mechHeight - input.StandardLevelHeight + 0.3);
-            //    if (level != null)
-            //    {
-            //        levels.Add(level);
-            //        remnHeight -= input.StandardLevelHeight + 0.3;
-            //    }
-            //}
-
-            // Add standard height levels.
-            //var stdHeight = 0.0;
-            //if (remnHeight >= input.StandardLevelHeight)
-            //{
-            //    var lvlQty = Math.Floor(remnHeight / input.StandardLevelHeight);
-            //    var lvlElev = input.GroundLevelHeight + input.StandardLevelHeight;
-
-            //    for (int i = 0; i < lvlQty; i++)
-            //    {
-            //        level = makeLevels.MakeLevel(lvlElev);
-            //        if (level != null)
-            //        {
-            //            levels.Add(level);
-            //        }
-            //        lvlElev += stdHeight;
-            //    }
-            //}
-
-            levels = levels.OrderBy(l => l.Elevation).ToList();
-
-            var levelArea = 0.0;
-            foreach (var item in levels)
+            // Add ground Level.
+            level = makeLevels.MakeLevel(0.0);
+            if (level != null)
             {
-                levelArea += item.Perimeter.Area();
+                levels.Add(level);
+                levelArea += level.Perimeter.Area();
             }
 
+            // Add top Level.
+            level = makeLevels.MakeLevel(bldgHeight);
+            if (level != null)
+            {
+                levels.Add(level);
+                levelArea += level.Perimeter.Area();
+            }
+
+            //// Add second Level.
+            if (bldgHeight >= input.GroundLevelHeight)
+            {
+                level = makeLevels.MakeLevel(input.GroundLevelHeight);
+                if (level != null)
+                {
+                    levels.Add(level);
+                    levelArea += level.Perimeter.Area();
+                    remnHeight = bldgHeight - input.GroundLevelHeight;
+                }
+            }
+
+            // Add mechanical Level.
+            var mechHeight = input.StandardLevelHeight * input.MechanicalLevelHeightRatio;
+            if (remnHeight >= mechHeight)
+            {
+                level = makeLevels.MakeLevel(bldgHeight - mechHeight);
+                if (level != null)
+                {
+                    levels.Add(level);
+                    levelArea += level.Perimeter.Area();
+                    remnHeight -= mechHeight;
+                }
+            }
+
+            // Add standard height Levels.
+            var lvlQty = Math.Floor(remnHeight / input.StandardLevelHeight) - 1;
+            var stdHeight = remnHeight / lvlQty;
+            if (remnHeight >= input.StandardLevelHeight)
+            {
+                var lvlElev = input.GroundLevelHeight + input.StandardLevelHeight;
+                for (int i = 0; i < lvlQty; i++)
+                {
+                    level = makeLevels.MakeLevel(lvlElev);
+                    if (level != null)
+                    {
+                        levels.Add(level);
+                        levelArea += level.Perimeter.Area();
+                    }
+                    lvlElev += stdHeight;
+                }
+            }
+            levels = levels.OrderBy(l => l.Elevation).ToList();
             var matl = new Material(new Color(0.5f, 0.5f, 0.5f, 0.5f), 0.0f, 0.0f, Guid.NewGuid(), "Level");
-            var output = new LevelsByEnvelopeOutputs(input.GroundLevelHeight, 5.0, 5.0, levelArea); //stdHeight, mechHeight
+            var output = new LevelsByEnvelopeOutputs(input.GroundLevelHeight, stdHeight, mechHeight, levelArea);
             output.model.AddElements(levels);     
-            
             foreach (var item in levels)
             {
                 output.model.AddElement(new Panel(item.Perimeter, matl, new Transform(0.0, 0.0, item.Elevation), null, Guid.NewGuid(), ""));
