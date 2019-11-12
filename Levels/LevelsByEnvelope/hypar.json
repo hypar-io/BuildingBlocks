@@ -1,6 +1,6 @@
 {
   "$schema": "https://hypar.io/Schemas/Function.json",
-  "description": "The LevelsByEnvelope function.",
+  "description": "Creates Levels from one or more Envelopes supplied by other functions.",
   "id": "aa0b94eb-6a0d-4f17-b0eb-322bce98bb2a",
   "name": "LevelsByEnvelope",
   "repository_url": "https://github.com/hypar-io/function",

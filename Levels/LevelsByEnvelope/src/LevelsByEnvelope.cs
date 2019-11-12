@@ -90,7 +90,7 @@ namespace LevelsByEnvelope
             // Add standard height Levels.
             var lvlQty = Math.Floor(remnHeight / input.StandardLevelHeight) - 1;
             var stdHeight = remnHeight / lvlQty;
-            if (remnHeight >= input.StandardLevelHeight)
+            if (remnHeight >= stdHeight)
             {
                 var lvlElev = input.GroundLevelHeight + input.StandardLevelHeight;
                 for (int i = 0; i < lvlQty; i++)

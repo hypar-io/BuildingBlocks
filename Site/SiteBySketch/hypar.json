@@ -1,0 +1,27 @@
+{
+  "$schema": "https://hypar.io/Schemas/Function.json",
+  "description": "The SiteBySketch function.",
+  "id": "ed467745-1cc2-4307-a3b6-4543e79d4916",
+  "name": "SiteBySketch",
+  "repository_url": "https://github.com/hypar-io/function",
+  "model_output": "Site",
+  "inputs": [
+    {
+      "primitive_type": "polygon",
+      "name": "Perimeter",
+      "description": "Perimeter of the building envelope.",
+      "type": "geometry"
+    }
+  ],
+  "outputs": [
+    {
+      "name": "Area",
+      "description": "Area of the site.",
+      "type": "number"
+    }
+  ],
+  "preview_image": null,
+  "element_types": [
+    "../../schemas/Site.json"
+  ]
+}
