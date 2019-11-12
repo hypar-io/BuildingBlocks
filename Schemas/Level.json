@@ -6,7 +6,7 @@
     "x-namespace": "Elements",
     "type": ["object", "null"],
     "allOf": [{"$ref": "https://hypar.io/Schemas/Element.json"}],  
-    "required": ["discriminator", "Origin","Normal", "Elevation"],
+    "required": ["discriminator", "Origin", "Normal", "Elevation", "Perimeter"],
     "discriminator": "discriminator",
     "properties": {
         "discriminator": {

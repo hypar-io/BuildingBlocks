@@ -1,0 +1,21 @@
+{
+    "$id": "https://hypar.io/BuildingBlocks/schemas/Level.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "description": "A horizontal planer datum indicating a site boundary.",
+    "title": "Site",
+    "x-namespace": "Elements",
+    "type": ["object", "null"],
+    "allOf": [{"$ref": "https://hypar.io/Schemas/Element.json"}],  
+    "required": ["discriminator", "Perimeter"],
+    "discriminator": "discriminator",
+    "properties": {
+        "discriminator": {
+          "type": "string"
+        },      
+        "Perimeter": {
+          "description": "The perimeter of the level.",
+          "$ref": "https://raw.githubusercontent.com/hypar-io/Elements/master/Schemas/Geometry/Polygon.json"
+        }             
+    },
+    "additionalProperties": false
+}

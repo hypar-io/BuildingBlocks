@@ -45,7 +45,7 @@ namespace Facade
             if(models.ContainsKey(ENVELOPE_MODEL_NAME))
             {
                 var envelopeModel = models[ENVELOPE_MODEL_NAME];
-                envelopes = envelopeModel.AllElementsOfType<Envelope>().Where(e=>e.Direction.IsAlmostEqualTo(Vector3.ZAxis)).ToList();
+                envelopes = envelopeModel.AllElementsOfType<Envelope>().Where(e=>e.Elevation >= 0.0).ToList();
                 var levelsModel = models[LEVELS_MODEL_NAME];
                 levels = levelsModel.AllElementsOfType<Level>().ToList();
             }
