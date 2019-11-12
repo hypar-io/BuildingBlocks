@@ -42,7 +42,7 @@ namespace Facade
         /// </summary>
         public FacadeInputs() : base()
         {
-			this.PanelWidth = 3;
+			this.PanelWidth = 4;
 			this.MullionWidth = 0.5;
 			this.GlassInset = 1;
 
