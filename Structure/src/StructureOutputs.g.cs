@@ -17,10 +17,10 @@ namespace Structure
     public class StructureOutputs: ResultsBase
     {
 		/// <summary>
-		/// The number of grid lines.
+		/// The maximum beam length.
 		/// </summary>
-		[JsonProperty("Grids")]
-		public double Grids {get;}
+		[JsonProperty("Maximum Beam Length")]
+		public double MaximumBeamLength {get;}
 
 
         
@@ -39,9 +39,9 @@ namespace Structure
         /// </summary>
         /// <returns></returns>
         [JsonConstructor]
-        public StructureOutputs(double grids): base()
+        public StructureOutputs(double maximumbeamlength): base()
         {
-			this.Grids = grids;
+			this.MaximumBeamLength = maximumbeamlength;
 
 		}
 

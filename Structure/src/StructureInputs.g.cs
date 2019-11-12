@@ -34,6 +34,12 @@ namespace Structure
 		[JsonProperty("Grid Rotation")]
 		public double GridRotation {get;}
 
+		/// <summary>
+		/// When true, beams are colored according to their length.
+		/// </summary>
+		[JsonProperty("Color Beams By Length")]
+		public bool ColorBeamsByLength {get;}
+
 
         
         /// <summary>
@@ -45,6 +51,7 @@ namespace Structure
 			this.GridXAxisInterval = 10;
 			this.GridYAxisInterval = 10;
 			this.GridRotation = 90;
+			this.ColorBeamsByLength = false;
 
         }
 
@@ -54,11 +61,12 @@ namespace Structure
         /// </summary>
         /// <returns></returns>
         [JsonConstructor]
-        public StructureInputs(double gridxaxisinterval, double gridyaxisinterval, double gridrotation, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
+        public StructureInputs(double gridxaxisinterval, double gridyaxisinterval, double gridrotation, bool colorbeamsbylength, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
         {
 			this.GridXAxisInterval = gridxaxisinterval;
 			this.GridYAxisInterval = gridyaxisinterval;
 			this.GridRotation = gridrotation;
+			this.ColorBeamsByLength = colorbeamsbylength;
 
 		}
 
