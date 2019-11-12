@@ -8,6 +8,8 @@ The EnvelopeBySketch function.
 |---|---|---|
 |Perimeter|Geometry|Perimeter of the building envelope.|
 |Building Height|Range|Overall height of the building from grade.|
+|Setback Interval|Range|Vertical distance between envelope setbacks.|
+|Setback Depth|Range|Offset depth from previous setback.|
 |Foundation Depth|Range|Depth of the building envelope below grade.|
 
 

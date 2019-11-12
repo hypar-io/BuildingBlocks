@@ -6,13 +6,12 @@ The FloorsByLevels function.
 
 |Input Name|Type|Description|
 |---|---|---|
-|Length|Range|The length.|
-|Width|Range|The width.|
+|Floor Thickness|Range|Thickness of all floors.|
 
 
 <br>
 
 |Output Name|Type|Description|
 |---|---|---|
-|Volume|Number|The volume.|
+|Total Area|Number|Aggregate area of all floors.|
 

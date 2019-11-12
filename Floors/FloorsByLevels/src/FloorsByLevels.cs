@@ -1,5 +1,6 @@
 using Elements;
 using Elements.Geometry;
+using System;
 using System.Collections.Generic;
 
 namespace FloorsByLevels
@@ -14,13 +15,20 @@ namespace FloorsByLevels
         /// <returns>A FloorsByLevelsOutputs instance containing computed results and the model with any new elements.</returns>
         public static FloorsByLevelsOutputs Execute(Dictionary<string, Model> inputModels, FloorsByLevelsInputs input)
         {
-            /// Your code here.
-            var height = 1.0;
-            var volume = input.Length * input.Width * height;
-            var output = new FloorsByLevelsOutputs(volume);
-            var rectangle = Polygon.Rectangle(input.Length, input.Width);
-            var mass = new Mass(rectangle, height);
-            output.model.AddElement(mass);
+            var levels = new List<Level>();
+            inputModels.TryGetValue("Levels", out var model);
+            levels.AddRange(model.AllElementsOfType<Level>());
+
+            var floors = new List<Floor>();
+            var floorArea = 0.0;
+            
+            foreach (var level in levels)
+            {
+                floors.Add(new Floor(level.Perimeter, input.FloorThickness, 0.0, new Transform(0.0, 0.0, level.Elevation), BuiltInMaterials.Concrete, null, Guid.NewGuid(), null));
+                floorArea += level.Perimeter.Area();
+            }
+            var output = new FloorsByLevelsOutputs(floorArea);
+            output.model.AddElements(floors);
             return output;
         }
       }

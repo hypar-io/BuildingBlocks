@@ -29,6 +29,18 @@ namespace EnvelopeBySketch
 		public double BuildingHeight {get;}
 
 		/// <summary>
+		/// Vertical distance between envelope setbacks.
+		/// </summary>
+		[JsonProperty("Setback Interval")]
+		public double SetbackInterval {get;}
+
+		/// <summary>
+		/// Offset depth from previous setback.
+		/// </summary>
+		[JsonProperty("Setback Depth")]
+		public double SetbackDepth {get;}
+
+		/// <summary>
 		/// Depth of the building envelope below grade.
 		/// </summary>
 		[JsonProperty("Foundation Depth")]
@@ -43,7 +55,9 @@ namespace EnvelopeBySketch
         public EnvelopeBySketchInputs() : base()
         {
 			this.Perimeter = Elements.Geometry.Polygon.Rectangle(1, 1);
-			this.BuildingHeight = 200;
+			this.BuildingHeight = 100;
+			this.SetbackInterval = 50;
+			this.SetbackDepth = 10;
 			this.FoundationDepth = 20;
 
         }
@@ -54,10 +68,12 @@ namespace EnvelopeBySketch
         /// </summary>
         /// <returns></returns>
         [JsonConstructor]
-        public EnvelopeBySketchInputs(Elements.Geometry.Polygon perimeter, double buildingheight, double foundationdepth, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
+        public EnvelopeBySketchInputs(Elements.Geometry.Polygon perimeter, double buildingheight, double setbackinterval, double setbackdepth, double foundationdepth, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
         {
 			this.Perimeter = perimeter;
 			this.BuildingHeight = buildingheight;
+			this.SetbackInterval = setbackinterval;
+			this.SetbackDepth = setbackdepth;
 			this.FoundationDepth = foundationdepth;
 
 		}

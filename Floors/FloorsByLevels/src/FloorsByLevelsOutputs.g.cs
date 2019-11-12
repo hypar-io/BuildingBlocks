@@ -17,10 +17,10 @@ namespace FloorsByLevels
     public class FloorsByLevelsOutputs: ResultsBase
     {
 		/// <summary>
-		/// The volume.
+		/// Aggregate area of all floors.
 		/// </summary>
-		[JsonProperty("Volume")]
-		public double Volume {get;}
+		[JsonProperty("Total Area")]
+		public double TotalArea {get;}
 
 
         
@@ -39,9 +39,9 @@ namespace FloorsByLevels
         /// </summary>
         /// <returns></returns>
         [JsonConstructor]
-        public FloorsByLevelsOutputs(double volume): base()
+        public FloorsByLevelsOutputs(double totalarea): base()
         {
-			this.Volume = volume;
+			this.TotalArea = totalarea;
 
 		}
 

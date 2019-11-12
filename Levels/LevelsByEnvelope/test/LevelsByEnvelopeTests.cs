@@ -15,8 +15,8 @@ namespace LevelsByEnvelope.Tests
         [Fact]
         public void LevelsByEnvelopeTest()
         {
-            var model = Model.FromJson(System.IO.File.ReadAllText("../../../../../../TestOutput/EnvelopeBySketch.json"));
             var inputs = new LevelsByEnvelopeInputs(4.0, 4.0, 1.5, "", "", new Dictionary<string, string>(), "", "", "");
+            var model = Model.FromJson(System.IO.File.ReadAllText("../../../../../../TestOutput/EnvelopeBySketch.json"));
             var outputs = LevelsByEnvelope.Execute(new Dictionary<string, Model>{{"Envelope", model}}, inputs);
             System.IO.File.WriteAllText("../../../../../../TestOutput/LevelsByEnvelope.json", outputs.model.ToJson());
             outputs.model.ToGlTF("../../../../../../TestOutput/LevelsByEnvelope.glb");

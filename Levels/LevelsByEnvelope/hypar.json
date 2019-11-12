@@ -47,6 +47,11 @@
       "name": "Mechanical Level Height",
       "description": "Height of the mechanical level.",
       "type": "number"
+    },
+    {
+      "name": "Total Level Area",
+      "description": "Total aggregate area of all levels.",
+      "type": "number"
     }
   ],
   "preview_image": null,
