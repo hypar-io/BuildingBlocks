@@ -12,36 +12,36 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System.Collections.Generic;
 
-namespace SiteBySketch
+namespace EnvelopeBySite
 {
-    public class SiteBySketchOutputs: ResultsBase
+    public class EnvelopeBySiteOutputs: ResultsBase
     {
 		/// <summary>
-		/// Area of the site.
+		/// The volume.
 		/// </summary>
-		[JsonProperty("Area")]
-		public double Area {get;}
+		[JsonProperty("Volume")]
+		public double Volume {get;}
 
 
         
         /// <summary>
-        /// Construct a SiteBySketchOutputs with default inputs.
+        /// Construct a EnvelopeBySiteOutputs with default inputs.
         /// This should be used for testing only.
         /// </summary>
-        public SiteBySketchOutputs() : base()
+        public EnvelopeBySiteOutputs() : base()
         {
 
         }
 
 
         /// <summary>
-        /// Construct a SiteBySketchOutputs specifying all inputs.
+        /// Construct a EnvelopeBySiteOutputs specifying all inputs.
         /// </summary>
         /// <returns></returns>
         [JsonConstructor]
-        public SiteBySketchOutputs(double area): base()
+        public EnvelopeBySiteOutputs(double volume): base()
         {
-			this.Area = area;
+			this.Volume = volume;
 
 		}
 

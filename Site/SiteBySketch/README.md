@@ -2,17 +2,16 @@
             
 # SiteBySketch
 
-The SiteBySketch function.
+Creates a Site from a polygon sketch.
 
 |Input Name|Type|Description|
 |---|---|---|
-|Length|Range|The length.|
-|Width|Range|The width.|
+|Perimeter|Geometry|Perimeter of the building envelope.|
 
 
 <br>
 
 |Output Name|Type|Description|
 |---|---|---|
-|Volume|Number|The volume.|
+|Area|Number|Area of the site.|
 

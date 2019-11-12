@@ -1,6 +1,8 @@
 using Elements;
 using Elements.Geometry;
+using System;
 using System.Collections.Generic;
+using GeometryEx;
 
 namespace SiteBySketch
 {
@@ -14,13 +16,12 @@ namespace SiteBySketch
         /// <returns>A SiteBySketchOutputs instance containing computed results and the model with any new elements.</returns>
         public static SiteBySketchOutputs Execute(Dictionary<string, Model> inputModels, SiteBySketchInputs input)
         {
-            /// Your code here.
-            var height = 1.0;
-            var volume = input.Length * input.Width * height;
-            var output = new SiteBySketchOutputs(volume);
-            var rectangle = Polygon.Rectangle(input.Length, input.Width);
-            var mass = new Mass(rectangle, height);
-            output.model.AddElement(mass);
+            var lamina = new Elements.Geometry.Solids.Lamina(input.Perimeter, false);
+            var geomRep = new Representation(new List<Elements.Geometry.Solids.SolidOperation>() { lamina });
+            var sitMatl = new Material("site", Palette.Emerald, 0.0f, 0.0f);
+            var output = new SiteBySketchOutputs(input.Perimeter.Area());
+            output.model.AddElement(new Site(input.Perimeter, Guid.NewGuid(), ""));
+            output.model.AddElement(new Panel(input.Perimeter, sitMatl, new Transform(), null, Guid.NewGuid(), ""));
             return output;
         }
       }

@@ -1,6 +1,6 @@
 {
   "$schema": "https://hypar.io/Schemas/Function.json",
-  "description": "Adds facade Panels to one or more Masses named 'envelope'.",
+  "description": "Creates a Facade for each Envelope supplied by other functions.",
   "id": "e578bbcb-c654-438d-be3a-a81cbeb1784f",
   "name": "Facade",
   "repository_url": "https://github.com/hypar-io/function",
