@@ -26,18 +26,19 @@ namespace Elements
 	public partial class Level : Element
     {
         [Newtonsoft.Json.JsonConstructor]
-        public Level(Vector3 @origin, Vector3 @normal, double @elevation, System.Guid @id, string @name)
+        public Level(Vector3 @origin, Vector3 @normal, double @elevation, Polygon @perimeter, System.Guid @id, string @name)
             : base(id, name)
         {
             var validator = Validator.Instance.GetFirstValidatorForType<Level>();
             if(validator != null)
             {
-                validator.Validate(new object[]{ @origin, @normal, @elevation, @id, @name});
+                validator.Validate(new object[]{ @origin, @normal, @elevation, @perimeter, @id, @name});
             }
         
             this.Origin = @origin;
             this.Normal = @normal;
             this.Elevation = @elevation;
+            this.Perimeter = @perimeter;
         }
     
         /// <summary>The origin of the level.</summary>
@@ -52,6 +53,10 @@ namespace Elements
         [Newtonsoft.Json.JsonProperty("Elevation", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Range(0, int.MaxValue)]
         public double Elevation { get; set; }
+    
+        /// <summary>The perimeter of the level.</summary>
+        [Newtonsoft.Json.JsonProperty("Perimeter", Required = Newtonsoft.Json.Required.AllowNull)]
+        public Polygon Perimeter { get; set; }
     
     
     }

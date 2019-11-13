@@ -29,10 +29,16 @@ namespace Facade
 		public double MullionWidth {get;}
 
 		/// <summary>
-		/// The inset of the glass panel from the outer frame.
+		/// The inset of the glass panel from the left and right of the outer frame.
 		/// </summary>
-		[JsonProperty("Glass Inset")]
-		public double GlassInset {get;}
+		[JsonProperty("Glass Left-Right Inset")]
+		public double GlassLeftRightInset {get;}
+
+		/// <summary>
+		/// The inset of the glass panel from the top and bottom of the outer frame.
+		/// </summary>
+		[JsonProperty("Glass Top-Bottom Inset")]
+		public double GlassTopBottomInset {get;}
 
 
         
@@ -44,7 +50,8 @@ namespace Facade
         {
 			this.PanelWidth = 4;
 			this.MullionWidth = 0.5;
-			this.GlassInset = 1;
+			this.GlassLeftRightInset = 1;
+			this.GlassTopBottomInset = 1;
 
         }
 
@@ -54,11 +61,12 @@ namespace Facade
         /// </summary>
         /// <returns></returns>
         [JsonConstructor]
-        public FacadeInputs(double panelwidth, double mullionwidth, double glassinset, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
+        public FacadeInputs(double panelwidth, double mullionwidth, double glassleftrightinset, double glasstopbottominset, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
         {
 			this.PanelWidth = panelwidth;
 			this.MullionWidth = mullionwidth;
-			this.GlassInset = glassinset;
+			this.GlassLeftRightInset = glassleftrightinset;
+			this.GlassTopBottomInset = glasstopbottominset;
 
 		}
 
