@@ -315,6 +315,8 @@ namespace Structure
                     var beam = new Beam(x,
                                         profile,
                                         colorByLength ? _lengthGradient[(int)(lengthFactor*(_lengthGradient.Count-1))] : mat,
+                                        startSetback: 0.25,
+                                        endSetback: 0.25,
                                         transform: new Transform(new Vector3(0,0, elevation-profile.d/2)));
                     beams.Add(beam);
                 }
@@ -334,6 +336,8 @@ namespace Structure
                     var beam = new Beam(y,
                                         profile,
                                         colorByLength ? _lengthGradient[(int)(lengthFactor * (_lengthGradient.Count-1))] : mat,
+                                        startSetback: 0.25,
+                                        endSetback: 0.25,
                                         transform: new Transform(new Vector3(0,0, elevation-profile.d/2)));
                     beams.Add(beam);
                 }
