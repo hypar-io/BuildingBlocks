@@ -30,7 +30,7 @@ namespace LevelsByEnvelope
                 levelArea += level.Perimeter.Area();
             }
             var matl = new Material(new Color(0.5f, 0.5f, 0.5f, 0.5f), 0.0f, 0.0f, Guid.NewGuid(), "Level");
-            var output = new LevelsByEnvelopeOutputs(input.GroundLevelHeight, 5.0, levelArea); // mechHeight, levelArea);
+            var output = new LevelsByEnvelopeOutputs(input.GroundLevelHeight, mechHeight, levelArea);
             output.model.AddElements(levelMaker.Levels);     
             foreach (var item in levelMaker.Levels)
             {
