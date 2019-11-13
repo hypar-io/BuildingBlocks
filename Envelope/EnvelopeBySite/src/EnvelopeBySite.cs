@@ -43,7 +43,7 @@ namespace EnvelopeBySite
                 var geomRep = new Representation(new List<Elements.Geometry.Solids.SolidOperation>() { extrude });
                 var fndMatl = new Material("foundation", Palette.Gray, 0.0f, 0.0f);
                 var envMatl = new Material("envelope", Palette.Aqua, 0.0f, 0.0f);
-                var envelope = new List<Envelope>()
+                var envelopes = new List<Envelope>()
                 {
                     new Envelope(perimeter, input.FoundationDepth * -1, input.FoundationDepth, Vector3.ZAxis,
                                  0.0, new Transform(0.0, 0.0, input.FoundationDepth * -1), fndMatl, geomRep, Guid.NewGuid(), "")
@@ -54,7 +54,7 @@ namespace EnvelopeBySite
                 var tierHeight = tiers > 0 ? input.BuildingHeight / tiers : input.BuildingHeight;
                 extrude = new Elements.Geometry.Solids.Extrude(perimeter, tierHeight, Vector3.ZAxis, 0.0, false);
                 geomRep = new Representation(new List<Elements.Geometry.Solids.SolidOperation>() { extrude });
-                envelope.Add(new Envelope(perimeter, 0.0, tierHeight, Vector3.ZAxis, 0.0,
+                envelopes.Add(new Envelope(perimeter, 0.0, tierHeight, Vector3.ZAxis, 0.0,
                              new Transform(), envMatl, geomRep, Guid.NewGuid(), ""));
 
                 // Create the remaining Envelope Elements.
@@ -70,12 +70,13 @@ namespace EnvelopeBySite
                     tryPer = tryPer.OrderByDescending(p => p.Area()).ToArray();
                     extrude = new Elements.Geometry.Solids.Extrude(tryPer.First(), tierHeight, Vector3.ZAxis, 0.0, false);
                     geomRep = new Representation(new List<Elements.Geometry.Solids.SolidOperation>() { extrude });
-                    envelope.Add(new Envelope(tryPer.First(), tierHeight * elevFactor, tierHeight, Vector3.ZAxis, 0.0,
+                    envelopes.Add(new Envelope(tryPer.First(), tierHeight * elevFactor, tierHeight, Vector3.ZAxis, 0.0,
                                 new Transform(0.0, 0.0, tierHeight * elevFactor), envMatl, geomRep, Guid.NewGuid(), ""));
                     offsFactor--;
                     elevFactor++;
                 }
-                foreach (var item in envelope.OrderBy(e => e.Elevation))
+                envelopes = envelopes.OrderBy(e => e.Elevation).ToList();
+                foreach (var item in envelopes)
                 {
                     output.model.AddElement(item);
                 }

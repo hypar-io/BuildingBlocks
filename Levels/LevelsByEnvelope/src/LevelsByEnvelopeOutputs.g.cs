@@ -23,12 +23,6 @@ namespace LevelsByEnvelope
 		public double EntryLevelHeight {get;}
 
 		/// <summary>
-		/// Height of the repeated levels.
-		/// </summary>
-		[JsonProperty("Repeated Level Height")]
-		public double RepeatedLevelHeight {get;}
-
-		/// <summary>
 		/// Height of the mechanical level.
 		/// </summary>
 		[JsonProperty("Mechanical Level Height")]
@@ -57,10 +51,9 @@ namespace LevelsByEnvelope
         /// </summary>
         /// <returns></returns>
         [JsonConstructor]
-        public LevelsByEnvelopeOutputs(double entrylevelheight, double repeatedlevelheight, double mechanicallevelheight, double totallevelarea): base()
+        public LevelsByEnvelopeOutputs(double entrylevelheight, double mechanicallevelheight, double totallevelarea): base()
         {
 			this.EntryLevelHeight = entrylevelheight;
-			this.RepeatedLevelHeight = repeatedlevelheight;
 			this.MechanicalLevelHeight = mechanicallevelheight;
 			this.TotalLevelArea = totallevelarea;
 

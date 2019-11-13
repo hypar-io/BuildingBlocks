@@ -41,11 +41,6 @@
       "type": "number"
     },
     {
-      "name": "Repeated Level Height",
-      "description": "Height of the repeated levels.",
-      "type": "number"
-    },
-    {
       "name": "Mechanical Level Height",
       "description": "Height of the mechanical level.",
       "type": "number"

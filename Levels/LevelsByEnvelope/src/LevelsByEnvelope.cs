@@ -20,93 +20,19 @@ namespace LevelsByEnvelope
             var envelopes = new List<Envelope>();
             inputModels.TryGetValue("Envelope", out var model);
             envelopes.AddRange(model.AllElementsOfType<Envelope>());
-            envelopes = envelopes.OrderBy(e => e.Elevation).ToList();
 
-            var levels = new List<Level>();
-
-            var bldgHeight = 0.0;
-            var remnHeight = 0.0;
-            
-            foreach (var envelope in envelopes)
-            {
-                if (envelope.Elevation >= 0.0)
-                {
-                    bldgHeight += envelope.Height;
-                    remnHeight += envelope.Height;
-                }
-            }
-            var makeLevels = new MakeLevels(envelopes);
-            var levelArea = 0.0;
-
-            // Add subgrade Level.
-            var level = makeLevels.MakeLevel(envelopes.First().Elevation);
-            if (level != null)
-            {
-                levels.Add(level);
-                levelArea += level.Perimeter.Area();
-            }
-
-            // Add ground Level.
-            level = makeLevels.MakeLevel(0.0);
-            if (level != null)
-            {
-                levels.Add(level);
-                levelArea += level.Perimeter.Area();
-            }
-
-            // Add top Level.
-            level = makeLevels.MakeLevel(bldgHeight);
-            if (level != null)
-            {
-                levels.Add(level);
-                levelArea += level.Perimeter.Area();
-            }
-
-            //// Add second Level.
-            if (bldgHeight >= input.GroundLevelHeight)
-            {
-                level = makeLevels.MakeLevel(input.GroundLevelHeight);
-                if (level != null)
-                {
-                    levels.Add(level);
-                    levelArea += level.Perimeter.Area();
-                    remnHeight = bldgHeight - input.GroundLevelHeight;
-                }
-            }
-
-            // Add mechanical Level.
             var mechHeight = input.StandardLevelHeight * input.MechanicalLevelHeightRatio;
-            if (remnHeight >= mechHeight)
+            var levelMaker = new LevelMaker(envelopes, input.StandardLevelHeight, input.GroundLevelHeight, mechHeight);
+            
+            var levelArea = 0.0;
+            foreach (var level in levelMaker.Levels)
             {
-                level = makeLevels.MakeLevel(bldgHeight - mechHeight);
-                if (level != null)
-                {
-                    levels.Add(level);
-                    levelArea += level.Perimeter.Area();
-                    remnHeight -= mechHeight;
-                }
+                levelArea += level.Perimeter.Area();
             }
-
-            // Add standard height Levels.
-            var lvlQty = Math.Floor(remnHeight / input.StandardLevelHeight) - 1;
-            var stdHeight = remnHeight / lvlQty;
-            var lvlElev = input.GroundLevelHeight + input.StandardLevelHeight;
-            while (remnHeight >= stdHeight * 2)
-            {
-                level = makeLevels.MakeLevel(lvlElev);
-                if (level != null)
-                {
-                    levels.Add(level);
-                    levelArea += level.Perimeter.Area();
-                }
-                lvlElev += stdHeight;
-                remnHeight -= stdHeight;
-            }
-            levels = levels.OrderBy(l => l.Elevation).ToList();
             var matl = new Material(new Color(0.5f, 0.5f, 0.5f, 0.5f), 0.0f, 0.0f, Guid.NewGuid(), "Level");
-            var output = new LevelsByEnvelopeOutputs(input.GroundLevelHeight, stdHeight, mechHeight, levelArea);
-            output.model.AddElements(levels);     
-            foreach (var item in levels)
+            var output = new LevelsByEnvelopeOutputs(input.GroundLevelHeight, mechHeight, levelArea);
+            output.model.AddElements(levelMaker.Levels);     
+            foreach (var item in levelMaker.Levels)
             {
                 output.model.AddElement(new Panel(item.Perimeter, matl, new Transform(0.0, 0.0, item.Elevation), null, Guid.NewGuid(), ""));
             }
