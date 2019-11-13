@@ -17,16 +17,16 @@ namespace CoreByLevels
     public class CoreByLevelsInputs: S3Args
     {
 		/// <summary>
-		/// The length.
+		/// Stair access to roof required.
 		/// </summary>
-		[JsonProperty("Length")]
-		public double Length {get;}
+		[JsonProperty("Stair Roof Access")]
+		public bool StairRoofAccess {get;}
 
 		/// <summary>
-		/// The width.
+		/// Rotation of the core.
 		/// </summary>
-		[JsonProperty("Width")]
-		public double Width {get;}
+		[JsonProperty("Rotation")]
+		public double Rotation {get;}
 
 
         
@@ -36,8 +36,8 @@ namespace CoreByLevels
         /// </summary>
         public CoreByLevelsInputs() : base()
         {
-			this.Length = 10;
-			this.Width = 10;
+			this.StairRoofAccess = false;
+			this.Rotation = 355;
 
         }
 
@@ -47,10 +47,10 @@ namespace CoreByLevels
         /// </summary>
         /// <returns></returns>
         [JsonConstructor]
-        public CoreByLevelsInputs(double length, double width, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
+        public CoreByLevelsInputs(bool stairroofaccess, double rotation, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
         {
-			this.Length = length;
-			this.Width = width;
+			this.StairRoofAccess = stairroofaccess;
+			this.Rotation = rotation;
 
 		}
 

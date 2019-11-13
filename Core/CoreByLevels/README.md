@@ -2,17 +2,17 @@
             
 # CoreByLevels
 
-The CoreByLevels function.
+Creates a building core by referencing Levels supplied by another function.
 
 |Input Name|Type|Description|
 |---|---|---|
-|Length|Range|The length.|
-|Width|Range|The width.|
+|Stair Roof Access|Boolean|Stair access to roof required.|
+|Rotation|Range|Rotation of the core.|
 
 
 <br>
 
 |Output Name|Type|Description|
 |---|---|---|
-|Volume|Number|The volume.|
+|Volume|Number|The total volume of the core.|
 

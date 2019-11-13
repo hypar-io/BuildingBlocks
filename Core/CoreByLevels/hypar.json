@@ -7,32 +7,35 @@
   "model_dependencies": [
     "Levels"
   ],
-  "model_output": "Cores",  
+  "model_output": "Cores",
   "inputs": [
     {
-      "min": 1.0,
-      "max": 10.0,
-      "step": 1.0,
-      "name": "Length",
-      "description": "The length.",
-      "type": "range"
+      "name": "Stair Roof Access",
+      "description": "Stair access to roof required.",
+      "type": "boolean"
     },
     {
-      "min": 1.0,
-      "max": 10.0,
-      "step": 1.0,
-      "name": "Width",
-      "description": "The width.",
+      "min": 0.0,
+      "max": 355.0,
+      "step": 5.0,
+      "name": "Rotation",
+      "description": "Rotation of the core.",
       "type": "range"
     }
   ],
   "outputs": [
     {
       "name": "Volume",
-      "description": "The volume.",
+      "description": "The total volume of the core.",
       "type": "number"
     }
   ],
   "preview_image": null,
-  "element_types": null
+  "element_types": [
+    "../../Schemas/Level.json",
+    "../../Schemas/Room.json",
+    "../../Schemas/StairEnclosure.json",
+    "../../Schemas/LiftShaft.json",
+    "../../Schemas/MechanicalCorridor.json"
+  ]
 }

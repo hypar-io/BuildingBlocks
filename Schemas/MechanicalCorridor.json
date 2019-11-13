@@ -1,0 +1,50 @@
+{
+    "$id": "https://hypar.io/BuildingBlocks/schemas/mechanicalcorridor.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "description": "Represents the enclosure of mechanical system pathways.",
+    "title": "MechanicalCorridor",
+    "x-namespace": "Elements",
+    "type": ["object", "null"],
+    "allOf": [{"$ref": "https://hypar.io/Schemas/GeometricElement.json"}],
+    "required": ["discriminator", "Perimeter", "Direction", "Rotation", "Start", "End", "Length", "Volume", "Number"],
+    "discriminator": "discriminator",
+  "properties": {
+    "discriminator": {
+      "type": "string"
+    }, 
+    "Perimeter": {
+      "description": "The id of the polygon to extrude.",
+      "$ref": "https://hypar.io/Schemas/Geometry/Polygon.json"
+    },
+    "Direction": {
+      "description": "The direction in which to extrude.",
+      "$ref": "https://hypar.io/Schemas/Geometry/Vector3.json"
+    },
+    "Rotation": {
+      "description": "The rotation in degrees of the mechanical corridor.",
+      "type": "number"
+    },      
+    "Start": {
+      "description": "The start point of the centroid of the mechanical corridor.",
+      "$ref": "https://hypar.io/Schemas/Geometry/Vector3.json"
+    },
+    "End": {
+        "description": "The end point of the centroid of the mechanical corridor.",
+        "$ref": "https://hypar.io/Schemas/Geometry/Vector3.json"
+      },    
+    "Length": {
+      "description": "The length of the mechanical corridor.",
+      "type": "number",
+      "minimum": 0
+    },
+    "Volume": {
+      "description": "The volume of the mechanical corridor.",
+      "type": "number"
+    },
+    "Number": {
+      "description": "The number of the stair enclosure.",
+      "type": "string"
+    }      
+  },
+    "additionalProperties": false
+}

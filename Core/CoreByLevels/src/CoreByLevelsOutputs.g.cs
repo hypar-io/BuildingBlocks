@@ -17,7 +17,7 @@ namespace CoreByLevels
     public class CoreByLevelsOutputs: ResultsBase
     {
 		/// <summary>
-		/// The volume.
+		/// The total volume of the core.
 		/// </summary>
 		[JsonProperty("Volume")]
 		public double Volume {get;}
