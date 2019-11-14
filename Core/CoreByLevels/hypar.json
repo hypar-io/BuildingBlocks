@@ -10,11 +10,6 @@
   "model_output": "Cores",
   "inputs": [
     {
-      "name": "Stair Roof Access",
-      "description": "Stair access to roof required.",
-      "type": "boolean"
-    },
-    {
       "min": 0.0,
       "max": 355.0,
       "step": 5.0,
