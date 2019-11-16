@@ -22,6 +22,12 @@ namespace FloorsByLevels
 		[JsonProperty("Total Area")]
 		public double TotalArea {get;}
 
+		/// <summary>
+		/// Quantity of floors.
+		/// </summary>
+		[JsonProperty("Floor Quantity")]
+		public double FloorQuantity {get;}
+
 
         
         /// <summary>
@@ -39,9 +45,10 @@ namespace FloorsByLevels
         /// </summary>
         /// <returns></returns>
         [JsonConstructor]
-        public FloorsByLevelsOutputs(double totalarea): base()
+        public FloorsByLevelsOutputs(double totalarea, double floorquantity): base()
         {
 			this.TotalArea = totalarea;
+			this.FloorQuantity = floorquantity;
 
 		}
 
