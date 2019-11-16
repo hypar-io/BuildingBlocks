@@ -40,11 +40,11 @@ namespace CoreByLevels
                 output.model.AddElement(lift);
             }
             // Comment for distribution.
-            //var matl = new Material(new Color(0.5f, 0.5f, 0.5f, 0.5f), 0.0f, 0.0f, Guid.NewGuid(), "Level");
-            //foreach (var item in levels)
-            //{
-            //    output.model.AddElement(new Panel(item.Perimeter, matl, new Transform(0.0, 0.0, item.Elevation), null, Guid.NewGuid(), ""));
-            //}
+            var matl = new Material(new Color(0.5f, 0.5f, 0.5f, 0.5f), 0.0f, 0.0f, Guid.NewGuid(), "Level");
+            foreach (var item in levels)
+            {
+                output.model.AddElement(new Panel(item.Perimeter, matl, new Transform(0.0, 0.0, item.Elevation), null, Guid.NewGuid(), ""));
+            }
             // Comment for distribution.
             return output;
         }

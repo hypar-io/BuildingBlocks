@@ -17,10 +17,34 @@ namespace PlansByFloors
     public class PlansByFloorsOutputs: ResultsBase
     {
 		/// <summary>
-		/// The volume.
+		/// Quantity of rooms on the ground floor.
 		/// </summary>
-		[JsonProperty("Volume")]
-		public double Volume {get;}
+		[JsonProperty("Ground Floor Room Quantity")]
+		public double GroundFloorRoomQuantity {get;}
+
+		/// <summary>
+		/// Area for the ground floor.
+		/// </summary>
+		[JsonProperty("Ground Floor Area")]
+		public double GroundFloorArea {get;}
+
+		/// <summary>
+		/// Quantity of rooms on the ground floor.
+		/// </summary>
+		[JsonProperty("Typical Floor Room Quantity")]
+		public double TypicalFloorRoomQuantity {get;}
+
+		/// <summary>
+		/// Quantity of rooms on all upper floors.
+		/// </summary>
+		[JsonProperty("Upper Floor Room Quantity")]
+		public double UpperFloorRoomQuantity {get;}
+
+		/// <summary>
+		/// Total area for all upper floors.
+		/// </summary>
+		[JsonProperty("Upper Floor Area")]
+		public double UpperFloorArea {get;}
 
 
         
@@ -39,9 +63,13 @@ namespace PlansByFloors
         /// </summary>
         /// <returns></returns>
         [JsonConstructor]
-        public PlansByFloorsOutputs(double volume): base()
+        public PlansByFloorsOutputs(double groundfloorroomquantity, double groundfloorarea, double typicalfloorroomquantity, double upperfloorroomquantity, double upperfloorarea): base()
         {
-			this.Volume = volume;
+			this.GroundFloorRoomQuantity = groundfloorroomquantity;
+			this.GroundFloorArea = groundfloorarea;
+			this.TypicalFloorRoomQuantity = typicalfloorroomquantity;
+			this.UpperFloorRoomQuantity = upperfloorroomquantity;
+			this.UpperFloorArea = upperfloorarea;
 
 		}
 

@@ -17,16 +17,22 @@ namespace PlansByFloors
     public class PlansByFloorsInputs: S3Args
     {
 		/// <summary>
-		/// The length.
+		/// Quantity of rooms on the ground floor.
 		/// </summary>
-		[JsonProperty("Length")]
-		public double Length {get;}
+		[JsonProperty("Ground Floor Rooms")]
+		public double GroundFloorRooms {get;}
 
 		/// <summary>
-		/// The width.
+		/// Quantity of rooms on a typical floor.
 		/// </summary>
-		[JsonProperty("Width")]
-		public double Width {get;}
+		[JsonProperty("Typical Rooms Per Upper Floor")]
+		public double TypicalRoomsPerUpperFloor {get;}
+
+		/// <summary>
+		/// Minimum area for each room.
+		/// </summary>
+		[JsonProperty("Minimum Room Area")]
+		public double MinimumRoomArea {get;}
 
 
         
@@ -36,8 +42,9 @@ namespace PlansByFloors
         /// </summary>
         public PlansByFloorsInputs() : base()
         {
-			this.Length = 10;
-			this.Width = 10;
+			this.GroundFloorRooms = 20;
+			this.TypicalRoomsPerUpperFloor = 20;
+			this.MinimumRoomArea = 10;
 
         }
 
@@ -47,10 +54,11 @@ namespace PlansByFloors
         /// </summary>
         /// <returns></returns>
         [JsonConstructor]
-        public PlansByFloorsInputs(double length, double width, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
+        public PlansByFloorsInputs(double groundfloorrooms, double typicalroomsperupperfloor, double minimumroomarea, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
         {
-			this.Length = length;
-			this.Width = width;
+			this.GroundFloorRooms = groundfloorrooms;
+			this.TypicalRoomsPerUpperFloor = typicalroomsperupperfloor;
+			this.MinimumRoomArea = minimumroomarea;
 
 		}
 

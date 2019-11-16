@@ -55,7 +55,7 @@ namespace EnvelopeBySite
                 extrude = new Elements.Geometry.Solids.Extrude(perimeter, tierHeight, Vector3.ZAxis, 0.0, false);
                 geomRep = new Representation(new List<Elements.Geometry.Solids.SolidOperation>() { extrude });
                 envelopes.Add(new Envelope(perimeter, 0.0, tierHeight, Vector3.ZAxis, 0.0,
-                             new Transform(), envMatl, geomRep, Guid.NewGuid(), ""));
+                              new Transform(), envMatl, geomRep, Guid.NewGuid(), ""));
 
                 // Create the remaining Envelope Elements.
                 var offsFactor = -1;
@@ -71,7 +71,7 @@ namespace EnvelopeBySite
                     extrude = new Elements.Geometry.Solids.Extrude(tryPer.First(), tierHeight, Vector3.ZAxis, 0.0, false);
                     geomRep = new Representation(new List<Elements.Geometry.Solids.SolidOperation>() { extrude });
                     envelopes.Add(new Envelope(tryPer.First(), tierHeight * elevFactor, tierHeight, Vector3.ZAxis, 0.0,
-                                new Transform(0.0, 0.0, tierHeight * elevFactor), envMatl, geomRep, Guid.NewGuid(), ""));
+                                  new Transform(0.0, 0.0, tierHeight * elevFactor), envMatl, geomRep, Guid.NewGuid(), ""));
                     offsFactor--;
                     elevFactor++;
                 }

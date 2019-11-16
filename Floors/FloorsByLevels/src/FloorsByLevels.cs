@@ -1,6 +1,7 @@
 using Elements;
 using Elements.Geometry;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 
 namespace FloorsByLevels
@@ -24,9 +25,10 @@ namespace FloorsByLevels
             
             foreach (var level in levels)
             {
-                floors.Add(new Floor(level.Perimeter, input.FloorThickness, 0.0, new Transform(0.0, 0.0, level.Elevation), BuiltInMaterials.Concrete, null, Guid.NewGuid(), null));
+                floors.Add(new Floor(level.Perimeter, input.FloorThickness, level.Elevation, new Transform(0.0, 0.0, level.Elevation), BuiltInMaterials.Concrete, null, Guid.NewGuid(), null));
                 floorArea += level.Perimeter.Area();
             }
+            floors = floors.OrderBy(f => f.Elevation).ToList();
             var output = new FloorsByLevelsOutputs(floorArea);
             output.model.AddElements(floors);
             return output;

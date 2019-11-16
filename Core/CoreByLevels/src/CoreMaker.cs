@@ -117,7 +117,8 @@ namespace CoreByLevels
                 var bathHeight = bathLevels.ElementAt(i + 1).Elevation - bathLevels.ElementAt(i).Elevation - 1.0;
                 var extrude = new Elements.Geometry.Solids.Extrude(bathPerim, bathHeight, Vector3.ZAxis, 0.0, false);
                 var geomRep = new Representation(new List<Elements.Geometry.Solids.SolidOperation>() { extrude });
-                Restrooms.Add(new Room(bathPerim, Vector3.ZAxis, 0.0, 0.0, bathHeight, bathPerim.Area(), "",
+                Restrooms.Add(new Room(bathPerim, Vector3.ZAxis, Rotation, bathLevels.ElementAt(i).Elevation, 
+                                       bathHeight, bathPerim.Area(), "",
                                        new Transform(0.0, 0.0, bathLevels.ElementAt(i).Elevation), bathMatl, geomRep,
                                        Guid.NewGuid(), "Restroom"));
                 i++;
@@ -188,7 +189,7 @@ namespace CoreByLevels
                 var extrude = new Elements.Geometry.Solids.Extrude(stairPerim, stairHeight, Vector3.ZAxis, 0.0, false);
                 var geomRep = new Representation(new List<Elements.Geometry.Solids.SolidOperation>() { extrude });
                 var stairMatl = new Material(new Color(1.0f, 0.0f, 0.0f, 0.8f), 0.0f, 0.0f, Guid.NewGuid(), "stair");
-                Stairs.Add(new StairEnclosure(stairPerim, Vector3.ZAxis, 0.0, 0.0,
+                Stairs.Add(new StairEnclosure(stairPerim, Vector3.ZAxis, Rotation, Levels.First().Elevation,
                                               stairHeight, stairPerim.Area() * stairHeight, "",
                                               new Transform(0.0, 0.0, Levels.First().Elevation),
                                               stairMatl, geomRep, Guid.NewGuid(), ""));
@@ -244,7 +245,8 @@ namespace CoreByLevels
                 {
                     var extrude = new Elements.Geometry.Solids.Extrude(polygon, liftHeight, Vector3.ZAxis, 0.0, false);
                     var geomRep = new Representation(new List<Elements.Geometry.Solids.SolidOperation>() { extrude });
-                    Lifts.Add(new LiftShaft(polygon, Vector3.ZAxis, 0.0, 0.0, liftHeight, polygon.Area() * liftHeight, "",
+                    Lifts.Add(new LiftShaft(polygon, Vector3.ZAxis, Rotation, Levels.First().Elevation, 
+                                            liftHeight, polygon.Area() * liftHeight, "",
                                             new Transform(0.0, 0.0, Levels.First().Elevation), liftMatl, geomRep,
                                             Guid.NewGuid(), ""));
 
