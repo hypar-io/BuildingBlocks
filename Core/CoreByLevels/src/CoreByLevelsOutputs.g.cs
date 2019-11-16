@@ -17,10 +17,16 @@ namespace CoreByLevels
     public class CoreByLevelsOutputs: ResultsBase
     {
 		/// <summary>
-		/// The volume.
+		/// Restroom quantity.
 		/// </summary>
-		[JsonProperty("Volume")]
-		public double Volume {get;}
+		[JsonProperty("Restrooms")]
+		public double Restrooms {get;}
+
+		/// <summary>
+		/// Lift quantity.
+		/// </summary>
+		[JsonProperty("Lifts")]
+		public double Lifts {get;}
 
 
         
@@ -39,9 +45,10 @@ namespace CoreByLevels
         /// </summary>
         /// <returns></returns>
         [JsonConstructor]
-        public CoreByLevelsOutputs(double volume): base()
+        public CoreByLevelsOutputs(double restrooms, double lifts): base()
         {
-			this.Volume = volume;
+			this.Restrooms = restrooms;
+			this.Lifts = lifts;
 
 		}
 

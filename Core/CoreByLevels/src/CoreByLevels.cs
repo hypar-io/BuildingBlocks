@@ -1,10 +1,13 @@
 using Elements;
 using Elements.Geometry;
+using System;
+using System.Linq;
 using System.Collections.Generic;
+using GeometryEx;
 
 namespace CoreByLevels
 {
-      public static class CoreByLevels
+    public static class CoreByLevels
     {
         /// <summary>
         /// The CoreByLevels function.
@@ -14,14 +17,36 @@ namespace CoreByLevels
         /// <returns>A CoreByLevelsOutputs instance containing computed results and the model with any new elements.</returns>
         public static CoreByLevelsOutputs Execute(Dictionary<string, Model> inputModels, CoreByLevelsInputs input)
         {
-            /// Your code here.
-            var height = 1.0;
-            var volume = input.Length * input.Width * height;
-            var output = new CoreByLevelsOutputs(volume);
-            var rectangle = Polygon.Rectangle(input.Length, input.Width);
-            var mass = new Mass(rectangle, height);
-            output.model.AddElement(mass);
+            var levels = new List<Level>();
+            inputModels.TryGetValue("Levels", out var model);
+            levels.AddRange(model.AllElementsOfType<Level>());
+            var coreMaker = new CoreMaker(levels, input.Rotation);
+            var output = new CoreByLevelsOutputs(coreMaker.Restrooms.Count(), coreMaker.LiftQuantity);
+
+            foreach(var room in coreMaker.Restrooms)
+            {
+                output.model.AddElement(room);
+            }
+            foreach (var mech in coreMaker.Mechanicals)
+            {
+                output.model.AddElement(mech);
+            }
+            foreach (var stair in coreMaker.Stairs)
+            {
+                output.model.AddElement(stair);
+            }
+            foreach (var lift in coreMaker.Lifts)
+            {
+                output.model.AddElement(lift);
+            }
+            // Included for testing only. Remove for production.
+            //var matl = new Material(new Color(0.5f, 0.5f, 0.5f, 0.5f), 0.0f, 0.0f, Guid.NewGuid(), "Level");
+            //foreach (var item in levels)
+            //{
+            //    output.model.AddElement(new Panel(item.Perimeter, matl, new Transform(0.0, 0.0, item.Elevation), null, Guid.NewGuid(), ""));
+            //}
+            // Included for testing only. Remove for production.
             return output;
         }
-      }
+    }
 }

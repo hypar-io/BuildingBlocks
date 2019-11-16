@@ -17,16 +17,10 @@ namespace CoreByLevels
     public class CoreByLevelsInputs: S3Args
     {
 		/// <summary>
-		/// The length.
+		/// Rotation of the core.
 		/// </summary>
-		[JsonProperty("Length")]
-		public double Length {get;}
-
-		/// <summary>
-		/// The width.
-		/// </summary>
-		[JsonProperty("Width")]
-		public double Width {get;}
+		[JsonProperty("Rotation")]
+		public double Rotation {get;}
 
 
         
@@ -36,8 +30,7 @@ namespace CoreByLevels
         /// </summary>
         public CoreByLevelsInputs() : base()
         {
-			this.Length = 10;
-			this.Width = 10;
+			this.Rotation = 355;
 
         }
 
@@ -47,10 +40,9 @@ namespace CoreByLevels
         /// </summary>
         /// <returns></returns>
         [JsonConstructor]
-        public CoreByLevelsInputs(double length, double width, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
+        public CoreByLevelsInputs(double rotation, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
         {
-			this.Length = length;
-			this.Width = width;
+			this.Rotation = rotation;
 
 		}
 
