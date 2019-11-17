@@ -2,13 +2,12 @@
             
 # PlansByFloors
 
-Creates 2D floor plans from Floors provided by another function.
+The PlansByFloors function.
 
 |Input Name|Type|Description|
 |---|---|---|
 |Ground Floor Rooms|Range|Quantity of rooms on the ground floor.|
 |Typical Rooms Per Upper Floor|Range|Quantity of rooms on a typical floor.|
-|Minimum Room Area|Range|Minimum area for each room.|
 
 
 <br>

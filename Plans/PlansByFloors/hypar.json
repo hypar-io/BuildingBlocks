@@ -1,12 +1,13 @@
 {
   "$schema": "https://hypar.io/Schemas/Function.json",
-  "description": "Creates 2D floor plans from Floors provided by another function.",
+  "description": "The PlansByFloors function.",
+  "id": "43f9683a-7392-4c2e-8c85-3d5ffafb4ac4",
   "name": "PlansByFloors",
   "repository_url": "https://github.com/hypar-io/function",
   "model_dependencies": [
     "Floors"
   ],
-  "model_output": "Plans",
+  "model_output": "Rooms",
   "inputs": [
     {
       "min": 1.0,
@@ -22,14 +23,6 @@
       "step": 2.0,
       "name": "Typical Rooms Per Upper Floor",
       "description": "Quantity of rooms on a typical floor.",
-      "type": "range"
-    },
-    {
-      "min": 1.0,
-      "max": 10.0,
-      "step": 1.0,
-      "name": "Minimum Room Area",
-      "description": "Minimum area for each room.",
       "type": "range"
     }
   ],
@@ -62,6 +55,6 @@
   ],
   "preview_image": null,
   "element_types": [
-    "../../schemas/Room.json"
+    "https://raw.githubusercontent.com/hypar-io/Schemas/master/Room.json"
   ]
 }

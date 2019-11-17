@@ -28,12 +28,6 @@ namespace PlansByFloors
 		[JsonProperty("Typical Rooms Per Upper Floor")]
 		public double TypicalRoomsPerUpperFloor {get;}
 
-		/// <summary>
-		/// Minimum area for each room.
-		/// </summary>
-		[JsonProperty("Minimum Room Area")]
-		public double MinimumRoomArea {get;}
-
 
         
         /// <summary>
@@ -44,7 +38,6 @@ namespace PlansByFloors
         {
 			this.GroundFloorRooms = 20;
 			this.TypicalRoomsPerUpperFloor = 20;
-			this.MinimumRoomArea = 10;
 
         }
 
@@ -54,11 +47,10 @@ namespace PlansByFloors
         /// </summary>
         /// <returns></returns>
         [JsonConstructor]
-        public PlansByFloorsInputs(double groundfloorrooms, double typicalroomsperupperfloor, double minimumroomarea, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
+        public PlansByFloorsInputs(double groundfloorrooms, double typicalroomsperupperfloor, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
         {
 			this.GroundFloorRooms = groundfloorrooms;
 			this.TypicalRoomsPerUpperFloor = typicalroomsperupperfloor;
-			this.MinimumRoomArea = minimumroomarea;
 
 		}
 
