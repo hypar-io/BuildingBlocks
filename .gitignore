@@ -6,3 +6,4 @@ TestOutput/
 *.glb
 output.json
 input.json
+.DS_Store
