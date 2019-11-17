@@ -72,16 +72,9 @@ namespace LevelsByEnvelope
             MakeLevel(Envelopes.Last(), bldgHeight - mchHeight);
 
             // Create temporary envelope to populate the region beneath the Mechanical level.
-            envelope = new Envelope(envelope.Profile.Perimeter,
-                                    envelope.Elevation,
-                                    envelope.Height - mchHeight,
-                                    Vector3.ZAxis,
-                                    0.0,
-                                    envelope.Transform,
-                                    null,
-                                    envelope.Representation,
-                                    Guid.NewGuid(),
-                                    "");
+            envelope = new Envelope(envelope.Profile.Perimeter, envelope.Elevation, envelope.Height - mchHeight,
+                                    Vector3.ZAxis, 0.0, envelope.Transform, null, envelope.Representation,
+                                    Guid.NewGuid(), "");
             Levels.AddRange(MakeLevels(envelope, stdHeight).Skip(1));
             Levels = Levels.OrderBy(l => l.Elevation).ToList();
         }

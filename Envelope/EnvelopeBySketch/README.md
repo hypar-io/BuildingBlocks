@@ -2,7 +2,7 @@
             
 # EnvelopeBySketch
 
-The EnvelopeBySketch function.
+Creates building Envelope elements derived from a polygon sketch and setback settings.
 
 |Input Name|Type|Description|
 |---|---|---|

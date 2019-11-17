@@ -17,15 +17,19 @@ namespace EnvelopeBySketch.Tests
         public void EnvelopeBySketchTest()
         {
             var model = new Model();
-            var polygon =
-                new Polygon(
+            var polygon = 
+                new Polygon
+                (
                     new[]
                     {
-                        new Vector3(20.0, 20.0, 0.0),
-                        new Vector3(-20.0, 20.0, 0.0),
-                        new Vector3(-20.0, -20.0, 0.0),
-                        new Vector3(20.0, -20.0, 0.0)
-                    });
+                        new Vector3(0.0, 0.0),
+                        new Vector3(100.0, 0.0),
+                        new Vector3(100.0, 45.0),
+                        new Vector3(45.0, 45.0),
+                        new Vector3(45.0, 100.0),
+                        new Vector3(0.0, 100.0),
+                    }
+                );
             var inputs = 
                 new EnvelopeBySketchInputs (polygon, 80.0, 20.0, 2.0, 100.0, 20.0, "", "", new Dictionary<string, string>(), "", "", "");
             var outputs = EnvelopeBySketch.Execute(new Dictionary<string, Model> { { "Envelope", model } }, inputs);

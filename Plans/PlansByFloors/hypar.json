@@ -1,0 +1,67 @@
+{
+  "$schema": "https://hypar.io/Schemas/Function.json",
+  "description": "Creates 2D floor plans from Floors provided by another function.",
+  "name": "PlansByFloors",
+  "repository_url": "https://github.com/hypar-io/function",
+  "model_dependencies": [
+    "Floors"
+  ],
+  "model_output": "Plans",
+  "inputs": [
+    {
+      "min": 1.0,
+      "max": 20.0,
+      "step": 1.0,
+      "name": "Ground Floor Rooms",
+      "description": "Quantity of rooms on the ground floor.",
+      "type": "range"
+    },
+    {
+      "min": 2.0,
+      "max": 20.0,
+      "step": 2.0,
+      "name": "Typical Rooms Per Upper Floor",
+      "description": "Quantity of rooms on a typical floor.",
+      "type": "range"
+    },
+    {
+      "min": 1.0,
+      "max": 10.0,
+      "step": 1.0,
+      "name": "Minimum Room Area",
+      "description": "Minimum area for each room.",
+      "type": "range"
+    }
+  ],
+  "outputs": [
+    {
+      "name": "Ground Floor Room Quantity",
+      "description": "Quantity of rooms on the ground floor.",
+      "type": "number"
+    },
+    {
+      "name": "Ground Floor Area",
+      "description": "Area for the ground floor.",
+      "type": "number"
+    },
+    {
+      "name": "Typical Floor Room Quantity",
+      "description": "Quantity of rooms on the ground floor.",
+      "type": "number"
+    },
+    {
+      "name": "Upper Floor Room Quantity",
+      "description": "Quantity of rooms on all upper floors.",
+      "type": "number"
+    },
+    {
+      "name": "Upper Floor Area",
+      "description": "Total area for all upper floors.",
+      "type": "number"
+    }
+  ],
+  "preview_image": null,
+  "element_types": [
+    "../../schemas/Room.json"
+  ]
+}

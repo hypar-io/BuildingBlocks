@@ -55,7 +55,7 @@ namespace Elements
         public double Elevation { get; set; }
     
         /// <summary>The perimeter of the level.</summary>
-        [Newtonsoft.Json.JsonProperty("Perimeter", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonProperty("Perimeter", Required = Newtonsoft.Json.Required.AllowNull)]
         public Polygon Perimeter { get; set; }
     
     

@@ -1,7 +1,9 @@
 ﻿using Xunit;
+using System;
 using System.Linq;
 using Newtonsoft.Json;
 using Elements;
+using Elements.Geometry;
 using Hypar.Functions.Execution.Local;
 using Elements.Serialization.glTF;
 using Elements.Serialization.JSON;

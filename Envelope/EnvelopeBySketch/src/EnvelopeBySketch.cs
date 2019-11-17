@@ -49,7 +49,7 @@ namespace EnvelopeBySketch
                 extrude = new Elements.Geometry.Solids.Extrude(tryPer.First(), tierHeight, Vector3.ZAxis, 0.0, false);
                 geomRep = new Representation(new List<Elements.Geometry.Solids.SolidOperation>() { extrude });
                 envelopes.Add(new Envelope(tryPer.First(), tierHeight * elevFactor, tierHeight, Vector3.ZAxis, 0.0,
-                            new Transform(0.0, 0.0, tierHeight * elevFactor), envMatl, geomRep, Guid.NewGuid(), ""));
+                              new Transform(0.0, 0.0, tierHeight * elevFactor), envMatl, geomRep, Guid.NewGuid(), ""));
                 offsFactor--;
                 elevFactor++;
             }

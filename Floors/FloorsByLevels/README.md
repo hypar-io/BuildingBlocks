@@ -1,8 +1,8 @@
-
+<img src="preview.png" width="512">
             
 # FloorsByLevels
 
-The FloorsByLevels function.
+Creates Floors from Levels supplied by another function.
 
 |Input Name|Type|Description|
 |---|---|---|
@@ -14,4 +14,5 @@ The FloorsByLevels function.
 |Output Name|Type|Description|
 |---|---|---|
 |Total Area|Number|Aggregate area of all floors.|
+|Floor Quantity|Number|Quantity of floors.|
 

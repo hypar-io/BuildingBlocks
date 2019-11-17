@@ -51,7 +51,7 @@ namespace FloorsByEnvelope
 			this.GroundFloorHeight = 7;
 			this.StandardFloorHeight = 5;
 			this.MechanicalFloorHeightRatio = 2.5;
-			this.FloorSetback = 1.5;
+			this.FloorSetback = 1;
 
         }
 
