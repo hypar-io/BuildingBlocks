@@ -20,10 +20,10 @@ namespace CoreByLevels
             var levels = new List<Level>();
             inputModels.TryGetValue("Levels", out var model);
             levels.AddRange(model.AllElementsOfType<Level>());
-            var coreMaker = new CoreMaker(levels, input.Rotation);
+            var coreMaker = new CoreMaker(levels, input.Setback, input.Rotation);
             var output = new CoreByLevelsOutputs(coreMaker.Restrooms.Count(), coreMaker.LiftQuantity);
 
-            foreach(var room in coreMaker.Restrooms)
+            foreach (var room in coreMaker.Restrooms)
             {
                 output.model.AddElement(room);
             }
@@ -39,13 +39,16 @@ namespace CoreByLevels
             {
                 output.model.AddElement(lift);
             }
-            // Comment for distribution.
-            var matl = new Material(new Color(0.5f, 0.5f, 0.5f, 0.5f), 0.0f, 0.0f, Guid.NewGuid(), "Level");
-            foreach (var item in levels)
-            {
-                output.model.AddElement(new Panel(item.Perimeter, matl, new Transform(0.0, 0.0, item.Elevation), null, Guid.NewGuid(), ""));
-            }
-            // Comment for distribution.
+
+            // Debug section. Comment for distribution.
+            //var matl = new Material(new Color(0.5f, 0.5f, 0.5f, 0.5f), 0.0f, 0.0f, Guid.NewGuid(), "Level");
+            //var item = levels.Last();
+            //output.model.AddElement(new Panel(item.Perimeter, matl, new Transform(0.0, 0.0, item.Elevation), null, Guid.NewGuid(), ""));
+            //foreach (var item in levels)
+            //{
+            //    output.model.AddElement(new Panel(item.Perimeter, matl, new Transform(0.0, 0.0, item.Elevation), null, Guid.NewGuid(), ""));
+            //}
+
             return output;
         }
     }

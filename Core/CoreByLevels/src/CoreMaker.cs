@@ -37,7 +37,7 @@ namespace CoreByLevels
         /// </summary>
         /// <param name="levels"></param>
         /// <param name="rotation"></param>
-        public CoreMaker(List<Level> levels, double rotation)
+        public CoreMaker(List<Level> levels, double setback, double rotation)
         {
             Levels = new List<Level>();
             Levels.AddRange(levels.OrderBy(l => l.Elevation).ToList());
@@ -46,7 +46,7 @@ namespace CoreByLevels
             Stairs = new List<StairEnclosure>();
             Lifts = new List<LiftShaft>();
             Rotation = rotation;
-            var corePerim = PlaceCore(Levels.Last().Perimeter);
+            var corePerim = PlaceCore(setback, rotation);
             if (corePerim == null)
             {
                 throw new InvalidOperationException("No valid service core location found.");
@@ -56,6 +56,25 @@ namespace CoreByLevels
             var mechTopo = MakeMech(bathTopo.E);
             var stairTopos = MakeStairs(bathTopo);
             MakeLifts(stairTopos, LiftService);
+
+            //Following section for debug. 
+            //Comment for deployment.
+
+            //Mechanicals.Clear();
+            //var ctr = corePerim.Centroid();
+            //var lastLevel = Levels.Last();
+            //var mechHeight = lastLevel.Elevation - Levels.First().Elevation + 5.0;
+            //var extrude = new Elements.Geometry.Solids.Extrude(corePerim, mechHeight, Vector3.ZAxis, 0.0, false);
+            //var geomRep = new Representation(new List<Elements.Geometry.Solids.SolidOperation>() { extrude });
+            //var mechMatl = new Material(new Color(0.2f, 0.2f, 0.2f, 0.8f), 0.0f, 0.0f, Guid.NewGuid(), "mech");
+            //Mechanicals.Add(new MechanicalCorridor(corePerim, Vector3.ZAxis, Rotation,
+            //                                       new Vector3(ctr.X, ctr.Y, Levels.First().Elevation),
+            //                                       new Vector3(ctr.X, ctr.Y, Levels.First().Elevation + mechHeight),
+            //                                       mechHeight, corePerim.Area() * mechHeight, "",
+            //                                       new Transform(0.0, 0.0, Levels.First().Elevation),
+            //                                       mechMatl, geomRep, Guid.NewGuid(), ""));
+
+
         }
 
         /// <summary>
@@ -63,8 +82,14 @@ namespace CoreByLevels
         /// </summary>
         /// <param name="shell"></param>
         /// <returns></returns>
-        private Polygon PlaceCore(Polygon shell)
+        private Polygon PlaceCore(double setback, double rotation)
         {
+            var offShells = Levels.Last().Perimeter.Offset(setback * -1);
+            if (offShells.Count() == 0)
+            {
+                return null;
+            }
+            var shell = offShells.OrderByDescending(s => s.Area()).First();
             var occLevels = Levels.Where(l => l.Elevation >= 0.0).ToList();
             var occArea = 0.0;
             foreach (var level in occLevels)
@@ -72,7 +97,7 @@ namespace CoreByLevels
                 occArea += level.Perimeter.Area();
             }
             var occupants = (int)Math.Ceiling(occArea / occupantLoad);
-            LiftQuantity = (int)Math.Floor(occArea / liftService);
+            LiftQuantity = (int)Math.Ceiling(occArea / liftService);
             if (LiftQuantity > 8)
             {
                 LiftQuantity = 8;
@@ -87,7 +112,7 @@ namespace CoreByLevels
                 var corePerim = Polygon.Rectangle(stairLength + (liftBank * liftSize),
                                                  (stairWidth * 2) + bathWidth);
                 corePerim = corePerim.MoveFromTo(corePerim.Centroid(), position).Rotate(position, Rotation);
-                if (shell.Contains(corePerim))
+                if (shell.Covers(corePerim))
                 {
                     Position = position;
                     return corePerim;

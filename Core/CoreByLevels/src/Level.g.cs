@@ -43,20 +43,20 @@ namespace Elements
     
         /// <summary>The origin of the level.</summary>
         [Newtonsoft.Json.JsonProperty("Origin", Required = Newtonsoft.Json.Required.AllowNull)]
-        public Vector3 Origin { get; set; }
+        public Vector3 Origin { get; internal set; }
     
         /// <summary>The normal of the level.</summary>
         [Newtonsoft.Json.JsonProperty("Normal", Required = Newtonsoft.Json.Required.AllowNull)]
-        public Vector3 Normal { get; set; }
+        public Vector3 Normal { get; internal set; }
     
         /// <summary>The elevation of the level.</summary>
         [Newtonsoft.Json.JsonProperty("Elevation", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Range(0, int.MaxValue)]
-        public double Elevation { get; set; }
+        public double Elevation { get; internal set; }
     
         /// <summary>The perimeter of the level.</summary>
         [Newtonsoft.Json.JsonProperty("Perimeter", Required = Newtonsoft.Json.Required.AllowNull)]
-        public Polygon Perimeter { get; set; }
+        public Polygon Perimeter { get; internal set; }
     
     
     }

@@ -6,6 +6,7 @@ Creates a building core by referencing Levels supplied by another function.
 
 |Input Name|Type|Description|
 |---|---|---|
+|Setback|Range|Core perimeter setback from envelope.|
 |Rotation|Range|Rotation of the core.|
 
 

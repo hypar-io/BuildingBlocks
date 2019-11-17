@@ -17,6 +17,12 @@ namespace CoreByLevels
     public class CoreByLevelsInputs: S3Args
     {
 		/// <summary>
+		/// Core perimeter setback from envelope.
+		/// </summary>
+		[JsonProperty("Setback")]
+		public double Setback {get;}
+
+		/// <summary>
 		/// Rotation of the core.
 		/// </summary>
 		[JsonProperty("Rotation")]
@@ -30,6 +36,7 @@ namespace CoreByLevels
         /// </summary>
         public CoreByLevelsInputs() : base()
         {
+			this.Setback = 10;
 			this.Rotation = 355;
 
         }
@@ -40,8 +47,9 @@ namespace CoreByLevels
         /// </summary>
         /// <returns></returns>
         [JsonConstructor]
-        public CoreByLevelsInputs(double rotation, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
+        public CoreByLevelsInputs(double setback, double rotation, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
         {
+			this.Setback = setback;
 			this.Rotation = rotation;
 
 		}

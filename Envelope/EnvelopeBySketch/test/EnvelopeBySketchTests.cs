@@ -24,10 +24,12 @@ namespace EnvelopeBySketch.Tests
                     {
                         new Vector3(0.0, 0.0),
                         new Vector3(100.0, 0.0),
-                        new Vector3(100.0, 45.0),
-                        new Vector3(45.0, 45.0),
-                        new Vector3(45.0, 100.0),
-                        new Vector3(0.0, 100.0),
+                        new Vector3(100.0, 100.0),
+                        new Vector3(60.0, 100.0),
+                        new Vector3(60.0, 30.0),
+                        new Vector3(40.0, 40.0),
+                        new Vector3(40.0, 100.0),
+                        new Vector3(0.0, 100.0)
                     }
                 );
             var inputs = 

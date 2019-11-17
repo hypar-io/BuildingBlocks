@@ -46,34 +46,34 @@ namespace Elements
     
         /// <summary>The id of the polygon to extrude.</summary>
         [Newtonsoft.Json.JsonProperty("Perimeter", Required = Newtonsoft.Json.Required.AllowNull)]
-        public Polygon Perimeter { get; set; }
+        public Polygon Perimeter { get; internal set; }
     
         /// <summary>The direction in which to extrude.</summary>
         [Newtonsoft.Json.JsonProperty("Direction", Required = Newtonsoft.Json.Required.AllowNull)]
-        public Vector3 Direction { get; set; }
+        public Vector3 Direction { get; internal set; }
     
         /// <summary>The rotation in degrees of the stair enclosure.</summary>
         [Newtonsoft.Json.JsonProperty("Rotation", Required = Newtonsoft.Json.Required.Always)]
-        public double Rotation { get; set; }
+        public double Rotation { get; internal set; }
     
         /// <summary>The elevation of the stair enclosure</summary>
         [Newtonsoft.Json.JsonProperty("Elevation", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Range(0, int.MaxValue)]
-        public double Elevation { get; set; }
+        public double Elevation { get; internal set; }
     
         /// <summary>The height of the stair enclosure.</summary>
         [Newtonsoft.Json.JsonProperty("Height", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Range(0, int.MaxValue)]
-        public double Height { get; set; }
+        public double Height { get; internal set; }
     
         /// <summary>The area of the stair enclosure footprint.</summary>
         [Newtonsoft.Json.JsonProperty("Area", Required = Newtonsoft.Json.Required.Always)]
-        public double Area { get; set; }
+        public double Area { get; internal set; }
     
         /// <summary>The number of the stair enclosure.</summary>
         [Newtonsoft.Json.JsonProperty("Number", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        public string Number { get; set; }
+        public string Number { get; internal set; }
     
     
     }

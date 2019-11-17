@@ -10,6 +10,14 @@
   "model_output": "Cores",
   "inputs": [
     {
+      "min": 1.0,
+      "max": 10.0,
+      "step": 1.0,
+      "name": "Setback",
+      "description": "Core perimeter setback from envelope.",
+      "type": "range"
+    },
+    {
       "min": 0.0,
       "max": 355.0,
       "step": 5.0,

@@ -47,37 +47,37 @@ namespace Elements
     
         /// <summary>The id of the polygon to extrude.</summary>
         [Newtonsoft.Json.JsonProperty("Perimeter", Required = Newtonsoft.Json.Required.AllowNull)]
-        public Polygon Perimeter { get; set; }
+        public Polygon Perimeter { get; internal set; }
     
         /// <summary>The direction in which to extrude.</summary>
         [Newtonsoft.Json.JsonProperty("Direction", Required = Newtonsoft.Json.Required.AllowNull)]
-        public Vector3 Direction { get; set; }
+        public Vector3 Direction { get; internal set; }
     
         /// <summary>The rotation in degrees of the mechanical corridor.</summary>
         [Newtonsoft.Json.JsonProperty("Rotation", Required = Newtonsoft.Json.Required.Always)]
-        public double Rotation { get; set; }
+        public double Rotation { get; internal set; }
     
         /// <summary>The start point of the centroid of the mechanical corridor.</summary>
         [Newtonsoft.Json.JsonProperty("Start", Required = Newtonsoft.Json.Required.AllowNull)]
-        public Vector3 Start { get; set; }
+        public Vector3 Start { get; internal set; }
     
         /// <summary>The end point of the centroid of the mechanical corridor.</summary>
         [Newtonsoft.Json.JsonProperty("End", Required = Newtonsoft.Json.Required.AllowNull)]
-        public Vector3 End { get; set; }
+        public Vector3 End { get; internal set; }
     
         /// <summary>The length of the mechanical corridor.</summary>
         [Newtonsoft.Json.JsonProperty("Length", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Range(0, int.MaxValue)]
-        public double Length { get; set; }
+        public double Length { get; internal set; }
     
         /// <summary>The volume of the mechanical corridor.</summary>
         [Newtonsoft.Json.JsonProperty("Volume", Required = Newtonsoft.Json.Required.Always)]
-        public double Volume { get; set; }
+        public double Volume { get; internal set; }
     
         /// <summary>The number of the stair enclosure.</summary>
         [Newtonsoft.Json.JsonProperty("Number", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        public string Number { get; set; }
+        public string Number { get; internal set; }
     
     
     }
