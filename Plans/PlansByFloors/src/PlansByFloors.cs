@@ -33,9 +33,15 @@ namespace PlansByFloors
                                                   input.TypicalRoomsPerUpperFloor,
                                                   input.TypicalRoomsPerUpperFloor * (floors.Count() - 3),
                                                   upperFloorArea);
-            var retlMatl = new Material("retail", Palette.Emerald, 0.0f, 0.0f);
-            var offcMatl = new Material("office", Palette.Cobalt, 0.0f, 0.0f);
-            var corrMatl = new Material("corridor", Palette.White, 0.0f, 0.0f);
+            var retlColor = Palette.Emerald;
+            retlColor.Alpha = 1.0;
+            var offcColor = Palette.Cobalt;
+            offcColor.Alpha = 1.0;
+            var corrColor = Palette.White;
+            corrColor.Alpha = 1.0;
+            var retlMatl = new Material("retail", retlColor, 0.0f, 0.0f);
+            var offcMatl = new Material("office", offcColor, 0.0f, 0.0f);
+            var corrMatl = new Material("corridor", corrColor, 0.0f, 0.0f);
             for (var i = 0; i < floors.Count() - 2; i++)
             {
                 var floor = floors.ElementAt(i);
@@ -67,7 +73,7 @@ namespace PlansByFloors
                         name = "Retail";
                         matl = retlMatl;
                     }
-                    var panel = room.Perimeter.Offset(-0.1).First();
+                    var panel = room.Perimeter.Offset(-0.15).First();
                     var lamina = new Elements.Geometry.Solids.Lamina(panel, false);
                     var geomRep = new Representation(new List<Elements.Geometry.Solids.SolidOperation>() { lamina });
                     output.model.AddElement(new Elements.Room(panel, Vector3.ZAxis, 0.0,
@@ -75,16 +81,16 @@ namespace PlansByFloors
                                                               new Transform(0.0, 0.0, room.Elevation),
                                                               matl, geomRep, Guid.NewGuid(), name));
                 }
-                foreach (var room in story.Corridors)
-                {
-                    var panel = room.Perimeter.Offset(0.05).First();
-                    var lamina = new Elements.Geometry.Solids.Lamina(panel, false);
-                    var geomRep = new Representation(new List<Elements.Geometry.Solids.SolidOperation>() { lamina });
-                    output.model.AddElement(new Elements.Room(panel, Vector3.ZAxis, 0.0,
-                                                              room.Elevation + 0.05, room.Height, room.Area, "",
-                                                              new Transform(0.0, 0.0, room.Elevation),
-                                                              corrMatl, geomRep, Guid.NewGuid(), "Corridor"));
-                }
+                //foreach (var room in story.Corridors)
+                //{
+                //    var panel = room.Perimeter.Offset(0.05).First();
+                //    var lamina = new Elements.Geometry.Solids.Lamina(panel, false);
+                //    var geomRep = new Representation(new List<Elements.Geometry.Solids.SolidOperation>() { lamina });
+                //    output.model.AddElement(new Elements.Room(panel, Vector3.ZAxis, 0.0,
+                //                                              room.Elevation + 0.05, room.Height, room.Area, "",
+                //                                              new Transform(0.0, 0.0, room.Elevation),
+                //                                              corrMatl, geomRep, Guid.NewGuid(), "Corridor"));
+                //}
             }
             return output;
         }
