@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\PlansByFloors.csproj" />
+    <ProjectReference Include="..\src\RoomsByFloors.csproj" />
   </ItemGroup>
 
 </Project>

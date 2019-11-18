@@ -34,7 +34,7 @@ namespace LevelsByEnvelope
             var subs = Envelopes.Where(e => e.Elevation < 0.0).ToList();
             foreach (var env in subs)
             {
-                Levels.AddRange(MakeLevels(env, stdHeight));
+                Levels.AddRange(MakeLevels(env, stdHeight, true, true));
             }
 
             // Add lobby Envelope Levels.
@@ -49,7 +49,7 @@ namespace LevelsByEnvelope
                 envelope = new Envelope(envelope.Profile, grdHeight, envelope.Height - grdHeight,
                                         Vector3.ZAxis, 0.0, envelope.Transform, null, envelope.Representation,
                                         Guid.NewGuid(), "");
-                Levels.AddRange(MakeLevels(envelope, stdHeight));
+                Levels.AddRange(MakeLevels(envelope, stdHeight, false, true));
             }
             else
             {
@@ -68,14 +68,13 @@ namespace LevelsByEnvelope
             // Add mechanical level and roof level to highest Envelope.
             var envelope = Envelopes.Last();
             var bldgHeight = envelope.Elevation + envelope.Height;
-            MakeLevel(envelope, envelope.Elevation + envelope.Height);
-            MakeLevel(Envelopes.Last(), bldgHeight - mchHeight);
+            MakeLevel(envelope, bldgHeight);
 
             // Create temporary envelope to populate the region beneath the Mechanical level.
             envelope = new Envelope(envelope.Profile.Perimeter, envelope.Elevation, envelope.Height - mchHeight,
                                     Vector3.ZAxis, 0.0, envelope.Transform, null, envelope.Representation,
                                     Guid.NewGuid(), "");
-            Levels.AddRange(MakeLevels(envelope, stdHeight).Skip(1));
+            Levels.AddRange(MakeLevels(envelope, stdHeight, false, true));
             Levels = Levels.OrderBy(l => l.Elevation).ToList();
         }
 
@@ -88,15 +87,13 @@ namespace LevelsByEnvelope
             // Remove completed Levels from Envelope list.
             var envelopes = new List<Envelope>();
             envelopes.AddRange(Envelopes.Where(e => e.Elevation >= 0.0).Skip(1).ToList());
-            envelopes.Reverse();
-            envelopes = envelopes.Skip(1).ToList();
-            envelopes.Reverse();
+            envelopes = envelopes.SkipLast(1).ToList();
 
             // Add standard height Levels.
             foreach (var envelope in envelopes)
             {
                 //Skip the last level so we don't get redundant levels at the top of one envelope and the bottom of the next.
-                Levels.AddRange(MakeLevels(envelope, stdHeight).Skip(1).ToList());
+                Levels.AddRange(MakeLevels(envelope, stdHeight, false, true));
             }
             Levels = Levels.OrderBy(l => l.Elevation).ToList();
         }
@@ -124,11 +121,12 @@ namespace LevelsByEnvelope
         /// <param name="envelope">Envelope that will encompass the new Levels.</param>
         /// <param name="interval">Desired vertical distance between Levels.</param>
         /// <returns>A List of Levels ordered from lowest Elevation to highest.</returns>
-        public List<Level> MakeLevels (Envelope envelope, double interval)
+        public List<Level> MakeLevels (Envelope envelope, double interval, bool first = true, bool last = true)
         {
-            var levels = new List<Level>
+            var levels = new List<Level>();
+            if (first)
             {
-                new Level(Vector3.Origin, Vector3.ZAxis, envelope.Elevation, envelope.Profile.Perimeter, Guid.NewGuid(), "")
+                levels.Add(new Level(Vector3.Origin, Vector3.ZAxis, envelope.Elevation, envelope.Profile.Perimeter, Guid.NewGuid(), ""));
             };
             var openHeight = envelope.Height;
             var stdHeight = openHeight / Math.Floor(openHeight / interval) - 1;
@@ -139,8 +137,10 @@ namespace LevelsByEnvelope
                 openHeight -= stdHeight;
                 atHeight += stdHeight;
             }
-            atHeight = envelope.Elevation + envelope.Height;
-            levels.Add(new Level(Vector3.Origin, Vector3.ZAxis, atHeight, envelope.Profile.Perimeter, Guid.NewGuid(), ""));
+            if (last)
+            {
+                levels.Add(new Level(Vector3.Origin, Vector3.ZAxis, envelope.Elevation + envelope.Height, envelope.Profile.Perimeter, Guid.NewGuid(), ""));
+            }
             return levels;
         }
     }

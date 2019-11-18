@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace FloorsByLevels
 {
-      public static class FloorsByLevels
+    public static class FloorsByLevels
     {
         /// <summary>
         /// The FloorsByLevels function.
@@ -22,18 +22,19 @@ namespace FloorsByLevels
 
             var floors = new List<Floor>();
             var floorArea = 0.0;
-            
+
             foreach (var level in levels)
             {
-                floors.Add(new Floor(level.Perimeter, input.FloorThickness, level.Elevation,
-                           new Transform(0.0, 0.0, level.Elevation),
+                floors.Add(new Floor(level.Perimeter, input.FloorThickness, 0.0,
+                           new Transform(0.0, 0.0, level.Elevation - input.FloorThickness),
                            BuiltInMaterials.Concrete, null, Guid.NewGuid(), null));
                 floorArea += level.Perimeter.Area();
             }
+
             floors = floors.OrderBy(f => f.Elevation).ToList();
             var output = new FloorsByLevelsOutputs(floorArea, floors.Count());
             output.model.AddElements(floors);
             return output;
         }
-      }
+    }
 }

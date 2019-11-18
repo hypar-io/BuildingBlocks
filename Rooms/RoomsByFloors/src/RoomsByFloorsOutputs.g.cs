@@ -12,9 +12,9 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System.Collections.Generic;
 
-namespace PlansByFloors
+namespace RoomsByFloors
 {
-    public class PlansByFloorsOutputs: ResultsBase
+    public class RoomsByFloorsOutputs: ResultsBase
     {
 		/// <summary>
 		/// Quantity of rooms on the ground floor.
@@ -37,39 +37,39 @@ namespace PlansByFloors
 		/// <summary>
 		/// Quantity of rooms on all upper floors.
 		/// </summary>
-		[JsonProperty("Upper Floor Room Quantity")]
-		public double UpperFloorRoomQuantity {get;}
+		[JsonProperty("Upper Floors Room Quantity")]
+		public double UpperFloorsRoomQuantity {get;}
 
 		/// <summary>
 		/// Total area for all upper floors.
 		/// </summary>
-		[JsonProperty("Upper Floor Area")]
-		public double UpperFloorArea {get;}
+		[JsonProperty("Upper Floor Total Area")]
+		public double UpperFloorTotalArea {get;}
 
 
         
         /// <summary>
-        /// Construct a PlansByFloorsOutputs with default inputs.
+        /// Construct a RoomsByFloorsOutputs with default inputs.
         /// This should be used for testing only.
         /// </summary>
-        public PlansByFloorsOutputs() : base()
+        public RoomsByFloorsOutputs() : base()
         {
 
         }
 
 
         /// <summary>
-        /// Construct a PlansByFloorsOutputs specifying all inputs.
+        /// Construct a RoomsByFloorsOutputs specifying all inputs.
         /// </summary>
         /// <returns></returns>
         [JsonConstructor]
-        public PlansByFloorsOutputs(double groundfloorroomquantity, double groundfloorarea, double typicalfloorroomquantity, double upperfloorroomquantity, double upperfloorarea): base()
+        public RoomsByFloorsOutputs(double groundfloorroomquantity, double groundfloorarea, double typicalfloorroomquantity, double upperfloorsroomquantity, double upperfloortotalarea): base()
         {
 			this.GroundFloorRoomQuantity = groundfloorroomquantity;
 			this.GroundFloorArea = groundfloorarea;
 			this.TypicalFloorRoomQuantity = typicalfloorroomquantity;
-			this.UpperFloorRoomQuantity = upperfloorroomquantity;
-			this.UpperFloorArea = upperfloorarea;
+			this.UpperFloorsRoomQuantity = upperfloorsroomquantity;
+			this.UpperFloorTotalArea = upperfloortotalarea;
 
 		}
 
