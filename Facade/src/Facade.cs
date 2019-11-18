@@ -237,13 +237,13 @@ namespace Facade
 
             Profile profile;
             var mat = material;
-            if(Math.Abs(width - defaultWidth) > Vector3.Epsilon)
-            {
-                mat = _nonStandardPanel;
-                profile = new Profile(new Polygon(new[]{a,b,c,d}.Shrink(0.01)));
-            }
-            else
-            {
+            //if(Math.Abs(width - defaultWidth) > Vector3.Epsilon)
+            //{
+            //    mat = _nonStandardPanel;
+            //    profile = new Profile(new Polygon(new[]{a,b,c,d}.Shrink(0.01)));
+            //}
+            //else
+            //{
                 var a1 = new Vector3(leftRightInset, topBottomInset, 0);
                 var b1 = new Vector3(width-leftRightInset, topBottomInset,0);
                 var c1 = new Vector3(width-leftRightInset, height-topBottomInset, 0);
@@ -252,7 +252,7 @@ namespace Facade
                 profile = new Profile(new Polygon(new[]{a,b,c,d}.Shrink(0.01)), inner);
                 var glazing = new Panel(inner, _glazing, lowerLeft);
                 model.AddElement(glazing);
-            }
+            //}
             
             var solidOps = new List<SolidOperation>(){new Extrude(profile, thickness, Vector3.ZAxis, 0.0, false)};
             var representation = new Representation(solidOps);
