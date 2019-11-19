@@ -5,8 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Hypar.Elements" Version="0.4.0-alpha.10" />
-    <PackageReference Include="Hypar.Functions" Version="0.4.0-alpha.10" />
+    <PackageReference Include="Hypar.Elements" Version="0.4.0-alpha.11" />
+    <PackageReference Include="Hypar.Functions" Version="0.4.0-alpha.11" />
     <PackageReference Include="Magick.NET-Q8-AnyCPU" Version="7.14.5" />
     <PackageReference Include="RestSharp" Version="106.6.10" />
   </ItemGroup>
