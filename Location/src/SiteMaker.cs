@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Reflection;
 using RestSharp;
 using RestSharp.Extensions;
 using ImageMagick;
@@ -37,7 +36,7 @@ namespace Location
             // Sampling at 512x512 yields a mesh
             // too large to display with ushort indices.
             // It's also just too much data. 
-            var sampleSize = 4;
+            var sampleSize = 8;
             using (var image = new MagickImage(response))
             {
                 image.Format = MagickFormat.Png;
@@ -64,7 +63,7 @@ namespace Location
         {
             var client = new RestSharp.RestClient(mapboxUri);
             var zoom = 16;
-            var styleId = "mapbox/streets-v11";
+            var styleId = "mapbox/light-v10";
             // var styleId = "ikeough/cjy4r0l2h00ig1dmuk7zeximh";
             var imageTileUrl = $"styles/v1/{styleId}/tiles/{imageSize}/{zoom}/{x}/{y}@2x";
             var req = new RestRequest(imageTileUrl);
