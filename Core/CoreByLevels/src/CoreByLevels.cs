@@ -19,6 +19,10 @@ namespace CoreByLevels
         {
             var levels = new List<Level>();
             inputModels.TryGetValue("Levels", out var model);
+            if (model == null)
+            {
+                throw new ArgumentException("No Levels found in input models.");
+            }
             levels.AddRange(model.AllElementsOfType<Level>());
             var coreMaker = new CoreMaker(levels, input.Setback, input.Rotation);
             var output = new CoreByLevelsOutputs(coreMaker.Restrooms.Count(), coreMaker.LiftQuantity);
