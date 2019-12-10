@@ -5,9 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="GeometryEx" Version="1.13.0-alpha10" />
-    <PackageReference Include="Hypar.Elements" Version="0.4.0-alpha.10" />
-    <PackageReference Include="Hypar.Functions" Version="0.4.0-alpha.10" />
+    <PackageReference Include="GeometryEx" Version="2.0.0" />
+    <PackageReference Include="Hypar.Elements" Version="0.4.0" />
+    <PackageReference Include="Hypar.Functions" Version="0.4.0" />
   </ItemGroup>
 
 </Project>
