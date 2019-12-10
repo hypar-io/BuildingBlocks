@@ -18,6 +18,10 @@ namespace FloorsByEnvelope
         {
             var envelopes = new List<Envelope>();
             inputModels.TryGetValue("Envelope", out var model);
+            if (model == null)
+            {
+                throw new ArgumentException("No Envelope found.");
+            }
             envelopes.AddRange(model.AllElementsOfType<Envelope>());
             
             var rentable = new List<Envelope>();
@@ -51,12 +55,12 @@ namespace FloorsByEnvelope
             var flrThick = 0.15;
 
             // Add ground floor.
-            floors.Add(new Floor(perimeter, flrThick, 0.0, new Transform(0.0, 0.0, flrElev),
+            floors.Add(new Floor(perimeter, flrThick, new Transform(0.0, 0.0, flrElev),
                                  BuiltInMaterials.Concrete, null, Guid.NewGuid(), ""));
             if (bldgHeight >= input.GroundFloorHeight)
             {
                 flrElev = input.GroundFloorHeight;
-                floors.Add(new Floor(perimeter, flrThick, 0.0, new Transform(0.0, 0.0, flrElev),
+                floors.Add(new Floor(perimeter, flrThick, new Transform(0.0, 0.0, flrElev),
                            BuiltInMaterials.Concrete, null, Guid.NewGuid(), ""));
                 floorArea += perimeter.Area();
                 remnHeight = bldgHeight - input.GroundFloorHeight;
@@ -66,8 +70,7 @@ namespace FloorsByEnvelope
             var mechHeight = input.StandardFloorHeight * input.MechanicalFloorHeightRatio;
             if (remnHeight >= mechHeight)
             {
-                floors.Add(new Floor(perimeter, flrThick, bldgHeight - mechHeight, 
-                                     new Transform(0.0, 0.0, bldgHeight - mechHeight - flrThick),
+                floors.Add(new Floor(perimeter, flrThick, new Transform(0.0, 0.0, bldgHeight - mechHeight - flrThick),
                                      BuiltInMaterials.Concrete, null, Guid.NewGuid(), ""));
                 remnHeight -= mechHeight;
             }
@@ -76,7 +79,7 @@ namespace FloorsByEnvelope
             if (remnHeight > input.StandardFloorHeight + 0.3)
             {
                 flrElev = bldgHeight - mechHeight - input.StandardFloorHeight + 0.3;
-                floors.Add(new Floor(perimeter, flrThick, flrElev, new Transform(0.0, 0.0, flrElev - flrThick),
+                floors.Add(new Floor(perimeter, flrThick, new Transform(0.0, 0.0, flrElev - flrThick),
                                      BuiltInMaterials.Concrete, null, Guid.NewGuid(), ""));
                 remnHeight -= input.StandardFloorHeight + 0.3;
             }
@@ -88,7 +91,7 @@ namespace FloorsByEnvelope
             var stdHeight = remnHeight / flrQty;
             for (int i =0; i < flrQty; i++)
             {
-                floors.Add(new Floor(perimeter, flrThick, flrElev, new Transform(0.0, 0.0, flrElev),
+                floors.Add(new Floor(perimeter, flrThick, new Transform(0.0, 0.0, flrElev),
                            BuiltInMaterials.Concrete, null, Guid.NewGuid(), ""));
                 floorArea += perimeter.Area();
                 flrElev += stdHeight;
