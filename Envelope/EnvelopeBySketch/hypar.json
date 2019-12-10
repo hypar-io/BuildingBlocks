@@ -13,7 +13,7 @@
       "type": "geometry"
     },
     {
-      "min": 20.0,
+      "min": 5.0,
       "max": 100.0,
       "step": 1.0,
       "name": "Building Height",
