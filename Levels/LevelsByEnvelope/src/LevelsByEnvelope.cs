@@ -19,11 +19,13 @@ namespace LevelsByEnvelope
         {
             var envelopes = new List<Envelope>();
             inputModels.TryGetValue("Envelope", out var model);
+            if (model == null)
+            {
+                throw new ArgumentException("No Envelope found.");
+            }
             envelopes.AddRange(model.AllElementsOfType<Envelope>());
-
             var mechHeight = input.StandardLevelHeight * input.MechanicalLevelHeightRatio;
             var levelMaker = new LevelMaker(envelopes, input.StandardLevelHeight, input.GroundLevelHeight, mechHeight);
-            
             var levelArea = 0.0;
             foreach (var level in levelMaker.Levels)
             {
