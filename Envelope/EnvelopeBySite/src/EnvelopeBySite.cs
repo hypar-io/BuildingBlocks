@@ -20,6 +20,10 @@ namespace EnvelopeBySite
             // Retrieve site information from incoming models.
             var sites = new List<Site>();
             inputModels.TryGetValue("Site", out var model);
+            if (model == null)
+            {
+                throw new ArgumentException("No Site found.");
+            }
             sites.AddRange(model.AllElementsOfType<Site>());
             sites = sites.OrderByDescending(e => e.Perimeter.Area()).ToList();
             var output = new EnvelopeBySiteOutputs(input.BuildingHeight, input.FoundationDepth);
