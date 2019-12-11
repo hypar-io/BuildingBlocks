@@ -31,6 +31,8 @@ namespace CoreByLevels
         public List<MechanicalCorridor> Mechanicals { get; private set; }
         public List<StairEnclosure> Stairs { get; private set; }
         public List<LiftShaft> Lifts { get; private set; }
+        public Polygon Perimeter { get; private set; }
+        public double Elevation { get; private set; }
 
         /// <summary>
         /// 
@@ -47,10 +49,8 @@ namespace CoreByLevels
             Lifts = new List<LiftShaft>();
             Rotation = rotation;
             var corePerim = PlaceCore(setback, rotation);
-            if (corePerim == null)
-            {
-                throw new InvalidOperationException("No valid service core location found.");
-            }
+            Perimeter = corePerim ?? throw new InvalidOperationException("No valid service core location found.");
+            Elevation = Levels.First().Elevation;
             var coreTopo = new TopoBox(corePerim);
             var bathTopo = MakeBaths(coreTopo.W);
             var mechTopo = MakeMech(bathTopo.E);

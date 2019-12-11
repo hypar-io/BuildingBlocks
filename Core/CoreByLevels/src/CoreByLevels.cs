@@ -27,6 +27,7 @@ namespace CoreByLevels
             var coreMaker = new CoreMaker(levels, input.Setback, input.Rotation);
             var output = new CoreByLevelsOutputs(coreMaker.Restrooms.Count(), coreMaker.LiftQuantity);
 
+            output.model.AddElement(new Exclusion(coreMaker.Perimeter, coreMaker.Elevation, Guid.NewGuid(), "Core Exclusion"));
             foreach (var room in coreMaker.Restrooms)
             {
                 output.model.AddElement(room);

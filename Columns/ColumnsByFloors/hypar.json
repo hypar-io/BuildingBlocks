@@ -1,0 +1,54 @@
+{
+  "$schema": "https://hypar.io/Schemas/Function.json",
+  "description": "The ColumnsByFloors function.",
+  "id": "d59054b4-6e86-47c3-9b1b-42f180bf7efe",
+  "name": "ColumnsByFloors",
+  "repository_url": "https://github.com/hypar-io/function",
+  "model_dependencies": [
+    "Floors"
+  ],
+  "model_output": "Columns",  
+  "inputs": [
+    {
+      "min": 3.0,
+      "max": 10.0,
+      "step": 1.0,
+      "name": "Grid X-Axis Interval",
+      "description": "Grid interval in the X direction.",
+      "type": "range"
+    },
+    {
+      "min": 3.0,
+      "max": 10.0,
+      "step": 1.0,
+      "name": "Grid Y-Axis Interval",
+      "description": "Grid interval in the Y direction.",
+      "type": "range"
+    },
+    {
+      "min": 0.0,
+      "max": 90.0,
+      "step": 1.0,
+      "name": "Grid Rotation",
+      "description": "Rotation of the grid in degrees.",
+      "type": "range"
+    },
+    {
+      "min": 0.2,
+      "max": 2.0,
+      "step": 0.1,
+      "name": "Column Diameter",
+      "description": "Diameter of the columns.",
+      "type": "range"
+    }    
+  ],
+  "outputs": [
+    {
+      "name": "Column Quantity",
+      "description": "Total quantity of columns.",
+      "type": "number"
+    }   
+  ],
+  "preview_image": null,
+  "element_types": null
+}

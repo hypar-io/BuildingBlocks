@@ -44,6 +44,7 @@
     "https://raw.githubusercontent.com/hypar-io/Schemas/master/Room.json",
     "https://raw.githubusercontent.com/hypar-io/Schemas/master/StairEnclosure.json",
     "https://raw.githubusercontent.com/hypar-io/Schemas/master/LiftShaft.json",
-    "https://raw.githubusercontent.com/hypar-io/Schemas/master/MechanicalCorridor.json"
+    "https://raw.githubusercontent.com/hypar-io/Schemas/master/MechanicalCorridor.json",
+    "https://raw.githubusercontent.com/hypar-io/Schemas/master/Exclusion.json"
   ]
 }

@@ -46,34 +46,34 @@ namespace Elements
     
         /// <summary>The id of the polygon to extrude.</summary>
         [Newtonsoft.Json.JsonProperty("Perimeter", Required = Newtonsoft.Json.Required.AllowNull)]
-        public Polygon Perimeter { get; internal set; }
+        public Polygon Perimeter { get; set; }
     
         /// <summary>The direction in which to extrude.</summary>
         [Newtonsoft.Json.JsonProperty("Direction", Required = Newtonsoft.Json.Required.AllowNull)]
-        public Vector3 Direction { get; internal set; }
+        public Vector3 Direction { get; set; }
     
         /// <summary>The rotation in degrees of the room.</summary>
         [Newtonsoft.Json.JsonProperty("Rotation", Required = Newtonsoft.Json.Required.Always)]
-        public double Rotation { get; internal set; }
+        public double Rotation { get; set; }
     
         /// <summary>The elevation of the room.</summary>
         [Newtonsoft.Json.JsonProperty("Elevation", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Range(0, int.MaxValue)]
-        public double Elevation { get; internal set; }
+        public double Elevation { get; set; }
     
         /// <summary>The height of the room.</summary>
         [Newtonsoft.Json.JsonProperty("Height", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Range(0, int.MaxValue)]
-        public double Height { get; internal set; }
+        public double Height { get; set; }
     
         /// <summary>The area of the room.</summary>
         [Newtonsoft.Json.JsonProperty("Area", Required = Newtonsoft.Json.Required.Always)]
-        public double Area { get; internal set; }
+        public double Area { get; set; }
     
         /// <summary>The number of the room.</summary>
         [Newtonsoft.Json.JsonProperty("Number", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        public string Number { get; internal set; }
+        public string Number { get; set; }
     
     
     }
