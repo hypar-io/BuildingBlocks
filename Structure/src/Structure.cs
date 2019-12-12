@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Elements;
 using Elements.Geometry;
-using Elements.Geometry.Profiles;
 using Elements.Geometry.Solids;
 
 namespace Structure
@@ -64,17 +63,6 @@ namespace Structure
             new Material(Colors.Red, 0.0, 0.0, Guid.NewGuid(), "Gradient 6"),
         };
 
-        // private static List<WideFlangeProfile> _beamProfiles = new List<WideFlangeProfile>(){
-        //     (WideFlangeProfile)WideFlangeProfileServer.Instance.GetProfileByName("W10x12"),
-        //     (WideFlangeProfile)WideFlangeProfileServer.Instance.GetProfileByName("W12x14"),
-        //     (WideFlangeProfile)WideFlangeProfileServer.Instance.GetProfileByName("W14x22"),
-        //     (WideFlangeProfile)WideFlangeProfileServer.Instance.GetProfileByName("W16x26"),
-        //     (WideFlangeProfile)WideFlangeProfileServer.Instance.GetProfileByName("W18x35"),
-        //     (WideFlangeProfile)WideFlangeProfileServer.Instance.GetProfileByName("W21x44"),
-        //     (WideFlangeProfile)WideFlangeProfileServer.Instance.GetProfileByName("W24x55"),
-        //     (WideFlangeProfile)WideFlangeProfileServer.Instance.GetProfileByName("W27x84")
-        // };
-
         private const double mToIn = .0254;
 
         private static List<Profile> _beamProfiles = new List<Profile>(){
@@ -105,13 +93,26 @@ namespace Structure
             if(!models.ContainsKey(ENVELOPE_MODEL_NAME))
             {
                 // Make a default envelope for testing.
-                var a = new Vector3(0,0,0);
-                var b = new Vector3(30,0,0);
-                var c = new Vector3(30,50,0);
-                var d = new Vector3(15,20,0);
-                var e = new Vector3(0,50,0);
-                var p1 = new Polygon(new[]{a,b,c,d,e});
+                // var a = new Vector3(0,0,0);
+                // var b = new Vector3(30,0,0);
+                // var c = new Vector3(30,50,0);
+                // var d = new Vector3(15,20,0);
+                // var e = new Vector3(0,50,0);
+                // var p1 = new Polygon(new[]{a,b,c,d,e});
+                // var p2 = p1.Offset(-1)[0];
+
+                // A rectangle to test.
+                // var r = new Transform();
+                // r.Rotate(Vector3.ZAxis, 15);
+                // var p1 = r.OfPolygon(Polygon.Rectangle(20, 30));
+                // var p2 = p1.Offset(-1)[0];
+
+                // An L to test.
+                var r = new Transform();
+                r.Rotate(Vector3.ZAxis, 15);
+                var p1 = r.OfPolygon(Polygon.L(40, 30, 10));
                 var p2 = p1.Offset(-1)[0];
+
                 var env1 = new Envelope(p1,
                                         0,
                                         40,
@@ -156,7 +157,17 @@ namespace Structure
             List<Line> yGrids;
 
             var gridRotation = CreateGridsFromBoundary(envelopes.First().Profile.Perimeter, input.GridXAxisInterval, input.GridYAxisInterval, out xGrids, out yGrids);
-            
+
+            model.AddElement(new ModelCurve(Polygon.Circle(1), transform:new Transform(xGrids[0].Start)));
+            foreach(var xg in xGrids)
+            {
+                model.AddElement(new ModelCurve(xg, BuiltInMaterials.XAxis));
+            }
+            foreach(var yg in yGrids)
+            {
+                model.AddElement(new ModelCurve(yg, BuiltInMaterials.YAxis));
+            }
+
             levels.Sort(new LevelComparer());
             
             Level last = null;
@@ -168,7 +179,7 @@ namespace Structure
                 // Inset the footprint just a bit to keep the
                 // beams out of the plane of the envelope. Use the biggest 
                 // beam that we have.
-                var footprint = envelope.Profile.Perimeter.Offset(-0.5)[0];
+                var footprint = envelope.Profile.Perimeter.Offset(-0.25)[0];
 
                 // Trim all the grid lines by the boundary
                 var boundarySegments = footprint.Segments();
@@ -284,39 +295,53 @@ namespace Structure
                     longestSide = s;
                 }
             }
-            var transform = new Transform(new Vector3(),longestSide.Direction(), Vector3.ZAxis);
-            var rotation = longestSide.Direction().AngleTo(Vector3.XAxis);
+            var xAxis = longestSide.Direction();
+            var yAxis = xAxis.Cross(Vector3.ZAxis).Negate();
 
-            // Create a grid across the boundary
-            // var bounds = new BBox3(Vector3.Origin, Vector3.Origin);>
+            // Construct a transform with the x axis along
+            // the longest side, and the y axis pointing to the "left".
+            var transform = new Transform(Vector3.Origin, xAxis, Vector3.ZAxis);
+            var rotation = xAxis.AngleTo(Vector3.XAxis);
+
+            // Use the transform to to construct a bounding
+            // box around oriented along the longest edge
+            // containing all the vertices of the boundary.
             double minx = 10000; double miny = 10000;
             double maxx = -10000; double maxy = -10000;
 
             foreach(var v in boundary.Vertices)
             {
-                if(v.X < minx) minx = v.X;
-                if(v.Y < miny) miny = v.Y;
-                if(v.X > maxx) maxx = v.X;
-                if(v.Y > maxy) maxy = v.Y;
+                var tv = transform.OfVector(v);
+                if(tv.X < minx) minx = tv.X;
+                if(tv.Y < miny) miny = tv.Y;
+                if(tv.X > maxx) maxx = tv.X;
+                if(tv.Y > maxy) maxy = tv.Y;
             }
-            var overshoot = 100;
-            var min = new Vector3(minx - overshoot, miny - overshoot);
-            var max = new Vector3(maxx + overshoot, maxy + overshoot);
-
-            var centroid = boundary.Centroid();
-
+            
+            var max = new Vector3(maxx, maxy);
+            var min = new Vector3(minx, miny);
+            
             xGrids = new List<Line>();
             yGrids = new List<Line>();
 
-            for(var x=min.X; x<=max.X; x += xInterval)
-            {
-                yGrids.Add(transform.OfLine(new Line(new Vector3(x,min.Y), new Vector3(x, max.Y))));
-            }
+            var w = max.X - min.X;
+            var h = max.Y - min.Y;
+            Console.WriteLine($"min: {min}, max: {max}");
+            Console.WriteLine($"w: {w}, h: {h}");
 
-            for(var y=min.Y; y<=max.Y; y += yInterval)
+            for(var x=0.0; x <= h; x += xInterval)
             {
-                xGrids.Add(transform.OfLine(new Line(new Vector3(min.X,y), new Vector3(max.X, y))));
-            }
+                var p1 = longestSide.Start + yAxis * x;
+                var p2 = longestSide.Start + yAxis * x + xAxis * w;
+                xGrids.Add(new Line(p1, p2));
+            } 
+
+            for(var y=0.0; y <= w; y += yInterval)
+            {
+                var p1 = longestSide.Start + xAxis * y;
+                var p2 = longestSide.Start + xAxis * y + yAxis * h;
+                yGrids.Add(new Line(p1, p2));
+            } 
 
             return rotation;
         }
@@ -450,7 +475,7 @@ namespace Structure
 
                 xsects.Sort(new IntersectionComparer(grid.Start));
 
-                for(var i=0; i<xsects.Count; i+=2)
+                for(var i=0; i<xsects.Count-1; i+=2)
                 {
                     if(xsects[i].IsAlmostEqualTo(xsects[i+1]))
                     {
