@@ -64,15 +64,28 @@ namespace Structure
             new Material(Colors.Red, 0.0, 0.0, Guid.NewGuid(), "Gradient 6"),
         };
 
-        private static List<WideFlangeProfile> _beamProfiles = new List<WideFlangeProfile>(){
-            (WideFlangeProfile)WideFlangeProfileServer.Instance.GetProfileByName("W10x12"),
-            (WideFlangeProfile)WideFlangeProfileServer.Instance.GetProfileByName("W12x14"),
-            (WideFlangeProfile)WideFlangeProfileServer.Instance.GetProfileByName("W14x22"),
-            (WideFlangeProfile)WideFlangeProfileServer.Instance.GetProfileByName("W16x26"),
-            (WideFlangeProfile)WideFlangeProfileServer.Instance.GetProfileByName("W18x35"),
-            (WideFlangeProfile)WideFlangeProfileServer.Instance.GetProfileByName("W21x44"),
-            (WideFlangeProfile)WideFlangeProfileServer.Instance.GetProfileByName("W24x55"),
-            (WideFlangeProfile)WideFlangeProfileServer.Instance.GetProfileByName("W27x84")
+        // private static List<WideFlangeProfile> _beamProfiles = new List<WideFlangeProfile>(){
+        //     (WideFlangeProfile)WideFlangeProfileServer.Instance.GetProfileByName("W10x12"),
+        //     (WideFlangeProfile)WideFlangeProfileServer.Instance.GetProfileByName("W12x14"),
+        //     (WideFlangeProfile)WideFlangeProfileServer.Instance.GetProfileByName("W14x22"),
+        //     (WideFlangeProfile)WideFlangeProfileServer.Instance.GetProfileByName("W16x26"),
+        //     (WideFlangeProfile)WideFlangeProfileServer.Instance.GetProfileByName("W18x35"),
+        //     (WideFlangeProfile)WideFlangeProfileServer.Instance.GetProfileByName("W21x44"),
+        //     (WideFlangeProfile)WideFlangeProfileServer.Instance.GetProfileByName("W24x55"),
+        //     (WideFlangeProfile)WideFlangeProfileServer.Instance.GetProfileByName("W27x84")
+        // };
+
+        private const double mToIn = .0254;
+
+        private static List<Profile> _beamProfiles = new List<Profile>(){
+            new Profile(Polygon.Rectangle(4 * mToIn, 10 * mToIn)),
+            new Profile(Polygon.Rectangle(5 * mToIn, 14 * mToIn)),
+            new Profile(Polygon.Rectangle(5.5 * mToIn, 16 * mToIn)),
+            new Profile(Polygon.Rectangle(12 * mToIn, 10 * mToIn)),
+            new Profile(Polygon.Rectangle(6 * mToIn, 18 * mToIn)),
+            new Profile(Polygon.Rectangle(6.5 * mToIn, 21 * mToIn)),
+            new Profile(Polygon.Rectangle(7 * mToIn, 24 * mToIn)),
+            new Profile(Polygon.Rectangle(10 * mToIn, 27 * mToIn))
         };
 
         private static double _longestGridSpan = 0.0;
@@ -101,7 +114,7 @@ namespace Structure
                 var p2 = p1.Offset(-1)[0];
                 var env1 = new Envelope(p1,
                                         0,
-                                        20,
+                                        40,
                                         Vector3.ZAxis,
                                         0,
                                         new Transform(),
@@ -110,8 +123,8 @@ namespace Structure
                                         Guid.NewGuid(),
                                         "Envelope 1");
                 var env2 = new Envelope(p2,
-                                        20,
-                                        50,
+                                        40,
+                                        100,
                                         Vector3.ZAxis,
                                         0,
                                         new Transform(0,0,10),
@@ -122,7 +135,7 @@ namespace Structure
                 envelopes = new List<Envelope>(){env1,env2};
                 model.AddElements(envelopes);
                 levels = new List<Level>();
-                for(var i=0; i<50; i+=3)
+                for(var i=0; i<100; i+=3)
                 {
                     levels.Add(new Level(new Vector3(0,0,i), Vector3.ZAxis, i, null, Guid.NewGuid(), $"Level {i}"));
                 }
@@ -155,7 +168,7 @@ namespace Structure
                 // Inset the footprint just a bit to keep the
                 // beams out of the plane of the envelope. Use the biggest 
                 // beam that we have.
-                var footprint = envelope.Profile.Perimeter.Offset(-((WideFlangeProfile)_beamProfiles.Last()).bf/2)[0];
+                var footprint = envelope.Profile.Perimeter.Offset(-0.5)[0];
 
                 // Trim all the grid lines by the boundary
                 var boundarySegments = footprint.Segments();
@@ -192,7 +205,8 @@ namespace Structure
                     model.AddElements(framing);
                 }
 
-                var colProfile = (WideFlangeProfile)WideFlangeProfileServer.Instance.GetProfileByName("W18x76");
+                // var colProfile = (WideFlangeProfile)WideFlangeProfileServer.Instance.GetProfileByName("W18x76");
+                var colProfile = new Profile(Polygon.Rectangle(11 * mToIn, 18 * mToIn));
                 foreach(var lc in columnLocations)
                 {
                     var mat = BuiltInMaterials.Steel;
@@ -317,7 +331,7 @@ namespace Structure
                                         colorByLength ? _lengthGradient[(int)(lengthFactor*(_lengthGradient.Count-1))] : mat,
                                         startSetback: 0.25,
                                         endSetback: 0.25,
-                                        transform: new Transform(new Vector3(0,0, elevation-profile.d/2)));
+                                        transform: new Transform(new Vector3(0,0, elevation)));
                     beams.Add(beam);
                 }
                 catch(Exception ex)
@@ -338,7 +352,7 @@ namespace Structure
                                         colorByLength ? _lengthGradient[(int)(lengthFactor * (_lengthGradient.Count-1))] : mat,
                                         startSetback: 0.25,
                                         endSetback: 0.25,
-                                        transform: new Transform(new Vector3(0,0, elevation-profile.d/2)));
+                                        transform: new Transform(new Vector3(0,0, elevation)));
                     beams.Add(beam);
                 }
                 catch(Exception ex)
@@ -354,7 +368,7 @@ namespace Structure
                 var beam = new Beam(s,
                                     profile,
                                     BuiltInMaterials.Steel,
-                                    transform: new Transform(new Vector3(0,0,elevation - profile.d/2)));
+                                    transform: new Transform(new Vector3(0,0, elevation)));
                 beams.Add(beam);
             }
 
