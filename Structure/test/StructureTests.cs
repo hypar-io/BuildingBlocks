@@ -21,13 +21,13 @@ namespace Structure.tests
             var outputs = Structure.Execute(new Dictionary<string, Model> { { "Envelope", envModel }, { "Levels", lvlModel } }, inputs);
             System.IO.File.WriteAllText("../../../../../TestOutput/structure.json", outputs.model.ToJson());
             outputs.model.ToGlTF("../../../../../TestOutput/structure.glb");
-
+            
+            // Partial Structure result:
             var model = Model.FromJson(System.IO.File.ReadAllText("../../../../../TestOutput/structureProblem.json"));
             inputs = new StructureInputs(8.0, 7.0, 18.0, false, "", "", new Dictionary<string, string>(), "", "", "");
             outputs = Structure.Execute(new Dictionary<string, Model> { { "Envelope", model }, { "Levels", model }  }, inputs);
             System.IO.File.WriteAllText("../../../../../TestOutput/tructureFail.json", outputs.model.ToJson());
             outputs.model.ToGlTF("../../../../../TestOutput/structureFail.glb");
-
         }
     }
 }
