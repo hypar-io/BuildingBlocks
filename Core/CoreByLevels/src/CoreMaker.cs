@@ -94,7 +94,7 @@ namespace CoreByLevels
             var occArea = 0.0;
             foreach (var level in occLevels)
             {
-                occArea += level.Perimeter.Area();
+                occArea += level.Area;
             }
             var occupants = (int)Math.Ceiling(occArea / occupantLoad);
             LiftQuantity = (int)Math.Ceiling(occArea / liftService);

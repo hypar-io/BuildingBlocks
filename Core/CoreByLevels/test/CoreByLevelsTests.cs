@@ -23,5 +23,16 @@ namespace CoreByLevels.tests
             System.IO.File.WriteAllText("../../../../../../TestOutput/CoreByLevels.json", outputs.model.ToJson());
             outputs.model.ToGlTF("../../../../../../TestOutput/CoreByLevels.glb");
         }
+
+        [Fact]
+        public void CoreFailTest()
+        {
+            var model = Model.FromJson(System.IO.File.ReadAllText("../../../../../../TestOutput/CoreFail.json"));
+            var inputs = new CoreByLevelsInputs(1.0, 45.0, "", "", new Dictionary<string, string>(), "", "", "");
+            var outputs = CoreByLevels.Execute(new Dictionary<string, Model> { { "Levels", model } }, inputs);
+            System.IO.File.WriteAllText("../../../../../../TestOutput/FailByZero.json", outputs.model.ToJson());
+            outputs.model.ToGlTF("../../../../../../TestOutput/FailByZero.glb");
+        }
+
     }
 }

@@ -126,20 +126,35 @@ namespace LevelsByEnvelope
             var levels = new List<Level>();
             if (first)
             {
-                levels.Add(new Level(Vector3.Origin, Vector3.ZAxis, envelope.Elevation, envelope.Profile.Perimeter, Guid.NewGuid(), ""));
+                levels.Add(new Level(Vector3.Origin, 
+                                     Vector3.ZAxis, 
+                                     envelope.Elevation, 
+                                     Math.Abs(envelope.Profile.Perimeter.Area()),        
+                                     envelope.Profile.Perimeter, 
+                                     Guid.NewGuid(), ""));
             };
             var openHeight = envelope.Height;
             var stdHeight = openHeight / Math.Floor(openHeight / interval) - 1;
             var atHeight = envelope.Elevation + stdHeight;
             while (openHeight > stdHeight * 2)
             {
-                levels.Add(new Level(Vector3.Origin, Vector3.ZAxis, atHeight, envelope.Profile.Perimeter, Guid.NewGuid(), ""));
+                levels.Add(new Level(Vector3.Origin, 
+                                     Vector3.ZAxis, 
+                                     atHeight,
+                                     Math.Abs(envelope.Profile.Perimeter.Area()), 
+                                     envelope.Profile.Perimeter, 
+                                     Guid.NewGuid(), ""));
                 openHeight -= stdHeight;
                 atHeight += stdHeight;
             }
             if (last)
             {
-                levels.Add(new Level(Vector3.Origin, Vector3.ZAxis, envelope.Elevation + envelope.Height, envelope.Profile.Perimeter, Guid.NewGuid(), ""));
+                levels.Add(new Level(Vector3.Origin, 
+                                     Vector3.ZAxis, 
+                                     envelope.Elevation + envelope.Height,
+                                     Math.Abs(envelope.Profile.Perimeter.Area()),
+                                     envelope.Profile.Perimeter, 
+                                     Guid.NewGuid(), ""));
             }
             return levels;
         }
