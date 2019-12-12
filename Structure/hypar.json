@@ -27,14 +27,6 @@
       "type": "range"
     },
     {
-      "min": 0.0,
-      "max": 90.0,
-      "step": 1.0,
-      "name": "Grid Rotation",
-      "description": "The amount to rotate the grid in degrees.",
-      "type": "range"
-    },
-    {
       "name": "Color Beams By Length",
       "description": "When true, beams are colored according to their length.",
       "type": "boolean"

@@ -137,7 +137,7 @@ namespace Structure
                 levels = new List<Level>();
                 for(var i=0; i<100; i+=3)
                 {
-                    levels.Add(new Level(new Vector3(0,0,i), Vector3.ZAxis, i, null, Guid.NewGuid(), $"Level {i}"));
+                    levels.Add(new Level(new Vector3(0,0,i), Vector3.ZAxis, i, 0.0, null, Guid.NewGuid(), $"Level {i}"));
                 }
             }
             else
@@ -155,7 +155,7 @@ namespace Structure
             List<Line> xGrids;
             List<Line> yGrids;
 
-            CreateGridsFromBoundary(envelopes.First().Profile.Perimeter, input.GridXAxisInterval, input.GridYAxisInterval, input.GridRotation, out xGrids, out yGrids);
+            var gridRotation = CreateGridsFromBoundary(envelopes.First().Profile.Perimeter, input.GridXAxisInterval, input.GridYAxisInterval, out xGrids, out yGrids);
             
             levels.Sort(new LevelComparer());
             
@@ -210,7 +210,7 @@ namespace Structure
                 foreach(var lc in columnLocations)
                 {
                     var mat = BuiltInMaterials.Steel;
-                    var column = new Column(lc, envLevels.Last().Elevation - lc.Z, colProfile, mat, null, 0,0, input.GridRotation);
+                    var column = new Column(lc, envLevels.Last().Elevation - lc.Z, colProfile, mat, null, 0,0, gridRotation);
                     model.AddElement(column); 
                 }
             }
@@ -270,15 +270,22 @@ namespace Structure
             return false;
         }
 
-        private static void CreateGridsFromBoundary(Polygon boundary,
+        private static double CreateGridsFromBoundary(Polygon boundary,
                                                     double xInterval,
                                                     double yInterval,
-                                                    double rotation,
                                                     out List<Line> xGrids,
                                                     out List<Line> yGrids)
         {
-            var transform = new Transform();
-            transform.Rotate(Vector3.ZAxis, rotation);
+            Line longestSide = null;
+            foreach(var s in boundary.Segments())
+            {
+                if(longestSide == null || s.Length() > longestSide.Length())
+                {
+                    longestSide = s;
+                }
+            }
+            var transform = new Transform(new Vector3(),longestSide.Direction(), Vector3.ZAxis);
+            var rotation = longestSide.Direction().AngleTo(Vector3.XAxis);
 
             // Create a grid across the boundary
             // var bounds = new BBox3(Vector3.Origin, Vector3.Origin);>
@@ -310,6 +317,8 @@ namespace Structure
             {
                 xGrids.Add(transform.OfLine(new Line(new Vector3(min.X,y), new Vector3(max.X, y))));
             }
+
+            return rotation;
         }
 
         private static List<Element> CreateGirders(double elevation,
