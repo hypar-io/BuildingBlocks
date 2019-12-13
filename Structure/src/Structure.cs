@@ -156,17 +156,12 @@ namespace Structure
             List<Line> xGrids;
             List<Line> yGrids;
 
-            var gridRotation = CreateGridsFromBoundary(envelopes.First().Profile.Perimeter, input.GridXAxisInterval, input.GridYAxisInterval, out xGrids, out yGrids);
-
-            model.AddElement(new ModelCurve(Polygon.Circle(1), transform:new Transform(xGrids[0].Start)));
-            foreach(var xg in xGrids)
-            {
-                model.AddElement(new ModelCurve(xg, BuiltInMaterials.XAxis));
-            }
-            foreach(var yg in yGrids)
-            {
-                model.AddElement(new ModelCurve(yg, BuiltInMaterials.YAxis));
-            }
+            var gridRotation = CreateGridsFromBoundary(envelopes.First().Profile.Perimeter,
+                                                       input.GridXAxisInterval,
+                                                       input.GridYAxisInterval,
+                                                       out xGrids,
+                                                       out yGrids,
+                                                       model);
 
             levels.Sort(new LevelComparer());
             
@@ -285,7 +280,8 @@ namespace Structure
                                                     double xInterval,
                                                     double yInterval,
                                                     out List<Line> xGrids,
-                                                    out List<Line> yGrids)
+                                                    out List<Line> yGrids, 
+                                                    Model model)
         {
             Line longestSide = null;
             foreach(var s in boundary.Segments())
@@ -304,44 +300,51 @@ namespace Structure
             var rotation = xAxis.AngleTo(Vector3.XAxis);
 
             // Use the transform to to construct a bounding
-            // box around oriented along the longest edge
+            // box oriented along the longest edge
             // containing all the vertices of the boundary.
             double minx = 10000; double miny = 10000;
             double maxx = -10000; double maxy = -10000;
 
-            foreach(var v in boundary.Vertices)
+            var ti = new Transform(transform);
+            ti.Invert();
+            var tBoundary = ti.OfPolygon(boundary);
+
+            foreach(var v in tBoundary.Vertices)
             {
-                var tv = transform.OfVector(v);
-                if(tv.X < minx) minx = tv.X;
-                if(tv.Y < miny) miny = tv.Y;
-                if(tv.X > maxx) maxx = tv.X;
-                if(tv.Y > maxy) maxy = tv.Y;
+                if(v.X < minx) minx = v.X;
+                if(v.Y < miny) miny = v.Y;
+                if(v.X > maxx) maxx = v.X;
+                if(v.Y > maxy) maxy = v.Y;
             }
-            
+
             var max = new Vector3(maxx, maxy);
             var min = new Vector3(minx, miny);
+            var w = max.X - min.X;
+            var h = max.Y - min.Y;
             
             xGrids = new List<Line>();
             yGrids = new List<Line>();
 
-            var w = max.X - min.X;
-            var h = max.Y - min.Y;
-            Console.WriteLine($"min: {min}, max: {max}");
-            Console.WriteLine($"w: {w}, h: {h}");
-
-            for(var x=0.0; x <= h; x += xInterval)
+            var start = transform.OfVector(min);
+            for(var y=0.0; y <= h; y += xInterval)
             {
-                var p1 = longestSide.Start + yAxis * x;
-                var p2 = longestSide.Start + yAxis * x + xAxis * w;
-                xGrids.Add(new Line(p1, p2));
+                var p1 = start + yAxis * y;
+                var p2 = start + yAxis * y + xAxis * w;
+                var l = new Line(p1, p2);
+                xGrids.Add(l);
+                model.AddElement(new ModelCurve(l, BuiltInMaterials.XAxis));
             } 
 
-            for(var y=0.0; y <= w; y += yInterval)
+            for(var x=0.0; x <= w; x += yInterval)
             {
-                var p1 = longestSide.Start + xAxis * y;
-                var p2 = longestSide.Start + xAxis * y + yAxis * h;
-                yGrids.Add(new Line(p1, p2));
-            } 
+                var p1 = start + xAxis * x;
+                var p2 = start + xAxis * x + yAxis * h;
+                var l = new Line(p1, p2);
+                model.AddElement(new ModelCurve(l, BuiltInMaterials.YAxis));
+                yGrids.Add(l);
+            }
+
+            model.AddElement(new ModelCurve(Polygon.Circle(1), transform:new Transform(xGrids[0].Start)));
 
             return rotation;
         }
