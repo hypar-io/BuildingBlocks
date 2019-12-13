@@ -484,7 +484,7 @@ namespace Structure
                     }
                 }
 
-                if(xsects.Count == 0)
+                if(xsects.Count < 2)
                 {
                     continue;
                 }

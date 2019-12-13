@@ -10,7 +10,7 @@ using Elements.Geometry;
 using Xunit.Abstractions;
 using Hypar.Functions.Execution.Local;
 
-namespace FloorsByEnvelope.Tests
+namespace ColumnsByFloors.Tests
 {
     public class FunctionTests
     {
@@ -24,16 +24,16 @@ namespace FloorsByEnvelope.Tests
         [Fact]
         public async Task InvokeFunction()
         {
-            var store = new FileModelStore<FloorsByEnvelopeInputs>("./",true);
+            var store = new FileModelStore<ColumnsByFloorsInputs>("./",true);
 
             // Create an input object with default values.
-            var input = new FloorsByEnvelopeInputs();
+            var input = new ColumnsByFloorsInputs();
 
             // Invoke the function.
             // The function invocation uses a FileModelStore
             // which will write the resulting model to disk.
             // You'll find the model at "./model.gltf"
-            var l = new InvocationWrapper<FloorsByEnvelopeInputs,FloorsByEnvelopeOutputs>(store, FloorsByEnvelope.Execute);
+            var l = new InvocationWrapper<ColumnsByFloorsInputs,ColumnsByFloorsOutputs>(store, ColumnsByFloors.Execute);
             var output = await l.InvokeAsync(input);
         }
     }

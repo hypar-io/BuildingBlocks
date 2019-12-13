@@ -15,7 +15,8 @@ Creates Levels from one or more Envelopes supplied by other functions.
 
 |Output Name|Type|Description|
 |---|---|---|
+|Level Quantity|Number|Total number of levels.|
+|Total Level Area|Number|Total aggregate area of all levels.|
 |Entry Level Height|Number|Height of the ground level.|
 |Mechanical Level Height|Number|Height of the mechanical level.|
-|Total Level Area|Number|Total aggregate area of all levels.|
 

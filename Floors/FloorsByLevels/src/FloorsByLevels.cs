@@ -18,19 +18,21 @@ namespace FloorsByLevels
         {
             var levels = new List<Level>();
             inputModels.TryGetValue("Levels", out var model);
+            if (model == null)
+            {
+                throw new ArgumentException("No Levels found.");
+            }
             levels.AddRange(model.AllElementsOfType<Level>());
-
             var floors = new List<Floor>();
             var floorArea = 0.0;
 
             foreach (var level in levels)
             {
-                floors.Add(new Floor(level.Perimeter, input.FloorThickness, 0.0,
+                floors.Add(new Floor(level.Perimeter, input.FloorThickness,
                            new Transform(0.0, 0.0, level.Elevation - input.FloorThickness),
                            BuiltInMaterials.Concrete, null, Guid.NewGuid(), null));
                 floorArea += level.Perimeter.Area();
             }
-
             floors = floors.OrderBy(f => f.Elevation).ToList();
             var output = new FloorsByLevelsOutputs(floorArea, floors.Count());
             output.model.AddElements(floors);

@@ -19,19 +19,23 @@ namespace LevelsByEnvelope
         {
             var envelopes = new List<Envelope>();
             inputModels.TryGetValue("Envelope", out var model);
+            if (model == null)
+            {
+                throw new ArgumentException("No Envelope found.");
+            }
             envelopes.AddRange(model.AllElementsOfType<Envelope>());
-
             var mechHeight = input.StandardLevelHeight * input.MechanicalLevelHeightRatio;
             var levelMaker = new LevelMaker(envelopes, input.StandardLevelHeight, input.GroundLevelHeight, mechHeight);
-            
             var levelArea = 0.0;
             foreach (var level in levelMaker.Levels)
             {
                 levelArea += level.Perimeter.Area();
             }
-            var matl = new Material(new Color(0.5f, 0.5f, 0.5f, 0.5f), 0.0f, 0.0f, Guid.NewGuid(), "Level");
-            var output = new LevelsByEnvelopeOutputs(input.GroundLevelHeight, mechHeight, levelArea);
-            output.model.AddElements(levelMaker.Levels);     
+            var output = new LevelsByEnvelopeOutputs(levelMaker.Levels.Count(), levelArea, input.GroundLevelHeight, mechHeight);
+            output.model.AddElements(levelMaker.Levels);
+            var matl = BuiltInMaterials.Glass;
+            matl.SpecularFactor = 0.5;
+            matl.GlossinessFactor = 0.0;
             foreach (var item in levelMaker.Levels)
             {
                 output.model.AddElement(new Panel(item.Perimeter, matl, new Transform(0.0, 0.0, item.Elevation), null, Guid.NewGuid(), ""));

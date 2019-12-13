@@ -19,6 +19,10 @@ namespace RoomsByFloors
         {
             var floors = new List<Floor>();
             inputModels.TryGetValue("Floors", out var model);
+            if (model == null)
+            {
+                throw new ArgumentException("No Floors found.");
+            }
             floors.AddRange(model.AllElementsOfType<Floor>());
 
             floors = floors.OrderBy(f => f.Elevation).Where(f => f.Elevation >= 0.0).ToList();

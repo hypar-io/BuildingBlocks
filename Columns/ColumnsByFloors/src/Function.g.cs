@@ -9,22 +9,22 @@ using Hypar.Functions.Execution.AWS;
 using System.Threading.Tasks;
 
 [assembly: LambdaSerializer(typeof(Amazon.Lambda.Serialization.Json.JsonSerializer))]
-namespace FloorsByEnvelope
+namespace ColumnsByFloors
 {
     public class Function
     {
         // Cache the model store for use by subsequent
         // executions of this lambda.
-        private IModelStore<FloorsByEnvelopeInputs> store;
+        private IModelStore<ColumnsByFloorsInputs> store;
 
-        public async Task<FloorsByEnvelopeOutputs> Handler(FloorsByEnvelopeInputs args, ILambdaContext context)
+        public async Task<ColumnsByFloorsOutputs> Handler(ColumnsByFloorsInputs args, ILambdaContext context)
         {
             if(this.store == null)
             {
-                this.store = new S3ModelStore<FloorsByEnvelopeInputs>(RegionEndpoint.USWest1);
+                this.store = new S3ModelStore<ColumnsByFloorsInputs>(RegionEndpoint.USWest1);
             }
             
-            var l = new InvocationWrapper<FloorsByEnvelopeInputs,FloorsByEnvelopeOutputs>(store, FloorsByEnvelope.Execute);
+            var l = new InvocationWrapper<ColumnsByFloorsInputs,ColumnsByFloorsOutputs>(store, ColumnsByFloors.Execute);
             var output = await l.InvokeAsync(args);
             return output;
         }
