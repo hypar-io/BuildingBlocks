@@ -76,6 +76,17 @@ namespace Structure
             new Profile(Polygon.Rectangle(10 * mToIn, 27 * mToIn))
         };
 
+        private static List<double> _halfDepths = new List<double>(){
+            (10 * mToIn)/2,
+            (14 * mToIn)/2,
+            (16 * mToIn)/2,
+            (10 * mToIn)/2,
+            (18 * mToIn)/2,
+            (21 * mToIn)/2,
+            (24 * mToIn)/2,
+            (27 * mToIn)/2,
+        };
+
         private static double _longestGridSpan = 0.0;
 
         /// <summary>
@@ -362,13 +373,14 @@ namespace Structure
                 try
                 {
                     var lengthFactor = (x.Length()/_longestGridSpan);
-                    var profile = _beamProfiles[(int)(lengthFactor * (_beamProfiles.Count - 1))];
+                    var beamIndex = (int)(lengthFactor * (_beamProfiles.Count - 1));
+                    var profile = _beamProfiles[beamIndex];
                     var beam = new Beam(x,
                                         profile,
                                         colorByLength ? _lengthGradient[(int)(lengthFactor*(_lengthGradient.Count-1))] : mat,
                                         startSetback: 0.25,
                                         endSetback: 0.25,
-                                        transform: new Transform(new Vector3(0,0, elevation)));
+                                        transform: new Transform(new Vector3(0,0, elevation - _halfDepths[beamIndex])));
                     beams.Add(beam);
                 }
                 catch(Exception ex)
@@ -383,13 +395,14 @@ namespace Structure
                 try
                 {
                     var lengthFactor = (y.Length()/_longestGridSpan);
-                    var profile = _beamProfiles[(int)(lengthFactor * (_beamProfiles.Count - 1))];
+                    var beamIndex = (int)(lengthFactor * (_beamProfiles.Count - 1));
+                    var profile = _beamProfiles[beamIndex];
                     var beam = new Beam(y,
                                         profile,
                                         colorByLength ? _lengthGradient[(int)(lengthFactor * (_lengthGradient.Count-1))] : mat,
                                         startSetback: 0.25,
                                         endSetback: 0.25,
-                                        transform: new Transform(new Vector3(0,0, elevation)));
+                                        transform: new Transform(new Vector3(0,0, elevation - _halfDepths[beamIndex])));
                     beams.Add(beam);
                 }
                 catch(Exception ex)
@@ -405,7 +418,7 @@ namespace Structure
                 var beam = new Beam(s,
                                     profile,
                                     BuiltInMaterials.Steel,
-                                    transform: new Transform(new Vector3(0,0, elevation)));
+                                    transform: new Transform(new Vector3(0,0, elevation - _halfDepths[5])));
                 beams.Add(beam);
             }
 
