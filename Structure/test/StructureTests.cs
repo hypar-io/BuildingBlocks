@@ -15,19 +15,23 @@ namespace Structure.tests
         [Fact]
         public void StructureTest()
         {
-            var envModel = Model.FromJson(System.IO.File.ReadAllText("../../../../../TestOutput/EnvelopeBySketch.json"));
-            var lvlModel = Model.FromJson(System.IO.File.ReadAllText("../../../../../TestOutput/LevelsByEnvelope.json"));
-            var inputs = new StructureInputs(10.0, 10.0, 15.5, false, "", "", new Dictionary<string, string>(), "", "", "");
-            var outputs = Structure.Execute(new Dictionary<string, Model> { { "Envelope", envModel }, { "Levels", lvlModel } }, inputs);
-            System.IO.File.WriteAllText("../../../../../TestOutput/structure.json", outputs.model.ToJson());
-            outputs.model.ToGlTF("../../../../../TestOutput/structure.glb");
+            var model = Model.FromJson(System.IO.File.ReadAllText("../../../../core.json"));
+            var inputs = new StructureInputs(4.0, 5.0, false, "", "", new Dictionary<string, string>(), "", "", "");
+            var outputs = Structure.Execute(new Dictionary<string, Model>{{"envelope", model}}, inputs);
+            System.IO.File.WriteAllText("../../../../structureCore.json", outputs.model.ToJson());
+            outputs.model.ToGlTF("../../../../structureCore.glb");
 
-            var model = Model.FromJson(System.IO.File.ReadAllText("../../../../../TestOutput/structureProblem.json"));
-            inputs = new StructureInputs(8.0, 7.0, 18.0, false, "", "", new Dictionary<string, string>(), "", "", "");
-            outputs = Structure.Execute(new Dictionary<string, Model> { { "Envelope", model }, { "Levels", model }  }, inputs);
-            System.IO.File.WriteAllText("../../../../../TestOutput/tructureFail.json", outputs.model.ToJson());
-            outputs.model.ToGlTF("../../../../../TestOutput/structureFail.glb");
+            model = Model.FromJson(System.IO.File.ReadAllText("../../../../mass.json"));
+            inputs = new StructureInputs(4.0, 5.0, false, "", "", new Dictionary<string, string>(), "", "", "");
+            outputs = Structure.Execute(new Dictionary<string, Model>{{"envelope", model}}, inputs);
+            System.IO.File.WriteAllText("../../../../structureMass.json", outputs.model.ToJson());
+            outputs.model.ToGlTF("../../../../structureMass.glb");
 
+            model = Model.FromJson(System.IO.File.ReadAllText("../../../../story.json"));
+            inputs = new StructureInputs(4.0, 5.0, false, "", "", new Dictionary<string, string>(), "", "", "");
+            outputs = Structure.Execute(new Dictionary<string, Model>{{"envelope", model}}, inputs);
+            System.IO.File.WriteAllText("../../../../structureStory.json", outputs.model.ToJson());
+            outputs.model.ToGlTF("../../../../structureStory.glb");
         }
     }
 }

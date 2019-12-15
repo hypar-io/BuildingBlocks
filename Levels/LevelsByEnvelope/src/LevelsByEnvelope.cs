@@ -36,6 +36,12 @@ namespace LevelsByEnvelope
             output.model.AddElements(levelMaker.Levels);
             output.model.AddElements(levelMaker.LevelPerimeters);
             foreach (var item in levelMaker.LevelPerimeters)
+            var output = new LevelsByEnvelopeOutputs(levelMaker.Levels.Count(), levelArea, input.GroundLevelHeight, mechHeight);
+            output.model.AddElements(levelMaker.Levels);
+            var matl = BuiltInMaterials.Glass;
+            matl.SpecularFactor = 0.5;
+            matl.GlossinessFactor = 0.0;
+            foreach (var item in levelMaker.Levels)
             {
                 output.model.AddElement(new Panel(item.Perimeter, matl, new Transform(0.0, 0.0, item.Elevation), null, Guid.NewGuid(), ""));
             }

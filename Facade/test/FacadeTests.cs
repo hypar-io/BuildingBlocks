@@ -3,6 +3,7 @@ using Hypar.Functions.Execution.Local;
 using Xunit.Abstractions;
 using System.Threading.Tasks;
 using Hypar.Functions.Execution;
+using System.IO;
 
 namespace Facade.tests
 {
@@ -29,6 +30,9 @@ namespace Facade.tests
             // You'll find the model at "./model.gltf"
             var l = new InvocationWrapper<FacadeInputs,FacadeOutputs>(store, Facade.Execute);
             var output = await l.InvokeAsync(input);
+            
+            var json = output.model.ToJson();
+            File.WriteAllText("../../../facade.json", json);
         }
     }
 }

@@ -17,6 +17,18 @@ namespace LevelsByEnvelope
     public class LevelsByEnvelopeOutputs: ResultsBase
     {
 		/// <summary>
+		/// Total number of levels.
+		/// </summary>
+		[JsonProperty("Level Quantity")]
+		public double LevelQuantity {get;}
+
+		/// <summary>
+		/// Total aggregate area of all levels.
+		/// </summary>
+		[JsonProperty("Total Level Area")]
+		public double TotalLevelArea {get;}
+
+		/// <summary>
 		/// Height of the ground level.
 		/// </summary>
 		[JsonProperty("Entry Level Height")]
@@ -27,12 +39,6 @@ namespace LevelsByEnvelope
 		/// </summary>
 		[JsonProperty("Mechanical Level Height")]
 		public double MechanicalLevelHeight {get;}
-
-		/// <summary>
-		/// Total aggregate area of all levels.
-		/// </summary>
-		[JsonProperty("Total Level Area")]
-		public double TotalLevelArea {get;}
 
 
         
@@ -51,11 +57,12 @@ namespace LevelsByEnvelope
         /// </summary>
         /// <returns></returns>
         [JsonConstructor]
-        public LevelsByEnvelopeOutputs(double entrylevelheight, double mechanicallevelheight, double totallevelarea): base()
+        public LevelsByEnvelopeOutputs(double levelquantity, double totallevelarea, double entrylevelheight, double mechanicallevelheight): base()
         {
+			this.LevelQuantity = levelquantity;
+			this.TotalLevelArea = totallevelarea;
 			this.EntryLevelHeight = entrylevelheight;
 			this.MechanicalLevelHeight = mechanicallevelheight;
-			this.TotalLevelArea = totallevelarea;
 
 		}
 

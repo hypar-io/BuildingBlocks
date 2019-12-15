@@ -134,6 +134,12 @@ namespace LevelsByEnvelope
             {
                 Levels.Add(new Level(envelope.Elevation, Guid.NewGuid(), ""));
                 LevelPerimeters.Add(new LevelPerimeter(envelope.Elevation, envelope.Profile.Perimeter, Guid.NewGuid(), ""));
+                levels.Add(new Level(Vector3.Origin, 
+                                     Vector3.ZAxis, 
+                                     envelope.Elevation, 
+                                     Math.Abs(envelope.Profile.Perimeter.Area()),        
+                                     envelope.Profile.Perimeter, 
+                                     Guid.NewGuid(), ""));
             };
             var openHeight = envelope.Height;
             var stdHeight = openHeight / Math.Floor(openHeight / interval) - 1;
@@ -142,6 +148,12 @@ namespace LevelsByEnvelope
             {
                 Levels.Add(new Level(atHeight, Guid.NewGuid(), ""));
                 LevelPerimeters.Add(new LevelPerimeter(atHeight, envelope.Profile.Perimeter, Guid.NewGuid(), ""));
+                levels.Add(new Level(Vector3.Origin, 
+                                     Vector3.ZAxis, 
+                                     atHeight,
+                                     Math.Abs(envelope.Profile.Perimeter.Area()), 
+                                     envelope.Profile.Perimeter, 
+                                     Guid.NewGuid(), ""));
                 openHeight -= stdHeight;
                 atHeight += stdHeight;
             }
@@ -149,6 +161,12 @@ namespace LevelsByEnvelope
             {
                 Levels.Add(new Level(envelope.Elevation + envelope.Height, Guid.NewGuid(), ""));
                 LevelPerimeters.Add(new LevelPerimeter(envelope.Elevation + envelope.Height, envelope.Profile.Perimeter, Guid.NewGuid(), ""));
+                levels.Add(new Level(Vector3.Origin, 
+                                     Vector3.ZAxis, 
+                                     envelope.Elevation + envelope.Height,
+                                     Math.Abs(envelope.Profile.Perimeter.Area()),
+                                     envelope.Profile.Perimeter, 
+                                     Guid.NewGuid(), ""));
             }
         }
     }
