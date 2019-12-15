@@ -10,7 +10,7 @@ namespace LevelsByEnvelope
     public static class LevelsByEnvelope
     {
         /// <summary>
-        /// The LevelsByEnvelope function.
+        /// Creates Levels and LevelPerimeters from an incoming Envelope and height arguments.
         /// </summary>
         /// <param name="model">The input model.</param>
         /// <param name="input">The arguments to the execution.</param>
@@ -31,17 +31,13 @@ namespace LevelsByEnvelope
             {
                 levelArea += Math.Abs(lp.Perimeter.Area());
             }
-            var matl = new Material(new Color(0.5f, 0.5f, 0.5f, 0.5f), 0.0f, 0.0f, Guid.NewGuid(), "Level");
-            var output = new LevelsByEnvelopeOutputs(input.GroundLevelHeight, mechHeight, levelArea);
-            output.model.AddElements(levelMaker.Levels);
-            output.model.AddElements(levelMaker.LevelPerimeters);
-            foreach (var item in levelMaker.LevelPerimeters)
             var output = new LevelsByEnvelopeOutputs(levelMaker.Levels.Count(), levelArea, input.GroundLevelHeight, mechHeight);
             output.model.AddElements(levelMaker.Levels);
+            output.model.AddElements(levelMaker.LevelPerimeters);
             var matl = BuiltInMaterials.Glass;
             matl.SpecularFactor = 0.5;
             matl.GlossinessFactor = 0.0;
-            foreach (var item in levelMaker.Levels)
+            foreach (var item in levelMaker.LevelPerimeters)
             {
                 output.model.AddElement(new Panel(item.Perimeter, matl, new Transform(0.0, 0.0, item.Elevation), null, Guid.NewGuid(), ""));
             }

@@ -111,12 +111,17 @@ namespace LevelsByEnvelope
         /// <returns>A Level or null if no eligible envelope is found.</returns>
         public bool MakeLevel(Envelope envelope, double elevation)
         {
+            var perimeter = envelope.Profile.Perimeter;
+            if (perimeter.IsClockWise())
+            {
+                perimeter = perimeter.Reversed();
+            }
             if (elevation < envelope.Elevation || elevation > envelope.Elevation + envelope.Height)
             {
                 return false;
             }
             Levels.Add(new Level(elevation, Guid.NewGuid(), ""));
-            LevelPerimeters.Add(new LevelPerimeter(elevation, envelope.Profile.Perimeter, Guid.NewGuid(), ""));
+            LevelPerimeters.Add(new LevelPerimeter(elevation, perimeter, Guid.NewGuid(), ""));
             Levels = Levels.OrderBy(l => l.Elevation).ToList();
             LevelPerimeters = LevelPerimeters.OrderBy(l => l.Elevation).ToList();
             return true;
@@ -130,16 +135,15 @@ namespace LevelsByEnvelope
         /// <returns>A List of Levels ordered from lowest Elevation to highest.</returns>
         public void MakeLevels (Envelope envelope, double interval, bool first = true, bool last = true)
         {
+            var perimeter = envelope.Profile.Perimeter;
+            if (perimeter.IsClockWise())
+            {
+                perimeter = perimeter.Reversed();
+            }
             if (first)
             {
                 Levels.Add(new Level(envelope.Elevation, Guid.NewGuid(), ""));
-                LevelPerimeters.Add(new LevelPerimeter(envelope.Elevation, envelope.Profile.Perimeter, Guid.NewGuid(), ""));
-                levels.Add(new Level(Vector3.Origin, 
-                                     Vector3.ZAxis, 
-                                     envelope.Elevation, 
-                                     Math.Abs(envelope.Profile.Perimeter.Area()),        
-                                     envelope.Profile.Perimeter, 
-                                     Guid.NewGuid(), ""));
+                LevelPerimeters.Add(new LevelPerimeter(envelope.Elevation, perimeter, Guid.NewGuid(), ""));
             };
             var openHeight = envelope.Height;
             var stdHeight = openHeight / Math.Floor(openHeight / interval) - 1;
@@ -147,26 +151,14 @@ namespace LevelsByEnvelope
             while (openHeight > stdHeight * 2)
             {
                 Levels.Add(new Level(atHeight, Guid.NewGuid(), ""));
-                LevelPerimeters.Add(new LevelPerimeter(atHeight, envelope.Profile.Perimeter, Guid.NewGuid(), ""));
-                levels.Add(new Level(Vector3.Origin, 
-                                     Vector3.ZAxis, 
-                                     atHeight,
-                                     Math.Abs(envelope.Profile.Perimeter.Area()), 
-                                     envelope.Profile.Perimeter, 
-                                     Guid.NewGuid(), ""));
+                LevelPerimeters.Add(new LevelPerimeter(atHeight, perimeter, Guid.NewGuid(), ""));
                 openHeight -= stdHeight;
                 atHeight += stdHeight;
             }
             if (last)
             {
                 Levels.Add(new Level(envelope.Elevation + envelope.Height, Guid.NewGuid(), ""));
-                LevelPerimeters.Add(new LevelPerimeter(envelope.Elevation + envelope.Height, envelope.Profile.Perimeter, Guid.NewGuid(), ""));
-                levels.Add(new Level(Vector3.Origin, 
-                                     Vector3.ZAxis, 
-                                     envelope.Elevation + envelope.Height,
-                                     Math.Abs(envelope.Profile.Perimeter.Area()),
-                                     envelope.Profile.Perimeter, 
-                                     Guid.NewGuid(), ""));
+                LevelPerimeters.Add(new LevelPerimeter(envelope.Elevation + envelope.Height, perimeter, Guid.NewGuid(), ""));
             }
         }
     }

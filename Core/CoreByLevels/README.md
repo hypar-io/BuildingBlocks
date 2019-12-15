@@ -7,7 +7,7 @@ Creates a building core by referencing LevelPerimeters supplied by another funct
 |Input Name|Type|Description|
 |---|---|---|
 |Setback|Range|Core perimeter setback from envelope.|
-|Rotation|Range|Rotation of the core.|
+|Rotation|Range|Core Rotation.|
 
 
 <br>
