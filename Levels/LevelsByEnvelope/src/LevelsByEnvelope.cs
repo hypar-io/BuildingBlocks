@@ -27,14 +27,15 @@ namespace LevelsByEnvelope
             var mechHeight = input.StandardLevelHeight * input.MechanicalLevelHeightRatio;
             var levelMaker = new LevelMaker(envelopes, input.StandardLevelHeight, input.GroundLevelHeight, mechHeight);
             var levelArea = 0.0;
-            foreach (var level in levelMaker.Levels)
+            foreach (var lp in levelMaker.LevelPerimeters)
             {
-                levelArea += level.Perimeter.Area();
+                levelArea += Math.Abs(lp.Perimeter.Area());
             }
             var matl = new Material(new Color(0.5f, 0.5f, 0.5f, 0.5f), 0.0f, 0.0f, Guid.NewGuid(), "Level");
             var output = new LevelsByEnvelopeOutputs(input.GroundLevelHeight, mechHeight, levelArea);
-            output.model.AddElements(levelMaker.Levels);     
-            foreach (var item in levelMaker.Levels)
+            output.model.AddElements(levelMaker.Levels);
+            output.model.AddElements(levelMaker.LevelPerimeters);
+            foreach (var item in levelMaker.LevelPerimeters)
             {
                 output.model.AddElement(new Panel(item.Perimeter, matl, new Transform(0.0, 0.0, item.Elevation), null, Guid.NewGuid(), ""));
             }

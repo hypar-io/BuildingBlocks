@@ -21,7 +21,7 @@ namespace CoreByLevels
         const double mechLength = 2.0;
         const double mechWidth = 6.0;
 
-        private List<Level> Levels { get; set; }
+        private List<LevelPerimeter> Levels { get; set; }
         private int LiftService { get; set; }
         private Vector3 Position { get; set; }
         private double Rotation { get; set; }       
@@ -35,13 +35,13 @@ namespace CoreByLevels
         public double Elevation { get; private set; }
 
         /// <summary>
-        /// 
+        /// Creates different Elements of the building's service core by employing several targeted methods.
         /// </summary>
-        /// <param name="levels"></param>
-        /// <param name="rotation"></param>
-        public CoreMaker(List<Level> levels, double setback, double rotation)
+        /// <param name="levels">List of LevelPerimeters.</param>
+        /// <param name="rotation">Rotation in degrees of the core.</param>
+        public CoreMaker(List<LevelPerimeter> levels, double setback, double rotation)
         {
-            Levels = new List<Level>();
+            Levels = new List<LevelPerimeter>();
             Levels.AddRange(levels.OrderBy(l => l.Elevation).ToList());
             Restrooms = new List<Room>();
             Mechanicals = new List<MechanicalCorridor>();
@@ -56,32 +56,13 @@ namespace CoreByLevels
             var mechTopo = MakeMech(bathTopo.E);
             var stairTopos = MakeStairs(bathTopo);
             MakeLifts(stairTopos, LiftService);
-
-            //Following section for debug. 
-            //Comment for deployment.
-
-            //Mechanicals.Clear();
-            //var ctr = corePerim.Centroid();
-            //var lastLevel = Levels.Last();
-            //var mechHeight = lastLevel.Elevation - Levels.First().Elevation + 5.0;
-            //var extrude = new Elements.Geometry.Solids.Extrude(corePerim, mechHeight, Vector3.ZAxis, 0.0, false);
-            //var geomRep = new Representation(new List<Elements.Geometry.Solids.SolidOperation>() { extrude });
-            //var mechMatl = new Material(new Color(0.2f, 0.2f, 0.2f, 0.8f), 0.0f, 0.0f, Guid.NewGuid(), "mech");
-            //Mechanicals.Add(new MechanicalCorridor(corePerim, Vector3.ZAxis, Rotation,
-            //                                       new Vector3(ctr.X, ctr.Y, Levels.First().Elevation),
-            //                                       new Vector3(ctr.X, ctr.Y, Levels.First().Elevation + mechHeight),
-            //                                       mechHeight, corePerim.Area() * mechHeight, "",
-            //                                       new Transform(0.0, 0.0, Levels.First().Elevation),
-            //                                       mechMatl, geomRep, Guid.NewGuid(), ""));
-
-
         }
 
         /// <summary>
-        /// 
+        /// Attempts to place the core within the supplied perimeter.
         /// </summary>
-        /// <param name="shell"></param>
-        /// <returns></returns>
+        /// <param name="shell">Perimeter within which to tplace the core.</param>
+        /// <returns>Perimeter of the core as a Polygon or null if a compliant position cannot be found.</returns>
         private Polygon PlaceCore(double setback, double rotation)
         {
             var offShells = Levels.Last().Perimeter.Offset(setback * -1);
