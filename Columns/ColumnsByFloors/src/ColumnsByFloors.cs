@@ -18,13 +18,25 @@ namespace ColumnsByFloors
         public static ColumnsByFloorsOutputs Execute(Dictionary<string, Model> inputModels, ColumnsByFloorsInputs input)
         {
             var floors = new List<Floor>();
-            inputModels.TryGetValue("Floors", out var model);
-            if (model == null)
+            inputModels.TryGetValue("Floors", out var flrModel);
+            if (flrModel == null || flrModel.AllElementsOfType<Floor>().Count() == 0)
             {
                 throw new ArgumentException("No Floors found.");
             }
-            floors.AddRange(model.AllElementsOfType<Floor>());
+            floors.AddRange(flrModel.AllElementsOfType<Floor>());
             floors = floors.OrderBy(f => f.Elevation).ToList();
+
+            var exclusions = new List<Exclusion>();
+            inputModels.TryGetValue("Cores", out var corModel);
+            if (corModel != null)
+            {
+                exclusions.AddRange(corModel.AllElementsOfType<Exclusion>());
+            }
+            var cores = new List<Polygon>();
+            foreach (var exclude in exclusions)
+            {
+                cores.Add(exclude.Perimeter);
+            }
             var columns = new List<Column>();
             for (var i = 0; i < floors.Count() - 1; i++)
             {
@@ -34,6 +46,7 @@ namespace ColumnsByFloors
                              - floor.ProfileTransformed().Perimeter.Vertices.First().Z
                              - floor.Thickness;
                 var grid = new CoordinateGrid(ceiling.Profile.Perimeter, input.GridXAxisInterval, input.GridYAxisInterval, input.GridRotation);
+                grid.Allocate(cores);
                 foreach (var point in grid.Available)
                 {
                     columns.Add(new Column(point, height,

@@ -19,7 +19,7 @@ namespace LevelsByEnvelope
         {
             var envelopes = new List<Envelope>();
             inputModels.TryGetValue("Envelope", out var model);
-            if (model == null)
+            if (model == null || model.AllElementsOfType<Envelope>().Count() == 0)
             {
                 throw new ArgumentException("No Envelope found.");
             }
