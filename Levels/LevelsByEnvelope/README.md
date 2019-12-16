@@ -2,7 +2,7 @@
             
 # LevelsByEnvelope
 
-Creates Levels from one or more Envelopes supplied by other functions.
+Creates Levels and LevelPerimeters from one or more Envelopes supplied by other functions.
 
 |Input Name|Type|Description|
 |---|---|---|
