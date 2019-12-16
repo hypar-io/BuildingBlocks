@@ -16,6 +16,7 @@ namespace LevelsByEnvelope
             Envelopes.AddRange(envelopes.OrderBy(e => e.Elevation));
             Levels = new List<Level>();
             LevelPerimeters = new List<LevelPerimeter>();
+            SubGradeLevels(stdHeight);
             GradeLevels(stdHeight, grdHeight);
             HighLevels(stdHeight, mchHeight);
             MidLevels(stdHeight);
@@ -116,7 +117,7 @@ namespace LevelsByEnvelope
         /// </summary>
         /// <param name="stdHeight">Desired height for repeating Levels.</param>
         /// <param name="grdHeight">Desired height for first Level above grade.</param>
-        private void SubGradeLevels(double stdHeight, double grdHeight)
+        private void SubGradeLevels(double stdHeight)
         {
             // Add subgrade Levels.
             var subs = Envelopes.Where(e => e.Elevation < 0.0).ToList();
