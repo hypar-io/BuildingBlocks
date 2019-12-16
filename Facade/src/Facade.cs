@@ -81,7 +81,7 @@ namespace Facade
                 levels = new List<Level>();
                 for(var i=0; i<20; i+=3)
                 {
-                    levels.Add(new Level(new Vector3(0,0,i), Vector3.ZAxis, i, null, Guid.NewGuid(), $"Level {i}"));
+                    levels.Add(new Level(i, Guid.NewGuid(), $"Level {i}"));
                 }
                 // model.AddElements(envelopes);
             }
