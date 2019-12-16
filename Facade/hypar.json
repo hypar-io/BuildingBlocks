@@ -19,14 +19,6 @@
       "type": "range"
     },
     {
-      "min": 0.05,
-      "max": 0.5,
-      "step": 0.05,
-      "name": "Mullion Width",
-      "description": "Width of each mullion.",
-      "type": "range"
-    },
-    {
       "min": 0.01,
       "max": 1.0,
       "step": 0.01,

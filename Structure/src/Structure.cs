@@ -149,7 +149,7 @@ namespace Structure
                 levels = new List<Level>();
                 for(var i=0; i<100; i+=3)
                 {
-                    levels.Add(new Level(new Vector3(0,0,i), Vector3.ZAxis, i, 0.0, null, Guid.NewGuid(), $"Level {i}"));
+                    levels.Add(new Level(i, Guid.NewGuid(), $"Level {i}"));
                 }
             }
             else
@@ -168,8 +168,8 @@ namespace Structure
             List<Line> yGrids;
 
             var gridRotation = CreateGridsFromBoundary(envelopes.First().Profile.Perimeter,
-                                                       input.GridXAxisInterval,
-                                                       input.GridYAxisInterval,
+                                                       input.GridXAxisInterval > 0 ? input.GridXAxisInterval : 4,
+                                                       input.GridYAxisInterval > 0 ? input.GridYAxisInterval : 4,
                                                        out xGrids,
                                                        out yGrids,
                                                        model);
@@ -218,7 +218,7 @@ namespace Structure
 
                 foreach(var l in envLevels)
                 {
-                    var framing = CreateGirders(l.Elevation, xGridSegments, yGridSegments, boundarySegments, input.ColorBeamsByLength);
+                    var framing = CreateGirders(l.Elevation, xGridSegments, yGridSegments, boundarySegments);
                     model.AddElements(framing);
                 }
 
@@ -343,7 +343,7 @@ namespace Structure
                 var p2 = start + yAxis * y + xAxis * w;
                 var l = new Line(p1, p2);
                 xGrids.Add(l);
-                model.AddElement(new ModelCurve(l, BuiltInMaterials.XAxis));
+                // model.AddElement(new ModelCurve(l, BuiltInMaterials.XAxis));
             } 
 
             for(var x=0.0; x <= w; x += yInterval)
@@ -351,11 +351,11 @@ namespace Structure
                 var p1 = start + xAxis * x;
                 var p2 = start + xAxis * x + yAxis * h;
                 var l = new Line(p1, p2);
-                model.AddElement(new ModelCurve(l, BuiltInMaterials.YAxis));
                 yGrids.Add(l);
+                // model.AddElement(new ModelCurve(l, BuiltInMaterials.YAxis));
             }
 
-            model.AddElement(new ModelCurve(Polygon.Circle(1), transform:new Transform(xGrids[0].Start)));
+            // model.AddElement(new ModelCurve(Polygon.Circle(1), transform:new Transform(xGrids[0].Start)));
 
             return rotation;
         }
@@ -363,8 +363,7 @@ namespace Structure
         private static List<Element> CreateGirders(double elevation,
                                                    List<Line> xGridSegments,
                                                    List<Line> yGridSegments,
-                                                   IList<Line> boundarySegments,
-                                                   bool colorByLength)
+                                                   IList<Line> boundarySegments)
         {
             var beams = new List<Element>();
             var mat = BuiltInMaterials.Steel;
@@ -377,7 +376,7 @@ namespace Structure
                     var profile = _beamProfiles[beamIndex];
                     var beam = new Beam(x,
                                         profile,
-                                        colorByLength ? _lengthGradient[(int)(lengthFactor*(_lengthGradient.Count-1))] : mat,
+                                        mat,
                                         startSetback: 0.25,
                                         endSetback: 0.25,
                                         transform: new Transform(new Vector3(0,0, elevation - _halfDepths[beamIndex])));
@@ -399,7 +398,7 @@ namespace Structure
                     var profile = _beamProfiles[beamIndex];
                     var beam = new Beam(y,
                                         profile,
-                                        colorByLength ? _lengthGradient[(int)(lengthFactor * (_lengthGradient.Count-1))] : mat,
+                                        mat,
                                         startSetback: 0.25,
                                         endSetback: 0.25,
                                         transform: new Transform(new Vector3(0,0, elevation - _halfDepths[beamIndex])));
