@@ -4,6 +4,12 @@
 
 Creates Levels and LevelPerimeters from one or more Envelopes supplied by other functions.
 
+https://raw.githubusercontent.com/hypar-io/Schemas/master/Envelope.json
+
+https://raw.githubusercontent.com/hypar-io/Schemas/master/Level.json
+
+https://raw.githubusercontent.com/hypar-io/Schemas/master/LevelPerimeter.json
+
 |Input Name|Type|Description|
 |---|---|---|
 |Ground Level Height|Range|Height of ground level.|
