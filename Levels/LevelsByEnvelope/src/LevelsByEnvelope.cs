@@ -24,14 +24,20 @@ namespace LevelsByEnvelope
                 throw new ArgumentException("No Envelope found.");
             }
             envelopes.AddRange(model.AllElementsOfType<Envelope>());
-            var mechHeight = input.StandardLevelHeight * input.MechanicalLevelHeightRatio;
-            var levelMaker = new LevelMaker(envelopes, input.StandardLevelHeight, input.GroundLevelHeight, mechHeight);
+            var levelMaker = new LevelMaker(envelopes, 
+                                            input.StandardLevelHeight, 
+                                            input.GroundLevelHeight,
+                                            input.PenthouseLevelHeight);
             var levelArea = 0.0;
             foreach (var lp in levelMaker.LevelPerimeters)
             {
                 levelArea += Math.Abs(lp.Perimeter.Area());
             }
-            var output = new LevelsByEnvelopeOutputs(levelMaker.Levels.Count(), levelArea, input.GroundLevelHeight, mechHeight);
+            var output = new LevelsByEnvelopeOutputs(levelMaker.Levels.Count(), 
+                                                     levelArea, 
+                                                     input.GroundLevelHeight, 
+                                                     input.StandardLevelHeight,
+                                                     input.PenthouseLevelHeight);
             output.model.AddElements(levelMaker.Levels);
             output.model.AddElements(levelMaker.LevelPerimeters);
             var matl = BuiltInMaterials.Glass;
@@ -39,7 +45,8 @@ namespace LevelsByEnvelope
             matl.GlossinessFactor = 0.0;
             foreach (var item in levelMaker.LevelPerimeters)
             {
-                output.model.AddElement(new Panel(item.Perimeter, matl, new Transform(0.0, 0.0, item.Elevation), null, Guid.NewGuid(), ""));
+                output.model.AddElement(new Panel(item.Perimeter, matl, new Transform(0.0, 0.0, item.Elevation), 
+                                        null, Guid.NewGuid(), ""));
             }
             return output;
         }
