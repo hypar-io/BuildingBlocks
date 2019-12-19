@@ -10,14 +10,15 @@ namespace LevelsByEnvelope
     public class LevelMaker
     {
 
-        public LevelMaker(List<Envelope> envelopes, double stdHeight, double grdHeight, double mchHeight)
+        public LevelMaker(List<Envelope> envelopes, double stdHeight, double grdHeight, double pntHeight)
         {
             Envelopes = new List<Envelope> ();
             Envelopes.AddRange(envelopes.OrderBy(e => e.Elevation));
             Levels = new List<Level>();
             LevelPerimeters = new List<LevelPerimeter>();
+            SubGradeLevels(stdHeight);
             GradeLevels(stdHeight, grdHeight);
-            HighLevels(stdHeight, mchHeight);
+            HighLevels(stdHeight, pntHeight);
             MidLevels(stdHeight);
         }
 
@@ -65,20 +66,20 @@ namespace LevelsByEnvelope
         /// Creates levels in the highest Envelope, including a higher mechanical Level below the top of the Envelope.
         /// </summary>
         /// <param name="stdHeight">Desired height for repeating Levels.</param>
-        /// <param name="mchHeight">Desired height for mechanical Levels</param>
-        private void HighLevels(double stdHeight, double mchHeight)
+        /// <param name="pntHeight">Desired height for mechanical Levels</param>
+        private void HighLevels(double stdHeight, double pntHeight)
         {
             if (Envelopes.Where(e => e.Elevation >= 0.0).ToList().Count() < 2)
             {
                 return;
             }
-            // Add mechanical level and roof level to highest Envelope.
+            // Add penthouse level and roof level to highest Envelope.
             var envelope = Envelopes.Last();
             var bldgHeight = envelope.Elevation + envelope.Height;
             MakeLevel(envelope, bldgHeight);
 
-            // Create temporary envelope to populate the region beneath the Mechanical level.
-            envelope = new Envelope(envelope.Profile.Perimeter, envelope.Elevation, envelope.Height - mchHeight,
+            // Create temporary envelope to populate the region beneath the penthouse level.
+            envelope = new Envelope(envelope.Profile.Perimeter, envelope.Elevation, envelope.Height - pntHeight,
                                     Vector3.ZAxis, 0.0, envelope.Transform, null, envelope.Representation,
                                     Guid.NewGuid(), "");
             MakeLevels(envelope, stdHeight, false, true);
@@ -116,7 +117,7 @@ namespace LevelsByEnvelope
         /// </summary>
         /// <param name="stdHeight">Desired height for repeating Levels.</param>
         /// <param name="grdHeight">Desired height for first Level above grade.</param>
-        private void SubGradeLevels(double stdHeight, double grdHeight)
+        private void SubGradeLevels(double stdHeight)
         {
             // Add subgrade Levels.
             var subs = Envelopes.Where(e => e.Elevation < 0.0).ToList();

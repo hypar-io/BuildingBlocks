@@ -1,6 +1,6 @@
 {
   "$schema": "https://hypar.io/Schemas/Function.json",
-  "description": "Creates Levels from one or more Envelopes supplied by other functions.",
+  "description": "Creates Levels and LevelPerimeters from one or more Envelopes supplied by other functions.",
   "id": "aa0b94eb-6a0d-4f17-b0eb-322bce98bb2a",
   "name": "LevelsByEnvelope",
   "repository_url": "https://github.com/hypar-io/function",
@@ -10,7 +10,7 @@
   "model_output": "Levels",
   "inputs": [
     {
-      "min": 4.0,
+      "min": 3.0,
       "max": 7.0,
       "step": 0.1,
       "name": "Ground Level Height",
@@ -18,7 +18,7 @@
       "type": "range"
     },
     {
-      "min": 4.0,
+      "min": 3.0,
       "max": 5.0,
       "step": 0.1,
       "name": "Standard Level Height",
@@ -26,11 +26,11 @@
       "type": "range"
     },
     {
-      "min": 1.5,
-      "max": 2.5,
+      "min": 3.0,
+      "max": 7.0,
       "step": 0.1,
-      "name": "Mechanical Level Height Ratio",
-      "description": "Multiplier of standard level height for mechanical levels.",
+      "name": "Penthouse Level Height",
+      "description": "Height of the top level.",
       "type": "range"
     }
   ],
@@ -51,8 +51,13 @@
       "type": "number"
     },
     {
-      "name": "Mechanical Level Height",
-      "description": "Height of the mechanical level.",
+      "name": "Repeating Level Height",
+      "description": "Height of the standard levels.",
+      "type": "number"
+    },
+    {
+      "name": "Top Level Height",
+      "description": "Height of the penthouse level.",
       "type": "number"
     }
   ],

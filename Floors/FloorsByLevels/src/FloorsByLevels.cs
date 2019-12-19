@@ -27,9 +27,20 @@ namespace FloorsByLevels
             var floorArea = 0.0;
             foreach (var level in levels)
             {
-                var floor = new Floor(level.Perimeter, input.FloorThickness,
+                Floor floor = null;
+                var flrOffsets = level.Perimeter.Offset(input.FloorSetback * -1);
+                if (flrOffsets.Count() > 0)
+                {
+                    floor = new Floor(flrOffsets.First(), input.FloorThickness,
                             new Transform(0.0, 0.0, level.Elevation - input.FloorThickness),
                             BuiltInMaterials.Concrete, null, Guid.NewGuid(), null);
+                }
+                else
+                {
+                    floor = new Floor(level.Perimeter, input.FloorThickness,
+                            new Transform(0.0, 0.0, level.Elevation - input.FloorThickness),
+                            BuiltInMaterials.Concrete, null, Guid.NewGuid(), null);
+                }
                 floors.Add(floor);
                 floorArea += floor.Area();
             }
