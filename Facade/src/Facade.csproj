@@ -7,4 +7,7 @@
     <PackageReference Include="Hypar.Elements" Version="0.4.0" />
     <PackageReference Include="Hypar.Functions" Version="0.4.0" />
   </ItemGroup>
+  <ItemGroup Condition="'$(Configuration)' == 'Debug'">
+    <Content Include="../envelope.json" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
 </Project>
