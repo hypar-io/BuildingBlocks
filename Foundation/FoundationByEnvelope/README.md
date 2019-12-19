@@ -13,5 +13,5 @@ The FoundationByEnvelope function.
 
 |Output Name|Type|Description|
 |---|---|---|
-|Depth|Number|Literally, just the depth.|
+|Depth|Number|The calculated foundation depth.|
 

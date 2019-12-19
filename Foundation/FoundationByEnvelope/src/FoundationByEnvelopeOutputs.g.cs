@@ -17,7 +17,7 @@ namespace FoundationByEnvelope
     public class FoundationByEnvelopeOutputs: ResultsBase
     {
 		/// <summary>
-		/// Literally, just the depth.
+		/// The calculated foundation depth.
 		/// </summary>
 		[JsonProperty("Depth")]
 		public double Depth {get;}
