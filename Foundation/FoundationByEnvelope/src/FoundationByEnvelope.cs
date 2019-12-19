@@ -45,11 +45,19 @@ namespace FoundationByEnvelope
 
 
                     var perimeter = envelope.Profile.Perimeter;
-                    var offset = perimeter.Offset(-0.1).OrderBy(p => p.Area()).Last();
-                    if (offset == null) offset = perimeter; //revert to the perimeter if offset fails
+                    var offset = perimeter;
+                    var offsetResults = perimeter.Offset(-0.1);
+                    //get largest offset
+                    if (offsetResults.Length > 0)
+                    {
+                        offset = offsetResults.OrderBy(p => p.Area()).Last();
+                    }
 
                     offset = offset.Project(new Plane(Vector3.Origin, Vector3.ZAxis));
-                    if (finalDepth > outputDepth) outputDepth = finalDepth;
+                    if (finalDepth > outputDepth)
+                    {
+                        outputDepth = finalDepth;
+                    }
                     outputEnvelopes.Add(CreateFoundation(offset, finalDepth));
                 }
             }
