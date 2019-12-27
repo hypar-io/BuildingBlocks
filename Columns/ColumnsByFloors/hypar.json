@@ -2,7 +2,7 @@
   "$schema": "https://hypar.io/Schemas/Function.json",
   "description": "Creates a grid of columns on each floor with the central intervals spanning the floor's centroid.",
   "id": "d59054b4-6e86-47c3-9b1b-42f180bf7efe",
-  "name": "ColumnsByFloors",
+  "name": "Columns By Floors",
   "repository_url": "https://github.com/hypar-io/function",
   "model_dependencies": [
     "Floors"

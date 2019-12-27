@@ -1,6 +1,6 @@
 <img src="preview.png" width="512">
             
-# CoreByLevels
+# Core By Levels
 
 Creates a building core by referencing LevelPerimeters supplied by another function.
 

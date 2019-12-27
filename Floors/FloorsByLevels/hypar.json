@@ -2,7 +2,7 @@
   "$schema": "https://hypar.io/Schemas/Function.json",
   "description": "Creates Floors from LevelPerimeters supplied by another function.",
   "id": "c3bb78fd-7dee-41cc-ae2e-f1b4b4ae2794",
-  "name": "FloorsByLevels",
+  "name": "Floors By Levels",
   "repository_url": "https://github.com/hypar-io/function",
   "model_dependencies": [
     "Levels"
