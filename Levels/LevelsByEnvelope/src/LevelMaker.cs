@@ -110,7 +110,12 @@ namespace LevelsByEnvelope
             {
                 return false;
             }
-            Levels.Add(new Level(Vector3.Origin, Vector3.ZAxis, elevation, envelope.Profile.Perimeter, Guid.NewGuid(), ""));
+            Levels.Add(new Level(Vector3.Origin, 
+                                 Vector3.ZAxis, 
+                                 elevation, 
+                                 Math.Abs(envelope.Profile.Perimeter.Area()), 
+                                 envelope.Profile.Perimeter, 
+                                 Guid.NewGuid(), ""));
             Levels = Levels.OrderBy(l => l.Elevation).ToList();
             return true;
         }
