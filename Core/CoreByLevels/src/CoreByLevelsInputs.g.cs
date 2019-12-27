@@ -23,7 +23,7 @@ namespace CoreByLevels
 		public double Setback {get;}
 
 		/// <summary>
-		/// Rotation of the core.
+		/// Core Rotation.
 		/// </summary>
 		[JsonProperty("Rotation")]
 		public double Rotation {get;}

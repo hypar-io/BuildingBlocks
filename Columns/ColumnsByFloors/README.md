@@ -1,8 +1,8 @@
-
+<img src="preview.png" width="512">
             
 # ColumnsByFloors
 
-The ColumnsByFloors function.
+Creates a grid of columns on each floor with the central intervals spanning the floor's centroid.
 
 |Input Name|Type|Description|
 |---|---|---|

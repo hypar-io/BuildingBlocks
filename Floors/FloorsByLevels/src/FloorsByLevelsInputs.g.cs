@@ -17,6 +17,12 @@ namespace FloorsByLevels
     public class FloorsByLevelsInputs: S3Args
     {
 		/// <summary>
+		/// Setback of all floors from each level's perimeter.
+		/// </summary>
+		[JsonProperty("Floor Setback")]
+		public double FloorSetback {get;}
+
+		/// <summary>
 		/// Thickness of all floors.
 		/// </summary>
 		[JsonProperty("Floor Thickness")]
@@ -30,6 +36,7 @@ namespace FloorsByLevels
         /// </summary>
         public FloorsByLevelsInputs() : base()
         {
+			this.FloorSetback = 0.5;
 			this.FloorThickness = 0.5;
 
         }
@@ -40,8 +47,9 @@ namespace FloorsByLevels
         /// </summary>
         /// <returns></returns>
         [JsonConstructor]
-        public FloorsByLevelsInputs(double floorthickness, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
+        public FloorsByLevelsInputs(double floorsetback, double floorthickness, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
         {
+			this.FloorSetback = floorsetback;
 			this.FloorThickness = floorthickness;
 
 		}

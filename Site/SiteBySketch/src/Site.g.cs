@@ -19,20 +19,20 @@ namespace Elements
 {
     #pragma warning disable // Disable all warnings
 
-    /// <summary>A horizontal planer datum indicating a site boundary.</summary>
+    /// <summary>A horizontal planar datum indicating a site boundary.</summary>
     [Newtonsoft.Json.JsonConverter(typeof(Elements.Serialization.JSON.JsonInheritanceConverter), "discriminator")]
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.0.27.0 (Newtonsoft.Json v12.0.0.0)")]
     [UserElement]
-	public partial class Site : Element
+	public partial class Site : GeometricElement
     {
         [Newtonsoft.Json.JsonConstructor]
-        public Site(Polygon @perimeter, System.Guid @id, string @name)
-            : base(id, name)
+        public Site(Polygon @perimeter, Transform @transform, Material @material, Representation @representation, System.Guid @id, string @name)
+            : base(transform, material, representation, id, name)
         {
             var validator = Validator.Instance.GetFirstValidatorForType<Site>();
             if(validator != null)
             {
-                validator.Validate(new object[]{ @perimeter, @id, @name});
+                validator.Validate(new object[]{ @perimeter, @transform, @material, @representation, @id, @name});
             }
         
             this.Perimeter = @perimeter;

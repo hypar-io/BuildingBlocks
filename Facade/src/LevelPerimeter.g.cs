@@ -19,46 +19,30 @@ namespace Elements
 {
     #pragma warning disable // Disable all warnings
 
-    /// <summary>A horizontal planer datum.</summary>
+    /// <summary>A horizontal planer datum with a perimeter.</summary>
     [Newtonsoft.Json.JsonConverter(typeof(Elements.Serialization.JSON.JsonInheritanceConverter), "discriminator")]
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.0.27.0 (Newtonsoft.Json v12.0.0.0)")]
     [UserElement]
-	public partial class Level : Element
+	public partial class LevelPerimeter : Element
     {
         [Newtonsoft.Json.JsonConstructor]
-        public Level(Vector3 @origin, Vector3 @normal, double @elevation, double @area, Polygon @perimeter, System.Guid @id, string @name)
+        public LevelPerimeter(double @elevation, Polygon @perimeter, System.Guid @id, string @name)
             : base(id, name)
         {
-            var validator = Validator.Instance.GetFirstValidatorForType<Level>();
+            var validator = Validator.Instance.GetFirstValidatorForType<LevelPerimeter>();
             if(validator != null)
             {
-                validator.Validate(new object[]{ @origin, @normal, @elevation, @area, @perimeter, @id, @name});
+                validator.Validate(new object[]{ @elevation, @perimeter, @id, @name});
             }
         
-            this.Origin = @origin;
-            this.Normal = @normal;
             this.Elevation = @elevation;
-            this.Area = @area;
             this.Perimeter = @perimeter;
         }
-    
-        /// <summary>The origin of the level.</summary>
-        [Newtonsoft.Json.JsonProperty("Origin", Required = Newtonsoft.Json.Required.AllowNull)]
-        public Vector3 Origin { get; set; }
-    
-        /// <summary>The normal of the level.</summary>
-        [Newtonsoft.Json.JsonProperty("Normal", Required = Newtonsoft.Json.Required.AllowNull)]
-        public Vector3 Normal { get; set; }
     
         /// <summary>The elevation of the level.</summary>
         [Newtonsoft.Json.JsonProperty("Elevation", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Range(0, int.MaxValue)]
         public double Elevation { get; set; }
-    
-        /// <summary>The area of the level.</summary>
-        [Newtonsoft.Json.JsonProperty("Area", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        [System.ComponentModel.DataAnnotations.Range(0, int.MaxValue)]
-        public double Area { get; set; }
     
         /// <summary>The perimeter of the level.</summary>
         [Newtonsoft.Json.JsonProperty("Perimeter", Required = Newtonsoft.Json.Required.AllowNull)]

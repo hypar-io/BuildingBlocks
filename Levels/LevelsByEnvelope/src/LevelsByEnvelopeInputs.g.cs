@@ -29,10 +29,10 @@ namespace LevelsByEnvelope
 		public double StandardLevelHeight {get;}
 
 		/// <summary>
-		/// Multiplier of standard level height for mechanical levels.
+		/// Height of the top level.
 		/// </summary>
-		[JsonProperty("Mechanical Level Height Ratio")]
-		public double MechanicalLevelHeightRatio {get;}
+		[JsonProperty("Penthouse Level Height")]
+		public double PenthouseLevelHeight {get;}
 
 
         
@@ -44,7 +44,7 @@ namespace LevelsByEnvelope
         {
 			this.GroundLevelHeight = 7;
 			this.StandardLevelHeight = 5;
-			this.MechanicalLevelHeightRatio = 2.5;
+			this.PenthouseLevelHeight = 7;
 
         }
 
@@ -54,11 +54,11 @@ namespace LevelsByEnvelope
         /// </summary>
         /// <returns></returns>
         [JsonConstructor]
-        public LevelsByEnvelopeInputs(double groundlevelheight, double standardlevelheight, double mechanicallevelheightratio, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
+        public LevelsByEnvelopeInputs(double groundlevelheight, double standardlevelheight, double penthouselevelheight, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
         {
 			this.GroundLevelHeight = groundlevelheight;
 			this.StandardLevelHeight = standardlevelheight;
-			this.MechanicalLevelHeightRatio = mechanicallevelheightratio;
+			this.PenthouseLevelHeight = penthouselevelheight;
 
 		}
 

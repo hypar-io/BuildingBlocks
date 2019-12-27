@@ -17,13 +17,13 @@ namespace CoreByLevels
         /// <returns>A CoreByLevelsOutputs instance containing computed results and the model with any new elements.</returns>
         public static CoreByLevelsOutputs Execute(Dictionary<string, Model> inputModels, CoreByLevelsInputs input)
         {
-            var levels = new List<Level>();
+            var levels = new List<LevelPerimeter>();
             inputModels.TryGetValue("Levels", out var model);
-            if (model == null)
+            if (model == null || model.AllElementsOfType<LevelPerimeter>().Count() == 0)
             {
-                throw new ArgumentException("No Levels found.");
+                throw new ArgumentException("No LevelPerimeters found.");
             }
-            levels.AddRange(model.AllElementsOfType<Level>());
+            levels.AddRange(model.AllElementsOfType<LevelPerimeter>());
             var coreMaker = new CoreMaker(levels, input.Setback, input.Rotation);
             var output = new CoreByLevelsOutputs(coreMaker.Restrooms.Count(), coreMaker.LiftQuantity);
 
@@ -44,16 +44,6 @@ namespace CoreByLevels
             {
                 output.model.AddElement(lift);
             }
-
-            // Debug section. Comment for distribution.
-            //var matl = new Material(new Color(0.5f, 0.5f, 0.5f, 0.5f), 0.0f, 0.0f, Guid.NewGuid(), "Level");
-            //var item = levels.Last();
-            //output.model.AddElement(new Panel(item.Perimeter, matl, new Transform(0.0, 0.0, item.Elevation), null, Guid.NewGuid(), ""));
-            //foreach (var item in levels)
-            //{
-            //    output.model.AddElement(new Panel(item.Perimeter, matl, new Transform(0.0, 0.0, item.Elevation), null, Guid.NewGuid(), ""));
-            //}
-
             return output;
         }
     }

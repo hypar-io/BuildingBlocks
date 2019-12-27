@@ -16,22 +16,33 @@ namespace FloorsByLevels
         /// <returns>A FloorsByLevelsOutputs instance containing computed results and the model with any new elements.</returns>
         public static FloorsByLevelsOutputs Execute(Dictionary<string, Model> inputModels, FloorsByLevelsInputs input)
         {
-            var levels = new List<Level>();
+            var levels = new List<LevelPerimeter>();
             inputModels.TryGetValue("Levels", out var model);
-            if (model == null)
+            if (model == null || model.AllElementsOfType<LevelPerimeter>().Count() == 0)
             {
-                throw new ArgumentException("No Levels found.");
+                throw new ArgumentException("No LevelPerimeters found.");
             }
-            levels.AddRange(model.AllElementsOfType<Level>());
+            levels.AddRange(model.AllElementsOfType<LevelPerimeter>());
             var floors = new List<Floor>();
             var floorArea = 0.0;
-
             foreach (var level in levels)
             {
-                floors.Add(new Floor(level.Perimeter, input.FloorThickness,
-                           new Transform(0.0, 0.0, level.Elevation - input.FloorThickness),
-                           BuiltInMaterials.Concrete, null, Guid.NewGuid(), null));
-                floorArea += level.Perimeter.Area();
+                Floor floor = null;
+                var flrOffsets = level.Perimeter.Offset(input.FloorSetback * -1);
+                if (flrOffsets.Count() > 0)
+                {
+                    floor = new Floor(flrOffsets.First(), input.FloorThickness,
+                            new Transform(0.0, 0.0, level.Elevation - input.FloorThickness),
+                            BuiltInMaterials.Concrete, null, Guid.NewGuid(), null);
+                }
+                else
+                {
+                    floor = new Floor(level.Perimeter, input.FloorThickness,
+                            new Transform(0.0, 0.0, level.Elevation - input.FloorThickness),
+                            BuiltInMaterials.Concrete, null, Guid.NewGuid(), null);
+                }
+                floors.Add(floor);
+                floorArea += floor.Area();
             }
             floors = floors.OrderBy(f => f.Elevation).ToList();
             var output = new FloorsByLevelsOutputs(floorArea, floors.Count());

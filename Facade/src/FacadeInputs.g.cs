@@ -23,12 +23,6 @@ namespace Facade
 		public double PanelWidth {get;}
 
 		/// <summary>
-		/// Width of each mullion.
-		/// </summary>
-		[JsonProperty("Mullion Width")]
-		public double MullionWidth {get;}
-
-		/// <summary>
 		/// The inset of the glass panel from the left and right of the outer frame.
 		/// </summary>
 		[JsonProperty("Glass Left-Right Inset")]
@@ -40,6 +34,12 @@ namespace Facade
 		[JsonProperty("Glass Top-Bottom Inset")]
 		public double GlassTopBottomInset {get;}
 
+		/// <summary>
+		/// When Wireframe is true, wireframe setting out geometry will be generated. Set Wireframe to false to generate full geometry.
+		/// </summary>
+		[JsonProperty("Wireframe")]
+		public bool Wireframe {get;}
+
 
         
         /// <summary>
@@ -49,9 +49,9 @@ namespace Facade
         public FacadeInputs() : base()
         {
 			this.PanelWidth = 4;
-			this.MullionWidth = 0.5;
 			this.GlassLeftRightInset = 1;
 			this.GlassTopBottomInset = 1;
+			this.Wireframe = false;
 
         }
 
@@ -61,12 +61,12 @@ namespace Facade
         /// </summary>
         /// <returns></returns>
         [JsonConstructor]
-        public FacadeInputs(double panelwidth, double mullionwidth, double glassleftrightinset, double glasstopbottominset, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
+        public FacadeInputs(double panelwidth, double glassleftrightinset, double glasstopbottominset, bool wireframe, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
         {
 			this.PanelWidth = panelwidth;
-			this.MullionWidth = mullionwidth;
 			this.GlassLeftRightInset = glassleftrightinset;
 			this.GlassTopBottomInset = glasstopbottominset;
+			this.Wireframe = wireframe;
 
 		}
 

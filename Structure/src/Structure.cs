@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Elements;
 using Elements.Geometry;
-using Elements.Geometry.Profiles;
 using Elements.Geometry.Solids;
 
 namespace Structure
@@ -64,15 +63,28 @@ namespace Structure
             new Material(Colors.Red, 0.0, 0.0, Guid.NewGuid(), "Gradient 6"),
         };
 
-        private static List<WideFlangeProfile> _beamProfiles = new List<WideFlangeProfile>(){
-            (WideFlangeProfile)WideFlangeProfileServer.Instance.GetProfileByName("W10x12"),
-            (WideFlangeProfile)WideFlangeProfileServer.Instance.GetProfileByName("W12x14"),
-            (WideFlangeProfile)WideFlangeProfileServer.Instance.GetProfileByName("W14x22"),
-            (WideFlangeProfile)WideFlangeProfileServer.Instance.GetProfileByName("W16x26"),
-            (WideFlangeProfile)WideFlangeProfileServer.Instance.GetProfileByName("W18x35"),
-            (WideFlangeProfile)WideFlangeProfileServer.Instance.GetProfileByName("W21x44"),
-            (WideFlangeProfile)WideFlangeProfileServer.Instance.GetProfileByName("W24x55"),
-            (WideFlangeProfile)WideFlangeProfileServer.Instance.GetProfileByName("W27x84")
+        private const double mToIn = .0254;
+
+        private static List<Profile> _beamProfiles = new List<Profile>(){
+            new Profile(Polygon.Rectangle(4 * mToIn, 10 * mToIn)),
+            new Profile(Polygon.Rectangle(5 * mToIn, 14 * mToIn)),
+            new Profile(Polygon.Rectangle(5.5 * mToIn, 16 * mToIn)),
+            new Profile(Polygon.Rectangle(12 * mToIn, 10 * mToIn)),
+            new Profile(Polygon.Rectangle(6 * mToIn, 18 * mToIn)),
+            new Profile(Polygon.Rectangle(6.5 * mToIn, 21 * mToIn)),
+            new Profile(Polygon.Rectangle(7 * mToIn, 24 * mToIn)),
+            new Profile(Polygon.Rectangle(10 * mToIn, 27 * mToIn))
+        };
+
+        private static List<double> _halfDepths = new List<double>(){
+            (10 * mToIn)/2,
+            (14 * mToIn)/2,
+            (16 * mToIn)/2,
+            (10 * mToIn)/2,
+            (18 * mToIn)/2,
+            (21 * mToIn)/2,
+            (24 * mToIn)/2,
+            (27 * mToIn)/2,
         };
 
         private static double _longestGridSpan = 0.0;
@@ -92,16 +104,29 @@ namespace Structure
             if(!models.ContainsKey(ENVELOPE_MODEL_NAME))
             {
                 // Make a default envelope for testing.
-                var a = new Vector3(0,0,0);
-                var b = new Vector3(30,0,0);
-                var c = new Vector3(30,50,0);
-                var d = new Vector3(15,20,0);
-                var e = new Vector3(0,50,0);
-                var p1 = new Polygon(new[]{a,b,c,d,e});
+                // var a = new Vector3(0,0,0);
+                // var b = new Vector3(30,0,0);
+                // var c = new Vector3(30,50,0);
+                // var d = new Vector3(15,20,0);
+                // var e = new Vector3(0,50,0);
+                // var p1 = new Polygon(new[]{a,b,c,d,e});
+                // var p2 = p1.Offset(-1)[0];
+
+                // A rectangle to test.
+                // var r = new Transform();
+                // r.Rotate(Vector3.ZAxis, 15);
+                // var p1 = r.OfPolygon(Polygon.Rectangle(20, 30));
+                // var p2 = p1.Offset(-1)[0];
+
+                // An L to test.
+                var r = new Transform();
+                r.Rotate(Vector3.ZAxis, 15);
+                var p1 = r.OfPolygon(Polygon.L(40, 30, 10));
                 var p2 = p1.Offset(-1)[0];
+
                 var env1 = new Envelope(p1,
                                         0,
-                                        20,
+                                        40,
                                         Vector3.ZAxis,
                                         0,
                                         new Transform(),
@@ -110,8 +135,8 @@ namespace Structure
                                         Guid.NewGuid(),
                                         "Envelope 1");
                 var env2 = new Envelope(p2,
-                                        20,
-                                        50,
+                                        40,
+                                        100,
                                         Vector3.ZAxis,
                                         0,
                                         new Transform(0,0,10),
@@ -122,9 +147,9 @@ namespace Structure
                 envelopes = new List<Envelope>(){env1,env2};
                 model.AddElements(envelopes);
                 levels = new List<Level>();
-                for(var i=0; i<50; i+=3)
+                for(var i=0; i<100; i+=3)
                 {
-                    levels.Add(new Level(new Vector3(0,0,i), Vector3.ZAxis, i, null, Guid.NewGuid(), $"Level {i}"));
+                    levels.Add(new Level(i, Guid.NewGuid(), $"Level {i}"));
                 }
             }
             else
@@ -142,8 +167,13 @@ namespace Structure
             List<Line> xGrids;
             List<Line> yGrids;
 
-            CreateGridsFromBoundary(envelopes.First().Profile.Perimeter, input.GridXAxisInterval, input.GridYAxisInterval, input.GridRotation, out xGrids, out yGrids);
-            
+            var gridRotation = CreateGridsFromBoundary(envelopes.First().Profile.Perimeter,
+                                                       input.GridXAxisInterval > 0 ? input.GridXAxisInterval : 4,
+                                                       input.GridYAxisInterval > 0 ? input.GridYAxisInterval : 4,
+                                                       out xGrids,
+                                                       out yGrids,
+                                                       model);
+
             levels.Sort(new LevelComparer());
             
             Level last = null;
@@ -155,7 +185,7 @@ namespace Structure
                 // Inset the footprint just a bit to keep the
                 // beams out of the plane of the envelope. Use the biggest 
                 // beam that we have.
-                var footprint = envelope.Profile.Perimeter.Offset(-((WideFlangeProfile)_beamProfiles.Last()).bf/2)[0];
+                var footprint = envelope.Profile.Perimeter.Offset(-0.25)[0];
 
                 // Trim all the grid lines by the boundary
                 var boundarySegments = footprint.Segments();
@@ -188,15 +218,16 @@ namespace Structure
 
                 foreach(var l in envLevels)
                 {
-                    var framing = CreateGirders(l.Elevation, xGridSegments, yGridSegments, boundarySegments, input.ColorBeamsByLength);
+                    var framing = CreateGirders(l.Elevation, xGridSegments, yGridSegments, boundarySegments);
                     model.AddElements(framing);
                 }
 
-                var colProfile = (WideFlangeProfile)WideFlangeProfileServer.Instance.GetProfileByName("W18x76");
+                // var colProfile = (WideFlangeProfile)WideFlangeProfileServer.Instance.GetProfileByName("W18x76");
+                var colProfile = new Profile(Polygon.Rectangle(11 * mToIn, 18 * mToIn));
                 foreach(var lc in columnLocations)
                 {
                     var mat = BuiltInMaterials.Steel;
-                    var column = new Column(lc, envLevels.Last().Elevation - lc.Z, colProfile, mat, null, 0,0, input.GridRotation);
+                    var column = new Column(lc, envLevels.Last().Elevation - lc.Z, colProfile, mat, null, 0,0, gridRotation);
                     model.AddElement(column); 
                 }
             }
@@ -256,53 +287,83 @@ namespace Structure
             return false;
         }
 
-        private static void CreateGridsFromBoundary(Polygon boundary,
+        private static double CreateGridsFromBoundary(Polygon boundary,
                                                     double xInterval,
                                                     double yInterval,
-                                                    double rotation,
                                                     out List<Line> xGrids,
-                                                    out List<Line> yGrids)
+                                                    out List<Line> yGrids, 
+                                                    Model model)
         {
-            var transform = new Transform();
-            transform.Rotate(Vector3.ZAxis, rotation);
+            Line longestSide = null;
+            foreach(var s in boundary.Segments())
+            {
+                if(longestSide == null || s.Length() > longestSide.Length())
+                {
+                    longestSide = s;
+                }
+            }
+            var xAxis = longestSide.Direction();
+            var yAxis = xAxis.Cross(Vector3.ZAxis).Negate();
 
-            // Create a grid across the boundary
-            // var bounds = new BBox3(Vector3.Origin, Vector3.Origin);>
+            // Construct a transform with the x axis along
+            // the longest side, and the y axis pointing to the "left".
+            var transform = new Transform(Vector3.Origin, xAxis, Vector3.ZAxis);
+            var rotation = xAxis.AngleTo(Vector3.XAxis);
+
+            // Use the transform to to construct a bounding
+            // box oriented along the longest edge
+            // containing all the vertices of the boundary.
             double minx = 10000; double miny = 10000;
             double maxx = -10000; double maxy = -10000;
 
-            foreach(var v in boundary.Vertices)
+            var ti = new Transform(transform);
+            ti.Invert();
+            var tBoundary = ti.OfPolygon(boundary);
+
+            foreach(var v in tBoundary.Vertices)
             {
                 if(v.X < minx) minx = v.X;
                 if(v.Y < miny) miny = v.Y;
                 if(v.X > maxx) maxx = v.X;
                 if(v.Y > maxy) maxy = v.Y;
             }
-            var overshoot = 100;
-            var min = new Vector3(minx - overshoot, miny - overshoot);
-            var max = new Vector3(maxx + overshoot, maxy + overshoot);
 
-            var centroid = boundary.Centroid();
-
+            var max = new Vector3(maxx, maxy);
+            var min = new Vector3(minx, miny);
+            var w = max.X - min.X;
+            var h = max.Y - min.Y;
+            
             xGrids = new List<Line>();
             yGrids = new List<Line>();
 
-            for(var x=min.X; x<=max.X; x += xInterval)
+            var start = transform.OfVector(min);
+            for(var y=0.0; y <= h; y += xInterval)
             {
-                yGrids.Add(transform.OfLine(new Line(new Vector3(x,min.Y), new Vector3(x, max.Y))));
+                var p1 = start + yAxis * y;
+                var p2 = start + yAxis * y + xAxis * w;
+                var l = new Line(p1, p2);
+                xGrids.Add(l);
+                // model.AddElement(new ModelCurve(l, BuiltInMaterials.XAxis));
+            } 
+
+            for(var x=0.0; x <= w; x += yInterval)
+            {
+                var p1 = start + xAxis * x;
+                var p2 = start + xAxis * x + yAxis * h;
+                var l = new Line(p1, p2);
+                yGrids.Add(l);
+                // model.AddElement(new ModelCurve(l, BuiltInMaterials.YAxis));
             }
 
-            for(var y=min.Y; y<=max.Y; y += yInterval)
-            {
-                xGrids.Add(transform.OfLine(new Line(new Vector3(min.X,y), new Vector3(max.X, y))));
-            }
+            // model.AddElement(new ModelCurve(Polygon.Circle(1), transform:new Transform(xGrids[0].Start)));
+
+            return rotation;
         }
 
         private static List<Element> CreateGirders(double elevation,
                                                    List<Line> xGridSegments,
                                                    List<Line> yGridSegments,
-                                                   IList<Line> boundarySegments,
-                                                   bool colorByLength)
+                                                   IList<Line> boundarySegments)
         {
             var beams = new List<Element>();
             var mat = BuiltInMaterials.Steel;
@@ -311,13 +372,14 @@ namespace Structure
                 try
                 {
                     var lengthFactor = (x.Length()/_longestGridSpan);
-                    var profile = _beamProfiles[(int)(lengthFactor * (_beamProfiles.Count - 1))];
+                    var beamIndex = (int)(lengthFactor * (_beamProfiles.Count - 1));
+                    var profile = _beamProfiles[beamIndex];
                     var beam = new Beam(x,
                                         profile,
-                                        colorByLength ? _lengthGradient[(int)(lengthFactor*(_lengthGradient.Count-1))] : mat,
+                                        mat,
                                         startSetback: 0.25,
                                         endSetback: 0.25,
-                                        transform: new Transform(new Vector3(0,0, elevation-profile.d/2)));
+                                        transform: new Transform(new Vector3(0,0, elevation - _halfDepths[beamIndex])));
                     beams.Add(beam);
                 }
                 catch(Exception ex)
@@ -332,13 +394,14 @@ namespace Structure
                 try
                 {
                     var lengthFactor = (y.Length()/_longestGridSpan);
-                    var profile = _beamProfiles[(int)(lengthFactor * (_beamProfiles.Count - 1))];
+                    var beamIndex = (int)(lengthFactor * (_beamProfiles.Count - 1));
+                    var profile = _beamProfiles[beamIndex];
                     var beam = new Beam(y,
                                         profile,
-                                        colorByLength ? _lengthGradient[(int)(lengthFactor * (_lengthGradient.Count-1))] : mat,
+                                        mat,
                                         startSetback: 0.25,
                                         endSetback: 0.25,
-                                        transform: new Transform(new Vector3(0,0, elevation-profile.d/2)));
+                                        transform: new Transform(new Vector3(0,0, elevation - _halfDepths[beamIndex])));
                     beams.Add(beam);
                 }
                 catch(Exception ex)
@@ -354,7 +417,7 @@ namespace Structure
                 var beam = new Beam(s,
                                     profile,
                                     BuiltInMaterials.Steel,
-                                    transform: new Transform(new Vector3(0,0,elevation - profile.d/2)));
+                                    transform: new Transform(new Vector3(0,0, elevation - _halfDepths[5])));
                 beams.Add(beam);
             }
 
@@ -427,7 +490,7 @@ namespace Structure
 
                 xsects.Sort(new IntersectionComparer(grid.Start));
 
-                for(var i=0; i<xsects.Count; i+=2)
+                for(var i=0; i<xsects.Count-1; i+=2)
                 {
                     if(xsects[i].IsAlmostEqualTo(xsects[i+1]))
                     {
