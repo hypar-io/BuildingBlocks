@@ -5,7 +5,7 @@
   "name": "Envelope By Site",
   "repository_url": "https://github.com/hypar-io/function",
   "model_dependencies": [
-    "Site"
+    {"name": "Site"}
   ],
   "model_output": "Envelope",
   "inputs": [

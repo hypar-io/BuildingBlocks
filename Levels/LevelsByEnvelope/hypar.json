@@ -5,7 +5,7 @@
   "name": "Levels By Envelope",
   "repository_url": "https://github.com/hypar-io/function",
   "model_dependencies": [
-    "Envelope"
+    {"name": "Envelope"}
   ],
   "model_output": "Levels",
   "inputs": [

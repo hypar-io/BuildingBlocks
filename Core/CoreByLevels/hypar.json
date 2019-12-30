@@ -5,7 +5,7 @@
   "name": "Core By Levels",
   "repository_url": "https://github.com/hypar-io/function",
   "model_dependencies": [
-    "Levels"
+    {"name": "Levels"}
   ],
   "model_output": "Cores",
   "inputs": [

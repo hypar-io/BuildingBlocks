@@ -5,7 +5,7 @@
   "name": "Foundation by Envelope",
   "repository_url": "https://github.com/hypar-io/BuildingBlocks",
   "model_dependencies": [
-    "Envelope"
+    {"name": "Envelope"}
   ],
   "model_output": "Foundation",
   "inputs": [
