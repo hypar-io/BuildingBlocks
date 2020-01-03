@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Facade", "src\Facade.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Facade.tests", "test\Facade.tests.csproj", "{FAC08B8C-05AD-4732-82B4-DCF6E9E7B947}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Facade.Dependencies", "dependencies\Facade.Dependencies.csproj", "{24D03F80-9EB4-4528-AD0E-A4A810A1AAD0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,5 +46,17 @@ Global
 		{FAC08B8C-05AD-4732-82B4-DCF6E9E7B947}.Release|x64.Build.0 = Release|Any CPU
 		{FAC08B8C-05AD-4732-82B4-DCF6E9E7B947}.Release|x86.ActiveCfg = Release|Any CPU
 		{FAC08B8C-05AD-4732-82B4-DCF6E9E7B947}.Release|x86.Build.0 = Release|Any CPU
+		{24D03F80-9EB4-4528-AD0E-A4A810A1AAD0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24D03F80-9EB4-4528-AD0E-A4A810A1AAD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24D03F80-9EB4-4528-AD0E-A4A810A1AAD0}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{24D03F80-9EB4-4528-AD0E-A4A810A1AAD0}.Debug|x64.Build.0 = Debug|Any CPU
+		{24D03F80-9EB4-4528-AD0E-A4A810A1AAD0}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{24D03F80-9EB4-4528-AD0E-A4A810A1AAD0}.Debug|x86.Build.0 = Debug|Any CPU
+		{24D03F80-9EB4-4528-AD0E-A4A810A1AAD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24D03F80-9EB4-4528-AD0E-A4A810A1AAD0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24D03F80-9EB4-4528-AD0E-A4A810A1AAD0}.Release|x64.ActiveCfg = Release|Any CPU
+		{24D03F80-9EB4-4528-AD0E-A4A810A1AAD0}.Release|x64.Build.0 = Release|Any CPU
+		{24D03F80-9EB4-4528-AD0E-A4A810A1AAD0}.Release|x86.ActiveCfg = Release|Any CPU
+		{24D03F80-9EB4-4528-AD0E-A4A810A1AAD0}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

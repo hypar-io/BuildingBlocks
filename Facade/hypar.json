@@ -5,8 +5,14 @@
   "name": "Facade",
   "repository_url": "https://github.com/hypar-io/function",
   "model_dependencies": [
-    "Envelope",
-    "Levels"
+    {
+      "name": "Envelope",
+      "optional": false
+    },
+    {
+      "name": "Level",
+      "optional": false
+    }
   ],
   "model_output": "Facade",
   "inputs": [
@@ -33,11 +39,6 @@
       "name": "Glass Top-Bottom Inset",
       "description": "The inset of the glass panel from the top and bottom of the outer frame.",
       "type": "range"
-    },
-    {
-      "name": "Wireframe",
-      "description": "When Wireframe is true, wireframe setting out geometry will be generated. Set Wireframe to false to generate full geometry.",
-      "type": "boolean"
     }
   ],
   "outputs": [
