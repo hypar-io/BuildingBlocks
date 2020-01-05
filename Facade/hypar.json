@@ -5,8 +5,14 @@
   "name": "Facade",
   "repository_url": "https://github.com/hypar-io/function",
   "model_dependencies": [
-    {"name": "Envelope"},
-    {"name": "Levels"}
+    {
+      "name": "Envelope",
+      "optional": false
+    },
+    {
+      "name": "Levels",
+      "optional": false
+    }
   ],
   "model_output": "Facade",
   "inputs": [
