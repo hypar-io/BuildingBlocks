@@ -292,10 +292,10 @@ namespace Facade
             var solidOps = new List<SolidOperation>();
             var profile = new Profile(p);
             
-            var bottom = new Sweep(p, new Line(lr, ll), 0, 0, 0, false);
-            var right = new Sweep(p, new Line(lr + new Vector3(gap,0),ur + new Vector3(gap,0)), 0, 0, 0, false);
-            var top = new Sweep(p, new Line(ul, ur), 0, 0, 0, false);
-            var left = new Sweep(p, new Line(ul - new Vector3(gap,0), ll - new Vector3(gap,0)), 0, 0, 0, false);
+            var bottom = new Sweep(p, new Line(lr, ll), 0, 0, false);
+            var right = new Sweep(p, new Line(lr + new Vector3(gap,0),ur + new Vector3(gap,0)), 0, 0, false);
+            var top = new Sweep(p, new Line(ul, ur), 0, 0, false);
+            var left = new Sweep(p, new Line(ul - new Vector3(gap,0), ll - new Vector3(gap,0)), 0, 0, false);
             solidOps.AddRange(new []{bottom, right, top, left});
             // var poly = new Polygon(new[]{ll,lr,ur,ul});
             // var sweep = new Sweep(profile, poly, 0, 0, 0, false);
