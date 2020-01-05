@@ -2,10 +2,10 @@
   "$schema": "https://hypar.io/Schemas/Function.json",
   "description": "Creates an Envelope from a Site boundary supplied by another function.",
   "id": "d4819507-d08b-41be-9157-376356d01491",
-  "name": "EnvelopeBySite",
+  "name": "Envelope By Site",
   "repository_url": "https://github.com/hypar-io/function",
   "model_dependencies": [
-    "Site"
+    {"name": "Site"}
   ],
   "model_output": "Envelope",
   "inputs": [

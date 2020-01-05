@@ -2,10 +2,10 @@
   "$schema": "https://hypar.io/Schemas/Function.json",
   "description": "Creates Rooms on each Floor supplied by another function.",
   "id": "ce8c432e-70ee-4b36-8e8d-0323ae7a2bf5",
-  "name": "RoomsByFloors",
+  "name": "Rooms By Floors",
   "repository_url": "https://github.com/hypar-io/function",
   "model_dependencies": [
-    "Floors"
+    {"name": "Floors"}
   ],
   "model_output": "Rooms",
   "inputs": [

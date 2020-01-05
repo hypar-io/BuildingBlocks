@@ -2,10 +2,10 @@
   "$schema": "https://hypar.io/Schemas/Function.json",
   "description": "Creates Levels and LevelPerimeters from one or more Envelopes supplied by other functions.",
   "id": "aa0b94eb-6a0d-4f17-b0eb-322bce98bb2a",
-  "name": "LevelsByEnvelope",
+  "name": "Levels By Envelope",
   "repository_url": "https://github.com/hypar-io/function",
   "model_dependencies": [
-    "Envelope"
+    {"name": "Envelope"}
   ],
   "model_output": "Levels",
   "inputs": [

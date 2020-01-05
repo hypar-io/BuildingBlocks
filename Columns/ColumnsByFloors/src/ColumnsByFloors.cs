@@ -53,17 +53,17 @@ namespace ColumnsByFloors
                         ceiling = floors.ElementAt(i + next);
                         next++;
                     } while (!floor.Profile.Perimeter.Intersects(ceiling.Profile.Perimeter));
-                    var height = ceiling.ProfileTransformed().Perimeter.Vertices.First().Z
-                                 - floor.ProfileTransformed().Perimeter.Vertices.First().Z
-                                 - floor.Thickness;
-
+                    
+                    var height = ceiling.Elevation - floor.Elevation - floor.Thickness;
                     var grid = new CoordinateGrid(ceiling.Profile.Perimeter, input.GridXAxisInterval, input.GridYAxisInterval, input.GridRotation);
                     foreach (var point in grid.Available)
                     {
                         columns.Add(new Column(point, height,
                                                new Profile(Polygon.Rectangle(input.ColumnDiameter, input.ColumnDiameter)),
-                                               BuiltInMaterials.Concrete, new Transform(0.0, 0.0, floor.Elevation + floor.Thickness),
-                                               0.0, 0.0, input.GridRotation, Guid.NewGuid(), ""));
+                                               BuiltInMaterials.Concrete, 
+                                               new Transform(0.0, 0.0, floor.Elevation + floor.Thickness),
+                                               0.0, 0.0, input.GridRotation, 
+                                               Guid.NewGuid(), ""));
                     }
                 }
             }

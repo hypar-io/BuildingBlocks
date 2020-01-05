@@ -2,7 +2,7 @@
   "$schema": "https://hypar.io/Schemas/Function.json",
   "description": "Creates building Envelope elements derived from a polygon sketch and setback settings.",
   "id": "0c8d0526-9490-4d53-896b-88a1515de583",
-  "name": "EnvelopeBySketch",
+  "name": "Envelope By Sketch",
   "repository_url": "https://github.com/hypar-io/function",
   "model_output": "Envelope",
   "inputs": [
