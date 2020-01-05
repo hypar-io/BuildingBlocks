@@ -104,13 +104,13 @@ namespace Structure
             if(!models.ContainsKey(ENVELOPE_MODEL_NAME))
             {
                 // Make a default envelope for testing.
-                // var a = new Vector3(0,0,0);
-                // var b = new Vector3(30,0,0);
-                // var c = new Vector3(30,50,0);
-                // var d = new Vector3(15,20,0);
-                // var e = new Vector3(0,50,0);
-                // var p1 = new Polygon(new[]{a,b,c,d,e});
-                // var p2 = p1.Offset(-1)[0];
+                var a = new Vector3(0,0,0);
+                var b = new Vector3(30,0,0);
+                var c = new Vector3(30,50,0);
+                var d = new Vector3(15,20,0);
+                var e = new Vector3(0,50,0);
+                var p1 = new Polygon(new[]{a,b,c,d,e});
+                var p2 = p1.Offset(-1)[0];
 
                 // A rectangle to test.
                 // var r = new Transform();
@@ -119,10 +119,10 @@ namespace Structure
                 // var p2 = p1.Offset(-1)[0];
 
                 // An L to test.
-                var r = new Transform();
-                r.Rotate(Vector3.ZAxis, 15);
-                var p1 = r.OfPolygon(Polygon.L(40, 30, 10));
-                var p2 = p1.Offset(-1)[0];
+                // var r = new Transform();
+                // r.Rotate(Vector3.ZAxis, 15);
+                // var p1 = r.OfPolygon(Polygon.L(40, 30, 10));
+                // var p2 = p1.Offset(-1)[0];
 
                 var env1 = new Envelope(p1,
                                         0,
@@ -433,8 +433,7 @@ namespace Structure
                 xsects.Add(g.Start);
                 foreach(var trim in trims)
                 {
-                    var x = Intersects(g, trim);
-                    if(x != null)
+                    if(Intersects(g, trim, out Vector3 x))
                     {
                         xsects.Add(x);
                     }
@@ -467,8 +466,7 @@ namespace Structure
                 var xsects = new List<Vector3>();
                 foreach(var s in boundarySegements)
                 {
-                    Vector3 xsect = Intersects(s, grid);
-                    if(xsect == null)
+                    if(!Intersects(s, grid, out Vector3 xsect))
                     {
                         continue;
                     }
@@ -508,7 +506,7 @@ namespace Structure
         /// <param name="AB"></param>
         /// <param name="CD"></param>
         /// <returns></returns>
-        public static Vector3 Intersects(Line AB, Line CD) {
+        public static bool Intersects(Line AB, Line CD, out Vector3 result) {
             double deltaACy = AB.Start.Y - CD.Start.Y;
             double deltaDCx = CD.End.X - CD.Start.X;
             double deltaACx = AB.Start.X - CD.Start.X;
@@ -519,38 +517,43 @@ namespace Structure
             double denominator = deltaBAx * deltaDCy - deltaBAy * deltaDCx;
             double numerator = deltaACy * deltaDCx - deltaACx * deltaDCy;
 
+            result = new Vector3();
+
             if (denominator == 0) 
             {
                 if (numerator == 0) {
                     // collinear. Potentially infinite intersection points.
                     // Check and return one of them.
                     if (AB.Start.X >= CD.Start.X && AB.Start.X <= CD.End.X) {
-                    return AB.Start;
+                        result = AB.Start;
+                        return true;
                     } else if (CD.Start.X >= AB.Start.X && CD.Start.X <= AB.End.X) {
-                    return CD.Start;
+                        result = CD.Start;
+                        return true;
                     } else {
-                    return null;
+                        return false;
                     }
                 } 
                 else 
                 { // parallel
-                    return null;
+                    return false;
                 }
             }
 
             double r = numerator / denominator;
             if (r < 0 || r > 1) 
             {
-                return null;
+                return false;
             }
 
             double s = (deltaACy * deltaBAx - deltaACx * deltaBAy) / denominator;
             if (s < 0 || s > 1) 
             {
-                return null;
+                return false;
             }
 
-            return new Vector3 ((AB.Start.X + r * deltaBAx), (AB.Start.Y + r * deltaBAy));
+            result = new Vector3 ((AB.Start.X + r * deltaBAx), (AB.Start.Y + r * deltaBAy));
+            return true;
         }
   	}
 }
