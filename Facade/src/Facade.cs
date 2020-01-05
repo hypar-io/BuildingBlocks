@@ -85,8 +85,8 @@ namespace Facade
                 // envelopes = new List<Envelope>(){env1, env2};
 
                 var errors = new List<string>();
-                var envelopeModel = Model.FromJson(File.ReadAllText("Building-01.json"), errors);
-                // var envelopeModel = Model.FromJson(File.ReadAllText("envelope.json"), errors);
+                // var envelopeModel = Model.FromJson(File.ReadAllText("Building-01.json"), errors);
+                var envelopeModel = Model.FromJson(File.ReadAllText("envelope.json"), errors);
                 envelopes = envelopeModel.AllElementsOfType<Envelope>().Where(e=>e.Elevation >= 0.0).ToList();
                 Console.WriteLine($"There are {envelopes.Count} envelopes.");
 
