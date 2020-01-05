@@ -6,10 +6,10 @@ using Amazon;
 using Amazon.Lambda.Core;
 using Hypar.Functions.Execution;
 using Hypar.Functions.Execution.AWS;
-using System.Threading.Tasks;
 using System;
 using System.IO;
 using System.Reflection;
+using System.Threading.Tasks;
 
 [assembly: LambdaSerializer(typeof(Amazon.Lambda.Serialization.Json.JsonSerializer))]
 namespace Facade
@@ -30,16 +30,17 @@ namespace Facade
                 var asmDir = Path.GetDirectoryName(asmLocation);
                 var asmName = Path.GetFileNameWithoutExtension(asmLocation);
                 var depPath = Path.Combine(asmDir, $"{asmName}.Dependencies.dll");
+                
                 if(File.Exists(depPath))
                 {
                     Console.WriteLine($"Loading dependencies from assembly: {depPath}...");
                     Assembly.LoadFrom(depPath);
-                    Console.WriteLine($"Dependencies assembly loaded.");
+                    Console.WriteLine("Dependencies assembly loaded.");
                 }
 
                 this.store = new S3ModelStore<FacadeInputs>(RegionEndpoint.USWest1);
             }
-
+            
             var l = new InvocationWrapper<FacadeInputs,FacadeOutputs>(store, Facade.Execute);
             var output = await l.InvokeAsync(args);
             return output;
