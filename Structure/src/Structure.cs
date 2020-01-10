@@ -216,19 +216,44 @@ namespace Structure
 
                 last = envLevels.Last();
 
+                List<GeometricElement> masterFraming = null;
                 foreach(var l in envLevels)
                 {
-                    var framing = CreateGirders(l.Elevation, xGridSegments, yGridSegments, boundarySegments);
-                    model.AddElements(framing);
+                    if(masterFraming == null)
+                    {
+                        masterFraming = CreateFramingPlan(l.Elevation, xGridSegments, yGridSegments, boundarySegments);
+                        model.AddElements(masterFraming);
+                    }
+                    else
+                    {
+                        var instances = CreateFramingPlanInstance(masterFraming, l.Elevation);
+                        model.AddElements(instances, false);
+                    }
                 }
 
-                // var colProfile = (WideFlangeProfile)WideFlangeProfileServer.Instance.GetProfileByName("W18x76");
                 var colProfile = new Profile(Polygon.Rectangle(11 * mToIn, 18 * mToIn));
+                
+                GeometricElement masterColumn = null;
                 foreach(var lc in columnLocations)
                 {
-                    var mat = BuiltInMaterials.Steel;
-                    var column = new Column(lc, envLevels.Last().Elevation - lc.Z, colProfile, mat, null, 0,0, gridRotation);
-                    model.AddElement(column); 
+                    if(masterColumn == null)
+                    {
+                        masterColumn = new Column(Vector3.Origin,
+                                        envLevels.Last().Elevation - lc.Z,
+                                        colProfile,
+                                        BuiltInMaterials.Steel,
+                                        new Transform(lc),
+                                        0,
+                                        0,
+                                        gridRotation);
+                        model.AddElement(masterColumn); 
+                    }
+                    else
+                    {
+                        // var displace = Vector3.Origin - masterColumn.Transform.Origin - lc;
+                        var instance = new Instance(masterColumn, new Transform(lc));
+                        model.AddElement(instance, false); 
+                    }
                 }
             }
 
@@ -360,12 +385,23 @@ namespace Structure
             return rotation;
         }
 
-        private static List<Element> CreateGirders(double elevation,
+        private static List<Element> CreateFramingPlanInstance(List<GeometricElement> framing, double elevation)
+        {
+            var instanceBeams = new List<Element>();
+            foreach(var beam in framing)
+            {
+                var beamInstance = new Instance(beam, new Transform(new Vector3(0,0, elevation)));
+                instanceBeams.Add(beamInstance);
+            }
+            return instanceBeams;
+        }
+
+        private static List<GeometricElement> CreateFramingPlan(double elevation,
                                                    List<Line> xGridSegments,
                                                    List<Line> yGridSegments,
                                                    IList<Line> boundarySegments)
         {
-            var beams = new List<Element>();
+            var beams = new List<GeometricElement>();
             var mat = BuiltInMaterials.Steel;
             foreach(var x in xGridSegments)
             {
