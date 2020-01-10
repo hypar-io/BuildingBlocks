@@ -5,7 +5,10 @@
   "name": "Columns By Floors",
   "repository_url": "https://github.com/hypar-io/function",
   "model_dependencies": [
-    {"name": "Floors"}
+    {
+      "name": "Floors",
+      "optional": false
+    }
   ],
   "model_output": "Columns",
   "inputs": [
