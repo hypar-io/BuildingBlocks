@@ -17,7 +17,7 @@
   "model_output": "Facade",
   "inputs": [
     {
-      "min": 2.0,
+      "min": 0.5,
       "max": 4.0,
       "step": 0.25,
       "name": "Panel Width",
