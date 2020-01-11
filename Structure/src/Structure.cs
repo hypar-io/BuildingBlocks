@@ -101,69 +101,16 @@ namespace Structure
             List<Level> levels = null;
             List<Envelope> envelopes = null;
             var model = new Model();
-            if(!models.ContainsKey(ENVELOPE_MODEL_NAME))
+
+            var envelopeModel = models[ENVELOPE_MODEL_NAME];
+            envelopes = envelopeModel.AllElementsOfType<Envelope>().Where(e=>e.Direction.IsAlmostEqualTo(Vector3.ZAxis)).ToList();
+            if(envelopes.Count() == 0)
             {
-                // Make a default envelope for testing.
-                var a = new Vector3(0,0,0);
-                var b = new Vector3(30,0,0);
-                var c = new Vector3(30,50,0);
-                var d = new Vector3(15,20,0);
-                var e = new Vector3(0,50,0);
-                var p1 = new Polygon(new[]{a,b,c,d,e});
-                var p2 = p1.Offset(-1)[0];
-
-                // A rectangle to test.
-                // var r = new Transform();
-                // r.Rotate(Vector3.ZAxis, 15);
-                // var p1 = r.OfPolygon(Polygon.Rectangle(20, 30));
-                // var p2 = p1.Offset(-1)[0];
-
-                // An L to test.
-                // var r = new Transform();
-                // r.Rotate(Vector3.ZAxis, 15);
-                // var p1 = r.OfPolygon(Polygon.L(40, 30, 10));
-                // var p2 = p1.Offset(-1)[0];
-
-                var env1 = new Envelope(p1,
-                                        0,
-                                        40,
-                                        Vector3.ZAxis,
-                                        0,
-                                        new Transform(),
-                                        BuiltInMaterials.Void,
-                                        new Representation(new List<SolidOperation>() { new Extrude(p1, 10, Vector3.ZAxis, 0, false) }),
-                                        Guid.NewGuid(),
-                                        "Envelope 1");
-                var env2 = new Envelope(p2,
-                                        40,
-                                        100,
-                                        Vector3.ZAxis,
-                                        0,
-                                        new Transform(0,0,10),
-                                        BuiltInMaterials.Void,
-                                        new Representation(new List<SolidOperation>() { new Extrude(p2, 20, Vector3.ZAxis, 0, false) }),
-                                        Guid.NewGuid(),
-                                        "Envelope 1");
-                envelopes = new List<Envelope>(){env1,env2};
-                model.AddElements(envelopes);
-                levels = new List<Level>();
-                for(var i=0; i<100; i+=3)
-                {
-                    levels.Add(new Level(i, Guid.NewGuid(), $"Level {i}"));
-                }
+                throw new Exception("No element of type 'Envelope' could be found in the supplied model.");
             }
-            else
-            {
-                var envelopeModel = models[ENVELOPE_MODEL_NAME];
-                envelopes = envelopeModel.AllElementsOfType<Envelope>().Where(e=>e.Direction.IsAlmostEqualTo(Vector3.ZAxis)).ToList();
-                if(envelopes.Count() == 0)
-                {
-                    throw new Exception("No element of type 'Envelope' could be found in the supplied model.");
-                }
-                var levelsModel = models[LEVELS_MODEL_NAME];
-                levels = levelsModel.AllElementsOfType<Level>().ToList();
-            }
-
+            var levelsModel = models[LEVELS_MODEL_NAME];
+            levels = levelsModel.AllElementsOfType<Level>().ToList();
+            
             List<Line> xGrids;
             List<Line> yGrids;
 
@@ -216,7 +163,7 @@ namespace Structure
 
                 last = envLevels.Last();
 
-                List<GeometricElement> masterFraming = null;
+                List<Beam> masterFraming = null;
                 foreach(var l in envLevels)
                 {
                     if(masterFraming == null)
@@ -385,23 +332,24 @@ namespace Structure
             return rotation;
         }
 
-        private static List<Element> CreateFramingPlanInstance(List<GeometricElement> framing, double elevation)
+        private static List<Element> CreateFramingPlanInstance(List<Beam> framing, double elevation)
         {
             var instanceBeams = new List<Element>();
             foreach(var beam in framing)
             {
-                var beamInstance = new Instance(beam, new Transform(new Vector3(0,0, elevation)));
+                var halfDepth = _halfDepths[_beamProfiles.IndexOf(beam.Profile)];
+                var beamInstance = new Instance(beam, new Transform(new Vector3(0,0, elevation - halfDepth)));
                 instanceBeams.Add(beamInstance);
             }
             return instanceBeams;
         }
 
-        private static List<GeometricElement> CreateFramingPlan(double elevation,
+        private static List<Beam> CreateFramingPlan(double elevation,
                                                    List<Line> xGridSegments,
                                                    List<Line> yGridSegments,
                                                    IList<Line> boundarySegments)
         {
-            var beams = new List<GeometricElement>();
+            var beams = new List<Beam>();
             var mat = BuiltInMaterials.Steel;
             foreach(var x in xGridSegments)
             {
