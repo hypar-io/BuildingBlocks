@@ -198,7 +198,7 @@ namespace Structure
                     else
                     {
                         // var displace = Vector3.Origin - masterColumn.Transform.Origin - lc;
-                        var instance = new Instance(masterColumn, new Transform(lc));
+                        var instance = new ElementInstance(masterColumn, new Transform(lc));
                         model.AddElement(instance, false); 
                     }
                 }
@@ -338,7 +338,7 @@ namespace Structure
             foreach(var beam in framing)
             {
                 var halfDepth = _halfDepths[_beamProfiles.IndexOf(beam.Profile)];
-                var beamInstance = new Instance(beam, new Transform(new Vector3(0,0, elevation - halfDepth)));
+                var beamInstance = new ElementInstance(beam, new Transform(new Vector3(0,0, elevation - halfDepth)));
                 instanceBeams.Add(beamInstance);
             }
             return instanceBeams;
