@@ -130,9 +130,9 @@ namespace Facade
                                     else
                                     {
                                         // Create a panel instance.
-                                        var panelInstance = new Instance(masterPanel, t);
+                                        var panelInstance = new ElementInstance(masterPanel, t);
                                         model.AddElement(panelInstance, false);
-                                        var glazingInstance = new Instance(masterGlazing, t);
+                                        var glazingInstance = new ElementInstance(masterGlazing, t);
                                         model.AddElement(glazingInstance, false);
                                     }
                                 }
@@ -241,7 +241,7 @@ namespace Facade
             var d = new Vector3(0, height, 0);
 
             var profile = new Profile(new Polygon(new[]{a,b,c,d}.Shrink(0.01)));
-            var solidOps = new List<SolidOperation>(){new Extrude(profile, thickness, Vector3.ZAxis, 0.0, false)};
+            var solidOps = new List<SolidOperation>(){new Extrude(profile, thickness, Vector3.ZAxis, false)};
             var representation = new Representation(solidOps);
             facadePanel = new FacadePanel(thickness, lowerLeft, material, representation, Guid.NewGuid(), name);
         }
@@ -272,7 +272,7 @@ namespace Facade
             glazing = new Panel(inner, _glazing, lowerLeft);
             
 
-            var solidOps = new List<SolidOperation>(){new Extrude(profile, thickness, Vector3.ZAxis, 0.0, false)};
+            var solidOps = new List<SolidOperation>(){new Extrude(profile, thickness, Vector3.ZAxis, false)};
             var representation = new Representation(solidOps);
             facadePanel = new FacadePanel(thickness, lowerLeft, material, representation, Guid.NewGuid(), name);
         }
