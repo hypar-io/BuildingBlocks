@@ -6,6 +6,9 @@ using Amazon;
 using Amazon.Lambda.Core;
 using Hypar.Functions.Execution;
 using Hypar.Functions.Execution.AWS;
+using System;
+using System.IO;
+using System.Reflection;
 using System.Threading.Tasks;
 
 [assembly: LambdaSerializer(typeof(Amazon.Lambda.Serialization.Json.JsonSerializer))]
@@ -21,6 +24,19 @@ namespace Structure
         {
             if(this.store == null)
             {
+                // Preload the dependencies (if they exist),
+                // so that they are available during model deserialization.
+                var asmLocation = this.GetType().Assembly.Location;
+                var asmDir = Path.GetDirectoryName(asmLocation);
+                var asmName = Path.GetFileNameWithoutExtension(asmLocation);
+                var depPath = Path.Combine(asmDir, $"{asmName}.Dependencies.dll");
+                if(File.Exists(depPath))
+                {
+                    Console.WriteLine($"Loading dependencies from assembly: {depPath}...");
+                    Assembly.LoadFrom(depPath);
+                    Console.WriteLine($"Dependencies assembly loaded.");
+                }
+                
                 this.store = new S3ModelStore<StructureInputs>(RegionEndpoint.USWest1);
             }
             

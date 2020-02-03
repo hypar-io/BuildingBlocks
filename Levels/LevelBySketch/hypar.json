@@ -1,0 +1,25 @@
+{
+  "$schema": "https://hypar.io/Schemas/Function.json",
+  "description": "The LevelBySketch function.",
+  "id": "88ea9c1b-682f-4b0a-8b9d-d789f00d345c",
+  "name": "LevelBySketch",
+  "repository_url": "https://github.com/hypar-io/function",
+  "model_output": "LevelPerimeter",
+  "inputs": [
+    {
+      "primitive_type": "polygon",
+      "name": "Perimeter",
+      "description": "Perimeter of the Level.",
+      "type": "geometry"
+    }
+  ],
+  "outputs": [
+    {
+      "name": "Area",
+      "description": "Area of the Level Perimeter.",
+      "type": "number"
+    }
+  ],
+  "preview_image": null,
+  "element_types": null
+}

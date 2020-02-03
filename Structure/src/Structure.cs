@@ -101,69 +101,16 @@ namespace Structure
             List<Level> levels = null;
             List<Envelope> envelopes = null;
             var model = new Model();
-            if(!models.ContainsKey(ENVELOPE_MODEL_NAME))
+
+            var envelopeModel = models[ENVELOPE_MODEL_NAME];
+            envelopes = envelopeModel.AllElementsOfType<Envelope>().Where(e=>e.Direction.IsAlmostEqualTo(Vector3.ZAxis)).ToList();
+            if(envelopes.Count() == 0)
             {
-                // Make a default envelope for testing.
-                // var a = new Vector3(0,0,0);
-                // var b = new Vector3(30,0,0);
-                // var c = new Vector3(30,50,0);
-                // var d = new Vector3(15,20,0);
-                // var e = new Vector3(0,50,0);
-                // var p1 = new Polygon(new[]{a,b,c,d,e});
-                // var p2 = p1.Offset(-1)[0];
-
-                // A rectangle to test.
-                // var r = new Transform();
-                // r.Rotate(Vector3.ZAxis, 15);
-                // var p1 = r.OfPolygon(Polygon.Rectangle(20, 30));
-                // var p2 = p1.Offset(-1)[0];
-
-                // An L to test.
-                var r = new Transform();
-                r.Rotate(Vector3.ZAxis, 15);
-                var p1 = r.OfPolygon(Polygon.L(40, 30, 10));
-                var p2 = p1.Offset(-1)[0];
-
-                var env1 = new Envelope(p1,
-                                        0,
-                                        40,
-                                        Vector3.ZAxis,
-                                        0,
-                                        new Transform(),
-                                        BuiltInMaterials.Void,
-                                        new Representation(new List<SolidOperation>() { new Extrude(p1, 10, Vector3.ZAxis, 0, false) }),
-                                        Guid.NewGuid(),
-                                        "Envelope 1");
-                var env2 = new Envelope(p2,
-                                        40,
-                                        100,
-                                        Vector3.ZAxis,
-                                        0,
-                                        new Transform(0,0,10),
-                                        BuiltInMaterials.Void,
-                                        new Representation(new List<SolidOperation>() { new Extrude(p2, 20, Vector3.ZAxis, 0, false) }),
-                                        Guid.NewGuid(),
-                                        "Envelope 1");
-                envelopes = new List<Envelope>(){env1,env2};
-                model.AddElements(envelopes);
-                levels = new List<Level>();
-                for(var i=0; i<100; i+=3)
-                {
-                    levels.Add(new Level(i, Guid.NewGuid(), $"Level {i}"));
-                }
+                throw new Exception("No element of type 'Envelope' could be found in the supplied model.");
             }
-            else
-            {
-                var envelopeModel = models[ENVELOPE_MODEL_NAME];
-                envelopes = envelopeModel.AllElementsOfType<Envelope>().Where(e=>e.Direction.IsAlmostEqualTo(Vector3.ZAxis)).ToList();
-                if(envelopes.Count() == 0)
-                {
-                    throw new Exception("No element of type 'Envelope' could be found in the supplied model.");
-                }
-                var levelsModel = models[LEVELS_MODEL_NAME];
-                levels = levelsModel.AllElementsOfType<Level>().ToList();
-            }
-
+            var levelsModel = models[LEVELS_MODEL_NAME];
+            levels = levelsModel.AllElementsOfType<Level>().ToList();
+            
             List<Line> xGrids;
             List<Line> yGrids;
 
@@ -216,19 +163,44 @@ namespace Structure
 
                 last = envLevels.Last();
 
+                List<Beam> masterFraming = null;
                 foreach(var l in envLevels)
                 {
-                    var framing = CreateGirders(l.Elevation, xGridSegments, yGridSegments, boundarySegments);
-                    model.AddElements(framing);
+                    if(masterFraming == null)
+                    {
+                        masterFraming = CreateFramingPlan(l.Elevation, xGridSegments, yGridSegments, boundarySegments);
+                        model.AddElements(masterFraming);
+                    }
+                    else
+                    {
+                        var instances = CreateFramingPlanInstance(masterFraming, l.Elevation);
+                        model.AddElements(instances, false);
+                    }
                 }
 
-                // var colProfile = (WideFlangeProfile)WideFlangeProfileServer.Instance.GetProfileByName("W18x76");
                 var colProfile = new Profile(Polygon.Rectangle(11 * mToIn, 18 * mToIn));
+                
+                GeometricElement masterColumn = null;
                 foreach(var lc in columnLocations)
                 {
-                    var mat = BuiltInMaterials.Steel;
-                    var column = new Column(lc, envLevels.Last().Elevation - lc.Z, colProfile, mat, null, 0,0, gridRotation);
-                    model.AddElement(column); 
+                    if(masterColumn == null)
+                    {
+                        masterColumn = new Column(Vector3.Origin,
+                                        envLevels.Last().Elevation - lc.Z,
+                                        colProfile,
+                                        BuiltInMaterials.Steel,
+                                        new Transform(lc),
+                                        0,
+                                        0,
+                                        gridRotation);
+                        model.AddElement(masterColumn); 
+                    }
+                    else
+                    {
+                        // var displace = Vector3.Origin - masterColumn.Transform.Origin - lc;
+                        var instance = new ElementInstance(masterColumn, new Transform(lc));
+                        model.AddElement(instance, false); 
+                    }
                 }
             }
 
@@ -360,12 +332,24 @@ namespace Structure
             return rotation;
         }
 
-        private static List<Element> CreateGirders(double elevation,
+        private static List<Element> CreateFramingPlanInstance(List<Beam> framing, double elevation)
+        {
+            var instanceBeams = new List<Element>();
+            foreach(var beam in framing)
+            {
+                var halfDepth = _halfDepths[_beamProfiles.IndexOf(beam.Profile)];
+                var beamInstance = new ElementInstance(beam, new Transform(new Vector3(0,0, elevation - halfDepth)));
+                instanceBeams.Add(beamInstance);
+            }
+            return instanceBeams;
+        }
+
+        private static List<Beam> CreateFramingPlan(double elevation,
                                                    List<Line> xGridSegments,
                                                    List<Line> yGridSegments,
                                                    IList<Line> boundarySegments)
         {
-            var beams = new List<Element>();
+            var beams = new List<Beam>();
             var mat = BuiltInMaterials.Steel;
             foreach(var x in xGridSegments)
             {
@@ -433,8 +417,7 @@ namespace Structure
                 xsects.Add(g.Start);
                 foreach(var trim in trims)
                 {
-                    var x = Intersects(g, trim);
-                    if(x != null)
+                    if(Intersects(g, trim, out Vector3 x))
                     {
                         xsects.Add(x);
                     }
@@ -467,8 +450,7 @@ namespace Structure
                 var xsects = new List<Vector3>();
                 foreach(var s in boundarySegements)
                 {
-                    Vector3 xsect = Intersects(s, grid);
-                    if(xsect == null)
+                    if(!Intersects(s, grid, out Vector3 xsect))
                     {
                         continue;
                     }
@@ -508,7 +490,7 @@ namespace Structure
         /// <param name="AB"></param>
         /// <param name="CD"></param>
         /// <returns></returns>
-        public static Vector3 Intersects(Line AB, Line CD) {
+        public static bool Intersects(Line AB, Line CD, out Vector3 result) {
             double deltaACy = AB.Start.Y - CD.Start.Y;
             double deltaDCx = CD.End.X - CD.Start.X;
             double deltaACx = AB.Start.X - CD.Start.X;
@@ -519,38 +501,43 @@ namespace Structure
             double denominator = deltaBAx * deltaDCy - deltaBAy * deltaDCx;
             double numerator = deltaACy * deltaDCx - deltaACx * deltaDCy;
 
+            result = new Vector3();
+
             if (denominator == 0) 
             {
                 if (numerator == 0) {
                     // collinear. Potentially infinite intersection points.
                     // Check and return one of them.
                     if (AB.Start.X >= CD.Start.X && AB.Start.X <= CD.End.X) {
-                    return AB.Start;
+                        result = AB.Start;
+                        return true;
                     } else if (CD.Start.X >= AB.Start.X && CD.Start.X <= AB.End.X) {
-                    return CD.Start;
+                        result = CD.Start;
+                        return true;
                     } else {
-                    return null;
+                        return false;
                     }
                 } 
                 else 
                 { // parallel
-                    return null;
+                    return false;
                 }
             }
 
             double r = numerator / denominator;
             if (r < 0 || r > 1) 
             {
-                return null;
+                return false;
             }
 
             double s = (deltaACy * deltaBAx - deltaACx * deltaBAy) / denominator;
             if (s < 0 || s > 1) 
             {
-                return null;
+                return false;
             }
 
-            return new Vector3 ((AB.Start.X + r * deltaBAx), (AB.Start.Y + r * deltaBAy));
+            result = new Vector3 ((AB.Start.X + r * deltaBAx), (AB.Start.Y + r * deltaBAy));
+            return true;
         }
   	}
 }

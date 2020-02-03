@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using Elements;
 using Elements.Geometry;
@@ -46,58 +45,19 @@ namespace Facade
             List<Level> levels = null;
             var model = new Model();
 
-            if(models.ContainsKey(ENVELOPE_MODEL_NAME))
+            var envelopeModel = models[ENVELOPE_MODEL_NAME];
+            envelopes = envelopeModel.AllElementsOfType<Envelope>().Where(e=>e.Elevation >= 0.0).ToList();
+            if(envelopes.Count() == 0)
             {
-                var envelopeModel = models[ENVELOPE_MODEL_NAME];
-                envelopes = envelopeModel.AllElementsOfType<Envelope>().Where(e=>e.Elevation >= 0.0).ToList();
-                if(envelopes.Count() == 0)
-                {
-                    throw new Exception("No element of type 'Envelope' could be found in the supplied model.");
-                }
-                var levelsModel = models[LEVELS_MODEL_NAME];
-                levels = levelsModel.AllElementsOfType<Level>().ToList();
-            }
-            else
-            {
-                var envMaterial = BuiltInMaterials.Void;
-                var p1 = Polygon.Ngon(3, 10);
-                var p2 = p1.Offset(-1)[0];
-                var env1 = new Envelope(p1,
-                                        0,
-                                        10,
-                                        Vector3.ZAxis,
-                                        0.0,
-                                        new Transform(),
-                                        envMaterial,
-                                        new Representation(new List<SolidOperation>() { new Extrude(p1, 10, Vector3.ZAxis, 0, false) }),
-                                        Guid.NewGuid(),
-                                        "envelope");
-                var env2 = new Envelope(p2,
-                                        Elevation,
-                                        20,
-                                        Vector3.ZAxis,
-                                        0.0,
-                                        new Transform(0,0,10),
-                                        envMaterial,
-                                        new Representation(new List<SolidOperation>() { new Extrude(p2, 10, Vector3.ZAxis, 0, false) }),
-                                        Guid.NewGuid(),
-                                        "envelope");
-                envelopes = new List<Envelope>(){env1, env2};
-
-                // var errors = new List<string>();
-                // var envelopeModel = Model.FromJson(File.ReadAllText("Building-01.json"), errors);
-                // var envelopeModel = Model.FromJson(File.ReadAllText("envelope.json"), errors);
-                // envelopes = envelopeModel.AllElementsOfType<Envelope>().Where(e=>e.Elevation >= 0.0).ToList();
-                // Console.WriteLine($"There are {envelopes.Count} envelopes.");
-
-                levels = new List<Level>();
-                for(var i=0; i<10; i++)
-                {
-                    levels.Add(new Level(i * 3, Guid.NewGuid(), $"Level {i}"));
-                }
-                // model.AddElements(envelopes);
+                throw new Exception("No element of type 'Envelope' could be found in the supplied model.");
             }
 
+            var levelsModel = models[LEVELS_MODEL_NAME];
+            levels = levelsModel.AllElementsOfType<Level>().ToList();
+            if(levels.Count() == 0)
+            {
+                throw new Exception("No element of type 'Level' could be found in the supplied model.");
+            }
             levels.Sort(new LevelComparer());
 
             var panelCount = 0;
@@ -119,88 +79,82 @@ namespace Facade
                     last = envLevels.Last();
                 }
                 envLevels = levels.Where(l=>l.Elevation >= envelope.Elevation && l.Elevation <= envelope.Elevation + envelope.Height).ToList();
-                Console.WriteLine($"There are {envLevels.Count} levels in this envelope.");
                 if(last != null)
                 {
                     envLevels.Insert(0, last);
                 }
 
-                foreach(var s in boundarySegments)
+                for(var i=0; i<envLevels.Count-1; i++)
                 {
-                    var d = s.Direction();
-                    var bottom = new Line(new Vector3(s.Start.X, s.Start.Y), new Vector3(s.End.X, s.End.Y));
-                    var bottomSegments = DivideByLengthFromCenter(bottom, input.PanelWidth);
+                    var level1 = envLevels[i];
+                    var level2 = envLevels[i+1];
 
-                    for(var i=0; i<envLevels.Count-1; i++)
+                    foreach(var s in boundarySegments)
                     {
+                        FacadePanel masterPanel = null;
+                        Panel masterGlazing = null;
+
+                        var d = s.Direction();
+                        var bottomSegments = DivideByLengthFromCenter(s, input.PanelWidth);
+
                         try{
-                            var level1 = envLevels[i];
-                            var level2 = envLevels[i+1];
-                            
                             for(var j=0; j<bottomSegments.Count(); j++)
                             {
                                 var bs = bottomSegments[j];
                                 var t = new Transform(bs.Start + new Vector3(0,0,level1.Elevation), d, d.Cross(Vector3.ZAxis));
                                 var l = bs.Length();
 
-                                if(input.Wireframe)
+                                // If the segment width is within Epsilon of 
+                                // the input panel width, then create a
+                                // panel with glazing.
+                                if(Math.Abs(l-input.PanelWidth) < Vector3.Epsilon)
                                 {
-                                    var panel = CreateFacadePanelWireframe($"FP_{i}_{j}",
-                                                                bs.Length(),
-                                                                level2.Elevation - level1.Elevation,
-                                                                t,
-                                                                model,
-                                                                wireframeMaterial);
-                                }
-                                else
-                                {
-                                    if(Math.Abs(l-input.PanelWidth) < Vector3.Epsilon)
+                                    if(masterPanel == null)
                                     {
-                                        var panel = CreateFacadePanel($"FP_{i}_{j}",
-                                                                    l,
-                                                                    level2.Elevation - level1.Elevation,
-                                                                    input.GlassLeftRightInset,
-                                                                    input.GlassTopBottomInset,
-                                                                    0.1,
-                                                                    input.PanelWidth,
-                                                                    panelMat,
-                                                                    t,
-                                                                    model);
-
-                                        // var panel = CreateBBFacadePanel($"FP_{i}_{j}",
-                                        //                         bs.Length(),
-                                        //                         level2.Elevation - level1.Elevation,
-                                        //                         d1: 0.1,
-                                        //                         d2: 0.4,
-                                        //                         h1: 0.3,
-                                        //                         h2: 0.05,
-                                        //                         gap: 0.05,
-                                        //                         panelMat,
-                                        //                         t,
-                                        //                         model);
+                                        // Create a master panel for each level.
+                                        // This panel will be instanced at every location.
+                                        CreateFacadePanel($"FP_{i}",
+                                                                input.PanelWidth,
+                                                                level2.Elevation - level1.Elevation,
+                                                                input.GlassLeftRightInset,
+                                                                input.GlassTopBottomInset,
+                                                                0.1,
+                                                                input.PanelWidth,
+                                                                panelMat,
+                                                                t,
+                                                                out masterPanel,
+                                                                out masterGlazing);
+                                        model.AddElement(masterPanel);
+                                        model.AddElement(masterGlazing);
                                     }
                                     else
                                     {
-                                        var panel = CreateStandardPanel($"FP_{i}_{j}",
-                                                                    l,
-                                                                    level2.Elevation - level1.Elevation,
-                                                                    0.1,
-                                                                    t,
-                                                                    panelMat,
-                                                                    model);
+                                        // Create a panel instance.
+                                        var panelInstance = new ElementInstance(masterPanel, t);
+                                        model.AddElement(panelInstance, false);
+                                        var glazingInstance = new ElementInstance(masterGlazing, t);
+                                        model.AddElement(glazingInstance, false);
                                     }
                                 }
-                                
+                                // Otherwise, create a panel with not glazing.
+                                else
+                                {
+                                    CreateStandardPanel($"FP_{i}_{j}",
+                                                        l,
+                                                        level2.Elevation - level1.Elevation,
+                                                        0.1,
+                                                        t,
+                                                        panelMat,
+                                                        out FacadePanel panel);
+                                    model.AddElement(panel);
+                                }
                                 panelCount++;
                             }
 
-                            if(!input.Wireframe)
+                            if(i == envLevels.Count - 2)
                             {
-                                if(i == envLevels.Count - 2)
-                                {
-                                    var parapet= new StandardWall(new Line(new Vector3(s.Start.X, s.Start.Y, level2.Elevation), new Vector3(s.End.X, s.End.Y, level2.Elevation)), 0.1, 0.9, panelMat);
-                                    model.AddElement(parapet);
-                                }
+                                var parapet= new StandardWall(new Line(new Vector3(s.Start.X, s.Start.Y, level2.Elevation), new Vector3(s.End.X, s.End.Y, level2.Elevation)), 0.1, 0.9, panelMat);
+                                model.AddElement(parapet);
                             }
                         }
                         catch(Exception ex)
@@ -273,61 +227,13 @@ namespace Facade
             return mc;
         }
 
-        private static FacadePanel CreateBBFacadePanel(string name,
-                                                     double width,
-                                                     double height,
-                                                     double d1,
-                                                     double d2,
-                                                     double h1,
-                                                     double h2,
-                                                     double gap,
-                                                     Material material,
-                                                     Transform lowerLeft,
-                                                     Model model)
-        {
-            var ll = new Vector3(0,0,0);
-            var lr = new Vector3(width,0,0);
-            var ur = new Vector3(width, height, 0);
-            var ul = new Vector3(0, height, 0);
-            
-            // ---- d1
-            // |   \   
-            // |    \   h1
-            // |     \  
-            // |      | h2 
-            // o-------
-            //    d2
-            var o = Vector3.Origin;
-            var a = o + new Vector3(d2, 0);
-            var b = a + new Vector3(0, h2);
-            var c = b + new Vector3(-(d2-d1), h1);
-            var d = c + new Vector3(-d1,0);
-
-            var p = new Polygon(new[]{o,a,b,c,d});
-            var solidOps = new List<SolidOperation>();
-            var profile = new Profile(p);
-            
-            var bottom = new Sweep(p, new Line(lr, ll), 0, 0, 0, false);
-            var right = new Sweep(p, new Line(lr + new Vector3(gap,0),ur + new Vector3(gap,0)), 0, 0, 0, false);
-            var top = new Sweep(p, new Line(ul, ur), 0, 0, 0, false);
-            var left = new Sweep(p, new Line(ul - new Vector3(gap,0), ll - new Vector3(gap,0)), 0, 0, 0, false);
-            solidOps.AddRange(new []{bottom, right, top, left});
-            // var poly = new Polygon(new[]{ll,lr,ur,ul});
-            // var sweep = new Sweep(profile, poly, 0, 0, 0, false);
-            var rep = new Representation(solidOps);
-            var panel = new FacadePanel(d1, lowerLeft, material, rep, Guid.NewGuid(), name);
-            model.AddElement(panel);
-            
-            return panel;
-        }
-
-        private static FacadePanel CreateStandardPanel(string name,
+        private static void CreateStandardPanel(string name,
                                                        double width,
                                                        double height,
                                                        double thickness,
                                                        Transform lowerLeft,
                                                        Material material,
-                                                       Model model)
+                                                       out FacadePanel facadePanel)
         {
             var a = new Vector3(0,0,0);
             var b = new Vector3(width,0,0);
@@ -335,15 +241,12 @@ namespace Facade
             var d = new Vector3(0, height, 0);
 
             var profile = new Profile(new Polygon(new[]{a,b,c,d}.Shrink(0.01)));
-            var solidOps = new List<SolidOperation>(){new Extrude(profile, thickness, Vector3.ZAxis, 0.0, false)};
+            var solidOps = new List<SolidOperation>(){new Extrude(profile, thickness, Vector3.ZAxis, false)};
             var representation = new Representation(solidOps);
-            var panel = new FacadePanel(thickness, lowerLeft, material, representation, Guid.NewGuid(), name);
-            model.AddElement(panel);
-
-            return panel;
+            facadePanel = new FacadePanel(thickness, lowerLeft, material, representation, Guid.NewGuid(), name);
         }
 
-        private static FacadePanel CreateFacadePanel(string name,
+        private static void CreateFacadePanel(string name,
                                                      double width,
                                                      double height,
                                                      double leftRightInset,
@@ -352,7 +255,8 @@ namespace Facade
                                                      double defaultWidth,
                                                      Material material,
                                                      Transform lowerLeft,
-                                                     Model model)
+                                                     out FacadePanel facadePanel,
+                                                     out Panel glazing)
         {
             var a = new Vector3(0,0,0);
             var b = new Vector3(width,0,0);
@@ -365,15 +269,12 @@ namespace Facade
             var d1 = new Vector3(leftRightInset, height-topBottomInset, 0);
             var inner = new Polygon(new[]{d1,c1,b1,a1});
             var profile = new Profile(new Polygon(new[]{a,b,c,d}.Shrink(0.01)), inner);
-            var glazing = new Panel(inner, _glazing, lowerLeft);
-            model.AddElement(glazing);
+            glazing = new Panel(inner, _glazing, lowerLeft);
+            
 
-            var solidOps = new List<SolidOperation>(){new Extrude(profile, thickness, Vector3.ZAxis, 0.0, false)};
+            var solidOps = new List<SolidOperation>(){new Extrude(profile, thickness, Vector3.ZAxis, false)};
             var representation = new Representation(solidOps);
-            var panel = new FacadePanel(thickness, lowerLeft, material, representation, Guid.NewGuid(), name);
-            model.AddElement(panel);
-
-            return panel;
+            facadePanel = new FacadePanel(thickness, lowerLeft, material, representation, Guid.NewGuid(), name);
         }
   	}
 }

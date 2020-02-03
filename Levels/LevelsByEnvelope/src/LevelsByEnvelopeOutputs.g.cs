@@ -45,8 +45,6 @@ namespace LevelsByEnvelope
 		/// </summary>
 		[JsonProperty("Top Level Height")]
 		public double TopLevelHeight {get;}
-
-
         
         /// <summary>
         /// Construct a LevelsByEnvelopeOutputs with default inputs.

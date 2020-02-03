@@ -3,11 +3,10 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="GeometryEx" Version="2.0.0" />
-    <PackageReference Include="Hypar.Elements" Version="0.4.0" />
-    <PackageReference Include="Hypar.Functions" Version="0.4.0" />
+    <PackageReference Include="Hypar.Elements" Version="0.4.4.1" />
+    <PackageReference Include="Hypar.Functions" Version="0.4.4.1" />
   </ItemGroup>
-  <ItemGroup Condition="'$(Configuration)' == 'Debug'">
-    <Content Include="../envelope.json" CopyToOutputDirectory="PreserveNewest" />
+  <ItemGroup>
+    <ProjectReference Include="..\dependencies\Facade.Dependencies.csproj" />
   </ItemGroup>
 </Project>

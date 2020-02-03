@@ -5,7 +5,7 @@
   "name": "Rooms By Floors",
   "repository_url": "https://github.com/hypar-io/function",
   "model_dependencies": [
-    "Floors"
+    {"name": "Floors"}
   ],
   "model_output": "Rooms",
   "inputs": [

@@ -34,12 +34,6 @@ namespace Facade
 		[JsonProperty("Glass Top-Bottom Inset")]
 		public double GlassTopBottomInset {get;}
 
-		/// <summary>
-		/// When Wireframe is true, wireframe setting out geometry will be generated. Set Wireframe to false to generate full geometry.
-		/// </summary>
-		[JsonProperty("Wireframe")]
-		public bool Wireframe {get;}
-
 
         
         /// <summary>
@@ -51,7 +45,6 @@ namespace Facade
 			this.PanelWidth = 4;
 			this.GlassLeftRightInset = 1;
 			this.GlassTopBottomInset = 1;
-			this.Wireframe = false;
 
         }
 
@@ -61,12 +54,11 @@ namespace Facade
         /// </summary>
         /// <returns></returns>
         [JsonConstructor]
-        public FacadeInputs(double panelwidth, double glassleftrightinset, double glasstopbottominset, bool wireframe, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
+        public FacadeInputs(double panelwidth, double glassleftrightinset, double glasstopbottominset, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
         {
 			this.PanelWidth = panelwidth;
 			this.GlassLeftRightInset = glassleftrightinset;
 			this.GlassTopBottomInset = glasstopbottominset;
-			this.Wireframe = wireframe;
 
 		}
 

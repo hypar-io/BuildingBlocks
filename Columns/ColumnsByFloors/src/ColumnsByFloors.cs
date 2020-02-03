@@ -58,6 +58,12 @@ namespace ColumnsByFloors
                     var grid = new CoordinateGrid(ceiling.Profile.Perimeter, input.GridXAxisInterval, input.GridYAxisInterval, input.GridRotation);
                     foreach (var point in grid.Available)
                     {
+                        var colPerim = Polygon.Rectangle(input.ColumnDiameter, input.ColumnDiameter).MoveFromTo(Vector3.Origin, point);
+                        if (!floor.Profile.Perimeter.Covers(colPerim) ||
+                            !ceiling.Profile.Perimeter.Covers(colPerim))
+                        {
+                            continue;
+                        }
                         columns.Add(new Column(point, height,
                                                new Profile(Polygon.Rectangle(input.ColumnDiameter, input.ColumnDiameter)),
                                                BuiltInMaterials.Concrete, 
