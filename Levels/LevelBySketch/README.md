@@ -6,13 +6,12 @@ The LevelBySketch function.
 
 |Input Name|Type|Description|
 |---|---|---|
-|Length|Range|The length.|
-|Width|Range|The width.|
+|Perimeter|Geometry|Perimeter of the Level.|
 
 
 <br>
 
 |Output Name|Type|Description|
 |---|---|---|
-|Volume|Number|The volume.|
+|Area|Number|Area of the Level Perimeter.|
 

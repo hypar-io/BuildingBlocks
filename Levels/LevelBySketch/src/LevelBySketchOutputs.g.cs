@@ -17,10 +17,10 @@ namespace LevelBySketch
     public class LevelBySketchOutputs: ResultsBase
     {
 		/// <summary>
-		/// The volume.
+		/// Area of the Level Perimeter.
 		/// </summary>
-		[JsonProperty("Volume")]
-		public double Volume {get;}
+		[JsonProperty("Area")]
+		public double Area {get;}
 
 
         
@@ -39,9 +39,9 @@ namespace LevelBySketch
         /// </summary>
         /// <returns></returns>
         [JsonConstructor]
-        public LevelBySketchOutputs(double volume): base()
+        public LevelBySketchOutputs(double area): base()
         {
-			this.Volume = volume;
+			this.Area = area;
 
 		}
 

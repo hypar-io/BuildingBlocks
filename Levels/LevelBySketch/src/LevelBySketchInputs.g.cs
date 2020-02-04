@@ -17,16 +17,10 @@ namespace LevelBySketch
     public class LevelBySketchInputs: S3Args
     {
 		/// <summary>
-		/// The length.
+		/// Perimeter of the Level.
 		/// </summary>
-		[JsonProperty("Length")]
-		public double Length {get;}
-
-		/// <summary>
-		/// The width.
-		/// </summary>
-		[JsonProperty("Width")]
-		public double Width {get;}
+		[JsonProperty("Perimeter")]
+		public Elements.Geometry.Polygon Perimeter {get;}
 
 
         
@@ -36,8 +30,7 @@ namespace LevelBySketch
         /// </summary>
         public LevelBySketchInputs() : base()
         {
-			this.Length = 10;
-			this.Width = 10;
+			this.Perimeter = Elements.Geometry.Polygon.Rectangle(1, 1);
 
         }
 
@@ -47,10 +40,9 @@ namespace LevelBySketch
         /// </summary>
         /// <returns></returns>
         [JsonConstructor]
-        public LevelBySketchInputs(double length, double width, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
+        public LevelBySketchInputs(Elements.Geometry.Polygon perimeter, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
         {
-			this.Length = length;
-			this.Width = width;
+			this.Perimeter = perimeter;
 
 		}
 

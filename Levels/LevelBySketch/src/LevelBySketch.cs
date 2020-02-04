@@ -1,6 +1,8 @@
+using System;
 using Elements;
 using Elements.Geometry;
 using System.Collections.Generic;
+using GeometryEx;
 
 namespace LevelBySketch
 {
@@ -14,13 +16,13 @@ namespace LevelBySketch
         /// <returns>A LevelBySketchOutputs instance containing computed results and the model with any new elements.</returns>
         public static LevelBySketchOutputs Execute(Dictionary<string, Model> inputModels, LevelBySketchInputs input)
         {
-            /// Your code here.
-            var height = 1.0;
-            var volume = input.Length * input.Width * height;
-            var output = new LevelBySketchOutputs(volume);
-            var rectangle = Polygon.Rectangle(input.Length, input.Width);
-            var mass = new Mass(rectangle, height);
-            output.model.AddElement(mass);
+            var lamina = new Elements.Geometry.Solids.Lamina(input.Perimeter, false);
+            var geomRep = new Representation(new List<Elements.Geometry.Solids.SolidOperation>() { lamina });
+            var lvlMatl = new Material("level", Palette.White, 0.0f, 0.0f);
+            var output = new LevelBySketchOutputs(input.Perimeter.Area());
+            output.model.AddElement(new Level(0.0, Guid.NewGuid(), ""));
+            output.model.AddElement(new LevelPerimeter(0.0, input.Perimeter, Guid.NewGuid(), ""));
+            output.model.AddElement(new Panel(input.Perimeter, lvlMatl, null, geomRep, Guid.NewGuid(), ""));
             return output;
         }
       }
