@@ -6,7 +6,7 @@ using GeometryEx;
 
 namespace LevelBySketch
 {
-      public static class LevelBySketch
+    public static class LevelBySketch
     {
         /// <summary>
         /// The LevelBySketch function.
@@ -25,5 +25,5 @@ namespace LevelBySketch
             output.model.AddElement(new Panel(input.Perimeter, lvlMatl, null, geomRep, Guid.NewGuid(), ""));
             return output;
         }
-      }
+    }
 }
