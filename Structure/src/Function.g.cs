@@ -30,13 +30,14 @@ namespace Structure
                 var asmDir = Path.GetDirectoryName(asmLocation);
                 var asmName = Path.GetFileNameWithoutExtension(asmLocation);
                 var depPath = Path.Combine(asmDir, $"{asmName}.Dependencies.dll");
+                
                 if(File.Exists(depPath))
                 {
                     Console.WriteLine($"Loading dependencies from assembly: {depPath}...");
                     Assembly.LoadFrom(depPath);
-                    Console.WriteLine($"Dependencies assembly loaded.");
+                    Console.WriteLine("Dependencies assembly loaded.");
                 }
-                
+
                 this.store = new S3ModelStore<StructureInputs>(RegionEndpoint.USWest1);
             }
             
