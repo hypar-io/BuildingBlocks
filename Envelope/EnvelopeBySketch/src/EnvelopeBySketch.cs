@@ -3,7 +3,6 @@ using System.Linq;
 using System;
 using Elements;
 using Elements.Geometry;
-using GeometryEx;
 
 namespace EnvelopeBySketch
 {
@@ -20,8 +19,8 @@ namespace EnvelopeBySketch
             // Create the foundation Envelope.
             var extrude = new Elements.Geometry.Solids.Extrude(input.Perimeter, input.FoundationDepth, Vector3.ZAxis, false);
             var geomRep = new Representation(new List<Elements.Geometry.Solids.SolidOperation>() { extrude });
-            var fndMatl = new Material("foundation", Palette.Granite, 0.0f, 0.0f);
-            var envMatl = new Material("envelope", Palette.Aqua, 0.0f, 0.0f);
+            var fndMatl = new Material("foundation", new Color(1.0, 1.0, 1.0, 0.2), 0.0f, 0.0f);
+            var envMatl = new Material("envelope", new Color(1.0, 1.0, 1.0, 0.2), 0.0f, 0.0f);
             var envelopes = new List<Envelope>()
             {
                 new Envelope(input.Perimeter, input.FoundationDepth * -1, input.FoundationDepth, Vector3.ZAxis,
