@@ -4,4 +4,5 @@ obj/
 *.glb
 output.json
 input.json
+model.json
 .vs/**/*.*
