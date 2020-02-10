@@ -3,8 +3,8 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Hypar.Elements" Version="0.4.4.1" />
-    <PackageReference Include="Hypar.Functions" Version="0.4.4.1" />
+    <PackageReference Include="Hypar.Elements" Version="0.5.1" />
+    <PackageReference Include="Hypar.Functions" Version="0.5.1" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\dependencies\Facade.Dependencies.csproj" />
