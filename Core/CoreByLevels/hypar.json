@@ -2,10 +2,14 @@
   "$schema": "https://hypar.io/Schemas/Function.json",
   "description": "Creates a building core by referencing LevelPerimeters supplied by another function.",
   "id": "99c9cad0-6de9-482a-a648-8aadfd4e2819",
+  "language": "C#",
   "name": "Core By Levels",
   "repository_url": "https://github.com/hypar-io/function",
   "model_dependencies": [
-    {"name": "Levels"}
+    {
+      "name": "Levels",
+      "optional": false
+    }
   ],
   "model_output": "Cores",
   "inputs": [

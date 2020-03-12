@@ -46,7 +46,7 @@ namespace LevelsByEnvelope
             foreach (var item in levelMaker.LevelPerimeters)
             {
                 output.model.AddElement(new Panel(item.Perimeter, matl, new Transform(0.0, 0.0, item.Elevation), 
-                                        null, Guid.NewGuid(), ""));
+                                        null, false, Guid.NewGuid(), ""));
             }
             return output;
         }

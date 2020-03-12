@@ -51,7 +51,7 @@ namespace LevelsByEnvelope
                 // Temporary Envelope to populate levels above the lobby.
                 envelope = new Envelope(envelope.Profile, grdHeight, envelope.Height - grdHeight,
                                         Vector3.ZAxis, 0.0, envelope.Transform, null, envelope.Representation,
-                                        Guid.NewGuid(), "");
+                                        false, Guid.NewGuid(), "");
                 MakeLevels(envelope, stdHeight, false, true);
             }
             else
@@ -81,7 +81,7 @@ namespace LevelsByEnvelope
             // Create temporary envelope to populate the region beneath the penthouse level.
             envelope = new Envelope(envelope.Profile.Perimeter, envelope.Elevation, envelope.Height - pntHeight,
                                     Vector3.ZAxis, 0.0, envelope.Transform, null, envelope.Representation,
-                                    Guid.NewGuid(), "");
+                                    false, Guid.NewGuid(), "");
             MakeLevels(envelope, stdHeight, false, true);
             Levels = Levels.OrderBy(l => l.Elevation).ToList();
             LevelPerimeters = LevelPerimeters.OrderBy(l => l.Elevation).ToList();

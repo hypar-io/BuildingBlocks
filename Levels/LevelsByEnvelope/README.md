@@ -1,14 +1,8 @@
 <img src="preview.png" width="512">
             
-# LevelsByEnvelope
+# Levels By Envelope
 
 Creates Levels and LevelPerimeters from one or more Envelopes supplied by other functions.
-
-https://raw.githubusercontent.com/hypar-io/Schemas/master/Envelope.json
-
-https://raw.githubusercontent.com/hypar-io/Schemas/master/Level.json
-
-https://raw.githubusercontent.com/hypar-io/Schemas/master/LevelPerimeter.json
 
 |Input Name|Type|Description|
 |---|---|---|

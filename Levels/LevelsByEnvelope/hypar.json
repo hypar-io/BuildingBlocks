@@ -2,16 +2,20 @@
   "$schema": "https://hypar.io/Schemas/Function.json",
   "description": "Creates Levels and LevelPerimeters from one or more Envelopes supplied by other functions.",
   "id": "aa0b94eb-6a0d-4f17-b0eb-322bce98bb2a",
+  "language": "C#",
   "name": "Levels By Envelope",
   "repository_url": "https://github.com/hypar-io/function",
   "model_dependencies": [
-    {"name": "Envelope"}
+    {
+      "name": "Envelope",
+      "optional": false
+    }
   ],
   "model_output": "Levels",
   "inputs": [
     {
       "min": 3.0,
-      "max": 7.0,
+      "max": 20.0,
       "step": 0.1,
       "name": "Ground Level Height",
       "description": "Height of ground level.",
@@ -19,7 +23,7 @@
     },
     {
       "min": 3.0,
-      "max": 5.0,
+      "max": 20.0,
       "step": 0.1,
       "name": "Standard Level Height",
       "description": "Standard height of repeated levels.",
@@ -27,7 +31,7 @@
     },
     {
       "min": 3.0,
-      "max": 7.0,
+      "max": 20.0,
       "step": 0.1,
       "name": "Penthouse Level Height",
       "description": "Height of the top level.",
