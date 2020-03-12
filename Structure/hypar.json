@@ -2,6 +2,7 @@
   "$schema": "https://hypar.io/Schemas/Function.json",
   "description": "Generate a structural frame provided a set of Levels and an Envelope.",
   "id": "530886d2-1c18-4a6d-ad21-da4a0db0f37e",
+  "language": "C#",
   "name": "Structure",
   "repository_url": "https://github.com/hypar-io/function",
   "model_dependencies": [

@@ -107,7 +107,7 @@ namespace Facade
                                 // If the segment width is within Epsilon of 
                                 // the input panel width, then create a
                                 // panel with glazing.
-                                if(Math.Abs(l-input.PanelWidth) < Vector3.Epsilon)
+                                if(Math.Abs(l-input.PanelWidth) < Vector3.EPSILON)
                                 {
                                     if(masterPanel == null)
                                     {
@@ -127,14 +127,13 @@ namespace Facade
                                         model.AddElement(masterPanel);
                                         model.AddElement(masterGlazing);
                                     }
-                                    else
-                                    {
-                                        // Create a panel instance.
-                                        var panelInstance = new ElementInstance(masterPanel, t);
-                                        model.AddElement(panelInstance, false);
-                                        var glazingInstance = new ElementInstance(masterGlazing, t);
-                                        model.AddElement(glazingInstance, false);
-                                    }
+
+                                    // Create a panel instance.
+                                    var panelInstance = masterPanel.CreateInstance(t, $"FP_{i}_{j}");
+                                    model.AddElement(panelInstance, false);
+                                    var glazingInstance = masterGlazing.CreateInstance(t, $"FG_{i}_{j}");
+                                    model.AddElement(glazingInstance, false);
+
                                 }
                                 // Otherwise, create a panel with not glazing.
                                 else
@@ -243,7 +242,7 @@ namespace Facade
             var profile = new Profile(new Polygon(new[]{a,b,c,d}.Shrink(0.01)));
             var solidOps = new List<SolidOperation>(){new Extrude(profile, thickness, Vector3.ZAxis, false)};
             var representation = new Representation(solidOps);
-            facadePanel = new FacadePanel(thickness, lowerLeft, material, representation, Guid.NewGuid(), name);
+            facadePanel = new FacadePanel(thickness, lowerLeft, material, representation, false, Guid.NewGuid(), name);
         }
 
         private static void CreateFacadePanel(string name,
@@ -269,12 +268,12 @@ namespace Facade
             var d1 = new Vector3(leftRightInset, height-topBottomInset, 0);
             var inner = new Polygon(new[]{d1,c1,b1,a1});
             var profile = new Profile(new Polygon(new[]{a,b,c,d}.Shrink(0.01)), inner);
-            glazing = new Panel(inner, _glazing, lowerLeft);
+            glazing = new Panel(inner, _glazing, lowerLeft, isElementDefinition: true);
             
 
             var solidOps = new List<SolidOperation>(){new Extrude(profile, thickness, Vector3.ZAxis, false)};
             var representation = new Representation(solidOps);
-            facadePanel = new FacadePanel(thickness, lowerLeft, material, representation, Guid.NewGuid(), name);
+            facadePanel = new FacadePanel(thickness, lowerLeft, material, representation, true, Guid.NewGuid(), name);
         }
   	}
 }

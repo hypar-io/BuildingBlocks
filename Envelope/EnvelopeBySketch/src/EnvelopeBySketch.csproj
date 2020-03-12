@@ -5,10 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="GeometryEx" Version="2.0.0" />
-    <PackageReference Include="Hypar.Elements" Version="0.4.1" />
-    <PackageReference Include="Hypar.Functions" Version="0.4.1" />
-    <PackageReference Include="RoomKit" Version="3.0.0" />
+    <PackageReference Include="Hypar.Elements" Version="0.5.1" />
+    <PackageReference Include="Hypar.Functions" Version="0.5.1" />
   </ItemGroup>
 
 </Project>
