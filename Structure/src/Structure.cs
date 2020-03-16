@@ -53,15 +53,6 @@ namespace Structure
 	{
         private const string ENVELOPE_MODEL_NAME = "Envelope";
         private const string LEVELS_MODEL_NAME = "Levels";
-		
-        private static List<Material> _lengthGradient = new List<Material>(){
-            new Material(Colors.Green, 0.0, 0.0, Guid.NewGuid(), "Gradient 1"),
-            new Material(Colors.Cyan, 0.0, 0.0, Guid.NewGuid(), "Gradient 2"),
-            new Material(Colors.Lime, 0.0, 0.0, Guid.NewGuid(), "Gradient 3"),
-            new Material(Colors.Yellow, 0.0, 0.0, Guid.NewGuid(), "Gradient 4"),
-            new Material(Colors.Orange, 0.0, 0.0, Guid.NewGuid(), "Gradient 5"),
-            new Material(Colors.Red, 0.0, 0.0, Guid.NewGuid(), "Gradient 6"),
-        };
 
         private const double mToIn = .0254;
 
