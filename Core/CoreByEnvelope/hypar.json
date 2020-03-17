@@ -1,0 +1,50 @@
+{
+  "$schema": "https://hypar.io/Schemas/Function.json",
+  "description": "Creates a building service representation derived from the envelope footprint.",
+  "id": "25d52f01-6023-494e-8d75-c45ba2f51b77",
+  "language": "C#",
+  "name": "Core By Envelope",
+  "repository_url": "https://github.com/hypar-io/function",
+  "inputs": [
+    {
+      "min": 0.15,
+      "max": 0.25,
+      "step": 0.01,
+      "name": "Percentage Area",
+      "description": "Percentage of highest square footage allocated to service core.",
+      "type": "range"
+    },
+    {
+      "min": 1.0,
+      "max": 10.0,
+      "step": 0.5,
+      "name": "Minimum Perimeter Offset",
+      "description": "Minimum distance from service core perimeter to building perimeter.",
+      "type": "range"
+    }
+  ],
+  "outputs": [
+    {
+      "name": "Service Core Length",
+      "description": "Length of the service core.",
+      "type": "number"
+    },
+    {
+      "name": "Service Core Width",
+      "description": "Width of the service core.",
+      "type": "number"
+    },
+    {
+      "name": "Service Core Rotation",
+      "description": "Rotation of the service core.",
+      "type": "number"
+    }
+  ],
+  "preview_image": null,
+  "element_types": [
+    "https://raw.githubusercontent.com/hypar-io/Schemas/master/Envelope.json",
+    "https://raw.githubusercontent.com/hypar-io/Schemas/master/Exclusion.json",
+    "https://raw.githubusercontent.com/hypar-io/Schemas/master/ServiceCore.json",
+    "https://raw.githubusercontent.com/hypar-io/Schemas/master/Shaft.json"
+  ]
+}
