@@ -7,7 +7,7 @@ using GeometryEx;
 
 namespace CoreByEnvelope
 {
-      public static class CoreByEnvelope
+    public static class CoreByEnvelope
     {
         /// <summary>
         /// The CoreByEnvelope function.
@@ -19,7 +19,6 @@ namespace CoreByEnvelope
                                                     CoreByEnvelopeInputs inputs)
         {
             var envelopes = new List<Envelope>();
-            //Console.WriteLine(inputModels.Keys.First());
             inputModels.TryGetValue("Envelope", out var model);
             if (model == null || model.AllElementsOfType<Envelope>().Count() == 0)
             {
@@ -33,7 +32,7 @@ namespace CoreByEnvelope
             var shfRep = new Representation(new List<Elements.Geometry.Solids.SolidOperation>() { shaft });
             var corMatl = new Material("serviceCore", Palette.Gray);
             var output = new CoreByEnvelopeOutputs(coreDef.length, coreDef.width, coreDef.rotation);
-            envelopes.ForEach(e => output.model.AddElement(e));
+            //Debugging: envelopes.ForEach(e => output.model.AddElement(e));
             output.model.AddElement(new ServiceCore(coreDef.perimeter,
                                                     Vector3.ZAxis,
                                                     coreDef.elevation,
@@ -60,5 +59,5 @@ namespace CoreByEnvelope
                                               "Service Core Shaft"));
             return output;
         }
-      }
+    }
 }

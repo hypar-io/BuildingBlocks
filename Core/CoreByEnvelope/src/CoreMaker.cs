@@ -9,6 +9,9 @@ namespace CoreByEnvelope
 {
     public static class CoreMaker
     {
+         /// <summary>
+         /// Structure carrying specifications to create a ServiceCore Element.
+         /// </summary>
         public struct CoreDef
         {
             public Polygon perimeter;
@@ -20,7 +23,17 @@ namespace CoreByEnvelope
         }
 
         public const double ROOF_ACCESS_HEIGHT = 3.0;
+        public const double MIN_CORE_SIDE_RATIO = 0.2;
+        public const double CORE_SIDE_RATIO = 1.0;
+        public const double CORE_SIDE_RATIO_INCREMENT = 0.1;
+        public const double CORE_ROTATE_INCREMENT = 1.0;
 
+        /// <summary>
+        /// Creates the shell of a building service core by attempting to place a footprint of various side ratios and rotations within the smallest envelope of the building. If the specified service core cannot fit within the building, the core is displaced to the exterior at the midpoint of the longest side of the highest envelope.
+        /// </summary>
+        /// <param name="inputs">Inputs from the UI.</param>
+        /// <param name="envelopes">List of Envelopes from an incoming model.</param>
+        /// <returns>A CoreDef structure specifying a service core.</returns>
         public static CoreDef MakeCore(CoreByEnvelopeInputs inputs, List<Envelope> envelopes)
         {
             var height = 0.0;
@@ -29,7 +42,7 @@ namespace CoreByEnvelope
             height += ROOF_ACCESS_HEIGHT;
             var footprint = envelopes.First().Profile.Perimeter;
             var area = Math.Abs(footprint.Area()) * inputs.PercentageArea;
-            var ratio = 1.0;
+            var ratio = CORE_SIDE_RATIO;
             var angLine = footprint.Segments().OrderByDescending(s => s.Length()).ToList().First();
             var angle = Math.Atan2(angLine.End.Y - angLine.Start.Y, angLine.End.X - angLine.Start.X) * (180 / Math.PI);
             var crown = envelopes.Last().Profile.Perimeter.Offset(inputs.MinimumPerimeterOffset * -1.0).First();
@@ -57,7 +70,7 @@ namespace CoreByEnvelope
             foreach (var position in positions)
             {
                 perimeter = perimeter.MoveFromTo(perimeter.Centroid(), position);
-                while (ratio >= 0.2)
+                while (ratio >= MIN_CORE_SIDE_RATIO)
                 {
                     var rotation = coreDef.rotation;
                     while (rotation <= angle + 90.0)
@@ -70,13 +83,13 @@ namespace CoreByEnvelope
                             coreDef.rotation = rotation;
                             return coreDef;
                         }
-                        rotation += 5.0;
+                        rotation += CORE_ROTATE_INCREMENT;
                     }
-                    ratio -= 0.1;
+                    ratio -= CORE_SIDE_RATIO_INCREMENT;
                     perimeter = Shaper.RectangleByArea(area, ratio);
                     perimeter = perimeter.Rotate(perimeter.Centroid(), angle);
                 }
-                ratio = 1.0;
+                ratio = CORE_SIDE_RATIO;
                 perimeter = coreDef.perimeter;
             }
             perimeter = Shaper.RectangleByArea(area, ratio);
