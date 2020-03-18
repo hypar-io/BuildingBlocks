@@ -28,10 +28,13 @@ namespace CoreByEnvelope
             envelopes.ForEach(e => height += e.Height);
             height += ROOF_ACCESS_HEIGHT;
             var footprint = envelopes.First().Profile.Perimeter;
-            var crown = envelopes.Last().Profile.Perimeter.Offset(inputs.MinimumPerimeterOffset * -1.0).First();
             var area = Math.Abs(footprint.Area()) * inputs.PercentageArea;
             var ratio = 1.0;
+            var angLine = footprint.Segments().OrderByDescending(s => s.Length()).ToList().First();
+            var angle = Math.Atan2(angLine.End.Y - angLine.Start.Y, angLine.End.X - angLine.Start.X) * (180 / Math.PI);
+            var crown = envelopes.Last().Profile.Perimeter.Offset(inputs.MinimumPerimeterOffset * -1.0).First();
             var perimeter = Shaper.RectangleByArea(area, ratio);
+            perimeter = perimeter.Rotate(perimeter.Centroid(), angle);
             var pCompass = new CompassBox(perimeter);
             var coreDef = new CoreDef
             {
@@ -40,7 +43,7 @@ namespace CoreByEnvelope
                 height = height,
                 length = pCompass.SizeX,
                 width = pCompass.SizeY,
-                rotation = 0.0
+                rotation = angle
             };
             var positions = new List<Vector3>();
             var centroid = crown.Centroid();
@@ -56,8 +59,8 @@ namespace CoreByEnvelope
                 perimeter = perimeter.MoveFromTo(perimeter.Centroid(), position);
                 while (ratio >= 0.2)
                 {
-                    var rotation = 0.0;
-                    while (rotation <= 90.0)
+                    var rotation = coreDef.rotation;
+                    while (rotation <= angle + 90.0)
                     {
                         perimeter = perimeter.Rotate(position, rotation);
                         if (crown.Covers(perimeter))
@@ -71,19 +74,16 @@ namespace CoreByEnvelope
                     }
                     ratio -= 0.1;
                     perimeter = Shaper.RectangleByArea(area, ratio);
+                    perimeter = perimeter.Rotate(perimeter.Centroid(), angle);
                 }
                 ratio = 1.0;
                 perimeter = coreDef.perimeter;
             }
-            var offset = -0.1;
-            var footArea = Math.Abs(footprint.Area());
-            while (Math.Abs(crown.Area()) / footArea > inputs.PercentageArea || crown.Vertices.Count > 4)
-            {
-                offset -= 0.1;
-                crown = crown.Offset(offset).OrderByDescending(p => Math.Abs(p.Area())).ToList().First();
-            }
-            centroid = crown.Centroid();
-            coreDef.perimeter = crown.MoveFromTo(centroid, new Vector3(centroid.X, centroid.Y, coreDef.elevation));         
+            perimeter = Shaper.RectangleByArea(area, ratio);
+            var compass = perimeter.Compass();
+            perimeter = perimeter.MoveFromTo(compass.W, angLine.Midpoint()).Rotate(angLine.Midpoint(), angle);
+            centroid = perimeter.Centroid();
+            coreDef.perimeter = perimeter.MoveFromTo(centroid, new Vector3(centroid.X, centroid.Y, coreDef.elevation));    
             return coreDef;
         }
     }

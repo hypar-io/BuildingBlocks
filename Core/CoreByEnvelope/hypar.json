@@ -5,6 +5,12 @@
   "language": "C#",
   "name": "Core By Envelope",
   "repository_url": "https://github.com/hypar-io/function",
+  "model_dependencies": [
+    {
+      "name": "Envelope",
+      "optional": false
+    }
+  ],
   "inputs": [
     {
       "min": 0.15,
