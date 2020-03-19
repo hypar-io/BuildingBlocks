@@ -2,6 +2,7 @@
   "$schema": "https://hypar.io/Schemas/Function.json",
   "description": "Creates a Site from a polygon sketch.",
   "id": "ed467745-1cc2-4307-a3b6-4543e79d4916",
+  "language": "C#",
   "name": "Site By Sketch",
   "repository_url": "https://github.com/hypar-io/function",
   "model_output": "Site",
