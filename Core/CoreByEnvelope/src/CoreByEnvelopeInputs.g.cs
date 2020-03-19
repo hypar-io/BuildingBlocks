@@ -23,6 +23,12 @@ namespace CoreByEnvelope
 		public double PercentageArea {get;}
 
 		/// <summary>
+		/// Ratio of X to Y length of service core sides.
+		/// </summary>
+		[JsonProperty("Length to Width Ratio")]
+		public double LengthToWidthRatio {get;}
+
+		/// <summary>
 		/// Minimum distance from service core perimeter to building perimeter.
 		/// </summary>
 		[JsonProperty("Minimum Perimeter Offset")]
@@ -37,6 +43,7 @@ namespace CoreByEnvelope
         public CoreByEnvelopeInputs() : base()
         {
 			this.PercentageArea = 0.25;
+			this.LengthToWidthRatio = 1.8;
 			this.MinimumPerimeterOffset = 10;
 
         }
@@ -47,9 +54,10 @@ namespace CoreByEnvelope
         /// </summary>
         /// <returns></returns>
         [JsonConstructor]
-        public CoreByEnvelopeInputs(double percentagearea, double minimumperimeteroffset, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
+        public CoreByEnvelopeInputs(double percentagearea, double lengthtowidthratio, double minimumperimeteroffset, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
         {
 			this.PercentageArea = percentagearea;
+			this.LengthToWidthRatio = lengthtowidthratio;
 			this.MinimumPerimeterOffset = minimumperimeteroffset;
 
 		}

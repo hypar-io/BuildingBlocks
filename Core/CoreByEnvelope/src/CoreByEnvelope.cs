@@ -30,33 +30,20 @@ namespace CoreByEnvelope
             var shaft = new Elements.Geometry.Solids.Extrude(coreDef.perimeter, coreDef.height, Vector3.ZAxis, true);
             var corRep = new Representation(new List<Elements.Geometry.Solids.SolidOperation>() { extrude });
             var shfRep = new Representation(new List<Elements.Geometry.Solids.SolidOperation>() { shaft });
-            var corMatl = new Material("serviceCore", Palette.Gray);
+            var corMatl = new Material("serviceCore", new Color(0.8, 0.8, 0.8, 0.2), 0.0f, 0.0f);
             var output = new CoreByEnvelopeOutputs(coreDef.length, coreDef.width, coreDef.rotation);
-            //Debugging: envelopes.ForEach(e => output.model.AddElement(e));
+            //envelopes.ForEach(e => output.model.AddElement(e));
             output.model.AddElement(new ServiceCore(coreDef.perimeter,
                                                     Vector3.ZAxis,
                                                     coreDef.elevation,
                                                     coreDef.height,
                                                     0.0,
-                                                    null,
+                                                    new Transform(0.0, 0.0, coreDef.elevation),
                                                     corMatl,
                                                     corRep,
                                                     false,
                                                     Guid.NewGuid(),
                                                     "Service Core"));
-            output.model.AddElement(new Shaft(coreDef.perimeter,
-                                              Vector3.ZAxis,
-                                              coreDef.elevation,
-                                              coreDef.height,
-                                              coreDef.rotation,
-                                              Math.Abs(coreDef.perimeter.Area()),
-                                              Math.Abs(coreDef.perimeter.Area() * coreDef.height),
-                                              null,
-                                              corMatl,
-                                              shfRep,
-                                              false,
-                                              Guid.NewGuid(),
-                                              "Service Core Shaft"));
             return output;
         }
     }

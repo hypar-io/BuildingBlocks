@@ -23,10 +23,7 @@ namespace CoreByEnvelope
         }
 
         public const double ROOF_ACCESS_HEIGHT = 3.0;
-        public const double MIN_CORE_SIDE_RATIO = 0.2;
-        public const double CORE_SIDE_RATIO = 1.0;
-        public const double CORE_SIDE_RATIO_INCREMENT = 0.1;
-        public const double CORE_ROTATE_INCREMENT = 1.0;
+        public const double CORE_ROTATE_INCREMENT = 5.0;
 
         /// <summary>
         /// Creates the shell of a building service core by attempting to place a footprint of various side ratios and rotations within the smallest envelope of the building. If the specified service core cannot fit within the building, the core is displaced to the exterior at the midpoint of the longest side of the highest envelope.
@@ -41,21 +38,26 @@ namespace CoreByEnvelope
             envelopes.ForEach(e => height += e.Height);
             height += ROOF_ACCESS_HEIGHT;
             var footprint = envelopes.First().Profile.Perimeter;
-            var area = Math.Abs(footprint.Area()) * inputs.PercentageArea;
-            var ratio = CORE_SIDE_RATIO;
-            var angLine = footprint.Segments().OrderByDescending(s => s.Length()).ToList().First();
+            var ftArea = Math.Abs(footprint.Area());
+            var area = ftArea * inputs.PercentageArea;
+            var crown = envelopes.Last().Profile.Perimeter;
+            var crownOff = crown.Offset(inputs.MinimumPerimeterOffset * -1.0);
+            if (crownOff.Count() > 0)
+            {
+                crown = crownOff.First();
+            }
+            var angLine = crown.Segments().OrderByDescending(s => s.Length()).ToList().First();
             var angle = Math.Atan2(angLine.End.Y - angLine.Start.Y, angLine.End.X - angLine.Start.X) * (180 / Math.PI);
-            var crown = envelopes.Last().Profile.Perimeter.Offset(inputs.MinimumPerimeterOffset * -1.0).First();
-            var perimeter = Shaper.RectangleByArea(area, ratio);
+            var perimeter = Shaper.RectangleByArea(area, inputs.LengthToWidthRatio);
             perimeter = perimeter.Rotate(perimeter.Centroid(), angle);
-            var pCompass = new CompassBox(perimeter);
+            var compass = new CompassBox(perimeter);
             var coreDef = new CoreDef
             {
                 perimeter = perimeter,
                 elevation = envelopes.First().Elevation,
                 height = height,
-                length = pCompass.SizeX,
-                width = pCompass.SizeY,
+                length = compass.SizeX,
+                width = compass.SizeY,
                 rotation = angle
             };
             var positions = new List<Vector3>();
@@ -70,33 +72,35 @@ namespace CoreByEnvelope
             foreach (var position in positions)
             {
                 perimeter = perimeter.MoveFromTo(perimeter.Centroid(), position);
-                while (ratio >= MIN_CORE_SIDE_RATIO)
+                var rotation = coreDef.rotation;
+                while (rotation <= angle + 90.0)
                 {
-                    var rotation = coreDef.rotation;
-                    while (rotation <= angle + 90.0)
+                    perimeter = perimeter.Rotate(position, rotation);
+                    if (crown.Covers(perimeter)) 
                     {
-                        perimeter = perimeter.Rotate(position, rotation);
-                        if (crown.Covers(perimeter))
-                        {
-                            centroid = perimeter.Centroid();
-                            coreDef.perimeter = perimeter.MoveFromTo(centroid, new Vector3(centroid.X, centroid.Y, coreDef.elevation));
-                            coreDef.rotation = rotation;
-                            return coreDef;
-                        }
-                        rotation += CORE_ROTATE_INCREMENT;
+                        coreDef.perimeter = perimeter;
+                        coreDef.rotation = rotation;
+                        return coreDef; // Return the first successful interior placement.
                     }
-                    ratio -= CORE_SIDE_RATIO_INCREMENT;
-                    perimeter = Shaper.RectangleByArea(area, ratio);
-                    perimeter = perimeter.Rotate(perimeter.Centroid(), angle);
+                    rotation += CORE_ROTATE_INCREMENT;
                 }
-                ratio = CORE_SIDE_RATIO;
-                perimeter = coreDef.perimeter;
             }
-            perimeter = Shaper.RectangleByArea(area, ratio);
-            var compass = perimeter.Compass();
-            perimeter = perimeter.MoveFromTo(compass.W, angLine.Midpoint()).Rotate(angLine.Midpoint(), angle);
-            centroid = perimeter.Centroid();
-            coreDef.perimeter = perimeter.MoveFromTo(centroid, new Vector3(centroid.X, centroid.Y, coreDef.elevation));    
+
+            // If no internal position found, place the service core to penetrate all envelopes along their longest side.
+
+            angLine = footprint.Segments().OrderByDescending(s => s.Length()).ToList().First();
+            angle = Math.Atan2(angLine.End.Y - angLine.Start.Y, angLine.End.X - angLine.Start.X) * (180 / Math.PI);
+            perimeter = Shaper.RectangleByArea(area, inputs.LengthToWidthRatio);
+            perimeter = perimeter.MoveFromTo(perimeter.Centroid(), angLine.Midpoint()).Rotate(angLine.Midpoint(), angle);
+            crown = envelopes.Last().Profile.Perimeter;
+            if (!perimeter.Intersects(crown))
+            {
+                angLine = crown.Segments().OrderByDescending(s => s.Length()).ToList().First();
+                angle = Math.Atan2(angLine.End.Y - angLine.Start.Y, angLine.End.X - angLine.Start.X) * (180 / Math.PI);
+                perimeter = Shaper.RectangleByArea(area, inputs.LengthToWidthRatio);
+                perimeter = perimeter.MoveFromTo(perimeter.Centroid(), angLine.Midpoint()).Rotate(angLine.Midpoint(), angle);
+            }
+            coreDef.perimeter = perimeter;
             return coreDef;
         }
     }

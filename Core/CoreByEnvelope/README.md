@@ -1,4 +1,4 @@
-
+<img src="preview.png" width="512">
             
 # Core By Envelope
 
@@ -7,6 +7,7 @@ Creates a building service representation derived from the envelope footprint.
 |Input Name|Type|Description|
 |---|---|---|
 |Percentage Area|Range|Percentage of highest square footage allocated to service core.|
+|Length to Width Ratio|Range|Ratio of X to Y length of service core sides.|
 |Minimum Perimeter Offset|Range|Minimum distance from service core perimeter to building perimeter.|
 
 
