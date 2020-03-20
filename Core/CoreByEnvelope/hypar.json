@@ -35,6 +35,14 @@
       "name": "Minimum Perimeter Offset",
       "description": "Minimum distance from service core perimeter to building perimeter.",
       "type": "range"
+    },
+    {
+      "min": 3.0,
+      "max": 6.0,
+      "step": 0.5,
+      "name": "Service Core Penthouse Height",
+      "description": "Height of the service core above the highest Envelope.",
+      "type": "range"
     }
   ],
   "outputs": [

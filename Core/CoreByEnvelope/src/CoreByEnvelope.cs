@@ -32,7 +32,7 @@ namespace CoreByEnvelope
             var shfRep = new Representation(new List<Elements.Geometry.Solids.SolidOperation>() { shaft });
             var corMatl = new Material("serviceCore", new Color(0.8, 0.8, 0.8, 0.2), 0.0f, 0.0f);
             var output = new CoreByEnvelopeOutputs(coreDef.length, coreDef.width, coreDef.rotation);
-            //envelopes.ForEach(e => output.model.AddElement(e));
+            envelopes.ForEach(e => output.model.AddElement(e));
             output.model.AddElement(new ServiceCore(coreDef.perimeter,
                                                     Vector3.ZAxis,
                                                     coreDef.elevation,

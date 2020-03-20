@@ -34,6 +34,12 @@ namespace CoreByEnvelope
 		[JsonProperty("Minimum Perimeter Offset")]
 		public double MinimumPerimeterOffset {get;}
 
+		/// <summary>
+		/// Height of the service core above the highest Envelope.
+		/// </summary>
+		[JsonProperty("Service Core Penthouse Height")]
+		public double ServiceCorePenthouseHeight {get;}
+
 
         
         /// <summary>
@@ -45,6 +51,7 @@ namespace CoreByEnvelope
 			this.PercentageArea = 0.25;
 			this.LengthToWidthRatio = 1.8;
 			this.MinimumPerimeterOffset = 10;
+			this.ServiceCorePenthouseHeight = 6;
 
         }
 
@@ -54,11 +61,12 @@ namespace CoreByEnvelope
         /// </summary>
         /// <returns></returns>
         [JsonConstructor]
-        public CoreByEnvelopeInputs(double percentagearea, double lengthtowidthratio, double minimumperimeteroffset, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
+        public CoreByEnvelopeInputs(double percentagearea, double lengthtowidthratio, double minimumperimeteroffset, double servicecorepenthouseheight, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
         {
 			this.PercentageArea = percentagearea;
 			this.LengthToWidthRatio = lengthtowidthratio;
 			this.MinimumPerimeterOffset = minimumperimeteroffset;
+			this.ServiceCorePenthouseHeight = servicecorepenthouseheight;
 
 		}
 

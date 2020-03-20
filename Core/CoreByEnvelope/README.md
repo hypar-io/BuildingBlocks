@@ -9,6 +9,7 @@ Creates a building service representation derived from the envelope footprint.
 |Percentage Area|Range|Percentage of highest square footage allocated to service core.|
 |Length to Width Ratio|Range|Ratio of X to Y length of service core sides.|
 |Minimum Perimeter Offset|Range|Minimum distance from service core perimeter to building perimeter.|
+|Service Core Penthouse Height|Range|Height of the service core above the highest Envelope.|
 
 
 <br>

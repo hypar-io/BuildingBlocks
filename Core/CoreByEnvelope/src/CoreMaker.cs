@@ -36,7 +36,7 @@ namespace CoreByEnvelope
             var height = 0.0;
             envelopes = envelopes.OrderBy(e => e.Elevation).ToList();
             envelopes.ForEach(e => height += e.Height);
-            height += ROOF_ACCESS_HEIGHT;
+            height += inputs.ServiceCorePenthouseHeight;
             var footprint = envelopes.First().Profile.Perimeter;
             var ftArea = Math.Abs(footprint.Area());
             var area = ftArea * inputs.PercentageArea;
