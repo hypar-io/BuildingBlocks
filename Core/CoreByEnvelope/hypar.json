@@ -37,9 +37,9 @@
       "type": "range"
     },
     {
-      "min": 3.0,
+      "min": 0.0,
       "max": 6.0,
-      "step": 0.5,
+      "step": 0.1,
       "name": "Service Core Penthouse Height",
       "description": "Height of the service core above the highest Envelope.",
       "type": "range"
