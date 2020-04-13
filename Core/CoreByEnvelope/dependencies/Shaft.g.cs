@@ -32,7 +32,7 @@ namespace Elements
             var validator = Validator.Instance.GetFirstValidatorForType<Shaft>();
             if(validator != null)
             {
-                validator.Validate(new object[]{ @perimeter, @direction, @elevation, @height, @rotation, @area, @volume, @transform, @material, @representation, @isElementDefinition, @id, @name});
+                validator.PreConstruct(new object[]{ @perimeter, @direction, @elevation, @height, @rotation, @area, @volume, @transform, @material, @representation, @isElementDefinition, @id, @name});
             }
         
             this.Perimeter = @perimeter;
@@ -42,6 +42,11 @@ namespace Elements
             this.Rotation = @rotation;
             this.Area = @area;
             this.Volume = @volume;
+        
+            if(validator != null)
+            {
+                validator.PostConstruct(this);
+            }
         }
     
         /// <summary>The id of the polygon to extrude.</summary>

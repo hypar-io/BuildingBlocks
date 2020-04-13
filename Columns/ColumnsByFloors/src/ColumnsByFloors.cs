@@ -69,7 +69,7 @@ namespace ColumnsByFloors
                                                BuiltInMaterials.Concrete, 
                                                new Transform(0.0, 0.0, floor.Elevation + floor.Thickness),
                                                0.0, 0.0, input.GridRotation, 
-                                               Guid.NewGuid(), ""));
+                                               false, Guid.NewGuid(), ""));
                     }
                 }
             }

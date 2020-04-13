@@ -32,11 +32,16 @@ namespace Elements
             var validator = Validator.Instance.GetFirstValidatorForType<Exclusion>();
             if(validator != null)
             {
-                validator.Validate(new object[]{ @perimeter, @elevation, @id, @name});
+                validator.PreConstruct(new object[]{ @perimeter, @elevation, @id, @name});
             }
         
             this.Perimeter = @perimeter;
             this.Elevation = @elevation;
+        
+            if(validator != null)
+            {
+                validator.PostConstruct(this);
+            }
         }
     
         /// <summary>The Exclusion perimeter.</summary>

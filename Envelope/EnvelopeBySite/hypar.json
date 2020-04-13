@@ -2,10 +2,14 @@
   "$schema": "https://hypar.io/Schemas/Function.json",
   "description": "Creates an Envelope from a Site boundary supplied by another function.",
   "id": "d4819507-d08b-41be-9157-376356d01491",
+  "language": "C#",
   "name": "Envelope By Site",
   "repository_url": "https://github.com/hypar-io/function",
   "model_dependencies": [
-    {"name": "Site"}
+    {
+      "name": "Site",
+      "optional": false
+    }
   ],
   "model_output": "Envelope",
   "inputs": [

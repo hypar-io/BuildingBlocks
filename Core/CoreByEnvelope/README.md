@@ -4,6 +4,9 @@
 
 Creates a building service representation derived from the envelope footprint.
 
+Source code:
+https://github.com/hypar-io/BuildingBlocks/tree/master/Core/CoreByEnvelope
+
 |Input Name|Type|Description|
 |---|---|---|
 |Percentage Area|Range|Percentage of highest square footage allocated to service core.|
