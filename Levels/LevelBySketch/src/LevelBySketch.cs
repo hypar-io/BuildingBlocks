@@ -22,7 +22,7 @@ namespace LevelBySketch
             var output = new LevelBySketchOutputs(input.Perimeter.Area());
             output.model.AddElement(new Level(0.0, Guid.NewGuid(), ""));
             output.model.AddElement(new LevelPerimeter(0.0, input.Perimeter, Guid.NewGuid(), ""));
-            output.model.AddElement(new Panel(input.Perimeter, lvlMatl, null, geomRep, Guid.NewGuid(), ""));
+            output.model.AddElement(new Panel(input.Perimeter, lvlMatl, null, geomRep, false, Guid.NewGuid(), ""));
             return output;
         }
     }

@@ -32,11 +32,16 @@ namespace Elements
             var validator = Validator.Instance.GetFirstValidatorForType<LevelPerimeter>();
             if(validator != null)
             {
-                validator.Validate(new object[]{ @elevation, @perimeter, @id, @name});
+                validator.PreConstruct(new object[]{ @elevation, @perimeter, @id, @name});
             }
         
             this.Elevation = @elevation;
             this.Perimeter = @perimeter;
+        
+            if(validator != null)
+            {
+                validator.PostConstruct(this);
+            }
         }
     
         /// <summary>The elevation of the level.</summary>

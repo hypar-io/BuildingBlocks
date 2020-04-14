@@ -88,14 +88,13 @@ namespace FoundationByEnvelope
 
         private static Envelope CreateFoundation(Polygon perimeter, double depth)
         {
-            var extrude = new Elements.Geometry.Solids.Extrude(perimeter, depth, Vector3.ZAxis, 0.0, false);
+            var extrude = new Elements.Geometry.Solids.Extrude(perimeter, depth, Vector3.ZAxis, false);
             var geomRep = new Representation(new List<Elements.Geometry.Solids.SolidOperation>() { extrude });
 
             var material = BuiltInMaterials.Concrete;
             return new Envelope(perimeter, depth * -1, depth, Vector3.ZAxis,
-                             0.0, new Transform(0.0, 0.0, depth * -1), material, geomRep, Guid.NewGuid(), "");
-
-
+                                0.0, new Transform(0.0, 0.0, depth * -1), material, 
+                                geomRep, false, Guid.NewGuid(), "");
         }
 
     }

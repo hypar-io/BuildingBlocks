@@ -32,12 +32,17 @@ namespace Elements
             var validator = Validator.Instance.GetFirstValidatorForType<Origin>();
             if(validator != null)
             {
-                validator.Validate(new object[]{ @position, @elevation, @transform, @id, @name});
+                validator.PreConstruct(new object[]{ @position, @elevation, @transform, @id, @name});
             }
         
             this.Position = @position;
             this.Elevation = @elevation;
             this.Transform = @transform;
+        
+            if(validator != null)
+            {
+                validator.PostConstruct(this);
+            }
         }
     
         /// <summary>The latitude of the origin.</summary>

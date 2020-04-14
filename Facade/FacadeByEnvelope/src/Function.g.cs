@@ -12,15 +12,15 @@ using System.Reflection;
 using System.Threading.Tasks;
 
 [assembly: LambdaSerializer(typeof(Amazon.Lambda.Serialization.Json.JsonSerializer))]
-namespace SiteBySketch
+namespace FacadeByEnvelope
 {
     public class Function
     {
         // Cache the model store for use by subsequent
         // executions of this lambda.
-        private IModelStore<SiteBySketchInputs> store;
+        private IModelStore<FacadeByEnvelopeInputs> store;
 
-        public async Task<SiteBySketchOutputs> Handler(SiteBySketchInputs args, ILambdaContext context)
+        public async Task<FacadeByEnvelopeOutputs> Handler(FacadeByEnvelopeInputs args, ILambdaContext context)
         {
             if(this.store == null)
             {
@@ -38,10 +38,10 @@ namespace SiteBySketch
                     Console.WriteLine("Dependencies assembly loaded.");
                 }
 
-                this.store = new S3ModelStore<SiteBySketchInputs>(RegionEndpoint.USWest1);
+                this.store = new S3ModelStore<FacadeByEnvelopeInputs>(RegionEndpoint.USWest1);
             }
             
-            var l = new InvocationWrapper<SiteBySketchInputs,SiteBySketchOutputs>(store, SiteBySketch.Execute);
+            var l = new InvocationWrapper<FacadeByEnvelopeInputs,FacadeByEnvelopeOutputs>(store, FacadeByEnvelope.Execute);
             var output = await l.InvokeAsync(args);
             return output;
         }

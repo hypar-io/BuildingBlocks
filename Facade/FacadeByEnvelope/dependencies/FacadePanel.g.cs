@@ -19,24 +19,23 @@ namespace Elements
 {
     #pragma warning disable // Disable all warnings
 
-    /// <summary>A horizontal planer datum with a perimeter.</summary>
+    /// <summary>A single panel within a facade.</summary>
     [Newtonsoft.Json.JsonConverter(typeof(Elements.Serialization.JSON.JsonInheritanceConverter), "discriminator")]
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.4.0 (Newtonsoft.Json v12.0.0.0)")]
     [UserElement]
-	public partial class LevelPerimeter : Element
+	public partial class FacadePanel : GeometricElement
     {
         [Newtonsoft.Json.JsonConstructor]
-        public LevelPerimeter(double @elevation, Polygon @perimeter, System.Guid @id, string @name)
-            : base(id, name)
+        public FacadePanel(double @thickness, Transform @transform, Material @material, Representation @representation, bool @isElementDefinition, System.Guid @id, string @name)
+            : base(transform, material, representation, isElementDefinition, id, name)
         {
-            var validator = Validator.Instance.GetFirstValidatorForType<LevelPerimeter>();
+            var validator = Validator.Instance.GetFirstValidatorForType<FacadePanel>();
             if(validator != null)
             {
-                validator.PreConstruct(new object[]{ @elevation, @perimeter, @id, @name});
+                validator.PreConstruct(new object[]{ @thickness, @transform, @material, @representation, @isElementDefinition, @id, @name});
             }
         
-            this.Elevation = @elevation;
-            this.Perimeter = @perimeter;
+            this.Thickness = @thickness;
         
             if(validator != null)
             {
@@ -44,14 +43,9 @@ namespace Elements
             }
         }
     
-        /// <summary>The elevation of the level.</summary>
-        [Newtonsoft.Json.JsonProperty("Elevation", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Range(0D, double.MaxValue)]
-        public double Elevation { get; set; }
-    
-        /// <summary>The perimeter of the level.</summary>
-        [Newtonsoft.Json.JsonProperty("Perimeter", Required = Newtonsoft.Json.Required.AllowNull)]
-        public Polygon Perimeter { get; set; }
+        /// <summary>The total thickness of the panel.</summary>
+        [Newtonsoft.Json.JsonProperty("Thickness", Required = Newtonsoft.Json.Required.Always)]
+        public double Thickness { get; set; }
     
     
     }

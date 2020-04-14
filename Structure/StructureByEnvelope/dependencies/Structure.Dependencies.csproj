@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <PackageReference Include="Hypar.Elements" Version="0.6.2" />
-    <PackageReference Include="Hypar.Functions" Version="0.6.2" />
   </ItemGroup>
 
 </Project>

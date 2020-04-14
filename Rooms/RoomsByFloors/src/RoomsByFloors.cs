@@ -57,7 +57,7 @@ namespace RoomsByFloors
                     throw new InvalidOperationException("Plan Setback too deep. No valid room boundaries could be created.");
                 }
                 var perimeter = offPerims.First();
-                var perimBox = new TopoBox(perimeter);
+                var perimBox = new CompassBox(perimeter);
 
                 var xDiv = 1.0;
                 var yDiv = 1.0;
@@ -96,7 +96,7 @@ namespace RoomsByFloors
                     for (var y = 0; y < yDiv; y++)
                     {
                         var perim = Polygon.Rectangle(xRoomSize, yRoomSize);
-                        var pTopo = new TopoBox(perim);
+                        var pTopo = new CompassBox(perim);
                         perimeters.Add(perim.MoveFromTo(pTopo.SW, loc));
                         loc = new Vector3(loc.X, loc.Y + yRoomSize, 0.0);
                     }
@@ -130,7 +130,7 @@ namespace RoomsByFloors
                             Representation geomRep = null;
                             if (input.RoomsIn3D)
                             {
-                                var solid = new Elements.Geometry.Solids.Extrude(room, height, Vector3.ZAxis, 0.0, false);
+                                var solid = new Elements.Geometry.Solids.Extrude(room, height, Vector3.ZAxis, false);
                                 geomRep = new Representation(new List<Elements.Geometry.Solids.SolidOperation>() { solid });
                             }
                             else
@@ -138,8 +138,7 @@ namespace RoomsByFloors
                                 var solid = new Elements.Geometry.Solids.Lamina(room, false);
                                 geomRep = new Representation(new List<Elements.Geometry.Solids.SolidOperation>() { solid });
                             }
-                            var rm = new Room(room, Vector3.ZAxis, 0.0, floor.Elevation, height, room.Area(), "",
-                                              new Transform(floor.Transform), matl, geomRep, Guid.NewGuid(), name);
+                            var rm = new Room(room, Vector3.ZAxis, "", "", "", "", 0.0, 0.0, 0.0, floor.Elevation,                    height, room.Area(), new Transform(floor.Transform), matl, geomRep,                      false, Guid.NewGuid(), name);
                             rm.Transform.Move(new Vector3(0.0, 0.0, 0.7));
                             rooms.Add(rm);
                         }
