@@ -1,0 +1,24 @@
+{
+    "$id": "https://raw.githubusercontent.com/andrewheumann/EnvelopeByCenterline/master/Sketch.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "description": "A geometric polyline sketch.",
+    "title": "Sketch",
+    "x-namespace": "Elements",
+    "type": "object",
+    "allOf": [
+        {
+            "$ref": "https://hypar.io/Schemas/Element.json"
+        }
+    ],
+    "required": [
+        "Geometry"
+    ],
+    "discriminator": "discriminator",
+    "properties": {
+        "Geometry": {
+            "description": "The Sketch Geometry.",
+            "$ref": "https://hypar.io/Schemas/Geometry/Polyline.json"
+        }
+    },
+    "additionalProperties": false
+}
