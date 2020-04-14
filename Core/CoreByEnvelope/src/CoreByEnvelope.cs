@@ -28,7 +28,7 @@ namespace CoreByEnvelope
             var coreDef = CoreMaker.MakeCore(inputs, envelopes);
             var extrude = new Elements.Geometry.Solids.Extrude(coreDef.perimeter, coreDef.height, Vector3.ZAxis, false);
             var corRep = new Representation(new List<Elements.Geometry.Solids.SolidOperation>() { extrude });
-            var corMatl = new Material("serviceCore", new Color(0.8, 0.8, 0.8, 0.2), 0.0f, 0.0f);
+            var corMatl = new Material("serviceCore", Palette.White, 0.0f, 0.0f);
             var output = new CoreByEnvelopeOutputs(coreDef.length, coreDef.width, coreDef.rotation);
             //envelopes.ForEach(e => output.model.AddElement(e));
             output.model.AddElement(new ServiceCore(coreDef.perimeter,

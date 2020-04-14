@@ -1,6 +1,6 @@
 {
   "$schema": "https://hypar.io/Schemas/Function.json",
-  "description": "Creates a building core by referencing LevelPerimeters supplied by another function.",
+  "description": "Creates a building core by referencing LevelPerimeters supplied by another function.\n\nSource Code:\nhttps://github.com/hypar-io/BuildingBlocks/tree/master/Core/CoreByLevels",
   "id": "99c9cad0-6de9-482a-a648-8aadfd4e2819",
   "language": "C#",
   "name": "Core By Levels",

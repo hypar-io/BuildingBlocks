@@ -1,6 +1,6 @@
 {
   "$schema": "https://hypar.io/Schemas/Function.json",
-  "description": "Creates an Envelope from a Site boundary supplied by another function.",
+  "description": "Creates an Envelope from a Site boundary supplied by another function.\n\nSource code:\nhttps://github.com/hypar-io/BuildingBlocks/tree/master/Envelope/EnvelopeBySite",
   "id": "d4819507-d08b-41be-9157-376356d01491",
   "language": "C#",
   "name": "Envelope By Site",

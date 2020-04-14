@@ -1,6 +1,6 @@
 {
   "$schema": "https://hypar.io/Schemas/Function.json",
-  "description": "Creates a building service representation derived from the envelope footprint.\n\nSource code:\nhttps://github.com/hypar-io/BuildingBlocks/tree/master/Core/CoreByEnvelope",
+  "description": "Creates a building service core representation derived from the envelope footprint.\n\nSource code:\nhttps://github.com/hypar-io/BuildingBlocks/tree/master/Core/CoreByEnvelope",
   "id": "25d52f01-6023-494e-8d75-c45ba2f51b77",
   "language": "C#",
   "name": "Core By Envelope",
