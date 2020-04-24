@@ -1,6 +1,6 @@
 {
   "$schema": "https://hypar.io/Schemas/Function.json",
-  "description": "Creates Levels and LevelPerimeters from one or more Envelopes supplied by other functions.",
+  "description": "Creates Levels and LevelPerimeters from one or more Envelopes.\n\nSource code:\nhttps://github.com/hypar-io/BuildingBlocks/tree/master/Levels/LevelsByEnvelope",
   "id": "aa0b94eb-6a0d-4f17-b0eb-322bce98bb2a",
   "language": "C#",
   "name": "Levels By Envelope",

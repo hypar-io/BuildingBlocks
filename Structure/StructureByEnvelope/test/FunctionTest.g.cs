@@ -10,7 +10,7 @@ using Elements.Geometry;
 using Xunit.Abstractions;
 using Hypar.Functions.Execution.Local;
 
-namespace Structure.Tests
+namespace StructureByEnvelope.Tests
 {
     public class FunctionTests
     {
@@ -24,16 +24,16 @@ namespace Structure.Tests
         [Fact]
         public async Task InvokeFunction()
         {
-            var store = new FileModelStore<StructureInputs>("./",true);
+            var store = new FileModelStore<StructureByEnvelopeInputs>("./",true);
 
             // Create an input object with default values.
-            var input = new StructureInputs();
+            var input = new StructureByEnvelopeInputs();
 
             // Invoke the function.
             // The function invocation uses a FileModelStore
             // which will write the resulting model to disk.
             // You'll find the model at "./model.gltf"
-            var l = new InvocationWrapper<StructureInputs,StructureOutputs>(store, Structure.Execute);
+            var l = new InvocationWrapper<StructureByEnvelopeInputs,StructureByEnvelopeOutputs>(store, StructureByEnvelope.Execute);
             var output = await l.InvokeAsync(input);
         }
     }

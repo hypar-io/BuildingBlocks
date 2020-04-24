@@ -2,7 +2,10 @@
             
 # Facade By Envelope
 
-Creates a Facade for each Envelope supplied by other functions.
+Creates a Facade for an Envelope.
+
+Source code:
+https://github.com/hypar-io/BuildingBlocks/tree/master/Facade/FacadeByEnvelope
 
 |Input Name|Type|Description|
 |---|---|---|

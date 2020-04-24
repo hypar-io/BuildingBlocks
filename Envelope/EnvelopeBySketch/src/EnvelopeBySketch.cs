@@ -19,18 +19,22 @@ namespace EnvelopeBySketch
             // Create the foundation Envelope.
             var extrude = new Elements.Geometry.Solids.Extrude(input.Perimeter, input.FoundationDepth, Vector3.ZAxis, false);
             var geomRep = new Representation(new List<Elements.Geometry.Solids.SolidOperation>() { extrude });
-            var fndMatl = new Material("foundation", new Color(1.0, 1.0, 1.0, 0.2), 0.0f, 0.0f);
-            var envMatl = new Material("envelope", new Color(1.0, 1.0, 1.0, 0.2), 0.0f, 0.0f);
+            var envMatl = new Material("envelope", new Color(0.30000001192092896, 0.699999988079071, 0.699999988079071, 0.6), 0.0f, 0.0f);
             var envelopes = new List<Envelope>()
             {
                 new Envelope(input.Perimeter, input.FoundationDepth * -1, input.FoundationDepth, Vector3.ZAxis,
-                             0.0, new Transform(0.0, 0.0, input.FoundationDepth * -1), fndMatl, geomRep, false, Guid.NewGuid(), "")
+                             0.0, new Transform(0.0, 0.0, input.FoundationDepth * -1), envMatl, geomRep, false, Guid.NewGuid(), "")
             };
 
             // Create the Envelope at the location's zero plane.
             var tiers = Math.Floor(input.BuildingHeight / input.SetbackInterval);
             var tierHeight = tiers > 1 ? input.BuildingHeight / tiers : input.BuildingHeight;
-            extrude = new Elements.Geometry.Solids.Extrude(input.Perimeter, tierHeight, Vector3.ZAxis, false);
+            var polygon = input.Perimeter;
+            if (polygon.IsClockWise())
+            {
+                polygon = polygon.Reversed();
+            }
+            extrude = new Elements.Geometry.Solids.Extrude(polygon, tierHeight, Vector3.ZAxis, false);
             geomRep = new Representation(new List<Elements.Geometry.Solids.SolidOperation>() { extrude });
             envelopes.Add(new Envelope(input.Perimeter, 0.0, tierHeight, Vector3.ZAxis, 0.0,
                           new Transform(), envMatl, geomRep, false, Guid.NewGuid(), ""));
@@ -40,12 +44,17 @@ namespace EnvelopeBySketch
             for (int i = 0; i < tiers - 1; i++)
             {
                 var tryPer = input.Perimeter.Offset(input.SetbackDepth * offsFactor);
+                tryPer = tryPer.OrderByDescending(p => p.Area()).ToArray();
                 if (tryPer.Count() == 0 || tryPer.First().Area() < input.MinimumTierArea)
                 {
                     break;
                 }
-                tryPer = tryPer.OrderByDescending(p => p.Area()).ToArray();
-                extrude = new Elements.Geometry.Solids.Extrude(tryPer.First(), tierHeight, Vector3.ZAxis, false);
+                polygon = tryPer.First();
+                if (polygon.IsClockWise())
+                {
+                    polygon = polygon.Reversed();
+                }
+                extrude = new Elements.Geometry.Solids.Extrude(polygon, tierHeight, Vector3.ZAxis, false);
                 geomRep = new Representation(new List<Elements.Geometry.Solids.SolidOperation>() { extrude });
                 envelopes.Add(new Envelope(tryPer.First(), tierHeight * elevFactor, tierHeight, Vector3.ZAxis, 0.0,
                               new Transform(0.0, 0.0, tierHeight * elevFactor), envMatl, geomRep, false, Guid.NewGuid(), ""));

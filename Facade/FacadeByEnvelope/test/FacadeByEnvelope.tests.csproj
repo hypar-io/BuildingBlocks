@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\Facade.csproj" />
+    <ProjectReference Include="..\src\FacadeByEnvelope.csproj" />
   </ItemGroup>
 
 </Project>

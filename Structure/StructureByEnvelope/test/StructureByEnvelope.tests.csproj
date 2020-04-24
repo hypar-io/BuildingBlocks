@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\Structure.csproj" />
+    <ProjectReference Include="..\src\StructureByEnvelope.csproj" />
   </ItemGroup>
 
 </Project>
