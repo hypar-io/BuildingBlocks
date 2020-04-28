@@ -1,0 +1,58 @@
+{
+  "$schema": "https://hypar.io/Schemas/Function.json",
+  "description": "Creates building Envelope elements derived from a polyline centerline sketch, width, and height.\n\nSource code:\nhttps://github.com/hypar-io/BuildingBlocks/tree/master/Envelope/EnvelopeByCenterline",
+  "id": "9f54e26f-2c3d-4a60-b582-fdd82af403c2",
+  "language": "C#",
+  "name": "Envelope By Centerline",
+  "repository_url": "https://github.com/hypar-io/function",
+  "model_output": "Envelope",
+  "inputs": [
+    {
+      "primitive_type": "polyline",
+      "name": "Centerline",
+      "description": "Centerline of the building envelope.",
+      "type": "geometry"
+    },
+    {
+      "min": 5.0,
+      "max": 100.0,
+      "step": 1.0,
+      "name": "Building Height",
+      "description": "Overall height of the building from grade.",
+      "type": "range"
+    },
+    {
+      "min": 10.0,
+      "max": 30.0,
+      "step": 1.0,
+      "name": "Bar Width",
+      "description": "Width of the mass perpendicular to the Centerline.",
+      "type": "range"
+    },
+    {
+      "min": 5.0,
+      "max": 20.0,
+      "step": 1.0,
+      "name": "Foundation Depth",
+      "description": "Depth of the building envelope below grade.",
+      "type": "range"
+    }
+  ],
+  "outputs": [
+    {
+      "name": "Height",
+      "description": "Height of the building.",
+      "type": "number"
+    },
+    {
+      "name": "Subgrade",
+      "description": "Depth of the subgrade section.",
+      "type": "number"
+    }
+  ],
+  "preview_image": "data:image/png;base64,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",
+  "element_types": [
+    "https://raw.githubusercontent.com/hypar-io/Schemas/master/Envelope.json",
+    "https://raw.githubusercontent.com/andrewheumann/EnvelopeByCenterline/master/Sketch.json"
+  ]
+}

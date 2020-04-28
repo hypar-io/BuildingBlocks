@@ -1,6 +1,6 @@
 <img src="preview.png" width="512">
             
-# SiteBySketch
+# Site By Sketch
 
 Creates a Site from a polygon sketch.
 

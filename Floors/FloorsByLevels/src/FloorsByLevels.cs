@@ -33,14 +33,16 @@ namespace FloorsByLevels
                 {
                     floor = new Floor(flrOffsets.First(), input.FloorThickness,
                             new Transform(0.0, 0.0, level.Elevation - input.FloorThickness),
-                            BuiltInMaterials.Concrete, null, Guid.NewGuid(), null);
+                            BuiltInMaterials.Concrete, null, false, Guid.NewGuid(), null);
                 }
                 else
                 {
                     floor = new Floor(level.Perimeter, input.FloorThickness,
                             new Transform(0.0, 0.0, level.Elevation - input.FloorThickness),
-                            BuiltInMaterials.Concrete, null, Guid.NewGuid(), null);
+                            BuiltInMaterials.Concrete, null, false, Guid.NewGuid(), null);
                 }
+                var opening = level.Perimeter.Offset(-1.0).First();
+                floor.Openings.Add(new Opening(opening));
                 floors.Add(floor);
                 floorArea += floor.Area();
             }

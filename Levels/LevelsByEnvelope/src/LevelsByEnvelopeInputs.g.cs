@@ -42,9 +42,9 @@ namespace LevelsByEnvelope
         /// </summary>
         public LevelsByEnvelopeInputs() : base()
         {
-			this.GroundLevelHeight = 7;
-			this.StandardLevelHeight = 5;
-			this.PenthouseLevelHeight = 7;
+			this.GroundLevelHeight = 20;
+			this.StandardLevelHeight = 20;
+			this.PenthouseLevelHeight = 20;
 
         }
 

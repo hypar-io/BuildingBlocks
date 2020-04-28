@@ -19,8 +19,9 @@ namespace SiteBySketch
             var lamina = new Elements.Geometry.Solids.Lamina(input.Perimeter, false);
             var geomRep = new Representation(new List<Elements.Geometry.Solids.SolidOperation>() { lamina });
             var sitMatl = new Material("site", Palette.Emerald, 0.0f, 0.0f);
-            var output = new SiteBySketchOutputs(input.Perimeter.Area());
-            output.model.AddElement(new Site(input.Perimeter, new Transform(0, 0, 0), sitMatl, geomRep, Guid.NewGuid(), ""));
+            var output = new SiteBySketchOutputs(Math.Abs(input.Perimeter.Area()));
+            var site = new Site(input.Perimeter, Math.Abs(input.Perimeter.Area()), null, sitMatl, geomRep, false, Guid.NewGuid(), "");
+            output.model.AddElement(site);
             return output;
         }
     }

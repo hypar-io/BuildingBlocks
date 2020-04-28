@@ -32,7 +32,7 @@ namespace Elements
             var validator = Validator.Instance.GetFirstValidatorForType<Envelope>();
             if(validator != null)
             {
-                validator.Validate(new object[]{ @profile, @elevation, @height, @direction, @rotation, @transform, @material, @representation, @isElementDefinition, @id, @name});
+                validator.PreConstruct(new object[]{ @profile, @elevation, @height, @direction, @rotation, @transform, @material, @representation, @isElementDefinition, @id, @name});
             }
         
             this.Profile = @profile;
@@ -40,6 +40,11 @@ namespace Elements
             this.Height = @height;
             this.Direction = @direction;
             this.Rotation = @rotation;
+        
+            if(validator != null)
+            {
+                validator.PostConstruct(this);
+            }
         }
     
         /// <summary>The id of the profile to extrude.</summary>
