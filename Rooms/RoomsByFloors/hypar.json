@@ -1,11 +1,15 @@
 {
   "$schema": "https://hypar.io/Schemas/Function.json",
-  "description": "Creates Rooms on each Floor supplied by another function.",
+  "description": "Creates Rooms on each Floor.\n\nSource code:\nhttps://github.com/hypar-io/BuildingBlocks/tree/master/Rooms/RoomsByFloors",
   "id": "ce8c432e-70ee-4b36-8e8d-0323ae7a2bf5",
+  "language": "C#",
   "name": "Rooms By Floors",
   "repository_url": "https://github.com/hypar-io/function",
   "model_dependencies": [
-    {"name": "Floors"}
+    {
+      "name": "Floors",
+      "optional": false
+    }
   ],
   "model_output": "Rooms",
   "inputs": [

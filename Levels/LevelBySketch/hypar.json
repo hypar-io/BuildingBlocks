@@ -1,7 +1,8 @@
 {
   "$schema": "https://hypar.io/Schemas/Function.json",
-  "description": "The LevelBySketch function.",
+  "description": "Creates a Level from a sketch.\n\nSource code:\nhttps://github.com/hypar-io/BuildingBlocks/tree/master/Levels/LevelBySketch",
   "id": "88ea9c1b-682f-4b0a-8b9d-d789f00d345c",
+  "language": "C#",
   "name": "Level By Sketch",
   "repository_url": "https://github.com/hypar-io/function",
   "model_output": "LevelPerimeter",
