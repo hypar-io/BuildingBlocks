@@ -1,0 +1,50 @@
+{
+    "Origin": [
+        0.0,
+        0.0
+    ],
+    "Elements":{
+        "916c88a6-1ad8-4340-b9fe-4febd1d6a7bd": {
+            "discriminator": "Elements.Level",
+            "Elevation": 0.0,
+            "Id": "916c88a6-1ad8-4340-b9fe-4febd1d6a7bd",
+            "Name": ""
+        },
+        "f777a36f-6ca5-4fb8-a59a-b16bc0458206": {
+            "discriminator": "Elements.Level",
+            "Elevation": 3.252,
+            "Id": "f777a36f-6ca5-4fb8-a59a-b16bc0458206",
+            "Name": ""
+        },
+        "1ffbba4d-8eff-4577-b7c1-345005fbbdb9": {
+            "discriminator": "Elements.Level",
+            "Elevation": 6.504,
+            "Id": "1ffbba4d-8eff-4577-b7c1-345005fbbdb9",
+            "Name": ""
+        },
+        "16d10103-c0f6-4b32-ae04-77689ea14466": {
+            "discriminator": "Elements.Level",
+            "Elevation": 9.756,
+            "Id": "16d10103-c0f6-4b32-ae04-77689ea14466",
+            "Name": ""
+        },
+        "272f85d3-5f36-400f-89df-17434e2eff4d": {
+            "discriminator": "Elements.Level",
+            "Elevation": 13.008,
+            "Id": "272f85d3-5f36-400f-89df-17434e2eff4d",
+            "Name": ""
+        },
+        "d7afcf2c-ec79-49fd-b683-158cd4aa8801": {
+            "discriminator": "Elements.Level",
+            "Elevation": 16.259999999999998,
+            "Id": "d7afcf2c-ec79-49fd-b683-158cd4aa8801",
+            "Name": ""
+        },
+        "e71c64e2-eb52-404a-93a4-c1f2717164ba": {
+            "discriminator": "Elements.Level",
+            "Elevation": 19.511999999999997,
+            "Id": "e71c64e2-eb52-404a-93a4-c1f2717164ba",
+            "Name": ""
+        }
+    }
+}
