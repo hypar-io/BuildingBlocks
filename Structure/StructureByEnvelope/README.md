@@ -2,10 +2,7 @@
             
 # Structure By Envelope
 
-Generates a structural frame from a set of Levels and an Envelope.
-
-Source code:
-https://github.com/hypar-io/BuildingBlocks/tree/master/Structure/StructureByEnvelope
+Generate a structural frame from a set of Levels and an Envelope.
 
 |Input Name|Type|Description|
 |---|---|---|

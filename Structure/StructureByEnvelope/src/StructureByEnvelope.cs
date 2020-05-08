@@ -90,12 +90,12 @@ namespace StructureByEnvelope
         private static double _longestGridSpan = 0.0;
 
         /// <summary>
-		/// The Structure function.
+		/// The StructureByEnvelope function.
 		/// </summary>
 		/// <param name="model">The model. 
 		/// Add elements to the model to have them persisted.</param>
 		/// <param name="input">The arguments to the execution.</param>
-		/// <returns>A StructureOutputs instance containing computed results.</returns>
+		/// <returns>A StructureByEnvelopeOutputs instance containing computed results.</returns>
 		public static StructureByEnvelopeOutputs Execute(Dictionary<string, Model> models, StructureByEnvelopeInputs input)
         {
             List<Level> levels = null;
@@ -198,14 +198,15 @@ namespace StructureByEnvelope
                     else
                     {
                         // var displace = Vector3.Origin - masterColumn.Transform.Origin - lc;
-                        var instance = new ElementInstance(masterColumn, new Transform(lc));
+                        masterColumn.IsElementDefinition = true;
+                        var instance = masterColumn.CreateInstance(new Transform(lc), "");//new ElementInstance(masterColumn, new Transform(lc));
                         model.AddElement(instance, false);
                     }
                 }
             }
 
             var output = new StructureByEnvelopeOutputs(_longestGridSpan);
-            output.model = model;
+            output.Model = model;
             return output;
         }
 
@@ -338,7 +339,8 @@ namespace StructureByEnvelope
             foreach (var beam in framing)
             {
                 var halfDepth = _halfDepths[_beamProfiles.IndexOf(beam.Profile)];
-                var beamInstance = new ElementInstance(beam, new Transform(new Vector3(0, 0, elevation - halfDepth)));
+                beam.IsElementDefinition = true;
+                var beamInstance = beam.CreateInstance(new Transform(new Vector3(0, 0, elevation - halfDepth)), "");
                 instanceBeams.Add(beamInstance);
             }
             return instanceBeams;
