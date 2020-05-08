@@ -12,9 +12,9 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System.Collections.Generic;
 
-namespace Structure
+namespace StructureByEnvelope
 {
-    public class StructureOutputs: ResultsBase
+    public class StructureByEnvelopeOutputs: ResultsBase
     {
 		/// <summary>
 		/// The maximum beam length.
@@ -25,21 +25,21 @@ namespace Structure
 
         
         /// <summary>
-        /// Construct a StructureOutputs with default inputs.
+        /// Construct a StructureByEnvelopeOutputs with default inputs.
         /// This should be used for testing only.
         /// </summary>
-        public StructureOutputs() : base()
+        public StructureByEnvelopeOutputs() : base()
         {
 
         }
 
 
         /// <summary>
-        /// Construct a StructureOutputs specifying all inputs.
+        /// Construct a StructureByEnvelopeOutputs specifying all inputs.
         /// </summary>
         /// <returns></returns>
         [JsonConstructor]
-        public StructureOutputs(double maximumbeamlength): base()
+        public StructureByEnvelopeOutputs(double maximumbeamlength): base()
         {
 			this.MaximumBeamLength = maximumbeamlength;
 

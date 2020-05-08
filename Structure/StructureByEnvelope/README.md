@@ -1,8 +1,8 @@
 <img src="preview.png" width="512">
             
-# Structure
+# Structure By Envelope
 
-Generate a structural frame provided a set of Levels and an Envelope.
+Generate a structural frame from a set of Levels and an Envelope.
 
 |Input Name|Type|Description|
 |---|---|---|

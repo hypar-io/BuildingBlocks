@@ -12,9 +12,9 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System.Collections.Generic;
 
-namespace Structure
+namespace StructureByEnvelope
 {
-    public class StructureInputs: S3Args
+    public class StructureByEnvelopeInputs: S3Args
     {
 		/// <summary>
 		/// Grid interval in the X direction.
@@ -31,10 +31,10 @@ namespace Structure
 
         
         /// <summary>
-        /// Construct a StructureInputs with default inputs.
+        /// Construct a StructureByEnvelopeInputs with default inputs.
         /// This should be used for testing only.
         /// </summary>
-        public StructureInputs() : base()
+        public StructureByEnvelopeInputs() : base()
         {
 			this.GridXAxisInterval = 10;
 			this.GridYAxisInterval = 10;
@@ -43,11 +43,11 @@ namespace Structure
 
 
         /// <summary>
-        /// Construct a StructureInputs specifying all inputs.
+        /// Construct a StructureByEnvelopeInputs specifying all inputs.
         /// </summary>
         /// <returns></returns>
         [JsonConstructor]
-        public StructureInputs(double gridxaxisinterval, double gridyaxisinterval, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
+        public StructureByEnvelopeInputs(double gridxaxisinterval, double gridyaxisinterval, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
         {
 			this.GridXAxisInterval = gridxaxisinterval;
 			this.GridYAxisInterval = gridyaxisinterval;

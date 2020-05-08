@@ -4,13 +4,15 @@
 
 using Xunit;
 using Hypar.Functions.Execution;
+using System.IO;
+using System.Reflection;
 using System.Threading.Tasks;
-using Elements;
-using Elements.Geometry;
 using Xunit.Abstractions;
 using Hypar.Functions.Execution.Local;
+using System;
+using System.Collections.Generic;
 
-namespace Structure.Tests
+namespace StructureByEnvelope.Tests
 {
     public class FunctionTests
     {
@@ -24,17 +26,31 @@ namespace Structure.Tests
         [Fact]
         public async Task InvokeFunction()
         {
-            var store = new FileModelStore<StructureInputs>("./",true);
+            var root = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "../../../../");
+            var config = Hypar.Functions.Function.FromJson(File.ReadAllText(Path.Combine(root, "hypar.json")));
+
+            var store = new FileModelStore<StructureByEnvelopeInputs>(root, true);
 
             // Create an input object with default values.
-            var input = new StructureInputs();
+            var input = new StructureByEnvelopeInputs();
+
+            // Read local input files to populate incoming test data.
+            if (config.ModelDependencies != null)
+            {
+                var modelInputKeys = new Dictionary<string, string>();
+                foreach (var dep in config.ModelDependencies)
+                {
+                    modelInputKeys.Add(dep.Name, $"{dep.Name}.json");
+                }
+                input.ModelInputKeys = modelInputKeys;
+            }
 
             // Invoke the function.
             // The function invocation uses a FileModelStore
             // which will write the resulting model to disk.
             // You'll find the model at "./model.gltf"
-            var l = new InvocationWrapper<StructureInputs,StructureOutputs>(store, Structure.Execute);
-            var output = await l.InvokeAsync(input);
+            var l = new InvocationWrapper<StructureByEnvelopeInputs, StructureByEnvelopeOutputs>(store, StructureByEnvelope.Execute);
+            await l.InvokeAsync(input);
         }
     }
 }

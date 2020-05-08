@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Structure", "src\Structure.csproj", "{54E8E011-E7E9-475B-89C1-AB4A54D0E275}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StructureByEnvelope", "src\StructureByEnvelope.csproj", "{54E8E011-E7E9-475B-89C1-AB4A54D0E275}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Structure.tests", "test\Structure.tests.csproj", "{CE809602-EB60-4D06-9799-51A871A2D56C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StructureByEnvelope.tests", "test\StructureByEnvelope.tests.csproj", "{CE809602-EB60-4D06-9799-51A871A2D56C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Structure.Dependencies", "dependencies\Structure.Dependencies.csproj", "{0DB0987C-E49F-4251-8408-2249EBAD8556}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StructureByEnvelope.Dependencies", "dependencies\StructureByEnvelope.Dependencies.csproj", "{0DB0987C-E49F-4251-8408-2249EBAD8556}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
