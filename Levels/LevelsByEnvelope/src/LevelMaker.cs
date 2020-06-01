@@ -172,7 +172,7 @@ namespace LevelsByEnvelope
                 LevelPerimeters.Add(new LevelPerimeter(envelope.Elevation, perimeter, Guid.NewGuid(), ""));
             };
             var openHeight = envelope.Height;
-            var stdHeight = openHeight / Math.Floor(openHeight / interval) - 1;
+            var stdHeight = Math.Abs(openHeight / Math.Floor(openHeight / interval) - 1);
             var atHeight = envelope.Elevation + stdHeight;
             while (openHeight > stdHeight * 2)
             {

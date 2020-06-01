@@ -38,14 +38,14 @@ namespace LevelsByEnvelope
                                                      input.GroundLevelHeight, 
                                                      input.StandardLevelHeight,
                                                      input.PenthouseLevelHeight);
-            output.model.AddElements(levelMaker.Levels);
-            output.model.AddElements(levelMaker.LevelPerimeters);
+            output.Model.AddElements(levelMaker.Levels);
+            output.Model.AddElements(levelMaker.LevelPerimeters);
             var matl = BuiltInMaterials.Glass;
             matl.SpecularFactor = 0.5;
             matl.GlossinessFactor = 0.0;
             foreach (var item in levelMaker.LevelPerimeters)
             {
-                output.model.AddElement(new Panel(item.Perimeter, matl, new Transform(0.0, 0.0, item.Elevation), 
+                output.Model.AddElement(new Panel(item.Perimeter, matl, new Transform(0.0, 0.0, item.Elevation), 
                                         null, false, Guid.NewGuid(), ""));
             }
             return output;
