@@ -147,7 +147,7 @@ namespace LevelsByEnvelope
                 return false;
             }
             Levels.Add(new Level(elevation, Guid.NewGuid(), ""));
-            LevelPerimeters.Add(new LevelPerimeter(elevation, perimeter, Guid.NewGuid(), ""));
+            LevelPerimeters.Add(new LevelPerimeter(perimeter.Area(), elevation, perimeter, Guid.NewGuid(), ""));
             Levels = Levels.OrderBy(l => l.Elevation).ToList();
             LevelPerimeters = LevelPerimeters.OrderBy(l => l.Elevation).ToList();
             return true;
@@ -169,7 +169,7 @@ namespace LevelsByEnvelope
             if (first)
             {
                 Levels.Add(new Level(envelope.Elevation, Guid.NewGuid(), ""));
-                LevelPerimeters.Add(new LevelPerimeter(envelope.Elevation, perimeter, Guid.NewGuid(), ""));
+                LevelPerimeters.Add(new LevelPerimeter(perimeter.Area(), envelope.Elevation, perimeter, Guid.NewGuid(), ""));
             };
             var openHeight = envelope.Height;
             var stdHeight = Math.Abs(openHeight / Math.Floor(openHeight / interval) - 1);
@@ -177,14 +177,14 @@ namespace LevelsByEnvelope
             while (openHeight > stdHeight * 2)
             {
                 Levels.Add(new Level(atHeight, Guid.NewGuid(), ""));
-                LevelPerimeters.Add(new LevelPerimeter(atHeight, perimeter, Guid.NewGuid(), ""));
+                LevelPerimeters.Add(new LevelPerimeter(Math.Abs(perimeter.Area()), atHeight, perimeter, Guid.NewGuid(), ""));
                 openHeight -= stdHeight;
                 atHeight += stdHeight;
             }
             if (last)
             {
                 Levels.Add(new Level(envelope.Elevation + envelope.Height, Guid.NewGuid(), ""));
-                LevelPerimeters.Add(new LevelPerimeter(envelope.Elevation + envelope.Height, perimeter, Guid.NewGuid(), ""));
+                LevelPerimeters.Add(new LevelPerimeter(Math.Abs(perimeter.Area()), envelope.Elevation + envelope.Height, perimeter, Guid.NewGuid(), ""));
             }
         }
     }
