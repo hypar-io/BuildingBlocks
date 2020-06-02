@@ -31,7 +31,7 @@ namespace LevelsByEnvelope
             var levelArea = 0.0;
             foreach (var lp in levelMaker.LevelPerimeters)
             {
-                levelArea += Math.Abs(lp.Perimeter.Area());
+                levelArea += lp.Area;
             }
             var output = new LevelsByEnvelopeOutputs(levelMaker.Levels.Count(), 
                                                      levelArea, 

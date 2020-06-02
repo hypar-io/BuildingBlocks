@@ -177,14 +177,14 @@ namespace LevelsByEnvelope
             while (openHeight > stdHeight * 2)
             {
                 Levels.Add(new Level(atHeight, Guid.NewGuid(), ""));
-                LevelPerimeters.Add(new LevelPerimeter(Math.Abs(perimeter.Area()), atHeight, perimeter, Guid.NewGuid(), ""));
+                LevelPerimeters.Add(new LevelPerimeter(perimeter.Area(), atHeight, perimeter, Guid.NewGuid(), ""));
                 openHeight -= stdHeight;
                 atHeight += stdHeight;
             }
             if (last)
             {
                 Levels.Add(new Level(envelope.Elevation + envelope.Height, Guid.NewGuid(), ""));
-                LevelPerimeters.Add(new LevelPerimeter(Math.Abs(perimeter.Area()), envelope.Elevation + envelope.Height, perimeter, Guid.NewGuid(), ""));
+                LevelPerimeters.Add(new LevelPerimeter(perimeter.Area(), envelope.Elevation + envelope.Height, perimeter, Guid.NewGuid(), ""));
             }
         }
     }
