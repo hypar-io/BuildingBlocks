@@ -76,7 +76,7 @@ namespace ColumnsByFloors
             var output = new ColumnsByFloorsOutputs(columns.Count());
             foreach (var column in columns)
             {
-                output.model.AddElement(column);
+                output.Model.AddElement(column);
             }
             return output;
         }

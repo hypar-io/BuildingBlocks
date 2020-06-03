@@ -18,8 +18,8 @@ namespace RoomsByFloors.Tests
             var inputs = new RoomsByFloorsInputs(2.0, 2.0, 5.0, 5.0, 1.0, 0.0, false, "", "", new Dictionary<string, string>(), "", "", "");
             var model = Model.FromJson(System.IO.File.ReadAllText("../../../../../../TestOutput/FloorsByLevels.json"));
             var outputs = RoomsByFloors.Execute(new Dictionary<string, Model>{{"Floors", model}}, inputs);
-            System.IO.File.WriteAllText("../../../../../../TestOutput/RoomsByFloors.json", outputs.model.ToJson());
-            outputs.model.ToGlTF("../../../../../../TestOutput/RoomsByFloors.glb");
+            System.IO.File.WriteAllText("../../../../../../TestOutput/RoomsByFloors.json", outputs.Model.ToJson());
+            outputs.Model.ToGlTF("../../../../../../TestOutput/RoomsByFloors.glb");
         }
     }
 }

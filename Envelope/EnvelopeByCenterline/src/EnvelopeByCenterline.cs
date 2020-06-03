@@ -23,8 +23,8 @@ namespace EnvelopeByCenterline
             // Create the foundation Envelope.
             var extrude = new Elements.Geometry.Solids.Extrude(perimeter, input.FoundationDepth, Vector3.ZAxis, false);
             var geomRep = new Representation(new List<Elements.Geometry.Solids.SolidOperation>() { extrude });
-            var fndMatl = new Material("foundation", new Color(0.60000002384185791, 0.60000002384185791, 0.60000002384185791, 1), 0.0f, 0.0f);
-            var envMatl = new Material("envelope", new Color(0.30000001192092896, 0.699999988079071, 0.699999988079071, 0.6), 0.0f, 0.0f);
+            var fndMatl = new Material("foundation", new Color(0.6, 0.60000002384185791, 0.6, 1), 0.0f, 0.0f);
+            var envMatl = new Material("envelope", new Color(0.3, 0.7, 0.7, 0.6), 0.0f, 0.0f);
             var envelopes = new List<Envelope>()
             {
                 new Envelope(perimeter, input.FoundationDepth * -1, input.FoundationDepth, Vector3.ZAxis,
@@ -38,9 +38,9 @@ namespace EnvelopeByCenterline
             geomRep = new Representation(new List<Elements.Geometry.Solids.SolidOperation>() { extrude });
             envelopes.Add(new Envelope(perimeter, 0.0, input.BuildingHeight, Vector3.ZAxis, 0.0,
                           new Transform(), envMatl, geomRep, false, Guid.NewGuid(), ""));
-            output.model.AddElements(envelopes);
+            output.Model.AddElements(envelopes);
             var sketch = new Sketch(input.Centerline, Guid.NewGuid(), "Centerline Sketch");
-            output.model.AddElement(sketch);
+            output.Model.AddElement(sketch);
             return output;
         }
 

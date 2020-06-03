@@ -48,7 +48,7 @@ namespace FloorsByLevels
             }
             floors = floors.OrderBy(f => f.Elevation).ToList();
             var output = new FloorsByLevelsOutputs(floorArea, floors.Count());
-            output.model.AddElements(floors);
+            output.Model.AddElements(floors);
             return output;
         }
     }

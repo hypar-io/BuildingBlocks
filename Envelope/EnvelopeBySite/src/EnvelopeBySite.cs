@@ -82,7 +82,7 @@ namespace EnvelopeBySite
                 envelopes = envelopes.OrderBy(e => e.Elevation).ToList();
                 foreach (var item in envelopes)
                 {
-                    output.model.AddElement(item);
+                    output.Model.AddElement(item);
                 }
             }
             return output;

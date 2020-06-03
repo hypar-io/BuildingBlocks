@@ -18,8 +18,8 @@ namespace ColumnsByFloors.Tests
             var inputs = new ColumnsByFloorsInputs(4.0, 5.0, 15.0, 0.5, "", "", new Dictionary<string, string>(), "", "", "");
             var model = Model.FromJson(System.IO.File.ReadAllText("../../../../../../TestOutput/FloorsByLevels.json"));
             var outputs = ColumnsByFloors.Execute(new Dictionary<string, Model>{{"Floors", model}}, inputs);
-            System.IO.File.WriteAllText("../../../../../../TestOutput/ColumnsByFloors.json", outputs.model.ToJson());
-            outputs.model.ToGlTF("../../../../../../TestOutput/ColumnsByFloors.glb");
+            System.IO.File.WriteAllText("../../../../../../TestOutput/ColumnsByFloors.json", outputs.Model.ToJson());
+            outputs.Model.ToGlTF("../../../../../../TestOutput/ColumnsByFloors.glb");
         }
     }
 }

@@ -167,7 +167,7 @@ namespace FacadeByEnvelope
             }
 
             var output = new FacadeByEnvelopeOutputs(panelCount);
-            output.model = model;
+            output.Model = model;
             return output;
         }
 

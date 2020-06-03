@@ -29,8 +29,8 @@ namespace SiteBySketch.Tests
             var inputs = 
                 new SiteBySketchInputs (polygon, "", "", new Dictionary<string, string>(), "", "", "");
             var outputs = SiteBySketch.Execute(new Dictionary<string, Model> { { "Test", model } }, inputs);
-            System.IO.File.WriteAllText("../../../../../../TestOutput/SiteBySketch.json", outputs.model.ToJson());
-            outputs.model.ToGlTF("../../../../../../TestOutput/SiteBySketch.glb");
+            System.IO.File.WriteAllText("../../../../../../TestOutput/SiteBySketch.json", outputs.Model.ToJson());
+            outputs.Model.ToGlTF("../../../../../../TestOutput/SiteBySketch.glb");
         }
     }
 }
