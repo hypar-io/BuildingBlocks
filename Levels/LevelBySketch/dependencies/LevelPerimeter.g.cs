@@ -26,25 +26,36 @@ namespace Elements
 	public partial class LevelPerimeter : Element
     {
         [Newtonsoft.Json.JsonConstructor]
-        public LevelPerimeter(double @elevation, Polygon @perimeter, System.Guid @id, string @name)
+        public LevelPerimeter(double @area, double @elevation, Polygon @perimeter, System.Guid @id, string @name)
             : base(id, name)
         {
             var validator = Validator.Instance.GetFirstValidatorForType<LevelPerimeter>();
             if(validator != null)
             {
-                validator.Validate(new object[]{ @elevation, @perimeter, @id, @name});
+                validator.PreConstruct(new object[]{ @area, @elevation, @perimeter, @id, @name});
             }
         
+            this.Area = @area;
             this.Elevation = @elevation;
             this.Perimeter = @perimeter;
+        
+            if(validator != null)
+            {
+                validator.PostConstruct(this);
+            }
         }
     
-        /// <summary>The elevation of the level.</summary>
+        /// <summary>The area of the level perimeter.</summary>
+        [Newtonsoft.Json.JsonProperty("Area", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.Range(0D, double.MaxValue)]
+        public double Area { get; set; }
+    
+        /// <summary>The elevation of the level perimeter.</summary>
         [Newtonsoft.Json.JsonProperty("Elevation", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Range(0D, double.MaxValue)]
         public double Elevation { get; set; }
     
-        /// <summary>The perimeter of the level.</summary>
+        /// <summary>The perimeter of the level perimeter.</summary>
         [Newtonsoft.Json.JsonProperty("Perimeter", Required = Newtonsoft.Json.Required.AllowNull)]
         public Polygon Perimeter { get; set; }
     

@@ -32,10 +32,15 @@ namespace Elements
             var validator = Validator.Instance.GetFirstValidatorForType<Level>();
             if(validator != null)
             {
-                validator.Validate(new object[]{ @elevation, @id, @name});
+                validator.PreConstruct(new object[]{ @elevation, @id, @name});
             }
         
             this.Elevation = @elevation;
+        
+            if(validator != null)
+            {
+                validator.PostConstruct(this);
+            }
         }
     
         /// <summary>The elevation of the level.</summary>

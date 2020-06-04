@@ -8,6 +8,6 @@
     <PackageReference Include="GeometryEx" Version="4.0.0" />
   </ItemGroup>
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 </Project>

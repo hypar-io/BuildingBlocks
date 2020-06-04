@@ -4,6 +4,9 @@
 
 Creates building Envelope elements derived from a polyline centerline sketch, width, and height.
 
+Source code:
+https://github.com/hypar-io/BuildingBlocks/tree/master/Envelope/EnvelopeByCenterline
+
 |Input Name|Type|Description|
 |---|---|---|
 |Centerline|Geometry|Centerline of the building envelope.|

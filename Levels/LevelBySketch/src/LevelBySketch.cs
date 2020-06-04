@@ -21,7 +21,7 @@ namespace LevelBySketch
             var lvlMatl = new Material("level", Palette.White, 0.0f, 0.0f);
             var output = new LevelBySketchOutputs(input.Perimeter.Area());
             output.Model.AddElement(new Level(0.0, Guid.NewGuid(), ""));
-            output.Model.AddElement(new LevelPerimeter(0.0, input.Perimeter, Guid.NewGuid(), ""));
+            output.Model.AddElement(new LevelPerimeter(input.Perimeter.Area(), 0.0, input.Perimeter, Guid.NewGuid(), ""));
             output.Model.AddElement(new Panel(input.Perimeter, lvlMatl, null, geomRep, false, Guid.NewGuid(), ""));
             return output;
         }
