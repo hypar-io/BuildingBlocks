@@ -16,7 +16,7 @@
       "min": 0.0,
       "max": 30.0,
       "step": 1.0,
-      "unit_type": "none",
+      "unit_type": "length",
       "name": "Site Setback",
       "description": "Distance from site boundary to building envelope.",
       "type": "range"
@@ -25,7 +25,7 @@
       "min": 5.0,
       "max": 100.0,
       "step": 1.0,
-      "unit_type": "none",
+      "unit_type": "length",
       "name": "Building Height",
       "description": "Overall height of the building from grade.",
       "type": "range"
@@ -34,7 +34,7 @@
       "min": 10.0,
       "max": 30.0,
       "step": 1.0,
-      "unit_type": "none",
+      "unit_type": "length",
       "name": "Setback Interval",
       "description": "Vertical distance between envelope setbacks.",
       "type": "range"
@@ -43,7 +43,7 @@
       "min": 1.0,
       "max": 3.0,
       "step": 0.5,
-      "unit_type": "none",
+      "unit_type": "length",
       "name": "Setback Depth",
       "description": "Offset depth from previous setback.",
       "type": "range"
@@ -52,7 +52,7 @@
       "min": 10.0,
       "max": 100.0,
       "step": 1.0,
-      "unit_type": "none",
+      "unit_type": "area",
       "name": "Minimum Tier Area",
       "description": "Minimum area allowed for a setback tier.",
       "type": "range"
@@ -61,7 +61,7 @@
       "min": 5.0,
       "max": 20.0,
       "step": 1.0,
-      "unit_type": "none",
+      "unit_type": "length",
       "name": "Foundation Depth",
       "description": "Depth of the building envelope below grade.",
       "type": "range"
@@ -69,13 +69,13 @@
   ],
   "outputs": [
     {
-      "unit_type": "none",
+      "unit_type": "length",
       "name": "Height",
       "description": "Height of the building.",
       "type": "number"
     },
     {
-      "unit_type": "none",
+      "unit_type": "length",
       "name": "Subgrade",
       "description": "Depth of the subgrade section.",
       "type": "number"

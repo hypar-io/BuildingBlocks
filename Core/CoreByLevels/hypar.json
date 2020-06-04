@@ -16,7 +16,7 @@
       "min": 1.0,
       "max": 10.0,
       "step": 1.0,
-      "unit_type": "none",
+      "unit_type": "length",
       "name": "Setback",
       "description": "Core perimeter setback from envelope.",
       "type": "range"

@@ -20,7 +20,7 @@
       "min": 3.0,
       "max": 10.0,
       "step": 1.0,
-      "unit_type": "none",
+      "unit_type": "length",
       "name": "Grid X-Axis Interval",
       "description": "Grid interval in the X direction.",
       "type": "range"
@@ -29,7 +29,7 @@
       "min": 3.0,
       "max": 10.0,
       "step": 1.0,
-      "unit_type": "none",
+      "unit_type": "length",
       "name": "Grid Y-Axis Interval",
       "description": "Grid interval in the Y direction.",
       "type": "range"
@@ -37,7 +37,7 @@
   ],
   "outputs": [
     {
-      "unit_type": "none",
+      "unit_type": "length",
       "name": "Maximum Beam Length",
       "description": "The maximum beam length.",
       "type": "number"

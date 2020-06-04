@@ -15,7 +15,7 @@
   ],
   "outputs": [
     {
-      "unit_type": "none",
+      "unit_type": "area",
       "name": "Area",
       "description": "Area of the Level Perimeter.",
       "type": "number"

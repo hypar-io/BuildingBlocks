@@ -16,7 +16,7 @@
       "min": 4.0,
       "max": 10.0,
       "step": 1.0,
-      "unit_type": "none",
+      "unit_type": "length",
       "name": "Grid X-Axis Interval",
       "description": "Grid interval in the X direction.",
       "type": "range"
@@ -25,7 +25,7 @@
       "min": 4.0,
       "max": 10.0,
       "step": 1.0,
-      "unit_type": "none",
+      "unit_type": "length",
       "name": "Grid Y-Axis Interval",
       "description": "Grid interval in the Y direction.",
       "type": "range"
@@ -43,7 +43,7 @@
       "min": 0.2,
       "max": 2.0,
       "step": 0.1,
-      "unit_type": "none",
+      "unit_type": "length",
       "name": "Column Diameter",
       "description": "Diameter of the columns.",
       "type": "range"
