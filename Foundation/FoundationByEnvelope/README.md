@@ -2,7 +2,10 @@
             
 # Foundation by Envelope
 
-The FoundationByEnvelope function.
+Creates a Foundation from a building Envelope.
+
+Source code:
+https://github.com/hypar-io/BuildingBlocks/tree/master/Foundation/FoundationByEnvelope
 
 |Input Name|Type|Description|
 |---|---|---|

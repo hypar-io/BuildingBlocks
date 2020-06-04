@@ -4,11 +4,13 @@
 
 using Xunit;
 using Hypar.Functions.Execution;
+using System.IO;
+using System.Reflection;
 using System.Threading.Tasks;
-using Elements;
-using Elements.Geometry;
 using Xunit.Abstractions;
 using Hypar.Functions.Execution.Local;
+using System;
+using System.Collections.Generic;
 
 namespace FoundationByEnvelope.Tests
 {
@@ -24,17 +26,31 @@ namespace FoundationByEnvelope.Tests
         [Fact]
         public async Task InvokeFunction()
         {
-            var store = new FileModelStore<FoundationByEnvelopeInputs>("./",true);
+            var root = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "../../../../");
+            var config = Hypar.Functions.Function.FromJson(File.ReadAllText(Path.Combine(root, "hypar.json")));
+
+            var store = new FileModelStore<FoundationByEnvelopeInputs>(root, true);
 
             // Create an input object with default values.
             var input = new FoundationByEnvelopeInputs();
+
+            // Read local input files to populate incoming test data.
+            if (config.ModelDependencies != null)
+            {
+                var modelInputKeys = new Dictionary<string, string>();
+                foreach (var dep in config.ModelDependencies)
+                {
+                    modelInputKeys.Add(dep.Name, $"{dep.Name}.json");
+                }
+                input.ModelInputKeys = modelInputKeys;
+            }
 
             // Invoke the function.
             // The function invocation uses a FileModelStore
             // which will write the resulting model to disk.
             // You'll find the model at "./model.gltf"
-            var l = new InvocationWrapper<FoundationByEnvelopeInputs,FoundationByEnvelopeOutputs>(store, FoundationByEnvelope.Execute);
-            var output = await l.InvokeAsync(input);
+            var l = new InvocationWrapper<FoundationByEnvelopeInputs, FoundationByEnvelopeOutputs>(store, FoundationByEnvelope.Execute);
+            await l.InvokeAsync(input);
         }
     }
 }

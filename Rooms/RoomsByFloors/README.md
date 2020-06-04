@@ -2,7 +2,10 @@
             
 # Rooms By Floors
 
-Creates Rooms on each Floor supplied by another function.
+Creates Rooms on each Floor.
+
+Source code:
+https://github.com/hypar-io/BuildingBlocks/tree/master/Rooms/RoomsByFloors
 
 |Input Name|Type|Description|
 |---|---|---|

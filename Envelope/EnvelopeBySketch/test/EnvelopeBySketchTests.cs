@@ -35,8 +35,8 @@ namespace EnvelopeBySketch.Tests
             var inputs = 
                 new EnvelopeBySketchInputs (polygon, 80.0, 20.0, 2.0, 100.0, 20.0, "", "", new Dictionary<string, string>(), "", "", "");
             var outputs = EnvelopeBySketch.Execute(new Dictionary<string, Model> { { "Envelope", model } }, inputs);
-            System.IO.File.WriteAllText("../../../../../../TestOutput/EnvelopeBySketch.json", outputs.model.ToJson());
-            outputs.model.ToGlTF("../../../../../../TestOutput/EnvelopeBySketch.glb");
+            System.IO.File.WriteAllText("../../../../../../TestOutput/EnvelopeBySketch.json", outputs.Model.ToJson());
+            outputs.Model.ToGlTF("../../../../../../TestOutput/EnvelopeBySketch.glb");
         }
     }
 }

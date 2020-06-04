@@ -4,6 +4,9 @@
 
 Creates a building core by referencing LevelPerimeters supplied by another function.
 
+Source Code:
+https://github.com/hypar-io/BuildingBlocks/tree/master/Core/CoreByLevels
+
 |Input Name|Type|Description|
 |---|---|---|
 |Setback|Range|Core perimeter setback from envelope.|

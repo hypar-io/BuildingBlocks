@@ -18,8 +18,8 @@ namespace FloorsByLevels.tests
             var model = Model.FromJson(System.IO.File.ReadAllText("../../../../../../TestOutput/LevelsByEnvelope.json"));
             var inputs = new FloorsByLevelsInputs(0.2, 0.5, "", "", new Dictionary<string, string>(), "", "", "");
             var outputs = FloorsByLevels.Execute(new Dictionary<string, Model>{{"Levels", model}}, inputs);
-            System.IO.File.WriteAllText("../../../../../../TestOutput/FloorsByLevels.json", outputs.model.ToJson());
-            outputs.model.ToGlTF("../../../../../../TestOutput/FloorsByLevels.glb");
+            System.IO.File.WriteAllText("../../../../../../TestOutput/FloorsByLevels.json", outputs.Model.ToJson());
+            outputs.Model.ToGlTF("../../../../../../TestOutput/FloorsByLevels.glb");
         }
 
         [Fact]
@@ -28,8 +28,8 @@ namespace FloorsByLevels.tests
             var model = Model.FromJson(System.IO.File.ReadAllText("../../../../../../TestOutput/Building-01.json"));
             var inputs = new FloorsByLevelsInputs(0.2, 0.5, "", "", new Dictionary<string, string>(), "", "", "");
             var outputs = FloorsByLevels.Execute(new Dictionary<string, Model> { { "Levels", model } }, inputs);
-            System.IO.File.WriteAllText("../../../../../../TestOutput/GHFloorsByLevels.json", outputs.model.ToJson());
-            outputs.model.ToGlTF("../../../../../../TestOutput/GHFloorsByLevels.glb");
+            System.IO.File.WriteAllText("../../../../../../TestOutput/GHFloorsByLevels.json", outputs.Model.ToJson());
+            outputs.Model.ToGlTF("../../../../../../TestOutput/GHFloorsByLevels.glb");
         }
     }
 }

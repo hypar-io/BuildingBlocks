@@ -149,7 +149,7 @@ namespace RoomsByFloors
             var output = new RoomsByFloorsOutputs(grdRooms, grdArea, typRooms, typRoomCount, upArea);
             foreach (var room in rooms)
             {
-                output.model.AddElement(room);
+                output.Model.AddElement(room);
             }
             return output;
         }

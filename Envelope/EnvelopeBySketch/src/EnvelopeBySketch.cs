@@ -65,7 +65,7 @@ namespace EnvelopeBySketch
             envelopes = envelopes.OrderBy(e => e.Elevation).ToList();
             foreach (var env in envelopes)
             {
-                output.model.AddElement(env);
+                output.Model.AddElement(env);
             }
             return output;
         }

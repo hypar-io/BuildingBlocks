@@ -4,6 +4,9 @@
 
 Creates Floors from LevelPerimeters supplied by another function.
 
+Source code:
+https://github.com/hypar-io/BuildingBlocks/tree/master/Floors/FloorsByLevels
+
 |Input Name|Type|Description|
 |---|---|---|
 |Floor Setback|Range|Setback of all floors from each level's perimeter.|

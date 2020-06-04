@@ -31,7 +31,7 @@ namespace CoreByEnvelope
             var corMatl = new Material("serviceCore", Palette.White, 0.0f, 0.0f);
             var output = new CoreByEnvelopeOutputs(coreDef.length, coreDef.width, coreDef.rotation);
             //envelopes.ForEach(e => output.model.AddElement(e));
-            output.model.AddElement(new ServiceCore(coreDef.perimeter,
+            output.Model.AddElement(new ServiceCore(coreDef.perimeter,
                                                     Vector3.ZAxis,
                                                     coreDef.elevation,
                                                     coreDef.height,
