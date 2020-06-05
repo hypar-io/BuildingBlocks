@@ -20,7 +20,7 @@
       "min": 0.5,
       "max": 4.0,
       "step": 0.25,
-      "unit_type": "none",
+      "unit_type": "length",
       "name": "Panel Width",
       "description": "The panel width",
       "type": "range"
@@ -29,7 +29,7 @@
       "min": 0.01,
       "max": 1.0,
       "step": 0.01,
-      "unit_type": "none",
+      "unit_type": "length",
       "name": "Glass Left-Right Inset",
       "description": "The inset of the glass panel from the left and right of the outer frame.",
       "type": "range"
@@ -38,7 +38,7 @@
       "min": 0.01,
       "max": 1.0,
       "step": 0.01,
-      "unit_type": "none",
+      "unit_type": "length",
       "name": "Glass Top-Bottom Inset",
       "description": "The inset of the glass panel from the top and bottom of the outer frame.",
       "type": "range"

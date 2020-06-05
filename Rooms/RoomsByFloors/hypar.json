@@ -52,7 +52,7 @@
       "min": 0.0,
       "max": 2.0,
       "step": 0.1,
-      "unit_type": "none",
+      "unit_type": "length",
       "name": "Plan Setback",
       "description": "Plan setback from the edge of all floors.",
       "type": "range"
@@ -80,7 +80,7 @@
       "type": "number"
     },
     {
-      "unit_type": "none",
+      "unit_type": "area",
       "name": "Ground Floor Area",
       "description": "Area for the ground floor.",
       "type": "number"
@@ -98,7 +98,7 @@
       "type": "number"
     },
     {
-      "unit_type": "none",
+      "unit_type": "area",
       "name": "Upper Floor Total Area",
       "description": "Total area for all upper floors.",
       "type": "number"

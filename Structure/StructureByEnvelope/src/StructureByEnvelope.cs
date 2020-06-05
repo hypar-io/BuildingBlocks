@@ -460,7 +460,7 @@ namespace StructureByEnvelope
 
                     if (drawTestGeometry)
                     {
-                        var pt = Polygon.Circle(0.5);
+                        var pt = new Circle(0.5).ToPolygon(10);
                         var t = new Transform(xsect);
                         var mc = new ModelCurve(t.OfPolygon(pt), BuiltInMaterials.XAxis);
                         model.AddElement(mc);
