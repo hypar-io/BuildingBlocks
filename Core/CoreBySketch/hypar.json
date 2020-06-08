@@ -1,0 +1,44 @@
+{
+  "$schema": "https://hypar.io/Schemas/Function.json",
+  "id": "70733a0d-5e3f-4cb6-a72a-b045abe5d677",
+  "name": "Core By Sketch",
+  "description": "The CoreBySketch function.",
+  "language": "C#",
+  "model_dependencies": [
+    {
+      "name": "Levels",
+      "optional": false
+    }
+  ],
+  "inputs": [
+    {
+      "primitive_type": "polygon",
+      "name": "Perimeter",
+      "description": "Perimeter of the building service core.",
+      "type": "geometry"
+    },
+    {
+      "min": -1.0,
+      "max": 5.0,
+      "step": 1.0,
+      "unit_type": "length",
+      "name": "Core height above roof",
+      "description": "The projection of the service core above the highest building level.",
+      "type": "range"
+    }
+  ],
+  "outputs": [
+    {
+      "unit_type": "none",
+      "name": "Height",
+      "description": "Height of the service core.",
+      "type": "number"
+    }
+  ],
+  "element_types": [
+    "https://raw.githubusercontent.com/hypar-io/Schemas/master/Level.json",
+    "https://raw.githubusercontent.com/hypar-io/Schemas/master/ServiceCore.json"
+  ],
+  "repository_url": "https://github.com/hypar-io/function",
+  "preview_image": null
+}
