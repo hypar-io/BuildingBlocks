@@ -2,7 +2,7 @@
   "$schema": "https://hypar.io/Schemas/Function.json",
   "id": "70733a0d-5e3f-4cb6-a72a-b045abe5d677",
   "name": "Core By Sketch",
-  "description": "The CoreBySketch function.",
+  "description": "Creates the volume of a building service core by extruding a sketch to a height relative to the highest model Level.",
   "language": "C#",
   "model_dependencies": [
     {
@@ -29,7 +29,7 @@
   ],
   "outputs": [
     {
-      "unit_type": "none",
+      "unit_type": "length",
       "name": "Height",
       "description": "Height of the service core.",
       "type": "number"
