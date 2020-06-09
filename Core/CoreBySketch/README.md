@@ -1,8 +1,8 @@
-
+<img src="preview.png" width="512">
             
 # Core By Sketch
 
-The CoreBySketch function.
+Creates the volume of a building service core by extruding a sketch to a height relative to the highest model Level.
 
 |Input Name|Type|Description|
 |---|---|---|
