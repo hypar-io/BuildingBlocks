@@ -45,6 +45,7 @@ namespace FloorsByLevels
                 floorArea += floor.Area();
             }
             floors = floors.OrderBy(f => f.Elevation).ToList();
+            floors.First().Transform.Move(new Vector3(0.0, 0.0, input.FloorThickness));
             var output = new FloorsByLevelsOutputs(floorArea, floors.Count());
             output.Model.AddElements(floors);
             return output;
