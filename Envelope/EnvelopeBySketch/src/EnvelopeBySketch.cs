@@ -19,7 +19,7 @@ namespace EnvelopeBySketch
             // Create the foundation Envelope.
             var extrude = new Elements.Geometry.Solids.Extrude(input.Perimeter, input.FoundationDepth, Vector3.ZAxis, false);
             var geomRep = new Representation(new List<Elements.Geometry.Solids.SolidOperation>() { extrude });
-            var envMatl = new Material("envelope", new Color(0.30000001192092896, 0.699999988079071, 0.699999988079071, 0.6), 0.0f, 0.0f);
+            var envMatl = new Material("envelope", new Color(0.3, 0.7, 0.7, 0.6), 0.0f, 0.0f);
             var envelopes = new List<Envelope>()
             {
                 new Envelope(input.Perimeter, input.FoundationDepth * -1, input.FoundationDepth, Vector3.ZAxis,
