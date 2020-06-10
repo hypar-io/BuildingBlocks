@@ -17,23 +17,19 @@ namespace EnvelopeBySketch.Tests
         public void EnvelopeBySketchTest()
         {
             var model = new Model();
-            var polygon = 
+            var polygon =
                 new Polygon
                 (
                     new[]
                     {
                         new Vector3(0.0, 0.0),
-                        new Vector3(100.0, 0.0),
-                        new Vector3(100.0, 100.0),
-                        new Vector3(60.0, 100.0),
-                        new Vector3(60.0, 30.0),
-                        new Vector3(40.0, 40.0),
-                        new Vector3(40.0, 100.0),
-                        new Vector3(0.0, 100.0)
+                        new Vector3(20.0, 0.0),
+                        new Vector3(20.0, 20.0),
+                        new Vector3(0.0, 20.0)
                     }
                 );
-            var inputs = 
-                new EnvelopeBySketchInputs (polygon, 80.0, 20.0, 2.0, 100.0, 20.0, "", "", new Dictionary<string, string>(), "", "", "");
+            var inputs =
+                new EnvelopeBySketchInputs(polygon, 27.0, 50.0, 5.0, 100.0, 3.0, "", "", new Dictionary<string, string>(), "", "", "");
             var outputs = EnvelopeBySketch.Execute(new Dictionary<string, Model> { { "Envelope", model } }, inputs);
             System.IO.File.WriteAllText("../../../../../../TestOutput/EnvelopeBySketch.json", outputs.Model.ToJson());
             outputs.Model.ToGlTF("../../../../../../TestOutput/EnvelopeBySketch.glb");
