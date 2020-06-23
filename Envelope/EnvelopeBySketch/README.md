@@ -1,11 +1,8 @@
 <img src="preview.png" width="512">
-            
+
 # Envelope By Sketch
 
 Creates building Envelope elements derived from a polygon sketch and setback settings.
-
-Source code:
-https://github.com/hypar-io/BuildingBlocks/tree/master/Envelope/EnvelopeBySketch
 
 |Input Name|Type|Description|
 |---|---|---|

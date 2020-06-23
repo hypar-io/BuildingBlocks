@@ -16,15 +16,19 @@ namespace EnvelopeBySketch
         /// <returns>A EnvelopeBySketchOutputs instance containing computed results and the model with any new elements.</returns>
         public static EnvelopeBySketchOutputs Execute(Dictionary<string, Model> inputModels, EnvelopeBySketchInputs input)
         {
-            // Create the foundation Envelope.
-            var extrude = new Elements.Geometry.Solids.Extrude(input.Perimeter, input.FoundationDepth, Vector3.ZAxis, false);
-            var geomRep = new Representation(new List<Elements.Geometry.Solids.SolidOperation>() { extrude });
+            Elements.Geometry.Solids.Extrude extrude;
+            Representation geomRep;
+            var envelopes = new List<Envelope>();
             var envMatl = new Material("envelope", new Color(0.3, 0.7, 0.7, 0.6), 0.0f, 0.0f);
-            var envelopes = new List<Envelope>()
+
+            // Create the foundation Envelope.
+            if (input.FoundationDepth > 0)
             {
-                new Envelope(input.Perimeter, input.FoundationDepth * -1, input.FoundationDepth, Vector3.ZAxis,
-                             0.0, new Transform(0.0, 0.0, input.FoundationDepth * -1), envMatl, geomRep, false, Guid.NewGuid(), "")
-            };
+                extrude = new Elements.Geometry.Solids.Extrude(input.Perimeter, input.FoundationDepth, Vector3.ZAxis, false);
+                geomRep = new Representation(new List<Elements.Geometry.Solids.SolidOperation>() { extrude });
+                envelopes.Add(new Envelope(input.Perimeter, input.FoundationDepth * -1, input.FoundationDepth, Vector3.ZAxis,
+                                0.0, new Transform(0.0, 0.0, input.FoundationDepth * -1), envMatl, geomRep, false, Guid.NewGuid(), ""));
+            }
 
             // Create the Envelope at the location's zero plane.
             var tiers = Math.Floor(input.BuildingHeight / input.SetbackInterval);

@@ -29,7 +29,7 @@ namespace EnvelopeBySketch
 		public double Subgrade {get;}
 
 
-        
+
         /// <summary>
         /// Construct a EnvelopeBySketchOutputs with default inputs.
         /// This should be used for testing only.

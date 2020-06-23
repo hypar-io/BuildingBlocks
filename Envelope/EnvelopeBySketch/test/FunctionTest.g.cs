@@ -29,7 +29,7 @@ namespace EnvelopeBySketch.Tests
             var root = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "../../../../");
             var config = Hypar.Functions.Function.FromJson(File.ReadAllText(Path.Combine(root, "hypar.json")));
 
-            var store = new FileModelStore<EnvelopeBySketchInputs>(root, true);
+            var store = new FileModelStore<EnvelopeBySketchInputs>(root);
 
             // Create an input object with default values.
             var input = new EnvelopeBySketchInputs();
