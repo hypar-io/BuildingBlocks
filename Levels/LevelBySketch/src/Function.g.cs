@@ -30,7 +30,7 @@ namespace LevelBySketch
                 var asmDir = Path.GetDirectoryName(asmLocation);
                 var asmName = Path.GetFileNameWithoutExtension(asmLocation);
                 var depPath = Path.Combine(asmDir, $"{asmName}.Dependencies.dll");
-                
+
                 if(File.Exists(depPath))
                 {
                     Console.WriteLine($"Loading dependencies from assembly: {depPath}...");
@@ -40,7 +40,7 @@ namespace LevelBySketch
 
                 this.store = new S3ModelStore<LevelBySketchInputs>(RegionEndpoint.USWest1);
             }
-            
+
             var l = new InvocationWrapper<LevelBySketchInputs,LevelBySketchOutputs>(store, LevelBySketch.Execute);
             var output = await l.InvokeAsync(args);
             return output;

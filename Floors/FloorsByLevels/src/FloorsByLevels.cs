@@ -9,7 +9,7 @@ namespace FloorsByLevels
     public static class FloorsByLevels
     {
         /// <summary>
-        /// The FloorsByLevels function.
+        /// Generates Floors for each LevelPerimeter in the model configured ith slab thickness and setback..
         /// </summary>
         /// <param name="model">The input model.</param>
         /// <param name="input">The arguments to the execution.</param>

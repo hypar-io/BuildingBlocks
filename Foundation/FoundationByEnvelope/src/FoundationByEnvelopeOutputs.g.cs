@@ -23,7 +23,7 @@ namespace FoundationByEnvelope
 		public double Depth {get;}
 
 
-        
+
         /// <summary>
         /// Construct a FoundationByEnvelopeOutputs with default inputs.
         /// This should be used for testing only.

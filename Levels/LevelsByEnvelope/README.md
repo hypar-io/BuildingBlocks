@@ -1,11 +1,8 @@
 <img src="preview.png" width="512">
-            
+
 # Levels By Envelope
 
 Creates Levels and LevelPerimeters from one or more Envelopes.
-
-Source code:
-https://github.com/hypar-io/BuildingBlocks/tree/master/Levels/LevelsByEnvelope
 
 |Input Name|Type|Description|
 |---|---|---|

@@ -29,7 +29,7 @@ namespace CoreByLevels
 		public double Lifts {get;}
 
 
-        
+
         /// <summary>
         /// Construct a CoreByLevelsOutputs with default inputs.
         /// This should be used for testing only.

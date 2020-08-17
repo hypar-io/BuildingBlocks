@@ -9,7 +9,7 @@ namespace LevelBySketch
     public static class LevelBySketch
     {
         /// <summary>
-        /// The LevelBySketch function.
+        /// Generates a Level and LevelPerimeters from a sketch and specified elevation.
         /// </summary>
         /// <param name="model">The input model.</param>
         /// <param name="input">The arguments to the execution.</param>

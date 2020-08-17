@@ -30,7 +30,7 @@ namespace FoundationByEnvelope
                 var asmDir = Path.GetDirectoryName(asmLocation);
                 var asmName = Path.GetFileNameWithoutExtension(asmLocation);
                 var depPath = Path.Combine(asmDir, $"{asmName}.Dependencies.dll");
-                
+
                 if(File.Exists(depPath))
                 {
                     Console.WriteLine($"Loading dependencies from assembly: {depPath}...");
@@ -40,7 +40,7 @@ namespace FoundationByEnvelope
 
                 this.store = new S3ModelStore<FoundationByEnvelopeInputs>(RegionEndpoint.USWest1);
             }
-            
+
             var l = new InvocationWrapper<FoundationByEnvelopeInputs,FoundationByEnvelopeOutputs>(store, FoundationByEnvelope.Execute);
             var output = await l.InvokeAsync(args);
             return output;

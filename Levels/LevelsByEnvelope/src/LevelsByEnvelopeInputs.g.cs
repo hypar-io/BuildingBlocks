@@ -35,7 +35,7 @@ namespace LevelsByEnvelope
 		public double PenthouseLevelHeight {get;}
 
 
-        
+
         /// <summary>
         /// Construct a LevelsByEnvelopeInputs with default inputs.
         /// This should be used for testing only.
@@ -54,11 +54,11 @@ namespace LevelsByEnvelope
         /// </summary>
         /// <returns></returns>
         [JsonConstructor]
-        public LevelsByEnvelopeInputs(double groundlevelheight, double standardlevelheight, double penthouselevelheight, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
+        public LevelsByEnvelopeInputs(double groundLevelHeight, double standardLevelHeight, double penthouseLevelHeight, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
         {
-			this.GroundLevelHeight = groundlevelheight;
-			this.StandardLevelHeight = standardlevelheight;
-			this.PenthouseLevelHeight = penthouselevelheight;
+			this.GroundLevelHeight = groundLevelHeight;
+			this.StandardLevelHeight = standardLevelHeight;
+			this.PenthouseLevelHeight = penthouseLevelHeight;
 
 		}
 

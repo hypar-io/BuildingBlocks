@@ -29,7 +29,7 @@ namespace StructureByEnvelope
 		public double GridYAxisInterval {get;}
 
 
-        
+
         /// <summary>
         /// Construct a StructureByEnvelopeInputs with default inputs.
         /// This should be used for testing only.
@@ -47,10 +47,10 @@ namespace StructureByEnvelope
         /// </summary>
         /// <returns></returns>
         [JsonConstructor]
-        public StructureByEnvelopeInputs(double gridxaxisinterval, double gridyaxisinterval, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
+        public StructureByEnvelopeInputs(double gridXAxisInterval, double gridYAxisInterval, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
         {
-			this.GridXAxisInterval = gridxaxisinterval;
-			this.GridYAxisInterval = gridyaxisinterval;
+			this.GridXAxisInterval = gridXAxisInterval;
+			this.GridYAxisInterval = gridYAxisInterval;
 
 		}
 

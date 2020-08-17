@@ -1,11 +1,8 @@
 <img src="preview.png" width="512">
-            
+
 # Core By Envelope
 
 Creates a building service core representation derived from the envelope footprint.
-
-Source code:
-https://github.com/hypar-io/BuildingBlocks/tree/master/Core/CoreByEnvelope
 
 |Input Name|Type|Description|
 |---|---|---|

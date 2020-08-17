@@ -1,12 +1,12 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
     <ProjectReference Include="..\dependencies\CoreBySketch.Dependencies.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Hypar.Elements" Version="0.7.1" />
-    <PackageReference Include="Hypar.Functions" Version="0.7.1" />
+    <PackageReference Include="Hypar.Elements" Version="0.7.3" />
+    <PackageReference Include="Hypar.Functions" Version="0.7.3" />
   </ItemGroup>
 
   <PropertyGroup>

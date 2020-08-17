@@ -10,7 +10,7 @@ namespace EnvelopeBySite
     public static class EnvelopeBySite
     {
         /// <summary>
-        /// The EnvelopeBySite function.
+        /// Generates a building Envelope from a Site boundary.
         /// </summary>
         /// <param name="model">The input model.</param>
         /// <param name="input">The arguments to the execution.</param>
@@ -79,11 +79,7 @@ namespace EnvelopeBySite
                     offsFactor--;
                     elevFactor++;
                 }
-                envelopes = envelopes.OrderBy(e => e.Elevation).ToList();
-                foreach (var item in envelopes)
-                {
-                    output.Model.AddElement(item);
-                }
+                envelopes.OrderBy(e => e.Elevation).ToList().ForEach(e => output.Model.AddElement(e));
             }
             return output;
         }

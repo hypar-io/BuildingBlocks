@@ -11,6 +11,15 @@
       "name": "Perimeter",
       "description": "Perimeter of the Level.",
       "type": "geometry"
+    },
+    {
+      "min": -20.0,
+      "max": 200.0,
+      "step": 0.25,
+      "unit_type": "length",
+      "name": "Level Elevation",
+      "description": "Level elevation relative to the zero plane.",
+      "type": "range"
     }
   ],
   "outputs": [

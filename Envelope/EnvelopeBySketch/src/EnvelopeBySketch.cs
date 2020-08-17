@@ -9,7 +9,7 @@ namespace EnvelopeBySketch
     public static class EnvelopeBySketch
     {
         /// <summary>
-        /// The EnvelopeBySketch function.
+        /// Generates a building Envelope from a sketch of the footprint, a building height, and a setback configuration.
         /// </summary>
         /// <param name="model">The input model.</param>
         /// <param name="input">The arguments to the execution.</param>

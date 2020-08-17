@@ -53,7 +53,7 @@ namespace EnvelopeBySite
 		public double FoundationDepth {get;}
 
 
-        
+
         /// <summary>
         /// Construct a EnvelopeBySiteInputs with default inputs.
         /// This should be used for testing only.
@@ -75,14 +75,14 @@ namespace EnvelopeBySite
         /// </summary>
         /// <returns></returns>
         [JsonConstructor]
-        public EnvelopeBySiteInputs(double sitesetback, double buildingheight, double setbackinterval, double setbackdepth, double minimumtierarea, double foundationdepth, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
+        public EnvelopeBySiteInputs(double siteSetback, double buildingHeight, double setbackInterval, double setbackDepth, double minimumTierArea, double foundationDepth, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
         {
-			this.SiteSetback = sitesetback;
-			this.BuildingHeight = buildingheight;
-			this.SetbackInterval = setbackinterval;
-			this.SetbackDepth = setbackdepth;
-			this.MinimumTierArea = minimumtierarea;
-			this.FoundationDepth = foundationdepth;
+			this.SiteSetback = siteSetback;
+			this.BuildingHeight = buildingHeight;
+			this.SetbackInterval = setbackInterval;
+			this.SetbackDepth = setbackDepth;
+			this.MinimumTierArea = minimumTierArea;
+			this.FoundationDepth = foundationDepth;
 
 		}
 

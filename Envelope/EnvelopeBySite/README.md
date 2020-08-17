@@ -1,11 +1,8 @@
 <img src="preview.png" width="512">
-            
+
 # Envelope By Site
 
 Creates an Envelope from a Site boundary supplied by another function.
-
-Source code:
-https://github.com/hypar-io/BuildingBlocks/tree/master/Envelope/EnvelopeBySite
 
 |Input Name|Type|Description|
 |---|---|---|

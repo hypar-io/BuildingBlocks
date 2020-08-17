@@ -30,7 +30,7 @@ namespace ColumnsByFloors
                 var asmDir = Path.GetDirectoryName(asmLocation);
                 var asmName = Path.GetFileNameWithoutExtension(asmLocation);
                 var depPath = Path.Combine(asmDir, $"{asmName}.Dependencies.dll");
-                
+
                 if(File.Exists(depPath))
                 {
                     Console.WriteLine($"Loading dependencies from assembly: {depPath}...");
@@ -40,7 +40,7 @@ namespace ColumnsByFloors
 
                 this.store = new S3ModelStore<ColumnsByFloorsInputs>(RegionEndpoint.USWest1);
             }
-            
+
             var l = new InvocationWrapper<ColumnsByFloorsInputs,ColumnsByFloorsOutputs>(store, ColumnsByFloors.Execute);
             var output = await l.InvokeAsync(args);
             return output;

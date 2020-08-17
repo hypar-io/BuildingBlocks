@@ -14,7 +14,7 @@ namespace SubdivideSlab
     public static class SubdivideSlab
     {
         /// <summary>
-        /// The SubdivideSlab function.
+        /// Subdivides an incoming Floor according to x- and y-axis distances and grid rotation.
         /// </summary>
         /// <param name="model">The input model.</param>
         /// <param name="input">The arguments to the execution.</param>

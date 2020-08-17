@@ -10,7 +10,7 @@ namespace ColumnsByFloors
     public static class ColumnsByFloors
     {
         /// <summary>
-        /// The ColumnsByFloors function.
+        /// Creates a grid of columns derived from x- and y-axis intervals and a rotation angle using the largest floor to determine the pattern for all floors.
         /// </summary>
         /// <param name="model">The input model.</param>
         /// <param name="input">The arguments to the execution.</param>
@@ -42,6 +42,9 @@ namespace ColumnsByFloors
             var columns = new List<Column>();
             foreach (var floorGroup in floorGroups)
             {
+                var biggestFloor = floorGroup.OrderByDescending(f => f.Profile.Perimeter.Area()).First();
+                var grid = new CoordinateGrid(biggestFloor.Profile.Perimeter, input.GridXAxisInterval, input.GridYAxisInterval, input.GridRotation);
+
                 var floors = floorGroup.OrderBy(f => f.Elevation).ToList();
                 for (var i = 0; i < floors.Count() - 1; i++)
                 {
@@ -55,11 +58,11 @@ namespace ColumnsByFloors
                     } while (!floor.Profile.Perimeter.Intersects(ceiling.Profile.Perimeter));
                     
                     var height = ceiling.Elevation - floor.Elevation - floor.Thickness;
-                    var grid = new CoordinateGrid(ceiling.Profile.Perimeter, input.GridXAxisInterval, input.GridYAxisInterval, input.GridRotation);
+
                     foreach (var point in grid.Available)
                     {
                         var colPerim = Polygon.Rectangle(input.ColumnDiameter, input.ColumnDiameter).MoveFromTo(Vector3.Origin, point);
-                        if (!floor.Profile.Perimeter.Covers(colPerim) ||
+                        if (!floor.Profile.Perimeter.Covers(colPerim) || 
                             !ceiling.Profile.Perimeter.Covers(colPerim))
                         {
                             continue;
@@ -74,10 +77,7 @@ namespace ColumnsByFloors
                 }
             }
             var output = new ColumnsByFloorsOutputs(columns.Count());
-            foreach (var column in columns)
-            {
-                output.Model.AddElement(column);
-            }
+            columns.ForEach(c => output.Model.AddElement(c));
             return output;
         }
     }

@@ -29,7 +29,7 @@ namespace CoreByLevels
 		public double Rotation {get;}
 
 
-        
+
         /// <summary>
         /// Construct a CoreByLevelsInputs with default inputs.
         /// This should be used for testing only.

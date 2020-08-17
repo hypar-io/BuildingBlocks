@@ -291,7 +291,7 @@ namespace StructureByEnvelope
 
             var ti = new Transform(transform);
             ti.Invert();
-            var tBoundary = ti.OfPolygon(boundary);
+            var tBoundary = boundary.TransformedPolygon(ti);
 
             foreach (var v in tBoundary.Vertices)
             {
@@ -462,7 +462,7 @@ namespace StructureByEnvelope
                     {
                         var pt = new Circle(0.5).ToPolygon(10);
                         var t = new Transform(xsect);
-                        var mc = new ModelCurve(t.OfPolygon(pt), BuiltInMaterials.XAxis);
+                        var mc = new ModelCurve(pt.TransformedPolyline(t), BuiltInMaterials.XAxis);
                         model.AddElement(mc);
                     }
                 }

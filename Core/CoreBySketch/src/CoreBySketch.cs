@@ -9,7 +9,7 @@ namespace CoreBySketch
       public static class CoreBySketch
     {
         /// <summary>
-        /// The CoreBySketch function.
+        /// Creates a building service core enclosure from a sketch and referenced Levels.
         /// </summary>
         /// <param name="model">The input model.</param>
         /// <param name="input">The arguments to the execution.</param>

@@ -23,7 +23,7 @@ namespace ColumnsByFloors
 		public double ColumnQuantity {get;}
 
 
-        
+
         /// <summary>
         /// Construct a ColumnsByFloorsOutputs with default inputs.
         /// This should be used for testing only.
@@ -39,9 +39,9 @@ namespace ColumnsByFloors
         /// </summary>
         /// <returns></returns>
         [JsonConstructor]
-        public ColumnsByFloorsOutputs(double columnquantity): base()
+        public ColumnsByFloorsOutputs(double columnQuantity): base()
         {
-			this.ColumnQuantity = columnquantity;
+			this.ColumnQuantity = columnQuantity;
 
 		}
 

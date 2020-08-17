@@ -29,7 +29,7 @@ namespace EnvelopeByCenterline
 		public double Subgrade {get;}
 
 
-        
+
         /// <summary>
         /// Construct a EnvelopeByCenterlineOutputs with default inputs.
         /// This should be used for testing only.

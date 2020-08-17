@@ -29,7 +29,7 @@ namespace CoreBySketch
 		public double CoreHeightAboveRoof {get;}
 
 
-        
+
         /// <summary>
         /// Construct a CoreBySketchInputs with default inputs.
         /// This should be used for testing only.
@@ -47,10 +47,10 @@ namespace CoreBySketch
         /// </summary>
         /// <returns></returns>
         [JsonConstructor]
-        public CoreBySketchInputs(Elements.Geometry.Polygon perimeter, double coreheightaboveroof, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
+        public CoreBySketchInputs(Elements.Geometry.Polygon perimeter, double coreHeightAboveRoof, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
         {
 			this.Perimeter = perimeter;
-			this.CoreHeightAboveRoof = coreheightaboveroof;
+			this.CoreHeightAboveRoof = coreHeightAboveRoof;
 
 		}
 

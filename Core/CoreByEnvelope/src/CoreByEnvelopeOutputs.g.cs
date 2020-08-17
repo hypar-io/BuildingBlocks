@@ -35,7 +35,7 @@ namespace CoreByEnvelope
 		public double ServiceCoreRotation {get;}
 
 
-        
+
         /// <summary>
         /// Construct a CoreByEnvelopeOutputs with default inputs.
         /// This should be used for testing only.
@@ -51,11 +51,11 @@ namespace CoreByEnvelope
         /// </summary>
         /// <returns></returns>
         [JsonConstructor]
-        public CoreByEnvelopeOutputs(double servicecorelength, double servicecorewidth, double servicecorerotation): base()
+        public CoreByEnvelopeOutputs(double serviceCoreLength, double serviceCoreWidth, double serviceCoreRotation): base()
         {
-			this.ServiceCoreLength = servicecorelength;
-			this.ServiceCoreWidth = servicecorewidth;
-			this.ServiceCoreRotation = servicecorerotation;
+			this.ServiceCoreLength = serviceCoreLength;
+			this.ServiceCoreWidth = serviceCoreWidth;
+			this.ServiceCoreRotation = serviceCoreRotation;
 
 		}
 
