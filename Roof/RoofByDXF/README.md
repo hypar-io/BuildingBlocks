@@ -2,7 +2,7 @@
 
 # Roof By DXF
 
-Creates a Roof from a DXF Polyline and supplied elevation and thickness.
+Generates a Roof from a DXF Polyline and supplied elevation and thickness values.
 
 |Input Name|Type|Description|
 |---|---|---|

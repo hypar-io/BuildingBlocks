@@ -2,7 +2,7 @@
   "$schema": "https://hypar.io/Schemas/Function.json",
   "id": "23eb71d4-b51d-4571-a086-6bfd932b11e1",
   "name": "Roof By DXF",
-  "description": "Creates a Roof from a DXF Polyline and supplied elevation and thickness.",
+  "description": "Generates a Roof from a DXF Polyline and supplied elevation and thickness values.",
   "language": "C#",
   "model_output": "Roof",
   "inputs": [

@@ -12,7 +12,7 @@ namespace RoofByDXF
       public static class RoofByDXF
     {
         /// <summary>
-        /// The RoofByDXF function.
+        /// Generates a Roof from a DXF Polyline and supplied elevation and thickness values.
         /// </summary>
         /// <param name="model">The input model.</param>
         /// <param name="input">The arguments to the execution.</param>
@@ -27,60 +27,57 @@ namespace RoofByDXF
             var polygons = new List<Polygon>();
             foreach (DxfEntity entity in dxfFile.Entities)
             {
-                if (entity.EntityType == DxfEntityType.LwPolyline)
+                if (entity.EntityType != DxfEntityType.LwPolyline)
                 {
-                    var pline = (DxfLwPolyline)entity;
-                    if (pline.IsClosed == false)
-                    {
-                        continue;
-                    }
-                    var vertices = pline.Vertices;
-                    var verts = new List<Vector3>();
-                    foreach (var vtx in vertices)
-                    {
-                        verts.Add(new Vector3(vtx.X, vtx.Y));
-                    }
-                    if ((verts[1].X - verts[0].X) * (verts[2].Y - verts[0].Y) -
-                        (verts[2].X - verts[0].X) * (verts[1].Y - verts[0].Y) < 0)
-                    {
-                        verts.Reverse();
-                    }
-                    polygons.Add(new Polygon(verts.ToArray()));
+                    continue;
                 }
+                var pline = (DxfLwPolyline)entity;
+                if (pline.IsClosed == false)
+                {
+                    continue;
+                }
+                var vertices = pline.Vertices.ToList();
+                var verts = new List<Vector3>();
+                vertices.ForEach(v => verts.Add(new Vector3(v.X, v.Y)));
+                polygons.Add(new Polygon(verts));
             }
-            Polygon perimeter = null;
-            if (polygons.Count > 0)
+            if (polygons.Count == 0)
             {
-                perimeter = polygons.First();
+                throw new ArgumentException("No LWPolylines found in DXF.");
             }
-            else
+            polygons = polygons.OrderByDescending(p => Math.Abs(p.Area())).ToList();
+            var polygon = polygons.First().IsClockWise() ? polygons.First().Reversed() : polygons.First();
+            polygons = polygons.Skip(1).ToList();
+            polygons.ForEach(p => p = p.IsClockWise() ? p : p.Reversed());
+            var polys = new List<Polygon>();
+            foreach (var poly in polygons)
             {
-                perimeter = Polygon.Rectangle(50.0, 50.0);
+                if (!polygon.Contains(poly))
+                {
+                    continue;
+                }
+                if (!poly.IsClockWise())
+                {
+                    polys.Add(poly.Reversed());
+                    continue;
+                }
+                polys.Add(poly);
             }
-            var extrude = new Elements.Geometry.Solids.Extrude(perimeter, input.RoofThickness, Vector3.ZAxis, false);
+            polys.Insert(0, polygon);
+            var shape = new Profile(polys);
+            var extrude = new Elements.Geometry.Solids.Extrude(shape, input.RoofThickness, Vector3.ZAxis, false);
             var geomRep = new Representation(new List<Elements.Geometry.Solids.SolidOperation>() { extrude });
             var roofMatl = BuiltInMaterials.Concrete;
-            var roof = new Roof(perimeter,
+            var roof = new Roof(shape,
                                 input.RoofElevation,
                                 input.RoofThickness,
-                                perimeter.Area(),
+                                shape.Area(),
                                 new Transform(0.0, 0.0, input.RoofElevation - input.RoofThickness),
                                 roofMatl,
                                 geomRep,
                                 false,
                                 Guid.NewGuid(), "");
-            //if (polygons.Count > 1)
-            //{
-            //    polygons = polygons.OrderByDescending(p => p.Area()).ToList();
-            //    foreach (var polygon in polygons.Skip(1))
-            //    {
-            //        if (perimeter.Covers(polygon))
-            //        {
-            //            floor.Openings.Add(new Opening(polygon));
-            //        }
-            //    }
-            //}
-            var output = new RoofByDXFOutputs(perimeter.Area());
+            var output = new RoofByDXFOutputs(shape.Area());
             output.Model.AddElement(roof);
             return output;
         }

@@ -27,7 +27,7 @@ namespace Elements
     
     {
         [Newtonsoft.Json.JsonConstructor]
-        public Roof(Polygon @perimeter, double @elevation, double @thickness, double @area, Transform @transform, Material @material, Representation @representation, bool @isElementDefinition, System.Guid @id, string @name)
+        public Roof(Profile @perimeter, double @elevation, double @thickness, double @area, Transform @transform, Material @material, Representation @representation, bool @isElementDefinition, System.Guid @id, string @name)
             : base(transform, material, representation, isElementDefinition, id, name)
         {
             var validator = Validator.Instance.GetFirstValidatorForType<Roof>();
@@ -47,9 +47,9 @@ namespace Elements
             }
         }
     
-        /// <summary>The perimeter of the Roof.</summary>
+        /// <summary>The perimeter of the Roof and its openings.</summary>
         [Newtonsoft.Json.JsonProperty("Perimeter", Required = Newtonsoft.Json.Required.AllowNull)]
-        public Polygon Perimeter { get; set; }
+        public Profile Perimeter { get; set; }
     
         /// <summary>The elevation of the Roof.</summary>
         [Newtonsoft.Json.JsonProperty("Elevation", Required = Newtonsoft.Json.Required.Always)]
