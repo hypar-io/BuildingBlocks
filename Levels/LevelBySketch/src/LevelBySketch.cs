@@ -20,9 +20,14 @@ namespace LevelBySketch
             var geomRep = new Representation(new List<Elements.Geometry.Solids.SolidOperation>() { lamina });
             var lvlMatl = new Material("level", Palette.White, 0.0f, 0.0f);
             var output = new LevelBySketchOutputs(input.Perimeter.Area());
-            output.Model.AddElement(new Level(0.0, Guid.NewGuid(), ""));
-            output.Model.AddElement(new LevelPerimeter(input.Perimeter.Area(), 0.0, input.Perimeter, Guid.NewGuid(), ""));
-            output.Model.AddElement(new Panel(input.Perimeter, lvlMatl, null, geomRep, false, Guid.NewGuid(), ""));
+            output.Model.AddElement(new Level(input.LevelElevation, Guid.NewGuid(), ""));
+            output.Model.AddElement(new LevelPerimeter(input.Perimeter.Area(), input.LevelElevation, input.Perimeter, Guid.NewGuid(), ""));
+            output.Model.AddElement(new Panel(input.Perimeter, 
+                                              lvlMatl, 
+                                              new Transform(0.0, 0.0, input.LevelElevation), 
+                                              geomRep, 
+                                              false, 
+                                              Guid.NewGuid(), ""));
             return output;
         }
     }

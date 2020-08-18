@@ -1,0 +1,51 @@
+{
+  "$schema": "https://hypar.io/Schemas/Function.json",
+  "id": "23eb71d4-b51d-4571-a086-6bfd932b11e1",
+  "name": "Roof By DXF",
+  "description": "Creates a Roof from a DXF Polyline and supplied elevation and thickness.",
+  "language": "C#",
+  "model_output": "Roof",
+  "inputs": [
+    {
+      "content_type": null,
+      "file_types": [
+        "dxf"
+      ],
+      "name": "DXF",
+      "description": "DXF format closed LWPolylines representing a roof edge and openings within or aligned with the perimeter.",
+      "type": "data"
+    },
+    {
+      "min": 3.0,
+      "max": 1000.0,
+      "step": 0.1,
+      "unit_type": "length",
+      "name": "Roof Elevation",
+      "description": "Roof elevation relative to the zero plane.",
+      "type": "range"
+    },
+    {
+      "min": 0.1,
+      "max": 1.0,
+      "step": 0.01,
+      "unit_type": "length",
+      "name": "Roof Thickness",
+      "description": "Thickness of the Roof.",
+      "type": "range"
+    }
+  ],
+  "outputs": [
+    {
+      "unit_type": "area",
+      "name": "Area",
+      "description": "Area of the Roof.",
+      "type": "number"
+    }
+  ],
+  "element_types": [
+    "https://raw.githubusercontent.com/hypar-io/Schemas/master/Roof.json"
+  ],
+  "repository_url": "https://github.com/hypar-io/function",
+  "source_file_key": null,
+  "preview_image": null
+}
