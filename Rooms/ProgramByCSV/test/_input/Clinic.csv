@@ -1,0 +1,38 @@
+Suite Name,Suite Number,Department,Room Name,Quantity,Area,Ratio,Height
+Admitting,100,Imaging,Reception,1,8,0.75,5
+Admitting,100,Imaging,Print,1,6,0.75,5
+Admitting,100,Imaging,Waiting,1,25,0.75,5
+Admitting,100,Imaging,Public Toilet,1,6,0.75,5
+Admitting,100,Imaging,Payee  Window,1,6,0.75,5
+Prep,200,Imaging,Prep Cubicle,1,9,0.75,4
+Prep,200,Imaging,Prep Recovery,1,12,0.75,4
+Prep,200,Imaging,Medication Storage,1,2,0.75,4
+Prep,200,Imaging,Nurse Station,1,7.5,0.75,4
+Prep,200,Imaging,Clean  Linen Supply,1,3.75,0.75,4
+Prep,200,Imaging,Soiled Utility,1,2,0.75,4
+Radiology,300,Imaging,General Radiography,1,30,0.75,6
+Radiology,300,Imaging,Control Radiographic,1,4,0.75,6
+Radiology,300,Imaging,General Radiography,1,30,0.75,6
+Radiology,300,Imaging,Control Radiographic,1,4,0.75,6
+Radiology,300,Imaging,General Radiography,1,30,0.75,6
+Radiology,300,Imaging,Control Radiographic,1,4,0.75,6
+Radiology,300,Imaging,Radio Flouroscopy,1,5,0.75,6
+Radiology,300,Imaging,Control Radiographic,1,5,0.75,6
+Radiology,300,Imaging,Contrast,1,4,0.75,6
+Radiology,300,Imaging,Dressing,1,5,0.75,6
+Radiology,300,Imaging,Radiologist Reading,1,8,0.75,6
+Consultation,400,Imaging,Records,1,2,0.75,4
+Consultation,400,Imaging,Physician Office,1,11,0.75,4
+Consultation,400,Imaging,Exam,3,10,0.75,4
+Consultation,400,Imaging,Patient Toilet,1,6,0.75,4
+Admin,500,Imaging,Conference,1,15,0.75,4
+Admin,500,Imaging,Office Scheduling,1,12,0.75,4
+Admin,500,Imaging,Office Director,1,12,0.75,4
+Admin,500,Imaging,Office Manager,1,8,0.75,4
+Admin,500,Imaging,Office Staff,1,7.5,0.75,4
+Admin,500,Imaging,Worstation Assistant,1,5,0.75,4
+Admin,500,Imaging,Houskeeping,1,3.5,0.75,4
+Staff,600,Imaging,Break Room,1,15,0.75,4
+Staff,600,Imaging,Lockers,1,5,0.75,4
+Staff,600,Imaging,Staff Toilet,1,6,0.75,4
+Staff,600,Imaging,Staff Shower,1,6,0.75,4
