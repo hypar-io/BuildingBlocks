@@ -22,35 +22,5 @@ namespace RoofBySketch.Tests
         {
             this.output = output;
         }
-
-        [Fact]
-        public async Task InvokeFunction()
-        {
-            var root = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "../../../../");
-            var config = Hypar.Model.Function.FromJson(File.ReadAllText(Path.Combine(root, "hypar.json")));
-
-            var store = new FileModelStore<RoofBySketchInputs>(root);
-
-            // Create an input object with default values.
-            var input = new RoofBySketchInputs();
-
-            // Read local input files to populate incoming test data.
-            if (config.ModelDependencies != null)
-            {
-                var modelInputKeys = new Dictionary<string, string>();
-                foreach (var dep in config.ModelDependencies)
-                {
-                    modelInputKeys.Add(dep.Name, $"{dep.Name}.json");
-                }
-                input.ModelInputKeys = modelInputKeys;
-            }
-
-            // Invoke the function.
-            // The function invocation uses a FileModelStore
-            // which will write the resulting model to disk.
-            // You'll find the model at "./model.gltf"
-            var l = new InvocationWrapper<RoofBySketchInputs, RoofBySketchOutputs>(store, RoofBySketch.Execute);
-            await l.InvokeAsync(input);
-        }
     }
 }

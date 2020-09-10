@@ -5,67 +5,175 @@
 using Elements;
 using Elements.GeoJSON;
 using Elements.Geometry;
+using Elements.Geometry.Solids;
+using Elements.Properties;
+using Elements.Validators;
 using Hypar.Functions;
 using Hypar.Functions.Execution;
 using Hypar.Functions.Execution.AWS;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using Line = Elements.Geometry.Line;
+using Polygon = Elements.Geometry.Polygon;
 
 namespace RoofBySketch
 {
-    public class RoofBySketchInputs: S3Args
+    #pragma warning disable // Disable all warnings
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
+    
+    public partial class Mesh 
+    
     {
-		/// <summary>
-		/// Perimeter of Roof.
-		/// </summary>
-		[JsonProperty("Perimeter")]
-		public Elements.Geometry.Polygon Perimeter {get;}
-
-		/// <summary>
-		/// Roof elevation relative to the zero plane.
-		/// </summary>
-		[JsonProperty("Roof Elevation")]
-		public double RoofElevation {get;}
-
-		/// <summary>
-		/// Thickness of the Roof.
-		/// </summary>
-		[JsonProperty("Roof Thickness")]
-		public double RoofThickness {get;}
-
-
-
-        /// <summary>
-        /// Construct a RoofBySketchInputs with default inputs.
-        /// This should be used for testing only.
-        /// </summary>
-        public RoofBySketchInputs() : base()
+        [Newtonsoft.Json.JsonConstructor]
+        public Mesh(IList<Triangles> @triangles, IList<Vertices> @vertices)
         {
-			this.Perimeter = Elements.Geometry.Polygon.Rectangle(1, 1);
-			this.RoofElevation = 1000;
-			this.RoofThickness = 1;
-
+            var validator = Validator.Instance.GetFirstValidatorForType<Mesh>();
+            if(validator != null)
+            {
+                validator.PreConstruct(new object[]{ @triangles, @vertices});
+            }
+        
+            this.Triangles = @triangles;
+            this.Vertices = @vertices;
+        
+            if(validator != null)
+            {
+                validator.PostConstruct(this);
+            }
         }
-
-
-        /// <summary>
-        /// Construct a RoofBySketchInputs specifying all inputs.
-        /// </summary>
-        /// <returns></returns>
-        [JsonConstructor]
-        public RoofBySketchInputs(Elements.Geometry.Polygon perimeter, double roofElevation, double roofThickness, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
+    
+        [Newtonsoft.Json.JsonProperty("triangles", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public IList<Triangles> Triangles { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("vertices", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public IList<Vertices> Vertices { get; set; }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
+    
+    public  class RoofBySketchInputs : S3Args
+    
+    {
+        [Newtonsoft.Json.JsonConstructor]
+        
+        public RoofBySketchInputs(Mesh @mesh, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey):
+        base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
         {
-			this.Perimeter = perimeter;
-			this.RoofElevation = roofElevation;
-			this.RoofThickness = roofThickness;
-
-		}
-
-		public override string ToString()
-		{
-			var json = JsonConvert.SerializeObject(this);
-			return json;
-		}
-	}
+            var validator = Validator.Instance.GetFirstValidatorForType<RoofBySketchInputs>();
+            if(validator != null)
+            {
+                validator.PreConstruct(new object[]{ @mesh});
+            }
+        
+            this.Mesh = @mesh;
+        
+            if(validator != null)
+            {
+                validator.PostConstruct(this);
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("Mesh", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public Mesh Mesh { get; set; }
+    
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+    
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
+    
+    public partial class Triangles 
+    
+    {
+        [Newtonsoft.Json.JsonConstructor]
+        public Triangles(IList<int> @vertexIndices)
+        {
+            var validator = Validator.Instance.GetFirstValidatorForType<Triangles>();
+            if(validator != null)
+            {
+                validator.PreConstruct(new object[]{ @vertexIndices});
+            }
+        
+            this.VertexIndices = @vertexIndices;
+        
+            if(validator != null)
+            {
+                validator.PostConstruct(this);
+            }
+        }
+    
+        /// <summary>The vertices that bound these triangles, identified by the 'index' field inside vertices in the 'vertices' collection.</summary>
+        [Newtonsoft.Json.JsonProperty("vertexIndices", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public IList<int> VertexIndices { get; set; }
+    
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+    
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
+    
+    public partial class Vertices 
+    
+    {
+        [Newtonsoft.Json.JsonConstructor]
+        public Vertices(int @index, bool @isBoundary, Vector3 @position)
+        {
+            var validator = Validator.Instance.GetFirstValidatorForType<Vertices>();
+            if(validator != null)
+            {
+                validator.PreConstruct(new object[]{ @index, @isBoundary, @position});
+            }
+        
+            this.Index = @index;
+            this.IsBoundary = @isBoundary;
+            this.Position = @position;
+        
+            if(validator != null)
+            {
+                validator.PostConstruct(this);
+            }
+        }
+    
+        /// <summary>Identifier for this vertex within the mesh.</summary>
+        [Newtonsoft.Json.JsonProperty("index", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int Index { get; set; }
+    
+        /// <summary>Whether the vertex represents an boundary of the mesh. That is, whether attached edges may bound a single face rather than two.</summary>
+        [Newtonsoft.Json.JsonProperty("isBoundary", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public bool IsBoundary { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("position", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public Vector3 Position { get; set; }
+    
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+    
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
+    
+    
+    }
 }

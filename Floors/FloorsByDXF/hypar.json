@@ -1,0 +1,38 @@
+{
+  "$schema": "https://hypar.io/Schemas/Function.json",
+  "id": "655dd54e-1ed8-436c-8e0d-961448f1a394",
+  "name": "Floors By DXF",
+  "description": "The FloorsByDXF function.",
+  "language": "C#",
+  "inputs": [
+    {
+      "min": 1.0,
+      "max": 10.0,
+      "step": 1.0,
+      "unit_type": "none",
+      "name": "Length",
+      "description": "The length.",
+      "type": "range"
+    },
+    {
+      "min": 1.0,
+      "max": 10.0,
+      "step": 1.0,
+      "unit_type": "none",
+      "name": "Width",
+      "description": "The width.",
+      "type": "range"
+    }
+  ],
+  "outputs": [
+    {
+      "unit_type": "none",
+      "name": "Volume",
+      "description": "The volume.",
+      "type": "number"
+    }
+  ],
+  "repository_url": "https://github.com/hypar-io/function",
+  "source_file_key": null,
+  "preview_image": null
+}
