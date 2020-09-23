@@ -6,6 +6,7 @@
   "language": "C#",
   "model_dependencies": [
     {
+      "autohide": true,
       "name": "Envelope",
       "optional": false
     },
