@@ -12,5 +12,5 @@ Creates a Roof from a supplied Polygon sketch and a supplied elevation.
 
 |Output Name|Type|Description|
 |---|---|---|
-|Area|Number|Area of the Roof.|
+|Area|Number|Area of the Roof's topside surface.|
 

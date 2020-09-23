@@ -60,16 +60,18 @@ namespace RoofBySketch
     {
         [Newtonsoft.Json.JsonConstructor]
         
-        public RoofBySketchInputs(Mesh @mesh, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey):
+        public RoofBySketchInputs(Mesh @mesh, double @thickness, double @elevation, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey):
         base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
         {
             var validator = Validator.Instance.GetFirstValidatorForType<RoofBySketchInputs>();
             if(validator != null)
             {
-                validator.PreConstruct(new object[]{ @mesh});
+                validator.PreConstruct(new object[]{ @mesh, @thickness, @elevation});
             }
         
             this.Mesh = @mesh;
+            this.Thickness = @thickness;
+            this.Elevation = @elevation;
         
             if(validator != null)
             {
@@ -79,6 +81,16 @@ namespace RoofBySketch
     
         [Newtonsoft.Json.JsonProperty("Mesh", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public Mesh Mesh { get; set; }
+    
+        /// <summary>Thickness of the Roof from its lowest point to its underside.</summary>
+        [Newtonsoft.Json.JsonProperty("Thickness", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.Range(0.1D, 1.0D)]
+        public double Thickness { get; set; } = 0.2D;
+    
+        /// <summary>The elevation of the Roof's underside.</summary>
+        [Newtonsoft.Json.JsonProperty("Elevation", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.Range(3.0D, 100.0D)]
+        public double Elevation { get; set; } = 10D;
     
         private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
     

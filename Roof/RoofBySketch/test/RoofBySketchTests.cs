@@ -58,6 +58,8 @@ namespace RoofBySketch.Tests
             var inputs =
                 new RoofBySketchInputs(
                     mesh: mesh,
+                    thickness: 0.2,
+                    elevation: 10.0,
                     "", "", new Dictionary<string, string>(), "", "", "");
             var outputs = RoofBySketch.Execute(new Dictionary<string, Model> { { "Test", new Model() } }, inputs);
             System.IO.File.WriteAllText(OUTPUT + "RoofBySketch.json", outputs.Model.ToJson());
