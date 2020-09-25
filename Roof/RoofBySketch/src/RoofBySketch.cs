@@ -87,7 +87,7 @@ namespace RoofBySketch
 
             // Construct serializable underside mesh           
             triangles.Clear();
-            vertices.Clear();
+            indices.Clear();
             var usIV = underSide.ToIndexedVertices();
             usIV.triangles.ForEach(t => triangles.Add(new triangles(t)));
             usIV.vertices.ForEach(v => indices.Add(new vertices(v.index, v.isBoundary, v.position)));
@@ -95,7 +95,7 @@ namespace RoofBySketch
 
             // Construct serializable envelope mesh           
             triangles.Clear();
-            vertices.Clear();
+            indices.Clear();
             var enIV = Envelope.ToIndexedVertices();
             enIV.triangles.ForEach(t => triangles.Add(new triangles(t)));
             enIV.vertices.ForEach(v => indices.Add(new vertices(v.index, v.isBoundary, v.position)));

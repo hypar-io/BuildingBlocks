@@ -18,14 +18,6 @@
         "step": 0.01,
         "default": 0.2,
         "description": "Thickness of the Roof from its lowest point to its underside."
-      },
-      "Elevation": {
-        "type": "number",
-        "minimum": 3.0,
-        "maximum": 100.0,
-        "step": 0.1,
-        "default": 10,
-        "description": "The elevation of the Roof's underside."
       }
     }
   },
