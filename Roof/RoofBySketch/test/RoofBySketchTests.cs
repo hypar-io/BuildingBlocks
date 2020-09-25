@@ -29,13 +29,13 @@ namespace RoofBySketch.Tests
                     new Vertices(1, true, new Vector3(9.0, 2.0, 12.0)),
                     new Vertices(2, true, new Vector3(9.0, 13.0, 12.0)),
                     new Vertices(3, true, new Vector3(2.0, 13.0, 12.0)),
-                    new Vertices(4, false, new Vector3(5.0, 4.0, 10.0)),
-                    new Vertices(5, false, new Vector3(5.0, 11.0, 10.0)),
+                    new Vertices(4, false, new Vector3(5.0, 4.0, 11.0)),
+                    new Vertices(5, false, new Vector3(5.0, 11.0, 11.0)),
 
                     new Vertices(6, true, new Vector3(15.0, 2.0, 12.0)),
                     new Vertices(7, true, new Vector3(15.0, 13.0, 12.0)),
-                    new Vertices(8, false, new Vector3(12.0, 11.0, 10.0)),
-                    new Vertices(9, false, new Vector3(12.0, 5.0, 10.0))
+                    new Vertices(8, false, new Vector3(12.0, 11.0, 11.0)),
+                    new Vertices(9, false, new Vector3(12.0, 5.0, 11.0))
                 };
             IList<Triangles> triangles =
                 new List<Triangles>
@@ -59,7 +59,6 @@ namespace RoofBySketch.Tests
                 new RoofBySketchInputs(
                     mesh: mesh,
                     thickness: 0.2,
-                    elevation: 10.0,
                     "", "", new Dictionary<string, string>(), "", "", "");
             var outputs = RoofBySketch.Execute(new Dictionary<string, Model> { { "Test", new Model() } }, inputs);
             System.IO.File.WriteAllText(OUTPUT + "RoofBySketch.json", outputs.Model.ToJson());
