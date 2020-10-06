@@ -131,6 +131,8 @@ namespace RoofByDXF
     }
 }
 
+// 2020.10.06: Retaining this code for future roof penetration handling with new mesh toolkit.
+
 //polygons = polygons.Skip(1).ToList();
 //polygons.ForEach(p => p = p.IsClockWise() ? p : p.Reversed());
 //var polys = new List<Polygon>();
