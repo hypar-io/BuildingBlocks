@@ -45,7 +45,7 @@ namespace RoofByDXF
         public RoofByDXFInputs() : base()
         {
 			this.DXF = new InputData("default_input.dxf");
-			this.RoofElevation = 1000;
+			this.RoofElevation = 30;
 			this.RoofThickness = 1;
 
         }

@@ -30,8 +30,7 @@
     }
   ],
   "element_types": [
-    "https://raw.githubusercontent.com/hypar-io/Schemas/master/Roof.json",
-    "https://dev-api.hypar.io/schemas/DrainableRoofSection"
+    "https://raw.githubusercontent.com/hypar-io/Schemas/master/Roof.json"
   ],
   "repository_url": "https://github.com/hypar-io/function",
   "source_file_key": null,

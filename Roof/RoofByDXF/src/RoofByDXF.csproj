@@ -5,13 +5,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Hypar.Elements" Version="0.7.3" />
-    <PackageReference Include="Hypar.Functions" Version="0.7.3" />
+    <PackageReference Include="GeometryEx" Version="7.2.6" />
+    <PackageReference Include="Hypar.Elements" Version="0.8.0-alpha.9" />
+    <PackageReference Include="Hypar.Functions" Version="0.8.0-alpha.9" />
     <PackageReference Include="IxMilia.Dxf" Version="0.7.4" />
   </ItemGroup>
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>    
   </PropertyGroup>
 
 </Project>

@@ -46,7 +46,7 @@ namespace RoofBySketch
             var uPoints = new List<Vector3>();
             ePoints.ForEach(p => uPoints.Add(new Vector3(p.X, p.Y, elevation)));
             var underBoundary = new Polygon(uPoints);
-            var underSide = underBoundary.ToMesh();
+            var underSide = underBoundary.ToMesh(false);
 
             // Use the topSide Mesh's edgePoints and the lower Mesh's underPoints
             // to construct a series of triangles forming the sides of the Roof.
@@ -71,7 +71,7 @@ namespace RoofBySketch
             var enVertices = new List<Vertex>();
             envTriangles.ForEach(t => enVertices.AddRange(t.Vertices));
 
-            // Construct the roof enevelope in Elements.Geometry.mesh form.
+            // Construct the roof envelope in Elements.Geometry.mesh form.
             var Envelope = new Elements.Geometry.Mesh();
             envTriangles.ForEach(t => Envelope.AddTriangle(t));
             enVertices.ForEach(v => Envelope.AddVertex(v));
