@@ -5,14 +5,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="GeometryEx" Version="7.6.0" />
     <PackageReference Include="Hypar.Elements" Version="0.8.0-alpha.9" />
     <PackageReference Include="Hypar.Functions" Version="0.8.0-alpha.9" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="GeometryEx">
-      <HintPath>..\..\..\..\GeometryEx\GeometryEx\bin\Debug\netstandard2.0\GeometryEx.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
   <PropertyGroup>

@@ -23,9 +23,11 @@ namespace RoofBySketch
             var area = 0.0;
             foreach (var triangle in input.Mesh.Triangles)
             {
-                var triAng = new Triangle(topSide.Vertices[triangle.VertexIndices[0]],
-                                          topSide.Vertices[triangle.VertexIndices[1]],
-                                          topSide.Vertices[triangle.VertexIndices[2]]);
+                var triAng = 
+                    new Elements.Geometry.Triangle(
+                        topSide.Vertices[triangle.VertexIndices[0]],
+                        topSide.Vertices[triangle.VertexIndices[1]],
+                        topSide.Vertices[triangle.VertexIndices[2]]);
                 topSide.AddTriangle(triAng);
                 area += triAng.Area();
                 
@@ -50,19 +52,21 @@ namespace RoofBySketch
 
             // Use the topSide Mesh's edgePoints and the lower Mesh's underPoints
             // to construct a series of triangles forming the sides of the Roof.
-            var sideTriangles = new List<Triangle>();
+            var sideTriangles = new List<Elements.Geometry.Triangle>();
             for(var i = 0; i < ePoints.Count; i++)
             {
-                sideTriangles.Add(new Triangle(new Vertex(ePoints[i]),
-                                  new Vertex(uPoints[i]),
-                                  new Vertex(uPoints[(i + 1) % uPoints.Count])));
-                sideTriangles.Add(new Triangle(new Vertex(ePoints[i]),
-                                  new Vertex(uPoints[(i + 1) % uPoints.Count]),
-                                  new Vertex(ePoints[(i + 1) % ePoints.Count])));
+                sideTriangles.Add(
+                    new Elements.Geometry.Triangle(new Vertex(ePoints[i]),
+                                                   new Vertex(uPoints[i]),
+                                                   new Vertex(uPoints[(i + 1) % uPoints.Count])));
+                sideTriangles.Add(
+                    new Elements.Geometry.Triangle(new Vertex(ePoints[i]),
+                                                   new Vertex(uPoints[(i + 1) % uPoints.Count]),
+                                                   new Vertex(ePoints[(i + 1) % ePoints.Count])));
             }
 
             // Create an aggregated list of Triangles representing the Roof envelope.
-            var envTriangles = new List<Triangle>();
+            var envTriangles = new List<Elements.Geometry.Triangle>();
             topSide.Triangles.ForEach(t => envTriangles.Add(t));
             underSide.Triangles.ForEach(t => envTriangles.Add(t));
             sideTriangles.ForEach(t => envTriangles.Add(t));         
