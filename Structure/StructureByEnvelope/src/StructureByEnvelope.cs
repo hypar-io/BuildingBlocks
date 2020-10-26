@@ -132,7 +132,7 @@ namespace StructureByEnvelope
                 // Inset the footprint just a bit to keep the
                 // beams out of the plane of the envelope. Use the biggest 
                 // beam that we have.
-                var footprint = envelope.Profile.Perimeter.Offset(-0.25)[0];
+                var footprint = envelope.Profile.Perimeter.Offset(-input.SlabEdgeOffset)[0];
 
                 // Trim all the grid lines by the boundary
                 var boundarySegments = footprint.Segments();

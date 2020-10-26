@@ -33,6 +33,15 @@
       "name": "Grid Y-Axis Interval",
       "description": "Grid interval in the Y direction.",
       "type": "range"
+    },
+    {
+      "min": 0.0,
+      "max": 3.0,
+      "step": 0.1,
+      "unit_type": "length",
+      "name": "Slab Edge Offset",
+      "description": "The offset of the grid lines from the slab edge.",
+      "type": "range"
     }
   ],
   "outputs": [

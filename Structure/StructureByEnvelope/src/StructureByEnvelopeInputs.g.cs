@@ -28,6 +28,12 @@ namespace StructureByEnvelope
 		[JsonProperty("Grid Y-Axis Interval")]
 		public double GridYAxisInterval {get;}
 
+		/// <summary>
+		/// The offset of the grid lines from the slab edge.
+		/// </summary>
+		[JsonProperty("Slab Edge Offset")]
+		public double SlabEdgeOffset {get;}
+
 
 
         /// <summary>
@@ -38,6 +44,7 @@ namespace StructureByEnvelope
         {
 			this.GridXAxisInterval = 10;
 			this.GridYAxisInterval = 10;
+			this.SlabEdgeOffset = 3;
 
         }
 
@@ -47,10 +54,11 @@ namespace StructureByEnvelope
         /// </summary>
         /// <returns></returns>
         [JsonConstructor]
-        public StructureByEnvelopeInputs(double gridXAxisInterval, double gridYAxisInterval, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
+        public StructureByEnvelopeInputs(double gridXAxisInterval, double gridYAxisInterval, double slabEdgeOffset, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
         {
 			this.GridXAxisInterval = gridXAxisInterval;
 			this.GridYAxisInterval = gridYAxisInterval;
+			this.SlabEdgeOffset = slabEdgeOffset;
 
 		}
 
