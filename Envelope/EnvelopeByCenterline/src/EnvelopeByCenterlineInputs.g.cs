@@ -41,7 +41,7 @@ namespace EnvelopeByCenterline
 		public double FoundationDepth {get;}
 
 
-        
+
         /// <summary>
         /// Construct a EnvelopeByCenterlineInputs with default inputs.
         /// This should be used for testing only.
@@ -61,12 +61,12 @@ namespace EnvelopeByCenterline
         /// </summary>
         /// <returns></returns>
         [JsonConstructor]
-        public EnvelopeByCenterlineInputs(Elements.Geometry.Polyline centerline, double buildingheight, double barwidth, double foundationdepth, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
+        public EnvelopeByCenterlineInputs(Elements.Geometry.Polyline centerline, double buildingHeight, double barWidth, double foundationDepth, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
         {
 			this.Centerline = centerline;
-			this.BuildingHeight = buildingheight;
-			this.BarWidth = barwidth;
-			this.FoundationDepth = foundationdepth;
+			this.BuildingHeight = buildingHeight;
+			this.BarWidth = barWidth;
+			this.FoundationDepth = foundationDepth;
 
 		}
 

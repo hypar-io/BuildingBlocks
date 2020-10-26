@@ -10,7 +10,7 @@ namespace CoreByEnvelope
     public static class CoreByEnvelope
     {
         /// <summary>
-        /// The CoreByEnvelope function.
+        /// Creates the volume of a building service core either placed wholly within the building envelope or partially emerged if no interior fit can be found.
         /// </summary>
         /// <param name="model">The input model.</param>
         /// <param name="input">The arguments to the execution.</param>
@@ -30,8 +30,7 @@ namespace CoreByEnvelope
             var corRep = new Representation(new List<Elements.Geometry.Solids.SolidOperation>() { extrude });
             var corMatl = new Material("serviceCore", Palette.White, 0.0f, 0.0f);
             var output = new CoreByEnvelopeOutputs(coreDef.length, coreDef.width, coreDef.rotation);
-            //envelopes.ForEach(e => output.model.AddElement(e));
-            output.model.AddElement(new ServiceCore(coreDef.perimeter,
+            output.Model.AddElement(new ServiceCore(coreDef.perimeter,
                                                     Vector3.ZAxis,
                                                     coreDef.elevation,
                                                     coreDef.height,

@@ -23,7 +23,7 @@ namespace FoundationByEnvelope
 		public double MinDepth {get;}
 
 
-        
+
         /// <summary>
         /// Construct a FoundationByEnvelopeInputs with default inputs.
         /// This should be used for testing only.
@@ -40,9 +40,9 @@ namespace FoundationByEnvelope
         /// </summary>
         /// <returns></returns>
         [JsonConstructor]
-        public FoundationByEnvelopeInputs(double mindepth, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
+        public FoundationByEnvelopeInputs(double minDepth, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
         {
-			this.MinDepth = mindepth;
+			this.MinDepth = minDepth;
 
 		}
 

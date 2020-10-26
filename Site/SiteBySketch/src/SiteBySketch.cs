@@ -9,7 +9,7 @@ namespace SiteBySketch
     public static class SiteBySketch
     {
         /// <summary>
-        /// The SiteBySketch function.
+        /// Generates a planar Site from a supplied sketch.
         /// </summary>
         /// <param name="inputModels">The input models.</param>
         /// <param name="input">The arguments to the execution.</param>
@@ -21,7 +21,7 @@ namespace SiteBySketch
             var sitMatl = new Material("site", Palette.Emerald, 0.0f, 0.0f);
             var output = new SiteBySketchOutputs(Math.Abs(input.Perimeter.Area()));
             var site = new Site(input.Perimeter, Math.Abs(input.Perimeter.Area()), null, sitMatl, geomRep, false, Guid.NewGuid(), "");
-            output.model.AddElement(site);
+            output.Model.AddElement(site);
             return output;
         }
     }

@@ -41,7 +41,7 @@ namespace ColumnsByFloors
 		public double ColumnDiameter {get;}
 
 
-        
+
         /// <summary>
         /// Construct a ColumnsByFloorsInputs with default inputs.
         /// This should be used for testing only.
@@ -61,12 +61,12 @@ namespace ColumnsByFloors
         /// </summary>
         /// <returns></returns>
         [JsonConstructor]
-        public ColumnsByFloorsInputs(double gridxaxisinterval, double gridyaxisinterval, double gridrotation, double columndiameter, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
+        public ColumnsByFloorsInputs(double gridXAxisInterval, double gridYAxisInterval, double gridRotation, double columnDiameter, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
         {
-			this.GridXAxisInterval = gridxaxisinterval;
-			this.GridYAxisInterval = gridyaxisinterval;
-			this.GridRotation = gridrotation;
-			this.ColumnDiameter = columndiameter;
+			this.GridXAxisInterval = gridXAxisInterval;
+			this.GridYAxisInterval = gridYAxisInterval;
+			this.GridRotation = gridRotation;
+			this.ColumnDiameter = columnDiameter;
 
 		}
 

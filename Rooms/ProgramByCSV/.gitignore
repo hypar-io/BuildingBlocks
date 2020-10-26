@@ -1,0 +1,7 @@
+.vs/
+bin/
+obj/
+*.glb
+output.json
+input.json
+.vs/**/*.*

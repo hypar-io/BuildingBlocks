@@ -9,7 +9,7 @@ namespace LevelBySketch
     public static class LevelBySketch
     {
         /// <summary>
-        /// The LevelBySketch function.
+        /// Generates a Level and LevelPerimeters from a sketch and specified elevation.
         /// </summary>
         /// <param name="model">The input model.</param>
         /// <param name="input">The arguments to the execution.</param>
@@ -20,9 +20,14 @@ namespace LevelBySketch
             var geomRep = new Representation(new List<Elements.Geometry.Solids.SolidOperation>() { lamina });
             var lvlMatl = new Material("level", Palette.White, 0.0f, 0.0f);
             var output = new LevelBySketchOutputs(input.Perimeter.Area());
-            output.model.AddElement(new Level(0.0, Guid.NewGuid(), ""));
-            output.model.AddElement(new LevelPerimeter(0.0, input.Perimeter, Guid.NewGuid(), ""));
-            output.model.AddElement(new Panel(input.Perimeter, lvlMatl, null, geomRep, false, Guid.NewGuid(), ""));
+            output.Model.AddElement(new Level(input.LevelElevation, Guid.NewGuid(), ""));
+            output.Model.AddElement(new LevelPerimeter(input.Perimeter.Area(), input.LevelElevation, input.Perimeter, Guid.NewGuid(), ""));
+            output.Model.AddElement(new Panel(input.Perimeter, 
+                                              lvlMatl, 
+                                              new Transform(0.0, 0.0, input.LevelElevation), 
+                                              geomRep, 
+                                              false, 
+                                              Guid.NewGuid(), ""));
             return output;
         }
     }

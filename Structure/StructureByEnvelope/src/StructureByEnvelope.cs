@@ -49,10 +49,19 @@ namespace StructureByEnvelope
         }
     }
 
-    public static class Structure
+    public static class StructureByEnvelope
     {
         private const string ENVELOPE_MODEL_NAME = "Envelope";
         private const string LEVELS_MODEL_NAME = "Levels";
+
+        private static List<Material> _lengthGradient = new List<Material>(){
+            new Material(Colors.Green, 0.0f, 0.0f, false, null, false, Guid.NewGuid(), "Gradient 1"),
+            new Material(Colors.Cyan, 0.0f, 0.0f, false, null, false, Guid.NewGuid(), "Gradient 2"),
+            new Material(Colors.Lime, 0.0f, 0.0f, false, null, false, Guid.NewGuid(), "Gradient 3"),
+            new Material(Colors.Yellow, 0.0f, 0.0f, false, null, false, Guid.NewGuid(), "Gradient 4"),
+            new Material(Colors.Orange, 0.0f, 0.0f, false, null, false, Guid.NewGuid(), "Gradient 5"),
+            new Material(Colors.Red, 0.0f, 0.0f, false, null, false, Guid.NewGuid(), "Gradient 6"),
+        };
 
         private const double mToIn = .0254;
 
@@ -81,12 +90,12 @@ namespace StructureByEnvelope
         private static double _longestGridSpan = 0.0;
 
         /// <summary>
-		/// The Structure function.
+		/// The StructureByEnvelope function.
 		/// </summary>
 		/// <param name="model">The model. 
 		/// Add elements to the model to have them persisted.</param>
 		/// <param name="input">The arguments to the execution.</param>
-		/// <returns>A StructureOutputs instance containing computed results.</returns>
+		/// <returns>A StructureByEnvelopeOutputs instance containing computed results.</returns>
 		public static StructureByEnvelopeOutputs Execute(Dictionary<string, Model> models, StructureByEnvelopeInputs input)
         {
             List<Level> levels = null;
@@ -183,21 +192,21 @@ namespace StructureByEnvelope
                                         new Transform(lc),
                                         0,
                                         0,
-                                        gridRotation,
-                                        isElementDefinition: true);
+                                        gridRotation);
                         model.AddElement(masterColumn);
                     }
                     else
                     {
                         // var displace = Vector3.Origin - masterColumn.Transform.Origin - lc;
-                        var instance = masterColumn.CreateInstance(new Transform(lc), "column");
+                        masterColumn.IsElementDefinition = true;
+                        var instance = masterColumn.CreateInstance(new Transform(lc), "");//new ElementInstance(masterColumn, new Transform(lc));
                         model.AddElement(instance, false);
                     }
                 }
             }
 
             var output = new StructureByEnvelopeOutputs(_longestGridSpan);
-            output.model = model;
+            output.Model = model;
             return output;
         }
 
@@ -282,7 +291,7 @@ namespace StructureByEnvelope
 
             var ti = new Transform(transform);
             ti.Invert();
-            var tBoundary = ti.OfPolygon(boundary);
+            var tBoundary = boundary.TransformedPolygon(ti);
 
             foreach (var v in tBoundary.Vertices)
             {
@@ -330,7 +339,8 @@ namespace StructureByEnvelope
             foreach (var beam in framing)
             {
                 var halfDepth = _halfDepths[_beamProfiles.IndexOf(beam.Profile)];
-                var beamInstance = beam.CreateInstance(new Transform(new Vector3(0, 0, elevation - halfDepth)), "beam");
+                beam.IsElementDefinition = true;
+                var beamInstance = beam.CreateInstance(new Transform(new Vector3(0, 0, elevation - halfDepth)), "");
                 instanceBeams.Add(beamInstance);
             }
             return instanceBeams;
@@ -355,8 +365,7 @@ namespace StructureByEnvelope
                                         mat,
                                         startSetback: 0.25,
                                         endSetback: 0.25,
-                                        transform: new Transform(new Vector3(0, 0, elevation - _halfDepths[beamIndex])),
-                                        isElementDefinition: true);
+                                        transform: new Transform(new Vector3(0, 0, elevation - _halfDepths[beamIndex])));
                     beams.Add(beam);
                 }
                 catch (Exception ex)
@@ -378,8 +387,7 @@ namespace StructureByEnvelope
                                         mat,
                                         startSetback: 0.25,
                                         endSetback: 0.25,
-                                        transform: new Transform(new Vector3(0, 0, elevation - _halfDepths[beamIndex])),
-                                        isElementDefinition: true);
+                                        transform: new Transform(new Vector3(0, 0, elevation - _halfDepths[beamIndex])));
                     beams.Add(beam);
                 }
                 catch (Exception ex)
@@ -395,8 +403,7 @@ namespace StructureByEnvelope
                 var beam = new Beam(s,
                                     profile,
                                     BuiltInMaterials.Steel,
-                                    transform: new Transform(new Vector3(0, 0, elevation - _halfDepths[5])),
-                                    isElementDefinition: true);
+                                    transform: new Transform(new Vector3(0, 0, elevation - _halfDepths[5])));
                 beams.Add(beam);
             }
 
@@ -453,9 +460,9 @@ namespace StructureByEnvelope
 
                     if (drawTestGeometry)
                     {
-                        var pt = new Circle(0.5);
+                        var pt = new Circle(0.5).ToPolygon(10);
                         var t = new Transform(xsect);
-                        var mc = new ModelCurve(t.OfPolygon(pt.ToPolygon()), BuiltInMaterials.XAxis);
+                        var mc = new ModelCurve(pt.TransformedPolyline(t), BuiltInMaterials.XAxis);
                         model.AddElement(mc);
                     }
                 }

@@ -1,0 +1,78 @@
+Suite Name,Suite Number,Room Department,Room Name,Room Quantity,Area,Room Dimension Ratio,Room Height
+Classroom,1001,Classroom,Event Space,1,391,0.75,4
+Classroom,1001,Classroom,Classroom,4,90,0.5,4
+Classroom,1001,Classroom,Computer Lab Classroom,1,118,0.75,4
+Classroom,1001,Special,Media Production Studio/ Digital Content Creation,1,56,1.2,4
+Classroom,1001,Special,Testing Area,1,45,2,4
+Classroom,1001,Special,Private Testing Rooms,1,14,1.5,4
+Classroom,1001,Special,Nap pod,3,2,0.5,4
+Public,1002,Public,Lobby,1,66,1.2,4
+Public,1002,Public,Information Desk,1,10,1.2,6
+Public,1002,Enrollment,Enrollment: Check in Desk ,1,7,0.75,6
+Public,1002,Enrollment,Enrollment: Waiting Lounge with Self-service stations,1,40,1.2,6
+Public,1002,Enrollment,Enrollment: Flexible Consultation Rooms,4,10,2,6
+Public,1002,Enrollment,Enrollment: Cashier Window,1,5,0.75,6
+Wellness,1003,Wellness,Wellness: Check-in Desk,1,9,1.2,4
+Wellness,1003,Wellness,Wellness: General Waiting Lounge,1,27,2,4
+Wellness,1003,Wellness,Wellness: Discreet Waiting area for sensitive cases,1,10,1.2,4
+Retail,1003,Retail,Food Service and Prep Area,1,107,0.5,4
+Retail,1003,Retail,Food Seating Area,1,51,1.2,4
+Retail,1003,Retail,Small Cafe + Campus store (previously Bookstore),1,196,2,4
+Meeting,1003,Meeting,Workshop Space,3,49,1.5,4
+Meeting,1003,Meeting,Large Meeting,1,92,2,6
+Meeting,1003,Meeting,8-person meeting room,1,19,1.2,6
+Meeting,1003,Meeting,Huddle Rooms,4,12,0.5,4
+Meeting,1003,Meeting,Phone Booth,2,6,0.5,4
+Lounge,1004,Lounge,Staff Lounge,1,53,1.2,8
+Lounge,1004,Lounge,Student Lounge,2,53,1.2,8
+Lounge,1004,Lounge,ASCOM Lounge and Meeting Space,1,66,1.2,4
+Lounge,1004,Office,Faculty and Staff Kitchen,1,14,1.5,6
+Lounge,1004,LC,Puente Space,1,79,1.5,4
+Lounge,1004,LC,MAPS Space,1,79,1.2,4
+Lounge,1004,LC,Umoja Space,1,79,2,4
+Lounge,1004,LC,Future Learning Community spaces,2,79,1.2,4
+Library,1005,Tutoring,Reading + Writing Lab,1,204,1.2,4
+Library,1005,Tutoring,Tutoring Space,1,204,2,4
+Library,1005,Tutoring,Transfer Center,1,49,1.2,4
+Library,1005,Library,Information Literacy Lab,1,101,2,4
+Library,1005,Library,Open Study,2,251,2,4
+Library,1005,Library,Archive Reading Room,1,28,0.5,4
+Study,1006,Library,Small Group Study,7,12,1.2,4
+Study,1006,Library,Family Room,2,12,1.2,6
+Office,1007,Office,Hoteling Open Workspace,1,61,1.5,6
+Office,1007,Office,Staff Meeting Room,1,10,1.2,4
+Office,1007,Office,Copy Room,1,10,0.75,4
+Office,1007,Office,Mailboxes,1,2,2,4
+Office,1007,Office,Faculty Lounge,1,53,1.2,4
+Office,1007,Office,Teaching + Learning Center,1,42,0.5,4
+ASCOM,1009,ASCOM,Dedicated Offices,3,10,1.2,4
+ASCOM,1009,ASCOM,Office Storage,1,2,0.75,4
+SAS,1011,SAS,Dedicated Offices,8,10,1.2,4
+SAS,1011,SAS,Open Workspace,7,7,1.2,6
+SAS,1011,SAS,Office Storage,6,2,1.2,4
+Psych,1014,Psych,Dedicated Offices,3,10,1.2,4
+Psych,1014,Psych,Office Storage,3,2,0.5,4
+Wellness,1017,Wellness,Dedicated Offices,3,10,0.75,4
+Wellness,1017,Wellness,Office Storage,1,10,0.5,4
+Wellness,1017,Wellness,Student Center,1,10,1.2,4
+LC,1018,LC,Dedicated Offices,1,10,2,4
+LC,1018,IE,Dedicated Offices,1,10,1.2,4
+LC,1018,IE,Office Storage,1,6,1.2,4
+LC,1018,CE,Dedicated Offices,3,10,0.5,4
+LC,1018,CE,Embedded Desk,1,5,0.75,4
+LC,1018,CE,Office Storage,1,2,1.2,4
+Counseling,1019,Counseling,Dedicated Offices,20,10,1.5,4
+Counseling,1019,Counseling,Open Workspace,1,13,1.2,4
+Counseling,1019,Counseling,Dedicated Offices,2,10,2,4
+Enrollment,1020,Enrollment,Dedicated Offices,5,10,1.2,4
+Enrollment,1020,Enrollment,Open Workspace,1,109,2,4
+Enrollment,1020,Enrollment,Dedicated Offices,2,10,1.2,4
+Enrollment,1020,Enrollment,Embedded Desk,1,5,1.2,4
+Enrollment,1020,Enrollment,Office Storage,1,13,2,4
+Journalism,1030,Journalism,Dedicated Offices,2,10,1.2,4
+Journalism,1030,Journalism,Office Storage,2,3,2,4
+Business,1035,Business,Dedicated Offices,3,10,1.2,4
+Business,1035,Business,Office Storage,1,2,1.2,4
+Support,1040,Support,Wellness,2,5,0.75,4
+Support,1040,Support,Showers,2,3,1.2,4
+Support,1040,Support,Lockers,1,4,0.5,4

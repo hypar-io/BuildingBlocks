@@ -29,7 +29,7 @@ namespace EnvelopeBySite
 		public double Subgrade {get;}
 
 
-        
+
         /// <summary>
         /// Construct a EnvelopeBySiteOutputs with default inputs.
         /// This should be used for testing only.

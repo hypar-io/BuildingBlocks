@@ -4,11 +4,13 @@
 
 using Xunit;
 using Hypar.Functions.Execution;
+using System.IO;
+using System.Reflection;
 using System.Threading.Tasks;
-using Elements;
-using Elements.Geometry;
 using Xunit.Abstractions;
 using Hypar.Functions.Execution.Local;
+using System;
+using System.Collections.Generic;
 
 namespace SiteBySketch.Tests
 {
@@ -24,17 +26,31 @@ namespace SiteBySketch.Tests
         [Fact]
         public async Task InvokeFunction()
         {
-            var store = new FileModelStore<SiteBySketchInputs>("./",true);
+            var root = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "../../../../");
+            var config = Hypar.Model.Function.FromJson(File.ReadAllText(Path.Combine(root, "hypar.json")));
+
+            var store = new FileModelStore<SiteBySketchInputs>(root);
 
             // Create an input object with default values.
             var input = new SiteBySketchInputs();
+
+            // Read local input files to populate incoming test data.
+            if (config.ModelDependencies != null)
+            {
+                var modelInputKeys = new Dictionary<string, string>();
+                foreach (var dep in config.ModelDependencies)
+                {
+                    modelInputKeys.Add(dep.Name, $"{dep.Name}.json");
+                }
+                input.ModelInputKeys = modelInputKeys;
+            }
 
             // Invoke the function.
             // The function invocation uses a FileModelStore
             // which will write the resulting model to disk.
             // You'll find the model at "./model.gltf"
-            var l = new InvocationWrapper<SiteBySketchInputs,SiteBySketchOutputs>(store, SiteBySketch.Execute);
-            var output = await l.InvokeAsync(input);
+            var l = new InvocationWrapper<SiteBySketchInputs, SiteBySketchOutputs>(store, SiteBySketch.Execute);
+            await l.InvokeAsync(input);
         }
     }
 }

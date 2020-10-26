@@ -1,0 +1,50 @@
+{
+    "$id": "https://raw.githubusercontent.com/andrewheumann/SubdivideSlab/master/SlabSubdivision.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "description": "A subsection of a slab",
+    "title": "SlabSubdivision",
+    "x-namespace": "Elements",
+    "type": [
+        "object",
+        "null"
+    ],
+    "allOf": [
+        {
+            "$ref": "https://hypar.io/Schemas/GeometricElement.json"
+        }
+    ],
+    "required": [
+        "discriminator",
+        "Profile",
+        "Depth"
+    ],
+    "discriminator": "discriminator",
+    "properties": {
+        "discriminator": {
+            "type": "string"
+        },
+        "Identifier": {
+            "description": "The identifier of this section.",
+            "type": "string"
+        },
+        "Profile": {
+            "description": "The id of the profile to extrude.",
+            "$ref": "https://hypar.io/Schemas/Geometry/Profile.json"
+        },
+        "IsTrimmed": {
+            "description": "True if a subdivision is trimmed or clipped by the boundary of the slab.",
+            "type": "boolean"
+        },
+        "Depth": {
+            "description": "The depth of the slab.",
+            "type": "number",
+            "minimum": 0
+        },
+        "Volume": {
+            "description": "The volume of the slab section.",
+            "type": "number",
+            "minimum": 0
+        }
+    },
+    "additionalProperties": false
+}

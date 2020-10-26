@@ -9,7 +9,7 @@ namespace FloorsByLevels
     public static class FloorsByLevels
     {
         /// <summary>
-        /// The FloorsByLevels function.
+        /// Generates Floors for each LevelPerimeter in the model configured ith slab thickness and setback..
         /// </summary>
         /// <param name="model">The input model.</param>
         /// <param name="input">The arguments to the execution.</param>
@@ -41,14 +41,13 @@ namespace FloorsByLevels
                             new Transform(0.0, 0.0, level.Elevation - input.FloorThickness),
                             BuiltInMaterials.Concrete, null, false, Guid.NewGuid(), null);
                 }
-                var opening = level.Perimeter.Offset(-1.0).First();
-                floor.Openings.Add(new Opening(opening));
                 floors.Add(floor);
                 floorArea += floor.Area();
             }
             floors = floors.OrderBy(f => f.Elevation).ToList();
+            floors.First().Transform.Move(new Vector3(0.0, 0.0, input.FloorThickness));
             var output = new FloorsByLevelsOutputs(floorArea, floors.Count());
-            output.model.AddElements(floors);
+            output.Model.AddElements(floors);
             return output;
         }
     }

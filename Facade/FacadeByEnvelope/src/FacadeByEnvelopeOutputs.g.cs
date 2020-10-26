@@ -23,7 +23,7 @@ namespace FacadeByEnvelope
 		public double PanelQuantity {get;}
 
 
-        
+
         /// <summary>
         /// Construct a FacadeByEnvelopeOutputs with default inputs.
         /// This should be used for testing only.
@@ -39,9 +39,9 @@ namespace FacadeByEnvelope
         /// </summary>
         /// <returns></returns>
         [JsonConstructor]
-        public FacadeByEnvelopeOutputs(double panelquantity): base()
+        public FacadeByEnvelopeOutputs(double panelQuantity): base()
         {
-			this.PanelQuantity = panelquantity;
+			this.PanelQuantity = panelQuantity;
 
 		}
 

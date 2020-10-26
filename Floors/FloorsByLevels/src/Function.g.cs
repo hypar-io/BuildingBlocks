@@ -30,7 +30,7 @@ namespace FloorsByLevels
                 var asmDir = Path.GetDirectoryName(asmLocation);
                 var asmName = Path.GetFileNameWithoutExtension(asmLocation);
                 var depPath = Path.Combine(asmDir, $"{asmName}.Dependencies.dll");
-                
+
                 if(File.Exists(depPath))
                 {
                     Console.WriteLine($"Loading dependencies from assembly: {depPath}...");
@@ -40,7 +40,7 @@ namespace FloorsByLevels
 
                 this.store = new S3ModelStore<FloorsByLevelsInputs>(RegionEndpoint.USWest1);
             }
-            
+
             var l = new InvocationWrapper<FloorsByLevelsInputs,FloorsByLevelsOutputs>(store, FloorsByLevels.Execute);
             var output = await l.InvokeAsync(args);
             return output;

@@ -1,12 +1,13 @@
+<img src="preview.png" width="512">
 
-            
-# LevelBySketch
+# Level By Sketch
 
-The LevelBySketch function.
+Creates a Level from a sketch.
 
 |Input Name|Type|Description|
 |---|---|---|
 |Perimeter|Geometry|Perimeter of the Level.|
+|Level Elevation|Range|Level elevation relative to the zero plane.|
 
 
 <br>

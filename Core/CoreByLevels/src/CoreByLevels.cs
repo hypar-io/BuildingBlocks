@@ -10,7 +10,7 @@ namespace CoreByLevels
     public static class CoreByLevels
     {
         /// <summary>
-        /// The CoreByLevels function.
+        /// Creates a building service core including stair enclosures, lift shafts, a mechanical shaft, and restrooms with reference to the quantity and area of the building levels.
         /// </summary>
         /// <param name="model">The input model.</param>
         /// <param name="input">The arguments to the execution.</param>
@@ -25,26 +25,26 @@ namespace CoreByLevels
             }
             levels.AddRange(model.AllElementsOfType<LevelPerimeter>());
             var coreMaker = new CoreMaker(levels, input.Setback, input.Rotation);
-            var output = new CoreByLevelsOutputs(coreMaker.Restrooms.Count(), coreMaker.LiftQuantity);
+            var outputs = new CoreByLevelsOutputs(coreMaker.Restrooms.Count(), coreMaker.LiftQuantity);
 
-            output.model.AddElement(new Exclusion(coreMaker.Perimeter, coreMaker.Elevation, Guid.NewGuid(), "Core Exclusion"));
+            outputs.Model.AddElement(new Exclusion(coreMaker.Perimeter, coreMaker.Elevation, Guid.NewGuid(), "Core Exclusion"));
             foreach (var room in coreMaker.Restrooms)
             {
-                output.model.AddElement(room);
+                outputs.Model.AddElement(room);
             }
             foreach (var mech in coreMaker.Mechanicals)
             {
-                output.model.AddElement(mech);
+                outputs.Model.AddElement(mech);
             }
             foreach (var stair in coreMaker.Stairs)
             {
-                output.model.AddElement(stair);
+                outputs.Model.AddElement(stair);
             }
             foreach (var lift in coreMaker.Lifts)
             {
-                output.model.AddElement(lift);
+                outputs.Model.AddElement(lift);
             }
-            return output;
+            return outputs;
         }
     }
 }

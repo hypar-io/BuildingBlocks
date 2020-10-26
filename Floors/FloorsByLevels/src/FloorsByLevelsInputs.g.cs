@@ -29,7 +29,7 @@ namespace FloorsByLevels
 		public double FloorThickness {get;}
 
 
-        
+
         /// <summary>
         /// Construct a FloorsByLevelsInputs with default inputs.
         /// This should be used for testing only.
@@ -47,10 +47,10 @@ namespace FloorsByLevels
         /// </summary>
         /// <returns></returns>
         [JsonConstructor]
-        public FloorsByLevelsInputs(double floorsetback, double floorthickness, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
+        public FloorsByLevelsInputs(double floorSetback, double floorThickness, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
         {
-			this.FloorSetback = floorsetback;
-			this.FloorThickness = floorthickness;
+			this.FloorSetback = floorSetback;
+			this.FloorThickness = floorThickness;
 
 		}
 

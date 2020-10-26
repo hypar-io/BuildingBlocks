@@ -1,5 +1,5 @@
 <img src="preview.png" width="512">
-            
+
 # Envelope By Site
 
 Creates an Envelope from a Site boundary supplied by another function.

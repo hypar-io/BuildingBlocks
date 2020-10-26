@@ -1,8 +1,8 @@
 <img src="preview.png" width="512">
-            
+
 # Levels By Envelope
 
-Creates Levels and LevelPerimeters from one or more Envelopes supplied by other functions.
+Creates Levels and LevelPerimeters from one or more Envelopes.
 
 |Input Name|Type|Description|
 |---|---|---|

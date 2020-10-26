@@ -23,7 +23,7 @@ namespace SiteBySketch
 		public Elements.Geometry.Polygon Perimeter {get;}
 
 
-        
+
         /// <summary>
         /// Construct a SiteBySketchInputs with default inputs.
         /// This should be used for testing only.

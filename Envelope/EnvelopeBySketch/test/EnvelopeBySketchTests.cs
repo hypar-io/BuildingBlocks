@@ -11,32 +11,48 @@ using Elements.Geometry;
 
 namespace EnvelopeBySketch.Tests
 {
+    /// <summary>
+    /// Writes all new Elements to JSON output.
+    /// Writes all new Elements and any incoming contextual Elements to GLB output.
+    /// </summary>
     public class EnvelopeBySketchTests
     {
+        private const string OUTPUT = "../../../_output/";
+
         [Fact]
         public void EnvelopeBySketchTest()
         {
-            var model = new Model();
             var polygon = 
                 new Polygon
                 (
-                    new[]
+                    new []
                     {
-                        new Vector3(0.0, 0.0),
-                        new Vector3(100.0, 0.0),
-                        new Vector3(100.0, 100.0),
-                        new Vector3(60.0, 100.0),
-                        new Vector3(60.0, 30.0),
-                        new Vector3(40.0, 40.0),
-                        new Vector3(40.0, 100.0),
-                        new Vector3(0.0, 100.0)
-                    }
-                );
-            var inputs = 
-                new EnvelopeBySketchInputs (polygon, 80.0, 20.0, 2.0, 100.0, 20.0, "", "", new Dictionary<string, string>(), "", "", "");
-            var outputs = EnvelopeBySketch.Execute(new Dictionary<string, Model> { { "Envelope", model } }, inputs);
-            System.IO.File.WriteAllText("../../../../../../TestOutput/EnvelopeBySketch.json", outputs.model.ToJson());
-            outputs.model.ToGlTF("../../../../../../TestOutput/EnvelopeBySketch.glb");
+                        new Vector3(6.0, 0.0),
+                        new Vector3(9.0, 0.0),
+                        new Vector3(9.0, 4.0),
+                        new Vector3(13.0, 4.0),
+                        new Vector3(13.0, 7.0),
+                        new Vector3(9.0, 7.0),
+                        new Vector3(9.0, 11.0),
+                        new Vector3(6.0, 11.0),
+                        new Vector3(6.0, 7.0),
+                        new Vector3(2.0, 7.0),
+                        new Vector3(2.0, 4.0),
+                        new Vector3(6.0, 4.0)                        
+                    });
+            var inputs =
+                new EnvelopeBySketchInputs(
+                    perimeter: polygon, 
+                    buildingHeight: 27.0,
+                    setbackInterval: 50.0, 
+                    setbackDepth: 5.0, 
+                    minimumTierArea: 100.0, 
+                    foundationDepth: 3.0, 
+                    "", "", new Dictionary<string, string>(), "", "", "");
+            var outputs = 
+                EnvelopeBySketch.Execute(new Dictionary<string, Model> { { "Envelope", new Model() } }, inputs);
+            System.IO.File.WriteAllText(OUTPUT + "EnvelopeBySketch.json", outputs.Model.ToJson());
+            outputs.Model.ToGlTF(OUTPUT + "EnvelopeBySketch.glb");
         }
     }
 }

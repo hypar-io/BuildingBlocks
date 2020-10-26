@@ -1,5 +1,5 @@
 <img src="preview.png" width="512">
-            
+
 # Envelope By Sketch
 
 Creates building Envelope elements derived from a polygon sketch and setback settings.

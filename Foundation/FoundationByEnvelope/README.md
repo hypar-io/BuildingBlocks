@@ -1,8 +1,8 @@
 <img src="preview.png" width="512">
-            
+
 # Foundation by Envelope
 
-The FoundationByEnvelope function.
+Creates a Foundation from a building Envelope.
 
 |Input Name|Type|Description|
 |---|---|---|

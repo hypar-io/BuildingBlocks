@@ -35,7 +35,7 @@ namespace FacadeByEnvelope
 		public double GlassTopBottomInset {get;}
 
 
-        
+
         /// <summary>
         /// Construct a FacadeByEnvelopeInputs with default inputs.
         /// This should be used for testing only.
@@ -54,11 +54,11 @@ namespace FacadeByEnvelope
         /// </summary>
         /// <returns></returns>
         [JsonConstructor]
-        public FacadeByEnvelopeInputs(double panelwidth, double glassleftrightinset, double glasstopbottominset, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
+        public FacadeByEnvelopeInputs(double panelWidth, double glassLeftRightInset, double glassTopBottomInset, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
         {
-			this.PanelWidth = panelwidth;
-			this.GlassLeftRightInset = glassleftrightinset;
-			this.GlassTopBottomInset = glasstopbottominset;
+			this.PanelWidth = panelWidth;
+			this.GlassLeftRightInset = glassLeftRightInset;
+			this.GlassTopBottomInset = glassTopBottomInset;
 
 		}
 

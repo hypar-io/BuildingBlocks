@@ -23,7 +23,7 @@ namespace SiteBySketch
 		public double Area {get;}
 
 
-        
+
         /// <summary>
         /// Construct a SiteBySketchOutputs with default inputs.
         /// This should be used for testing only.
