@@ -127,6 +127,12 @@ namespace StructureByEnvelope
             var gridXMaterial = new Material("GridX", Colors.Red);
             double lumpingTolerance = 2.0;
 
+            var structureMaterial = BuiltInMaterials.Steel;
+            if (input.TypeOfConstruction == TypeOfConstruction.MassTimber)
+            {
+                structureMaterial = BuiltInMaterials.Wood;
+            }
+
             foreach (var envelope in envelopes)
             {
                 // Inset the footprint just a bit to keep the
@@ -164,17 +170,20 @@ namespace StructureByEnvelope
                 last = envLevels.Last();
 
                 List<Beam> masterFraming = null;
-                foreach (var l in envLevels)
+                if (input.TypeOfConstruction == TypeOfConstruction.Steel)
                 {
-                    if (masterFraming == null)
+                    foreach (var l in envLevels)
                     {
-                        masterFraming = CreateFramingPlan(l.Elevation, xGridSegments, yGridSegments, boundarySegments);
-                        model.AddElements(masterFraming);
-                    }
-                    else
-                    {
-                        var instances = CreateFramingPlanInstance(masterFraming, l.Elevation);
-                        model.AddElements(instances, false);
+                        if (masterFraming == null)
+                        {
+                            masterFraming = CreateFramingPlan(l.Elevation, xGridSegments, yGridSegments, boundarySegments, structureMaterial);
+                            model.AddElements(masterFraming);
+                        }
+                        else
+                        {
+                            var instances = CreateFramingPlanInstance(masterFraming, l.Elevation);
+                            model.AddElements(instances, false);
+                        }
                     }
                 }
 
@@ -188,17 +197,17 @@ namespace StructureByEnvelope
                         masterColumn = new Column(Vector3.Origin,
                                         envLevels.Last().Elevation - lc.Z,
                                         colProfile,
-                                        BuiltInMaterials.Steel,
+                                        structureMaterial,
                                         new Transform(lc),
                                         0,
                                         0,
                                         gridRotation);
+                        masterColumn.IsElementDefinition = true;
                         model.AddElement(masterColumn);
                     }
                     else
                     {
                         // var displace = Vector3.Origin - masterColumn.Transform.Origin - lc;
-                        masterColumn.IsElementDefinition = true;
                         var instance = masterColumn.CreateInstance(new Transform(lc), "");//new ElementInstance(masterColumn, new Transform(lc));
                         model.AddElement(instance, false);
                     }
@@ -339,7 +348,6 @@ namespace StructureByEnvelope
             foreach (var beam in framing)
             {
                 var halfDepth = _halfDepths[_beamProfiles.IndexOf(beam.Profile)];
-                beam.IsElementDefinition = true;
                 var beamInstance = beam.CreateInstance(new Transform(new Vector3(0, 0, elevation - halfDepth)), "");
                 instanceBeams.Add(beamInstance);
             }
@@ -349,10 +357,10 @@ namespace StructureByEnvelope
         private static List<Beam> CreateFramingPlan(double elevation,
                                                    List<Line> xGridSegments,
                                                    List<Line> yGridSegments,
-                                                   IList<Line> boundarySegments)
+                                                   IList<Line> boundarySegments,
+                                                   Material mat)
         {
             var beams = new List<Beam>();
-            var mat = BuiltInMaterials.Steel;
             foreach (var x in xGridSegments)
             {
                 try
@@ -366,6 +374,7 @@ namespace StructureByEnvelope
                                         startSetback: 0.25,
                                         endSetback: 0.25,
                                         transform: new Transform(new Vector3(0, 0, elevation - _halfDepths[beamIndex])));
+                    beam.IsElementDefinition = true;
                     beams.Add(beam);
                 }
                 catch (Exception ex)
@@ -388,6 +397,7 @@ namespace StructureByEnvelope
                                         startSetback: 0.25,
                                         endSetback: 0.25,
                                         transform: new Transform(new Vector3(0, 0, elevation - _halfDepths[beamIndex])));
+                    beam.IsElementDefinition = true;
                     beams.Add(beam);
                 }
                 catch (Exception ex)
@@ -404,6 +414,7 @@ namespace StructureByEnvelope
                                     profile,
                                     BuiltInMaterials.Steel,
                                     transform: new Transform(new Vector3(0, 0, elevation - _halfDepths[5])));
+                beam.IsElementDefinition = true;
                 beams.Add(beam);
             }
 

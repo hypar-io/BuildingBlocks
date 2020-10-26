@@ -42,6 +42,15 @@
       "name": "Slab Edge Offset",
       "description": "The offset of the grid lines from the slab edge.",
       "type": "range"
+    },
+    {
+      "name": "Type of Construction",
+      "description": "The system used for construction.",
+      "type": "choice",
+      "choices": [
+        "Steel",
+        "MassTimber"
+      ]
     }
   ],
   "outputs": [

@@ -21,9 +21,10 @@ namespace StructureByEnvelope.tests
             var envModel = Model.FromJson(System.IO.File.ReadAllText(INPUT + "Envelope.json"));
             var lvlModel = Model.FromJson(System.IO.File.ReadAllText(INPUT + "Levels.json"));
             var inputs = new StructureByEnvelopeInputs(
-                gridXAxisInterval: 4.0, 
+                gridXAxisInterval: 4.0,
                 gridYAxisInterval: 5.0,
                 slabEdgeOffset: 1.0,
+                typeOfConstruction: TypeOfConstruction.Steel,
                 "", "", new Dictionary<string, string>(), "", "", "");
             var outputs = StructureByEnvelope.Execute(
                 new Dictionary<string, Model>
