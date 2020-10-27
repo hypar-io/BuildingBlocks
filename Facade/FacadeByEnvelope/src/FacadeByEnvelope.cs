@@ -4,6 +4,7 @@ using System.Linq;
 using Elements;
 using Elements.Geometry;
 using Elements.Geometry.Solids;
+using Elements.Spatial;
 
 namespace FacadeByEnvelope
 {
@@ -60,13 +61,11 @@ namespace FacadeByEnvelope
             }
             levels.Sort(new LevelComparer());
 
-            var panelCount = 0;
-
-            var panelMat = new Material("envelope", new Color(1.0, 1.0, 1.0, 1), 0.5f, 0.5f);
             List<Level> envLevels = null;
 
             var wireframeMaterial = new Material("wireframe", new Color(0.5, 0.5, 0.5, 1.0));
 
+            var panelCount = 0;
             foreach (var envelope in envelopes)
             {
                 var boundarySegments = envelope.Profile.Perimeter.Segments();
@@ -84,91 +83,146 @@ namespace FacadeByEnvelope
                     envLevels.Insert(0, last);
                 }
 
-                for (var i = 0; i < envLevels.Count - 1; i++)
-                {
-                    var level1 = envLevels[i];
-                    var level2 = envLevels[i + 1];
+                panelCount = PanelLevels(envLevels, boundarySegments, input.PanelWidth, input.GlassLeftRightInset, input.GlassTopBottomInset, model);
+            }
 
-                    foreach (var s in boundarySegments)
-                    {
-                        FacadePanel masterPanel = null;
-                        Panel masterGlazing = null;
-
-                        var d = s.Direction();
-                        var bottomSegments = DivideByLengthFromCenter(s, input.PanelWidth);
-
-                        try
-                        {
-                            for (var j = 0; j < bottomSegments.Count(); j++)
-                            {
-                                var bs = bottomSegments[j];
-                                var t = new Transform(bs.Start + new Vector3(0, 0, level1.Elevation), d, d.Cross(Vector3.ZAxis));
-                                var l = bs.Length();
-
-                                // If the segment width is within Epsilon of 
-                                // the input panel width, then create a
-                                // panel with glazing.
-                                if (Math.Abs(l - input.PanelWidth) < Vector3.EPSILON)
-                                {
-                                    if (masterPanel == null)
-                                    {
-                                        // Create a master panel for each level.
-                                        // This panel will be instanced at every location.
-                                        CreateFacadePanel($"FP_{i}",
-                                                                input.PanelWidth,
-                                                                level2.Elevation - level1.Elevation,
-                                                                input.GlassLeftRightInset,
-                                                                input.GlassTopBottomInset,
-                                                                0.1,
-                                                                input.PanelWidth,
-                                                                panelMat,
-                                                                t,
-                                                                out masterPanel,
-                                                                out masterGlazing);
-                                        model.AddElement(masterPanel);
-                                        model.AddElement(masterGlazing);
-                                    }
-
-                                    // Create a panel instance.
-                                    var panelInstance = masterPanel.CreateInstance(t, $"FP_{i}_{j}");
-                                    model.AddElement(panelInstance, false);
-                                    var glazingInstance = masterGlazing.CreateInstance(t, $"FG_{i}_{j}");
-                                    model.AddElement(glazingInstance, false);
-
-                                }
-                                // Otherwise, create a panel with not glazing.
-                                else
-                                {
-                                    CreateStandardPanel($"FP_{i}_{j}",
-                                                        l,
-                                                        level2.Elevation - level1.Elevation,
-                                                        0.1,
-                                                        t,
-                                                        panelMat,
-                                                        out FacadePanel panel);
-                                    model.AddElement(panel);
-                                }
-                                panelCount++;
-                            }
-
-                            if (i == envLevels.Count - 2)
-                            {
-                                var parapet = new StandardWall(new Line(new Vector3(s.Start.X, s.Start.Y, level2.Elevation), new Vector3(s.End.X, s.End.Y, level2.Elevation)), 0.1, 0.9, panelMat);
-                                model.AddElement(parapet);
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine(ex);
-                            continue;
-                        }
-                    }
-                }
+            var groundFloorEnvelope = envelopes.First(e => e.Elevation == 0.0);
+            if (groundFloorEnvelope != null)
+            {
+                var boundarySegments = groundFloorEnvelope.Profile.Perimeter.Offset(-0.5)[0].Segments();
+                var groundLevels = levels.Where(l => l.Elevation >= groundFloorEnvelope.Elevation && l.Elevation <= groundFloorEnvelope.Elevation + groundFloorEnvelope.Height).ToList();
+                var bottom = groundLevels.First().Elevation;
+                var top = groundLevels.Count > 1 ? groundLevels[1].Elevation : groundFloorEnvelope.Elevation + groundFloorEnvelope.Height;
+                PanelGroundFloor(bottom, top, boundarySegments, input.PanelWidth, model);
             }
 
             var output = new FacadeByEnvelopeOutputs(panelCount);
             output.Model = model;
             return output;
+        }
+
+        private static int PanelLevels(List<Level> envLevels,
+                                       Line[] boundarySegments,
+                                       double panelWidth,
+                                       double glassLeftRight,
+                                       double glassTopBottom,
+                                       Model model)
+        {
+            var panelMat = new Material("envelope", new Color(1.0, 1.0, 1.0, 1), 0.5f, 0.5f);
+            var panelCount = 0;
+
+            for (var i = 1; i < envLevels.Count - 1; i++)
+            {
+                var level1 = envLevels[i];
+                var level2 = envLevels[i + 1];
+
+                foreach (var s in boundarySegments)
+                {
+                    FacadePanel masterPanel = null;
+                    Panel masterGlazing = null;
+
+                    var d = s.Direction();
+                    var bottomSegments = DivideByLengthFromCenter(s, panelWidth);
+
+                    try
+                    {
+                        for (var j = 0; j < bottomSegments.Count(); j++)
+                        {
+                            var bs = bottomSegments[j];
+                            var t = new Transform(bs.Start + new Vector3(0, 0, level1.Elevation), d, d.Cross(Vector3.ZAxis));
+                            var l = bs.Length();
+
+                            // If the segment width is within Epsilon of 
+                            // the input panel width, then create a
+                            // panel with glazing.
+                            if (Math.Abs(l - panelWidth) < Vector3.EPSILON)
+                            {
+                                if (masterPanel == null)
+                                {
+                                    // Create a master panel for each level.
+                                    // This panel will be instanced at every location.
+                                    CreateFacadePanel($"FP_{i}",
+                                                            panelWidth,
+                                                            level2.Elevation - level1.Elevation,
+                                                            glassLeftRight,
+                                                            glassTopBottom,
+                                                            0.1,
+                                                            panelWidth,
+                                                            panelMat,
+                                                            t,
+                                                            out masterPanel,
+                                                            out masterGlazing);
+                                    model.AddElement(masterPanel);
+                                    model.AddElement(masterGlazing);
+                                }
+
+                                // Create a panel instance.
+                                var panelInstance = masterPanel.CreateInstance(t, $"FP_{i}_{j}");
+                                model.AddElement(panelInstance, false);
+                                var glazingInstance = masterGlazing.CreateInstance(t, $"FG_{i}_{j}");
+                                model.AddElement(glazingInstance, false);
+
+                            }
+                            // Otherwise, create a panel with not glazing.
+                            else
+                            {
+                                CreateStandardPanel($"FP_{i}_{j}",
+                                                    l,
+                                                    level2.Elevation - level1.Elevation,
+                                                    0.1,
+                                                    t,
+                                                    panelMat,
+                                                    out FacadePanel panel);
+                                model.AddElement(panel);
+                            }
+                            panelCount++;
+                        }
+
+                        if (i == envLevels.Count - 2)
+                        {
+                            var parapet = new StandardWall(new Line(new Vector3(s.Start.X, s.Start.Y, level2.Elevation), new Vector3(s.End.X, s.End.Y, level2.Elevation)), 0.1, 0.9, panelMat);
+                            model.AddElement(parapet);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex);
+                        continue;
+                    }
+                }
+            }
+
+            return panelCount;
+        }
+
+        private static void PanelGroundFloor(double bottomElevation,
+                                             double topElevation,
+                                             Line[] boundarySegments,
+                                             double panelWidth,
+                                             Model model)
+        {
+            foreach (var segment in boundarySegments)
+            {
+                var u = new Grid1d(segment);
+                var v = new Grid1d(new Line(segment.Start, new Vector3(segment.Start.X, segment.Start.Y, segment.Start.Z + topElevation)));
+                var grid2d = new Grid2d(u, v);
+                grid2d.U.DivideByFixedLength(1.5);
+                grid2d.V.DivideByCount(2);
+                foreach (var sep in grid2d.GetCellSeparators(GridDirection.U))
+                {
+                    var mullion = new Beam((Line)sep, Polygon.Rectangle(0.05, 0.05), BuiltInMaterials.Black);
+                    model.AddElement(mullion);
+                }
+                foreach (var sep in grid2d.GetCellSeparators(GridDirection.V))
+                {
+                    var mullion = new Beam((Line)sep, Polygon.Rectangle(0.05, 0.05), BuiltInMaterials.Black);
+                    model.AddElement(mullion);
+                }
+                var panel = new Panel(new Polygon(new[]{
+                    segment.Start, segment.End , new Vector3(segment.End.X, segment.End.Y, segment.End.Z + topElevation), new Vector3(segment.Start.X, segment.Start.Y, segment.Start.Z + topElevation)
+                }), BuiltInMaterials.Glass);
+                model.AddElement(panel);
+            }
         }
 
         private static List<Line> DivideByLengthFromCenter(Line line, double d)
