@@ -28,19 +28,20 @@ namespace FacadeByEnvelope
     {
         [Newtonsoft.Json.JsonConstructor]
         
-        public FacadeByEnvelopeInputs(double @panelWidth, double @glassLeftRightInset, double @glassTopBottomInset, Color @panelColor, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey):
+        public FacadeByEnvelopeInputs(double @panelWidth, double @glassLeftRightInset, double @glassTopBottomInset, Color @panelColor, double @groundFloorSetback, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey):
         base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
         {
             var validator = Validator.Instance.GetFirstValidatorForType<FacadeByEnvelopeInputs>();
             if(validator != null)
             {
-                validator.PreConstruct(new object[]{ @panelWidth, @glassLeftRightInset, @glassTopBottomInset, @panelColor});
+                validator.PreConstruct(new object[]{ @panelWidth, @glassLeftRightInset, @glassTopBottomInset, @panelColor, @groundFloorSetback});
             }
         
             this.PanelWidth = @panelWidth;
             this.GlassLeftRightInset = @glassLeftRightInset;
             this.GlassTopBottomInset = @glassTopBottomInset;
             this.PanelColor = @panelColor;
+            this.GroundFloorSetback = @groundFloorSetback;
         
             if(validator != null)
             {
@@ -65,6 +66,11 @@ namespace FacadeByEnvelope
     
         [Newtonsoft.Json.JsonProperty("Panel Color", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public Color PanelColor { get; set; }
+    
+        /// <summary>The setback of the ground floor facade.</summary>
+        [Newtonsoft.Json.JsonProperty("Ground Floor Setback", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.Range(0D, 2.0D)]
+        public double GroundFloorSetback { get; set; } = 1D;
     
         private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
     

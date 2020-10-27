@@ -29,6 +29,7 @@ namespace FacadeByEnvelope.Tests
                     glassLeftRightInset: 3.0,
                     glassTopBottomInset: 3.0,
                     panelColor: Colors.Yellow,
+                    groundFloorSetback: 1.0,
                     "", "", new Dictionary<string, string>(), "", "", "");
             var envModel = Model.FromJson(System.IO.File.ReadAllText(INPUT + "Envelope.json"));
             var lvlModel = Model.FromJson(System.IO.File.ReadAllText(INPUT + "Levels.json"));

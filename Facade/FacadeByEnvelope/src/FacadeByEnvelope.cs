@@ -95,7 +95,7 @@ namespace FacadeByEnvelope
             var groundFloorEnvelope = envelopes.First(e => e.Elevation == 0.0);
             if (groundFloorEnvelope != null)
             {
-                var boundarySegments = groundFloorEnvelope.Profile.Perimeter.Offset(-0.5)[0].Segments();
+                var boundarySegments = groundFloorEnvelope.Profile.Perimeter.Offset(-input.GroundFloorSetback)[0].Segments();
                 var groundLevels = levels.Where(l => l.Elevation >= groundFloorEnvelope.Elevation && l.Elevation <= groundFloorEnvelope.Elevation + groundFloorEnvelope.Height).ToList();
                 var bottom = groundLevels.First().Elevation;
                 var top = groundLevels.Count > 1 ? groundLevels[1].Elevation : groundFloorEnvelope.Elevation + groundFloorEnvelope.Height;
