@@ -5,67 +5,76 @@
 using Elements;
 using Elements.GeoJSON;
 using Elements.Geometry;
+using Elements.Geometry.Solids;
+using Elements.Properties;
+using Elements.Validators;
 using Hypar.Functions;
 using Hypar.Functions.Execution;
 using Hypar.Functions.Execution.AWS;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using Line = Elements.Geometry.Line;
+using Polygon = Elements.Geometry.Polygon;
 
 namespace FacadeByEnvelope
 {
-    public class FacadeByEnvelopeInputs: S3Args
+    #pragma warning disable // Disable all warnings
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
+    
+    public  class FacadeByEnvelopeInputs : S3Args
+    
     {
-		/// <summary>
-		/// The panel width
-		/// </summary>
-		[JsonProperty("Panel Width")]
-		public double PanelWidth {get;}
-
-		/// <summary>
-		/// The inset of the glass panel from the left and right of the outer frame.
-		/// </summary>
-		[JsonProperty("Glass Left-Right Inset")]
-		public double GlassLeftRightInset {get;}
-
-		/// <summary>
-		/// The inset of the glass panel from the top and bottom of the outer frame.
-		/// </summary>
-		[JsonProperty("Glass Top-Bottom Inset")]
-		public double GlassTopBottomInset {get;}
-
-
-
-        /// <summary>
-        /// Construct a FacadeByEnvelopeInputs with default inputs.
-        /// This should be used for testing only.
-        /// </summary>
-        public FacadeByEnvelopeInputs() : base()
+        [Newtonsoft.Json.JsonConstructor]
+        
+        public FacadeByEnvelopeInputs(double @panelWidth, double @glassLeftRightInset, double @glassTopBottomInset, Color @panelColor, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey):
+        base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
         {
-			this.PanelWidth = 4;
-			this.GlassLeftRightInset = 1;
-			this.GlassTopBottomInset = 1;
-
+            var validator = Validator.Instance.GetFirstValidatorForType<FacadeByEnvelopeInputs>();
+            if(validator != null)
+            {
+                validator.PreConstruct(new object[]{ @panelWidth, @glassLeftRightInset, @glassTopBottomInset, @panelColor});
+            }
+        
+            this.PanelWidth = @panelWidth;
+            this.GlassLeftRightInset = @glassLeftRightInset;
+            this.GlassTopBottomInset = @glassTopBottomInset;
+            this.PanelColor = @panelColor;
+        
+            if(validator != null)
+            {
+                validator.PostConstruct(this);
+            }
         }
-
-
-        /// <summary>
-        /// Construct a FacadeByEnvelopeInputs specifying all inputs.
-        /// </summary>
-        /// <returns></returns>
-        [JsonConstructor]
-        public FacadeByEnvelopeInputs(double panelWidth, double glassLeftRightInset, double glassTopBottomInset, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
+    
+        /// <summary>The width of each facade panel..</summary>
+        [Newtonsoft.Json.JsonProperty("Panel Width", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.Range(0.5D, 4.0D)]
+        public double PanelWidth { get; set; } = 1D;
+    
+        /// <summary>The inset of the glass panel from the left and right of the outer frame.</summary>
+        [Newtonsoft.Json.JsonProperty("Glass Left-Right Inset", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.Range(0.01D, 1.0D)]
+        public double GlassLeftRightInset { get; set; }
+    
+        /// <summary>The inset of the glass panel from the top and bottom of the outer frame.</summary>
+        [Newtonsoft.Json.JsonProperty("Glass Top-Bottom Inset", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.Range(0.01D, 1.0D)]
+        public double GlassTopBottomInset { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("Panel Color", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public Color PanelColor { get; set; }
+    
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+    
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
         {
-			this.PanelWidth = panelWidth;
-			this.GlassLeftRightInset = glassLeftRightInset;
-			this.GlassTopBottomInset = glassTopBottomInset;
-
-		}
-
-		public override string ToString()
-		{
-			var json = JsonConvert.SerializeObject(this);
-			return json;
-		}
-	}
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
+    
+    
+    }
 }

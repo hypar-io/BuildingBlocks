@@ -2,6 +2,7 @@
 using System.Linq;
 using Newtonsoft.Json;
 using Elements;
+using Elements.Geometry;
 using Hypar.Functions.Execution.Local;
 using Elements.Serialization.glTF;
 using Elements.Serialization.JSON;
@@ -22,11 +23,12 @@ namespace FacadeByEnvelope.Tests
         [Fact]
         public void FacadeByEnvelopeTest()
         {
-            var inputs 
+            var inputs
                 = new FacadeByEnvelopeInputs(
-                    panelWidth: 3.0, 
-                    glassLeftRightInset: 3.0, 
-                    glassTopBottomInset: 3.0, 
+                    panelWidth: 3.0,
+                    glassLeftRightInset: 3.0,
+                    glassTopBottomInset: 3.0,
+                    panelColor: Colors.Yellow,
                     "", "", new Dictionary<string, string>(), "", "", "");
             var envModel = Model.FromJson(System.IO.File.ReadAllText(INPUT + "Envelope.json"));
             var lvlModel = Model.FromJson(System.IO.File.ReadAllText(INPUT + "Levels.json"));
@@ -35,7 +37,7 @@ namespace FacadeByEnvelope.Tests
                 {
                     {"Envelope", envModel},
                     {"Levels", lvlModel}
-                }, 
+                },
                 inputs);
             System.IO.File.WriteAllText(OUTPUT + "FacadeByEnvelope.json", outputs.Model.ToJson());
             outputs.Model.AddElements(envModel.Elements.Values);

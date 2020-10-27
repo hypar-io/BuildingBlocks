@@ -83,7 +83,13 @@ namespace FacadeByEnvelope
                     envLevels.Insert(0, last);
                 }
 
-                panelCount = PanelLevels(envLevels, boundarySegments, input.PanelWidth, input.GlassLeftRightInset, input.GlassTopBottomInset, model);
+                panelCount = PanelLevels(envLevels,
+                                         boundarySegments,
+                                         input.PanelWidth,
+                                         input.GlassLeftRightInset,
+                                         input.GlassTopBottomInset,
+                                         model,
+                                         input.PanelColor);
             }
 
             var groundFloorEnvelope = envelopes.First(e => e.Elevation == 0.0);
@@ -106,9 +112,10 @@ namespace FacadeByEnvelope
                                        double panelWidth,
                                        double glassLeftRight,
                                        double glassTopBottom,
-                                       Model model)
+                                       Model model,
+                                       Color panelColor)
         {
-            var panelMat = new Material("envelope", new Color(1.0, 1.0, 1.0, 1), 0.5f, 0.5f);
+            var panelMat = new Material("panel", panelColor, 0.8f, 0.5f);
             var panelCount = 0;
 
             for (var i = 1; i < envLevels.Count - 1; i++)
