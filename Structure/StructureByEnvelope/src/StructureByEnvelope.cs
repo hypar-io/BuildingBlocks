@@ -119,7 +119,8 @@ namespace StructureByEnvelope
                                                        input.GridYAxisInterval > 0 ? input.GridYAxisInterval : 4,
                                                        out xGrids,
                                                        out yGrids,
-                                                       model);
+                                                       model,
+                                                       input.DisplayGrid);
 
             levels.Sort(new LevelComparer());
 
@@ -179,11 +180,9 @@ namespace StructureByEnvelope
                             masterFraming = CreateFramingPlan(l.Elevation, xGridSegments, yGridSegments, boundarySegments, structureMaterial);
                             model.AddElements(masterFraming);
                         }
-                        else
-                        {
-                            var instances = CreateFramingPlanInstance(masterFraming, l.Elevation);
-                            model.AddElements(instances, false);
-                        }
+
+                        var instances = CreateFramingPlanInstance(masterFraming, l.Elevation);
+                        model.AddElements(instances, false);
                     }
                 }
 
@@ -192,10 +191,11 @@ namespace StructureByEnvelope
                 GeometricElement masterColumn = null;
                 foreach (var lc in columnLocations)
                 {
+                    var height = envLevels.Last().Elevation - lc.Z;
                     if (masterColumn == null)
                     {
-                        masterColumn = new Column(Vector3.Origin,
-                                        envLevels.Last().Elevation - lc.Z,
+                        masterColumn = new Column(new Vector3(),
+                                        height,
                                         colProfile,
                                         structureMaterial,
                                         new Transform(lc),
@@ -205,14 +205,12 @@ namespace StructureByEnvelope
                         masterColumn.IsElementDefinition = true;
                         model.AddElement(masterColumn);
                     }
-                    else
-                    {
-                        // var displace = Vector3.Origin - masterColumn.Transform.Origin - lc;
-                        var instance = masterColumn.CreateInstance(new Transform(lc), "");//new ElementInstance(masterColumn, new Transform(lc));
-                        model.AddElement(instance, false);
-                    }
+
+                    var instance = masterColumn.CreateInstance(new Transform(lc), "");//new ElementInstance(masterColumn, new Transform(lc));
+                    model.AddElement(instance, false);
                 }
             }
+
 
             var output = new StructureByEnvelopeOutputs(_longestGridSpan);
             output.Model = model;
@@ -274,7 +272,8 @@ namespace StructureByEnvelope
                                                     double yInterval,
                                                     out List<Line> xGrids,
                                                     out List<Line> yGrids,
-                                                    Model model)
+                                                    Model model,
+                                                    bool displayGrid = false)
         {
             Line longestSide = null;
             foreach (var s in boundary.Segments())
@@ -325,7 +324,10 @@ namespace StructureByEnvelope
                 var p2 = start + yAxis * y + xAxis * w;
                 var l = new Line(p1, p2);
                 xGrids.Add(l);
-                // model.AddElement(new ModelCurve(l, BuiltInMaterials.XAxis));
+                if (displayGrid)
+                {
+                    model.AddElement(new ModelCurve(l, BuiltInMaterials.XAxis));
+                }
             }
 
             for (var x = 0.0; x <= w; x += yInterval)
@@ -334,10 +336,16 @@ namespace StructureByEnvelope
                 var p2 = start + xAxis * x + yAxis * h;
                 var l = new Line(p1, p2);
                 yGrids.Add(l);
-                // model.AddElement(new ModelCurve(l, BuiltInMaterials.YAxis));
+                if (displayGrid)
+                {
+                    model.AddElement(new ModelCurve(l, BuiltInMaterials.YAxis));
+                }
             }
 
-            // model.AddElement(new ModelCurve(Polygon.Circle(1), transform:new Transform(xGrids[0].Start)));
+            if (displayGrid)
+            {
+                model.AddElement(new ModelCurve(new Circle(1).ToPolygon(), transform: new Transform(xGrids[0].Start)));
+            }
 
             return rotation;
         }
@@ -455,7 +463,10 @@ namespace StructureByEnvelope
             return result;
         }
 
-        private static List<Line> TrimGridsToBoundary(List<Line> grids, IList<Line> boundarySegements, Model model, bool drawTestGeometry = false)
+        private static List<Line> TrimGridsToBoundary(List<Line> grids,
+                                                      IList<Line> boundarySegements,
+                                                      Model model,
+                                                      bool drawTestGeometry = false)
         {
             var trims = new List<Line>();
             foreach (var grid in grids)

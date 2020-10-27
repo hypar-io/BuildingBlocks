@@ -51,6 +51,11 @@
         "Steel",
         "MassTimber"
       ]
+    },
+    {
+      "name": "DisplayGrid",
+      "description": "Display the grid on the ground plane?",
+      "type": "boolean"
     }
   ],
   "outputs": [

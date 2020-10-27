@@ -25,6 +25,7 @@ namespace StructureByEnvelope.tests
                 gridYAxisInterval: 5.0,
                 slabEdgeOffset: 1.0,
                 typeOfConstruction: TypeOfConstruction.Steel,
+                displayGrid: false,
                 "", "", new Dictionary<string, string>(), "", "", "");
             var outputs = StructureByEnvelope.Execute(
                 new Dictionary<string, Model>

@@ -41,6 +41,12 @@ namespace StructureByEnvelope
 		[JsonConverter(typeof(StringEnumConverter))]
 		public TypeOfConstruction TypeOfConstruction {get;}
 
+		/// <summary>
+		/// Display the grid on the ground plane?
+		/// </summary>
+		[JsonProperty("DisplayGrid")]
+		public bool DisplayGrid {get;}
+
 
 
         /// <summary>
@@ -53,6 +59,7 @@ namespace StructureByEnvelope
 			this.GridYAxisInterval = 10;
 			this.SlabEdgeOffset = 3;
 			this.TypeOfConstruction = TypeOfConstruction.Steel;
+			this.DisplayGrid = false;
 
         }
 
@@ -62,12 +69,13 @@ namespace StructureByEnvelope
         /// </summary>
         /// <returns></returns>
         [JsonConstructor]
-        public StructureByEnvelopeInputs(double gridXAxisInterval, double gridYAxisInterval, double slabEdgeOffset, TypeOfConstruction typeOfConstruction, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
+        public StructureByEnvelopeInputs(double gridXAxisInterval, double gridYAxisInterval, double slabEdgeOffset, TypeOfConstruction typeOfConstruction, bool displayGrid, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
         {
 			this.GridXAxisInterval = gridXAxisInterval;
 			this.GridYAxisInterval = gridYAxisInterval;
 			this.SlabEdgeOffset = slabEdgeOffset;
 			this.TypeOfConstruction = typeOfConstruction;
+			this.DisplayGrid = displayGrid;
 
 		}
 
