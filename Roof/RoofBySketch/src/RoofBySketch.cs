@@ -30,7 +30,6 @@ namespace RoofBySketch
                         topSide.Vertices[triangle.VertexIndices[2]]);
                 topSide.AddTriangle(triAng);
                 area += triAng.Area();
-                
             }
             topSide.ComputeNormals();
             
@@ -87,7 +86,7 @@ namespace RoofBySketch
             var tsIV = topSide.ToIndexedVertices();
             tsIV.triangles.ForEach(t => triangles.Add(new triangles(t)));
             tsIV.vertices.ForEach(v => indices.Add(new vertices(v.index, v.isBoundary, v.position)));
-            var topside = new Elements.Mesh(triangles, indices);
+            var topside = new Elements.Mesh(triangles.ToList(), indices.ToList());
 
             // Construct serializable underside mesh           
             triangles.Clear();
@@ -95,7 +94,7 @@ namespace RoofBySketch
             var usIV = underSide.ToIndexedVertices();
             usIV.triangles.ForEach(t => triangles.Add(new triangles(t)));
             usIV.vertices.ForEach(v => indices.Add(new vertices(v.index, v.isBoundary, v.position)));
-            var underside = new Elements.Mesh(triangles, indices);
+            var underside = new Elements.Mesh(triangles.ToList(), indices.ToList());
 
             // Construct serializable envelope mesh           
             triangles.Clear();
@@ -103,7 +102,7 @@ namespace RoofBySketch
             var enIV = Envelope.ToIndexedVertices();
             enIV.triangles.ForEach(t => triangles.Add(new triangles(t)));
             enIV.vertices.ForEach(v => indices.Add(new vertices(v.index, v.isBoundary, v.position)));
-            var envelope = new Elements.Mesh(triangles, indices);
+            var envelope = new Elements.Mesh(triangles.ToList(), indices.ToList());
 
             //Record roof high point from topSide mesh.
             var highPoint = topSide.Points().OrderByDescending(p => p.Z).First().Z;
