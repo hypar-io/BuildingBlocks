@@ -5,84 +5,95 @@
 using Elements;
 using Elements.GeoJSON;
 using Elements.Geometry;
+using Elements.Geometry.Solids;
+using Elements.Properties;
+using Elements.Validators;
+using Elements.Serialization.JSON;
 using Hypar.Functions;
 using Hypar.Functions.Execution;
 using Hypar.Functions.Execution.AWS;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using Line = Elements.Geometry.Line;
+using Polygon = Elements.Geometry.Polygon;
 
 namespace StructureByEnvelope
 {
-    public class StructureByEnvelopeInputs: S3Args
+    #pragma warning disable // Disable all warnings
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
+    
+    public  class StructureByEnvelopeInputs : S3Args
+    
     {
-		/// <summary>
-		/// Grid interval in the X direction.
-		/// </summary>
-		[JsonProperty("Grid X-Axis Interval")]
-		public double GridXAxisInterval {get;}
-
-		/// <summary>
-		/// Grid interval in the Y direction.
-		/// </summary>
-		[JsonProperty("Grid Y-Axis Interval")]
-		public double GridYAxisInterval {get;}
-
-		/// <summary>
-		/// The offset of the grid lines from the slab edge.
-		/// </summary>
-		[JsonProperty("Slab Edge Offset")]
-		public double SlabEdgeOffset {get;}
-
-		/// <summary>
-		/// The system used for construction.
-		/// </summary>
-		[JsonProperty("Type of Construction")]
-		[JsonConverter(typeof(StringEnumConverter))]
-		public TypeOfConstruction TypeOfConstruction {get;}
-
-		/// <summary>
-		/// Display the grid on the ground plane?
-		/// </summary>
-		[JsonProperty("DisplayGrid")]
-		public bool DisplayGrid {get;}
-
-
-
-        /// <summary>
-        /// Construct a StructureByEnvelopeInputs with default inputs.
-        /// This should be used for testing only.
-        /// </summary>
-        public StructureByEnvelopeInputs() : base()
+        [Newtonsoft.Json.JsonConstructor]
+        
+        public StructureByEnvelopeInputs(double @gridXAxisInterval, double @gridYAxisInterval, double @slabEdgeOffset, bool @displayGrid, StructureByEnvelopeInputsTypeOfConstruction @typeOfConstruction, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey):
+        base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
         {
-			this.GridXAxisInterval = 10;
-			this.GridYAxisInterval = 10;
-			this.SlabEdgeOffset = 3;
-			this.TypeOfConstruction = TypeOfConstruction.Steel;
-			this.DisplayGrid = false;
-
+            var validator = Validator.Instance.GetFirstValidatorForType<StructureByEnvelopeInputs>();
+            if(validator != null)
+            {
+                validator.PreConstruct(new object[]{ @gridXAxisInterval, @gridYAxisInterval, @slabEdgeOffset, @displayGrid, @typeOfConstruction});
+            }
+        
+            this.GridXAxisInterval = @gridXAxisInterval;
+            this.GridYAxisInterval = @gridYAxisInterval;
+            this.SlabEdgeOffset = @slabEdgeOffset;
+            this.DisplayGrid = @displayGrid;
+            this.TypeOfConstruction = @typeOfConstruction;
+        
+            if(validator != null)
+            {
+                validator.PostConstruct(this);
+            }
         }
-
-
-        /// <summary>
-        /// Construct a StructureByEnvelopeInputs specifying all inputs.
-        /// </summary>
-        /// <returns></returns>
-        [JsonConstructor]
-        public StructureByEnvelopeInputs(double gridXAxisInterval, double gridYAxisInterval, double slabEdgeOffset, TypeOfConstruction typeOfConstruction, bool displayGrid, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
+    
+        /// <summary>Grix interval in the X direction.</summary>
+        [Newtonsoft.Json.JsonProperty("Grid X-Axis Interval", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.Range(3.0D, 10.0D)]
+        public double GridXAxisInterval { get; set; } = 3D;
+    
+        /// <summary>Grid interval in the Y direction.</summary>
+        [Newtonsoft.Json.JsonProperty("Grid Y-Axis Interval", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.Range(3.0D, 10.0D)]
+        public double GridYAxisInterval { get; set; } = 3D;
+    
+        /// <summary>The offset of the grid lines from the slab edge.</summary>
+        [Newtonsoft.Json.JsonProperty("Slab Edge Offset", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.Range(0.0D, 3.0D)]
+        public double SlabEdgeOffset { get; set; } = 0.5D;
+    
+        /// <summary>Display the grid on the ground plane?</summary>
+        [Newtonsoft.Json.JsonProperty("Display Grid", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public bool DisplayGrid { get; set; } = false;
+    
+        /// <summary>The system used for construction.</summary>
+        [Newtonsoft.Json.JsonProperty("Type of Construction", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        public StructureByEnvelopeInputsTypeOfConstruction TypeOfConstruction { get; set; } = StructureByEnvelopeInputsTypeOfConstruction.Steel;
+    
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+    
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
         {
-			this.GridXAxisInterval = gridXAxisInterval;
-			this.GridYAxisInterval = gridYAxisInterval;
-			this.SlabEdgeOffset = slabEdgeOffset;
-			this.TypeOfConstruction = typeOfConstruction;
-			this.DisplayGrid = displayGrid;
-
-		}
-
-		public override string ToString()
-		{
-			var json = JsonConvert.SerializeObject(this);
-			return json;
-		}
-	}
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
+    public enum StructureByEnvelopeInputsTypeOfConstruction
+    {
+        [System.Runtime.Serialization.EnumMember(Value = @"Steel")]
+        Steel = 0,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"MassTimber")]
+        MassTimber = 1,
+    
+    }
 }

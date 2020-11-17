@@ -129,7 +129,7 @@ namespace StructureByEnvelope
             double lumpingTolerance = 2.0;
 
             var structureMaterial = BuiltInMaterials.Steel;
-            if (input.TypeOfConstruction == TypeOfConstruction.MassTimber)
+            if (input.TypeOfConstruction == StructureByEnvelopeInputsTypeOfConstruction.MassTimber)
             {
                 structureMaterial = BuiltInMaterials.Wood;
             }
@@ -171,7 +171,7 @@ namespace StructureByEnvelope
                 last = envLevels.Last();
 
                 List<Beam> masterFraming = null;
-                if (input.TypeOfConstruction == TypeOfConstruction.Steel)
+                if (input.TypeOfConstruction == StructureByEnvelopeInputsTypeOfConstruction.Steel)
                 {
                     foreach (var l in envLevels)
                     {
