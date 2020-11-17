@@ -21,50 +21,50 @@
     "type": "object",
     "properties": {
       "Grid X-Axis Interval": {
-        "type": "number",
-        "default": 3.0,
-        "minimum": 3.0,
-        "maximum": 10.0,
-        "multipleOf": 1.0,
-        "$hyparUnitType": "length",
+        "multipleOf": 1,
+        "default": 3,
+        "maximum": 10,
         "description": "Grix interval in the X direction.",
-        "$hyparOrder": 0
-      },
-      "Grid Y-Axis Interval": {
         "type": "number",
-        "default": 3.0,
-        "minimum": 3.0,
-        "maximum": 10.0,
-        "multipleOf": 1.0,
         "$hyparUnitType": "length",
-        "description": "Grid interval in the Y direction.",
-        "$hyparOrder": 1
+        "$hyparOrder": 0,
+        "minimum": 3
       },
       "Slab Edge Offset": {
-        "type": "number",
-        "default": 0.5,
-        "minimum": 0.0,
-        "maximum": 3.0,
         "multipleOf": 0.1,
-        "$hyparUnitType": "length",
+        "default": 0.5,
+        "maximum": 3,
         "description": "The offset of the grid lines from the slab edge.",
-        "$hyparOrder": 2
+        "type": "number",
+        "$hyparUnitType": "length",
+        "$hyparOrder": 2,
+        "minimum": 0
       },
       "Display Grid": {
-        "type": "boolean",
         "description": "Display the grid on the ground plane?",
         "default": false,
+        "type": "boolean",
         "$hyparOrder": 3
       },
+      "Grid Y-Axis Interval": {
+        "multipleOf": 1,
+        "default": 3,
+        "maximum": 10,
+        "description": "Grid interval in the Y direction.",
+        "type": "number",
+        "$hyparUnitType": "length",
+        "$hyparOrder": 1,
+        "minimum": 3
+      },
       "Type of Construction": {
+        "description": "The system used for construction.",
+        "default": "Steel",
         "type": "string",
+        "$hyparOrder": 4,
         "enum": [
           "Steel",
           "MassTimber"
-        ],
-        "default": "Steel",
-        "description": "The system used for construction.",
-        "$hyparOrder": 4
+        ]
       }
     }
   },

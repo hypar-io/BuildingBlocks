@@ -29,19 +29,19 @@ namespace StructureByEnvelope
     {
         [Newtonsoft.Json.JsonConstructor]
         
-        public StructureByEnvelopeInputs(double @gridXAxisInterval, double @gridYAxisInterval, double @slabEdgeOffset, bool @displayGrid, StructureByEnvelopeInputsTypeOfConstruction @typeOfConstruction, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey):
+        public StructureByEnvelopeInputs(double @gridXAxisInterval, double @slabEdgeOffset, bool @displayGrid, double @gridYAxisInterval, StructureByEnvelopeInputsTypeOfConstruction @typeOfConstruction, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey):
         base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
         {
             var validator = Validator.Instance.GetFirstValidatorForType<StructureByEnvelopeInputs>();
             if(validator != null)
             {
-                validator.PreConstruct(new object[]{ @gridXAxisInterval, @gridYAxisInterval, @slabEdgeOffset, @displayGrid, @typeOfConstruction});
+                validator.PreConstruct(new object[]{ @gridXAxisInterval, @slabEdgeOffset, @displayGrid, @gridYAxisInterval, @typeOfConstruction});
             }
         
             this.GridXAxisInterval = @gridXAxisInterval;
-            this.GridYAxisInterval = @gridYAxisInterval;
             this.SlabEdgeOffset = @slabEdgeOffset;
             this.DisplayGrid = @displayGrid;
+            this.GridYAxisInterval = @gridYAxisInterval;
             this.TypeOfConstruction = @typeOfConstruction;
         
             if(validator != null)
@@ -52,22 +52,22 @@ namespace StructureByEnvelope
     
         /// <summary>Grix interval in the X direction.</summary>
         [Newtonsoft.Json.JsonProperty("Grid X-Axis Interval", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        [System.ComponentModel.DataAnnotations.Range(3.0D, 10.0D)]
+        [System.ComponentModel.DataAnnotations.Range(3D, 10D)]
         public double GridXAxisInterval { get; set; } = 3D;
-    
-        /// <summary>Grid interval in the Y direction.</summary>
-        [Newtonsoft.Json.JsonProperty("Grid Y-Axis Interval", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        [System.ComponentModel.DataAnnotations.Range(3.0D, 10.0D)]
-        public double GridYAxisInterval { get; set; } = 3D;
     
         /// <summary>The offset of the grid lines from the slab edge.</summary>
         [Newtonsoft.Json.JsonProperty("Slab Edge Offset", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        [System.ComponentModel.DataAnnotations.Range(0.0D, 3.0D)]
+        [System.ComponentModel.DataAnnotations.Range(0D, 3D)]
         public double SlabEdgeOffset { get; set; } = 0.5D;
     
         /// <summary>Display the grid on the ground plane?</summary>
         [Newtonsoft.Json.JsonProperty("Display Grid", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public bool DisplayGrid { get; set; } = false;
+    
+        /// <summary>Grid interval in the Y direction.</summary>
+        [Newtonsoft.Json.JsonProperty("Grid Y-Axis Interval", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.Range(3D, 10D)]
+        public double GridYAxisInterval { get; set; } = 3D;
     
         /// <summary>The system used for construction.</summary>
         [Newtonsoft.Json.JsonProperty("Type of Construction", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]

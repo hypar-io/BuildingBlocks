@@ -26,7 +26,9 @@ namespace StructureByEnvelope.tests
                 slabEdgeOffset: 1.0,
                 displayGrid: false,
                 typeOfConstruction: StructureByEnvelopeInputsTypeOfConstruction.Steel,
-                "", "", new Dictionary<string, string>(), "", "", "");
+                bucketName: "", 
+                uploadsBucket: "", 
+                modelInputKeys: new Dictionary<string, string>(), gltfKey: "", elementsKey: "", ifcKey: "");
             var outputs = StructureByEnvelope.Execute(
                 new Dictionary<string, Model>
                 {
