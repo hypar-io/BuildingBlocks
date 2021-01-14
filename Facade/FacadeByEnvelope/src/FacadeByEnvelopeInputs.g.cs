@@ -6,7 +6,6 @@ using Elements;
 using Elements.GeoJSON;
 using Elements.Geometry;
 using Elements.Geometry.Solids;
-using Elements.Properties;
 using Elements.Validators;
 using Elements.Serialization.JSON;
 using Hypar.Functions;
@@ -20,59 +19,59 @@ using Polygon = Elements.Geometry.Polygon;
 
 namespace FacadeByEnvelope
 {
-    #pragma warning disable // Disable all warnings
+#pragma warning disable // Disable all warnings
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
-    
-    public  class FacadeByEnvelopeInputs : S3Args
-    
+
+    public class FacadeByEnvelopeInputs : S3Args
+
     {
         [Newtonsoft.Json.JsonConstructor]
-        
-        public FacadeByEnvelopeInputs(double @panelWidth, double @glassLeftRightInset, double @glassTopBottomInset, Color @panelColor, double @groundFloorSetback, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey):
+
+        public FacadeByEnvelopeInputs(double @panelWidth, double @glassLeftRightInset, double @glassTopBottomInset, Color @panelColor, double @groundFloorSetback, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey) :
         base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
         {
             var validator = Validator.Instance.GetFirstValidatorForType<FacadeByEnvelopeInputs>();
-            if(validator != null)
+            if (validator != null)
             {
-                validator.PreConstruct(new object[]{ @panelWidth, @glassLeftRightInset, @glassTopBottomInset, @panelColor, @groundFloorSetback});
+                validator.PreConstruct(new object[] { @panelWidth, @glassLeftRightInset, @glassTopBottomInset, @panelColor, @groundFloorSetback });
             }
-        
+
             this.PanelWidth = @panelWidth;
             this.GlassLeftRightInset = @glassLeftRightInset;
             this.GlassTopBottomInset = @glassTopBottomInset;
             this.PanelColor = @panelColor;
             this.GroundFloorSetback = @groundFloorSetback;
-        
-            if(validator != null)
+
+            if (validator != null)
             {
                 validator.PostConstruct(this);
             }
         }
-    
+
         /// <summary>The width of each facade panel..</summary>
         [Newtonsoft.Json.JsonProperty("Panel Width", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.Range(0.5D, 4.0D)]
         public double PanelWidth { get; set; } = 1D;
-    
+
         /// <summary>The inset of the glass panel from the left and right of the outer frame.</summary>
         [Newtonsoft.Json.JsonProperty("Glass Left-Right Inset", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.Range(0.01D, 1.0D)]
         public double GlassLeftRightInset { get; set; }
-    
+
         /// <summary>The inset of the glass panel from the top and bottom of the outer frame.</summary>
         [Newtonsoft.Json.JsonProperty("Glass Top-Bottom Inset", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.Range(0.01D, 1.0D)]
         public double GlassTopBottomInset { get; set; }
-    
+
         [Newtonsoft.Json.JsonProperty("Panel Color", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public Color PanelColor { get; set; }
-    
+
         /// <summary>The setback of the ground floor facade.</summary>
         [Newtonsoft.Json.JsonProperty("Ground Floor Setback", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.Range(0D, 2.0D)]
         public double GroundFloorSetback { get; set; } = 1D;
-    
-    
+
+
     }
 }

@@ -7,7 +7,6 @@ using Elements;
 using Elements.GeoJSON;
 using Elements.Geometry;
 using Elements.Geometry.Solids;
-using Elements.Properties;
 using Elements.Validators;
 using Elements.Serialization.JSON;
 using System;
@@ -23,29 +22,27 @@ namespace Elements
     /// <summary>A horizontal planer datum with a perimeter.</summary>
     [Newtonsoft.Json.JsonConverter(typeof(Elements.Serialization.JSON.JsonInheritanceConverter), "discriminator")]
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
-    [UserElement]
-	public partial class LevelPerimeter : Element
+    public partial class LevelPerimeter : Element
     {
         [Newtonsoft.Json.JsonConstructor]
         public LevelPerimeter(double @area, double @elevation, Polygon @perimeter, System.Guid @id, string @name)
             : base(id, name)
         {
-            var validator = Validator.Instance.GetFirstValidatorForType<LevelPerimeter>
-            ();
+            var validator = Validator.Instance.GetFirstValidatorForType<LevelPerimeter>();
             if(validator != null)
             {
                 validator.PreConstruct(new object[]{ @area, @elevation, @perimeter, @id, @name});
             }
         
-                this.Area = @area;
-                this.Elevation = @elevation;
-                this.Perimeter = @perimeter;
+            this.Area = @area;
+            this.Elevation = @elevation;
+            this.Perimeter = @perimeter;
             
             if(validator != null)
             {
-            validator.PostConstruct(this);
+                validator.PostConstruct(this);
             }
-            }
+        }
     
         /// <summary>The area of the level perimeter.</summary>
         [Newtonsoft.Json.JsonProperty("Area", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
