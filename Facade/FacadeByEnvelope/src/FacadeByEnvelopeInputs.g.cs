@@ -8,6 +8,7 @@ using Elements.Geometry;
 using Elements.Geometry.Solids;
 using Elements.Properties;
 using Elements.Validators;
+using Elements.Serialization.JSON;
 using Hypar.Functions;
 using Hypar.Functions.Execution;
 using Hypar.Functions.Execution.AWS;
@@ -71,15 +72,6 @@ namespace FacadeByEnvelope
         [Newtonsoft.Json.JsonProperty("Ground Floor Setback", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.Range(0D, 2.0D)]
         public double GroundFloorSetback { get; set; } = 1D;
-    
-        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
-    
-        [Newtonsoft.Json.JsonExtensionData]
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
-        {
-            get { return _additionalProperties; }
-            set { _additionalProperties = value; }
-        }
     
     
     }
