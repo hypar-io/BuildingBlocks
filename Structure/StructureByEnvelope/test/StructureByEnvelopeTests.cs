@@ -24,9 +24,11 @@ namespace StructureByEnvelope.tests
                 gridXAxisInterval: 4.0,
                 gridYAxisInterval: 5.0,
                 slabEdgeOffset: 1.0,
-                typeOfConstruction: TypeOfConstruction.Steel,
                 displayGrid: false,
-                "", "", new Dictionary<string, string>(), "", "", "");
+                typeOfConstruction: StructureByEnvelopeInputsTypeOfConstruction.Steel,
+                bucketName: "", 
+                uploadsBucket: "", 
+                modelInputKeys: new Dictionary<string, string>(), gltfKey: "", elementsKey: "", ifcKey: "");
             var outputs = StructureByEnvelope.Execute(
                 new Dictionary<string, Model>
                 {
