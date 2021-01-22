@@ -1,1 +1,148 @@
-{"Transform":{"Matrix":{"Components":[1.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,1.0,0.0]}},"Elements":{"6a6b1326-0dc5-45bc-8736-f81271427ace":{"discriminator":"Elements.Geometry.Profile","Perimeter":{"discriminator":"Elements.Geometry.Polygon","Vertices":[{"X":6.0,"Y":0.0,"Z":0.0},{"X":9.0,"Y":0.0,"Z":0.0},{"X":9.0,"Y":4.0,"Z":0.0},{"X":13.0,"Y":4.0,"Z":0.0},{"X":13.0,"Y":7.0,"Z":0.0},{"X":9.0,"Y":7.0,"Z":0.0},{"X":9.0,"Y":11.0,"Z":0.0},{"X":6.0,"Y":11.0,"Z":0.0},{"X":6.0,"Y":7.0,"Z":0.0},{"X":2.0,"Y":7.0,"Z":0.0},{"X":2.0,"Y":4.0,"Z":0.0},{"X":6.0,"Y":4.0,"Z":0.0}]},"Voids":null,"Id":"6a6b1326-0dc5-45bc-8736-f81271427ace","Name":null},"cfe183f8-02bc-4f3d-a292-6ccf5c95e7d2":{"discriminator":"Elements.Material","Color":{"Red":0.3,"Green":0.7,"Blue":0.7,"Alpha":0.6},"SpecularFactor":0.0,"GlossinessFactor":0.0,"Unlit":false,"DoubleSided":false,"Id":"cfe183f8-02bc-4f3d-a292-6ccf5c95e7d2","Name":"envelope"},"de3b35a3-37cf-45c1-962e-f7109a97eef8":{"discriminator":"Elements.Geometry.Profile","Perimeter":{"discriminator":"Elements.Geometry.Polygon","Vertices":[{"X":6.0,"Y":0.0,"Z":0.0},{"X":9.0,"Y":0.0,"Z":0.0},{"X":9.0,"Y":4.0,"Z":0.0},{"X":13.0,"Y":4.0,"Z":0.0},{"X":13.0,"Y":7.0,"Z":0.0},{"X":9.0,"Y":7.0,"Z":0.0},{"X":9.0,"Y":11.0,"Z":0.0},{"X":6.0,"Y":11.0,"Z":0.0},{"X":6.0,"Y":7.0,"Z":0.0},{"X":2.0,"Y":7.0,"Z":0.0},{"X":2.0,"Y":4.0,"Z":0.0},{"X":6.0,"Y":4.0,"Z":0.0}]},"Voids":null,"Id":"de3b35a3-37cf-45c1-962e-f7109a97eef8","Name":null},"8f088302-81a2-4c9a-9b5a-aca876611e30":{"discriminator":"Elements.Envelope","Profile":"6a6b1326-0dc5-45bc-8736-f81271427ace","Elevation":-3.0,"Height":3.0,"Direction":{"X":0.0,"Y":0.0,"Z":1.0},"Rotation":0.0,"Transform":{"Matrix":{"Components":[1.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,1.0,-3.0]}},"Material":"cfe183f8-02bc-4f3d-a292-6ccf5c95e7d2","Representation":{"SolidOperations":[{"discriminator":"Elements.Geometry.Solids.Extrude","Profile":"de3b35a3-37cf-45c1-962e-f7109a97eef8","Height":3.0,"Direction":{"X":0.0,"Y":0.0,"Z":1.0},"IsVoid":false}]},"IsElementDefinition":false,"Id":"8f088302-81a2-4c9a-9b5a-aca876611e30","Name":""},"d05d39e4-a4ef-4470-84e8-cccff15332a3":{"discriminator":"Elements.Geometry.Profile","Perimeter":{"discriminator":"Elements.Geometry.Polygon","Vertices":[{"X":6.0,"Y":0.0,"Z":0.0},{"X":9.0,"Y":0.0,"Z":0.0},{"X":9.0,"Y":4.0,"Z":0.0},{"X":13.0,"Y":4.0,"Z":0.0},{"X":13.0,"Y":7.0,"Z":0.0},{"X":9.0,"Y":7.0,"Z":0.0},{"X":9.0,"Y":11.0,"Z":0.0},{"X":6.0,"Y":11.0,"Z":0.0},{"X":6.0,"Y":7.0,"Z":0.0},{"X":2.0,"Y":7.0,"Z":0.0},{"X":2.0,"Y":4.0,"Z":0.0},{"X":6.0,"Y":4.0,"Z":0.0}]},"Voids":null,"Id":"d05d39e4-a4ef-4470-84e8-cccff15332a3","Name":null},"ebb22732-63a8-4720-8703-c93ff8d20176":{"discriminator":"Elements.Geometry.Profile","Perimeter":{"discriminator":"Elements.Geometry.Polygon","Vertices":[{"X":6.0,"Y":0.0,"Z":0.0},{"X":9.0,"Y":0.0,"Z":0.0},{"X":9.0,"Y":4.0,"Z":0.0},{"X":13.0,"Y":4.0,"Z":0.0},{"X":13.0,"Y":7.0,"Z":0.0},{"X":9.0,"Y":7.0,"Z":0.0},{"X":9.0,"Y":11.0,"Z":0.0},{"X":6.0,"Y":11.0,"Z":0.0},{"X":6.0,"Y":7.0,"Z":0.0},{"X":2.0,"Y":7.0,"Z":0.0},{"X":2.0,"Y":4.0,"Z":0.0},{"X":6.0,"Y":4.0,"Z":0.0}]},"Voids":null,"Id":"ebb22732-63a8-4720-8703-c93ff8d20176","Name":null},"836a79dd-1afe-4e9e-9446-8ad544840a8f":{"discriminator":"Elements.Envelope","Profile":"d05d39e4-a4ef-4470-84e8-cccff15332a3","Elevation":0.0,"Height":27.0,"Direction":{"X":0.0,"Y":0.0,"Z":1.0},"Rotation":0.0,"Transform":{"Matrix":{"Components":[1.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,1.0,0.0]}},"Material":"cfe183f8-02bc-4f3d-a292-6ccf5c95e7d2","Representation":{"SolidOperations":[{"discriminator":"Elements.Geometry.Solids.Extrude","Profile":"ebb22732-63a8-4720-8703-c93ff8d20176","Height":27.0,"Direction":{"X":0.0,"Y":0.0,"Z":1.0},"IsVoid":false}]},"IsElementDefinition":false,"Id":"836a79dd-1afe-4e9e-9446-8ad544840a8f","Name":""}}}
+{
+  "Transform": {
+    "Matrix": {
+      "Components": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ]
+    }
+  },
+  "Elements": {
+    "3807d96b-47a7-4ee5-a27f-81566fabd0d6": {
+      "discriminator": "Elements.Geometry.Profile",
+      "Perimeter": {
+        "discriminator": "Elements.Geometry.Polygon",
+        "Vertices": [
+          {
+            "X": -9.943840291806021,
+            "Y": -10.134658262619327,
+            "Z": 0.0
+          },
+          {
+            "X": 10.071730130142056,
+            "Y": -10.070914407772339,
+            "Z": 0.0
+          },
+          {
+            "X": 10.007785210974038,
+            "Y": 10.007790210979039,
+            "Z": 0.0
+          },
+          {
+            "X": -10.007785210974038,
+            "Y": 9.944046356132038,
+            "Z": 0.0
+          }
+        ]
+      },
+      "Voids": null,
+      "Id": "3807d96b-47a7-4ee5-a27f-81566fabd0d6",
+      "Name": null
+    },
+    "718ad54d-3a64-4f7c-98e3-b03c7c3fad83": {
+      "discriminator": "Elements.Material",
+      "Color": {
+        "Red": 0.3,
+        "Green": 0.7,
+        "Blue": 0.7,
+        "Alpha": 0.6
+      },
+      "SpecularFactor": 0.0,
+      "GlossinessFactor": 0.0,
+      "Unlit": false,
+      "DoubleSided": false,
+      "Id": "718ad54d-3a64-4f7c-98e3-b03c7c3fad83",
+      "Name": "envelope"
+    },
+    "698cb8c9-a70a-4669-8225-f4920fb568a8": {
+      "discriminator": "Elements.Geometry.Profile",
+      "Perimeter": {
+        "discriminator": "Elements.Geometry.Polygon",
+        "Vertices": [
+          {
+            "X": -9.943840291806021,
+            "Y": -10.134658262619327,
+            "Z": 0.0
+          },
+          {
+            "X": 10.071730130142056,
+            "Y": -10.070914407772339,
+            "Z": 0.0
+          },
+          {
+            "X": 10.007785210974038,
+            "Y": 10.007790210979039,
+            "Z": 0.0
+          },
+          {
+            "X": -10.007785210974038,
+            "Y": 9.944046356132038,
+            "Z": 0.0
+          }
+        ]
+      },
+      "Voids": null,
+      "Id": "698cb8c9-a70a-4669-8225-f4920fb568a8",
+      "Name": null
+    },
+    "b9f3c7f3-e487-4540-9016-b22f43b5431a": {
+      "discriminator": "Elements.Envelope",
+      "Profile": "3807d96b-47a7-4ee5-a27f-81566fabd0d6",
+      "Elevation": 0.0,
+      "Height": 12.0,
+      "Direction": {
+        "X": 0.0,
+        "Y": 0.0,
+        "Z": 1.0
+      },
+      "Rotation": 0.0,
+      "Transform": {
+        "Matrix": {
+          "Components": [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ]
+        }
+      },
+      "Material": "718ad54d-3a64-4f7c-98e3-b03c7c3fad83",
+      "Representation": {
+        "SolidOperations": [
+          {
+            "discriminator": "Elements.Geometry.Solids.Extrude",
+            "Profile": "698cb8c9-a70a-4669-8225-f4920fb568a8",
+            "Height": 12.0,
+            "Direction": {
+              "X": 0.0,
+              "Y": 0.0,
+              "Z": 1.0
+            },
+            "IsVoid": false
+          }
+        ]
+      },
+      "IsElementDefinition": false,
+      "Id": "b9f3c7f3-e487-4540-9016-b22f43b5431a",
+      "Name": ""
+    }
+  }
+}

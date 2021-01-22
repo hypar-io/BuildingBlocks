@@ -5,9 +5,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="GeometryEx" Version="7.6.0" />
-    <PackageReference Include="Hypar.Elements" Version="0.8.0-alpha.9" />
-    <PackageReference Include="Hypar.Functions" Version="0.8.0-alpha.9" />
+    <PackageReference Include="GeometryEx" Version="7.11.0" />
+    <PackageReference Include="Hypar.Elements" Version="0.8.0" />
+    <PackageReference Include="Hypar.Elements.CodeGeneration" Version="0.8.0" />
+    <PackageReference Include="Hypar.Functions" Version="0.8.0" />
   </ItemGroup>
 
   <PropertyGroup>

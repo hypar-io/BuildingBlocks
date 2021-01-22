@@ -17,7 +17,7 @@ namespace RoofBySketch
     public class RoofBySketchOutputs: ResultsBase
     {
 		/// <summary>
-		/// Area of the Roof's topside surface.
+		/// Area of the Roof's topSide surface.
 		/// </summary>
 		[JsonProperty("Area")]
 		public double Area {get;}
