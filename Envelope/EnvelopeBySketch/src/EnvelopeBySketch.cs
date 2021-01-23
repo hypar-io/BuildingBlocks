@@ -31,7 +31,7 @@ namespace EnvelopeBySketch
             }
 
             // Create the Envelope at the location's zero plane.
-            var tiers = Math.Floor(input.BuildingHeight / input.SetbackInterval);
+            var tiers = input.UseSetbacks ? Math.Floor(input.BuildingHeight / input.SetbackInterval) : 1;
             var tierHeight = tiers > 1 ? input.BuildingHeight / tiers : input.BuildingHeight;
             var polygon = input.Perimeter;
             if (polygon.IsClockWise())
