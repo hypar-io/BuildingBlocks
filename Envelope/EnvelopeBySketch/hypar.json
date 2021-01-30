@@ -6,39 +6,16 @@
   "language": "C#",
   "model_output": "Envelope",
   "input_schema": {
+    "type": "object",
     "properties": {
       "Perimeter": {
         "description": "Perimeter of the building envelope.",
+        "$hyparOrder": 0,
         "type": "object",
-        "$ref": "https://hypar.io/Schemas/Geometry/Polygon.json",
-        "$hyparOrder": 0
-      },
-      "Building Height": {
-        "minimum": 5.0,
-        "maximum": 100.0,
-        "step": 1.0,
-        "default": 20.0,
-        "$hyparUnitType": "length",
-        "description": "Overall height of the building from grade.",
-        "type": "number",
-        "$hyparOrder": 1
-      },
-      "Foundation Depth": {
-        "minimum": 0.0,
-        "maximum": 20.0,
-        "step": 1.0,
-        "default": 10.0,
-        "$hyparUnitType": "length",
-        "description": "Depth of the building envelope below grade.",
-        "type": "number",
-        "$hyparOrder": 2
-      },
-      "Use Setbacks": {
-        "type": "boolean",
-        "default": "false",
-        "$hyparOrder": 3
+        "$ref": "https://hypar.io/Schemas/Geometry/Polygon.json"
       },
       "Setback Interval": {
+        "default": 20,
         "$hyparShowIf": {
           "conditions": [
             {
@@ -47,16 +24,21 @@
             }
           ]
         },
-        "minimum": 10.0,
-        "maximum": 30.0,
-        "step": 1.0,
-        "default": 20.0,
-        "$hyparUnitType": "length",
         "description": "Vertical distance between envelope setbacks.",
+        "maximum": 30,
+        "step": 1,
+        "$hyparOrder": 4,
+        "$hyparUnitType": "length",
         "type": "number",
-        "$hyparOrder": 4
+        "minimum": 10
+      },
+      "Use Setbacks": {
+        "$hyparOrder": 3,
+        "type": "boolean",
+        "default": false
       },
       "Setback Depth": {
+        "default": 1,
         "$hyparShowIf": {
           "conditions": [
             {
@@ -65,16 +47,16 @@
             }
           ]
         },
-        "minimum": 1.0,
-        "maximum": 3.0,
-        "step": 0.5,
-        "default": 1.0,
-        "$hyparUnitType": "length",
         "description": "Offset depth from previous setback.",
+        "maximum": 3,
+        "step": 0.5,
+        "$hyparOrder": 5,
+        "$hyparUnitType": "length",
         "type": "number",
-        "$hyparOrder": 5
+        "minimum": 1
       },
       "Minimum Tier Area": {
+        "default": 50,
         "$hyparShowIf": {
           "conditions": [
             {
@@ -83,16 +65,38 @@
             }
           ]
         },
-        "minimum": 10.0,
-        "maximum": 100.0,
-        "step": 1.0,
-        "default": 50.0,
-        "$hyparUnitType": "area",
         "description": "Minimum area allowed for a setback tier.",
+        "maximum": 100,
+        "step": 1,
+        "$hyparOrder": 6,
+        "$hyparUnitType": "area",
         "type": "number",
-        "$hyparOrder": 6
+        "minimum": 10
+      },
+      "Building Height": {
+        "default": 20,
+        "description": "Overall height of the building from grade.",
+        "maximum": 100,
+        "step": 1,
+        "$hyparOrder": 1,
+        "$hyparUnitType": "length",
+        "type": "number",
+        "minimum": 5
+      },
+      "Foundation Depth": {
+        "default": 10,
+        "description": "Depth of the building envelope below grade.",
+        "maximum": 20,
+        "step": 1,
+        "$hyparOrder": 2,
+        "$hyparUnitType": "length",
+        "type": "number",
+        "minimum": 0
       }
-    }
+    },
+    "required": [
+      "Perimeter"
+    ]
   },
   "outputs": [
     {
