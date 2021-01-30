@@ -22,10 +22,10 @@ namespace EnvelopeBySketch.Tests
         [Fact]
         public void EnvelopeBySketchTest()
         {
-            var polygon = 
+            var polygon =
                 new Polygon
                 (
-                    new []
+                    new[]
                     {
                         new Vector3(6.0, 0.0),
                         new Vector3(9.0, 0.0),
@@ -38,18 +38,19 @@ namespace EnvelopeBySketch.Tests
                         new Vector3(6.0, 7.0),
                         new Vector3(2.0, 7.0),
                         new Vector3(2.0, 4.0),
-                        new Vector3(6.0, 4.0)                        
+                        new Vector3(6.0, 4.0)
                     });
             var inputs =
                 new EnvelopeBySketchInputs(
-                    perimeter: polygon, 
+                    perimeter: polygon,
                     buildingHeight: 27.0,
-                    setbackInterval: 50.0, 
-                    setbackDepth: 5.0, 
-                    minimumTierArea: 100.0, 
-                    foundationDepth: 3.0, 
+                    foundationDepth: 3.0,
+                    useSetbacks: true,
+                    setbackInterval: 50.0,
+                    setbackDepth: 5.0,
+                    minimumTierArea: 100.0,
                     "", "", new Dictionary<string, string>(), "", "", "");
-            var outputs = 
+            var outputs =
                 EnvelopeBySketch.Execute(new Dictionary<string, Model> { { "Envelope", new Model() } }, inputs);
             System.IO.File.WriteAllText(OUTPUT + "EnvelopeBySketch.json", outputs.Model.ToJson());
             outputs.Model.ToGlTF(OUTPUT + "EnvelopeBySketch.glb");
