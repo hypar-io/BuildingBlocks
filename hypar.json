@@ -1,0 +1,86 @@
+{
+  "$schema": "https://hypar.io/Schemas/Function.json",
+  "id": "c918ea51-b05b-4e14-a30b-ea53799365d5",
+  "name": "Custom Grids",
+  "description": "",
+  "language": "C#",
+  "model_dependencies": [],
+  "model_output": "Grids",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "Grid Areas": {
+        "type": "array",
+        "description": "List of grids enclosed by the area they apply to.",
+        "items": {
+          "name": "Grid Area",
+          "type": "object",
+          "required": [],
+          "properties": {
+            "Orientation": {
+              "type": "object",
+              "description": "A polyline with 3 points in this order: Origin, Point along the U axis, Point along the V axis",
+              "$ref": "https://hypar.io/Schemas/Geometry/Polyline.json",
+              "default": {
+                "Vertices": [
+                  {
+                    "X":0,
+                    "Y":0,
+                    "Z":0
+                  },
+                  {
+                    "X":1,
+                    "Y":0,
+                    "Z":0
+                  },
+                  {
+                    "X":0,
+                    "Y":1,
+                    "Z":0
+                  }
+                ]
+              }
+            },
+            "U": {
+              "type": "object",
+              "properties": {
+                "Name": {
+                  "type": "string",
+                  "default": "{A}"
+                },
+                "Spacing": {
+                  "type": "array",
+                  "$hyparStyle": "singleField",
+                  "items": {
+                    "type": "number"
+                  }
+                }
+              }
+            },
+            "V": {
+              "type": "object",
+              "properties": {
+                "Name": {
+                  "type": "string",
+                  "default": "{1}"
+                },
+                "Spacing": {
+                  "type": "array",
+                  "$hyparStyle": "singleField",
+                  "items": {
+                    "type": "number"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "element_types": ["https://prod-api.hypar.io/schemas/GridLine"],
+  "outputs": [],
+  "repository_url": "",
+  "source_file_key": null,
+  "preview_image": null
+}
