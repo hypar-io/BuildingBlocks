@@ -1,0 +1,64 @@
+{
+  "$id": "https://hypar.io/BuildingBlocks/schemas/Roof.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "description": "A horizontal Roof.",
+  "title": "Roof",
+  "x-namespace": "Elements",
+  "type": [
+    "object",
+    "null"
+  ],
+  "allOf": [
+    {
+      "$ref": "https://hypar.io/Schemas/GeometricElement.json"
+    }
+  ],
+  "required": [
+    "discriminator",
+    "Elevation",
+    "Perimeter"
+  ],
+  "discriminator": "discriminator",
+  "properties": {
+    "discriminator": {
+      "type": "string"
+    },
+    "Envelope": {
+      "description": "Boundary of the Roof system as a Mesh.",
+      "$ref": "https://raw.githubusercontent.com/hypar-io/Elements/master/Schemas/Geometry/Mesh.json"
+    },
+    "Topside": {
+      "description": "Top surface of the Roof as a Mesh.",
+      "$ref": "https://raw.githubusercontent.com/hypar-io/Elements/master/Schemas/Geometry/Mesh.json"
+    },
+    "Underside": {
+      "description": "Bottom surface of the Roof as a Mesh.",
+      "$ref": "https://raw.githubusercontent.com/hypar-io/Elements/master/Schemas/Geometry/Mesh.json"
+    },
+    "Perimeter": {
+      "description": "Bottom perimeter of the Roof as a Polygon.",
+      "$ref": "https://raw.githubusercontent.com/hypar-io/Elements/master/Schemas/Geometry/Polygon.json"
+    },
+    "Elevation": {
+      "description": "Elevation of the Roof's lowest underside point.",
+      "type": "number",
+      "minimum": 0
+    },
+    "Highpoint": {
+      "description": "Elevation of the Roof's highest topside point.",
+      "type": "number",
+      "minimum": 0
+    },
+    "Thickness": {
+      "description": "The thickness of the Roof at its thinnest point between Topside surface and Underside surface.",
+      "type": "number",
+      "minimum": 0
+    },
+    "Area": {
+      "description": "The area of the Roof Topside surface.",
+      "type": "number",
+      "minimum": 0
+    }
+  },
+  "additionalProperties": false
+}

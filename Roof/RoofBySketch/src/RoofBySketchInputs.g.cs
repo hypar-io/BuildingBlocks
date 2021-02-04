@@ -6,7 +6,6 @@ using Elements;
 using Elements.GeoJSON;
 using Elements.Geometry;
 using Elements.Geometry.Solids;
-using Elements.Properties;
 using Elements.Validators;
 using Elements.Serialization.JSON;
 using Hypar.Functions;
@@ -47,22 +46,14 @@ namespace RoofBySketch
             }
         }
     
-        [Newtonsoft.Json.JsonProperty("Mesh", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public Mesh Mesh { get; set; }
+        [Newtonsoft.Json.JsonProperty("Mesh", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public Mesh Mesh { get; set; } = new Mesh();
     
         /// <summary>Thickness of the Roof from its lowest point to its underside.</summary>
         [Newtonsoft.Json.JsonProperty("Thickness", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.Range(0.1D, 1.0D)]
         public double Thickness { get; set; } = 0.2D;
-    
-        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
-    
-        [Newtonsoft.Json.JsonExtensionData]
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
-        {
-            get { return _additionalProperties; }
-            set { _additionalProperties = value; }
-        }
     
     
     }

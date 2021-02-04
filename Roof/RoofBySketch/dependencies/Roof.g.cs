@@ -7,7 +7,6 @@ using Elements;
 using Elements.GeoJSON;
 using Elements.Geometry;
 using Elements.Geometry.Solids;
-using Elements.Properties;
 using Elements.Validators;
 using Elements.Serialization.JSON;
 using System;
@@ -23,34 +22,32 @@ namespace Elements
     /// <summary>A horizontal Roof.</summary>
     [Newtonsoft.Json.JsonConverter(typeof(Elements.Serialization.JSON.JsonInheritanceConverter), "discriminator")]
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
-    [UserElement]
-	public partial class Roof : GeometricElement
+    public partial class Roof : GeometricElement
     {
         [Newtonsoft.Json.JsonConstructor]
         public Roof(Mesh @envelope, Mesh @topside, Mesh @underside, Polygon @perimeter, double @elevation, double @highpoint, double @thickness, double @area, Transform @transform, Material @material, Representation @representation, bool @isElementDefinition, System.Guid @id, string @name)
             : base(transform, material, representation, isElementDefinition, id, name)
         {
-            var validator = Validator.Instance.GetFirstValidatorForType<Roof>
-            ();
+            var validator = Validator.Instance.GetFirstValidatorForType<Roof>();
             if(validator != null)
             {
                 validator.PreConstruct(new object[]{ @envelope, @topside, @underside, @perimeter, @elevation, @highpoint, @thickness, @area, @transform, @material, @representation, @isElementDefinition, @id, @name});
             }
         
-                this.Envelope = @envelope;
-                this.Topside = @topside;
-                this.Underside = @underside;
-                this.Perimeter = @perimeter;
-                this.Elevation = @elevation;
-                this.Highpoint = @highpoint;
-                this.Thickness = @thickness;
-                this.Area = @area;
+            this.Envelope = @envelope;
+            this.Topside = @topside;
+            this.Underside = @underside;
+            this.Perimeter = @perimeter;
+            this.Elevation = @elevation;
+            this.Highpoint = @highpoint;
+            this.Thickness = @thickness;
+            this.Area = @area;
             
             if(validator != null)
             {
-            validator.PostConstruct(this);
+                validator.PostConstruct(this);
             }
-            }
+        }
     
         /// <summary>Boundary of the Roof system as a Mesh.</summary>
         [Newtonsoft.Json.JsonProperty("Envelope", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
