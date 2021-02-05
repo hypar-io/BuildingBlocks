@@ -127,7 +127,7 @@ namespace RoofBySketch
             var output = new RoofBySketchOutputs(area);
 
 
-            // output.Model.AddElement(new MeshElement(Envelope, BuiltInMaterials.Concrete));
+            output.Model.AddElement(new MeshElement(Envelope, BuiltInMaterials.Concrete));
             output.Model.AddElement(roof);
             return output;
         }
