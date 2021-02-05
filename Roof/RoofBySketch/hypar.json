@@ -6,6 +6,9 @@
   "language": "C#",
   "model_output": "Roof",
   "input_schema": {
+    "required": [
+      "Mesh"
+    ],
     "type": "object",
     "properties": {
       "Mesh": {

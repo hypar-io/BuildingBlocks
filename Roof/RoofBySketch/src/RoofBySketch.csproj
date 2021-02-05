@@ -2,13 +2,13 @@
 
   <ItemGroup>
     <ProjectReference Include="..\dependencies\RoofBySketch.Dependencies.csproj" />
+    <ProjectReference Include="..\..\..\..\Hypar\Hypar.Functions\src\Hypar.Functions.csproj" />
+    <ProjectReference Include="..\..\..\..\GeometryEx\GeometryEx\GeometryEx.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="GeometryEx" Version="7.11.0" />
-    <PackageReference Include="Hypar.Elements" Version="0.8.0" />
-    <PackageReference Include="Hypar.Elements.CodeGeneration" Version="0.8.0" />
-    <PackageReference Include="Hypar.Functions" Version="0.8.0" />
+    <!-- <PackageReference Include="GeometryEx" Version="8.11.0" /> -->
+    
   </ItemGroup>
 
   <PropertyGroup>
