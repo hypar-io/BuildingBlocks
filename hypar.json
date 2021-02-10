@@ -4,7 +4,13 @@
   "name": "Custom Grids",
   "description": "",
   "language": "C#",
-  "model_dependencies": [],
+  "model_dependencies": [
+    {
+      "autohide": false,
+      "name": "Envelope",
+      "optional": true
+    }
+  ],
   "model_output": "Grids",
   "input_schema": {
     "type": "object",
@@ -12,11 +18,42 @@
       "Grid Areas": {
         "type": "array",
         "description": "List of grids enclosed by the area they apply to.",
+        "default": [{
+          "Name": "Main",
+          "Orientation": {
+            "Vertices": [{
+              "X":0,
+              "Y":0,
+              "Z":0
+            },
+            {
+              "X":1,
+              "Y":0,
+              "Z":0
+            },
+            {
+              "X":0,
+              "Y":1,
+              "Z":0
+            }]
+          },
+          "U": {
+            "Name": "{A}",
+            "Spacing": [0]
+          },
+          "V": {
+            "Name": "{1}",
+            "Spacing": [0]
+          }
+        }],
         "items": {
           "name": "Grid Area",
           "type": "object",
           "required": [],
           "properties": {
+            "Name": {
+              "type": "string"
+            },
             "Orientation": {
               "type": "object",
               "description": "A polyline with 3 points in this order: Origin, Point along the U axis, Point along the V axis",
@@ -78,7 +115,7 @@
       }
     }
   },
-  "element_types": ["https://prod-api.hypar.io/schemas/GridLine"],
+  "element_types": ["https://prod-api.hypar.io/schemas/GridLine", "https://prod-api.hypar.io/schemas/Envelope", "https://prod-api.hypar.io/schemas/Grid2dElement"],
   "outputs": [],
   "repository_url": "",
   "source_file_key": null,

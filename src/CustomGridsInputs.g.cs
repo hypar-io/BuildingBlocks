@@ -58,14 +58,15 @@ namespace CustomGrids
     
     {
         [Newtonsoft.Json.JsonConstructor]
-        public GridAreas(Polyline @orientation, U @u, V @v)
+        public GridAreas(string @name, Polyline @orientation, U @u, V @v)
         {
             var validator = Validator.Instance.GetFirstValidatorForType<GridAreas>();
             if(validator != null)
             {
-                validator.PreConstruct(new object[]{ @orientation, @u, @v});
+                validator.PreConstruct(new object[]{ @name, @orientation, @u, @v});
             }
         
+            this.Name = @name;
             this.Orientation = @orientation;
             this.U = @u;
             this.V = @v;
@@ -75,6 +76,9 @@ namespace CustomGrids
                 validator.PostConstruct(this);
             }
         }
+    
+        [Newtonsoft.Json.JsonProperty("Name", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Name { get; set; }
     
         /// <summary>A polyline with 3 points in this order: Origin, Point along the U axis, Point along the V axis</summary>
         [Newtonsoft.Json.JsonProperty("Orientation", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]

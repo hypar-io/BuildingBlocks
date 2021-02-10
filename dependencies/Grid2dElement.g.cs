@@ -20,22 +20,22 @@ namespace Elements
 {
     #pragma warning disable // Disable all warnings
 
-    /// <summary>A 2D grid line for a column grid</summary>
+    /// <summary>Just a test</summary>
     [Newtonsoft.Json.JsonConverter(typeof(Elements.Serialization.JSON.JsonInheritanceConverter), "discriminator")]
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
-    public partial class GridLine : Element
+    public partial class Grid2dElement : Element
     {
         [Newtonsoft.Json.JsonConstructor]
-        public GridLine(Polyline @geometry, System.Guid @id, string @name)
+        public Grid2dElement(Grid2d @grid, System.Guid @id, string @name)
             : base(id, name)
         {
-            var validator = Validator.Instance.GetFirstValidatorForType<GridLine>();
+            var validator = Validator.Instance.GetFirstValidatorForType<Grid2dElement>();
             if(validator != null)
             {
-                validator.PreConstruct(new object[]{ @geometry, @id, @name});
+                validator.PreConstruct(new object[]{ @grid, @id, @name});
             }
         
-            this.Geometry = @geometry;
+            this.Grid = @grid;
             
             if(validator != null)
             {
@@ -43,9 +43,9 @@ namespace Elements
             }
         }
     
-        /// <summary>The polyline geometry of the Grid Line</summary>
-        [Newtonsoft.Json.JsonProperty("Geometry", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public Polyline Geometry { get; set; }
+        /// <summary>contains a grid</summary>
+        [Newtonsoft.Json.JsonProperty("Grid", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public Grid2d Grid { get; set; }
     
     
     }

@@ -4,15 +4,30 @@ using Elements.Spatial;
 using System.Collections.Generic;
 using System;
 using System.Linq;
+using Newtonsoft.Json;
 
 namespace CustomGrids
 {
+    public class GridGuide
+    {
+        public Vector3 Point;
+        public string Name;
+
+        public GridGuide(Vector3 point, string name = null)
+        {
+            this.Point = point;
+            this.Name = name;
+        }
+    }
+
     public static class CustomGrids
     {
         private static double MinCircleRadius = 0.5;
         private static double CircleRadius = 1;
 
         private static Material GridlineMaterial = new Material("Gridline", Colors.Red);
+
+        private static Model DebugModel = null;
 
         /// <summary>
         ///
@@ -23,10 +38,19 @@ namespace CustomGrids
         public static CustomGridsOutputs Execute(Dictionary<string, Model> inputModels, CustomGridsInputs input)
         {
             var output = new CustomGridsOutputs();
+
+            DebugModel = output.Model;
+
+            var envelopes = new List<Envelope>();
+            inputModels.TryGetValue("Envelope", out var envelopeModel);
+            if (envelopeModel != null)
+            {
+                Console.WriteLine("Got envelope model");
+                envelopes.AddRange(envelopeModel.AllElementsOfType<Envelope>());
+            }
+
             foreach (var gridArea in input.GridAreas)
             {
-                // output.Model.AddElement(new ModelCurve(gridArea.Polygon, name: "Outline"));
-                // var bounds = gridArea.Polygon.Bounds();
 
                 if (gridArea.Orientation.Vertices.Count < 3)
                 {
@@ -45,13 +69,68 @@ namespace CustomGrids
 
                 CircleRadius = Math.Max(MinCircleRadius, Math.Max(uMin, vMin) * 0.3);
 
-                Drawlines(output.Model, origin, uDirection, vDirection, u, Math.Max(v.Spacing.Sum(), 1));
-                Drawlines(output.Model, origin, vDirection, uDirection, v, Math.Max(u.Spacing.Sum(), 1));
+                var uDivisions = GetDivisions(origin, uDirection, u);
+                var vDivisions = GetDivisions(origin, vDirection, v);
+
+                var uPoints = uDivisions.Select(division => division.Point).ToList();
+                var vPoints = vDivisions.Select(division => division.Point).ToList();
+
+                var boundaries = new List<List<Polygon>>();
+                var grids = new List<Grid2d>();
+
+                if (envelopes.Count() > 0)
+                {
+                    var polygons = envelopes.Select(e => e.Profile.Perimeter).ToList();
+                    var unions = Polygon.UnionAll(polygons).ToList();
+                    var bbox = new BBox3(unions);
+                    var boundary = Polygon.Rectangle(bbox.Min, bbox.Max);
+                    boundaries.Add(new List<Polygon>() { boundary });
+                }
+                else
+                {
+                    // use points min and max
+                    var min = new Vector3(Math.Min(uPoints.FirstOrDefault().X, vPoints.FirstOrDefault().X), Math.Min(uPoints.FirstOrDefault().Y, vPoints.FirstOrDefault().Y));
+                    var max = new Vector3(Math.Max(uPoints.LastOrDefault().X, vPoints.LastOrDefault().X), Math.Max(uPoints.LastOrDefault().Y, vPoints.LastOrDefault().Y));
+                    boundaries.Add(new List<Polygon>() { Polygon.Rectangle(min, max) });
+                }
+
+                foreach (var boundaryList in boundaries)
+                {
+                    foreach (var boundary in boundaryList)
+                    {
+                        var grid = MakeGrid(boundary, origin, uDirection, vDirection, uPoints, vPoints);
+                        DrawLines(output.Model, uDivisions, grid.V, boundary);
+                        DrawLines(output.Model, vDivisions, grid.U, boundary);
+                        grids.Add(grid);
+
+                        // foreach (var cell in grid.GetCells())
+                        // {
+                        //     output.Model.AddElement(new ModelCurve(cell.GetCellGeometry()));
+                        // }
+
+                        output.Model.AddElements(new ModelCurve(boundary));
+                    }
+                }
+
+                output.Model.AddElements(grids.Select(grid =>
+                {
+                    return new Grid2dElement(grid, Guid.NewGuid(), gridArea.Name);
+                }));
             }
             return output;
         }
 
-        private static void DrawLine(Model model, Line line, Material material, string namingPattern, int idx)
+        private static Grid2d MakeGrid(Polygon polygon, Vector3 origin, Vector3 uDir, Vector3 vDir, List<Vector3> uPoints, List<Vector3> vPoints)
+        {
+            var grid2d = new Grid2d(polygon, origin, uDir, vDir);
+
+            grid2d.U.SplitAtPoints(uPoints);
+            grid2d.V.SplitAtPoints(vPoints);
+
+            return grid2d;
+        }
+
+        private static string GetName(string namingPattern, int idx)
         {
             var name = $"{namingPattern}-{idx}";
 
@@ -63,6 +142,11 @@ namespace CustomGrids
             {
                 name = (idx + 1).ToString();
             }
+            return name;
+        }
+
+        private static void DrawLine(Model model, Line line, Material material, string name)
+        {
             var circleCenter = line.Start - (line.End - line.Start).Unitized() * CircleRadius;
 
             model.AddElement(new GridLine(new Polyline(new List<Vector3>() { line.Start, line.End }), Guid.NewGuid(), name));
@@ -71,85 +155,33 @@ namespace CustomGrids
             model.AddElement(new LabelDot(circleCenter, name));
         }
 
-        private static void Drawlines(Model model, Vector3 origin, Vector3 gridDir, Vector3 lineDir, U u, double length)
+        private static List<GridGuide> GetDivisions(Vector3 origin, Vector3 gridDir, U u)
         {
+            var gridGuides = new List<GridGuide>();
             var curPoint = origin;
             var sectionIdx = 0;
-
-            var overflow = CircleRadius * 4;
-
-            void drawNext()
-            {
-                var line = new Line(curPoint - (lineDir * overflow), curPoint + (lineDir * (length + overflow)));
-                DrawLine(model, line, GridlineMaterial, u.Name, sectionIdx);
-            };
-
             foreach (var spacing in u.Spacing)
             {
-                var endPoint = curPoint + (gridDir * spacing);
-                drawNext();
                 curPoint = curPoint + gridDir * spacing;
+                gridGuides.Add(new GridGuide(curPoint, GetName(u.Name, sectionIdx)));
                 sectionIdx += 1;
             }
-            drawNext();
+            return gridGuides;
         }
 
-        // private static void Drawlines(Model model, Vector3 origin, Vector3 gridDir, Vector3 lineDir, U u, BBox3 bounds)
-        // {
-        // var curPoint = origin;
-        // var material = new Material("U", Colors.Red);
-        // var sectionIdx = 0;
-        // foreach (var section in u.Sections)
-        // {
+        private static void DrawLines(Model model, List<GridGuide> gridGuides, Grid1d opposingGrid1d, Polygon bounds)
+        {
+            var baseLine = new Line(opposingGrid1d.Curve.PointAt(0), opposingGrid1d.Curve.PointAt(1));
+            var origin = gridGuides[0].Point;
 
-        //     if (section.Spacing == 0)
-        //     {
-        //         throw new Exception("Section spacing must be a non-zero value");
-        //     }
+            var startExtend = origin - baseLine.Start;
+            var endExtend = origin - baseLine.End;
 
-        //     var sectionLength = section.DistanceFromOrigin != 0 ? section.DistanceFromOrigin : section.Spacing * section.Cells;
-        //     var diagonalDist = bounds.Max.DistanceTo(bounds.Min);
-
-
-        //     if (sectionLength < 0)
-        //     {
-        //         throw new Exception("We currently only support postiive distance from origin for sections");
-        //     }
-
-        //     if (sectionLength == 0)
-        //     {
-        //         return;
-        //     }
-
-        //     var endPoint = curPoint + (gridDir * sectionLength);
-        //     // var grid = new Grid1d(sectionLength);
-        //     var curDist = 0.0;
-
-        //     while (curDist < sectionLength)
-        //     {
-
-        //         var line = new Line(curPoint - (lineDir * diagonalDist / 10), curPoint + (lineDir * diagonalDist / 2));
-        //         DrawLine(model, line, material, u.Name, (int)(curDist / section.Spacing));
-
-        //         curDist += section.Spacing;
-        //         curPoint = curPoint + gridDir * section.Spacing;
-        //     }
-
-        //     if (sectionIdx == u.Sections.Count - 1)
-        //     {
-        //         var line = new Line(curPoint - (lineDir * diagonalDist / 10), curPoint + (lineDir * diagonalDist / 2));
-        //         DrawLine(model, line, material, u.Name, (int)(curDist / section.Spacing));
-        //     }
-
-        //     sectionIdx += 1;
-        // }
-        // }
-
-
-
+            foreach (var gridGuide in gridGuides)
+            {
+                var line = new Line(gridGuide.Point - startExtend, gridGuide.Point - endExtend);
+                DrawLine(model, line, GridlineMaterial, gridGuide.Name);
+            }
+        }
     }
-
-
-
-
 }
