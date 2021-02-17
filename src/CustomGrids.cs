@@ -61,6 +61,13 @@ namespace CustomGrids
                 var uDirection = (gridArea.Orientation.Vertices[1] - gridArea.Orientation.Vertices[0]).Unitized();
                 var vDirection = (gridArea.Orientation.Vertices[2] - gridArea.Orientation.Vertices[0]).Unitized();
 
+                if (input.ShowDebugGeometry)
+                {
+                    // Draw origin
+                    output.Model.AddElement(new Line(origin - uDirection, origin + uDirection));
+                    output.Model.AddElement(new Line(origin - vDirection, origin + vDirection));
+                }
+
                 var u = gridArea.U;
                 var v = new U(gridArea.V.Name, gridArea.V.Spacing);
 
@@ -78,9 +85,12 @@ namespace CustomGrids
                 var boundaries = new List<List<Polygon>>();
                 var grids = new List<Grid2d>();
 
+                var gridPolygon = new Polygon(gridArea.Orientation.Vertices);
+
                 if (envelopes.Count() > 0)
                 {
                     var polygons = envelopes.Select(e => e.Profile.Perimeter).ToList();
+                    polygons.Add(gridPolygon);
                     var unions = Polygon.UnionAll(polygons).ToList();
                     var bbox = new BBox3(unions);
                     var boundary = Polygon.Rectangle(bbox.Min, bbox.Max);
@@ -91,6 +101,13 @@ namespace CustomGrids
                     // use points min and max
                     var min = new Vector3(Math.Min(uPoints.FirstOrDefault().X, vPoints.FirstOrDefault().X), Math.Min(uPoints.FirstOrDefault().Y, vPoints.FirstOrDefault().Y));
                     var max = new Vector3(Math.Max(uPoints.LastOrDefault().X, vPoints.LastOrDefault().X), Math.Max(uPoints.LastOrDefault().Y, vPoints.LastOrDefault().Y));
+
+                    min.X = Math.Min(min.X, origin.X);
+                    min.Y = Math.Min(min.Y, origin.Y);
+
+                    max.X = Math.Min(max.X, origin.X);
+                    max.Y = Math.Min(max.Y, origin.Y);
+
                     boundaries.Add(new List<Polygon>() { Polygon.Rectangle(min, max) });
                 }
 
@@ -99,16 +116,20 @@ namespace CustomGrids
                     foreach (var boundary in boundaryList)
                     {
                         var grid = MakeGrid(boundary, origin, uDirection, vDirection, uPoints, vPoints);
-                        DrawLines(output.Model, uDivisions, grid.V, boundary);
-                        DrawLines(output.Model, vDivisions, grid.U, boundary);
+                        DrawLines(output.Model, origin, uDivisions, grid.V, boundary);
+                        DrawLines(output.Model, origin, vDivisions, grid.U, boundary);
                         grids.Add(grid);
 
-                        // foreach (var cell in grid.GetCells())
-                        // {
-                        //     output.Model.AddElement(new ModelCurve(cell.GetCellGeometry()));
-                        // }
+                        if (input.ShowDebugGeometry)
+                        {
+                            // foreach (var cell in grid.GetCells())
+                            // {
+                            //     output.Model.AddElement(new ModelCurve(cell.GetCellGeometry()));
+                            // }
+                            output.Model.AddElements(new ModelCurve(boundary));
 
-                        output.Model.AddElements(new ModelCurve(boundary));
+                        }
+
                     }
                 }
 
@@ -169,10 +190,9 @@ namespace CustomGrids
             return gridGuides;
         }
 
-        private static void DrawLines(Model model, List<GridGuide> gridGuides, Grid1d opposingGrid1d, Polygon bounds)
+        private static void DrawLines(Model model, Vector3 origin, List<GridGuide> gridGuides, Grid1d opposingGrid1d, Polygon bounds)
         {
             var baseLine = new Line(opposingGrid1d.Curve.PointAt(0), opposingGrid1d.Curve.PointAt(1));
-            var origin = gridGuides[0].Point;
 
             var startExtend = origin - baseLine.Start;
             var endExtend = origin - baseLine.End;

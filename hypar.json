@@ -112,6 +112,11 @@
             }
           }
         }
+      },
+      "Show Debug Geometry": {
+        "type": "boolean",
+        "default": false,
+        "$hyparDisableRange": true
       }
     }
   },

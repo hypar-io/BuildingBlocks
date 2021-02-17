@@ -28,16 +28,17 @@ namespace CustomGrids
     {
         [Newtonsoft.Json.JsonConstructor]
         
-        public CustomGridsInputs(IList<GridAreas> @gridAreas, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey):
+        public CustomGridsInputs(IList<GridAreas> @gridAreas, bool @showDebugGeometry, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey):
         base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
         {
             var validator = Validator.Instance.GetFirstValidatorForType<CustomGridsInputs>();
             if(validator != null)
             {
-                validator.PreConstruct(new object[]{ @gridAreas});
+                validator.PreConstruct(new object[]{ @gridAreas, @showDebugGeometry});
             }
         
             this.GridAreas = @gridAreas;
+            this.ShowDebugGeometry = @showDebugGeometry;
         
             if(validator != null)
             {
@@ -48,6 +49,9 @@ namespace CustomGrids
         /// <summary>List of grids enclosed by the area they apply to.</summary>
         [Newtonsoft.Json.JsonProperty("Grid Areas", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public IList<GridAreas> GridAreas { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("Show Debug Geometry", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public bool ShowDebugGeometry { get; set; } = false;
     
     
     }
