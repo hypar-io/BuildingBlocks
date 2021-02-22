@@ -20,6 +20,18 @@ namespace CustomGrids
         }
     }
 
+    public class GridLine
+    {
+        public Line Line;
+        public string Name;
+
+        public GridLine(Line line, string name = null)
+        {
+            this.Line = line;
+            this.Name = name;
+        }
+    }
+
     public static class CustomGrids
     {
         private static double MinCircleRadius = 0.5;
@@ -111,14 +123,32 @@ namespace CustomGrids
                     boundaries.Add(new List<Polygon>() { Polygon.Rectangle(min, max) });
                 }
 
+                var gridNodes = new List<GridNode>();
+
                 foreach (var boundaryList in boundaries)
                 {
                     foreach (var boundary in boundaryList)
                     {
                         var grid = MakeGrid(boundary, origin, uDirection, vDirection, uPoints, vPoints);
-                        DrawLines(output.Model, origin, uDivisions, grid.V, boundary);
-                        DrawLines(output.Model, origin, vDivisions, grid.U, boundary);
+                        var uGridLines = DrawLines(output.Model, origin, uDivisions, grid.V, boundary);
+                        var vGridLines = DrawLines(output.Model, origin, vDivisions, grid.U, boundary);
                         grids.Add(grid);
+
+                        foreach (var uGridLine in uGridLines)
+                        {
+                            foreach (var vGridLine in vGridLines)
+                            {
+                                if (uGridLine.Line.Intersects(vGridLine.Line, out var intersection))
+                                {
+                                    var transform = new Transform(intersection);
+                                    gridNodes.Add(new GridNode(transform, Guid.NewGuid(), $"{uGridLine.Name}{vGridLine.Name}"));
+                                }
+                                else
+                                {
+                                    Console.WriteLine("No intersection between two gridlines found");
+                                }
+                            }
+                        }
 
                         if (input.ShowDebugGeometry)
                         {
@@ -135,8 +165,9 @@ namespace CustomGrids
 
                 output.Model.AddElements(grids.Select(grid =>
                 {
-                    return new Grid2dElement(grid, Guid.NewGuid(), gridArea.Name);
+                    return new Grid2dElement(grid, gridNodes, Guid.NewGuid(), gridArea.Name);
                 }));
+
             }
             return output;
         }
@@ -166,14 +197,15 @@ namespace CustomGrids
             return name;
         }
 
-        private static void DrawLine(Model model, Line line, Material material, string name)
+        private static GridLine DrawLine(Model model, Line line, Material material, string name)
         {
             var circleCenter = line.Start - (line.End - line.Start).Unitized() * CircleRadius;
 
-            model.AddElement(new GridLine(new Polyline(new List<Vector3>() { line.Start, line.End }), Guid.NewGuid(), name));
+            model.AddElement(new Elements.GridLine(new Polyline(new List<Vector3>() { line.Start, line.End }), Guid.NewGuid(), name));
             model.AddElement(new ModelCurve(line, material, name: name));
             model.AddElement(new ModelCurve(new Circle(circleCenter, CircleRadius), GridlineMaterial));
             model.AddElement(new LabelDot(circleCenter, name));
+            return new GridLine(line, name);
         }
 
         private static List<GridGuide> GetDivisions(Vector3 origin, Vector3 gridDir, U u)
@@ -190,18 +222,23 @@ namespace CustomGrids
             return gridGuides;
         }
 
-        private static void DrawLines(Model model, Vector3 origin, List<GridGuide> gridGuides, Grid1d opposingGrid1d, Polygon bounds)
+        private static List<GridLine> DrawLines(Model model, Vector3 origin, List<GridGuide> gridGuides, Grid1d opposingGrid1d, Polygon bounds)
         {
             var baseLine = new Line(opposingGrid1d.Curve.PointAt(0), opposingGrid1d.Curve.PointAt(1));
 
             var startExtend = origin - baseLine.Start;
             var endExtend = origin - baseLine.End;
 
+            List<GridLine> gridLines = new List<GridLine>();
+
             foreach (var gridGuide in gridGuides)
             {
                 var line = new Line(gridGuide.Point - startExtend, gridGuide.Point - endExtend);
-                DrawLine(model, line, GridlineMaterial, gridGuide.Name);
+                var gridLine = DrawLine(model, line, GridlineMaterial, gridGuide.Name);
+                gridLines.Add(gridLine);
             }
+
+            return gridLines;
         }
     }
 }

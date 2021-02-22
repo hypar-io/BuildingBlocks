@@ -20,23 +20,22 @@ namespace Elements
 {
     #pragma warning disable // Disable all warnings
 
-    /// <summary>Just a test</summary>
+    /// <summary>Represents a point at the intersection of two gridlines</summary>
     [Newtonsoft.Json.JsonConverter(typeof(Elements.Serialization.JSON.JsonInheritanceConverter), "discriminator")]
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
-    public partial class Grid2dElement : Element
+    public partial class GridNode : Element
     {
         [Newtonsoft.Json.JsonConstructor]
-        public Grid2dElement(Grid2d @grid, IList<GridNode> @gridNodes, System.Guid @id, string @name)
+        public GridNode(Transform @location, System.Guid @id, string @name)
             : base(id, name)
         {
-            var validator = Validator.Instance.GetFirstValidatorForType<Grid2dElement>();
+            var validator = Validator.Instance.GetFirstValidatorForType<GridNode>();
             if(validator != null)
             {
-                validator.PreConstruct(new object[]{ @grid, @gridNodes, @id, @name});
+                validator.PreConstruct(new object[]{ @location, @id, @name});
             }
         
-            this.Grid = @grid;
-            this.GridNodes = @gridNodes;
+            this.Location = @location;
             
             if(validator != null)
             {
@@ -44,13 +43,9 @@ namespace Elements
             }
         }
     
-        /// <summary>contains a grid</summary>
-        [Newtonsoft.Json.JsonProperty("Grid", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public Grid2d Grid { get; set; }
-    
-        /// <summary>A list of grid nodes</summary>
-        [Newtonsoft.Json.JsonProperty("GridNodes", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public IList<GridNode> GridNodes { get; set; }
+        /// <summary>The location of this grid node.</summary>
+        [Newtonsoft.Json.JsonProperty("Location", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public Transform Location { get; set; }
     
     
     }
