@@ -3,11 +3,15 @@ using Elements.Geometry;
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.Reflection;
+using System.IO;
 
 namespace FloorsByLevels
 {
     public static class FloorsByLevels
     {
+        private static string _texturePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Textures/Concrete_512.jpg");
+
         /// <summary>
         /// Generates Floors for each LevelPerimeter in the model configured ith slab thickness and setback..
         /// </summary>
@@ -22,7 +26,11 @@ namespace FloorsByLevels
             {
                 throw new ArgumentException("No LevelPerimeters found.");
             }
+
+            var floorMaterial = new Material("Concrete", Colors.White, 0.5, 0.1, _texturePath);
+
             levels.AddRange(model.AllElementsOfType<LevelPerimeter>());
+
             var floors = new List<Floor>();
             var floorArea = 0.0;
             foreach (var level in levels)
@@ -33,13 +41,13 @@ namespace FloorsByLevels
                 {
                     floor = new Floor(flrOffsets.First(), input.FloorThickness,
                             new Transform(0.0, 0.0, level.Elevation - input.FloorThickness),
-                            BuiltInMaterials.Concrete, null, false, Guid.NewGuid(), null);
+                            floorMaterial, null, false, Guid.NewGuid(), null);
                 }
                 else
                 {
                     floor = new Floor(level.Perimeter, input.FloorThickness,
                             new Transform(0.0, 0.0, level.Elevation - input.FloorThickness),
-                            BuiltInMaterials.Concrete, null, false, Guid.NewGuid(), null);
+                            floorMaterial, null, false, Guid.NewGuid(), null);
                 }
                 floors.Add(floor);
                 floorArea += floor.Area();

@@ -2,12 +2,12 @@
 
 # Floors By Levels
 
-Creates Floors from LevelPerimeters supplied by another function.
+Creates floors from level perimeters supplied by another function.
 
 |Input Name|Type|Description|
 |---|---|---|
-|Floor Setback|Range|Setback of all floors from each level's perimeter.|
-|Floor Thickness|Range|Thickness of all floors.|
+|Floor Setback|number|Setback of all floors from each level's perimeter.|
+|Floor Thickness|number|Thickness of all floors.|
 
 
 <br>

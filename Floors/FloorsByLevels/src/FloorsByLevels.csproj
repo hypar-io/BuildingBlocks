@@ -5,8 +5,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Hypar.Elements" Version="0.7.3" />
-    <PackageReference Include="Hypar.Functions" Version="0.7.3" />
+    <PackageReference Include="Hypar.Elements" Version="0.8.3" />
+    <PackageReference Include="Hypar.Functions" Version="0.8.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\dependencies\FloorsByLevelsDependencies.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Textures\*.*">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>  
   </ItemGroup>
 
 </Project>

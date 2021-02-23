@@ -1,10 +1,6 @@
 ﻿using Xunit;
-using System.Linq;
-using Newtonsoft.Json;
 using Elements;
-using Hypar.Functions.Execution.Local;
 using Elements.Serialization.glTF;
-using Elements.Serialization.JSON;
 using System.Collections.Generic;
 
 
@@ -22,17 +18,16 @@ namespace FloorsByLevels.tests
         [Fact]
         public void FloorsByLevelsTest()
         {
-            var model = 
+            var model =
                 Model.FromJson(System.IO.File.ReadAllText(INPUT + "LevelsByEnvelope.json"));
-            var inputs = 
+            var inputs =
                 new FloorsByLevelsInputs(
-                    floorSetback: 0.2, 
-                    floorThickness: 0.1, 
+                    floorSetback: 0.2,
+                    floorThickness: 0.1,
                     "", "", new Dictionary<string, string>(), "", "", "");
-            var outputs = 
-                FloorsByLevels.Execute(new Dictionary<string, Model>{{"Levels", model}}, inputs);
+            var outputs =
+                FloorsByLevels.Execute(new Dictionary<string, Model> { { "Levels", model } }, inputs);
             System.IO.File.WriteAllText(OUTPUT + "FloorsByLevels.json", outputs.Model.ToJson());
-            outputs.Model.AddElements(model.Elements.Values);
             outputs.Model.ToGlTF(OUTPUT + "FloorsByLevels.glb");
         }
 
