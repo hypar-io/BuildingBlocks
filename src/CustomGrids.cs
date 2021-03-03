@@ -37,7 +37,8 @@ namespace CustomGrids
         private static double MinCircleRadius = 0.5;
         private static double CircleRadius = 1;
 
-        private static Material GridlineMaterial = new Material("Gridline", Colors.Red);
+        private static Material GridlineMaterialU = new Material("GridlineU", Colors.Red);
+        private static Material GridlineMaterialV = new Material("GridlineV", new Color(0, 0.5, 0, 1));
 
         private static Model DebugModel = null;
 
@@ -99,28 +100,27 @@ namespace CustomGrids
 
                 var gridPolygon = new Polygon(gridArea.Orientation.Vertices);
 
+                var gridPtsMin = new Vector3(Math.Min(uPoints.FirstOrDefault().X, vPoints.FirstOrDefault().X), Math.Min(uPoints.FirstOrDefault().Y, vPoints.FirstOrDefault().Y));
+                var gridPtsMax = new Vector3(Math.Max(uPoints.LastOrDefault().X, vPoints.LastOrDefault().X), Math.Max(uPoints.LastOrDefault().Y, vPoints.LastOrDefault().Y));
+
+                gridPtsMin.X = Math.Min(gridPtsMin.X, origin.X);
+                gridPtsMin.Y = Math.Min(gridPtsMin.Y, origin.Y);
+
+                gridPtsMax.X = Math.Max(gridPtsMax.X, origin.X);
+                gridPtsMax.Y = Math.Max(gridPtsMax.Y, origin.Y);
+
                 if (envelopes.Count() > 0)
                 {
                     var polygons = envelopes.Select(e => e.Profile.Perimeter).ToList();
                     polygons.Add(gridPolygon);
                     var unions = Polygon.UnionAll(polygons).ToList();
-                    var bbox = new BBox3(unions);
-                    var boundary = Polygon.Rectangle(bbox.Min, bbox.Max);
+                    var boundary = PolygonFromAlignedBoundingBox2d(unions.Select(u => u.Vertices).SelectMany(x => x), new List<Line>() { new Line(origin, origin + uDirection), new Line(origin, origin + vDirection) });
                     boundaries.Add(new List<Polygon>() { boundary });
                 }
                 else
                 {
                     // use points min and max
-                    var min = new Vector3(Math.Min(uPoints.FirstOrDefault().X, vPoints.FirstOrDefault().X), Math.Min(uPoints.FirstOrDefault().Y, vPoints.FirstOrDefault().Y));
-                    var max = new Vector3(Math.Max(uPoints.LastOrDefault().X, vPoints.LastOrDefault().X), Math.Max(uPoints.LastOrDefault().Y, vPoints.LastOrDefault().Y));
-
-                    min.X = Math.Min(min.X, origin.X);
-                    min.Y = Math.Min(min.Y, origin.Y);
-
-                    max.X = Math.Min(max.X, origin.X);
-                    max.Y = Math.Min(max.Y, origin.Y);
-
-                    boundaries.Add(new List<Polygon>() { Polygon.Rectangle(min, max) });
+                    boundaries.Add(new List<Polygon>() { Polygon.Rectangle(gridPtsMin, gridPtsMax) });
                 }
 
                 var gridNodes = new List<GridNode>();
@@ -130,8 +130,8 @@ namespace CustomGrids
                     foreach (var boundary in boundaryList)
                     {
                         var grid = MakeGrid(boundary, origin, uDirection, vDirection, uPoints, vPoints);
-                        var uGridLines = DrawLines(output.Model, origin, uDivisions, grid.V, boundary);
-                        var vGridLines = DrawLines(output.Model, origin, vDivisions, grid.U, boundary);
+                        var uGridLines = DrawLines(output.Model, origin, uDivisions, grid.V, boundary, GridlineMaterialU);
+                        var vGridLines = DrawLines(output.Model, origin, vDivisions, grid.U, boundary, GridlineMaterialV);
                         grids.Add(grid);
 
                         foreach (var uGridLine in uGridLines)
@@ -203,7 +203,7 @@ namespace CustomGrids
 
             model.AddElement(new Elements.GridLine(new Polyline(new List<Vector3>() { line.Start, line.End }), Guid.NewGuid(), name));
             model.AddElement(new ModelCurve(line, material, name: name));
-            model.AddElement(new ModelCurve(new Circle(circleCenter, CircleRadius), GridlineMaterial));
+            model.AddElement(new ModelCurve(new Circle(circleCenter, CircleRadius), material));
             model.AddElement(new LabelDot(circleCenter, name));
             return new GridLine(line, name);
         }
@@ -222,7 +222,7 @@ namespace CustomGrids
             return gridGuides;
         }
 
-        private static List<GridLine> DrawLines(Model model, Vector3 origin, List<GridGuide> gridGuides, Grid1d opposingGrid1d, Polygon bounds)
+        private static List<GridLine> DrawLines(Model model, Vector3 origin, List<GridGuide> gridGuides, Grid1d opposingGrid1d, Polygon bounds, Material material)
         {
             var baseLine = new Line(opposingGrid1d.Curve.PointAt(0), opposingGrid1d.Curve.PointAt(1));
 
@@ -234,11 +234,38 @@ namespace CustomGrids
             foreach (var gridGuide in gridGuides)
             {
                 var line = new Line(gridGuide.Point - startExtend, gridGuide.Point - endExtend);
-                var gridLine = DrawLine(model, line, GridlineMaterial, gridGuide.Name);
+                var gridLine = DrawLine(model, line, material, gridGuide.Name);
                 gridLines.Add(gridLine);
             }
 
             return gridLines;
+        }
+
+        private static Polygon PolygonFromAlignedBoundingBox2d(IEnumerable<Vector3> points, List<Line> segments)
+        {
+            var hull = ConvexHull.FromPoints(points);
+            var minBoxArea = double.MaxValue;
+            BBox3 minBox = new BBox3();
+            Transform minBoxXform = new Transform();
+            foreach (var edge in segments)
+            {
+                var edgeVector = edge.End - edge.Start;
+                var xform = new Transform(Vector3.Origin, edgeVector, Vector3.ZAxis, 0);
+                var invertedXform = new Transform(xform);
+                invertedXform.Invert();
+                var transformedPolygon = hull.TransformedPolygon(invertedXform);
+                var bbox = new BBox3(transformedPolygon.Vertices);
+                var bboxArea = (bbox.Max.X - bbox.Min.X) * (bbox.Max.Y - bbox.Min.Y);
+                if (bboxArea < minBoxArea)
+                {
+                    minBoxArea = bboxArea;
+                    minBox = bbox;
+                    minBoxXform = xform;
+                }
+            }
+            var xy = new Plane(Vector3.Origin, Vector3.ZAxis);
+            var boxRect = Polygon.Rectangle(minBox.Min.Project(xy), minBox.Max.Project(xy));
+            return boxRect.TransformedPolygon(minBoxXform);
         }
     }
 }
