@@ -23,7 +23,7 @@ namespace FloorsByLevels
                 throw new ArgumentException("No LevelPerimeters found.");
             }
 
-            var floorMaterial = new Material("Concrete", Colors.Gray, 0.3, 0.3);
+            var floorMaterial = new Material("Concrete", new Color(0.34, 0.34, 0.34, 1.0), 0.3, 0.3);
 
             levels.AddRange(model.AllElementsOfType<LevelPerimeter>());
 
