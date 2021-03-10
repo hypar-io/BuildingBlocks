@@ -62,7 +62,7 @@ namespace CustomGrids
     
     {
         [Newtonsoft.Json.JsonConstructor]
-        public GridAreas(string @name, Polyline @orientation, U @u, V @v)
+        public GridAreas(string @name, Transform @orientation, U @u, V @v)
         {
             var validator = Validator.Instance.GetFirstValidatorForType<GridAreas>();
             if(validator != null)
@@ -82,11 +82,11 @@ namespace CustomGrids
         }
     
         [Newtonsoft.Json.JsonProperty("Name", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Name { get; set; }
+        public string Name { get; set; } = "Main";
     
-        /// <summary>A polyline with 3 points in this order: Origin, Point along the U axis, Point along the V axis</summary>
-        [Newtonsoft.Json.JsonProperty("Orientation", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public Polyline Orientation { get; set; }
+        /// <summary>The origin and rotation of your grid</summary>
+        [Newtonsoft.Json.JsonProperty("Orientation", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public Transform Orientation { get; set; }
     
         [Newtonsoft.Json.JsonProperty("U", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public U U { get; set; }

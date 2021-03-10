@@ -64,15 +64,9 @@ namespace CustomGrids
 
             foreach (var gridArea in input.GridAreas)
             {
-
-                if (gridArea.Orientation.Vertices.Count < 3)
-                {
-                    throw new Exception("Your grid orientation must have 3 vertices");
-                }
-
-                var origin = gridArea.Orientation.Vertices[0];
-                var uDirection = (gridArea.Orientation.Vertices[1] - gridArea.Orientation.Vertices[0]).Unitized();
-                var vDirection = (gridArea.Orientation.Vertices[2] - gridArea.Orientation.Vertices[0]).Unitized();
+                var origin = gridArea.Orientation.Origin;
+                var uDirection = gridArea.Orientation.XAxis;
+                var vDirection = gridArea.Orientation.YAxis;
 
                 if (input.ShowDebugGeometry)
                 {
@@ -98,7 +92,7 @@ namespace CustomGrids
                 var boundaries = new List<List<Polygon>>();
                 var grids = new List<Grid2d>();
 
-                var gridPolygon = new Polygon(gridArea.Orientation.Vertices);
+                var gridPolygon = new Polygon(new List<Vector3>() { origin, origin + uDirection, origin + vDirection });
 
                 var gridPtsMin = new Vector3(Math.Min(uPoints.FirstOrDefault().X, vPoints.FirstOrDefault().X), Math.Min(uPoints.FirstOrDefault().Y, vPoints.FirstOrDefault().Y));
                 var gridPtsMax = new Vector3(Math.Max(uPoints.LastOrDefault().X, vPoints.LastOrDefault().X), Math.Max(uPoints.LastOrDefault().Y, vPoints.LastOrDefault().Y));
