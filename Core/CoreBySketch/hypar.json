@@ -10,23 +10,34 @@
       "optional": false
     }
   ],
-  "inputs": [
-    {
-      "primitive_type": "polygon",
-      "name": "Perimeter",
-      "description": "Perimeter of the building service core.",
-      "type": "geometry"
+  "input_schema": {
+    "type": "object",
+    "properties": {
+    "Perimeters": {
+      "description": "List of perimeters of the buildings service cores.",
+      "default": [],
+      "optional": false,
+      "type": "array",
+      "$hyparOrder": 0,
+      "items": {
+        "name": "Core Perimeters",
+        "description": "Polygons describing ncore perimeters.",
+        "default": null,
+        "type": "object",
+        "$ref": "https://hypar.io/Schemas/Geometry/Polygon.json"
+      }
     },
-    {
-      "min": -1.0,
+    "HeightAboveRoof": {
+      "multipleOf": 1.0,
+      "default": 2.0,
+      "min":-1.0,
       "max": 5.0,
-      "step": 1.0,
-      "unit_type": "length",
-      "name": "Core height above roof",
       "description": "The projection of the service core above the highest building level.",
-      "type": "range"
+      "type": "number",
+      "$hyparOrder": 1,
+      "minimum": 0
     }
-  ],
+  }},
   "outputs": [
     {
       "unit_type": "length",

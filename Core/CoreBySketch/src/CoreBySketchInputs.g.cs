@@ -5,59 +5,56 @@
 using Elements;
 using Elements.GeoJSON;
 using Elements.Geometry;
+using Elements.Geometry.Solids;
+using Elements.Validators;
+using Elements.Serialization.JSON;
 using Hypar.Functions;
 using Hypar.Functions.Execution;
 using Hypar.Functions.Execution.AWS;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using Line = Elements.Geometry.Line;
+using Polygon = Elements.Geometry.Polygon;
 
 namespace CoreBySketch
 {
-    public class CoreBySketchInputs: S3Args
+    #pragma warning disable // Disable all warnings
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
+    
+    public  class CoreBySketchInputs : S3Args
+    
     {
-		/// <summary>
-		/// Perimeter of the building service core.
-		/// </summary>
-		[JsonProperty("Perimeter")]
-		public Elements.Geometry.Polygon Perimeter {get;}
-
-		/// <summary>
-		/// The projection of the service core above the highest building level.
-		/// </summary>
-		[JsonProperty("Core height above roof")]
-		public double CoreHeightAboveRoof {get;}
-
-
+        [Newtonsoft.Json.JsonConstructor]
         
-        /// <summary>
-        /// Construct a CoreBySketchInputs with default inputs.
-        /// This should be used for testing only.
-        /// </summary>
-        public CoreBySketchInputs() : base()
+        public CoreBySketchInputs(IList<Polygon> @perimeters, double @heightAboveRoof, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey):
+        base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
         {
-			this.Perimeter = Elements.Geometry.Polygon.Rectangle(1, 1);
-			this.CoreHeightAboveRoof = 5;
-
+            var validator = Validator.Instance.GetFirstValidatorForType<CoreBySketchInputs>();
+            if(validator != null)
+            {
+                validator.PreConstruct(new object[]{ @perimeters, @heightAboveRoof});
+            }
+        
+            this.Perimeters = @perimeters;
+            this.HeightAboveRoof = @heightAboveRoof;
+        
+            if(validator != null)
+            {
+                validator.PostConstruct(this);
+            }
         }
-
-
-        /// <summary>
-        /// Construct a CoreBySketchInputs specifying all inputs.
-        /// </summary>
-        /// <returns></returns>
-        [JsonConstructor]
-        public CoreBySketchInputs(Elements.Geometry.Polygon perimeter, double coreheightaboveroof, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
-        {
-			this.Perimeter = perimeter;
-			this.CoreHeightAboveRoof = coreheightaboveroof;
-
-		}
-
-		public override string ToString()
-		{
-			var json = JsonConvert.SerializeObject(this);
-			return json;
-		}
-	}
+    
+        /// <summary>List of perimeters of the buildings service cores.</summary>
+        [Newtonsoft.Json.JsonProperty("Perimeters", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public IList<Polygon> Perimeters { get; set; }
+    
+        /// <summary>The projection of the service core above the highest building level.</summary>
+        [Newtonsoft.Json.JsonProperty("HeightAboveRoof", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.Range(0D, double.MaxValue)]
+        public double HeightAboveRoof { get; set; } = 2D;
+    
+    
+    }
 }

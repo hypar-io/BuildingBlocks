@@ -16,19 +16,27 @@ namespace CoreBySketch.tests
         [Fact]
         public void CoreBySketchTest()
         {
-            var polygon =
-                new Polygon
-                (
-                    new[]
-                    {
+            var polygons =
+                new Polygon [] {
+                    new Polygon(new Vector3[]{
                         new Vector3(30.0, 30.0),
                         new Vector3(60.0, 30.0),
                         new Vector3(60.0, 60.0),
                         new Vector3(30.0, 60.0)
                     }
-                );
+                    ),
+                    new Polygon( new Vector3[]{
+                        new Vector3(30.0, 30.0),
+                        new Vector3(60.0, 30.0),
+                        new Vector3(60.0, 60.0),
+                        new Vector3(30.0, 60.0)
+                    }
+                    )
+                 
+
+                };
             var model = Model.FromJson(System.IO.File.ReadAllText("../../../../../../TestOutput/LevelsByEnvelope.json"));
-            var inputs = new CoreBySketchInputs(polygon, 3.0, "", "", new Dictionary<string, string>(), "", "", "");
+            var inputs = new CoreBySketchInputs(polygons, 3.0, "", "", new Dictionary<string, string>(), "", "", "");
             var outputs = CoreBySketch.Execute(new Dictionary<string, Model>{{"Levels", model}}, inputs);
             System.IO.File.WriteAllText("../../../../../../TestOutput/CoreBySketch.json", outputs.Model.ToJson());
             outputs.Model.ToGlTF("../../../../../../TestOutput/CoreBySketch.glb");

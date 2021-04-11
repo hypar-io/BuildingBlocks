@@ -25,16 +25,22 @@ namespace CoreBySketch
                     throw new ArgumentException("No Levels found.");
                 }
                 levels.AddRange(model.AllElementsOfType<Level>());
-                var top = levels.OrderByDescending(l => l.Elevation).First().Elevation + input.CoreHeightAboveRoof;
+                var top = levels.OrderByDescending(l => l.Elevation).First().Elevation + input.HeightAboveRoof;
                 var elevation = levels.OrderBy(l => l.Elevation).First().Elevation;
                 var height = top - elevation;
                 // Create the Core extrusion.
-                var extrude = new Elements.Geometry.Solids.Extrude(input.Perimeter, height, Vector3.ZAxis, false);
+                var output = new CoreBySketchOutputs(height);
+
+                foreach(var perim in input.Perimeters)
+                {
+                var extrude = new Elements.Geometry.Solids.Extrude(perim, height, Vector3.ZAxis, false);
                 var geomRep = new Representation(new List<Elements.Geometry.Solids.SolidOperation>() { extrude });
                 var corMatl = new Material("core", new Color(1.0, 1.0, 1.0, 0.6), 0.0f, 0.0f);
-                var svcCore = new ServiceCore(input.Perimeter, Vector3.ZAxis, elevation, height, 0.0, new Transform(0.0, 0.0, elevation), corMatl, geomRep, false, Guid.NewGuid(), "serviceCore");
-                var output = new CoreBySketchOutputs(height);
+                var svcCore = new ServiceCore(perim, Vector3.ZAxis, elevation, height, 0.0, new Transform(0.0, 0.0, elevation), corMatl, geomRep, false, Guid.NewGuid(), "serviceCore");
+                
                 output.Model.AddElement(svcCore);
+                }
+               
                 return output;
             }
         }
