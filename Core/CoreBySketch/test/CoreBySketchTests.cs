@@ -26,10 +26,10 @@ namespace CoreBySketch.tests
                     }
                     ),
                     new Polygon( new Vector3[]{
-                        new Vector3(30.0, 30.0),
-                        new Vector3(60.0, 30.0),
                         new Vector3(60.0, 60.0),
-                        new Vector3(30.0, 60.0)
+                        new Vector3(90.0, 60.0),
+                        new Vector3(90.0, 90.0),
+                        new Vector3(60.0, 90.0)
                     }
                     )
                  
