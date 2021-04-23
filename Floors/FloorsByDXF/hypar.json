@@ -9,7 +9,7 @@
       "min": 1.0,
       "max": 10.0,
       "step": 1.0,
-      "unit_type": "none",
+      "unit_type": "length",
       "name": "Length",
       "description": "The length.",
       "type": "range"
@@ -18,7 +18,7 @@
       "min": 1.0,
       "max": 10.0,
       "step": 1.0,
-      "unit_type": "none",
+      "unit_type": "length",
       "name": "Width",
       "description": "The width.",
       "type": "range"
