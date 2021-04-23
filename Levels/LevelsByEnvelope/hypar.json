@@ -21,7 +21,8 @@
         "description": "Height of the top level.",
         "type": "number",
         "$hyparOrder": 2,
-        "minimum": 3
+        "minimum": 3,
+        "$hyparUnitType": "length"
       },
       "Ground Level Height": {
         "multipleOf": 0.1,
@@ -30,7 +31,8 @@
         "description": "Height of ground level.",
         "type": "number",
         "$hyparOrder": 0,
-        "minimum": 3
+        "minimum": 3,
+        "$hyparUnitType": "length"
       },
       "Standard Level Height": {
         "multipleOf": 0.1,
@@ -39,7 +41,8 @@
         "description": "Standard height of repeated levels.",
         "type": "number",
         "$hyparOrder": 1,
-        "minimum": 3
+        "minimum": 3,
+        "$hyparUnitType": "length"
       }
     }
   },

@@ -17,7 +17,7 @@
       "min": 1.0,
       "max": 50.0,
       "step": 1.0,
-      "unit_type": "none",
+      "unit_type": "length",
       "name": "Length",
       "description": "The max length of each subdivision.",
       "type": "range"
@@ -26,7 +26,7 @@
       "min": 1.0,
       "max": 50.0,
       "step": 1.0,
-      "unit_type": "none",
+      "unit_type": "length",
       "name": "Width",
       "description": "The max width of each subdivision.",
       "type": "range"

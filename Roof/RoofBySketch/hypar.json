@@ -18,9 +18,10 @@
         "type": "number",
         "minimum": 0.1,
         "maximum": 1.0,
-        "step": 0.01,
+        "multipleOf": 0.01,
         "default": 0.2,
-        "description": "Thickness of the Roof from its lowest point to its underside."
+        "description": "Thickness of the Roof from its lowest point to its underside.",
+        "$hyparUnitType": "length"
       }
     }
   },
