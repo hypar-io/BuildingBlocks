@@ -21,21 +21,13 @@
         "default": [{
           "Name": "Main",
           "Orientation": {
-            "Vertices": [{
-              "X":0,
-              "Y":0,
-              "Z":0
-            },
-            {
-              "X":1,
-              "Y":0,
-              "Z":0
-            },
-            {
-              "X":0,
-              "Y":1,
-              "Z":0
-            }]
+            "Matrix": {
+              "Components": [
+                1, 0, 0, 0,
+                0, 1, 0, 0,
+                0, 0, 1, 0
+              ]
+            }
           },
           "U": {
             "Name": "{A}",
@@ -52,30 +44,26 @@
           "required": [],
           "properties": {
             "Name": {
-              "type": "string"
+              "type": "string",
+              "default": "Main"
             },
             "Orientation": {
-              "type": "object",
-              "description": "A polyline with 3 points in this order: Origin, Point along the U axis, Point along the V axis",
-              "$ref": "https://hypar.io/Schemas/Geometry/Polyline.json",
+              "description": "The origin and rotation of your grid",
+              "$ref": "https://prod-api.hypar.io/schemas/Transform",
+              "$hyparConstraints": {
+                "enablePosition": true,
+                "enableRotation": true,
+                "positionZ": 0,
+                "rotationZ": 0
+              },
               "default": {
-                "Vertices": [
-                  {
-                    "X":0,
-                    "Y":0,
-                    "Z":0
-                  },
-                  {
-                    "X":1,
-                    "Y":0,
-                    "Z":0
-                  },
-                  {
-                    "X":0,
-                    "Y":1,
-                    "Z":0
-                  }
-                ]
+                "Matrix": {
+                  "Components": [
+                    1, 0, 0, 0,
+                    0, 1, 0, 0,
+                    0, 0, 1, 0
+                  ]
+                }
               }
             },
             "U": {
