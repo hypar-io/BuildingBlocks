@@ -20,7 +20,7 @@ namespace Elements
 {
     #pragma warning disable // Disable all warnings
 
-    /// <summary>Just a test</summary>
+    /// <summary>An element wrapper for Grid2d</summary>
     [Newtonsoft.Json.JsonConverter(typeof(Elements.Serialization.JSON.JsonInheritanceConverter), "discriminator")]
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
     public partial class Grid2dElement : Element

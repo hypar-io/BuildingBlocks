@@ -40,7 +40,8 @@ namespace CustomGrids
         private static Material GridlineMaterialU = new Material("GridlineU", Colors.Red);
         private static Material GridlineMaterialV = new Material("GridlineV", new Color(0, 0.5, 0, 1));
 
-        private static Model DebugModel = null;
+        private static Material LightweightBlueMaterial = new Material("Blue", new Color(0, 0.5, 1, 0.5));
+        private static Material MagentaMaterial = new Material("Magenta", new Color(1, 0, 0.75, 0.5));
 
         /// <summary>
         ///
@@ -51,8 +52,6 @@ namespace CustomGrids
         public static CustomGridsOutputs Execute(Dictionary<string, Model> inputModels, CustomGridsInputs input)
         {
             var output = new CustomGridsOutputs();
-
-            DebugModel = output.Model;
 
             var envelopes = new List<Envelope>();
             inputModels.TryGetValue("Envelope", out var envelopeModel);
@@ -67,6 +66,10 @@ namespace CustomGrids
                 var origin = gridArea.Orientation.Origin;
                 var uDirection = gridArea.Orientation.XAxis;
                 var vDirection = gridArea.Orientation.YAxis;
+
+                Console.WriteLine($"Orientation: {gridArea.Orientation}");
+
+                Console.WriteLine($"{origin}, {uDirection}, {vDirection}");
 
                 if (input.ShowDebugGeometry)
                 {
@@ -128,6 +131,15 @@ namespace CustomGrids
                         var vGridLines = DrawLines(output.Model, origin, vDivisions, grid.U, boundary, GridlineMaterialV);
                         grids.Add(grid);
 
+                        if (input.ShowDebugGeometry)
+                        {
+                            var uCurve = new Line(origin, origin + uDirection);
+                            var vCurve = new Line(origin, origin + vDirection);
+
+                            output.Model.AddElement(new ModelCurve(uCurve, MagentaMaterial));
+                            output.Model.AddElement(new ModelCurve(vCurve, MagentaMaterial));
+                        }
+
                         foreach (var uGridLine in uGridLines)
                         {
                             foreach (var vGridLine in vGridLines)
@@ -136,24 +148,41 @@ namespace CustomGrids
                                 {
                                     var transform = new Transform(intersection);
                                     gridNodes.Add(new GridNode(transform, Guid.NewGuid(), $"{uGridLine.Name}{vGridLine.Name}"));
+
+                                    if (input.ShowDebugGeometry)
+                                    {
+                                        DrawDebugPoint(output.Model, intersection, LightweightBlueMaterial);
+                                    }
                                 }
                                 else
                                 {
-                                    Console.WriteLine("No intersection between two gridlines found");
+                                    Console.WriteLine($"No intersection between two gridlines found: {uGridLine.Name}, {vGridLine.Name}");
                                 }
                             }
                         }
 
                         if (input.ShowDebugGeometry)
                         {
-                            // foreach (var cell in grid.GetCells())
-                            // {
-                            //     output.Model.AddElement(new ModelCurve(cell.GetCellGeometry()));
-                            // }
-                            output.Model.AddElements(new ModelCurve(boundary));
+                            foreach (var cell in grid.GetCells())
+                            {
+                                var polygon = (Polygon)cell.GetCellGeometry();
+                                foreach (var vertex in polygon.Vertices)
+                                {
+                                    DrawDebugPoint(output.Model, vertex, MagentaMaterial);
+                                }
+                                output.Model.AddElement(new ModelCurve(cell.GetCellGeometry(), LightweightBlueMaterial));
+                            }
+                            output.Model.AddElement(new ModelCurve(boundary));
 
+                            foreach (var pt in vPoints)
+                            {
+                                DrawDebugPoint(output.Model, pt, MagentaMaterial);
+                            }
+                            foreach (var pt in uPoints)
+                            {
+                                DrawDebugPoint(output.Model, pt, MagentaMaterial);
+                            }
                         }
-
                     }
                 }
 
@@ -260,6 +289,13 @@ namespace CustomGrids
             var xy = new Plane(Vector3.Origin, Vector3.ZAxis);
             var boxRect = Polygon.Rectangle(minBox.Min.Project(xy), minBox.Max.Project(xy));
             return boxRect.TransformedPolygon(minBoxXform);
+        }
+
+        private static void DrawDebugPoint(Model model, Vector3 location, Material material)
+        {
+            var transform = new Transform(location);
+            model.AddElement(new Panel(new Circle(Vector3.EPSILON * 2).ToPolygon(), material, transform));
+            model.AddElement(new Panel(new Circle(0.003).ToPolygon(), material, transform));
         }
     }
 }
