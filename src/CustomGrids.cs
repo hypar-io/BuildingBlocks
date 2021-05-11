@@ -41,9 +41,7 @@ namespace CustomGrids
         private static Material GridlineMaterialV = new Material("GridlineV", new Color(0, 0.5, 0, 1));
 
         private static Material LightweightBlueMaterial = new Material("Blue", new Color(0, 0.5, 1, 0.5));
-        private static Material MagentaMaterial = new Material("Magenta", Colors.Magenta);
-
-        private static Model DebugModel = null;
+        private static Material MagentaMaterial = new Material("Magenta", new Color(1, 0, 0.75, 0.5));
 
         /// <summary>
         ///
@@ -54,11 +52,6 @@ namespace CustomGrids
         public static CustomGridsOutputs Execute(Dictionary<string, Model> inputModels, CustomGridsInputs input)
         {
             var output = new CustomGridsOutputs();
-
-            input = GetInput(); // TEMP TEMP TEMP
-            input.ShowDebugGeometry = true;
-
-            DebugModel = output.Model;
 
             var envelopes = new List<Envelope>();
             inputModels.TryGetValue("Envelope", out var envelopeModel);
@@ -142,17 +135,9 @@ namespace CustomGrids
                         {
                             var uCurve = new Line(origin, origin + uDirection);
                             var vCurve = new Line(origin, origin + vDirection);
+
                             output.Model.AddElement(new ModelCurve(uCurve, MagentaMaterial));
                             output.Model.AddElement(new ModelCurve(vCurve, MagentaMaterial));
-
-                            var lines = new List<Line>() { new Line(uCurve.Start, uCurve.End), new Line(vCurve.Start, vCurve.End) };
-
-                            ExpandLinesToBounds(new BBox3(boundary), lines, output.Model);
-
-                            foreach (var line in lines)
-                            {
-                                output.Model.AddElement(new ModelCurve(line, MagentaMaterial));
-                            }
                         }
 
                         foreach (var uGridLine in uGridLines)
@@ -166,8 +151,7 @@ namespace CustomGrids
 
                                     if (input.ShowDebugGeometry)
                                     {
-                                        // output.Model.AddElement(new ModelCurve(new Circle(0.003).ToPolygon(), LightweightBlueMaterial, transform));
-                                        // output.Model.AddElement(new ModelCurve(new Circle(0.25).ToPolygon(), LightweightBlueMaterial, transform));
+                                        DrawDebugPoint(output.Model, intersection, LightweightBlueMaterial);
                                     }
                                 }
                                 else
@@ -179,25 +163,24 @@ namespace CustomGrids
 
                         if (input.ShowDebugGeometry)
                         {
-                            var inputTransform = new Transform(new Vector3(0, 0, 0));
                             foreach (var cell in grid.GetCells())
                             {
-                                // output.Model.AddElement(new ModelCurve(cell.GetCellGeometry(), transform: inputTransform));
+                                var polygon = (Polygon)cell.GetCellGeometry();
+                                foreach (var vertex in polygon.Vertices)
+                                {
+                                    DrawDebugPoint(output.Model, vertex, MagentaMaterial);
+                                }
+                                output.Model.AddElement(new ModelCurve(cell.GetCellGeometry(), LightweightBlueMaterial));
                             }
-                            output.Model.AddElement(new ModelCurve(boundary, transform: inputTransform));
-
-                            // output.Model.AddElement(new ModelCurve(grid.U.Curve, LightweightBlueMaterial, inputTransform));
-                            // output.Model.AddElement(new ModelCurve(grid.V.Curve, LightweightBlueMaterial, inputTransform));
+                            output.Model.AddElement(new ModelCurve(boundary));
 
                             foreach (var pt in vPoints)
                             {
-                                output.Model.AddElement(new ModelCurve(new Circle(0.003).ToPolygon(), MagentaMaterial, new Transform(pt)));
-                                output.Model.AddElement(new ModelCurve(new Circle(0.25).ToPolygon(), MagentaMaterial, new Transform(pt)));
+                                DrawDebugPoint(output.Model, pt, MagentaMaterial);
                             }
                             foreach (var pt in uPoints)
                             {
-                                output.Model.AddElement(new ModelCurve(new Circle(0.003).ToPolygon(), MagentaMaterial, new Transform(pt)));
-                                output.Model.AddElement(new ModelCurve(new Circle(0.25).ToPolygon(), MagentaMaterial, new Transform(pt)));
+                                DrawDebugPoint(output.Model, pt, MagentaMaterial);
                             }
                         }
                     }
@@ -308,130 +291,11 @@ namespace CustomGrids
             return boxRect.TransformedPolygon(minBoxXform);
         }
 
-        public static CustomGridsInputs GetInput()
+        private static void DrawDebugPoint(Model model, Vector3 location, Material material)
         {
-            var inputText = @"
-            {
-  ""Show Debug Geometry"": true,
-  ""Grid Areas"": [
-    {
-      ""Orientation"": {
-        ""Matrix"": {
-          ""Components"": [
-            0.9999947633971941,
-            -0.009614940148020392,
-            0,
-            -10.992100150908389,
-            -0.003236229007759388,
-            -0.9999537753946179,
-            0,
-            17.971426034076142,
-            0,
-            0,
-            1.0000000000000004,
-            0
-          ]
-        }
-      },
-      ""U"": {
-        ""Spacing"": [
-          0.6,
-          11.2,
-          25.8,
-          1.2
-        ],
-        ""Name"": ""{A}""
-      },
-      ""V"": {
-        ""Spacing"": [
-          1.2,
-          7.2,
-          7.2,
-          7.2,
-          7.2,
-          7.2,
-          7.2,
-          7.2,
-          1.2
-        ],
-        ""Name"": ""{1}""
-      },
-      ""Name"": ""Grid""
-    }
-  ],
-  ""model_input_keys"": {
-    ""Envelope"": ""bd950da8-7030-470e-81da-caca9d313608_0c8d0526-9490-4d53-896b-88a1515de583_elements.zip""
-  }
-}
-            ";
-            return Newtonsoft.Json.JsonConvert.DeserializeObject<CustomGridsInputs>(inputText);
-        }
-
-        private static List<Line> ExpandLinesToBounds(BBox3 bounds, List<Line> lines, Model model)
-        {
-            var boundary = Polygon.Rectangle(bounds.Min, bounds.Max);
-
-            for (var i = 0; i < lines.Count(); i++)
-            {
-                lines[i] = lines[i].ExtendTo(boundary, true, true);
-            }
-
-            var new1 = ExtendLineSkewed(bounds, lines[0], lines[1], model);
-            var new2 = ExtendLineSkewed(bounds, lines[1], new1, model);
-
-            new1 = ExtendLineSkewed(bounds, new1, new2, model);
-            new2 = ExtendLineSkewed(bounds, new2, new1, model);
-
-            lines[0] = new1;
-            lines[1] = new2;
-
-            return lines;
-        }
-
-        /// <summary>
-        /// Extend a line to a bounding box along a second line,
-        /// making sure this line extends to the boundary at the endpoints of second line to account for its skew.
-        /// Used to make sure U and V guide lines extend out far enough to encompass a boundary.
-        /// </summary>
-        /// <param name="bounds"></param>
-        /// <param name="line"></param>
-        /// <param name="possiblySkewedLine"></param>
-        /// <returns></returns>
-        private static Line ExtendLineSkewed(BBox3 bounds, Line line, Line possiblySkewedLine, Model model)
-        {
-            var boundary = Polygon.Rectangle(bounds.Min, bounds.Max);
-
-            var newLine = new Line(line.Start, line.End);
-
-            if (newLine.Intersects(possiblySkewedLine, out var intersection))
-            {
-                // // move to start and extend
-                // var toStart = possiblySkewedLine.Start - intersection;
-                // newLine = newLine.TransformedLine(new Transform(toStart));
-                // newLine = newLine.ExtendTo(boundary, true, true);
-
-                var beforeRay = (newLine.End - newLine.Start).Unitized();
-
-                // move to end and extend
-                var toEnd = possiblySkewedLine.End - intersection;
-                newLine = newLine.TransformedLine(new Transform(toEnd));
-                newLine = newLine.ExtendTo(boundary, true, true);
-
-                var afterRay = (newLine.End - newLine.Start).Unitized();
-
-                if (!beforeRay.Equals(afterRay)) {
-                    var transformedLine = (new Line(line.Start, line.End)).TransformedLine(new Transform(toEnd));
-                    Console.WriteLine($"Before and after");
-                    Console.WriteLine($"-- {beforeRay}");
-                    Console.WriteLine($"-- {afterRay}");
-                }
-
-            // move back to original
-            var toBeginning = intersection - possiblySkewedLine.End;
-                newLine = newLine.TransformedLine(new Transform(toBeginning));
-            }
-
-            return newLine;
+            var transform = new Transform(location);
+            model.AddElement(new Panel(new Circle(Vector3.EPSILON * 2).ToPolygon(), material, transform));
+            model.AddElement(new Panel(new Circle(0.003).ToPolygon(), material, transform));
         }
     }
 }

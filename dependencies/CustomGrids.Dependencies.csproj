@@ -1,11 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\Github\hypar\Elements\Elements\src\Elements.csproj" />
+  </ItemGroup>
+
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Hypar.Elements" Version="0.8.3" />
-  </ItemGroup>
 
 </Project>
