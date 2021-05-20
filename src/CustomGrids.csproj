@@ -2,8 +2,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\dependencies\CustomGrids.Dependencies.csproj" />
-    <ProjectReference Include="..\..\..\..\..\Github\hypar\Elements\Elements\src\Elements.csproj" />
-    <ProjectReference Include="..\..\..\..\..\Github\hypar\Hypar\Hypar.Functions\src\Hypar.Functions.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Hypar.Elements" Version="0.9.0" />
+    <PackageReference Include="Hypar.Functions" Version="0.8.9" />
   </ItemGroup>
 
   <PropertyGroup>

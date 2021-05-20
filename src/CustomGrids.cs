@@ -78,11 +78,14 @@ namespace CustomGrids
                     output.Model.AddElement(new Line(origin - vDirection, origin + vDirection));
                 }
 
-                var u = gridArea.U;
-                var v = new U(gridArea.V.Name, gridArea.V.Spacing);
+                var u = GetStandardizedRecords(gridArea.U, input);
+                var v = GetStandardizedRecords(gridArea.V, input);
 
-                var uMin = u.Spacing.Count > 0 ? u.Spacing.Min() : 10;
-                var vMin = v.Spacing.Count > 0 ? v.Spacing.Min() : 10;
+                var uSpacings = u.GridLines.Select(gl => gl.Spacing).ToList();
+                var vSpacings = v.GridLines.Select(gl => gl.Spacing).ToList();
+
+                var uMin = uSpacings.Count > 0 ? uSpacings.Min() : 10;
+                var vMin = vSpacings.Count > 0 ? vSpacings.Min() : 10;
 
                 CircleRadius = Math.Max(MinCircleRadius, Math.Max(uMin, vMin) * 0.3);
 
@@ -236,9 +239,9 @@ namespace CustomGrids
             var gridGuides = new List<GridGuide>();
             var curPoint = origin;
             var sectionIdx = 0;
-            foreach (var spacing in u.Spacing)
+            foreach (var gridline in u.GridLines)
             {
-                curPoint = curPoint + gridDir * spacing;
+                curPoint = curPoint + gridDir * gridline.Spacing;
                 gridGuides.Add(new GridGuide(curPoint, GetName(u.Name, sectionIdx)));
                 sectionIdx += 1;
             }
@@ -296,6 +299,64 @@ namespace CustomGrids
             var transform = new Transform(location);
             model.AddElement(new Panel(new Circle(Vector3.EPSILON * 2).ToPolygon(), material, transform));
             model.AddElement(new Panel(new Circle(0.003).ToPolygon(), material, transform));
+        }
+
+        /// <summary>
+        /// Standardizes records so that they all use spacing and not location.
+        /// Performs the duplication over quantity.
+        /// </summary>
+        /// <param name="u"></param>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        private static U GetStandardizedRecords(U u, CustomGridsInputs input)
+        {
+            var gridlines = new List<GridLines>();
+
+            if (u.Spacing != null && u.Spacing.Count > 0)
+            {
+                // Deprecation support
+                foreach (var spacing in u.Spacing)
+                {
+                    gridlines.Add(new GridLines(0, spacing, 1));
+                }
+            }
+            else if (input.Mode == CustomGridsInputsMode.Absolute)
+            {
+                var sortedGridlines = u.GridLines.OrderBy(gl => gl.Location).ToList();
+                for (var i = 0; i < sortedGridlines.Count; i++)
+                {
+                    var gl = sortedGridlines[i];
+                    if (i == 0)
+                    {
+                        gridlines.Add(new GridLines(0, gl.Location, 1));
+                    }
+                    else
+                    {
+                        var prev = sortedGridlines[i - 1];
+                        gridlines.Add(new GridLines(0, gl.Location - prev.Location, 1));
+                    }
+
+                }
+            }
+            else
+            {
+
+                foreach (var gl in u.GridLines)
+                {
+                    for (int i = 0; i < gl.Quantity; i++)
+                    {
+                        gridlines.Add(new GridLines(0, gl.Spacing, 1));
+                    }
+                }
+            }
+
+            return new U(u.Name, u.Spacing, gridlines);
+        }
+
+        private static U GetStandardizedRecords(V v, CustomGridsInputs input)
+        {
+            var vAsU = new U(v.Name, v.Spacing, v.GridLines);
+            return GetStandardizedRecords(vAsU, input);
         }
     }
 }
