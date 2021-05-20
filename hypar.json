@@ -30,42 +30,59 @@
         "type": "array",
         "description": "List of grids enclosed by the area they apply to.",
         "$hyparOrder": 1,
-        "default": [{
-          "Name": "Main",
-          "Orientation": {
-            "Matrix": {
-              "Components": [
-                1, 0, 0, 0,
-                0, 1, 0, 0,
-                0, 0, 1, 0
+        "default": [
+          {
+            "Name": "Main",
+            "Orientation": {
+              "Matrix": {
+                "Components": [
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1,
+                  0
+                ]
+              }
+            },
+            "U": {
+              "Name": "{A}",
+              "Grid Lines": [
+                {
+                  "Spacing": 0.5,
+                  "Quantity": 1,
+                  "Location": 0.5
+                },
+                {
+                  "Spacing": 7.6,
+                  "Quantity": 2,
+                  "Location": 8.1
+                }
+              ]
+            },
+            "V": {
+              "Name": "{1}",
+              "Grid Lines": [
+                {
+                  "Spacing": 0.5,
+                  "Quantity": 1,
+                  "Location": 0.5
+                },
+                {
+                  "Spacing": 7.6,
+                  "Quantity": 2,
+                  "Location": 8.1
+                }
               ]
             }
-          },
-          "U": {
-            "Name": "{A}",
-            "Grid Lines": [{
-              "Spacing": 0.5,
-              "Quantity": 1,
-              "Location": 0.5
-            }, {
-              "Spacing": 7.6,
-              "Quantity": 2,
-              "Location": 8.1
-            }]
-          },
-          "V": {
-            "Name": "{1}",
-            "Grid Lines": [{
-              "Spacing": 0.5,
-              "Quantity": 1,
-              "Location": 0.5
-            }, {
-              "Spacing": 7.6,
-              "Quantity": 2,
-              "Location": 8.1
-            }]
           }
-        }],
+        ],
         "items": {
           "name": "Grid Area",
           "type": "object",
@@ -87,9 +104,18 @@
               "default": {
                 "Matrix": {
                   "Components": [
-                    1, 0, 0, 0,
-                    0, 1, 0, 0,
-                    0, 0, 1, 0
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1,
+                    0
                   ]
                 }
               }
@@ -247,7 +273,11 @@
       }
     }
   },
-  "element_types": ["https://prod-api.hypar.io/schemas/GridLine", "https://prod-api.hypar.io/schemas/Envelope", "https://prod-api.hypar.io/schemas/Grid2dElement"],
+  "element_types": [
+    "https://prod-api.hypar.io/schemas/GridLine",
+    "https://prod-api.hypar.io/schemas/Envelope",
+    "https://prod-api.hypar.io/schemas/Grid2dElement"
+  ],
   "outputs": [],
   "repository_url": "",
   "source_file_key": null,
