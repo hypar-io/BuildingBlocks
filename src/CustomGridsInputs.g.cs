@@ -28,15 +28,16 @@ namespace CustomGrids
     {
         [Newtonsoft.Json.JsonConstructor]
         
-        public CustomGridsInputs(IList<GridAreas> @gridAreas, bool @showDebugGeometry, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey):
+        public CustomGridsInputs(CustomGridsInputsMode @mode, IList<GridAreas> @gridAreas, bool @showDebugGeometry, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey):
         base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
         {
             var validator = Validator.Instance.GetFirstValidatorForType<CustomGridsInputs>();
             if(validator != null)
             {
-                validator.PreConstruct(new object[]{ @gridAreas, @showDebugGeometry});
+                validator.PreConstruct(new object[]{ @mode, @gridAreas, @showDebugGeometry});
             }
         
+            this.Mode = @mode;
             this.GridAreas = @gridAreas;
             this.ShowDebugGeometry = @showDebugGeometry;
         
@@ -46,6 +47,11 @@ namespace CustomGrids
             }
         }
     
+        /// <summary>Are grid positions absolute from their origin, or relative to the last gridline?</summary>
+        [Newtonsoft.Json.JsonProperty("Mode", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        public CustomGridsInputsMode Mode { get; set; } = CustomGridsInputsMode.Relative;
+    
         /// <summary>List of grids enclosed by the area they apply to.</summary>
         [Newtonsoft.Json.JsonProperty("Grid Areas", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public IList<GridAreas> GridAreas { get; set; }
@@ -53,6 +59,17 @@ namespace CustomGrids
         [Newtonsoft.Json.JsonProperty("Show Debug Geometry", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public bool ShowDebugGeometry { get; set; } = false;
     
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
+    public enum CustomGridsInputsMode
+    {
+        [System.Runtime.Serialization.EnumMember(Value = @"Absolute")]
+        Absolute = 0,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"Relative")]
+        Relative = 1,
     
     }
     
@@ -112,16 +129,17 @@ namespace CustomGrids
     
     {
         [Newtonsoft.Json.JsonConstructor]
-        public U(string @name, IList<double> @spacing)
+        public U(string @name, IList<double> @spacing, IList<GridLines> @gridLines)
         {
             var validator = Validator.Instance.GetFirstValidatorForType<U>();
             if(validator != null)
             {
-                validator.PreConstruct(new object[]{ @name, @spacing});
+                validator.PreConstruct(new object[]{ @name, @spacing, @gridLines});
             }
         
             this.Name = @name;
             this.Spacing = @spacing;
+            this.GridLines = @gridLines;
         
             if(validator != null)
             {
@@ -132,8 +150,12 @@ namespace CustomGrids
         [Newtonsoft.Json.JsonProperty("Name", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string Name { get; set; } = "{A}";
     
+        /// <summary>Please use Relative mode and Grid Lines &gt; Spacing instead of Spacing.</summary>
         [Newtonsoft.Json.JsonProperty("Spacing", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public IList<double> Spacing { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("Grid Lines", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public IList<GridLines> GridLines { get; set; }
     
         private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
     
@@ -153,16 +175,17 @@ namespace CustomGrids
     
     {
         [Newtonsoft.Json.JsonConstructor]
-        public V(string @name, IList<double> @spacing)
+        public V(string @name, IList<double> @spacing, IList<GridLines> @gridLines)
         {
             var validator = Validator.Instance.GetFirstValidatorForType<V>();
             if(validator != null)
             {
-                validator.PreConstruct(new object[]{ @name, @spacing});
+                validator.PreConstruct(new object[]{ @name, @spacing, @gridLines});
             }
         
             this.Name = @name;
             this.Spacing = @spacing;
+            this.GridLines = @gridLines;
         
             if(validator != null)
             {
@@ -173,8 +196,57 @@ namespace CustomGrids
         [Newtonsoft.Json.JsonProperty("Name", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string Name { get; set; } = "{1}";
     
+        /// <summary>Please use Relative mode and Grid Lines &gt; Spacing instead of Spacing.</summary>
         [Newtonsoft.Json.JsonProperty("Spacing", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public IList<double> Spacing { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("Grid Lines", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public IList<GridLines> GridLines { get; set; }
+    
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+    
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
+    
+    public partial class GridLines 
+    
+    {
+        [Newtonsoft.Json.JsonConstructor]
+        public GridLines(double @location, double @spacing, int @quantity)
+        {
+            var validator = Validator.Instance.GetFirstValidatorForType<GridLines>();
+            if(validator != null)
+            {
+                validator.PreConstruct(new object[]{ @location, @spacing, @quantity});
+            }
+        
+            this.Location = @location;
+            this.Spacing = @spacing;
+            this.Quantity = @quantity;
+        
+            if(validator != null)
+            {
+                validator.PostConstruct(this);
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("Location", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public double Location { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("Spacing", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public double Spacing { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("Quantity", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int Quantity { get; set; } = 1;
     
         private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
     

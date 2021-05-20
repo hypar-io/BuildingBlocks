@@ -15,9 +15,21 @@
   "input_schema": {
     "type": "object",
     "properties": {
+      "Mode": {
+        "type": "string",
+        "description": "Are grid positions absolute from their origin, or relative to the last gridline?",
+        "$hyparOrder": 0,
+        "default": "Relative",
+        "$hyparDisableRange": true,
+        "enum": [
+          "Absolute",
+          "Relative"
+        ]
+      },
       "Grid Areas": {
         "type": "array",
         "description": "List of grids enclosed by the area they apply to.",
+        "$hyparOrder": 1,
         "default": [{
           "Name": "Main",
           "Orientation": {
@@ -31,11 +43,27 @@
           },
           "U": {
             "Name": "{A}",
-            "Spacing": [0]
+            "Grid Lines": [{
+              "Spacing": 0.5,
+              "Quantity": 1,
+              "Location": 0.5
+            }, {
+              "Spacing": 7.6,
+              "Quantity": 2,
+              "Location": 8.1
+            }]
           },
           "V": {
             "Name": "{1}",
-            "Spacing": [0]
+            "Grid Lines": [{
+              "Spacing": 0.5,
+              "Quantity": 1,
+              "Location": 0.5
+            }, {
+              "Spacing": 7.6,
+              "Quantity": 2,
+              "Location": 8.1
+            }]
           }
         }],
         "items": {
@@ -75,9 +103,64 @@
                 },
                 "Spacing": {
                   "type": "array",
+                  "description": "Please use Relative mode and Grid Lines > Spacing instead of Spacing.",
                   "$hyparStyle": "singleField",
                   "items": {
                     "type": "number"
+                  },
+                  "$hyparDeprecated": true
+                },
+                "Grid Lines": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "$hyparStyle": "row",
+                    "default": {
+                      "Location": 0,
+                      "Spacing": 0,
+                      "Quantity": 1
+                    },
+                    "properties": {
+                      "Location": {
+                        "type": "number",
+                        "$hyparOrder": 1,
+                        "$hyparUnitType": "length",
+                        "$hyparShowIf": {
+                          "conditions": [
+                            {
+                              "property": "Mode",
+                              "value": "Absolute"
+                            }
+                          ]
+                        }
+                      },
+                      "Spacing": {
+                        "type": "number",
+                        "$hyparOrder": 2,
+                        "$hyparUnitType": "length",
+                        "$hyparShowIf": {
+                          "conditions": [
+                            {
+                              "property": "Mode",
+                              "value": "Relative"
+                            }
+                          ]
+                        }
+                      },
+                      "Quantity": {
+                        "type": "integer",
+                        "default": 1,
+                        "$hyparOrder": 3,
+                        "$hyparShowIf": {
+                          "conditions": [
+                            {
+                              "property": "Mode",
+                              "value": "Relative"
+                            }
+                          ]
+                        }
+                      }
+                    }
                   }
                 }
               }
@@ -91,9 +174,64 @@
                 },
                 "Spacing": {
                   "type": "array",
+                  "description": "Please use Relative mode and Grid Lines > Spacing instead of Spacing.",
                   "$hyparStyle": "singleField",
                   "items": {
                     "type": "number"
+                  },
+                  "$hyparDeprecated": true
+                },
+                "Grid Lines": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "default": {
+                      "Location": 0,
+                      "Spacing": 0,
+                      "Quantity": 1
+                    },
+                    "$hyparStyle": "row",
+                    "properties": {
+                      "Location": {
+                        "type": "number",
+                        "$hyparOrder": 1,
+                        "$hyparUnitType": "length",
+                        "$hyparShowIf": {
+                          "conditions": [
+                            {
+                              "property": "Mode",
+                              "value": "Absolute"
+                            }
+                          ]
+                        }
+                      },
+                      "Spacing": {
+                        "type": "number",
+                        "$hyparOrder": 2,
+                        "$hyparUnitType": "length",
+                        "$hyparShowIf": {
+                          "conditions": [
+                            {
+                              "property": "Mode",
+                              "value": "Relative"
+                            }
+                          ]
+                        }
+                      },
+                      "Quantity": {
+                        "type": "integer",
+                        "default": 1,
+                        "$hyparOrder": 3,
+                        "$hyparShowIf": {
+                          "conditions": [
+                            {
+                              "property": "Mode",
+                              "value": "Relative"
+                            }
+                          ]
+                        }
+                      }
+                    }
                   }
                 }
               }
@@ -104,7 +242,8 @@
       "Show Debug Geometry": {
         "type": "boolean",
         "default": false,
-        "$hyparDisableRange": true
+        "$hyparDisableRange": true,
+        "$hyparOrder": 2
       }
     }
   },
