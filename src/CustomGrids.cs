@@ -43,6 +43,8 @@ namespace CustomGrids
         private static Material LightweightBlueMaterial = new Material("Blue", new Color(0, 0.5, 1, 0.5));
         private static Material MagentaMaterial = new Material("Magenta", new Color(1, 0, 0.75, 0.5));
 
+        private static Random random = new Random();
+
         /// <summary>
         ///
         /// </summary>
@@ -98,20 +100,32 @@ namespace CustomGrids
                 var boundaries = new List<List<Polygon>>();
                 var grids = new List<Grid2d>();
 
-                var gridPolygon = new Polygon(new List<Vector3>() { origin, origin + uDirection, origin + vDirection });
+                var gridPoints = new List<Vector3>();
 
-                var gridPtsMin = new Vector3(Math.Min(uPoints.FirstOrDefault().X, vPoints.FirstOrDefault().X), Math.Min(uPoints.FirstOrDefault().Y, vPoints.FirstOrDefault().Y));
-                var gridPtsMax = new Vector3(Math.Max(uPoints.LastOrDefault().X, vPoints.LastOrDefault().X), Math.Max(uPoints.LastOrDefault().Y, vPoints.LastOrDefault().Y));
+                foreach (var uPoint in uPoints)
+                {
+                    foreach (var vPoint in vPoints)
+                    {
+                        var offset = vPoint - uPoints[0];
+                        var gridpoint = uPoint + offset;
+                        gridPoints.Add(gridpoint);
+                        if (input.ShowDebugGeometry)
+                        {
+                            output.Model.AddElement(new Panel(new Circle().ToPolygon(), null, new Transform(gridpoint)));
+                        }
+                    }
+                }
 
-                gridPtsMin.X = Math.Min(gridPtsMin.X, origin.X);
-                gridPtsMin.Y = Math.Min(gridPtsMin.Y, origin.Y);
+                var gridPolygon = Polygon.FromAlignedBoundingBox2d(gridPoints);
 
-                gridPtsMax.X = Math.Max(gridPtsMax.X, origin.X);
-                gridPtsMax.Y = Math.Max(gridPtsMax.Y, origin.Y);
+                if (input.ShowDebugGeometry)
+                {
+                    output.Model.AddElement(new ModelCurve(gridPolygon));
+                }
 
                 if (envelopes.Count() > 0)
                 {
-                    var polygons = envelopes.Select(e => e.Profile.Perimeter).ToList();
+                    var polygons = envelopes.Select(e => (Polygon)e.Profile.Perimeter.Transformed(e.Transform)).ToList();
                     polygons.Add(gridPolygon);
                     var unions = Polygon.UnionAll(polygons).ToList();
                     var boundary = PolygonFromAlignedBoundingBox2d(unions.Select(u => u.Vertices).SelectMany(x => x), new List<Line>() { new Line(origin, origin + uDirection), new Line(origin, origin + vDirection) });
@@ -120,7 +134,7 @@ namespace CustomGrids
                 else
                 {
                     // use points min and max
-                    boundaries.Add(new List<Polygon>() { Polygon.Rectangle(gridPtsMin, gridPtsMax) });
+                    boundaries.Add(new List<Polygon>() { gridPolygon });
                 }
 
                 var gridNodes = new List<GridNode>();
@@ -134,14 +148,14 @@ namespace CustomGrids
                         var vGridLines = DrawLines(output.Model, origin, vDivisions, grid.U, boundary, GridlineMaterialV);
                         grids.Add(grid);
 
-                        if (input.ShowDebugGeometry)
-                        {
-                            var uCurve = new Line(origin, origin + uDirection);
-                            var vCurve = new Line(origin, origin + vDirection);
+                        // if (input.ShowDebugGeometry)
+                        // {
+                        //     var uCurve = new Line(origin, origin + uDirection);
+                        //     var vCurve = new Line(origin, origin + vDirection);
 
-                            output.Model.AddElement(new ModelCurve(uCurve, MagentaMaterial));
-                            output.Model.AddElement(new ModelCurve(vCurve, MagentaMaterial));
-                        }
+                        //     output.Model.AddElement(new ModelCurve(uCurve, MagentaMaterial));
+                        //     output.Model.AddElement(new ModelCurve(vCurve, MagentaMaterial));
+                        // }
 
                         foreach (var uGridLine in uGridLines)
                         {
@@ -152,10 +166,10 @@ namespace CustomGrids
                                     var transform = new Transform(intersection);
                                     gridNodes.Add(new GridNode(transform, Guid.NewGuid(), $"{uGridLine.Name}{vGridLine.Name}"));
 
-                                    if (input.ShowDebugGeometry)
-                                    {
-                                        DrawDebugPoint(output.Model, intersection, LightweightBlueMaterial);
-                                    }
+                                    // if (input.ShowDebugGeometry)
+                                    // {
+                                    //     DrawDebugPoint(output.Model, intersection, LightweightBlueMaterial);
+                                    // }
                                 }
                                 else
                                 {
@@ -173,9 +187,17 @@ namespace CustomGrids
                                 {
                                     DrawDebugPoint(output.Model, vertex, MagentaMaterial);
                                 }
-                                output.Model.AddElement(new ModelCurve(cell.GetCellGeometry(), LightweightBlueMaterial));
+                                var color = RandomExtensions.NextColor(random);
+                                foreach (var cellPiece in cell.GetTrimmedCellGeometry())
+                                {
+                                    var material = new Material(color.ToString(), new Color(color.Red, color.Green, color.Blue, 0.5), unlit: true);
+                                    var poly = (Polygon)cellPiece;
+                                    if (poly.Vertices.Count >= 3)
+                                    {
+                                        output.Model.AddElement(new Panel(poly, material: material));
+                                    }
+                                }
                             }
-                            output.Model.AddElement(new ModelCurve(boundary));
 
                             foreach (var pt in vPoints)
                             {
