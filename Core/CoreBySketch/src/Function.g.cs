@@ -30,7 +30,7 @@ namespace CoreBySketch
                 var asmDir = Path.GetDirectoryName(asmLocation);
                 var asmName = Path.GetFileNameWithoutExtension(asmLocation);
                 var depPath = Path.Combine(asmDir, $"{asmName}.Dependencies.dll");
-                
+
                 if(File.Exists(depPath))
                 {
                     Console.WriteLine($"Loading dependencies from assembly: {depPath}...");
@@ -40,7 +40,7 @@ namespace CoreBySketch
 
                 this.store = new S3ModelStore<CoreBySketchInputs>(RegionEndpoint.USWest1);
             }
-            
+
             var l = new InvocationWrapper<CoreBySketchInputs,CoreBySketchOutputs>(store, CoreBySketch.Execute);
             var output = await l.InvokeAsync(args);
             return output;

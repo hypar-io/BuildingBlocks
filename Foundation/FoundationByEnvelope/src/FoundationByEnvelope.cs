@@ -74,8 +74,6 @@ namespace FoundationByEnvelope
 
                 }
             }
-
-
             var output = new FoundationByEnvelopeOutputs(outputDepth);
             output.Model.AddElements(outputEnvelopes);
             return output;

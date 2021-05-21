@@ -6,12 +6,13 @@ Creates building Envelope elements derived from a polygon sketch and setback set
 
 |Input Name|Type|Description|
 |---|---|---|
-|Perimeter|Geometry|Perimeter of the building envelope.|
-|Building Height|Range|Overall height of the building from grade.|
-|Setback Interval|Range|Vertical distance between envelope setbacks.|
-|Setback Depth|Range|Offset depth from previous setback.|
-|Minimum Tier Area|Range|Minimum area allowed for a setback tier.|
-|Foundation Depth|Range|Depth of the building envelope below grade.|
+|Perimeter|https://hypar.io/Schemas/Geometry/Polygon.json|Perimeter of the building envelope.|
+|Building Height|number|Overall height of the building from grade.|
+|Foundation Depth|number|Depth of the building envelope below grade.|
+|Use Setbacks|boolean||
+|Setback Interval|number|Vertical distance between envelope setbacks.|
+|Setback Depth|number|Offset depth from previous setback.|
+|Minimum Tier Area|number|Minimum area allowed for a setback tier.|
 
 
 <br>

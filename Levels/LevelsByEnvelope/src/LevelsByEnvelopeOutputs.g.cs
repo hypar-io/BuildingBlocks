@@ -47,7 +47,7 @@ namespace LevelsByEnvelope
 		public double TopLevelHeight {get;}
 
 
-        
+
         /// <summary>
         /// Construct a LevelsByEnvelopeOutputs with default inputs.
         /// This should be used for testing only.
@@ -63,13 +63,13 @@ namespace LevelsByEnvelope
         /// </summary>
         /// <returns></returns>
         [JsonConstructor]
-        public LevelsByEnvelopeOutputs(double levelquantity, double totallevelarea, double entrylevelheight, double repeatinglevelheight, double toplevelheight): base()
+        public LevelsByEnvelopeOutputs(double levelQuantity, double totalLevelArea, double entryLevelHeight, double repeatingLevelHeight, double topLevelHeight): base()
         {
-			this.LevelQuantity = levelquantity;
-			this.TotalLevelArea = totallevelarea;
-			this.EntryLevelHeight = entrylevelheight;
-			this.RepeatingLevelHeight = repeatinglevelheight;
-			this.TopLevelHeight = toplevelheight;
+			this.LevelQuantity = levelQuantity;
+			this.TotalLevelArea = totalLevelArea;
+			this.EntryLevelHeight = entryLevelHeight;
+			this.RepeatingLevelHeight = repeatingLevelHeight;
+			this.TopLevelHeight = topLevelHeight;
 
 		}
 

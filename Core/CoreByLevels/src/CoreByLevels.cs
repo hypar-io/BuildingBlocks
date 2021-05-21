@@ -10,7 +10,7 @@ namespace CoreByLevels
     public static class CoreByLevels
     {
         /// <summary>
-        /// The CoreByLevels function.
+        /// Creates a building service core including stair enclosures, lift shafts, a mechanical shaft, and restrooms with reference to the quantity and area of the building levels.
         /// </summary>
         /// <param name="model">The input model.</param>
         /// <param name="input">The arguments to the execution.</param>

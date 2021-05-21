@@ -119,7 +119,8 @@ namespace StructureByEnvelope
                                                        input.GridYAxisInterval > 0 ? input.GridYAxisInterval : 4,
                                                        out xGrids,
                                                        out yGrids,
-                                                       model);
+                                                       model,
+                                                       input.DisplayGrid);
 
             levels.Sort(new LevelComparer());
 
@@ -127,12 +128,18 @@ namespace StructureByEnvelope
             var gridXMaterial = new Material("GridX", Colors.Red);
             double lumpingTolerance = 2.0;
 
+            var structureMaterial = BuiltInMaterials.Steel;
+            if (input.TypeOfConstruction == StructureByEnvelopeInputsTypeOfConstruction.MassTimber)
+            {
+                structureMaterial = BuiltInMaterials.Wood;
+            }
+
             foreach (var envelope in envelopes)
             {
                 // Inset the footprint just a bit to keep the
                 // beams out of the plane of the envelope. Use the biggest 
                 // beam that we have.
-                var footprint = envelope.Profile.Perimeter.Offset(-0.25)[0];
+                var footprint = envelope.Profile.Perimeter.Offset(-input.SlabEdgeOffset)[0];
 
                 // Trim all the grid lines by the boundary
                 var boundarySegments = footprint.Segments();
@@ -164,15 +171,16 @@ namespace StructureByEnvelope
                 last = envLevels.Last();
 
                 List<Beam> masterFraming = null;
-                foreach (var l in envLevels)
+                if (input.TypeOfConstruction == StructureByEnvelopeInputsTypeOfConstruction.Steel)
                 {
-                    if (masterFraming == null)
+                    foreach (var l in envLevels)
                     {
-                        masterFraming = CreateFramingPlan(l.Elevation, xGridSegments, yGridSegments, boundarySegments);
-                        model.AddElements(masterFraming);
-                    }
-                    else
-                    {
+                        if (masterFraming == null)
+                        {
+                            masterFraming = CreateFramingPlan(l.Elevation, xGridSegments, yGridSegments, boundarySegments, structureMaterial);
+                            model.AddElements(masterFraming);
+                        }
+
                         var instances = CreateFramingPlanInstance(masterFraming, l.Elevation);
                         model.AddElements(instances, false);
                     }
@@ -183,27 +191,26 @@ namespace StructureByEnvelope
                 GeometricElement masterColumn = null;
                 foreach (var lc in columnLocations)
                 {
+                    var height = envLevels.Last().Elevation - lc.Z;
                     if (masterColumn == null)
                     {
-                        masterColumn = new Column(Vector3.Origin,
-                                        envLevels.Last().Elevation - lc.Z,
+                        masterColumn = new Column(new Vector3(),
+                                        height,
                                         colProfile,
-                                        BuiltInMaterials.Steel,
+                                        structureMaterial,
                                         new Transform(lc),
                                         0,
                                         0,
                                         gridRotation);
+                        masterColumn.IsElementDefinition = true;
                         model.AddElement(masterColumn);
                     }
-                    else
-                    {
-                        // var displace = Vector3.Origin - masterColumn.Transform.Origin - lc;
-                        masterColumn.IsElementDefinition = true;
-                        var instance = masterColumn.CreateInstance(new Transform(lc), "");//new ElementInstance(masterColumn, new Transform(lc));
-                        model.AddElement(instance, false);
-                    }
+
+                    var instance = masterColumn.CreateInstance(new Transform(lc), "");//new ElementInstance(masterColumn, new Transform(lc));
+                    model.AddElement(instance, false);
                 }
             }
+
 
             var output = new StructureByEnvelopeOutputs(_longestGridSpan);
             output.Model = model;
@@ -265,7 +272,8 @@ namespace StructureByEnvelope
                                                     double yInterval,
                                                     out List<Line> xGrids,
                                                     out List<Line> yGrids,
-                                                    Model model)
+                                                    Model model,
+                                                    bool displayGrid = false)
         {
             Line longestSide = null;
             foreach (var s in boundary.Segments())
@@ -291,7 +299,7 @@ namespace StructureByEnvelope
 
             var ti = new Transform(transform);
             ti.Invert();
-            var tBoundary = ti.OfPolygon(boundary);
+            var tBoundary = boundary.TransformedPolygon(ti);
 
             foreach (var v in tBoundary.Vertices)
             {
@@ -316,7 +324,10 @@ namespace StructureByEnvelope
                 var p2 = start + yAxis * y + xAxis * w;
                 var l = new Line(p1, p2);
                 xGrids.Add(l);
-                // model.AddElement(new ModelCurve(l, BuiltInMaterials.XAxis));
+                if (displayGrid)
+                {
+                    model.AddElement(new ModelCurve(l, BuiltInMaterials.XAxis));
+                }
             }
 
             for (var x = 0.0; x <= w; x += yInterval)
@@ -325,10 +336,16 @@ namespace StructureByEnvelope
                 var p2 = start + xAxis * x + yAxis * h;
                 var l = new Line(p1, p2);
                 yGrids.Add(l);
-                // model.AddElement(new ModelCurve(l, BuiltInMaterials.YAxis));
+                if (displayGrid)
+                {
+                    model.AddElement(new ModelCurve(l, BuiltInMaterials.YAxis));
+                }
             }
 
-            // model.AddElement(new ModelCurve(Polygon.Circle(1), transform:new Transform(xGrids[0].Start)));
+            if (displayGrid)
+            {
+                model.AddElement(new ModelCurve(new Circle(1).ToPolygon(), transform: new Transform(xGrids[0].Start)));
+            }
 
             return rotation;
         }
@@ -339,7 +356,6 @@ namespace StructureByEnvelope
             foreach (var beam in framing)
             {
                 var halfDepth = _halfDepths[_beamProfiles.IndexOf(beam.Profile)];
-                beam.IsElementDefinition = true;
                 var beamInstance = beam.CreateInstance(new Transform(new Vector3(0, 0, elevation - halfDepth)), "");
                 instanceBeams.Add(beamInstance);
             }
@@ -349,10 +365,10 @@ namespace StructureByEnvelope
         private static List<Beam> CreateFramingPlan(double elevation,
                                                    List<Line> xGridSegments,
                                                    List<Line> yGridSegments,
-                                                   IList<Line> boundarySegments)
+                                                   IList<Line> boundarySegments,
+                                                   Material mat)
         {
             var beams = new List<Beam>();
-            var mat = BuiltInMaterials.Steel;
             foreach (var x in xGridSegments)
             {
                 try
@@ -366,6 +382,7 @@ namespace StructureByEnvelope
                                         startSetback: 0.25,
                                         endSetback: 0.25,
                                         transform: new Transform(new Vector3(0, 0, elevation - _halfDepths[beamIndex])));
+                    beam.IsElementDefinition = true;
                     beams.Add(beam);
                 }
                 catch (Exception ex)
@@ -388,6 +405,7 @@ namespace StructureByEnvelope
                                         startSetback: 0.25,
                                         endSetback: 0.25,
                                         transform: new Transform(new Vector3(0, 0, elevation - _halfDepths[beamIndex])));
+                    beam.IsElementDefinition = true;
                     beams.Add(beam);
                 }
                 catch (Exception ex)
@@ -404,6 +422,7 @@ namespace StructureByEnvelope
                                     profile,
                                     BuiltInMaterials.Steel,
                                     transform: new Transform(new Vector3(0, 0, elevation - _halfDepths[5])));
+                beam.IsElementDefinition = true;
                 beams.Add(beam);
             }
 
@@ -444,7 +463,10 @@ namespace StructureByEnvelope
             return result;
         }
 
-        private static List<Line> TrimGridsToBoundary(List<Line> grids, IList<Line> boundarySegements, Model model, bool drawTestGeometry = false)
+        private static List<Line> TrimGridsToBoundary(List<Line> grids,
+                                                      IList<Line> boundarySegements,
+                                                      Model model,
+                                                      bool drawTestGeometry = false)
         {
             var trims = new List<Line>();
             foreach (var grid in grids)
@@ -462,7 +484,7 @@ namespace StructureByEnvelope
                     {
                         var pt = new Circle(0.5).ToPolygon(10);
                         var t = new Transform(xsect);
-                        var mc = new ModelCurve(t.OfPolygon(pt), BuiltInMaterials.XAxis);
+                        var mc = new ModelCurve(pt.TransformedPolyline(t), BuiltInMaterials.XAxis);
                         model.AddElement(mc);
                     }
                 }

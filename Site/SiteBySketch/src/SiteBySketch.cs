@@ -9,7 +9,7 @@ namespace SiteBySketch
     public static class SiteBySketch
     {
         /// <summary>
-        /// The SiteBySketch function.
+        /// Generates a planar Site from a supplied sketch.
         /// </summary>
         /// <param name="inputModels">The input models.</param>
         /// <param name="input">The arguments to the execution.</param>

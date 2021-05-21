@@ -22,8 +22,14 @@ namespace LevelBySketch
 		[JsonProperty("Perimeter")]
 		public Elements.Geometry.Polygon Perimeter {get;}
 
+		/// <summary>
+		/// Level elevation relative to the zero plane.
+		/// </summary>
+		[JsonProperty("Level Elevation")]
+		public double LevelElevation {get;}
 
-        
+
+
         /// <summary>
         /// Construct a LevelBySketchInputs with default inputs.
         /// This should be used for testing only.
@@ -31,6 +37,7 @@ namespace LevelBySketch
         public LevelBySketchInputs() : base()
         {
 			this.Perimeter = Elements.Geometry.Polygon.Rectangle(1, 1);
+			this.LevelElevation = 200;
 
         }
 
@@ -40,9 +47,10 @@ namespace LevelBySketch
         /// </summary>
         /// <returns></returns>
         [JsonConstructor]
-        public LevelBySketchInputs(Elements.Geometry.Polygon perimeter, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
+        public LevelBySketchInputs(Elements.Geometry.Polygon perimeter, double levelElevation, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
         {
 			this.Perimeter = perimeter;
+			this.LevelElevation = levelElevation;
 
 		}
 

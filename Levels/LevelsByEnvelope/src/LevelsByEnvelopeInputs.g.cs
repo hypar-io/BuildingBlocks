@@ -5,67 +5,63 @@
 using Elements;
 using Elements.GeoJSON;
 using Elements.Geometry;
+using Elements.Geometry.Solids;
+using Elements.Validators;
+using Elements.Serialization.JSON;
 using Hypar.Functions;
 using Hypar.Functions.Execution;
 using Hypar.Functions.Execution.AWS;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using Line = Elements.Geometry.Line;
+using Polygon = Elements.Geometry.Polygon;
 
 namespace LevelsByEnvelope
 {
-    public class LevelsByEnvelopeInputs: S3Args
+    #pragma warning disable // Disable all warnings
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
+    
+    public  class LevelsByEnvelopeInputs : S3Args
+    
     {
-		/// <summary>
-		/// Height of ground level.
-		/// </summary>
-		[JsonProperty("Ground Level Height")]
-		public double GroundLevelHeight {get;}
-
-		/// <summary>
-		/// Standard height of repeated levels.
-		/// </summary>
-		[JsonProperty("Standard Level Height")]
-		public double StandardLevelHeight {get;}
-
-		/// <summary>
-		/// Height of the top level.
-		/// </summary>
-		[JsonProperty("Penthouse Level Height")]
-		public double PenthouseLevelHeight {get;}
-
-
+        [Newtonsoft.Json.JsonConstructor]
         
-        /// <summary>
-        /// Construct a LevelsByEnvelopeInputs with default inputs.
-        /// This should be used for testing only.
-        /// </summary>
-        public LevelsByEnvelopeInputs() : base()
+        public LevelsByEnvelopeInputs(double @penthouseLevelHeight, double @groundLevelHeight, double @standardLevelHeight, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey):
+        base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
         {
-			this.GroundLevelHeight = 20;
-			this.StandardLevelHeight = 20;
-			this.PenthouseLevelHeight = 20;
-
+            var validator = Validator.Instance.GetFirstValidatorForType<LevelsByEnvelopeInputs>();
+            if(validator != null)
+            {
+                validator.PreConstruct(new object[]{ @penthouseLevelHeight, @groundLevelHeight, @standardLevelHeight});
+            }
+        
+            this.PenthouseLevelHeight = @penthouseLevelHeight;
+            this.GroundLevelHeight = @groundLevelHeight;
+            this.StandardLevelHeight = @standardLevelHeight;
+        
+            if(validator != null)
+            {
+                validator.PostConstruct(this);
+            }
         }
-
-
-        /// <summary>
-        /// Construct a LevelsByEnvelopeInputs specifying all inputs.
-        /// </summary>
-        /// <returns></returns>
-        [JsonConstructor]
-        public LevelsByEnvelopeInputs(double groundlevelheight, double standardlevelheight, double penthouselevelheight, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
-        {
-			this.GroundLevelHeight = groundlevelheight;
-			this.StandardLevelHeight = standardlevelheight;
-			this.PenthouseLevelHeight = penthouselevelheight;
-
-		}
-
-		public override string ToString()
-		{
-			var json = JsonConvert.SerializeObject(this);
-			return json;
-		}
-	}
+    
+        /// <summary>Height of the top level.</summary>
+        [Newtonsoft.Json.JsonProperty("Penthouse Level Height", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.Range(3D, 20D)]
+        public double PenthouseLevelHeight { get; set; } = 4D;
+    
+        /// <summary>Height of ground level.</summary>
+        [Newtonsoft.Json.JsonProperty("Ground Level Height", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.Range(3D, 20D)]
+        public double GroundLevelHeight { get; set; } = 4D;
+    
+        /// <summary>Standard height of repeated levels.</summary>
+        [Newtonsoft.Json.JsonProperty("Standard Level Height", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.Range(3D, 20D)]
+        public double StandardLevelHeight { get; set; } = 4D;
+    
+    
+    }
 }

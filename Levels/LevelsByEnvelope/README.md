@@ -1,17 +1,14 @@
 <img src="preview.png" width="512">
-            
+
 # Levels By Envelope
 
-Creates Levels and LevelPerimeters from one or more Envelopes.
-
-Source code:
-https://github.com/hypar-io/BuildingBlocks/tree/master/Levels/LevelsByEnvelope
+Makes Levels and LevelPerimeters from an incoming Envelope.
 
 |Input Name|Type|Description|
 |---|---|---|
-|Ground Level Height|Range|Height of ground level.|
-|Standard Level Height|Range|Standard height of repeated levels.|
-|Penthouse Level Height|Range|Height of the top level.|
+|Penthouse Level Height|number|Height of the top level.|
+|Ground Level Height|number|Height of ground level.|
+|Standard Level Height|number|Standard height of repeated levels.|
 
 
 <br>

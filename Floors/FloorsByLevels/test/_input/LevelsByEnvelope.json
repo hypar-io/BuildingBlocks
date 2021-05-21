@@ -1,0 +1,3889 @@
+{
+  "Transform": {
+    "Matrix": {
+      "Components": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ]
+    }
+  },
+  "Elements": {
+    "e6d91240-29b7-4142-b889-ba5c5f315179": {
+      "discriminator": "Elements.Level",
+      "Elevation": 0.0,
+      "Id": "e6d91240-29b7-4142-b889-ba5c5f315179",
+      "Name": "Level 1"
+    },
+    "cb4f7d87-c5f1-4f00-8cdd-11e52c388133": {
+      "discriminator": "Elements.Level",
+      "Elevation": 6.0,
+      "Id": "cb4f7d87-c5f1-4f00-8cdd-11e52c388133",
+      "Name": "Level 2"
+    },
+    "ea706cca-4dc1-4953-b74f-5271947f91bf": {
+      "discriminator": "Elements.Level",
+      "Elevation": 10.0,
+      "Id": "ea706cca-4dc1-4953-b74f-5271947f91bf",
+      "Name": "Level 3"
+    },
+    "91126982-baff-4d08-8a77-1d7873b132fa": {
+      "discriminator": "Elements.Level",
+      "Elevation": 14.0,
+      "Id": "91126982-baff-4d08-8a77-1d7873b132fa",
+      "Name": "Level 4"
+    },
+    "d5f9428c-3e68-4fc7-acca-6f02b178bc96": {
+      "discriminator": "Elements.Level",
+      "Elevation": 18.0,
+      "Id": "d5f9428c-3e68-4fc7-acca-6f02b178bc96",
+      "Name": "Level 5"
+    },
+    "3fe4c691-4536-4b15-8a81-8145be4aa2bc": {
+      "discriminator": "Elements.Level",
+      "Elevation": 22.0,
+      "Id": "3fe4c691-4536-4b15-8a81-8145be4aa2bc",
+      "Name": "Level 6"
+    },
+    "315065bd-d70b-4992-8d7e-8f6ae4c0f56d": {
+      "discriminator": "Elements.Level",
+      "Elevation": 26.0,
+      "Id": "315065bd-d70b-4992-8d7e-8f6ae4c0f56d",
+      "Name": "Level 7"
+    },
+    "979aaa06-14b3-4129-adb4-ce58aee8963a": {
+      "discriminator": "Elements.Level",
+      "Elevation": 30.0,
+      "Id": "979aaa06-14b3-4129-adb4-ce58aee8963a",
+      "Name": "Level 8"
+    },
+    "0948d332-ea22-499f-82f3-47215b68fa4d": {
+      "discriminator": "Elements.Level",
+      "Elevation": 34.0,
+      "Id": "0948d332-ea22-499f-82f3-47215b68fa4d",
+      "Name": "Level 9"
+    },
+    "0431a01f-5938-47a1-a5c0-f25f69dad407": {
+      "discriminator": "Elements.Level",
+      "Elevation": 38.0,
+      "Id": "0431a01f-5938-47a1-a5c0-f25f69dad407",
+      "Name": "Level 10"
+    },
+    "3a8797c5-587b-449e-b6ea-1247834406a8": {
+      "discriminator": "Elements.Level",
+      "Elevation": 42.0,
+      "Id": "3a8797c5-587b-449e-b6ea-1247834406a8",
+      "Name": "Level 11"
+    },
+    "0d183be0-149e-48e4-aea1-0dbc825fd965": {
+      "discriminator": "Elements.Level",
+      "Elevation": 48.0,
+      "Id": "0d183be0-149e-48e4-aea1-0dbc825fd965",
+      "Name": "Penthouse Level"
+    },
+    "86ca7245-691a-44d9-91d7-15da2677477e": {
+      "discriminator": "Elements.Level",
+      "Elevation": 53.0,
+      "Id": "86ca7245-691a-44d9-91d7-15da2677477e",
+      "Name": "Roof Level"
+    },
+    "6309bdf4-e286-49b4-b533-71f62d4ad322": {
+      "discriminator": "Elements.LevelPerimeter",
+      "Area": 2840.3059100316495,
+      "Elevation": 0.0,
+      "Perimeter": {
+        "discriminator": "Elements.Geometry.Polygon",
+        "Vertices": [
+          {
+            "X": 75.50808,
+            "Y": 6.71751,
+            "Z": 0.0
+          },
+          {
+            "X": 63.85962,
+            "Y": 22.97523,
+            "Z": 0.0
+          },
+          {
+            "X": 39.44556,
+            "Y": 5.48287,
+            "Z": 0.0
+          },
+          {
+            "X": 9.97663,
+            "Y": 46.6126,
+            "Z": 0.0
+          },
+          {
+            "X": -1.57417,
+            "Y": 45.41864,
+            "Z": 0.0
+          },
+          {
+            "X": -24.16854,
+            "Y": -5.76566,
+            "Z": 0.0
+          },
+          {
+            "X": -5.8719,
+            "Y": -13.84238,
+            "Z": 0.0
+          },
+          {
+            "X": 7.30338,
+            "Y": 16.00433,
+            "Z": 0.0
+          },
+          {
+            "X": 34.8363,
+            "Y": -22.42331,
+            "Z": 0.0
+          }
+        ]
+      },
+      "Id": "6309bdf4-e286-49b4-b533-71f62d4ad322",
+      "Name": "Roof Level"
+    },
+    "601d691f-a5fb-426e-bf8f-5bf62af63f5a": {
+      "discriminator": "Elements.LevelPerimeter",
+      "Area": 2840.3059100316495,
+      "Elevation": 6.0,
+      "Perimeter": {
+        "discriminator": "Elements.Geometry.Polygon",
+        "Vertices": [
+          {
+            "X": 75.50808,
+            "Y": 6.71751,
+            "Z": 0.0
+          },
+          {
+            "X": 63.85962,
+            "Y": 22.97523,
+            "Z": 0.0
+          },
+          {
+            "X": 39.44556,
+            "Y": 5.48287,
+            "Z": 0.0
+          },
+          {
+            "X": 9.97663,
+            "Y": 46.6126,
+            "Z": 0.0
+          },
+          {
+            "X": -1.57417,
+            "Y": 45.41864,
+            "Z": 0.0
+          },
+          {
+            "X": -24.16854,
+            "Y": -5.76566,
+            "Z": 0.0
+          },
+          {
+            "X": -5.8719,
+            "Y": -13.84238,
+            "Z": 0.0
+          },
+          {
+            "X": 7.30338,
+            "Y": 16.00433,
+            "Z": 0.0
+          },
+          {
+            "X": 34.8363,
+            "Y": -22.42331,
+            "Z": 0.0
+          }
+        ]
+      },
+      "Id": "601d691f-a5fb-426e-bf8f-5bf62af63f5a",
+      "Name": "Level 2"
+    },
+    "5f158051-8c48-4a8f-a373-37bb59498e1a": {
+      "discriminator": "Elements.LevelPerimeter",
+      "Area": 2840.3059100316495,
+      "Elevation": 10.0,
+      "Perimeter": {
+        "discriminator": "Elements.Geometry.Polygon",
+        "Vertices": [
+          {
+            "X": 75.50808,
+            "Y": 6.71751,
+            "Z": 0.0
+          },
+          {
+            "X": 63.85962,
+            "Y": 22.97523,
+            "Z": 0.0
+          },
+          {
+            "X": 39.44556,
+            "Y": 5.48287,
+            "Z": 0.0
+          },
+          {
+            "X": 9.97663,
+            "Y": 46.6126,
+            "Z": 0.0
+          },
+          {
+            "X": -1.57417,
+            "Y": 45.41864,
+            "Z": 0.0
+          },
+          {
+            "X": -24.16854,
+            "Y": -5.76566,
+            "Z": 0.0
+          },
+          {
+            "X": -5.8719,
+            "Y": -13.84238,
+            "Z": 0.0
+          },
+          {
+            "X": 7.30338,
+            "Y": 16.00433,
+            "Z": 0.0
+          },
+          {
+            "X": 34.8363,
+            "Y": -22.42331,
+            "Z": 0.0
+          }
+        ]
+      },
+      "Id": "5f158051-8c48-4a8f-a373-37bb59498e1a",
+      "Name": "Level 3"
+    },
+    "1fd3f178-eeba-4f9c-83c6-418fd8ab2d1d": {
+      "discriminator": "Elements.LevelPerimeter",
+      "Area": 2840.3059100316495,
+      "Elevation": 14.0,
+      "Perimeter": {
+        "discriminator": "Elements.Geometry.Polygon",
+        "Vertices": [
+          {
+            "X": 75.50808,
+            "Y": 6.71751,
+            "Z": 0.0
+          },
+          {
+            "X": 63.85962,
+            "Y": 22.97523,
+            "Z": 0.0
+          },
+          {
+            "X": 39.44556,
+            "Y": 5.48287,
+            "Z": 0.0
+          },
+          {
+            "X": 9.97663,
+            "Y": 46.6126,
+            "Z": 0.0
+          },
+          {
+            "X": -1.57417,
+            "Y": 45.41864,
+            "Z": 0.0
+          },
+          {
+            "X": -24.16854,
+            "Y": -5.76566,
+            "Z": 0.0
+          },
+          {
+            "X": -5.8719,
+            "Y": -13.84238,
+            "Z": 0.0
+          },
+          {
+            "X": 7.30338,
+            "Y": 16.00433,
+            "Z": 0.0
+          },
+          {
+            "X": 34.8363,
+            "Y": -22.42331,
+            "Z": 0.0
+          }
+        ]
+      },
+      "Id": "1fd3f178-eeba-4f9c-83c6-418fd8ab2d1d",
+      "Name": "Level 4"
+    },
+    "134ecc9b-72e2-4fe7-8b11-df043d85dcba": {
+      "discriminator": "Elements.LevelPerimeter",
+      "Area": 2840.3059100316495,
+      "Elevation": 18.0,
+      "Perimeter": {
+        "discriminator": "Elements.Geometry.Polygon",
+        "Vertices": [
+          {
+            "X": 75.50808,
+            "Y": 6.71751,
+            "Z": 0.0
+          },
+          {
+            "X": 63.85962,
+            "Y": 22.97523,
+            "Z": 0.0
+          },
+          {
+            "X": 39.44556,
+            "Y": 5.48287,
+            "Z": 0.0
+          },
+          {
+            "X": 9.97663,
+            "Y": 46.6126,
+            "Z": 0.0
+          },
+          {
+            "X": -1.57417,
+            "Y": 45.41864,
+            "Z": 0.0
+          },
+          {
+            "X": -24.16854,
+            "Y": -5.76566,
+            "Z": 0.0
+          },
+          {
+            "X": -5.8719,
+            "Y": -13.84238,
+            "Z": 0.0
+          },
+          {
+            "X": 7.30338,
+            "Y": 16.00433,
+            "Z": 0.0
+          },
+          {
+            "X": 34.8363,
+            "Y": -22.42331,
+            "Z": 0.0
+          }
+        ]
+      },
+      "Id": "134ecc9b-72e2-4fe7-8b11-df043d85dcba",
+      "Name": "Level 5"
+    },
+    "24946674-19a5-4a1b-92c1-db98401439b1": {
+      "discriminator": "Elements.LevelPerimeter",
+      "Area": 2840.3059100316495,
+      "Elevation": 22.0,
+      "Perimeter": {
+        "discriminator": "Elements.Geometry.Polygon",
+        "Vertices": [
+          {
+            "X": 75.50808,
+            "Y": 6.71751,
+            "Z": 0.0
+          },
+          {
+            "X": 63.85962,
+            "Y": 22.97523,
+            "Z": 0.0
+          },
+          {
+            "X": 39.44556,
+            "Y": 5.48287,
+            "Z": 0.0
+          },
+          {
+            "X": 9.97663,
+            "Y": 46.6126,
+            "Z": 0.0
+          },
+          {
+            "X": -1.57417,
+            "Y": 45.41864,
+            "Z": 0.0
+          },
+          {
+            "X": -24.16854,
+            "Y": -5.76566,
+            "Z": 0.0
+          },
+          {
+            "X": -5.8719,
+            "Y": -13.84238,
+            "Z": 0.0
+          },
+          {
+            "X": 7.30338,
+            "Y": 16.00433,
+            "Z": 0.0
+          },
+          {
+            "X": 34.8363,
+            "Y": -22.42331,
+            "Z": 0.0
+          }
+        ]
+      },
+      "Id": "24946674-19a5-4a1b-92c1-db98401439b1",
+      "Name": "Level 6"
+    },
+    "966c9058-8a45-4169-b150-e0e353ee6a82": {
+      "discriminator": "Elements.LevelPerimeter",
+      "Area": 2840.3059100316495,
+      "Elevation": 26.0,
+      "Perimeter": {
+        "discriminator": "Elements.Geometry.Polygon",
+        "Vertices": [
+          {
+            "X": 75.50808,
+            "Y": 6.71751,
+            "Z": 0.0
+          },
+          {
+            "X": 63.85962,
+            "Y": 22.97523,
+            "Z": 0.0
+          },
+          {
+            "X": 39.44556,
+            "Y": 5.48287,
+            "Z": 0.0
+          },
+          {
+            "X": 9.97663,
+            "Y": 46.6126,
+            "Z": 0.0
+          },
+          {
+            "X": -1.57417,
+            "Y": 45.41864,
+            "Z": 0.0
+          },
+          {
+            "X": -24.16854,
+            "Y": -5.76566,
+            "Z": 0.0
+          },
+          {
+            "X": -5.8719,
+            "Y": -13.84238,
+            "Z": 0.0
+          },
+          {
+            "X": 7.30338,
+            "Y": 16.00433,
+            "Z": 0.0
+          },
+          {
+            "X": 34.8363,
+            "Y": -22.42331,
+            "Z": 0.0
+          }
+        ]
+      },
+      "Id": "966c9058-8a45-4169-b150-e0e353ee6a82",
+      "Name": "Level 7"
+    },
+    "83e4f1e4-c18f-4ca0-93b1-24b30e969be6": {
+      "discriminator": "Elements.LevelPerimeter",
+      "Area": 2840.3059100316495,
+      "Elevation": 30.0,
+      "Perimeter": {
+        "discriminator": "Elements.Geometry.Polygon",
+        "Vertices": [
+          {
+            "X": 75.50808,
+            "Y": 6.71751,
+            "Z": 0.0
+          },
+          {
+            "X": 63.85962,
+            "Y": 22.97523,
+            "Z": 0.0
+          },
+          {
+            "X": 39.44556,
+            "Y": 5.48287,
+            "Z": 0.0
+          },
+          {
+            "X": 9.97663,
+            "Y": 46.6126,
+            "Z": 0.0
+          },
+          {
+            "X": -1.57417,
+            "Y": 45.41864,
+            "Z": 0.0
+          },
+          {
+            "X": -24.16854,
+            "Y": -5.76566,
+            "Z": 0.0
+          },
+          {
+            "X": -5.8719,
+            "Y": -13.84238,
+            "Z": 0.0
+          },
+          {
+            "X": 7.30338,
+            "Y": 16.00433,
+            "Z": 0.0
+          },
+          {
+            "X": 34.8363,
+            "Y": -22.42331,
+            "Z": 0.0
+          }
+        ]
+      },
+      "Id": "83e4f1e4-c18f-4ca0-93b1-24b30e969be6",
+      "Name": "Level 8"
+    },
+    "143e7e65-cddb-483c-8032-200e8a8496ad": {
+      "discriminator": "Elements.LevelPerimeter",
+      "Area": 2840.3059100316495,
+      "Elevation": 34.0,
+      "Perimeter": {
+        "discriminator": "Elements.Geometry.Polygon",
+        "Vertices": [
+          {
+            "X": 75.50808,
+            "Y": 6.71751,
+            "Z": 0.0
+          },
+          {
+            "X": 63.85962,
+            "Y": 22.97523,
+            "Z": 0.0
+          },
+          {
+            "X": 39.44556,
+            "Y": 5.48287,
+            "Z": 0.0
+          },
+          {
+            "X": 9.97663,
+            "Y": 46.6126,
+            "Z": 0.0
+          },
+          {
+            "X": -1.57417,
+            "Y": 45.41864,
+            "Z": 0.0
+          },
+          {
+            "X": -24.16854,
+            "Y": -5.76566,
+            "Z": 0.0
+          },
+          {
+            "X": -5.8719,
+            "Y": -13.84238,
+            "Z": 0.0
+          },
+          {
+            "X": 7.30338,
+            "Y": 16.00433,
+            "Z": 0.0
+          },
+          {
+            "X": 34.8363,
+            "Y": -22.42331,
+            "Z": 0.0
+          }
+        ]
+      },
+      "Id": "143e7e65-cddb-483c-8032-200e8a8496ad",
+      "Name": "Level 9"
+    },
+    "7a7ded40-3698-4b98-b9a5-5f633b0bf614": {
+      "discriminator": "Elements.LevelPerimeter",
+      "Area": 2840.3059100316495,
+      "Elevation": 38.0,
+      "Perimeter": {
+        "discriminator": "Elements.Geometry.Polygon",
+        "Vertices": [
+          {
+            "X": 75.50808,
+            "Y": 6.71751,
+            "Z": 0.0
+          },
+          {
+            "X": 63.85962,
+            "Y": 22.97523,
+            "Z": 0.0
+          },
+          {
+            "X": 39.44556,
+            "Y": 5.48287,
+            "Z": 0.0
+          },
+          {
+            "X": 9.97663,
+            "Y": 46.6126,
+            "Z": 0.0
+          },
+          {
+            "X": -1.57417,
+            "Y": 45.41864,
+            "Z": 0.0
+          },
+          {
+            "X": -24.16854,
+            "Y": -5.76566,
+            "Z": 0.0
+          },
+          {
+            "X": -5.8719,
+            "Y": -13.84238,
+            "Z": 0.0
+          },
+          {
+            "X": 7.30338,
+            "Y": 16.00433,
+            "Z": 0.0
+          },
+          {
+            "X": 34.8363,
+            "Y": -22.42331,
+            "Z": 0.0
+          }
+        ]
+      },
+      "Id": "7a7ded40-3698-4b98-b9a5-5f633b0bf614",
+      "Name": "Level 10"
+    },
+    "bd3e1c45-561a-4156-95b6-3d45aa5035d9": {
+      "discriminator": "Elements.LevelPerimeter",
+      "Area": 2840.3059100316495,
+      "Elevation": 42.0,
+      "Perimeter": {
+        "discriminator": "Elements.Geometry.Polygon",
+        "Vertices": [
+          {
+            "X": 75.50808,
+            "Y": 6.71751,
+            "Z": 0.0
+          },
+          {
+            "X": 63.85962,
+            "Y": 22.97523,
+            "Z": 0.0
+          },
+          {
+            "X": 39.44556,
+            "Y": 5.48287,
+            "Z": 0.0
+          },
+          {
+            "X": 9.97663,
+            "Y": 46.6126,
+            "Z": 0.0
+          },
+          {
+            "X": -1.57417,
+            "Y": 45.41864,
+            "Z": 0.0
+          },
+          {
+            "X": -24.16854,
+            "Y": -5.76566,
+            "Z": 0.0
+          },
+          {
+            "X": -5.8719,
+            "Y": -13.84238,
+            "Z": 0.0
+          },
+          {
+            "X": 7.30338,
+            "Y": 16.00433,
+            "Z": 0.0
+          },
+          {
+            "X": 34.8363,
+            "Y": -22.42331,
+            "Z": 0.0
+          }
+        ]
+      },
+      "Id": "bd3e1c45-561a-4156-95b6-3d45aa5035d9",
+      "Name": "Level 11"
+    },
+    "5d0c0fdf-2046-4dba-a1c8-a7a1dfd483ee": {
+      "discriminator": "Elements.LevelPerimeter",
+      "Area": 2840.3059100316495,
+      "Elevation": 48.0,
+      "Perimeter": {
+        "discriminator": "Elements.Geometry.Polygon",
+        "Vertices": [
+          {
+            "X": 75.50808,
+            "Y": 6.71751,
+            "Z": 0.0
+          },
+          {
+            "X": 63.85962,
+            "Y": 22.97523,
+            "Z": 0.0
+          },
+          {
+            "X": 39.44556,
+            "Y": 5.48287,
+            "Z": 0.0
+          },
+          {
+            "X": 9.97663,
+            "Y": 46.6126,
+            "Z": 0.0
+          },
+          {
+            "X": -1.57417,
+            "Y": 45.41864,
+            "Z": 0.0
+          },
+          {
+            "X": -24.16854,
+            "Y": -5.76566,
+            "Z": 0.0
+          },
+          {
+            "X": -5.8719,
+            "Y": -13.84238,
+            "Z": 0.0
+          },
+          {
+            "X": 7.30338,
+            "Y": 16.00433,
+            "Z": 0.0
+          },
+          {
+            "X": 34.8363,
+            "Y": -22.42331,
+            "Z": 0.0
+          }
+        ]
+      },
+      "Id": "5d0c0fdf-2046-4dba-a1c8-a7a1dfd483ee",
+      "Name": "Penthouse Level"
+    },
+    "b4412df3-11a1-4cab-a00b-ee1bacd29a93": {
+      "discriminator": "Elements.LevelPerimeter",
+      "Area": 2840.3059100316495,
+      "Elevation": 53.0,
+      "Perimeter": {
+        "discriminator": "Elements.Geometry.Polygon",
+        "Vertices": [
+          {
+            "X": 75.50808,
+            "Y": 6.71751,
+            "Z": 0.0
+          },
+          {
+            "X": 63.85962,
+            "Y": 22.97523,
+            "Z": 0.0
+          },
+          {
+            "X": 39.44556,
+            "Y": 5.48287,
+            "Z": 0.0
+          },
+          {
+            "X": 9.97663,
+            "Y": 46.6126,
+            "Z": 0.0
+          },
+          {
+            "X": -1.57417,
+            "Y": 45.41864,
+            "Z": 0.0
+          },
+          {
+            "X": -24.16854,
+            "Y": -5.76566,
+            "Z": 0.0
+          },
+          {
+            "X": -5.8719,
+            "Y": -13.84238,
+            "Z": 0.0
+          },
+          {
+            "X": 7.30338,
+            "Y": 16.00433,
+            "Z": 0.0
+          },
+          {
+            "X": 34.8363,
+            "Y": -22.42331,
+            "Z": 0.0
+          }
+        ]
+      },
+      "Id": "b4412df3-11a1-4cab-a00b-ee1bacd29a93",
+      "Name": "Roof"
+    },
+    "838cae00-e92b-4856-b4a2-3c9423dc2a24": {
+      "discriminator": "Elements.Geometry.Profile",
+      "Perimeter": {
+        "discriminator": "Elements.Geometry.Polygon",
+        "Vertices": [
+          {
+            "X": 75.50808,
+            "Y": 6.71751,
+            "Z": 0.0
+          },
+          {
+            "X": 63.85962,
+            "Y": 22.97523,
+            "Z": 0.0
+          },
+          {
+            "X": 39.44556,
+            "Y": 5.48287,
+            "Z": 0.0
+          },
+          {
+            "X": 9.97663,
+            "Y": 46.6126,
+            "Z": 0.0
+          },
+          {
+            "X": -1.57417,
+            "Y": 45.41864,
+            "Z": 0.0
+          },
+          {
+            "X": -24.16854,
+            "Y": -5.76566,
+            "Z": 0.0
+          },
+          {
+            "X": -5.8719,
+            "Y": -13.84238,
+            "Z": 0.0
+          },
+          {
+            "X": 7.30338,
+            "Y": 16.00433,
+            "Z": 0.0
+          },
+          {
+            "X": 34.8363,
+            "Y": -22.42331,
+            "Z": 0.0
+          }
+        ]
+      },
+      "Voids": [],
+      "Id": "838cae00-e92b-4856-b4a2-3c9423dc2a24",
+      "Name": null
+    },
+    "28c5c2b1-d65c-4c46-8689-d651f50f07e7": {
+      "discriminator": "Elements.Material",
+      "Color": {
+        "Red": 1.0,
+        "Green": 1.0,
+        "Blue": 1.0,
+        "Alpha": 0.20000000298023224
+      },
+      "SpecularFactor": 0.5,
+      "GlossinessFactor": 0.0,
+      "Unlit": false,
+      "DoubleSided": false,
+      "Id": "28c5c2b1-d65c-4c46-8689-d651f50f07e7",
+      "Name": "glass"
+    },
+    "3baa55df-77eb-4d38-8611-f56e28e1ed3e": {
+      "discriminator": "Elements.Geometry.Profile",
+      "Perimeter": {
+        "discriminator": "Elements.Geometry.Polygon",
+        "Vertices": [
+          {
+            "X": 75.3681640625,
+            "Y": 6.740234375,
+            "Z": 0.0
+          },
+          {
+            "X": 63.8359375,
+            "Y": 22.8349609375,
+            "Z": 0.0
+          },
+          {
+            "X": 39.421875,
+            "Y": 5.3427734375,
+            "Z": 0.0
+          },
+          {
+            "X": 9.9287109375,
+            "Y": 46.5068359375,
+            "Z": 0.0
+          },
+          {
+            "X": -1.5048828125,
+            "Y": 45.32421875,
+            "Z": 0.0
+          },
+          {
+            "X": -24.0361328125,
+            "Y": -5.71484375,
+            "Z": 0.0
+          },
+          {
+            "X": -5.921875,
+            "Y": -13.7099609375,
+            "Z": 0.0
+          },
+          {
+            "X": 7.234375,
+            "Y": 16.09765625,
+            "Z": 0.0
+          },
+          {
+            "X": 7.3505859375,
+            "Y": 16.109375,
+            "Z": 0.0
+          },
+          {
+            "X": 34.859375,
+            "Y": -22.283203125,
+            "Z": 0.0
+          }
+        ]
+      },
+      "Voids": [],
+      "Id": "3baa55df-77eb-4d38-8611-f56e28e1ed3e",
+      "Name": "Level volume representation"
+    },
+    "9657f171-a522-4342-ba1c-3329b4a987ce": {
+      "discriminator": "Elements.LevelVolume",
+      "Profile": "838cae00-e92b-4856-b4a2-3c9423dc2a24",
+      "Height": 6.0,
+      "Area": 2840.3059100316495,
+      "Transform": {
+        "Matrix": {
+          "Components": [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ]
+        }
+      },
+      "Material": "28c5c2b1-d65c-4c46-8689-d651f50f07e7",
+      "Representation": {
+        "SolidOperations": [
+          {
+            "discriminator": "Elements.Geometry.Solids.Extrude",
+            "Profile": "3baa55df-77eb-4d38-8611-f56e28e1ed3e",
+            "Height": 6.0,
+            "Direction": {
+              "X": 0.0,
+              "Y": 0.0,
+              "Z": 1.0
+            },
+            "IsVoid": false
+          }
+        ]
+      },
+      "IsElementDefinition": false,
+      "Id": "9657f171-a522-4342-ba1c-3329b4a987ce",
+      "Name": "Roof Level"
+    },
+    "5a5af8d9-bb4d-434a-a9cc-d2522b9efce1": {
+      "discriminator": "Elements.Geometry.Profile",
+      "Perimeter": {
+        "discriminator": "Elements.Geometry.Polygon",
+        "Vertices": [
+          {
+            "X": 75.3681640625,
+            "Y": 6.740234375,
+            "Z": 0.0
+          },
+          {
+            "X": 63.8359375,
+            "Y": 22.8349609375,
+            "Z": 0.0
+          },
+          {
+            "X": 39.421875,
+            "Y": 5.3427734375,
+            "Z": 0.0
+          },
+          {
+            "X": 9.9287109375,
+            "Y": 46.5068359375,
+            "Z": 0.0
+          },
+          {
+            "X": -1.5048828125,
+            "Y": 45.32421875,
+            "Z": 0.0
+          },
+          {
+            "X": -24.0361328125,
+            "Y": -5.71484375,
+            "Z": 0.0
+          },
+          {
+            "X": -5.921875,
+            "Y": -13.7099609375,
+            "Z": 0.0
+          },
+          {
+            "X": 7.234375,
+            "Y": 16.09765625,
+            "Z": 0.0
+          },
+          {
+            "X": 7.3505859375,
+            "Y": 16.109375,
+            "Z": 0.0
+          },
+          {
+            "X": 34.859375,
+            "Y": -22.283203125,
+            "Z": 0.0
+          }
+        ]
+      },
+      "Voids": [],
+      "Id": "5a5af8d9-bb4d-434a-a9cc-d2522b9efce1",
+      "Name": "Level volume representation"
+    },
+    "04b10634-c686-4a2a-bc51-907a93e1b4e4": {
+      "discriminator": "Elements.LevelVolume",
+      "Profile": "838cae00-e92b-4856-b4a2-3c9423dc2a24",
+      "Height": 4.0,
+      "Area": 2840.3059100316495,
+      "Transform": {
+        "Matrix": {
+          "Components": [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            6.0
+          ]
+        }
+      },
+      "Material": "28c5c2b1-d65c-4c46-8689-d651f50f07e7",
+      "Representation": {
+        "SolidOperations": [
+          {
+            "discriminator": "Elements.Geometry.Solids.Extrude",
+            "Profile": "5a5af8d9-bb4d-434a-a9cc-d2522b9efce1",
+            "Height": 4.0,
+            "Direction": {
+              "X": 0.0,
+              "Y": 0.0,
+              "Z": 1.0
+            },
+            "IsVoid": false
+          }
+        ]
+      },
+      "IsElementDefinition": false,
+      "Id": "04b10634-c686-4a2a-bc51-907a93e1b4e4",
+      "Name": "Level 2"
+    },
+    "b0bcb0ff-89ca-4a4a-bddb-83809692715d": {
+      "discriminator": "Elements.Geometry.Profile",
+      "Perimeter": {
+        "discriminator": "Elements.Geometry.Polygon",
+        "Vertices": [
+          {
+            "X": 75.3681640625,
+            "Y": 6.740234375,
+            "Z": 0.0
+          },
+          {
+            "X": 63.8359375,
+            "Y": 22.8349609375,
+            "Z": 0.0
+          },
+          {
+            "X": 39.421875,
+            "Y": 5.3427734375,
+            "Z": 0.0
+          },
+          {
+            "X": 9.9287109375,
+            "Y": 46.5068359375,
+            "Z": 0.0
+          },
+          {
+            "X": -1.5048828125,
+            "Y": 45.32421875,
+            "Z": 0.0
+          },
+          {
+            "X": -24.0361328125,
+            "Y": -5.71484375,
+            "Z": 0.0
+          },
+          {
+            "X": -5.921875,
+            "Y": -13.7099609375,
+            "Z": 0.0
+          },
+          {
+            "X": 7.234375,
+            "Y": 16.09765625,
+            "Z": 0.0
+          },
+          {
+            "X": 7.3505859375,
+            "Y": 16.109375,
+            "Z": 0.0
+          },
+          {
+            "X": 34.859375,
+            "Y": -22.283203125,
+            "Z": 0.0
+          }
+        ]
+      },
+      "Voids": [],
+      "Id": "b0bcb0ff-89ca-4a4a-bddb-83809692715d",
+      "Name": "Level volume representation"
+    },
+    "548c0704-5bcb-44c5-a407-7e34ae286708": {
+      "discriminator": "Elements.LevelVolume",
+      "Profile": "838cae00-e92b-4856-b4a2-3c9423dc2a24",
+      "Height": 4.0,
+      "Area": 2840.3059100316495,
+      "Transform": {
+        "Matrix": {
+          "Components": [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            10.0
+          ]
+        }
+      },
+      "Material": "28c5c2b1-d65c-4c46-8689-d651f50f07e7",
+      "Representation": {
+        "SolidOperations": [
+          {
+            "discriminator": "Elements.Geometry.Solids.Extrude",
+            "Profile": "b0bcb0ff-89ca-4a4a-bddb-83809692715d",
+            "Height": 4.0,
+            "Direction": {
+              "X": 0.0,
+              "Y": 0.0,
+              "Z": 1.0
+            },
+            "IsVoid": false
+          }
+        ]
+      },
+      "IsElementDefinition": false,
+      "Id": "548c0704-5bcb-44c5-a407-7e34ae286708",
+      "Name": "Level 3"
+    },
+    "f3d897c1-255d-4154-8143-d52cbf6480e0": {
+      "discriminator": "Elements.Geometry.Profile",
+      "Perimeter": {
+        "discriminator": "Elements.Geometry.Polygon",
+        "Vertices": [
+          {
+            "X": 75.3681640625,
+            "Y": 6.740234375,
+            "Z": 0.0
+          },
+          {
+            "X": 63.8359375,
+            "Y": 22.8349609375,
+            "Z": 0.0
+          },
+          {
+            "X": 39.421875,
+            "Y": 5.3427734375,
+            "Z": 0.0
+          },
+          {
+            "X": 9.9287109375,
+            "Y": 46.5068359375,
+            "Z": 0.0
+          },
+          {
+            "X": -1.5048828125,
+            "Y": 45.32421875,
+            "Z": 0.0
+          },
+          {
+            "X": -24.0361328125,
+            "Y": -5.71484375,
+            "Z": 0.0
+          },
+          {
+            "X": -5.921875,
+            "Y": -13.7099609375,
+            "Z": 0.0
+          },
+          {
+            "X": 7.234375,
+            "Y": 16.09765625,
+            "Z": 0.0
+          },
+          {
+            "X": 7.3505859375,
+            "Y": 16.109375,
+            "Z": 0.0
+          },
+          {
+            "X": 34.859375,
+            "Y": -22.283203125,
+            "Z": 0.0
+          }
+        ]
+      },
+      "Voids": [],
+      "Id": "f3d897c1-255d-4154-8143-d52cbf6480e0",
+      "Name": "Level volume representation"
+    },
+    "c0c41248-6089-46c2-b1b7-d28e5e48f85a": {
+      "discriminator": "Elements.LevelVolume",
+      "Profile": "838cae00-e92b-4856-b4a2-3c9423dc2a24",
+      "Height": 4.0,
+      "Area": 2840.3059100316495,
+      "Transform": {
+        "Matrix": {
+          "Components": [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            14.0
+          ]
+        }
+      },
+      "Material": "28c5c2b1-d65c-4c46-8689-d651f50f07e7",
+      "Representation": {
+        "SolidOperations": [
+          {
+            "discriminator": "Elements.Geometry.Solids.Extrude",
+            "Profile": "f3d897c1-255d-4154-8143-d52cbf6480e0",
+            "Height": 4.0,
+            "Direction": {
+              "X": 0.0,
+              "Y": 0.0,
+              "Z": 1.0
+            },
+            "IsVoid": false
+          }
+        ]
+      },
+      "IsElementDefinition": false,
+      "Id": "c0c41248-6089-46c2-b1b7-d28e5e48f85a",
+      "Name": "Level 4"
+    },
+    "1fd1bfba-8b3e-4870-a135-7c4eeefa5706": {
+      "discriminator": "Elements.Geometry.Profile",
+      "Perimeter": {
+        "discriminator": "Elements.Geometry.Polygon",
+        "Vertices": [
+          {
+            "X": 75.3681640625,
+            "Y": 6.740234375,
+            "Z": 0.0
+          },
+          {
+            "X": 63.8359375,
+            "Y": 22.8349609375,
+            "Z": 0.0
+          },
+          {
+            "X": 39.421875,
+            "Y": 5.3427734375,
+            "Z": 0.0
+          },
+          {
+            "X": 9.9287109375,
+            "Y": 46.5068359375,
+            "Z": 0.0
+          },
+          {
+            "X": -1.5048828125,
+            "Y": 45.32421875,
+            "Z": 0.0
+          },
+          {
+            "X": -24.0361328125,
+            "Y": -5.71484375,
+            "Z": 0.0
+          },
+          {
+            "X": -5.921875,
+            "Y": -13.7099609375,
+            "Z": 0.0
+          },
+          {
+            "X": 7.234375,
+            "Y": 16.09765625,
+            "Z": 0.0
+          },
+          {
+            "X": 7.3505859375,
+            "Y": 16.109375,
+            "Z": 0.0
+          },
+          {
+            "X": 34.859375,
+            "Y": -22.283203125,
+            "Z": 0.0
+          }
+        ]
+      },
+      "Voids": [],
+      "Id": "1fd1bfba-8b3e-4870-a135-7c4eeefa5706",
+      "Name": "Level volume representation"
+    },
+    "9834ed65-f7e7-4371-8064-ba1b050e374f": {
+      "discriminator": "Elements.LevelVolume",
+      "Profile": "838cae00-e92b-4856-b4a2-3c9423dc2a24",
+      "Height": 4.0,
+      "Area": 2840.3059100316495,
+      "Transform": {
+        "Matrix": {
+          "Components": [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            18.0
+          ]
+        }
+      },
+      "Material": "28c5c2b1-d65c-4c46-8689-d651f50f07e7",
+      "Representation": {
+        "SolidOperations": [
+          {
+            "discriminator": "Elements.Geometry.Solids.Extrude",
+            "Profile": "1fd1bfba-8b3e-4870-a135-7c4eeefa5706",
+            "Height": 4.0,
+            "Direction": {
+              "X": 0.0,
+              "Y": 0.0,
+              "Z": 1.0
+            },
+            "IsVoid": false
+          }
+        ]
+      },
+      "IsElementDefinition": false,
+      "Id": "9834ed65-f7e7-4371-8064-ba1b050e374f",
+      "Name": "Level 5"
+    },
+    "d83502cc-1d5a-4a7e-9f05-592805f1949b": {
+      "discriminator": "Elements.Geometry.Profile",
+      "Perimeter": {
+        "discriminator": "Elements.Geometry.Polygon",
+        "Vertices": [
+          {
+            "X": 75.3681640625,
+            "Y": 6.740234375,
+            "Z": 0.0
+          },
+          {
+            "X": 63.8359375,
+            "Y": 22.8349609375,
+            "Z": 0.0
+          },
+          {
+            "X": 39.421875,
+            "Y": 5.3427734375,
+            "Z": 0.0
+          },
+          {
+            "X": 9.9287109375,
+            "Y": 46.5068359375,
+            "Z": 0.0
+          },
+          {
+            "X": -1.5048828125,
+            "Y": 45.32421875,
+            "Z": 0.0
+          },
+          {
+            "X": -24.0361328125,
+            "Y": -5.71484375,
+            "Z": 0.0
+          },
+          {
+            "X": -5.921875,
+            "Y": -13.7099609375,
+            "Z": 0.0
+          },
+          {
+            "X": 7.234375,
+            "Y": 16.09765625,
+            "Z": 0.0
+          },
+          {
+            "X": 7.3505859375,
+            "Y": 16.109375,
+            "Z": 0.0
+          },
+          {
+            "X": 34.859375,
+            "Y": -22.283203125,
+            "Z": 0.0
+          }
+        ]
+      },
+      "Voids": [],
+      "Id": "d83502cc-1d5a-4a7e-9f05-592805f1949b",
+      "Name": "Level volume representation"
+    },
+    "fbae879a-4865-45c0-a40f-abe425f75f63": {
+      "discriminator": "Elements.LevelVolume",
+      "Profile": "838cae00-e92b-4856-b4a2-3c9423dc2a24",
+      "Height": 4.0,
+      "Area": 2840.3059100316495,
+      "Transform": {
+        "Matrix": {
+          "Components": [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            22.0
+          ]
+        }
+      },
+      "Material": "28c5c2b1-d65c-4c46-8689-d651f50f07e7",
+      "Representation": {
+        "SolidOperations": [
+          {
+            "discriminator": "Elements.Geometry.Solids.Extrude",
+            "Profile": "d83502cc-1d5a-4a7e-9f05-592805f1949b",
+            "Height": 4.0,
+            "Direction": {
+              "X": 0.0,
+              "Y": 0.0,
+              "Z": 1.0
+            },
+            "IsVoid": false
+          }
+        ]
+      },
+      "IsElementDefinition": false,
+      "Id": "fbae879a-4865-45c0-a40f-abe425f75f63",
+      "Name": "Level 6"
+    },
+    "a91b7341-6504-4fd0-aae6-46744d4e6c15": {
+      "discriminator": "Elements.Geometry.Profile",
+      "Perimeter": {
+        "discriminator": "Elements.Geometry.Polygon",
+        "Vertices": [
+          {
+            "X": 75.3681640625,
+            "Y": 6.740234375,
+            "Z": 0.0
+          },
+          {
+            "X": 63.8359375,
+            "Y": 22.8349609375,
+            "Z": 0.0
+          },
+          {
+            "X": 39.421875,
+            "Y": 5.3427734375,
+            "Z": 0.0
+          },
+          {
+            "X": 9.9287109375,
+            "Y": 46.5068359375,
+            "Z": 0.0
+          },
+          {
+            "X": -1.5048828125,
+            "Y": 45.32421875,
+            "Z": 0.0
+          },
+          {
+            "X": -24.0361328125,
+            "Y": -5.71484375,
+            "Z": 0.0
+          },
+          {
+            "X": -5.921875,
+            "Y": -13.7099609375,
+            "Z": 0.0
+          },
+          {
+            "X": 7.234375,
+            "Y": 16.09765625,
+            "Z": 0.0
+          },
+          {
+            "X": 7.3505859375,
+            "Y": 16.109375,
+            "Z": 0.0
+          },
+          {
+            "X": 34.859375,
+            "Y": -22.283203125,
+            "Z": 0.0
+          }
+        ]
+      },
+      "Voids": [],
+      "Id": "a91b7341-6504-4fd0-aae6-46744d4e6c15",
+      "Name": "Level volume representation"
+    },
+    "5e4f467c-af8d-4f48-bf66-6cff685288d8": {
+      "discriminator": "Elements.LevelVolume",
+      "Profile": "838cae00-e92b-4856-b4a2-3c9423dc2a24",
+      "Height": 4.0,
+      "Area": 2840.3059100316495,
+      "Transform": {
+        "Matrix": {
+          "Components": [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            26.0
+          ]
+        }
+      },
+      "Material": "28c5c2b1-d65c-4c46-8689-d651f50f07e7",
+      "Representation": {
+        "SolidOperations": [
+          {
+            "discriminator": "Elements.Geometry.Solids.Extrude",
+            "Profile": "a91b7341-6504-4fd0-aae6-46744d4e6c15",
+            "Height": 4.0,
+            "Direction": {
+              "X": 0.0,
+              "Y": 0.0,
+              "Z": 1.0
+            },
+            "IsVoid": false
+          }
+        ]
+      },
+      "IsElementDefinition": false,
+      "Id": "5e4f467c-af8d-4f48-bf66-6cff685288d8",
+      "Name": "Level 7"
+    },
+    "1839930d-ed82-482b-9db9-84b071bfcc9e": {
+      "discriminator": "Elements.Geometry.Profile",
+      "Perimeter": {
+        "discriminator": "Elements.Geometry.Polygon",
+        "Vertices": [
+          {
+            "X": 75.3681640625,
+            "Y": 6.740234375,
+            "Z": 0.0
+          },
+          {
+            "X": 63.8359375,
+            "Y": 22.8349609375,
+            "Z": 0.0
+          },
+          {
+            "X": 39.421875,
+            "Y": 5.3427734375,
+            "Z": 0.0
+          },
+          {
+            "X": 9.9287109375,
+            "Y": 46.5068359375,
+            "Z": 0.0
+          },
+          {
+            "X": -1.5048828125,
+            "Y": 45.32421875,
+            "Z": 0.0
+          },
+          {
+            "X": -24.0361328125,
+            "Y": -5.71484375,
+            "Z": 0.0
+          },
+          {
+            "X": -5.921875,
+            "Y": -13.7099609375,
+            "Z": 0.0
+          },
+          {
+            "X": 7.234375,
+            "Y": 16.09765625,
+            "Z": 0.0
+          },
+          {
+            "X": 7.3505859375,
+            "Y": 16.109375,
+            "Z": 0.0
+          },
+          {
+            "X": 34.859375,
+            "Y": -22.283203125,
+            "Z": 0.0
+          }
+        ]
+      },
+      "Voids": [],
+      "Id": "1839930d-ed82-482b-9db9-84b071bfcc9e",
+      "Name": "Level volume representation"
+    },
+    "b4411ac9-2c5a-473d-ba7d-c051e6c0a207": {
+      "discriminator": "Elements.LevelVolume",
+      "Profile": "838cae00-e92b-4856-b4a2-3c9423dc2a24",
+      "Height": 4.0,
+      "Area": 2840.3059100316495,
+      "Transform": {
+        "Matrix": {
+          "Components": [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            30.0
+          ]
+        }
+      },
+      "Material": "28c5c2b1-d65c-4c46-8689-d651f50f07e7",
+      "Representation": {
+        "SolidOperations": [
+          {
+            "discriminator": "Elements.Geometry.Solids.Extrude",
+            "Profile": "1839930d-ed82-482b-9db9-84b071bfcc9e",
+            "Height": 4.0,
+            "Direction": {
+              "X": 0.0,
+              "Y": 0.0,
+              "Z": 1.0
+            },
+            "IsVoid": false
+          }
+        ]
+      },
+      "IsElementDefinition": false,
+      "Id": "b4411ac9-2c5a-473d-ba7d-c051e6c0a207",
+      "Name": "Level 8"
+    },
+    "c64f1cdd-43c0-400c-8b2d-f7a5eb1c0d4f": {
+      "discriminator": "Elements.Geometry.Profile",
+      "Perimeter": {
+        "discriminator": "Elements.Geometry.Polygon",
+        "Vertices": [
+          {
+            "X": 75.3681640625,
+            "Y": 6.740234375,
+            "Z": 0.0
+          },
+          {
+            "X": 63.8359375,
+            "Y": 22.8349609375,
+            "Z": 0.0
+          },
+          {
+            "X": 39.421875,
+            "Y": 5.3427734375,
+            "Z": 0.0
+          },
+          {
+            "X": 9.9287109375,
+            "Y": 46.5068359375,
+            "Z": 0.0
+          },
+          {
+            "X": -1.5048828125,
+            "Y": 45.32421875,
+            "Z": 0.0
+          },
+          {
+            "X": -24.0361328125,
+            "Y": -5.71484375,
+            "Z": 0.0
+          },
+          {
+            "X": -5.921875,
+            "Y": -13.7099609375,
+            "Z": 0.0
+          },
+          {
+            "X": 7.234375,
+            "Y": 16.09765625,
+            "Z": 0.0
+          },
+          {
+            "X": 7.3505859375,
+            "Y": 16.109375,
+            "Z": 0.0
+          },
+          {
+            "X": 34.859375,
+            "Y": -22.283203125,
+            "Z": 0.0
+          }
+        ]
+      },
+      "Voids": [],
+      "Id": "c64f1cdd-43c0-400c-8b2d-f7a5eb1c0d4f",
+      "Name": "Level volume representation"
+    },
+    "50674114-b213-4e03-bd83-ca117ccf515b": {
+      "discriminator": "Elements.LevelVolume",
+      "Profile": "838cae00-e92b-4856-b4a2-3c9423dc2a24",
+      "Height": 4.0,
+      "Area": 2840.3059100316495,
+      "Transform": {
+        "Matrix": {
+          "Components": [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            34.0
+          ]
+        }
+      },
+      "Material": "28c5c2b1-d65c-4c46-8689-d651f50f07e7",
+      "Representation": {
+        "SolidOperations": [
+          {
+            "discriminator": "Elements.Geometry.Solids.Extrude",
+            "Profile": "c64f1cdd-43c0-400c-8b2d-f7a5eb1c0d4f",
+            "Height": 4.0,
+            "Direction": {
+              "X": 0.0,
+              "Y": 0.0,
+              "Z": 1.0
+            },
+            "IsVoid": false
+          }
+        ]
+      },
+      "IsElementDefinition": false,
+      "Id": "50674114-b213-4e03-bd83-ca117ccf515b",
+      "Name": "Level 9"
+    },
+    "8bbfb259-d7a9-4a17-afc6-5daf33c87efe": {
+      "discriminator": "Elements.Geometry.Profile",
+      "Perimeter": {
+        "discriminator": "Elements.Geometry.Polygon",
+        "Vertices": [
+          {
+            "X": 75.3681640625,
+            "Y": 6.740234375,
+            "Z": 0.0
+          },
+          {
+            "X": 63.8359375,
+            "Y": 22.8349609375,
+            "Z": 0.0
+          },
+          {
+            "X": 39.421875,
+            "Y": 5.3427734375,
+            "Z": 0.0
+          },
+          {
+            "X": 9.9287109375,
+            "Y": 46.5068359375,
+            "Z": 0.0
+          },
+          {
+            "X": -1.5048828125,
+            "Y": 45.32421875,
+            "Z": 0.0
+          },
+          {
+            "X": -24.0361328125,
+            "Y": -5.71484375,
+            "Z": 0.0
+          },
+          {
+            "X": -5.921875,
+            "Y": -13.7099609375,
+            "Z": 0.0
+          },
+          {
+            "X": 7.234375,
+            "Y": 16.09765625,
+            "Z": 0.0
+          },
+          {
+            "X": 7.3505859375,
+            "Y": 16.109375,
+            "Z": 0.0
+          },
+          {
+            "X": 34.859375,
+            "Y": -22.283203125,
+            "Z": 0.0
+          }
+        ]
+      },
+      "Voids": [],
+      "Id": "8bbfb259-d7a9-4a17-afc6-5daf33c87efe",
+      "Name": "Level volume representation"
+    },
+    "15ad14aa-3006-457e-afd1-8744c46f93d8": {
+      "discriminator": "Elements.LevelVolume",
+      "Profile": "838cae00-e92b-4856-b4a2-3c9423dc2a24",
+      "Height": 4.0,
+      "Area": 2840.3059100316495,
+      "Transform": {
+        "Matrix": {
+          "Components": [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            38.0
+          ]
+        }
+      },
+      "Material": "28c5c2b1-d65c-4c46-8689-d651f50f07e7",
+      "Representation": {
+        "SolidOperations": [
+          {
+            "discriminator": "Elements.Geometry.Solids.Extrude",
+            "Profile": "8bbfb259-d7a9-4a17-afc6-5daf33c87efe",
+            "Height": 4.0,
+            "Direction": {
+              "X": 0.0,
+              "Y": 0.0,
+              "Z": 1.0
+            },
+            "IsVoid": false
+          }
+        ]
+      },
+      "IsElementDefinition": false,
+      "Id": "15ad14aa-3006-457e-afd1-8744c46f93d8",
+      "Name": "Level 10"
+    },
+    "c6d94817-6d2e-4767-af80-37a132328421": {
+      "discriminator": "Elements.Geometry.Profile",
+      "Perimeter": {
+        "discriminator": "Elements.Geometry.Polygon",
+        "Vertices": [
+          {
+            "X": 75.3681640625,
+            "Y": 6.740234375,
+            "Z": 0.0
+          },
+          {
+            "X": 63.8359375,
+            "Y": 22.8349609375,
+            "Z": 0.0
+          },
+          {
+            "X": 39.421875,
+            "Y": 5.3427734375,
+            "Z": 0.0
+          },
+          {
+            "X": 9.9287109375,
+            "Y": 46.5068359375,
+            "Z": 0.0
+          },
+          {
+            "X": -1.5048828125,
+            "Y": 45.32421875,
+            "Z": 0.0
+          },
+          {
+            "X": -24.0361328125,
+            "Y": -5.71484375,
+            "Z": 0.0
+          },
+          {
+            "X": -5.921875,
+            "Y": -13.7099609375,
+            "Z": 0.0
+          },
+          {
+            "X": 7.234375,
+            "Y": 16.09765625,
+            "Z": 0.0
+          },
+          {
+            "X": 7.3505859375,
+            "Y": 16.109375,
+            "Z": 0.0
+          },
+          {
+            "X": 34.859375,
+            "Y": -22.283203125,
+            "Z": 0.0
+          }
+        ]
+      },
+      "Voids": [],
+      "Id": "c6d94817-6d2e-4767-af80-37a132328421",
+      "Name": "Level volume representation"
+    },
+    "f62b5ea2-92a5-45b0-bab3-7d60df9d60c8": {
+      "discriminator": "Elements.LevelVolume",
+      "Profile": "838cae00-e92b-4856-b4a2-3c9423dc2a24",
+      "Height": 6.0,
+      "Area": 2840.3059100316495,
+      "Transform": {
+        "Matrix": {
+          "Components": [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            42.0
+          ]
+        }
+      },
+      "Material": "28c5c2b1-d65c-4c46-8689-d651f50f07e7",
+      "Representation": {
+        "SolidOperations": [
+          {
+            "discriminator": "Elements.Geometry.Solids.Extrude",
+            "Profile": "c6d94817-6d2e-4767-af80-37a132328421",
+            "Height": 6.0,
+            "Direction": {
+              "X": 0.0,
+              "Y": 0.0,
+              "Z": 1.0
+            },
+            "IsVoid": false
+          }
+        ]
+      },
+      "IsElementDefinition": false,
+      "Id": "f62b5ea2-92a5-45b0-bab3-7d60df9d60c8",
+      "Name": "Level 11"
+    },
+    "da32b866-3b24-441c-8377-311c43783efb": {
+      "discriminator": "Elements.Geometry.Profile",
+      "Perimeter": {
+        "discriminator": "Elements.Geometry.Polygon",
+        "Vertices": [
+          {
+            "X": 75.3681640625,
+            "Y": 6.740234375,
+            "Z": 0.0
+          },
+          {
+            "X": 63.8359375,
+            "Y": 22.8349609375,
+            "Z": 0.0
+          },
+          {
+            "X": 39.421875,
+            "Y": 5.3427734375,
+            "Z": 0.0
+          },
+          {
+            "X": 9.9287109375,
+            "Y": 46.5068359375,
+            "Z": 0.0
+          },
+          {
+            "X": -1.5048828125,
+            "Y": 45.32421875,
+            "Z": 0.0
+          },
+          {
+            "X": -24.0361328125,
+            "Y": -5.71484375,
+            "Z": 0.0
+          },
+          {
+            "X": -5.921875,
+            "Y": -13.7099609375,
+            "Z": 0.0
+          },
+          {
+            "X": 7.234375,
+            "Y": 16.09765625,
+            "Z": 0.0
+          },
+          {
+            "X": 7.3505859375,
+            "Y": 16.109375,
+            "Z": 0.0
+          },
+          {
+            "X": 34.859375,
+            "Y": -22.283203125,
+            "Z": 0.0
+          }
+        ]
+      },
+      "Voids": [],
+      "Id": "da32b866-3b24-441c-8377-311c43783efb",
+      "Name": "Level volume representation"
+    },
+    "2191f931-dc7a-454e-ad8c-80d12cd90c4b": {
+      "discriminator": "Elements.LevelVolume",
+      "Profile": "838cae00-e92b-4856-b4a2-3c9423dc2a24",
+      "Height": 5.0,
+      "Area": 2840.3059100316495,
+      "Transform": {
+        "Matrix": {
+          "Components": [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            48.0
+          ]
+        }
+      },
+      "Material": "28c5c2b1-d65c-4c46-8689-d651f50f07e7",
+      "Representation": {
+        "SolidOperations": [
+          {
+            "discriminator": "Elements.Geometry.Solids.Extrude",
+            "Profile": "da32b866-3b24-441c-8377-311c43783efb",
+            "Height": 5.0,
+            "Direction": {
+              "X": 0.0,
+              "Y": 0.0,
+              "Z": 1.0
+            },
+            "IsVoid": false
+          }
+        ]
+      },
+      "IsElementDefinition": false,
+      "Id": "2191f931-dc7a-454e-ad8c-80d12cd90c4b",
+      "Name": "Penthouse Level"
+    },
+    "d12744a2-91ef-4385-9f7f-d12625f558ce": {
+      "discriminator": "Elements.Panel",
+      "Perimeter": {
+        "discriminator": "Elements.Geometry.Polygon",
+        "Vertices": [
+          {
+            "X": 75.50808,
+            "Y": 6.71751,
+            "Z": 0.0
+          },
+          {
+            "X": 63.85962,
+            "Y": 22.97523,
+            "Z": 0.0
+          },
+          {
+            "X": 39.44556,
+            "Y": 5.48287,
+            "Z": 0.0
+          },
+          {
+            "X": 9.97663,
+            "Y": 46.6126,
+            "Z": 0.0
+          },
+          {
+            "X": -1.57417,
+            "Y": 45.41864,
+            "Z": 0.0
+          },
+          {
+            "X": -24.16854,
+            "Y": -5.76566,
+            "Z": 0.0
+          },
+          {
+            "X": -5.8719,
+            "Y": -13.84238,
+            "Z": 0.0
+          },
+          {
+            "X": 7.30338,
+            "Y": 16.00433,
+            "Z": 0.0
+          },
+          {
+            "X": 34.8363,
+            "Y": -22.42331,
+            "Z": 0.0
+          }
+        ]
+      },
+      "Transform": {
+        "Matrix": {
+          "Components": [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ]
+        }
+      },
+      "Material": "28c5c2b1-d65c-4c46-8689-d651f50f07e7",
+      "Representation": {
+        "SolidOperations": [
+          {
+            "discriminator": "Elements.Geometry.Solids.Lamina",
+            "Perimeter": {
+              "discriminator": "Elements.Geometry.Polygon",
+              "Vertices": [
+                {
+                  "X": 75.50808,
+                  "Y": 6.71751,
+                  "Z": 0.0
+                },
+                {
+                  "X": 63.85962,
+                  "Y": 22.97523,
+                  "Z": 0.0
+                },
+                {
+                  "X": 39.44556,
+                  "Y": 5.48287,
+                  "Z": 0.0
+                },
+                {
+                  "X": 9.97663,
+                  "Y": 46.6126,
+                  "Z": 0.0
+                },
+                {
+                  "X": -1.57417,
+                  "Y": 45.41864,
+                  "Z": 0.0
+                },
+                {
+                  "X": -24.16854,
+                  "Y": -5.76566,
+                  "Z": 0.0
+                },
+                {
+                  "X": -5.8719,
+                  "Y": -13.84238,
+                  "Z": 0.0
+                },
+                {
+                  "X": 7.30338,
+                  "Y": 16.00433,
+                  "Z": 0.0
+                },
+                {
+                  "X": 34.8363,
+                  "Y": -22.42331,
+                  "Z": 0.0
+                }
+              ]
+            },
+            "IsVoid": false
+          }
+        ]
+      },
+      "IsElementDefinition": false,
+      "Id": "d12744a2-91ef-4385-9f7f-d12625f558ce",
+      "Name": "Roof Level"
+    },
+    "67247dd7-e94c-4ba5-9216-e3c9b9433d78": {
+      "discriminator": "Elements.Panel",
+      "Perimeter": {
+        "discriminator": "Elements.Geometry.Polygon",
+        "Vertices": [
+          {
+            "X": 75.50808,
+            "Y": 6.71751,
+            "Z": 0.0
+          },
+          {
+            "X": 63.85962,
+            "Y": 22.97523,
+            "Z": 0.0
+          },
+          {
+            "X": 39.44556,
+            "Y": 5.48287,
+            "Z": 0.0
+          },
+          {
+            "X": 9.97663,
+            "Y": 46.6126,
+            "Z": 0.0
+          },
+          {
+            "X": -1.57417,
+            "Y": 45.41864,
+            "Z": 0.0
+          },
+          {
+            "X": -24.16854,
+            "Y": -5.76566,
+            "Z": 0.0
+          },
+          {
+            "X": -5.8719,
+            "Y": -13.84238,
+            "Z": 0.0
+          },
+          {
+            "X": 7.30338,
+            "Y": 16.00433,
+            "Z": 0.0
+          },
+          {
+            "X": 34.8363,
+            "Y": -22.42331,
+            "Z": 0.0
+          }
+        ]
+      },
+      "Transform": {
+        "Matrix": {
+          "Components": [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            6.0
+          ]
+        }
+      },
+      "Material": "28c5c2b1-d65c-4c46-8689-d651f50f07e7",
+      "Representation": {
+        "SolidOperations": [
+          {
+            "discriminator": "Elements.Geometry.Solids.Lamina",
+            "Perimeter": {
+              "discriminator": "Elements.Geometry.Polygon",
+              "Vertices": [
+                {
+                  "X": 75.50808,
+                  "Y": 6.71751,
+                  "Z": 0.0
+                },
+                {
+                  "X": 63.85962,
+                  "Y": 22.97523,
+                  "Z": 0.0
+                },
+                {
+                  "X": 39.44556,
+                  "Y": 5.48287,
+                  "Z": 0.0
+                },
+                {
+                  "X": 9.97663,
+                  "Y": 46.6126,
+                  "Z": 0.0
+                },
+                {
+                  "X": -1.57417,
+                  "Y": 45.41864,
+                  "Z": 0.0
+                },
+                {
+                  "X": -24.16854,
+                  "Y": -5.76566,
+                  "Z": 0.0
+                },
+                {
+                  "X": -5.8719,
+                  "Y": -13.84238,
+                  "Z": 0.0
+                },
+                {
+                  "X": 7.30338,
+                  "Y": 16.00433,
+                  "Z": 0.0
+                },
+                {
+                  "X": 34.8363,
+                  "Y": -22.42331,
+                  "Z": 0.0
+                }
+              ]
+            },
+            "IsVoid": false
+          }
+        ]
+      },
+      "IsElementDefinition": false,
+      "Id": "67247dd7-e94c-4ba5-9216-e3c9b9433d78",
+      "Name": "Level 2"
+    },
+    "45d01c2c-67ff-4e14-b530-bb1850a36332": {
+      "discriminator": "Elements.Panel",
+      "Perimeter": {
+        "discriminator": "Elements.Geometry.Polygon",
+        "Vertices": [
+          {
+            "X": 75.50808,
+            "Y": 6.71751,
+            "Z": 0.0
+          },
+          {
+            "X": 63.85962,
+            "Y": 22.97523,
+            "Z": 0.0
+          },
+          {
+            "X": 39.44556,
+            "Y": 5.48287,
+            "Z": 0.0
+          },
+          {
+            "X": 9.97663,
+            "Y": 46.6126,
+            "Z": 0.0
+          },
+          {
+            "X": -1.57417,
+            "Y": 45.41864,
+            "Z": 0.0
+          },
+          {
+            "X": -24.16854,
+            "Y": -5.76566,
+            "Z": 0.0
+          },
+          {
+            "X": -5.8719,
+            "Y": -13.84238,
+            "Z": 0.0
+          },
+          {
+            "X": 7.30338,
+            "Y": 16.00433,
+            "Z": 0.0
+          },
+          {
+            "X": 34.8363,
+            "Y": -22.42331,
+            "Z": 0.0
+          }
+        ]
+      },
+      "Transform": {
+        "Matrix": {
+          "Components": [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            10.0
+          ]
+        }
+      },
+      "Material": "28c5c2b1-d65c-4c46-8689-d651f50f07e7",
+      "Representation": {
+        "SolidOperations": [
+          {
+            "discriminator": "Elements.Geometry.Solids.Lamina",
+            "Perimeter": {
+              "discriminator": "Elements.Geometry.Polygon",
+              "Vertices": [
+                {
+                  "X": 75.50808,
+                  "Y": 6.71751,
+                  "Z": 0.0
+                },
+                {
+                  "X": 63.85962,
+                  "Y": 22.97523,
+                  "Z": 0.0
+                },
+                {
+                  "X": 39.44556,
+                  "Y": 5.48287,
+                  "Z": 0.0
+                },
+                {
+                  "X": 9.97663,
+                  "Y": 46.6126,
+                  "Z": 0.0
+                },
+                {
+                  "X": -1.57417,
+                  "Y": 45.41864,
+                  "Z": 0.0
+                },
+                {
+                  "X": -24.16854,
+                  "Y": -5.76566,
+                  "Z": 0.0
+                },
+                {
+                  "X": -5.8719,
+                  "Y": -13.84238,
+                  "Z": 0.0
+                },
+                {
+                  "X": 7.30338,
+                  "Y": 16.00433,
+                  "Z": 0.0
+                },
+                {
+                  "X": 34.8363,
+                  "Y": -22.42331,
+                  "Z": 0.0
+                }
+              ]
+            },
+            "IsVoid": false
+          }
+        ]
+      },
+      "IsElementDefinition": false,
+      "Id": "45d01c2c-67ff-4e14-b530-bb1850a36332",
+      "Name": "Level 3"
+    },
+    "a30b5e7f-7470-47ba-b586-d7904de90630": {
+      "discriminator": "Elements.Panel",
+      "Perimeter": {
+        "discriminator": "Elements.Geometry.Polygon",
+        "Vertices": [
+          {
+            "X": 75.50808,
+            "Y": 6.71751,
+            "Z": 0.0
+          },
+          {
+            "X": 63.85962,
+            "Y": 22.97523,
+            "Z": 0.0
+          },
+          {
+            "X": 39.44556,
+            "Y": 5.48287,
+            "Z": 0.0
+          },
+          {
+            "X": 9.97663,
+            "Y": 46.6126,
+            "Z": 0.0
+          },
+          {
+            "X": -1.57417,
+            "Y": 45.41864,
+            "Z": 0.0
+          },
+          {
+            "X": -24.16854,
+            "Y": -5.76566,
+            "Z": 0.0
+          },
+          {
+            "X": -5.8719,
+            "Y": -13.84238,
+            "Z": 0.0
+          },
+          {
+            "X": 7.30338,
+            "Y": 16.00433,
+            "Z": 0.0
+          },
+          {
+            "X": 34.8363,
+            "Y": -22.42331,
+            "Z": 0.0
+          }
+        ]
+      },
+      "Transform": {
+        "Matrix": {
+          "Components": [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            14.0
+          ]
+        }
+      },
+      "Material": "28c5c2b1-d65c-4c46-8689-d651f50f07e7",
+      "Representation": {
+        "SolidOperations": [
+          {
+            "discriminator": "Elements.Geometry.Solids.Lamina",
+            "Perimeter": {
+              "discriminator": "Elements.Geometry.Polygon",
+              "Vertices": [
+                {
+                  "X": 75.50808,
+                  "Y": 6.71751,
+                  "Z": 0.0
+                },
+                {
+                  "X": 63.85962,
+                  "Y": 22.97523,
+                  "Z": 0.0
+                },
+                {
+                  "X": 39.44556,
+                  "Y": 5.48287,
+                  "Z": 0.0
+                },
+                {
+                  "X": 9.97663,
+                  "Y": 46.6126,
+                  "Z": 0.0
+                },
+                {
+                  "X": -1.57417,
+                  "Y": 45.41864,
+                  "Z": 0.0
+                },
+                {
+                  "X": -24.16854,
+                  "Y": -5.76566,
+                  "Z": 0.0
+                },
+                {
+                  "X": -5.8719,
+                  "Y": -13.84238,
+                  "Z": 0.0
+                },
+                {
+                  "X": 7.30338,
+                  "Y": 16.00433,
+                  "Z": 0.0
+                },
+                {
+                  "X": 34.8363,
+                  "Y": -22.42331,
+                  "Z": 0.0
+                }
+              ]
+            },
+            "IsVoid": false
+          }
+        ]
+      },
+      "IsElementDefinition": false,
+      "Id": "a30b5e7f-7470-47ba-b586-d7904de90630",
+      "Name": "Level 4"
+    },
+    "c83f8a2c-7b7e-44e3-8968-cf2e9042a748": {
+      "discriminator": "Elements.Panel",
+      "Perimeter": {
+        "discriminator": "Elements.Geometry.Polygon",
+        "Vertices": [
+          {
+            "X": 75.50808,
+            "Y": 6.71751,
+            "Z": 0.0
+          },
+          {
+            "X": 63.85962,
+            "Y": 22.97523,
+            "Z": 0.0
+          },
+          {
+            "X": 39.44556,
+            "Y": 5.48287,
+            "Z": 0.0
+          },
+          {
+            "X": 9.97663,
+            "Y": 46.6126,
+            "Z": 0.0
+          },
+          {
+            "X": -1.57417,
+            "Y": 45.41864,
+            "Z": 0.0
+          },
+          {
+            "X": -24.16854,
+            "Y": -5.76566,
+            "Z": 0.0
+          },
+          {
+            "X": -5.8719,
+            "Y": -13.84238,
+            "Z": 0.0
+          },
+          {
+            "X": 7.30338,
+            "Y": 16.00433,
+            "Z": 0.0
+          },
+          {
+            "X": 34.8363,
+            "Y": -22.42331,
+            "Z": 0.0
+          }
+        ]
+      },
+      "Transform": {
+        "Matrix": {
+          "Components": [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            18.0
+          ]
+        }
+      },
+      "Material": "28c5c2b1-d65c-4c46-8689-d651f50f07e7",
+      "Representation": {
+        "SolidOperations": [
+          {
+            "discriminator": "Elements.Geometry.Solids.Lamina",
+            "Perimeter": {
+              "discriminator": "Elements.Geometry.Polygon",
+              "Vertices": [
+                {
+                  "X": 75.50808,
+                  "Y": 6.71751,
+                  "Z": 0.0
+                },
+                {
+                  "X": 63.85962,
+                  "Y": 22.97523,
+                  "Z": 0.0
+                },
+                {
+                  "X": 39.44556,
+                  "Y": 5.48287,
+                  "Z": 0.0
+                },
+                {
+                  "X": 9.97663,
+                  "Y": 46.6126,
+                  "Z": 0.0
+                },
+                {
+                  "X": -1.57417,
+                  "Y": 45.41864,
+                  "Z": 0.0
+                },
+                {
+                  "X": -24.16854,
+                  "Y": -5.76566,
+                  "Z": 0.0
+                },
+                {
+                  "X": -5.8719,
+                  "Y": -13.84238,
+                  "Z": 0.0
+                },
+                {
+                  "X": 7.30338,
+                  "Y": 16.00433,
+                  "Z": 0.0
+                },
+                {
+                  "X": 34.8363,
+                  "Y": -22.42331,
+                  "Z": 0.0
+                }
+              ]
+            },
+            "IsVoid": false
+          }
+        ]
+      },
+      "IsElementDefinition": false,
+      "Id": "c83f8a2c-7b7e-44e3-8968-cf2e9042a748",
+      "Name": "Level 5"
+    },
+    "80106fb7-07b7-4cfb-99c1-889c68aad5b9": {
+      "discriminator": "Elements.Panel",
+      "Perimeter": {
+        "discriminator": "Elements.Geometry.Polygon",
+        "Vertices": [
+          {
+            "X": 75.50808,
+            "Y": 6.71751,
+            "Z": 0.0
+          },
+          {
+            "X": 63.85962,
+            "Y": 22.97523,
+            "Z": 0.0
+          },
+          {
+            "X": 39.44556,
+            "Y": 5.48287,
+            "Z": 0.0
+          },
+          {
+            "X": 9.97663,
+            "Y": 46.6126,
+            "Z": 0.0
+          },
+          {
+            "X": -1.57417,
+            "Y": 45.41864,
+            "Z": 0.0
+          },
+          {
+            "X": -24.16854,
+            "Y": -5.76566,
+            "Z": 0.0
+          },
+          {
+            "X": -5.8719,
+            "Y": -13.84238,
+            "Z": 0.0
+          },
+          {
+            "X": 7.30338,
+            "Y": 16.00433,
+            "Z": 0.0
+          },
+          {
+            "X": 34.8363,
+            "Y": -22.42331,
+            "Z": 0.0
+          }
+        ]
+      },
+      "Transform": {
+        "Matrix": {
+          "Components": [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            22.0
+          ]
+        }
+      },
+      "Material": "28c5c2b1-d65c-4c46-8689-d651f50f07e7",
+      "Representation": {
+        "SolidOperations": [
+          {
+            "discriminator": "Elements.Geometry.Solids.Lamina",
+            "Perimeter": {
+              "discriminator": "Elements.Geometry.Polygon",
+              "Vertices": [
+                {
+                  "X": 75.50808,
+                  "Y": 6.71751,
+                  "Z": 0.0
+                },
+                {
+                  "X": 63.85962,
+                  "Y": 22.97523,
+                  "Z": 0.0
+                },
+                {
+                  "X": 39.44556,
+                  "Y": 5.48287,
+                  "Z": 0.0
+                },
+                {
+                  "X": 9.97663,
+                  "Y": 46.6126,
+                  "Z": 0.0
+                },
+                {
+                  "X": -1.57417,
+                  "Y": 45.41864,
+                  "Z": 0.0
+                },
+                {
+                  "X": -24.16854,
+                  "Y": -5.76566,
+                  "Z": 0.0
+                },
+                {
+                  "X": -5.8719,
+                  "Y": -13.84238,
+                  "Z": 0.0
+                },
+                {
+                  "X": 7.30338,
+                  "Y": 16.00433,
+                  "Z": 0.0
+                },
+                {
+                  "X": 34.8363,
+                  "Y": -22.42331,
+                  "Z": 0.0
+                }
+              ]
+            },
+            "IsVoid": false
+          }
+        ]
+      },
+      "IsElementDefinition": false,
+      "Id": "80106fb7-07b7-4cfb-99c1-889c68aad5b9",
+      "Name": "Level 6"
+    },
+    "a9e1aa88-4cac-4373-9dd3-6072c5920f06": {
+      "discriminator": "Elements.Panel",
+      "Perimeter": {
+        "discriminator": "Elements.Geometry.Polygon",
+        "Vertices": [
+          {
+            "X": 75.50808,
+            "Y": 6.71751,
+            "Z": 0.0
+          },
+          {
+            "X": 63.85962,
+            "Y": 22.97523,
+            "Z": 0.0
+          },
+          {
+            "X": 39.44556,
+            "Y": 5.48287,
+            "Z": 0.0
+          },
+          {
+            "X": 9.97663,
+            "Y": 46.6126,
+            "Z": 0.0
+          },
+          {
+            "X": -1.57417,
+            "Y": 45.41864,
+            "Z": 0.0
+          },
+          {
+            "X": -24.16854,
+            "Y": -5.76566,
+            "Z": 0.0
+          },
+          {
+            "X": -5.8719,
+            "Y": -13.84238,
+            "Z": 0.0
+          },
+          {
+            "X": 7.30338,
+            "Y": 16.00433,
+            "Z": 0.0
+          },
+          {
+            "X": 34.8363,
+            "Y": -22.42331,
+            "Z": 0.0
+          }
+        ]
+      },
+      "Transform": {
+        "Matrix": {
+          "Components": [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            26.0
+          ]
+        }
+      },
+      "Material": "28c5c2b1-d65c-4c46-8689-d651f50f07e7",
+      "Representation": {
+        "SolidOperations": [
+          {
+            "discriminator": "Elements.Geometry.Solids.Lamina",
+            "Perimeter": {
+              "discriminator": "Elements.Geometry.Polygon",
+              "Vertices": [
+                {
+                  "X": 75.50808,
+                  "Y": 6.71751,
+                  "Z": 0.0
+                },
+                {
+                  "X": 63.85962,
+                  "Y": 22.97523,
+                  "Z": 0.0
+                },
+                {
+                  "X": 39.44556,
+                  "Y": 5.48287,
+                  "Z": 0.0
+                },
+                {
+                  "X": 9.97663,
+                  "Y": 46.6126,
+                  "Z": 0.0
+                },
+                {
+                  "X": -1.57417,
+                  "Y": 45.41864,
+                  "Z": 0.0
+                },
+                {
+                  "X": -24.16854,
+                  "Y": -5.76566,
+                  "Z": 0.0
+                },
+                {
+                  "X": -5.8719,
+                  "Y": -13.84238,
+                  "Z": 0.0
+                },
+                {
+                  "X": 7.30338,
+                  "Y": 16.00433,
+                  "Z": 0.0
+                },
+                {
+                  "X": 34.8363,
+                  "Y": -22.42331,
+                  "Z": 0.0
+                }
+              ]
+            },
+            "IsVoid": false
+          }
+        ]
+      },
+      "IsElementDefinition": false,
+      "Id": "a9e1aa88-4cac-4373-9dd3-6072c5920f06",
+      "Name": "Level 7"
+    },
+    "ee0635a7-a26a-4728-877d-644ea8827eb4": {
+      "discriminator": "Elements.Panel",
+      "Perimeter": {
+        "discriminator": "Elements.Geometry.Polygon",
+        "Vertices": [
+          {
+            "X": 75.50808,
+            "Y": 6.71751,
+            "Z": 0.0
+          },
+          {
+            "X": 63.85962,
+            "Y": 22.97523,
+            "Z": 0.0
+          },
+          {
+            "X": 39.44556,
+            "Y": 5.48287,
+            "Z": 0.0
+          },
+          {
+            "X": 9.97663,
+            "Y": 46.6126,
+            "Z": 0.0
+          },
+          {
+            "X": -1.57417,
+            "Y": 45.41864,
+            "Z": 0.0
+          },
+          {
+            "X": -24.16854,
+            "Y": -5.76566,
+            "Z": 0.0
+          },
+          {
+            "X": -5.8719,
+            "Y": -13.84238,
+            "Z": 0.0
+          },
+          {
+            "X": 7.30338,
+            "Y": 16.00433,
+            "Z": 0.0
+          },
+          {
+            "X": 34.8363,
+            "Y": -22.42331,
+            "Z": 0.0
+          }
+        ]
+      },
+      "Transform": {
+        "Matrix": {
+          "Components": [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            30.0
+          ]
+        }
+      },
+      "Material": "28c5c2b1-d65c-4c46-8689-d651f50f07e7",
+      "Representation": {
+        "SolidOperations": [
+          {
+            "discriminator": "Elements.Geometry.Solids.Lamina",
+            "Perimeter": {
+              "discriminator": "Elements.Geometry.Polygon",
+              "Vertices": [
+                {
+                  "X": 75.50808,
+                  "Y": 6.71751,
+                  "Z": 0.0
+                },
+                {
+                  "X": 63.85962,
+                  "Y": 22.97523,
+                  "Z": 0.0
+                },
+                {
+                  "X": 39.44556,
+                  "Y": 5.48287,
+                  "Z": 0.0
+                },
+                {
+                  "X": 9.97663,
+                  "Y": 46.6126,
+                  "Z": 0.0
+                },
+                {
+                  "X": -1.57417,
+                  "Y": 45.41864,
+                  "Z": 0.0
+                },
+                {
+                  "X": -24.16854,
+                  "Y": -5.76566,
+                  "Z": 0.0
+                },
+                {
+                  "X": -5.8719,
+                  "Y": -13.84238,
+                  "Z": 0.0
+                },
+                {
+                  "X": 7.30338,
+                  "Y": 16.00433,
+                  "Z": 0.0
+                },
+                {
+                  "X": 34.8363,
+                  "Y": -22.42331,
+                  "Z": 0.0
+                }
+              ]
+            },
+            "IsVoid": false
+          }
+        ]
+      },
+      "IsElementDefinition": false,
+      "Id": "ee0635a7-a26a-4728-877d-644ea8827eb4",
+      "Name": "Level 8"
+    },
+    "bfdc89ab-89d5-43d8-a448-ccb753908265": {
+      "discriminator": "Elements.Panel",
+      "Perimeter": {
+        "discriminator": "Elements.Geometry.Polygon",
+        "Vertices": [
+          {
+            "X": 75.50808,
+            "Y": 6.71751,
+            "Z": 0.0
+          },
+          {
+            "X": 63.85962,
+            "Y": 22.97523,
+            "Z": 0.0
+          },
+          {
+            "X": 39.44556,
+            "Y": 5.48287,
+            "Z": 0.0
+          },
+          {
+            "X": 9.97663,
+            "Y": 46.6126,
+            "Z": 0.0
+          },
+          {
+            "X": -1.57417,
+            "Y": 45.41864,
+            "Z": 0.0
+          },
+          {
+            "X": -24.16854,
+            "Y": -5.76566,
+            "Z": 0.0
+          },
+          {
+            "X": -5.8719,
+            "Y": -13.84238,
+            "Z": 0.0
+          },
+          {
+            "X": 7.30338,
+            "Y": 16.00433,
+            "Z": 0.0
+          },
+          {
+            "X": 34.8363,
+            "Y": -22.42331,
+            "Z": 0.0
+          }
+        ]
+      },
+      "Transform": {
+        "Matrix": {
+          "Components": [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            34.0
+          ]
+        }
+      },
+      "Material": "28c5c2b1-d65c-4c46-8689-d651f50f07e7",
+      "Representation": {
+        "SolidOperations": [
+          {
+            "discriminator": "Elements.Geometry.Solids.Lamina",
+            "Perimeter": {
+              "discriminator": "Elements.Geometry.Polygon",
+              "Vertices": [
+                {
+                  "X": 75.50808,
+                  "Y": 6.71751,
+                  "Z": 0.0
+                },
+                {
+                  "X": 63.85962,
+                  "Y": 22.97523,
+                  "Z": 0.0
+                },
+                {
+                  "X": 39.44556,
+                  "Y": 5.48287,
+                  "Z": 0.0
+                },
+                {
+                  "X": 9.97663,
+                  "Y": 46.6126,
+                  "Z": 0.0
+                },
+                {
+                  "X": -1.57417,
+                  "Y": 45.41864,
+                  "Z": 0.0
+                },
+                {
+                  "X": -24.16854,
+                  "Y": -5.76566,
+                  "Z": 0.0
+                },
+                {
+                  "X": -5.8719,
+                  "Y": -13.84238,
+                  "Z": 0.0
+                },
+                {
+                  "X": 7.30338,
+                  "Y": 16.00433,
+                  "Z": 0.0
+                },
+                {
+                  "X": 34.8363,
+                  "Y": -22.42331,
+                  "Z": 0.0
+                }
+              ]
+            },
+            "IsVoid": false
+          }
+        ]
+      },
+      "IsElementDefinition": false,
+      "Id": "bfdc89ab-89d5-43d8-a448-ccb753908265",
+      "Name": "Level 9"
+    },
+    "1c788dba-3227-41ea-b2da-a44b3488d718": {
+      "discriminator": "Elements.Panel",
+      "Perimeter": {
+        "discriminator": "Elements.Geometry.Polygon",
+        "Vertices": [
+          {
+            "X": 75.50808,
+            "Y": 6.71751,
+            "Z": 0.0
+          },
+          {
+            "X": 63.85962,
+            "Y": 22.97523,
+            "Z": 0.0
+          },
+          {
+            "X": 39.44556,
+            "Y": 5.48287,
+            "Z": 0.0
+          },
+          {
+            "X": 9.97663,
+            "Y": 46.6126,
+            "Z": 0.0
+          },
+          {
+            "X": -1.57417,
+            "Y": 45.41864,
+            "Z": 0.0
+          },
+          {
+            "X": -24.16854,
+            "Y": -5.76566,
+            "Z": 0.0
+          },
+          {
+            "X": -5.8719,
+            "Y": -13.84238,
+            "Z": 0.0
+          },
+          {
+            "X": 7.30338,
+            "Y": 16.00433,
+            "Z": 0.0
+          },
+          {
+            "X": 34.8363,
+            "Y": -22.42331,
+            "Z": 0.0
+          }
+        ]
+      },
+      "Transform": {
+        "Matrix": {
+          "Components": [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            38.0
+          ]
+        }
+      },
+      "Material": "28c5c2b1-d65c-4c46-8689-d651f50f07e7",
+      "Representation": {
+        "SolidOperations": [
+          {
+            "discriminator": "Elements.Geometry.Solids.Lamina",
+            "Perimeter": {
+              "discriminator": "Elements.Geometry.Polygon",
+              "Vertices": [
+                {
+                  "X": 75.50808,
+                  "Y": 6.71751,
+                  "Z": 0.0
+                },
+                {
+                  "X": 63.85962,
+                  "Y": 22.97523,
+                  "Z": 0.0
+                },
+                {
+                  "X": 39.44556,
+                  "Y": 5.48287,
+                  "Z": 0.0
+                },
+                {
+                  "X": 9.97663,
+                  "Y": 46.6126,
+                  "Z": 0.0
+                },
+                {
+                  "X": -1.57417,
+                  "Y": 45.41864,
+                  "Z": 0.0
+                },
+                {
+                  "X": -24.16854,
+                  "Y": -5.76566,
+                  "Z": 0.0
+                },
+                {
+                  "X": -5.8719,
+                  "Y": -13.84238,
+                  "Z": 0.0
+                },
+                {
+                  "X": 7.30338,
+                  "Y": 16.00433,
+                  "Z": 0.0
+                },
+                {
+                  "X": 34.8363,
+                  "Y": -22.42331,
+                  "Z": 0.0
+                }
+              ]
+            },
+            "IsVoid": false
+          }
+        ]
+      },
+      "IsElementDefinition": false,
+      "Id": "1c788dba-3227-41ea-b2da-a44b3488d718",
+      "Name": "Level 10"
+    },
+    "263249fc-9d2e-46bf-8266-0b37433e82b6": {
+      "discriminator": "Elements.Panel",
+      "Perimeter": {
+        "discriminator": "Elements.Geometry.Polygon",
+        "Vertices": [
+          {
+            "X": 75.50808,
+            "Y": 6.71751,
+            "Z": 0.0
+          },
+          {
+            "X": 63.85962,
+            "Y": 22.97523,
+            "Z": 0.0
+          },
+          {
+            "X": 39.44556,
+            "Y": 5.48287,
+            "Z": 0.0
+          },
+          {
+            "X": 9.97663,
+            "Y": 46.6126,
+            "Z": 0.0
+          },
+          {
+            "X": -1.57417,
+            "Y": 45.41864,
+            "Z": 0.0
+          },
+          {
+            "X": -24.16854,
+            "Y": -5.76566,
+            "Z": 0.0
+          },
+          {
+            "X": -5.8719,
+            "Y": -13.84238,
+            "Z": 0.0
+          },
+          {
+            "X": 7.30338,
+            "Y": 16.00433,
+            "Z": 0.0
+          },
+          {
+            "X": 34.8363,
+            "Y": -22.42331,
+            "Z": 0.0
+          }
+        ]
+      },
+      "Transform": {
+        "Matrix": {
+          "Components": [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            42.0
+          ]
+        }
+      },
+      "Material": "28c5c2b1-d65c-4c46-8689-d651f50f07e7",
+      "Representation": {
+        "SolidOperations": [
+          {
+            "discriminator": "Elements.Geometry.Solids.Lamina",
+            "Perimeter": {
+              "discriminator": "Elements.Geometry.Polygon",
+              "Vertices": [
+                {
+                  "X": 75.50808,
+                  "Y": 6.71751,
+                  "Z": 0.0
+                },
+                {
+                  "X": 63.85962,
+                  "Y": 22.97523,
+                  "Z": 0.0
+                },
+                {
+                  "X": 39.44556,
+                  "Y": 5.48287,
+                  "Z": 0.0
+                },
+                {
+                  "X": 9.97663,
+                  "Y": 46.6126,
+                  "Z": 0.0
+                },
+                {
+                  "X": -1.57417,
+                  "Y": 45.41864,
+                  "Z": 0.0
+                },
+                {
+                  "X": -24.16854,
+                  "Y": -5.76566,
+                  "Z": 0.0
+                },
+                {
+                  "X": -5.8719,
+                  "Y": -13.84238,
+                  "Z": 0.0
+                },
+                {
+                  "X": 7.30338,
+                  "Y": 16.00433,
+                  "Z": 0.0
+                },
+                {
+                  "X": 34.8363,
+                  "Y": -22.42331,
+                  "Z": 0.0
+                }
+              ]
+            },
+            "IsVoid": false
+          }
+        ]
+      },
+      "IsElementDefinition": false,
+      "Id": "263249fc-9d2e-46bf-8266-0b37433e82b6",
+      "Name": "Level 11"
+    },
+    "2d789ec6-6a53-4965-a242-448023b0ea6e": {
+      "discriminator": "Elements.Panel",
+      "Perimeter": {
+        "discriminator": "Elements.Geometry.Polygon",
+        "Vertices": [
+          {
+            "X": 75.50808,
+            "Y": 6.71751,
+            "Z": 0.0
+          },
+          {
+            "X": 63.85962,
+            "Y": 22.97523,
+            "Z": 0.0
+          },
+          {
+            "X": 39.44556,
+            "Y": 5.48287,
+            "Z": 0.0
+          },
+          {
+            "X": 9.97663,
+            "Y": 46.6126,
+            "Z": 0.0
+          },
+          {
+            "X": -1.57417,
+            "Y": 45.41864,
+            "Z": 0.0
+          },
+          {
+            "X": -24.16854,
+            "Y": -5.76566,
+            "Z": 0.0
+          },
+          {
+            "X": -5.8719,
+            "Y": -13.84238,
+            "Z": 0.0
+          },
+          {
+            "X": 7.30338,
+            "Y": 16.00433,
+            "Z": 0.0
+          },
+          {
+            "X": 34.8363,
+            "Y": -22.42331,
+            "Z": 0.0
+          }
+        ]
+      },
+      "Transform": {
+        "Matrix": {
+          "Components": [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            48.0
+          ]
+        }
+      },
+      "Material": "28c5c2b1-d65c-4c46-8689-d651f50f07e7",
+      "Representation": {
+        "SolidOperations": [
+          {
+            "discriminator": "Elements.Geometry.Solids.Lamina",
+            "Perimeter": {
+              "discriminator": "Elements.Geometry.Polygon",
+              "Vertices": [
+                {
+                  "X": 75.50808,
+                  "Y": 6.71751,
+                  "Z": 0.0
+                },
+                {
+                  "X": 63.85962,
+                  "Y": 22.97523,
+                  "Z": 0.0
+                },
+                {
+                  "X": 39.44556,
+                  "Y": 5.48287,
+                  "Z": 0.0
+                },
+                {
+                  "X": 9.97663,
+                  "Y": 46.6126,
+                  "Z": 0.0
+                },
+                {
+                  "X": -1.57417,
+                  "Y": 45.41864,
+                  "Z": 0.0
+                },
+                {
+                  "X": -24.16854,
+                  "Y": -5.76566,
+                  "Z": 0.0
+                },
+                {
+                  "X": -5.8719,
+                  "Y": -13.84238,
+                  "Z": 0.0
+                },
+                {
+                  "X": 7.30338,
+                  "Y": 16.00433,
+                  "Z": 0.0
+                },
+                {
+                  "X": 34.8363,
+                  "Y": -22.42331,
+                  "Z": 0.0
+                }
+              ]
+            },
+            "IsVoid": false
+          }
+        ]
+      },
+      "IsElementDefinition": false,
+      "Id": "2d789ec6-6a53-4965-a242-448023b0ea6e",
+      "Name": "Penthouse Level"
+    },
+    "41472603-058e-440e-8ae7-6e25ccb973ac": {
+      "discriminator": "Elements.Panel",
+      "Perimeter": {
+        "discriminator": "Elements.Geometry.Polygon",
+        "Vertices": [
+          {
+            "X": 75.50808,
+            "Y": 6.71751,
+            "Z": 0.0
+          },
+          {
+            "X": 63.85962,
+            "Y": 22.97523,
+            "Z": 0.0
+          },
+          {
+            "X": 39.44556,
+            "Y": 5.48287,
+            "Z": 0.0
+          },
+          {
+            "X": 9.97663,
+            "Y": 46.6126,
+            "Z": 0.0
+          },
+          {
+            "X": -1.57417,
+            "Y": 45.41864,
+            "Z": 0.0
+          },
+          {
+            "X": -24.16854,
+            "Y": -5.76566,
+            "Z": 0.0
+          },
+          {
+            "X": -5.8719,
+            "Y": -13.84238,
+            "Z": 0.0
+          },
+          {
+            "X": 7.30338,
+            "Y": 16.00433,
+            "Z": 0.0
+          },
+          {
+            "X": 34.8363,
+            "Y": -22.42331,
+            "Z": 0.0
+          }
+        ]
+      },
+      "Transform": {
+        "Matrix": {
+          "Components": [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            53.0
+          ]
+        }
+      },
+      "Material": "28c5c2b1-d65c-4c46-8689-d651f50f07e7",
+      "Representation": {
+        "SolidOperations": [
+          {
+            "discriminator": "Elements.Geometry.Solids.Lamina",
+            "Perimeter": {
+              "discriminator": "Elements.Geometry.Polygon",
+              "Vertices": [
+                {
+                  "X": 75.50808,
+                  "Y": 6.71751,
+                  "Z": 0.0
+                },
+                {
+                  "X": 63.85962,
+                  "Y": 22.97523,
+                  "Z": 0.0
+                },
+                {
+                  "X": 39.44556,
+                  "Y": 5.48287,
+                  "Z": 0.0
+                },
+                {
+                  "X": 9.97663,
+                  "Y": 46.6126,
+                  "Z": 0.0
+                },
+                {
+                  "X": -1.57417,
+                  "Y": 45.41864,
+                  "Z": 0.0
+                },
+                {
+                  "X": -24.16854,
+                  "Y": -5.76566,
+                  "Z": 0.0
+                },
+                {
+                  "X": -5.8719,
+                  "Y": -13.84238,
+                  "Z": 0.0
+                },
+                {
+                  "X": 7.30338,
+                  "Y": 16.00433,
+                  "Z": 0.0
+                },
+                {
+                  "X": 34.8363,
+                  "Y": -22.42331,
+                  "Z": 0.0
+                }
+              ]
+            },
+            "IsVoid": false
+          }
+        ]
+      },
+      "IsElementDefinition": false,
+      "Id": "41472603-058e-440e-8ae7-6e25ccb973ac",
+      "Name": "Roof"
+    }
+  }
+}

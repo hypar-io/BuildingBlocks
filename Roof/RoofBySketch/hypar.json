@@ -1,0 +1,42 @@
+{
+  "$schema": "https://hypar.io/Schemas/Function.json",
+  "id": "0f328d62-cb65-4163-afc6-d8f7cc55457a",
+  "name": "Roof By Sketch",
+  "description": "Creates a Roof from a supplied Polygon sketch and a supplied elevation.",
+  "language": "C#",
+  "model_output": "Roof",
+  "input_schema": {
+    "required": [
+      "Mesh"
+    ],
+    "type": "object",
+    "properties": {
+      "Mesh": {
+        "$ref": "https://hypar.io/Schemas/Mesh.json"
+      },
+      "Thickness": {
+        "type": "number",
+        "minimum": 0.1,
+        "maximum": 1.0,
+        "multipleOf": 0.01,
+        "default": 0.2,
+        "description": "Thickness of the Roof from its lowest point to its underside.",
+        "$hyparUnitType": "length"
+      }
+    }
+  },
+  "outputs": [
+    {
+      "unit_type": "area",
+      "name": "Area",
+      "description": "Area of the Roof's topside surface.",
+      "type": "number"
+    }
+  ],
+  "element_types": [
+    "https://raw.githubusercontent.com/hypar-io/Schemas/master/Roof.json"
+  ],
+  "repository_url": "https://github.com/hypar-io/function",
+  "source_file_key": null,
+  "preview_image": null
+}

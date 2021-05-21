@@ -1,0 +1,10 @@
+
+bin/
+obj/
+*.glb
+output.json
+input.json
+.vs/**/*.*
+
+*.nupkg
+**/_output/*

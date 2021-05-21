@@ -9,7 +9,7 @@ namespace EnvelopeByCenterline
     public static class EnvelopeByCenterline
     {
         /// <summary>
-        /// The EnvelopeByCenterline function.
+        /// Creates a building envelope derived from a non-self-intersecting Polyline path input, a building height and width.
         /// </summary>
         /// <param name="model">The input model.</param>
         /// <param name="input">The arguments to the execution.</param>

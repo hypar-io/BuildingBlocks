@@ -29,7 +29,7 @@ namespace FloorsByLevels
 		public double FloorQuantity {get;}
 
 
-        
+
         /// <summary>
         /// Construct a FloorsByLevelsOutputs with default inputs.
         /// This should be used for testing only.
@@ -45,10 +45,10 @@ namespace FloorsByLevels
         /// </summary>
         /// <returns></returns>
         [JsonConstructor]
-        public FloorsByLevelsOutputs(double totalarea, double floorquantity): base()
+        public FloorsByLevelsOutputs(double totalArea, double floorQuantity): base()
         {
-			this.TotalArea = totalarea;
-			this.FloorQuantity = floorquantity;
+			this.TotalArea = totalArea;
+			this.FloorQuantity = floorQuantity;
 
 		}
 

@@ -5,59 +5,57 @@
 using Elements;
 using Elements.GeoJSON;
 using Elements.Geometry;
+using Elements.Geometry.Solids;
+using Elements.Validators;
+using Elements.Serialization.JSON;
 using Hypar.Functions;
 using Hypar.Functions.Execution;
 using Hypar.Functions.Execution.AWS;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using Line = Elements.Geometry.Line;
+using Polygon = Elements.Geometry.Polygon;
 
 namespace FloorsByLevels
 {
-    public class FloorsByLevelsInputs: S3Args
+    #pragma warning disable // Disable all warnings
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
+    
+    public  class FloorsByLevelsInputs : S3Args
+    
     {
-		/// <summary>
-		/// Setback of all floors from each level's perimeter.
-		/// </summary>
-		[JsonProperty("Floor Setback")]
-		public double FloorSetback {get;}
-
-		/// <summary>
-		/// Thickness of all floors.
-		/// </summary>
-		[JsonProperty("Floor Thickness")]
-		public double FloorThickness {get;}
-
-
+        [Newtonsoft.Json.JsonConstructor]
         
-        /// <summary>
-        /// Construct a FloorsByLevelsInputs with default inputs.
-        /// This should be used for testing only.
-        /// </summary>
-        public FloorsByLevelsInputs() : base()
+        public FloorsByLevelsInputs(double @floorSetback, double @floorThickness, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey):
+        base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
         {
-			this.FloorSetback = 0.5;
-			this.FloorThickness = 0.5;
-
+            var validator = Validator.Instance.GetFirstValidatorForType<FloorsByLevelsInputs>();
+            if(validator != null)
+            {
+                validator.PreConstruct(new object[]{ @floorSetback, @floorThickness});
+            }
+        
+            this.FloorSetback = @floorSetback;
+            this.FloorThickness = @floorThickness;
+        
+            if(validator != null)
+            {
+                validator.PostConstruct(this);
+            }
         }
-
-
-        /// <summary>
-        /// Construct a FloorsByLevelsInputs specifying all inputs.
-        /// </summary>
-        /// <returns></returns>
-        [JsonConstructor]
-        public FloorsByLevelsInputs(double floorsetback, double floorthickness, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
-        {
-			this.FloorSetback = floorsetback;
-			this.FloorThickness = floorthickness;
-
-		}
-
-		public override string ToString()
-		{
-			var json = JsonConvert.SerializeObject(this);
-			return json;
-		}
-	}
+    
+        /// <summary>Setback of all floors from each level's perimeter.</summary>
+        [Newtonsoft.Json.JsonProperty("Floor Setback", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.Range(0.0D, 0.5D)]
+        public double FloorSetback { get; set; } = 0D;
+    
+        /// <summary>Thickness of all floors.</summary>
+        [Newtonsoft.Json.JsonProperty("Floor Thickness", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.Range(0.01D, 0.5D)]
+        public double FloorThickness { get; set; } = 0.1D;
+    
+    
+    }
 }

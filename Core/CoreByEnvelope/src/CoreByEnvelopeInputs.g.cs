@@ -41,7 +41,7 @@ namespace CoreByEnvelope
 		public double ServiceCorePenthouseHeight {get;}
 
 
-        
+
         /// <summary>
         /// Construct a CoreByEnvelopeInputs with default inputs.
         /// This should be used for testing only.
@@ -61,12 +61,12 @@ namespace CoreByEnvelope
         /// </summary>
         /// <returns></returns>
         [JsonConstructor]
-        public CoreByEnvelopeInputs(double percentagearea, double lengthtowidthratio, double minimumperimeteroffset, double servicecorepenthouseheight, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
+        public CoreByEnvelopeInputs(double percentageArea, double lengthToWidthRatio, double minimumPerimeterOffset, double serviceCorePenthouseHeight, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
         {
-			this.PercentageArea = percentagearea;
-			this.LengthToWidthRatio = lengthtowidthratio;
-			this.MinimumPerimeterOffset = minimumperimeteroffset;
-			this.ServiceCorePenthouseHeight = servicecorepenthouseheight;
+			this.PercentageArea = percentageArea;
+			this.LengthToWidthRatio = lengthToWidthRatio;
+			this.MinimumPerimeterOffset = minimumPerimeterOffset;
+			this.ServiceCorePenthouseHeight = serviceCorePenthouseHeight;
 
 		}
 

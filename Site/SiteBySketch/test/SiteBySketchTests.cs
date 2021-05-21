@@ -11,12 +11,17 @@ using Elements.Geometry;
 
 namespace SiteBySketch.Tests
 {
+    /// <summary>
+    /// Writes all new Elements to JSON output.
+    /// Writes all new Elements and any incoming contextual Elements to GLB output.
+    /// </summary>
     public class SiteBySketchTests
     {
+        private const string OUTPUT = "../../../_output/";
+
         [Fact]
         public void SiteBySketchTest()
         {
-            var model = new Model();
             var polygon =
                 new Polygon(
                     new[]
@@ -28,9 +33,10 @@ namespace SiteBySketch.Tests
                     });
             var inputs = 
                 new SiteBySketchInputs (polygon, "", "", new Dictionary<string, string>(), "", "", "");
-            var outputs = SiteBySketch.Execute(new Dictionary<string, Model> { { "Test", model } }, inputs);
-            System.IO.File.WriteAllText("../../../../../../TestOutput/SiteBySketch.json", outputs.Model.ToJson());
-            outputs.Model.ToGlTF("../../../../../../TestOutput/SiteBySketch.glb");
+            var outputs = 
+                SiteBySketch.Execute(new Dictionary<string, Model> { { "Test", new Model() } }, inputs);
+            System.IO.File.WriteAllText(OUTPUT + "SiteBySketch.json", outputs.Model.ToJson());
+            outputs.Model.ToGlTF(OUTPUT + "SiteBySketch.glb");
         }
     }
 }

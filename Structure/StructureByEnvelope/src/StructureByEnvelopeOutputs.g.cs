@@ -23,7 +23,7 @@ namespace StructureByEnvelope
 		public double MaximumBeamLength {get;}
 
 
-        
+
         /// <summary>
         /// Construct a StructureByEnvelopeOutputs with default inputs.
         /// This should be used for testing only.
@@ -39,9 +39,9 @@ namespace StructureByEnvelope
         /// </summary>
         /// <returns></returns>
         [JsonConstructor]
-        public StructureByEnvelopeOutputs(double maximumbeamlength): base()
+        public StructureByEnvelopeOutputs(double maximumBeamLength): base()
         {
-			this.MaximumBeamLength = maximumbeamlength;
+			this.MaximumBeamLength = maximumBeamLength;
 
 		}
 

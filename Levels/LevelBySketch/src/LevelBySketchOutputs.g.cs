@@ -23,7 +23,7 @@ namespace LevelBySketch
 		public double Area {get;}
 
 
-        
+
         /// <summary>
         /// Construct a LevelBySketchOutputs with default inputs.
         /// This should be used for testing only.

@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\dependencies\RoofBySketch.Dependencies.csproj" />
+    <ProjectReference Include="..\..\..\..\Hypar\Hypar.Functions\src\Hypar.Functions.csproj" />
+    <ProjectReference Include="..\..\..\..\GeometryEx\GeometryEx\GeometryEx.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- <PackageReference Include="GeometryEx" Version="8.11.0" /> -->
+    
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+</Project>

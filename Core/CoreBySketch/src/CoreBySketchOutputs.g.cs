@@ -23,7 +23,7 @@ namespace CoreBySketch
 		public double Height {get;}
 
 
-        
+
         /// <summary>
         /// Construct a CoreBySketchOutputs with default inputs.
         /// This should be used for testing only.
