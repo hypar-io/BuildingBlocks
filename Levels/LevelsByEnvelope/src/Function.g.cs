@@ -35,7 +35,7 @@ namespace LevelsByEnvelope
             // deserialization.
             var asmName = Path.GetFileNameWithoutExtension(asmLocation);
             var depPath = Path.Combine(asmDir, $"{asmName}.Dependencies.dll");
-            if (File.Exists(depPath))
+            if(File.Exists(depPath))
             {
                 Console.WriteLine($"Loading dependencies assembly from: {depPath}...");
                 Assembly.LoadFrom(depPath);
@@ -59,14 +59,14 @@ namespace LevelsByEnvelope
             sw.Stop();
             Console.WriteLine($"Time to load assemblies: {sw.Elapsed.TotalSeconds})");
 
-            if (this.store == null)
+            if(this.store == null)
             {
                 this.store = new S3ModelStore<LevelsByEnvelopeInputs>(RegionEndpoint.USWest1);
             }
 
-            var l = new InvocationWrapper<LevelsByEnvelopeInputs, LevelsByEnvelopeOutputs>(store, LevelsByEnvelope.Execute);
+            var l = new InvocationWrapper<LevelsByEnvelopeInputs,LevelsByEnvelopeOutputs>(store, LevelsByEnvelope.Execute);
             var output = await l.InvokeAsync(args);
             return output;
         }
-    }
+      }
 }
