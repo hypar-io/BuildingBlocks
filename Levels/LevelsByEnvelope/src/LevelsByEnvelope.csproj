@@ -8,11 +8,9 @@
     <ProjectReference Include="..\dependencies\LevelsByEnvelope.Dependencies.csproj" />
   </ItemGroup>
 
-
   <ItemGroup>
-    <!-- <PackageReference Include="GeometryEx" Version="4.0.0" /> -->
-    <PackageReference Include="Hypar.Elements" Version="0.9.1-alpha.3" />
-    <PackageReference Include="Hypar.Functions" Version="0.9.0-alpha.14" />
+    <PackageReference Include="Hypar.Elements" Version="0.9.0" />
+    <PackageReference Include="Hypar.Functions" Version="0.8.9" />
   </ItemGroup>
 
   <PropertyGroup>
