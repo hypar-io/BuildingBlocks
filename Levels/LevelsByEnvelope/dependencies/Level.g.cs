@@ -7,6 +7,7 @@ using Elements;
 using Elements.GeoJSON;
 using Elements.Geometry;
 using Elements.Geometry.Solids;
+using Elements.Spatial;
 using Elements.Validators;
 using Elements.Serialization.JSON;
 using System;
@@ -17,7 +18,7 @@ using Polygon = Elements.Geometry.Polygon;
 
 namespace Elements
 {
-    #pragma warning disable // Disable all warnings
+#pragma warning disable // Disable all warnings
 
     /// <summary>A horizontal planer datum.</summary>
     [Newtonsoft.Json.JsonConverter(typeof(Elements.Serialization.JSON.JsonInheritanceConverter), "discriminator")]
@@ -29,24 +30,24 @@ namespace Elements
             : base(id, name)
         {
             var validator = Validator.Instance.GetFirstValidatorForType<Level>();
-            if(validator != null)
+            if (validator != null)
             {
-                validator.PreConstruct(new object[]{ @elevation, @id, @name});
+                validator.PreConstruct(new object[] { @elevation, @id, @name });
             }
-        
+
             this.Elevation = @elevation;
-            
-            if(validator != null)
+
+            if (validator != null)
             {
                 validator.PostConstruct(this);
             }
         }
-    
+
         /// <summary>The elevation of the level.</summary>
         [Newtonsoft.Json.JsonProperty("Elevation", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Range(0D, double.MaxValue)]
         public double Elevation { get; set; }
-    
-    
+
+
     }
 }
