@@ -5,9 +5,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="GeometryEx" Version="8.0.0" />
-    <PackageReference Include="Hypar.Elements" Version="0.8.2" />
-    <PackageReference Include="Hypar.Functions" Version="0.8.5" />
+    <ProjectReference Include="..\dependencies\LevelsByEnvelope.Dependencies.csproj" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <!-- <PackageReference Include="GeometryEx" Version="4.0.0" /> -->
+    <PackageReference Include="Hypar.Elements" Version="0.9.1-alpha.3" />
+    <PackageReference Include="Hypar.Functions" Version="0.9.0-alpha.14" />
   </ItemGroup>
 
   <PropertyGroup>

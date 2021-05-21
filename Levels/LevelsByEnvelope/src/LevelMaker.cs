@@ -1,9 +1,9 @@
 using Elements;
 using Elements.Geometry;
+using Elements.Geometry.Solids;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using GeometryEx;
 
 namespace LevelsByEnvelope
 {
@@ -12,7 +12,7 @@ namespace LevelsByEnvelope
 
         public LevelMaker(List<Envelope> envelopes, double stdHeight, double grdHeight, double pntHeight)
         {
-            Envelopes = new List<Envelope> ();
+            Envelopes = new List<Envelope>();
             Envelopes.AddRange(envelopes.OrderBy(e => e.Elevation));
             Levels = new List<Level>();
             LevelPerimeters = new List<LevelPerimeter>();
@@ -20,11 +20,14 @@ namespace LevelsByEnvelope
             GradeLevels(stdHeight, grdHeight);
             HighLevels(stdHeight, pntHeight);
             MidLevels(stdHeight);
+            LevelVolumes = MakeLevelVolumes();
+
         }
 
         private List<Envelope> Envelopes { get; set; }
         public List<Level> Levels { get; private set; }
         public List<LevelPerimeter> LevelPerimeters { get; private set; }
+        public List<LevelVolume> LevelVolumes { get; private set; }
 
 
 
@@ -159,7 +162,7 @@ namespace LevelsByEnvelope
         /// <param name="envelope">Envelope that will encompass the new Levels.</param>
         /// <param name="interval">Desired vertical distance between Levels.</param>
         /// <returns>A List of Levels ordered from lowest Elevation to highest.</returns>
-        public void MakeLevels (Envelope envelope, double interval, bool first = true, bool last = true)
+        public void MakeLevels(Envelope envelope, double interval, bool first = true, bool last = true)
         {
             var perimeter = envelope.Profile.Perimeter;
             if (perimeter.IsClockWise())
@@ -186,6 +189,35 @@ namespace LevelsByEnvelope
                 Levels.Add(new Level(envelope.Elevation + envelope.Height, Guid.NewGuid(), ""));
                 LevelPerimeters.Add(new LevelPerimeter(perimeter.Area(), envelope.Elevation + envelope.Height, perimeter, Guid.NewGuid(), ""));
             }
+        }
+
+        private List<LevelVolume> MakeLevelVolumes()
+        {
+            List<LevelVolume> volumes = new List<LevelVolume>();
+            for (int i = 0; i < LevelPerimeters.Count - 1; i++)
+            {
+                var thisLevelPerimeter = LevelPerimeters[i];
+                var nextLevelPerimeter = LevelPerimeters[i + 1];
+                var levelHeight = nextLevelPerimeter.Elevation - thisLevelPerimeter.Elevation;
+                if (levelHeight > 0.01)
+                {
+                    volumes.Add(
+                        new LevelVolume(
+                            thisLevelPerimeter.Perimeter,
+                            levelHeight,
+                            thisLevelPerimeter.Area,
+                            new Transform(0, 0, thisLevelPerimeter.Elevation),
+                            BuiltInMaterials.Glass,
+                            new Representation(
+                                new[] { new Extrude(thisLevelPerimeter.Perimeter, levelHeight, Vector3.ZAxis, false) }
+                                ),
+                            false,
+                            Guid.NewGuid(),
+                            thisLevelPerimeter.Name));
+                }
+
+            }
+            return volumes;
         }
     }
 }
