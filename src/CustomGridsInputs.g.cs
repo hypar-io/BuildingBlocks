@@ -28,18 +28,19 @@ namespace CustomGrids
     {
         [Newtonsoft.Json.JsonConstructor]
         
-        public CustomGridsInputs(CustomGridsInputsMode @mode, IList<GridAreas> @gridAreas, bool @showDebugGeometry, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey):
+        public CustomGridsInputs(CustomGridsInputsMode @mode, IList<GridAreas> @gridAreas, bool @showDebugGeometry, Overrides @overrides, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey):
         base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
         {
             var validator = Validator.Instance.GetFirstValidatorForType<CustomGridsInputs>();
             if(validator != null)
             {
-                validator.PreConstruct(new object[]{ @mode, @gridAreas, @showDebugGeometry});
+                validator.PreConstruct(new object[]{ @mode, @gridAreas, @showDebugGeometry, @overrides});
             }
         
             this.Mode = @mode;
             this.GridAreas = @gridAreas;
             this.ShowDebugGeometry = @showDebugGeometry;
+            this.Overrides = @overrides;
         
             if(validator != null)
             {
@@ -47,10 +48,10 @@ namespace CustomGrids
             }
         }
     
-        /// <summary>Are grid positions absolute from their origin, or relative to the last gridline?</summary>
+        /// <summary>Are the gridlines calculated from a typical target, as grid positions absolute from their origin, or relative to the last gridline?</summary>
         [Newtonsoft.Json.JsonProperty("Mode", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public CustomGridsInputsMode Mode { get; set; } = CustomGridsInputsMode.Relative;
+        public CustomGridsInputsMode Mode { get; set; } = CustomGridsInputsMode.Typical;
     
         /// <summary>List of grids enclosed by the area they apply to.</summary>
         [Newtonsoft.Json.JsonProperty("Grid Areas", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
@@ -58,6 +59,9 @@ namespace CustomGrids
     
         [Newtonsoft.Json.JsonProperty("Show Debug Geometry", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public bool ShowDebugGeometry { get; set; } = false;
+    
+        [Newtonsoft.Json.JsonProperty("overrides", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public Overrides Overrides { get; set; }
     
     
     }
@@ -70,6 +74,9 @@ namespace CustomGrids
     
         [System.Runtime.Serialization.EnumMember(Value = @"Relative")]
         Relative = 1,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"Typical")]
+        Typical = 2,
     
     }
     
@@ -125,21 +132,52 @@ namespace CustomGrids
     
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
     
+    public partial class Overrides 
+    
+    {
+        [Newtonsoft.Json.JsonConstructor]
+        public Overrides(IList<GridOriginsOverride> @gridOrigins)
+        {
+            var validator = Validator.Instance.GetFirstValidatorForType<Overrides>();
+            if(validator != null)
+            {
+                validator.PreConstruct(new object[]{ @gridOrigins});
+            }
+        
+            this.GridOrigins = @gridOrigins;
+        
+            if(validator != null)
+            {
+                validator.PostConstruct(this);
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("Grid Origins", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public IList<GridOriginsOverride> GridOrigins { get; set; }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
+    
     public partial class U 
     
     {
         [Newtonsoft.Json.JsonConstructor]
-        public U(string @name, IList<double> @spacing, IList<GridLines> @gridLines)
+        public U(string @name, IList<double> @spacing, IList<GridLines> @gridLines, double @targetTypicalSpacing, double @offsetStart, double @offsetEnd)
         {
             var validator = Validator.Instance.GetFirstValidatorForType<U>();
             if(validator != null)
             {
-                validator.PreConstruct(new object[]{ @name, @spacing, @gridLines});
+                validator.PreConstruct(new object[]{ @name, @spacing, @gridLines, @targetTypicalSpacing, @offsetStart, @offsetEnd});
             }
         
             this.Name = @name;
             this.Spacing = @spacing;
             this.GridLines = @gridLines;
+            this.TargetTypicalSpacing = @targetTypicalSpacing;
+            this.OffsetStart = @offsetStart;
+            this.OffsetEnd = @offsetEnd;
         
             if(validator != null)
             {
@@ -156,6 +194,18 @@ namespace CustomGrids
     
         [Newtonsoft.Json.JsonProperty("Grid Lines", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public IList<GridLines> GridLines { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("Target Typical Spacing", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.Range(3D, 15D)]
+        public double TargetTypicalSpacing { get; set; } = 7.6D;
+    
+        [Newtonsoft.Json.JsonProperty("Offset Start", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.Range(0D, 15D)]
+        public double OffsetStart { get; set; } = 0.5D;
+    
+        [Newtonsoft.Json.JsonProperty("Offset End", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.Range(0D, 15D)]
+        public double OffsetEnd { get; set; } = 0.5D;
     
         private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
     
@@ -175,17 +225,20 @@ namespace CustomGrids
     
     {
         [Newtonsoft.Json.JsonConstructor]
-        public V(string @name, IList<double> @spacing, IList<GridLines> @gridLines)
+        public V(string @name, IList<double> @spacing, IList<GridLines> @gridLines, double @targetTypicalSpacing, double @offsetStart, double @offsetEnd)
         {
             var validator = Validator.Instance.GetFirstValidatorForType<V>();
             if(validator != null)
             {
-                validator.PreConstruct(new object[]{ @name, @spacing, @gridLines});
+                validator.PreConstruct(new object[]{ @name, @spacing, @gridLines, @targetTypicalSpacing, @offsetStart, @offsetEnd});
             }
         
             this.Name = @name;
             this.Spacing = @spacing;
             this.GridLines = @gridLines;
+            this.TargetTypicalSpacing = @targetTypicalSpacing;
+            this.OffsetStart = @offsetStart;
+            this.OffsetEnd = @offsetEnd;
         
             if(validator != null)
             {
@@ -203,6 +256,18 @@ namespace CustomGrids
         [Newtonsoft.Json.JsonProperty("Grid Lines", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public IList<GridLines> GridLines { get; set; }
     
+        [Newtonsoft.Json.JsonProperty("Target Typical Spacing", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.Range(3D, 15D)]
+        public double TargetTypicalSpacing { get; set; } = 7.6D;
+    
+        [Newtonsoft.Json.JsonProperty("Offset Start", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.Range(0D, 15D)]
+        public double OffsetStart { get; set; } = 0.5D;
+    
+        [Newtonsoft.Json.JsonProperty("Offset End", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.Range(0D, 15D)]
+        public double OffsetEnd { get; set; } = 0.5D;
+    
         private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
     
         [Newtonsoft.Json.JsonExtensionData]
@@ -211,6 +276,42 @@ namespace CustomGrids
             get { return _additionalProperties; }
             set { _additionalProperties = value; }
         }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
+    
+    public partial class GridOriginsOverride 
+    
+    {
+        [Newtonsoft.Json.JsonConstructor]
+        public GridOriginsOverride(string @id, GridOriginsIdentity @identity, GridOriginsValue @value)
+        {
+            var validator = Validator.Instance.GetFirstValidatorForType<GridOriginsOverride>();
+            if(validator != null)
+            {
+                validator.PreConstruct(new object[]{ @id, @identity, @value});
+            }
+        
+            this.Id = @id;
+            this.Identity = @identity;
+            this.Value = @value;
+        
+            if(validator != null)
+            {
+                validator.PostConstruct(this);
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Id { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("Identity", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public GridOriginsIdentity Identity { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("Value", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public GridOriginsValue Value { get; set; }
     
     
     }
@@ -256,6 +357,62 @@ namespace CustomGrids
             get { return _additionalProperties; }
             set { _additionalProperties = value; }
         }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
+    
+    public partial class GridOriginsIdentity 
+    
+    {
+        [Newtonsoft.Json.JsonConstructor]
+        public GridOriginsIdentity(string @name)
+        {
+            var validator = Validator.Instance.GetFirstValidatorForType<GridOriginsIdentity>();
+            if(validator != null)
+            {
+                validator.PreConstruct(new object[]{ @name});
+            }
+        
+            this.Name = @name;
+        
+            if(validator != null)
+            {
+                validator.PostConstruct(this);
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("Name", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Name { get; set; }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
+    
+    public partial class GridOriginsValue 
+    
+    {
+        [Newtonsoft.Json.JsonConstructor]
+        public GridOriginsValue(Transform @transform)
+        {
+            var validator = Validator.Instance.GetFirstValidatorForType<GridOriginsValue>();
+            if(validator != null)
+            {
+                validator.PreConstruct(new object[]{ @transform});
+            }
+        
+            this.Transform = @transform;
+        
+            if(validator != null)
+            {
+                validator.PostConstruct(this);
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("Transform", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public Transform Transform { get; set; }
     
     
     }

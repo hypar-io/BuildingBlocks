@@ -2,7 +2,7 @@
   "$schema": "https://hypar.io/Schemas/Function.json",
   "id": "c918ea51-b05b-4e14-a30b-ea53799365d5",
   "name": "Custom Grids",
-  "description": "",
+  "description": "Create custom gridlines for your project using typical values, relative spacings, or absolute offsets.",
   "language": "C#",
   "model_dependencies": [
     {
@@ -17,13 +17,14 @@
     "properties": {
       "Mode": {
         "type": "string",
-        "description": "Are grid positions absolute from their origin, or relative to the last gridline?",
+        "description": "Are the gridlines calculated from a typical target, as grid positions absolute from their origin, or relative to the last gridline?",
         "$hyparOrder": 0,
-        "default": "Relative",
+        "default": "Typical",
         "$hyparDisableRange": true,
         "enum": [
           "Absolute",
-          "Relative"
+          "Relative",
+          "Typical"
         ]
       },
       "Grid Areas": {
@@ -64,7 +65,10 @@
                   "Quantity": 2,
                   "Location": 8.1
                 }
-              ]
+              ],
+              "Offset Start": 0.5,
+              "Target Typical Spacing": 7.6,
+              "Offset End": 0.5
             },
             "V": {
               "Name": "{1}",
@@ -79,7 +83,10 @@
                   "Quantity": 2,
                   "Location": 8.1
                 }
-              ]
+              ],
+              "Offset Start": 0.5,
+              "Target Typical Spacing": 7.6,
+              "Offset End": 0.5
             }
           }
         ],
@@ -87,6 +94,63 @@
           "name": "Grid Area",
           "type": "object",
           "required": [],
+          "default": {
+            "Name": "Main",
+            "Orientation": {
+              "Matrix": {
+                "Components": [
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1,
+                  0
+                ]
+              }
+            },
+            "U": {
+              "Name": "{A}",
+              "Grid Lines": [
+                {
+                  "Spacing": 0.5,
+                  "Quantity": 1,
+                  "Location": 0.5
+                },
+                {
+                  "Spacing": 7.6,
+                  "Quantity": 2,
+                  "Location": 8.1
+                }
+              ],
+              "Offset Start": 0.5,
+              "Target Typical Spacing": 7.6,
+              "Offset End": 0.5
+            },
+            "V": {
+              "Name": "{1}",
+              "Grid Lines": [
+                {
+                  "Spacing": 0.5,
+                  "Quantity": 1,
+                  "Location": 0.5
+                },
+                {
+                  "Spacing": 7.6,
+                  "Quantity": 2,
+                  "Location": 8.1
+                }
+              ],
+              "Offset Start": 0.5,
+              "Target Typical Spacing": 7.6,
+              "Offset End": 0.5
+            }
+          },
           "properties": {
             "Name": {
               "type": "string",
@@ -95,6 +159,7 @@
             "Orientation": {
               "description": "The origin and rotation of your grid",
               "$ref": "https://prod-api.hypar.io/schemas/Transform",
+              "$hyparDeprecated": true,
               "$hyparConstraints": {
                 "enablePosition": true,
                 "enableRotation": true,
@@ -125,6 +190,7 @@
               "properties": {
                 "Name": {
                   "type": "string",
+                  "$hyparOrder": 99,
                   "default": "{A}"
                 },
                 "Spacing": {
@@ -138,6 +204,18 @@
                 },
                 "Grid Lines": {
                   "type": "array",
+                  "$hyparShowIf": {
+                    "conditions": [
+                      {
+                        "property": "Mode",
+                        "value": "Relative"
+                      },
+                      {
+                        "property": "Mode",
+                        "value": "Absolute"
+                      }
+                    ]
+                  },
                   "items": {
                     "type": "object",
                     "$hyparStyle": "row",
@@ -188,6 +266,54 @@
                       }
                     }
                   }
+                },
+                "Target Typical Spacing": {
+                  "type": "number",
+                  "$hyparOrder": 1,
+                  "$hyparUnitType": "length",
+                  "default": 7.6,
+                  "minimum": 3,
+                  "maximum": 15,
+                  "$hyparShowIf": {
+                    "conditions": [
+                      {
+                        "property": "Mode",
+                        "value": "Typical"
+                      }
+                    ]
+                  }
+                },
+                "Offset Start": {
+                  "type": "number",
+                  "$hyparOrder": 2,
+                  "$hyparUnitType": "length",
+                  "default": 0.5,
+                  "minimum": 0,
+                  "maximum": 15,
+                  "$hyparShowIf": {
+                    "conditions": [
+                      {
+                        "property": "Mode",
+                        "value": "Typical"
+                      }
+                    ]
+                  }
+                },
+                "Offset End": {
+                  "type": "number",
+                  "$hyparOrder": 3,
+                  "$hyparUnitType": "length",
+                  "default": 0.5,
+                  "minimum": 0,
+                  "maximum": 15,
+                  "$hyparShowIf": {
+                    "conditions": [
+                      {
+                        "property": "Mode",
+                        "value": "Typical"
+                      }
+                    ]
+                  }
                 }
               }
             },
@@ -196,6 +322,7 @@
               "properties": {
                 "Name": {
                   "type": "string",
+                  "$hyparOrder": 99,
                   "default": "{1}"
                 },
                 "Spacing": {
@@ -209,14 +336,26 @@
                 },
                 "Grid Lines": {
                   "type": "array",
+                  "$hyparShowIf": {
+                    "conditions": [
+                      {
+                        "property": "Mode",
+                        "value": "Relative"
+                      },
+                      {
+                        "property": "Mode",
+                        "value": "Absolute"
+                      }
+                    ]
+                  },
                   "items": {
                     "type": "object",
+                    "$hyparStyle": "row",
                     "default": {
                       "Location": 0,
                       "Spacing": 0,
                       "Quantity": 1
                     },
-                    "$hyparStyle": "row",
                     "properties": {
                       "Location": {
                         "type": "number",
@@ -258,6 +397,54 @@
                         }
                       }
                     }
+                  }
+                },
+                "Target Typical Spacing": {
+                  "type": "number",
+                  "$hyparOrder": 1,
+                  "$hyparUnitType": "length",
+                  "default": 7.6,
+                  "minimum": 3,
+                  "maximum": 15,
+                  "$hyparShowIf": {
+                    "conditions": [
+                      {
+                        "property": "Mode",
+                        "value": "Typical"
+                      }
+                    ]
+                  }
+                },
+                "Offset Start": {
+                  "type": "number",
+                  "$hyparOrder": 2,
+                  "$hyparUnitType": "length",
+                  "default": 0.5,
+                  "minimum": 0,
+                  "maximum": 15,
+                  "$hyparShowIf": {
+                    "conditions": [
+                      {
+                        "property": "Mode",
+                        "value": "Typical"
+                      }
+                    ]
+                  }
+                },
+                "Offset End": {
+                  "type": "number",
+                  "$hyparOrder": 3,
+                  "$hyparUnitType": "length",
+                  "default": 0.5,
+                  "minimum": 0,
+                  "maximum": 15,
+                  "$hyparShowIf": {
+                    "conditions": [
+                      {
+                        "property": "Mode",
+                        "value": "Typical"
+                      }
+                    ]
                   }
                 }
               }
@@ -279,6 +466,27 @@
     "https://prod-api.hypar.io/schemas/Grid2dElement"
   ],
   "outputs": [],
+  "overrides": {
+    "Grid Origins": {
+      "context": "[*discriminator=Elements.Grid2dElement]",
+      "identity": {
+        "Name": {
+          "type": "string"
+        }
+      },
+      "schema": {
+        "Transform": {
+          "$ref": "https://prod-api.hypar.io/schemas/Transform",
+          "$hyparConstraints": {
+            "enablePosition": true,
+            "enableRotation": true,
+            "positionZ": 0,
+            "rotationZ": 0
+          }
+        }
+      }
+    }
+  },
   "repository_url": "",
   "source_file_key": null,
   "preview_image": null
