@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Hypar.Model" Version="0.8.9" />
+    <PackageReference Include="Hypar.Model" Version="0.8.7-alpha.15" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
     <PackageReference Include="xunit" Version="2.4.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\LevelsByEnvelope.csproj" />
+    <ProjectReference Include="..\src\SimpleLevelsByEnvelope.csproj" />
   </ItemGroup>
 
 </Project>

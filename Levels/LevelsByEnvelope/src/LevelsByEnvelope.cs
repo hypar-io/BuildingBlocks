@@ -3,7 +3,6 @@ using Elements.Geometry;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using GeometryEx;
 
 namespace LevelsByEnvelope
 {
@@ -40,6 +39,7 @@ namespace LevelsByEnvelope
                                                      input.PenthouseLevelHeight);
             output.Model.AddElements(levelMaker.Levels);
             output.Model.AddElements(levelMaker.LevelPerimeters);
+            output.Model.AddElements(levelMaker.LevelVolumes);
             var matl = BuiltInMaterials.Glass;
             matl.SpecularFactor = 0.0;
             matl.GlossinessFactor = 0.0;

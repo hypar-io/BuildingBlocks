@@ -11,38 +11,33 @@
       "optional": false
     }
   ],
+  "model_output": "Levels",
   "input_schema": {
     "type": "object",
     "properties": {
-      "Penthouse Level Height": {
-        "multipleOf": 0.1,
-        "default": 4,
-        "maximum": 20,
-        "description": "Height of the top level.",
-        "type": "number",
-        "$hyparOrder": 2,
-        "minimum": 3,
-        "$hyparUnitType": "length"
-      },
       "Ground Level Height": {
-        "multipleOf": 0.1,
-        "default": 4,
-        "maximum": 20,
-        "description": "Height of ground level.",
         "type": "number",
-        "$hyparOrder": 0,
-        "minimum": 3,
-        "$hyparUnitType": "length"
+        "minimum": 2.0,
+        "maximum": 20.0,
+        "$hyparUnitType": "length",
+        "description": "Height of ground level.",
+        "default": 5.0
       },
       "Standard Level Height": {
-        "multipleOf": 0.1,
-        "default": 4,
-        "maximum": 20,
-        "description": "Standard height of repeated levels.",
         "type": "number",
-        "$hyparOrder": 1,
-        "minimum": 3,
-        "$hyparUnitType": "length"
+        "minimum": 2.0,
+        "maximum": 20.0,
+        "$hyparUnitType": "length",
+        "description": "Standard height of repeated levels.",
+        "default": 4.0
+      },
+      "Penthouse Level Height": {
+        "type": "number",
+        "minimum": 2.0,
+        "maximum": 20.0,
+        "$hyparUnitType": "length",
+        "description": "Height of the top level.",
+        "default": 5.0
       }
     }
   },
@@ -81,7 +76,8 @@
   "element_types": [
     "https://dev-api.hypar.io/schemas/Envelope",
     "https://raw.githubusercontent.com/hypar-io/Schemas/master/Level.json",
-    "https://raw.githubusercontent.com/hypar-io/Schemas/master/LevelPerimeter.json"
+    "https://raw.githubusercontent.com/hypar-io/Schemas/master/LevelPerimeter.json",
+    "https://prod-api.hypar.io/schemas/LevelVolume"
   ],
   "repository_url": "",
   "source_file_key": null,
