@@ -26,7 +26,7 @@ namespace Elements
     public partial class Grid2dElement : GeometricElement
     {
         [Newtonsoft.Json.JsonConstructor]
-        public Grid2dElement(object @grid, IList<GridNode> @gridNodes, Transform @transform, Material @material, Representation @representation, bool @isElementDefinition, System.Guid @id, string @name)
+        public Grid2dElement(Grid2d @grid, IList<GridNode> @gridNodes, Transform @transform, Material @material, Representation @representation, bool @isElementDefinition, System.Guid @id, string @name)
             : base(transform, material, representation, isElementDefinition, id, name)
         {
             var validator = Validator.Instance.GetFirstValidatorForType<Grid2dElement>();
@@ -46,7 +46,7 @@ namespace Elements
     
         /// <summary>Contains a Grid2d in absolute space (is not intended to be modified by the transform)</summary>
         [Newtonsoft.Json.JsonProperty("Grid", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public object Grid { get; set; }
+        public Grid2d Grid { get; set; }
     
         /// <summary>A list of grid intersections that fall within the grid boundaries, in absolute space (is not intended to be modified by the transform)</summary>
         [Newtonsoft.Json.JsonProperty("GridNodes", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
