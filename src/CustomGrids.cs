@@ -107,7 +107,7 @@ namespace CustomGrids
                 output.Model.AddElement(new Line(origin - vDirection, origin + vDirection));
             }
 
-            var standardizedRecords = GetStandardizedRecords(output.Model, gridArea.U, gridArea.V, input, envelopePolygons, origin, uDirection, vDirection);
+            var standardizedRecords = GetStandardizedRecords(output, gridArea.U, gridArea.V, input, envelopePolygons, origin, uDirection, vDirection);
 
             var u = standardizedRecords.u;
             var v = standardizedRecords.v;
@@ -129,13 +129,14 @@ namespace CustomGrids
             {
                 foreach (var vPoint in vPoints)
                 {
-                    var offset = vPoint - uPoints[0];
+                    var offset = vPoint - origin;
                     var gridpoint = uPoint + offset;
                     gridPoints.Add(gridpoint);
                     if (input.ShowDebugGeometry)
                     {
-                        output.Model.AddElement(new Panel(new Circle().ToPolygon(), null, new Transform(gridpoint)));
+                        output.Model.AddElement(new Panel(new Circle(0.25).ToPolygon(), null, new Transform(gridpoint)));
                     }
+
                 }
             }
 
@@ -202,6 +203,7 @@ namespace CustomGrids
 
                             if (input.ShowDebugGeometry)
                             {
+                                output.Model.AddElement(new Panel(new Circle(0.25).ToPolygon(), Debug.MagentaMaterial, new Transform(intersection)));
                                 Debug.DrawPoint(output.Model, intersection, Debug.LightweightBlueMaterial);
                             }
                         }
@@ -336,11 +338,19 @@ namespace CustomGrids
             return boxRect.TransformedPolygon(minBoxXform);
         }
 
-        private static (U u, U v) GetStandardizedRecords(Model model, U u, V v, CustomGridsInputs input, List<Polygon> envelopePolygons, Vector3 origin, Vector3 uDirection, Vector3 vDirection)
+        private static (U u, U v) GetStandardizedRecords(CustomGridsOutputs output, U u, V v, CustomGridsInputs input, List<Polygon> envelopePolygons, Vector3 origin, Vector3 uDirection, Vector3 vDirection)
         {
             if (input.Mode == CustomGridsInputsMode.Typical)
             {
-                var bounds = Polygon.FromAlignedBoundingBox2d(envelopePolygons.SelectMany(polygon => polygon.Vertices).Select(vertex => new Vector3(vertex.X, vertex.Y)));
+                var points = envelopePolygons.SelectMany(polygon => polygon.Vertices).Select(vertex => new Vector3(vertex.X, vertex.Y)).ToList();
+                var bounds = Polygon.FromAlignedBoundingBox2d(points);
+
+                if (origin.DistanceTo(bounds) > 0)
+                {
+                    points.Add(origin);
+                    bounds = Polygon.FromAlignedBoundingBox2d(points);
+                    output.Warnings.Add("Your origin is outside of your envelope boundaries. There are some assumptions made in this calculation that may not align to what you expect");
+                }
 
                 var xAxis = new Line(origin, origin + uDirection);
                 xAxis = xAxis.ExtendTo(bounds, true, true);
@@ -350,7 +360,7 @@ namespace CustomGrids
 
                 if (input.ShowDebugGeometry)
                 {
-                    model.AddElement(new ModelCurve(bounds));
+                    output.Model.AddElement(new ModelCurve(bounds));
                 }
                 return (u: GetStandardizedRecords(u, input, xAxis.Length()), v: GetStandardizedRecords(v, input, yAxis.Length()));
             }

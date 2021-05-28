@@ -18,8 +18,8 @@ namespace CustomGrids
         {
             var input = GetInput();
 
-            var modelDependencies = new Dictionary<string, Model> { 
-                {"Envelope", Model.FromJson(File.ReadAllText(@"/Users/serenali/Github/hypar/function-CustomGrids/test/Generated/CustomGridsTest/model_dependencies/Envelope/model.json")) }, 
+            var modelDependencies = new Dictionary<string, Model> {
+                {"Envelope", Model.FromJson(File.ReadAllText(@"/Users/serenali/Github/hypar/function-CustomGrids/test/Generated/CustomGridsTest/model_dependencies/Envelope/model.json")) },
             };
 
             var result = CustomGrids.Execute(modelDependencies, input);
@@ -32,7 +32,7 @@ namespace CustomGrids
         {
             var inputText = @"
             {
-  ""Show Debug Geometry"": false,
+  ""Show Debug Geometry"": true,
   ""Grid Areas"": [
     {
       ""Orientation"": {
@@ -54,48 +54,56 @@ namespace CustomGrids
         }
       },
       ""U"": {
-        ""Grid Lines"": [
-          {
-            ""Quantity"": 1,
-            ""Spacing"": 0.5,
-            ""Location"": 0.5
-          },
-          {
-            ""Quantity"": 2,
-            ""Spacing"": 7.6,
-            ""Location"": 8.1
-          }
-        ],
-        ""Offset End"": 0.5,
+        ""Offset End"": 1,
+        ""Grid Lines"": [],
         ""Target Typical Spacing"": 7.6,
         ""Spacing"": [],
-        ""Offset Start"": 0.5,
+        ""Offset Start"": 1,
         ""Name"": ""{A}""
       },
       ""V"": {
-        ""Grid Lines"": [
-          {
-            ""Quantity"": 1,
-            ""Spacing"": 0.5,
-            ""Location"": 0.5
-          },
-          {
-            ""Quantity"": 2,
-            ""Spacing"": 7.6,
-            ""Location"": 8.1
-          }
-        ],
-        ""Offset End"": 0.5,
+        ""Offset End"": 1,
+        ""Grid Lines"": [],
         ""Target Typical Spacing"": 7.6,
         ""Spacing"": [],
-        ""Offset Start"": 0.5,
+        ""Offset Start"": 1,
         ""Name"": ""{1}""
       },
-      ""Name"": ""Main""
+      ""Name"": ""Grid""
     }
   ],
   ""model_input_keys"": {
-    ""Envelope"": ""8a157319-a0a5-4247-bd72-75aad05901a8_0c8d0526-9490-4d53-896b-88a1515de583_elements.zip""
+    ""Envelope"": ""c323a306-e928-44a8-be7f-70f0067cc967_d4819507-d08b-41be-9157-376356d01491_elements.zip""
+  },
+  ""overrides"": {
+    ""Grid Origins"": [
+      {
+        ""value"": {
+          ""Transform"": {
+            ""Matrix"": {
+              ""Components"": [
+                0.4590799938812189,
+                -0.8883949342595443,
+                3.5953008731802944E-16,
+                -58.47034701110173,
+                0.8883949342595445,
+                0.4590799938812188,
+                6.957495698884039E-16,
+                108.18430054586503,
+                -7.831534636881901E-16,
+                0,
+                1,
+                -1.1102230246251565E-15
+              ]
+            }
+          }
+        },
+        ""identity"": {
+          ""Name"": ""Grid""
+        },
+        ""id"": ""d1c36ce9-e94b-4fb7-9df0-f488e85dea99""
+      }
+    ]
   },
   ""Mode"": ""Typical""
 }
