@@ -23,16 +23,16 @@ namespace Elements
     /// <summary>An element wrapper for Grid2d</summary>
     [Newtonsoft.Json.JsonConverter(typeof(Elements.Serialization.JSON.JsonInheritanceConverter), "discriminator")]
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
-    public partial class Grid2dElement : Element
+    public partial class Grid2dElement : GeometricElement
     {
         [Newtonsoft.Json.JsonConstructor]
-        public Grid2dElement(Grid2d @grid, IList<GridNode> @gridNodes, System.Guid @id, string @name)
-            : base(id, name)
+        public Grid2dElement(Grid2d @grid, IList<GridNode> @gridNodes, Transform @transform, Material @material, Representation @representation, bool @isElementDefinition, System.Guid @id, string @name)
+            : base(transform, material, representation, isElementDefinition, id, name)
         {
             var validator = Validator.Instance.GetFirstValidatorForType<Grid2dElement>();
             if(validator != null)
             {
-                validator.PreConstruct(new object[]{ @grid, @gridNodes, @id, @name});
+                validator.PreConstruct(new object[]{ @grid, @gridNodes, @transform, @material, @representation, @isElementDefinition, @id, @name});
             }
         
             this.Grid = @grid;
@@ -44,11 +44,11 @@ namespace Elements
             }
         }
     
-        /// <summary>contains a grid</summary>
+        /// <summary>Contains a Grid2d in absolute space (is not intended to be modified by the transform)</summary>
         [Newtonsoft.Json.JsonProperty("Grid", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public Grid2d Grid { get; set; }
     
-        /// <summary>A list of grid nodes</summary>
+        /// <summary>A list of grid intersections that fall within the grid boundaries, in absolute space (is not intended to be modified by the transform)</summary>
         [Newtonsoft.Json.JsonProperty("GridNodes", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public IList<GridNode> GridNodes { get; set; }
     
