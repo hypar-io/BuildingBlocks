@@ -6,7 +6,6 @@ using Elements;
 using Elements.GeoJSON;
 using Elements.Geometry;
 using Elements.Geometry.Solids;
-using Elements.Properties;
 using Elements.Validators;
 using Elements.Serialization.JSON;
 using Hypar.Functions;
@@ -29,20 +28,19 @@ namespace StructureByEnvelope
     {
         [Newtonsoft.Json.JsonConstructor]
         
-        public StructureByEnvelopeInputs(double @gridXAxisInterval, double @slabEdgeOffset, bool @displayGrid, double @gridYAxisInterval, StructureByEnvelopeInputsTypeOfConstruction @typeOfConstruction, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey):
+        public StructureByEnvelopeInputs(StructureByEnvelopeInputsColumnType @columnType, StructureByEnvelopeInputsGirderType @girderType, StructureByEnvelopeInputsBeamType @beamType, bool @createBeamsOnFirstLevel, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey):
         base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
         {
             var validator = Validator.Instance.GetFirstValidatorForType<StructureByEnvelopeInputs>();
             if(validator != null)
             {
-                validator.PreConstruct(new object[]{ @gridXAxisInterval, @slabEdgeOffset, @displayGrid, @gridYAxisInterval, @typeOfConstruction});
+                validator.PreConstruct(new object[]{ @columnType, @girderType, @beamType, @createBeamsOnFirstLevel});
             }
         
-            this.GridXAxisInterval = @gridXAxisInterval;
-            this.SlabEdgeOffset = @slabEdgeOffset;
-            this.DisplayGrid = @displayGrid;
-            this.GridYAxisInterval = @gridYAxisInterval;
-            this.TypeOfConstruction = @typeOfConstruction;
+            this.ColumnType = @columnType;
+            this.GirderType = @girderType;
+            this.BeamType = @beamType;
+            this.CreateBeamsOnFirstLevel = @createBeamsOnFirstLevel;
         
             if(validator != null)
             {
@@ -50,50 +48,2884 @@ namespace StructureByEnvelope
             }
         }
     
-        /// <summary>Grix interval in the X direction.</summary>
-        [Newtonsoft.Json.JsonProperty("Grid X-Axis Interval", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        [System.ComponentModel.DataAnnotations.Range(3D, 10D)]
-        public double GridXAxisInterval { get; set; } = 3D;
-    
-        /// <summary>The offset of the grid lines from the slab edge.</summary>
-        [Newtonsoft.Json.JsonProperty("Slab Edge Offset", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        [System.ComponentModel.DataAnnotations.Range(0D, 3D)]
-        public double SlabEdgeOffset { get; set; } = 0.5D;
-    
-        /// <summary>Display the grid on the ground plane?</summary>
-        [Newtonsoft.Json.JsonProperty("Display Grid", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public bool DisplayGrid { get; set; } = false;
-    
-        /// <summary>Grid interval in the Y direction.</summary>
-        [Newtonsoft.Json.JsonProperty("Grid Y-Axis Interval", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        [System.ComponentModel.DataAnnotations.Range(3D, 10D)]
-        public double GridYAxisInterval { get; set; } = 3D;
-    
-        /// <summary>The system used for construction.</summary>
-        [Newtonsoft.Json.JsonProperty("Type of Construction", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        /// <summary>The wide flange section shape to use for all columns.</summary>
+        [Newtonsoft.Json.JsonProperty("Column Type", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public StructureByEnvelopeInputsTypeOfConstruction TypeOfConstruction { get; set; } = StructureByEnvelopeInputsTypeOfConstruction.Steel;
+        public StructureByEnvelopeInputsColumnType ColumnType { get; set; }
     
-        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+        /// <summary>The wide flange section shape to use for all girders.</summary>
+        [Newtonsoft.Json.JsonProperty("Girder Type", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        public StructureByEnvelopeInputsGirderType GirderType { get; set; }
     
-        [Newtonsoft.Json.JsonExtensionData]
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
-        {
-            get { return _additionalProperties; }
-            set { _additionalProperties = value; }
-        }
+        /// <summary>The wide flange section shape to use for all beams.</summary>
+        [Newtonsoft.Json.JsonProperty("Beam Type", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        public StructureByEnvelopeInputsBeamType BeamType { get; set; }
+    
+        /// <summary>Should beams be created at the lowest level of the structure?</summary>
+        [Newtonsoft.Json.JsonProperty("Create Beams On First Level", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public bool CreateBeamsOnFirstLevel { get; set; } = false;
     
     
     }
     
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
-    public enum StructureByEnvelopeInputsTypeOfConstruction
+    public enum StructureByEnvelopeInputsColumnType
     {
-        [System.Runtime.Serialization.EnumMember(Value = @"Steel")]
-        Steel = 0,
+        [System.Runtime.Serialization.EnumMember(Value = @"W4x13")]
+        W4x13 = 0,
     
-        [System.Runtime.Serialization.EnumMember(Value = @"MassTimber")]
-        MassTimber = 1,
+        [System.Runtime.Serialization.EnumMember(Value = @"W5x16")]
+        W5x16 = 1,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W5x19")]
+        W5x19 = 2,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W6x12")]
+        W6x12 = 3,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W6x15")]
+        W6x15 = 4,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W6x16")]
+        W6x16 = 5,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W6x20")]
+        W6x20 = 6,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W6x25")]
+        W6x25 = 7,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W6x8_5")]
+        W6x8_5 = 8,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W6x9")]
+        W6x9 = 9,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W8x10")]
+        W8x10 = 10,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W8x13")]
+        W8x13 = 11,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W8x15")]
+        W8x15 = 12,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W8x18")]
+        W8x18 = 13,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W8x21")]
+        W8x21 = 14,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W8x24")]
+        W8x24 = 15,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W8x28")]
+        W8x28 = 16,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W8x31")]
+        W8x31 = 17,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W8x35")]
+        W8x35 = 18,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W8x40")]
+        W8x40 = 19,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W8x48")]
+        W8x48 = 20,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W8x58")]
+        W8x58 = 21,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W8x67")]
+        W8x67 = 22,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W10x100")]
+        W10x100 = 23,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W10x112")]
+        W10x112 = 24,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W10x12")]
+        W10x12 = 25,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W10x15")]
+        W10x15 = 26,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W10x17")]
+        W10x17 = 27,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W10x19")]
+        W10x19 = 28,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W10x22")]
+        W10x22 = 29,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W10x26")]
+        W10x26 = 30,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W10x30")]
+        W10x30 = 31,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W10x33")]
+        W10x33 = 32,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W10x39")]
+        W10x39 = 33,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W10x45")]
+        W10x45 = 34,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W10x49")]
+        W10x49 = 35,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W10x54")]
+        W10x54 = 36,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W10x60")]
+        W10x60 = 37,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W10x68")]
+        W10x68 = 38,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W10x77")]
+        W10x77 = 39,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W10x88")]
+        W10x88 = 40,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x106")]
+        W12x106 = 41,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x120")]
+        W12x120 = 42,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x136")]
+        W12x136 = 43,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x14")]
+        W12x14 = 44,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x152")]
+        W12x152 = 45,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x16")]
+        W12x16 = 46,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x170")]
+        W12x170 = 47,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x19")]
+        W12x19 = 48,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x190")]
+        W12x190 = 49,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x210")]
+        W12x210 = 50,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x22")]
+        W12x22 = 51,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x230")]
+        W12x230 = 52,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x252")]
+        W12x252 = 53,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x26")]
+        W12x26 = 54,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x279")]
+        W12x279 = 55,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x30")]
+        W12x30 = 56,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x305")]
+        W12x305 = 57,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x336")]
+        W12x336 = 58,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x35")]
+        W12x35 = 59,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x40")]
+        W12x40 = 60,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x45")]
+        W12x45 = 61,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x50")]
+        W12x50 = 62,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x53")]
+        W12x53 = 63,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x58")]
+        W12x58 = 64,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x65")]
+        W12x65 = 65,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x72")]
+        W12x72 = 66,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x79")]
+        W12x79 = 67,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x87")]
+        W12x87 = 68,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x96")]
+        W12x96 = 69,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x109")]
+        W14x109 = 70,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x120")]
+        W14x120 = 71,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x132")]
+        W14x132 = 72,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x145")]
+        W14x145 = 73,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x159")]
+        W14x159 = 74,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x176")]
+        W14x176 = 75,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x193")]
+        W14x193 = 76,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x211")]
+        W14x211 = 77,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x22")]
+        W14x22 = 78,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x233")]
+        W14x233 = 79,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x257")]
+        W14x257 = 80,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x26")]
+        W14x26 = 81,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x283")]
+        W14x283 = 82,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x30")]
+        W14x30 = 83,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x311")]
+        W14x311 = 84,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x34")]
+        W14x34 = 85,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x342")]
+        W14x342 = 86,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x370")]
+        W14x370 = 87,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x38")]
+        W14x38 = 88,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x398")]
+        W14x398 = 89,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x426")]
+        W14x426 = 90,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x43")]
+        W14x43 = 91,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x455")]
+        W14x455 = 92,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x48")]
+        W14x48 = 93,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x500")]
+        W14x500 = 94,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x53")]
+        W14x53 = 95,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x550")]
+        W14x550 = 96,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x605")]
+        W14x605 = 97,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x61")]
+        W14x61 = 98,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x665")]
+        W14x665 = 99,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x68")]
+        W14x68 = 100,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x730")]
+        W14x730 = 101,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x74")]
+        W14x74 = 102,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x808")]
+        W14x808 = 103,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x82")]
+        W14x82 = 104,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x90")]
+        W14x90 = 105,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x99")]
+        W14x99 = 106,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W16x100")]
+        W16x100 = 107,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W16x26")]
+        W16x26 = 108,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W16x31")]
+        W16x31 = 109,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W16x36")]
+        W16x36 = 110,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W16x40")]
+        W16x40 = 111,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W16x45")]
+        W16x45 = 112,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W16x50")]
+        W16x50 = 113,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W16x57")]
+        W16x57 = 114,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W16x67")]
+        W16x67 = 115,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W16x77")]
+        W16x77 = 116,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W16x89")]
+        W16x89 = 117,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W18x106")]
+        W18x106 = 118,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W18x119")]
+        W18x119 = 119,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W18x130")]
+        W18x130 = 120,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W18x143")]
+        W18x143 = 121,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W18x158")]
+        W18x158 = 122,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W18x175")]
+        W18x175 = 123,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W18x192")]
+        W18x192 = 124,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W18x211")]
+        W18x211 = 125,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W18x234")]
+        W18x234 = 126,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W18x258")]
+        W18x258 = 127,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W18x283")]
+        W18x283 = 128,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W18x311")]
+        W18x311 = 129,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W18x35")]
+        W18x35 = 130,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W18x40")]
+        W18x40 = 131,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W18x46")]
+        W18x46 = 132,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W18x50")]
+        W18x50 = 133,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W18x55")]
+        W18x55 = 134,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W18x60")]
+        W18x60 = 135,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W18x65")]
+        W18x65 = 136,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W18x71")]
+        W18x71 = 137,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W18x76")]
+        W18x76 = 138,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W18x86")]
+        W18x86 = 139,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W18x97")]
+        W18x97 = 140,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W21x101")]
+        W21x101 = 141,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W21x111")]
+        W21x111 = 142,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W21x122")]
+        W21x122 = 143,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W21x132")]
+        W21x132 = 144,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W21x147")]
+        W21x147 = 145,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W21x166")]
+        W21x166 = 146,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W21x182")]
+        W21x182 = 147,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W21x201")]
+        W21x201 = 148,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W21x223")]
+        W21x223 = 149,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W21x248")]
+        W21x248 = 150,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W21x275")]
+        W21x275 = 151,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W21x300")]
+        W21x300 = 152,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W21x333")]
+        W21x333 = 153,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W21x364")]
+        W21x364 = 154,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W21x402")]
+        W21x402 = 155,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W21x44")]
+        W21x44 = 156,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W21x48")]
+        W21x48 = 157,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W21x50")]
+        W21x50 = 158,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W21x55")]
+        W21x55 = 159,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W21x57")]
+        W21x57 = 160,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W21x62")]
+        W21x62 = 161,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W21x68")]
+        W21x68 = 162,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W21x73")]
+        W21x73 = 163,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W21x83")]
+        W21x83 = 164,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W21x93")]
+        W21x93 = 165,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W24x103")]
+        W24x103 = 166,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W24x104")]
+        W24x104 = 167,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W24x117")]
+        W24x117 = 168,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W24x131")]
+        W24x131 = 169,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W24x146")]
+        W24x146 = 170,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W24x162")]
+        W24x162 = 171,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W24x176")]
+        W24x176 = 172,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W24x192")]
+        W24x192 = 173,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W24x207")]
+        W24x207 = 174,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W24x229")]
+        W24x229 = 175,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W24x250")]
+        W24x250 = 176,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W24x279")]
+        W24x279 = 177,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W24x306")]
+        W24x306 = 178,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W24x335")]
+        W24x335 = 179,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W24x370")]
+        W24x370 = 180,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W24x408")]
+        W24x408 = 181,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W24x450")]
+        W24x450 = 182,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W24x492")]
+        W24x492 = 183,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W24x55")]
+        W24x55 = 184,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W24x62")]
+        W24x62 = 185,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W24x68")]
+        W24x68 = 186,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W24x76")]
+        W24x76 = 187,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W24x84")]
+        W24x84 = 188,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W24x94")]
+        W24x94 = 189,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W27x102")]
+        W27x102 = 190,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W27x114")]
+        W27x114 = 191,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W27x129")]
+        W27x129 = 192,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W27x146")]
+        W27x146 = 193,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W27x161")]
+        W27x161 = 194,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W27x178")]
+        W27x178 = 195,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W27x194")]
+        W27x194 = 196,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W27x217")]
+        W27x217 = 197,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W27x235")]
+        W27x235 = 198,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W27x258")]
+        W27x258 = 199,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W27x281")]
+        W27x281 = 200,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W27x307")]
+        W27x307 = 201,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W27x336")]
+        W27x336 = 202,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W27x368")]
+        W27x368 = 203,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W27x407")]
+        W27x407 = 204,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W27x448")]
+        W27x448 = 205,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W27x494")]
+        W27x494 = 206,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W27x539")]
+        W27x539 = 207,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W27x84")]
+        W27x84 = 208,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W27x94")]
+        W27x94 = 209,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W30x108")]
+        W30x108 = 210,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W30x116")]
+        W30x116 = 211,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W30x124")]
+        W30x124 = 212,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W30x132")]
+        W30x132 = 213,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W30x148")]
+        W30x148 = 214,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W30x173")]
+        W30x173 = 215,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W30x191")]
+        W30x191 = 216,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W30x211")]
+        W30x211 = 217,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W30x235")]
+        W30x235 = 218,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W30x261")]
+        W30x261 = 219,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W30x292")]
+        W30x292 = 220,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W30x326")]
+        W30x326 = 221,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W30x357")]
+        W30x357 = 222,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W30x391")]
+        W30x391 = 223,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W30x433")]
+        W30x433 = 224,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W30x477")]
+        W30x477 = 225,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W30x526")]
+        W30x526 = 226,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W30x581")]
+        W30x581 = 227,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W30x90")]
+        W30x90 = 228,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W30x99")]
+        W30x99 = 229,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W33x118")]
+        W33x118 = 230,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W33x130")]
+        W33x130 = 231,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W33x141")]
+        W33x141 = 232,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W33x152")]
+        W33x152 = 233,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W33x169")]
+        W33x169 = 234,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W33x201")]
+        W33x201 = 235,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W33x221")]
+        W33x221 = 236,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W33x241")]
+        W33x241 = 237,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W33x263")]
+        W33x263 = 238,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W33x291")]
+        W33x291 = 239,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W33x318")]
+        W33x318 = 240,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W33x354")]
+        W33x354 = 241,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W33x387")]
+        W33x387 = 242,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W33x424")]
+        W33x424 = 243,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W33x468")]
+        W33x468 = 244,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W33x515")]
+        W33x515 = 245,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W33x567")]
+        W33x567 = 246,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W33x619")]
+        W33x619 = 247,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W36x135")]
+        W36x135 = 248,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W36x150")]
+        W36x150 = 249,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W36x160")]
+        W36x160 = 250,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W36x170")]
+        W36x170 = 251,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W36x182")]
+        W36x182 = 252,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W36x194")]
+        W36x194 = 253,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W36x210")]
+        W36x210 = 254,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W36x230")]
+        W36x230 = 255,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W36x232")]
+        W36x232 = 256,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W36x245")]
+        W36x245 = 257,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W36x256")]
+        W36x256 = 258,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W36x260")]
+        W36x260 = 259,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W36x280")]
+        W36x280 = 260,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W36x300")]
+        W36x300 = 261,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W36x328")]
+        W36x328 = 262,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W36x359")]
+        W36x359 = 263,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W36x393")]
+        W36x393 = 264,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W36x439")]
+        W36x439 = 265,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W36x485")]
+        W36x485 = 266,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W36x527")]
+        W36x527 = 267,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W36x588")]
+        W36x588 = 268,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W36x650")]
+        W36x650 = 269,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W36x720")]
+        W36x720 = 270,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W36x798")]
+        W36x798 = 271,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W36x848")]
+        W36x848 = 272,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x149")]
+        W40x149 = 273,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x167")]
+        W40x167 = 274,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x174")]
+        W40x174 = 275,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x183")]
+        W40x183 = 276,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x192")]
+        W40x192 = 277,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x199")]
+        W40x199 = 278,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x211")]
+        W40x211 = 279,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x215")]
+        W40x215 = 280,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x221")]
+        W40x221 = 281,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x235")]
+        W40x235 = 282,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x244")]
+        W40x244 = 283,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x249")]
+        W40x249 = 284,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x264")]
+        W40x264 = 285,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x268")]
+        W40x268 = 286,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x277")]
+        W40x277 = 287,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x278")]
+        W40x278 = 288,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x297")]
+        W40x297 = 289,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x298")]
+        W40x298 = 290,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x321")]
+        W40x321 = 291,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x324")]
+        W40x324 = 292,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x327")]
+        W40x327 = 293,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x328")]
+        W40x328 = 294,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x331")]
+        W40x331 = 295,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x362")]
+        W40x362 = 296,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x372")]
+        W40x372 = 297,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x392")]
+        W40x392 = 298,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x397")]
+        W40x397 = 299,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x431")]
+        W40x431 = 300,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x436")]
+        W40x436 = 301,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x466")]
+        W40x466 = 302,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x480")]
+        W40x480 = 303,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x503")]
+        W40x503 = 304,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x531")]
+        W40x531 = 305,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x593")]
+        W40x593 = 306,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x655")]
+        W40x655 = 307,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W44x198")]
+        W44x198 = 308,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W44X224")]
+        W44X224 = 309,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W44x230")]
+        W44x230 = 310,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W44x248")]
+        W44x248 = 311,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W44x262")]
+        W44x262 = 312,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W44x285")]
+        W44x285 = 313,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W44x290")]
+        W44x290 = 314,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W44x335")]
+        W44x335 = 315,
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
+    public enum StructureByEnvelopeInputsGirderType
+    {
+        [System.Runtime.Serialization.EnumMember(Value = @"W4x13")]
+        W4x13 = 0,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W5x16")]
+        W5x16 = 1,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W5x19")]
+        W5x19 = 2,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W6x12")]
+        W6x12 = 3,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W6x15")]
+        W6x15 = 4,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W6x16")]
+        W6x16 = 5,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W6x20")]
+        W6x20 = 6,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W6x25")]
+        W6x25 = 7,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W6x8_5")]
+        W6x8_5 = 8,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W6x9")]
+        W6x9 = 9,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W8x10")]
+        W8x10 = 10,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W8x13")]
+        W8x13 = 11,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W8x15")]
+        W8x15 = 12,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W8x18")]
+        W8x18 = 13,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W8x21")]
+        W8x21 = 14,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W8x24")]
+        W8x24 = 15,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W8x28")]
+        W8x28 = 16,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W8x31")]
+        W8x31 = 17,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W8x35")]
+        W8x35 = 18,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W8x40")]
+        W8x40 = 19,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W8x48")]
+        W8x48 = 20,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W8x58")]
+        W8x58 = 21,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W8x67")]
+        W8x67 = 22,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W10x100")]
+        W10x100 = 23,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W10x112")]
+        W10x112 = 24,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W10x12")]
+        W10x12 = 25,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W10x15")]
+        W10x15 = 26,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W10x17")]
+        W10x17 = 27,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W10x19")]
+        W10x19 = 28,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W10x22")]
+        W10x22 = 29,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W10x26")]
+        W10x26 = 30,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W10x30")]
+        W10x30 = 31,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W10x33")]
+        W10x33 = 32,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W10x39")]
+        W10x39 = 33,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W10x45")]
+        W10x45 = 34,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W10x49")]
+        W10x49 = 35,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W10x54")]
+        W10x54 = 36,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W10x60")]
+        W10x60 = 37,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W10x68")]
+        W10x68 = 38,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W10x77")]
+        W10x77 = 39,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W10x88")]
+        W10x88 = 40,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x106")]
+        W12x106 = 41,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x120")]
+        W12x120 = 42,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x136")]
+        W12x136 = 43,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x14")]
+        W12x14 = 44,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x152")]
+        W12x152 = 45,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x16")]
+        W12x16 = 46,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x170")]
+        W12x170 = 47,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x19")]
+        W12x19 = 48,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x190")]
+        W12x190 = 49,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x210")]
+        W12x210 = 50,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x22")]
+        W12x22 = 51,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x230")]
+        W12x230 = 52,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x252")]
+        W12x252 = 53,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x26")]
+        W12x26 = 54,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x279")]
+        W12x279 = 55,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x30")]
+        W12x30 = 56,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x305")]
+        W12x305 = 57,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x336")]
+        W12x336 = 58,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x35")]
+        W12x35 = 59,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x40")]
+        W12x40 = 60,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x45")]
+        W12x45 = 61,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x50")]
+        W12x50 = 62,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x53")]
+        W12x53 = 63,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x58")]
+        W12x58 = 64,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x65")]
+        W12x65 = 65,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x72")]
+        W12x72 = 66,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x79")]
+        W12x79 = 67,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x87")]
+        W12x87 = 68,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x96")]
+        W12x96 = 69,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x109")]
+        W14x109 = 70,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x120")]
+        W14x120 = 71,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x132")]
+        W14x132 = 72,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x145")]
+        W14x145 = 73,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x159")]
+        W14x159 = 74,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x176")]
+        W14x176 = 75,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x193")]
+        W14x193 = 76,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x211")]
+        W14x211 = 77,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x22")]
+        W14x22 = 78,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x233")]
+        W14x233 = 79,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x257")]
+        W14x257 = 80,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x26")]
+        W14x26 = 81,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x283")]
+        W14x283 = 82,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x30")]
+        W14x30 = 83,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x311")]
+        W14x311 = 84,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x34")]
+        W14x34 = 85,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x342")]
+        W14x342 = 86,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x370")]
+        W14x370 = 87,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x38")]
+        W14x38 = 88,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x398")]
+        W14x398 = 89,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x426")]
+        W14x426 = 90,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x43")]
+        W14x43 = 91,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x455")]
+        W14x455 = 92,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x48")]
+        W14x48 = 93,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x500")]
+        W14x500 = 94,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x53")]
+        W14x53 = 95,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x550")]
+        W14x550 = 96,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x605")]
+        W14x605 = 97,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x61")]
+        W14x61 = 98,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x665")]
+        W14x665 = 99,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x68")]
+        W14x68 = 100,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x730")]
+        W14x730 = 101,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x74")]
+        W14x74 = 102,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x808")]
+        W14x808 = 103,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x82")]
+        W14x82 = 104,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x90")]
+        W14x90 = 105,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x99")]
+        W14x99 = 106,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W16x100")]
+        W16x100 = 107,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W16x26")]
+        W16x26 = 108,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W16x31")]
+        W16x31 = 109,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W16x36")]
+        W16x36 = 110,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W16x40")]
+        W16x40 = 111,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W16x45")]
+        W16x45 = 112,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W16x50")]
+        W16x50 = 113,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W16x57")]
+        W16x57 = 114,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W16x67")]
+        W16x67 = 115,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W16x77")]
+        W16x77 = 116,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W16x89")]
+        W16x89 = 117,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W18x106")]
+        W18x106 = 118,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W18x119")]
+        W18x119 = 119,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W18x130")]
+        W18x130 = 120,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W18x143")]
+        W18x143 = 121,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W18x158")]
+        W18x158 = 122,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W18x175")]
+        W18x175 = 123,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W18x192")]
+        W18x192 = 124,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W18x211")]
+        W18x211 = 125,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W18x234")]
+        W18x234 = 126,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W18x258")]
+        W18x258 = 127,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W18x283")]
+        W18x283 = 128,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W18x311")]
+        W18x311 = 129,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W18x35")]
+        W18x35 = 130,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W18x40")]
+        W18x40 = 131,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W18x46")]
+        W18x46 = 132,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W18x50")]
+        W18x50 = 133,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W18x55")]
+        W18x55 = 134,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W18x60")]
+        W18x60 = 135,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W18x65")]
+        W18x65 = 136,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W18x71")]
+        W18x71 = 137,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W18x76")]
+        W18x76 = 138,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W18x86")]
+        W18x86 = 139,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W18x97")]
+        W18x97 = 140,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W21x101")]
+        W21x101 = 141,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W21x111")]
+        W21x111 = 142,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W21x122")]
+        W21x122 = 143,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W21x132")]
+        W21x132 = 144,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W21x147")]
+        W21x147 = 145,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W21x166")]
+        W21x166 = 146,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W21x182")]
+        W21x182 = 147,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W21x201")]
+        W21x201 = 148,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W21x223")]
+        W21x223 = 149,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W21x248")]
+        W21x248 = 150,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W21x275")]
+        W21x275 = 151,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W21x300")]
+        W21x300 = 152,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W21x333")]
+        W21x333 = 153,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W21x364")]
+        W21x364 = 154,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W21x402")]
+        W21x402 = 155,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W21x44")]
+        W21x44 = 156,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W21x48")]
+        W21x48 = 157,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W21x50")]
+        W21x50 = 158,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W21x55")]
+        W21x55 = 159,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W21x57")]
+        W21x57 = 160,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W21x62")]
+        W21x62 = 161,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W21x68")]
+        W21x68 = 162,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W21x73")]
+        W21x73 = 163,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W21x83")]
+        W21x83 = 164,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W21x93")]
+        W21x93 = 165,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W24x103")]
+        W24x103 = 166,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W24x104")]
+        W24x104 = 167,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W24x117")]
+        W24x117 = 168,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W24x131")]
+        W24x131 = 169,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W24x146")]
+        W24x146 = 170,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W24x162")]
+        W24x162 = 171,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W24x176")]
+        W24x176 = 172,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W24x192")]
+        W24x192 = 173,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W24x207")]
+        W24x207 = 174,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W24x229")]
+        W24x229 = 175,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W24x250")]
+        W24x250 = 176,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W24x279")]
+        W24x279 = 177,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W24x306")]
+        W24x306 = 178,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W24x335")]
+        W24x335 = 179,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W24x370")]
+        W24x370 = 180,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W24x408")]
+        W24x408 = 181,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W24x450")]
+        W24x450 = 182,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W24x492")]
+        W24x492 = 183,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W24x55")]
+        W24x55 = 184,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W24x62")]
+        W24x62 = 185,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W24x68")]
+        W24x68 = 186,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W24x76")]
+        W24x76 = 187,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W24x84")]
+        W24x84 = 188,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W24x94")]
+        W24x94 = 189,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W27x102")]
+        W27x102 = 190,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W27x114")]
+        W27x114 = 191,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W27x129")]
+        W27x129 = 192,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W27x146")]
+        W27x146 = 193,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W27x161")]
+        W27x161 = 194,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W27x178")]
+        W27x178 = 195,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W27x194")]
+        W27x194 = 196,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W27x217")]
+        W27x217 = 197,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W27x235")]
+        W27x235 = 198,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W27x258")]
+        W27x258 = 199,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W27x281")]
+        W27x281 = 200,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W27x307")]
+        W27x307 = 201,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W27x336")]
+        W27x336 = 202,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W27x368")]
+        W27x368 = 203,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W27x407")]
+        W27x407 = 204,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W27x448")]
+        W27x448 = 205,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W27x494")]
+        W27x494 = 206,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W27x539")]
+        W27x539 = 207,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W27x84")]
+        W27x84 = 208,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W27x94")]
+        W27x94 = 209,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W30x108")]
+        W30x108 = 210,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W30x116")]
+        W30x116 = 211,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W30x124")]
+        W30x124 = 212,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W30x132")]
+        W30x132 = 213,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W30x148")]
+        W30x148 = 214,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W30x173")]
+        W30x173 = 215,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W30x191")]
+        W30x191 = 216,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W30x211")]
+        W30x211 = 217,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W30x235")]
+        W30x235 = 218,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W30x261")]
+        W30x261 = 219,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W30x292")]
+        W30x292 = 220,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W30x326")]
+        W30x326 = 221,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W30x357")]
+        W30x357 = 222,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W30x391")]
+        W30x391 = 223,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W30x433")]
+        W30x433 = 224,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W30x477")]
+        W30x477 = 225,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W30x526")]
+        W30x526 = 226,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W30x581")]
+        W30x581 = 227,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W30x90")]
+        W30x90 = 228,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W30x99")]
+        W30x99 = 229,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W33x118")]
+        W33x118 = 230,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W33x130")]
+        W33x130 = 231,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W33x141")]
+        W33x141 = 232,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W33x152")]
+        W33x152 = 233,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W33x169")]
+        W33x169 = 234,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W33x201")]
+        W33x201 = 235,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W33x221")]
+        W33x221 = 236,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W33x241")]
+        W33x241 = 237,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W33x263")]
+        W33x263 = 238,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W33x291")]
+        W33x291 = 239,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W33x318")]
+        W33x318 = 240,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W33x354")]
+        W33x354 = 241,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W33x387")]
+        W33x387 = 242,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W33x424")]
+        W33x424 = 243,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W33x468")]
+        W33x468 = 244,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W33x515")]
+        W33x515 = 245,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W33x567")]
+        W33x567 = 246,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W33x619")]
+        W33x619 = 247,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W36x135")]
+        W36x135 = 248,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W36x150")]
+        W36x150 = 249,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W36x160")]
+        W36x160 = 250,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W36x170")]
+        W36x170 = 251,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W36x182")]
+        W36x182 = 252,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W36x194")]
+        W36x194 = 253,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W36x210")]
+        W36x210 = 254,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W36x230")]
+        W36x230 = 255,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W36x232")]
+        W36x232 = 256,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W36x245")]
+        W36x245 = 257,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W36x256")]
+        W36x256 = 258,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W36x260")]
+        W36x260 = 259,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W36x280")]
+        W36x280 = 260,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W36x300")]
+        W36x300 = 261,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W36x328")]
+        W36x328 = 262,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W36x359")]
+        W36x359 = 263,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W36x393")]
+        W36x393 = 264,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W36x439")]
+        W36x439 = 265,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W36x485")]
+        W36x485 = 266,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W36x527")]
+        W36x527 = 267,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W36x588")]
+        W36x588 = 268,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W36x650")]
+        W36x650 = 269,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W36x720")]
+        W36x720 = 270,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W36x798")]
+        W36x798 = 271,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W36x848")]
+        W36x848 = 272,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x149")]
+        W40x149 = 273,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x167")]
+        W40x167 = 274,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x174")]
+        W40x174 = 275,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x183")]
+        W40x183 = 276,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x192")]
+        W40x192 = 277,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x199")]
+        W40x199 = 278,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x211")]
+        W40x211 = 279,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x215")]
+        W40x215 = 280,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x221")]
+        W40x221 = 281,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x235")]
+        W40x235 = 282,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x244")]
+        W40x244 = 283,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x249")]
+        W40x249 = 284,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x264")]
+        W40x264 = 285,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x268")]
+        W40x268 = 286,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x277")]
+        W40x277 = 287,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x278")]
+        W40x278 = 288,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x297")]
+        W40x297 = 289,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x298")]
+        W40x298 = 290,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x321")]
+        W40x321 = 291,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x324")]
+        W40x324 = 292,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x327")]
+        W40x327 = 293,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x328")]
+        W40x328 = 294,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x331")]
+        W40x331 = 295,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x362")]
+        W40x362 = 296,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x372")]
+        W40x372 = 297,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x392")]
+        W40x392 = 298,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x397")]
+        W40x397 = 299,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x431")]
+        W40x431 = 300,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x436")]
+        W40x436 = 301,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x466")]
+        W40x466 = 302,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x480")]
+        W40x480 = 303,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x503")]
+        W40x503 = 304,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x531")]
+        W40x531 = 305,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x593")]
+        W40x593 = 306,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x655")]
+        W40x655 = 307,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W44x198")]
+        W44x198 = 308,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W44X224")]
+        W44X224 = 309,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W44x230")]
+        W44x230 = 310,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W44x248")]
+        W44x248 = 311,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W44x262")]
+        W44x262 = 312,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W44x285")]
+        W44x285 = 313,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W44x290")]
+        W44x290 = 314,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W44x335")]
+        W44x335 = 315,
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
+    public enum StructureByEnvelopeInputsBeamType
+    {
+        [System.Runtime.Serialization.EnumMember(Value = @"W4x13")]
+        W4x13 = 0,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W5x16")]
+        W5x16 = 1,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W5x19")]
+        W5x19 = 2,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W6x12")]
+        W6x12 = 3,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W6x15")]
+        W6x15 = 4,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W6x16")]
+        W6x16 = 5,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W6x20")]
+        W6x20 = 6,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W6x25")]
+        W6x25 = 7,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W6x8_5")]
+        W6x8_5 = 8,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W6x9")]
+        W6x9 = 9,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W8x10")]
+        W8x10 = 10,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W8x13")]
+        W8x13 = 11,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W8x15")]
+        W8x15 = 12,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W8x18")]
+        W8x18 = 13,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W8x21")]
+        W8x21 = 14,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W8x24")]
+        W8x24 = 15,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W8x28")]
+        W8x28 = 16,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W8x31")]
+        W8x31 = 17,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W8x35")]
+        W8x35 = 18,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W8x40")]
+        W8x40 = 19,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W8x48")]
+        W8x48 = 20,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W8x58")]
+        W8x58 = 21,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W8x67")]
+        W8x67 = 22,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W10x100")]
+        W10x100 = 23,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W10x112")]
+        W10x112 = 24,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W10x12")]
+        W10x12 = 25,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W10x15")]
+        W10x15 = 26,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W10x17")]
+        W10x17 = 27,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W10x19")]
+        W10x19 = 28,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W10x22")]
+        W10x22 = 29,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W10x26")]
+        W10x26 = 30,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W10x30")]
+        W10x30 = 31,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W10x33")]
+        W10x33 = 32,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W10x39")]
+        W10x39 = 33,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W10x45")]
+        W10x45 = 34,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W10x49")]
+        W10x49 = 35,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W10x54")]
+        W10x54 = 36,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W10x60")]
+        W10x60 = 37,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W10x68")]
+        W10x68 = 38,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W10x77")]
+        W10x77 = 39,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W10x88")]
+        W10x88 = 40,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x106")]
+        W12x106 = 41,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x120")]
+        W12x120 = 42,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x136")]
+        W12x136 = 43,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x14")]
+        W12x14 = 44,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x152")]
+        W12x152 = 45,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x16")]
+        W12x16 = 46,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x170")]
+        W12x170 = 47,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x19")]
+        W12x19 = 48,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x190")]
+        W12x190 = 49,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x210")]
+        W12x210 = 50,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x22")]
+        W12x22 = 51,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x230")]
+        W12x230 = 52,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x252")]
+        W12x252 = 53,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x26")]
+        W12x26 = 54,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x279")]
+        W12x279 = 55,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x30")]
+        W12x30 = 56,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x305")]
+        W12x305 = 57,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x336")]
+        W12x336 = 58,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x35")]
+        W12x35 = 59,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x40")]
+        W12x40 = 60,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x45")]
+        W12x45 = 61,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x50")]
+        W12x50 = 62,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x53")]
+        W12x53 = 63,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x58")]
+        W12x58 = 64,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x65")]
+        W12x65 = 65,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x72")]
+        W12x72 = 66,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x79")]
+        W12x79 = 67,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x87")]
+        W12x87 = 68,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W12x96")]
+        W12x96 = 69,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x109")]
+        W14x109 = 70,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x120")]
+        W14x120 = 71,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x132")]
+        W14x132 = 72,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x145")]
+        W14x145 = 73,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x159")]
+        W14x159 = 74,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x176")]
+        W14x176 = 75,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x193")]
+        W14x193 = 76,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x211")]
+        W14x211 = 77,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x22")]
+        W14x22 = 78,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x233")]
+        W14x233 = 79,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x257")]
+        W14x257 = 80,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x26")]
+        W14x26 = 81,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x283")]
+        W14x283 = 82,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x30")]
+        W14x30 = 83,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x311")]
+        W14x311 = 84,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x34")]
+        W14x34 = 85,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x342")]
+        W14x342 = 86,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x370")]
+        W14x370 = 87,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x38")]
+        W14x38 = 88,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x398")]
+        W14x398 = 89,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x426")]
+        W14x426 = 90,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x43")]
+        W14x43 = 91,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x455")]
+        W14x455 = 92,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x48")]
+        W14x48 = 93,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x500")]
+        W14x500 = 94,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x53")]
+        W14x53 = 95,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x550")]
+        W14x550 = 96,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x605")]
+        W14x605 = 97,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x61")]
+        W14x61 = 98,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x665")]
+        W14x665 = 99,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x68")]
+        W14x68 = 100,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x730")]
+        W14x730 = 101,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x74")]
+        W14x74 = 102,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x808")]
+        W14x808 = 103,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x82")]
+        W14x82 = 104,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x90")]
+        W14x90 = 105,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W14x99")]
+        W14x99 = 106,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W16x100")]
+        W16x100 = 107,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W16x26")]
+        W16x26 = 108,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W16x31")]
+        W16x31 = 109,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W16x36")]
+        W16x36 = 110,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W16x40")]
+        W16x40 = 111,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W16x45")]
+        W16x45 = 112,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W16x50")]
+        W16x50 = 113,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W16x57")]
+        W16x57 = 114,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W16x67")]
+        W16x67 = 115,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W16x77")]
+        W16x77 = 116,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W16x89")]
+        W16x89 = 117,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W18x106")]
+        W18x106 = 118,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W18x119")]
+        W18x119 = 119,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W18x130")]
+        W18x130 = 120,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W18x143")]
+        W18x143 = 121,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W18x158")]
+        W18x158 = 122,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W18x175")]
+        W18x175 = 123,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W18x192")]
+        W18x192 = 124,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W18x211")]
+        W18x211 = 125,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W18x234")]
+        W18x234 = 126,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W18x258")]
+        W18x258 = 127,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W18x283")]
+        W18x283 = 128,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W18x311")]
+        W18x311 = 129,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W18x35")]
+        W18x35 = 130,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W18x40")]
+        W18x40 = 131,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W18x46")]
+        W18x46 = 132,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W18x50")]
+        W18x50 = 133,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W18x55")]
+        W18x55 = 134,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W18x60")]
+        W18x60 = 135,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W18x65")]
+        W18x65 = 136,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W18x71")]
+        W18x71 = 137,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W18x76")]
+        W18x76 = 138,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W18x86")]
+        W18x86 = 139,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W18x97")]
+        W18x97 = 140,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W21x101")]
+        W21x101 = 141,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W21x111")]
+        W21x111 = 142,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W21x122")]
+        W21x122 = 143,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W21x132")]
+        W21x132 = 144,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W21x147")]
+        W21x147 = 145,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W21x166")]
+        W21x166 = 146,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W21x182")]
+        W21x182 = 147,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W21x201")]
+        W21x201 = 148,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W21x223")]
+        W21x223 = 149,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W21x248")]
+        W21x248 = 150,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W21x275")]
+        W21x275 = 151,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W21x300")]
+        W21x300 = 152,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W21x333")]
+        W21x333 = 153,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W21x364")]
+        W21x364 = 154,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W21x402")]
+        W21x402 = 155,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W21x44")]
+        W21x44 = 156,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W21x48")]
+        W21x48 = 157,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W21x50")]
+        W21x50 = 158,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W21x55")]
+        W21x55 = 159,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W21x57")]
+        W21x57 = 160,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W21x62")]
+        W21x62 = 161,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W21x68")]
+        W21x68 = 162,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W21x73")]
+        W21x73 = 163,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W21x83")]
+        W21x83 = 164,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W21x93")]
+        W21x93 = 165,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W24x103")]
+        W24x103 = 166,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W24x104")]
+        W24x104 = 167,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W24x117")]
+        W24x117 = 168,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W24x131")]
+        W24x131 = 169,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W24x146")]
+        W24x146 = 170,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W24x162")]
+        W24x162 = 171,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W24x176")]
+        W24x176 = 172,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W24x192")]
+        W24x192 = 173,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W24x207")]
+        W24x207 = 174,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W24x229")]
+        W24x229 = 175,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W24x250")]
+        W24x250 = 176,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W24x279")]
+        W24x279 = 177,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W24x306")]
+        W24x306 = 178,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W24x335")]
+        W24x335 = 179,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W24x370")]
+        W24x370 = 180,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W24x408")]
+        W24x408 = 181,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W24x450")]
+        W24x450 = 182,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W24x492")]
+        W24x492 = 183,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W24x55")]
+        W24x55 = 184,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W24x62")]
+        W24x62 = 185,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W24x68")]
+        W24x68 = 186,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W24x76")]
+        W24x76 = 187,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W24x84")]
+        W24x84 = 188,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W24x94")]
+        W24x94 = 189,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W27x102")]
+        W27x102 = 190,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W27x114")]
+        W27x114 = 191,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W27x129")]
+        W27x129 = 192,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W27x146")]
+        W27x146 = 193,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W27x161")]
+        W27x161 = 194,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W27x178")]
+        W27x178 = 195,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W27x194")]
+        W27x194 = 196,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W27x217")]
+        W27x217 = 197,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W27x235")]
+        W27x235 = 198,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W27x258")]
+        W27x258 = 199,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W27x281")]
+        W27x281 = 200,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W27x307")]
+        W27x307 = 201,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W27x336")]
+        W27x336 = 202,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W27x368")]
+        W27x368 = 203,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W27x407")]
+        W27x407 = 204,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W27x448")]
+        W27x448 = 205,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W27x494")]
+        W27x494 = 206,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W27x539")]
+        W27x539 = 207,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W27x84")]
+        W27x84 = 208,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W27x94")]
+        W27x94 = 209,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W30x108")]
+        W30x108 = 210,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W30x116")]
+        W30x116 = 211,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W30x124")]
+        W30x124 = 212,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W30x132")]
+        W30x132 = 213,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W30x148")]
+        W30x148 = 214,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W30x173")]
+        W30x173 = 215,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W30x191")]
+        W30x191 = 216,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W30x211")]
+        W30x211 = 217,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W30x235")]
+        W30x235 = 218,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W30x261")]
+        W30x261 = 219,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W30x292")]
+        W30x292 = 220,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W30x326")]
+        W30x326 = 221,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W30x357")]
+        W30x357 = 222,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W30x391")]
+        W30x391 = 223,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W30x433")]
+        W30x433 = 224,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W30x477")]
+        W30x477 = 225,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W30x526")]
+        W30x526 = 226,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W30x581")]
+        W30x581 = 227,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W30x90")]
+        W30x90 = 228,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W30x99")]
+        W30x99 = 229,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W33x118")]
+        W33x118 = 230,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W33x130")]
+        W33x130 = 231,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W33x141")]
+        W33x141 = 232,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W33x152")]
+        W33x152 = 233,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W33x169")]
+        W33x169 = 234,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W33x201")]
+        W33x201 = 235,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W33x221")]
+        W33x221 = 236,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W33x241")]
+        W33x241 = 237,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W33x263")]
+        W33x263 = 238,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W33x291")]
+        W33x291 = 239,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W33x318")]
+        W33x318 = 240,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W33x354")]
+        W33x354 = 241,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W33x387")]
+        W33x387 = 242,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W33x424")]
+        W33x424 = 243,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W33x468")]
+        W33x468 = 244,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W33x515")]
+        W33x515 = 245,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W33x567")]
+        W33x567 = 246,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W33x619")]
+        W33x619 = 247,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W36x135")]
+        W36x135 = 248,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W36x150")]
+        W36x150 = 249,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W36x160")]
+        W36x160 = 250,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W36x170")]
+        W36x170 = 251,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W36x182")]
+        W36x182 = 252,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W36x194")]
+        W36x194 = 253,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W36x210")]
+        W36x210 = 254,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W36x230")]
+        W36x230 = 255,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W36x232")]
+        W36x232 = 256,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W36x245")]
+        W36x245 = 257,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W36x256")]
+        W36x256 = 258,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W36x260")]
+        W36x260 = 259,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W36x280")]
+        W36x280 = 260,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W36x300")]
+        W36x300 = 261,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W36x328")]
+        W36x328 = 262,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W36x359")]
+        W36x359 = 263,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W36x393")]
+        W36x393 = 264,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W36x439")]
+        W36x439 = 265,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W36x485")]
+        W36x485 = 266,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W36x527")]
+        W36x527 = 267,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W36x588")]
+        W36x588 = 268,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W36x650")]
+        W36x650 = 269,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W36x720")]
+        W36x720 = 270,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W36x798")]
+        W36x798 = 271,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W36x848")]
+        W36x848 = 272,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x149")]
+        W40x149 = 273,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x167")]
+        W40x167 = 274,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x174")]
+        W40x174 = 275,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x183")]
+        W40x183 = 276,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x192")]
+        W40x192 = 277,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x199")]
+        W40x199 = 278,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x211")]
+        W40x211 = 279,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x215")]
+        W40x215 = 280,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x221")]
+        W40x221 = 281,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x235")]
+        W40x235 = 282,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x244")]
+        W40x244 = 283,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x249")]
+        W40x249 = 284,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x264")]
+        W40x264 = 285,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x268")]
+        W40x268 = 286,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x277")]
+        W40x277 = 287,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x278")]
+        W40x278 = 288,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x297")]
+        W40x297 = 289,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x298")]
+        W40x298 = 290,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x321")]
+        W40x321 = 291,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x324")]
+        W40x324 = 292,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x327")]
+        W40x327 = 293,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x328")]
+        W40x328 = 294,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x331")]
+        W40x331 = 295,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x362")]
+        W40x362 = 296,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x372")]
+        W40x372 = 297,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x392")]
+        W40x392 = 298,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x397")]
+        W40x397 = 299,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x431")]
+        W40x431 = 300,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x436")]
+        W40x436 = 301,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x466")]
+        W40x466 = 302,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x480")]
+        W40x480 = 303,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x503")]
+        W40x503 = 304,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x531")]
+        W40x531 = 305,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x593")]
+        W40x593 = 306,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W40x655")]
+        W40x655 = 307,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W44x198")]
+        W44x198 = 308,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W44X224")]
+        W44X224 = 309,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W44x230")]
+        W44x230 = 310,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W44x248")]
+        W44x248 = 311,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W44x262")]
+        W44x262 = 312,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W44x285")]
+        W44x285 = 313,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W44x290")]
+        W44x290 = 314,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"W44x335")]
+        W44x335 = 315,
     
     }
 }

@@ -21,13 +21,12 @@ namespace StructureByEnvelope.tests
             var envModel = Model.FromJson(System.IO.File.ReadAllText(INPUT + "Envelope.json"));
             var lvlModel = Model.FromJson(System.IO.File.ReadAllText(INPUT + "Levels.json"));
             var inputs = new StructureByEnvelopeInputs(
-                gridXAxisInterval: 4.0,
-                gridYAxisInterval: 5.0,
-                slabEdgeOffset: 1.0,
-                displayGrid: false,
-                typeOfConstruction: StructureByEnvelopeInputsTypeOfConstruction.Steel,
-                bucketName: "", 
-                uploadsBucket: "", 
+                StructureByEnvelopeInputsColumnType.W10x100,
+                StructureByEnvelopeInputsGirderType.W10x100,
+                StructureByEnvelopeInputsBeamType.W10x100,
+                false,
+                bucketName: "",
+                uploadsBucket: "",
                 modelInputKeys: new Dictionary<string, string>(), gltfKey: "", elementsKey: "", ifcKey: "");
             var outputs = StructureByEnvelope.Execute(
                 new Dictionary<string, Model>
