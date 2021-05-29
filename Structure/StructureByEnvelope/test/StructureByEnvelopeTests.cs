@@ -24,6 +24,7 @@ namespace StructureByEnvelope.tests
                 StructureByEnvelopeInputsColumnType.W10x100,
                 StructureByEnvelopeInputsGirderType.W10x100,
                 StructureByEnvelopeInputsBeamType.W10x100,
+                1.5,
                 false,
                 bucketName: "",
                 uploadsBucket: "",

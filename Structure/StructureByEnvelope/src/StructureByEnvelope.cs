@@ -11,10 +11,8 @@ namespace StructureByEnvelope
 {
     public static class StructureByEnvelope
     {
-        private const string ENVELOPE_MODEL_NAME = "Envelope";
-        private const string LEVELS_MODEL_NAME = "Levels";
-
         private const string BAYS_MODEL_NAME = "Bays";
+        private const string GRIDS_MODEL_NAME = "Grids";
 
         private static List<Material> _lengthGradient = new List<Material>(){
             new Material(Colors.Green, 0.0f, 0.0f, false, null, false, Guid.NewGuid(), "Gradient 1"),
@@ -40,6 +38,10 @@ namespace StructureByEnvelope
 
             var cellsModel = models[BAYS_MODEL_NAME];
             var cellComplex = cellsModel.AllElementsOfType<CellComplex>().First();
+
+            var gridsModel = models[GRIDS_MODEL_NAME];
+            var gridLines = gridsModel.AllElementsOfType<GridLine>();
+            var primaryDirection = gridLines.ElementAt(0).Geometry.Segments()[0].Direction();
 
             var structureMaterial = new Material("Steel", Colors.Gray, 0.5, 0.3);
             model.AddElement(structureMaterial);
@@ -67,7 +69,8 @@ namespace StructureByEnvelope
                 if (l.IsVertical())
                 {
                     var origin = start.IsLowerThan(end) ? start : end;
-                    framing = new Column(origin, l.Length(), columnProfile, structureMaterial);
+                    var rotation = Vector3.XAxis.AngleTo(primaryDirection);
+                    framing = new Column(origin, l.Length(), columnProfile, structureMaterial, rotation: rotation);
                 }
                 else
                 {
@@ -102,7 +105,7 @@ namespace StructureByEnvelope
                 var longestEdge = p.Segments().OrderBy(s => s.Length()).Last();
                 var d = longestEdge.Direction();
                 var grid = new Grid1d(longestEdge);
-                grid.DivideByFixedLength(Units.FeetToMeters(4));
+                grid.DivideByFixedLength(input.BeamSpacing);
                 var segments = p.Segments();
                 foreach (var pt in grid.GetCellSeparators())
                 {

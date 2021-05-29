@@ -28,18 +28,19 @@ namespace StructureByEnvelope
     {
         [Newtonsoft.Json.JsonConstructor]
         
-        public StructureByEnvelopeInputs(StructureByEnvelopeInputsColumnType @columnType, StructureByEnvelopeInputsGirderType @girderType, StructureByEnvelopeInputsBeamType @beamType, bool @createBeamsOnFirstLevel, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey):
+        public StructureByEnvelopeInputs(StructureByEnvelopeInputsColumnType @columnType, StructureByEnvelopeInputsGirderType @girderType, StructureByEnvelopeInputsBeamType @beamType, double @beamSpacing, bool @createBeamsOnFirstLevel, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey):
         base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
         {
             var validator = Validator.Instance.GetFirstValidatorForType<StructureByEnvelopeInputs>();
             if(validator != null)
             {
-                validator.PreConstruct(new object[]{ @columnType, @girderType, @beamType, @createBeamsOnFirstLevel});
+                validator.PreConstruct(new object[]{ @columnType, @girderType, @beamType, @beamSpacing, @createBeamsOnFirstLevel});
             }
         
             this.ColumnType = @columnType;
             this.GirderType = @girderType;
             this.BeamType = @beamType;
+            this.BeamSpacing = @beamSpacing;
             this.CreateBeamsOnFirstLevel = @createBeamsOnFirstLevel;
         
             if(validator != null)
@@ -51,17 +52,21 @@ namespace StructureByEnvelope
         /// <summary>The wide flange section shape to use for all columns.</summary>
         [Newtonsoft.Json.JsonProperty("Column Type", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public StructureByEnvelopeInputsColumnType ColumnType { get; set; }
+        public StructureByEnvelopeInputsColumnType ColumnType { get; set; } = StructureByEnvelopeInputsColumnType.W18x76;
     
         /// <summary>The wide flange section shape to use for all girders.</summary>
         [Newtonsoft.Json.JsonProperty("Girder Type", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public StructureByEnvelopeInputsGirderType GirderType { get; set; }
+        public StructureByEnvelopeInputsGirderType GirderType { get; set; } = StructureByEnvelopeInputsGirderType.W18x40;
     
         /// <summary>The wide flange section shape to use for all beams.</summary>
         [Newtonsoft.Json.JsonProperty("Beam Type", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public StructureByEnvelopeInputsBeamType BeamType { get; set; }
+        public StructureByEnvelopeInputsBeamType BeamType { get; set; } = StructureByEnvelopeInputsBeamType.W12x14;
+    
+        /// <summary>The spacing of the beams.</summary>
+        [Newtonsoft.Json.JsonProperty("Beam Spacing", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public double BeamSpacing { get; set; } = 1.5D;
     
         /// <summary>Should beams be created at the lowest level of the structure?</summary>
         [Newtonsoft.Json.JsonProperty("Create Beams On First Level", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
