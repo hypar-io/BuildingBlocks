@@ -205,6 +205,7 @@
                 "Grid Lines": {
                   "type": "array",
                   "$hyparShowIf": {
+                    "type": "any",
                     "conditions": [
                       {
                         "property": "Mode",
@@ -337,6 +338,7 @@
                 "Grid Lines": {
                   "type": "array",
                   "$hyparShowIf": {
+                    "type": "any",
                     "conditions": [
                       {
                         "property": "Mode",

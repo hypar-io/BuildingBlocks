@@ -167,6 +167,7 @@ function showIfTypical() {
 
 function showIfNotTypical() {
     return {
+        "type": "any",
         "conditions": [
             {
                 "property": "Mode",
