@@ -20,6 +20,57 @@
   "input_schema": {
     "type": "object",
     "properties": {
+      "Grid X-Axis Interval": {
+        "multipleOf": 1,
+        "default": 3,
+        "maximum": 10,
+        "description": "Grix interval in the X direction.",
+        "type": "number",
+        "$hyparUnitType": "length",
+        "$hyparOrder": 0,
+        "minimum": 3,
+        "$hyparDeprecated": true
+      },
+      "Grid Y-Axis Interval": {
+        "multipleOf": 1,
+        "default": 3,
+        "maximum": 10,
+        "description": "Grid interval in the Y direction.",
+        "type": "number",
+        "$hyparUnitType": "length",
+        "$hyparOrder": 1,
+        "minimum": 3,
+        "$hyparDeprecated": true
+      },
+      "Slab Edge Offset": {
+        "multipleOf": 0.1,
+        "default": 0.5,
+        "maximum": 3,
+        "description": "The offset of the grid lines from the slab edge.",
+        "type": "number",
+        "$hyparUnitType": "length",
+        "$hyparOrder": 2,
+        "minimum": 0,
+        "$hyparDeprecated": true
+      },
+      "Display Grid": {
+        "description": "Display the grid on the ground plane?",
+        "default": false,
+        "type": "boolean",
+        "$hyparOrder": 3,
+        "$hyparDeprecated": true
+      },
+      "Type of Construction": {
+        "description": "The system used for construction.",
+        "default": "Steel",
+        "type": "string",
+        "$hyparOrder": 4,
+        "enum": [
+          "Steel",
+          "MassTimber"
+        ],
+        "$hyparDeprecated": true
+      },
       "Column Type": {
         "type": "string",
         "description": "The wide flange section shape to use for all columns.",

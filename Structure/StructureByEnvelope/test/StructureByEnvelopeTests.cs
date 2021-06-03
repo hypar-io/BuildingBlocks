@@ -21,6 +21,11 @@ namespace StructureByEnvelope.tests
             var envModel = Model.FromJson(System.IO.File.ReadAllText(INPUT + "Envelope.json"));
             var lvlModel = Model.FromJson(System.IO.File.ReadAllText(INPUT + "Levels.json"));
             var inputs = new StructureByEnvelopeInputs(
+                5.0,
+                6.0,
+                1.5,
+                false,
+                StructureByEnvelopeInputsTypeOfConstruction.Steel,
                 StructureByEnvelopeInputsColumnType.W10x100,
                 StructureByEnvelopeInputsGirderType.W10x100,
                 StructureByEnvelopeInputsBeamType.W10x100,

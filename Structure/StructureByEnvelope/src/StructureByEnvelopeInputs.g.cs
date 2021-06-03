@@ -28,15 +28,20 @@ namespace StructureByEnvelope
     {
         [Newtonsoft.Json.JsonConstructor]
         
-        public StructureByEnvelopeInputs(StructureByEnvelopeInputsColumnType @columnType, StructureByEnvelopeInputsGirderType @girderType, StructureByEnvelopeInputsBeamType @beamType, double @beamSpacing, bool @createBeamsOnFirstLevel, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey):
+        public StructureByEnvelopeInputs(double @gridXAxisInterval, double @gridYAxisInterval, double @slabEdgeOffset, bool @displayGrid, StructureByEnvelopeInputsTypeOfConstruction @typeOfConstruction, StructureByEnvelopeInputsColumnType @columnType, StructureByEnvelopeInputsGirderType @girderType, StructureByEnvelopeInputsBeamType @beamType, double @beamSpacing, bool @createBeamsOnFirstLevel, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey):
         base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
         {
             var validator = Validator.Instance.GetFirstValidatorForType<StructureByEnvelopeInputs>();
             if(validator != null)
             {
-                validator.PreConstruct(new object[]{ @columnType, @girderType, @beamType, @beamSpacing, @createBeamsOnFirstLevel});
+                validator.PreConstruct(new object[]{ @gridXAxisInterval, @gridYAxisInterval, @slabEdgeOffset, @displayGrid, @typeOfConstruction, @columnType, @girderType, @beamType, @beamSpacing, @createBeamsOnFirstLevel});
             }
         
+            this.GridXAxisInterval = @gridXAxisInterval;
+            this.GridYAxisInterval = @gridYAxisInterval;
+            this.SlabEdgeOffset = @slabEdgeOffset;
+            this.DisplayGrid = @displayGrid;
+            this.TypeOfConstruction = @typeOfConstruction;
             this.ColumnType = @columnType;
             this.GirderType = @girderType;
             this.BeamType = @beamType;
@@ -48,6 +53,30 @@ namespace StructureByEnvelope
                 validator.PostConstruct(this);
             }
         }
+    
+        /// <summary>Grix interval in the X direction.</summary>
+        [Newtonsoft.Json.JsonProperty("Grid X-Axis Interval", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.Range(3D, 10D)]
+        public double GridXAxisInterval { get; set; } = 3D;
+    
+        /// <summary>Grid interval in the Y direction.</summary>
+        [Newtonsoft.Json.JsonProperty("Grid Y-Axis Interval", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.Range(3D, 10D)]
+        public double GridYAxisInterval { get; set; } = 3D;
+    
+        /// <summary>The offset of the grid lines from the slab edge.</summary>
+        [Newtonsoft.Json.JsonProperty("Slab Edge Offset", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.Range(0D, 3D)]
+        public double SlabEdgeOffset { get; set; } = 0.5D;
+    
+        /// <summary>Display the grid on the ground plane?</summary>
+        [Newtonsoft.Json.JsonProperty("Display Grid", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public bool DisplayGrid { get; set; } = false;
+    
+        /// <summary>The system used for construction.</summary>
+        [Newtonsoft.Json.JsonProperty("Type of Construction", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        public StructureByEnvelopeInputsTypeOfConstruction TypeOfConstruction { get; set; } = StructureByEnvelopeInputsTypeOfConstruction.Steel;
     
         /// <summary>The wide flange section shape to use for all columns.</summary>
         [Newtonsoft.Json.JsonProperty("Column Type", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
@@ -72,6 +101,17 @@ namespace StructureByEnvelope
         [Newtonsoft.Json.JsonProperty("Create Beams On First Level", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public bool CreateBeamsOnFirstLevel { get; set; } = false;
     
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
+    public enum StructureByEnvelopeInputsTypeOfConstruction
+    {
+        [System.Runtime.Serialization.EnumMember(Value = @"Steel")]
+        Steel = 0,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"MassTimber")]
+        MassTimber = 1,
     
     }
     
