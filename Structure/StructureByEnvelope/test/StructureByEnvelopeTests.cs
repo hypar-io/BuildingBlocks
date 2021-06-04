@@ -31,6 +31,8 @@ namespace StructureByEnvelope.tests
                 StructureByEnvelopeInputsBeamType.W10x100,
                 1.5,
                 false,
+                0.1254,
+                false,
                 bucketName: "",
                 uploadsBucket: "",
                 modelInputKeys: new Dictionary<string, string>(), gltfKey: "", elementsKey: "", ifcKey: "");

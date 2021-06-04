@@ -48,8 +48,15 @@ namespace StructureByEnvelope
 
             var wideFlangeFactory = new WideFlangeProfileFactory();
             var columnProfile = wideFlangeFactory.GetProfileByName(input.ColumnType.ToString());
+            var colProfileBounds = columnProfile.Perimeter.Bounds();
+            var colProfileDepth = colProfileBounds.Max.Y - colProfileBounds.Min.Y;
             var girderProfile = wideFlangeFactory.GetProfileByName(input.GirderType.ToString());
+            var girdProfileBounds = columnProfile.Perimeter.Bounds();
+            var girderProfileDepth = girdProfileBounds.Max.Y - girdProfileBounds.Min.Y;
             var beamProfile = wideFlangeFactory.GetProfileByName(input.BeamType.ToString());
+            var beamProfileBounds = beamProfile.Perimeter.Bounds();
+            var beamProfileDepth = beamProfileBounds.Max.Y - beamProfileBounds.Min.Y;
+
 
             var edges = cellComplex.GetEdges();
             var lowestTierSet = false;
@@ -60,14 +67,20 @@ namespace StructureByEnvelope
                 Math.Min(cellComplex.GetVertex(e.StartVertexId).Value.Z, cellComplex.GetVertex(e.EndVertexId).Value.Z)
             ))
             {
+                var isExternal = edge.GetFaces().Count < 4;
+
                 var start = cellComplex.GetVertex(edge.StartVertexId).Value;
                 var end = cellComplex.GetVertex(edge.EndVertexId).Value;
 
-                var l = new Line(start, end);
+                var l = new Line(start - new Vector3(0, 0, input.SlabThickness + girderProfileDepth / 2), end - new Vector3(0, 0, input.SlabThickness + girderProfileDepth / 2));
                 StructuralFraming framing = null;
 
                 if (l.IsVertical())
                 {
+                    if (!input.InsertColumnsAtExternalEdges && isExternal)
+                    {
+                        continue;
+                    }
                     var origin = start.IsLowerThan(end) ? start : end;
                     var rotation = Vector3.XAxis.AngleTo(primaryDirection);
                     framing = new Column(origin, l.Length(), columnProfile, structureMaterial, rotation: rotation);
@@ -105,7 +118,7 @@ namespace StructureByEnvelope
                 var longestEdge = p.Segments().OrderBy(s => s.Length()).Last();
                 var d = longestEdge.Direction();
                 var grid = new Grid1d(longestEdge);
-                grid.DivideByFixedLength(input.BeamSpacing);
+                grid.DivideByFixedLength(input.BeamSpacing, FixedDivisionMode.RemainderAtBothEnds);
                 var segments = p.Segments();
                 foreach (var pt in grid.GetCellSeparators())
                 {
@@ -130,7 +143,8 @@ namespace StructureByEnvelope
                             {
                                 continue;
                             }
-                            var beam = new Beam(new Line(t.Origin, xsect), beamProfile, structureMaterial);
+                            var l = new Line(t.Origin - new Vector3(0, 0, input.SlabThickness + beamProfileDepth / 2), xsect - new Vector3(0, 0, input.SlabThickness + beamProfileDepth / 2));
+                            var beam = new Beam(l, beamProfile, structureMaterial);
                             model.AddElement(beam, false);
                         }
                     }

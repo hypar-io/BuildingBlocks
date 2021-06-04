@@ -28,13 +28,13 @@ namespace StructureByEnvelope
     {
         [Newtonsoft.Json.JsonConstructor]
         
-        public StructureByEnvelopeInputs(double @gridXAxisInterval, double @gridYAxisInterval, double @slabEdgeOffset, bool @displayGrid, StructureByEnvelopeInputsTypeOfConstruction @typeOfConstruction, StructureByEnvelopeInputsColumnType @columnType, StructureByEnvelopeInputsGirderType @girderType, StructureByEnvelopeInputsBeamType @beamType, double @beamSpacing, bool @createBeamsOnFirstLevel, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey):
+        public StructureByEnvelopeInputs(double @gridXAxisInterval, double @gridYAxisInterval, double @slabEdgeOffset, bool @displayGrid, StructureByEnvelopeInputsTypeOfConstruction @typeOfConstruction, StructureByEnvelopeInputsColumnType @columnType, StructureByEnvelopeInputsGirderType @girderType, StructureByEnvelopeInputsBeamType @beamType, double @beamSpacing, bool @createBeamsOnFirstLevel, double @slabThickness, bool @insertColumnsAtExternalEdges, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey):
         base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
         {
             var validator = Validator.Instance.GetFirstValidatorForType<StructureByEnvelopeInputs>();
             if(validator != null)
             {
-                validator.PreConstruct(new object[]{ @gridXAxisInterval, @gridYAxisInterval, @slabEdgeOffset, @displayGrid, @typeOfConstruction, @columnType, @girderType, @beamType, @beamSpacing, @createBeamsOnFirstLevel});
+                validator.PreConstruct(new object[]{ @gridXAxisInterval, @gridYAxisInterval, @slabEdgeOffset, @displayGrid, @typeOfConstruction, @columnType, @girderType, @beamType, @beamSpacing, @createBeamsOnFirstLevel, @slabThickness, @insertColumnsAtExternalEdges});
             }
         
             this.GridXAxisInterval = @gridXAxisInterval;
@@ -47,6 +47,8 @@ namespace StructureByEnvelope
             this.BeamType = @beamType;
             this.BeamSpacing = @beamSpacing;
             this.CreateBeamsOnFirstLevel = @createBeamsOnFirstLevel;
+            this.SlabThickness = @slabThickness;
+            this.InsertColumnsAtExternalEdges = @insertColumnsAtExternalEdges;
         
             if(validator != null)
             {
@@ -100,6 +102,14 @@ namespace StructureByEnvelope
         /// <summary>Should beams be created at the lowest level of the structure?</summary>
         [Newtonsoft.Json.JsonProperty("Create Beams On First Level", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public bool CreateBeamsOnFirstLevel { get; set; } = false;
+    
+        /// <summary>The slab thickness. Control the offset of the structure from a level.</summary>
+        [Newtonsoft.Json.JsonProperty("Slab Thickness", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public double SlabThickness { get; set; } = 0.1254D;
+    
+        /// <summary>Should columns be created at external locations?</summary>
+        [Newtonsoft.Json.JsonProperty("Insert Columns At External Edges", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public bool InsertColumnsAtExternalEdges { get; set; } = false;
     
     
     }

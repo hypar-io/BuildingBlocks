@@ -1050,6 +1050,16 @@
         "type": "boolean",
         "description": "Should beams be created at the lowest level of the structure?",
         "default": false
+      },
+      "Slab Thickness": {
+        "type": "number",
+        "default": 0.1254,
+        "description": "The slab thickness. Control the offset of the structure from a level."
+      },
+      "Insert Columns At External Edges": {
+        "type": "boolean",
+        "default": false,
+        "description": "Should columns be created at external locations?"
       }
     }
   },
