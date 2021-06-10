@@ -7,9 +7,9 @@ using Elements.Geometry.Profiles;
 using Elements.Spatial;
 using Elements.Spatial.CellComplex;
 
-namespace StructureByEnvelope
+namespace Structure
 {
-    public static class StructureByEnvelope
+    public static class Structure
     {
         private const string BAYS_MODEL_NAME = "Bays";
         private const string GRIDS_MODEL_NAME = "Grids";
@@ -26,13 +26,13 @@ namespace StructureByEnvelope
         private static double _longestGridSpan = 0.0;
 
         /// <summary>
-		/// The StructureByEnvelope function.
+		/// The Structure function.
 		/// </summary>
 		/// <param name="model">The model. 
 		/// Add elements to the model to have them persisted.</param>
 		/// <param name="input">The arguments to the execution.</param>
-		/// <returns>A StructureByEnvelopeOutputs instance containing computed results.</returns>
-		public static StructureByEnvelopeOutputs Execute(Dictionary<string, Model> models, StructureByEnvelopeInputs input)
+		/// <returns>A StructureOutputs instance containing computed results.</returns>
+		public static StructureOutputs Execute(Dictionary<string, Model> models, StructureInputs input)
         {
             var model = new Model();
 
@@ -151,7 +151,7 @@ namespace StructureByEnvelope
                     // model.AddElements(t.ToModelCurves());
                 }
             }
-            var output = new StructureByEnvelopeOutputs(_longestGridSpan);
+            var output = new StructureOutputs(_longestGridSpan);
             output.Model = model;
             return output;
         }

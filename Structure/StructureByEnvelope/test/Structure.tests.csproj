@@ -15,6 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\StructureByEnvelope.csproj" />
+    <ProjectReference Include="..\src\Structure.csproj" />
   </ItemGroup>
 </Project>

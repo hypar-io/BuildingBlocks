@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\dependencies\StructureByEnvelope.Dependencies.csproj" />
+    <ProjectReference Include="..\dependencies\Structure.Dependencies.csproj" />
   </ItemGroup>
 
   <ItemGroup>

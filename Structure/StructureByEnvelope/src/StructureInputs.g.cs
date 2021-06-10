@@ -17,21 +17,21 @@ using System.Linq;
 using Line = Elements.Geometry.Line;
 using Polygon = Elements.Geometry.Polygon;
 
-namespace StructureByEnvelope
+namespace Structure
 {
     #pragma warning disable // Disable all warnings
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
     
-    public  class StructureByEnvelopeInputs : S3Args
+    public  class StructureInputs : S3Args
     
     {
         [Newtonsoft.Json.JsonConstructor]
         
-        public StructureByEnvelopeInputs(double @gridXAxisInterval, double @gridYAxisInterval, double @slabEdgeOffset, bool @displayGrid, StructureByEnvelopeInputsTypeOfConstruction @typeOfConstruction, StructureByEnvelopeInputsColumnType @columnType, StructureByEnvelopeInputsGirderType @girderType, StructureByEnvelopeInputsBeamType @beamType, double @beamSpacing, bool @createBeamsOnFirstLevel, double @slabThickness, bool @insertColumnsAtExternalEdges, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey):
+        public StructureInputs(double @gridXAxisInterval, double @gridYAxisInterval, double @slabEdgeOffset, bool @displayGrid, StructureInputsTypeOfConstruction @typeOfConstruction, StructureInputsColumnType @columnType, StructureInputsGirderType @girderType, StructureInputsBeamType @beamType, double @beamSpacing, bool @createBeamsOnFirstLevel, double @slabThickness, bool @insertColumnsAtExternalEdges, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey):
         base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
         {
-            var validator = Validator.Instance.GetFirstValidatorForType<StructureByEnvelopeInputs>();
+            var validator = Validator.Instance.GetFirstValidatorForType<StructureInputs>();
             if(validator != null)
             {
                 validator.PreConstruct(new object[]{ @gridXAxisInterval, @gridYAxisInterval, @slabEdgeOffset, @displayGrid, @typeOfConstruction, @columnType, @girderType, @beamType, @beamSpacing, @createBeamsOnFirstLevel, @slabThickness, @insertColumnsAtExternalEdges});
@@ -78,22 +78,22 @@ namespace StructureByEnvelope
         /// <summary>The system used for construction.</summary>
         [Newtonsoft.Json.JsonProperty("Type of Construction", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public StructureByEnvelopeInputsTypeOfConstruction TypeOfConstruction { get; set; } = StructureByEnvelopeInputsTypeOfConstruction.Steel;
+        public StructureInputsTypeOfConstruction TypeOfConstruction { get; set; } = StructureInputsTypeOfConstruction.Steel;
     
         /// <summary>The wide flange section shape to use for all columns.</summary>
         [Newtonsoft.Json.JsonProperty("Column Type", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public StructureByEnvelopeInputsColumnType ColumnType { get; set; } = StructureByEnvelopeInputsColumnType.W18x76;
+        public StructureInputsColumnType ColumnType { get; set; } = StructureInputsColumnType.W18x76;
     
         /// <summary>The wide flange section shape to use for all girders.</summary>
         [Newtonsoft.Json.JsonProperty("Girder Type", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public StructureByEnvelopeInputsGirderType GirderType { get; set; } = StructureByEnvelopeInputsGirderType.W18x40;
+        public StructureInputsGirderType GirderType { get; set; } = StructureInputsGirderType.W18x40;
     
         /// <summary>The wide flange section shape to use for all beams.</summary>
         [Newtonsoft.Json.JsonProperty("Beam Type", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public StructureByEnvelopeInputsBeamType BeamType { get; set; } = StructureByEnvelopeInputsBeamType.W12x14;
+        public StructureInputsBeamType BeamType { get; set; } = StructureInputsBeamType.W12x14;
     
         /// <summary>The spacing of the beams.</summary>
         [Newtonsoft.Json.JsonProperty("Beam Spacing", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
@@ -115,7 +115,7 @@ namespace StructureByEnvelope
     }
     
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
-    public enum StructureByEnvelopeInputsTypeOfConstruction
+    public enum StructureInputsTypeOfConstruction
     {
         [System.Runtime.Serialization.EnumMember(Value = @"Steel")]
         Steel = 0,
@@ -126,7 +126,7 @@ namespace StructureByEnvelope
     }
     
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
-    public enum StructureByEnvelopeInputsColumnType
+    public enum StructureInputsColumnType
     {
         [System.Runtime.Serialization.EnumMember(Value = @"W4x13")]
         W4x13 = 0,
@@ -1079,7 +1079,7 @@ namespace StructureByEnvelope
     }
     
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
-    public enum StructureByEnvelopeInputsGirderType
+    public enum StructureInputsGirderType
     {
         [System.Runtime.Serialization.EnumMember(Value = @"W4x13")]
         W4x13 = 0,
@@ -2032,7 +2032,7 @@ namespace StructureByEnvelope
     }
     
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
-    public enum StructureByEnvelopeInputsBeamType
+    public enum StructureInputsBeamType
     {
         [System.Runtime.Serialization.EnumMember(Value = @"W4x13")]
         W4x13 = 0,
