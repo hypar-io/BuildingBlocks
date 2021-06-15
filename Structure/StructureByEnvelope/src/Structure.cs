@@ -98,23 +98,23 @@ namespace Structure
 
                 cellComplex = new CellComplex(Guid.NewGuid(), "Temporary Cell Complex");
 
-                Console.WriteLine($"There are {levelVolumes.Count} level volumes.");
-                foreach (var levelVolume in levelVolumes)
+                // Draw level volumes from each level down.
+                for (var i = 1; i < levelVolumes.Count; i++)
                 {
-                    if (levelVolume == levelVolumes.Last())
-                    {
-                        break;
-                    }
-
+                    var levelVolume = levelVolumes.ElementAt(i);
                     var perimeter = levelVolume.Profile.Perimeter.Offset(-0.5)[0];
                     var g2d = new Grid2d(perimeter, grid.U, grid.V);
                     var levelElevation = levelVolume.Transform.Origin.Z;
-
+                    var lastLevelVolume = levelVolumes.ElementAt(i - 1);
                     foreach (var cell in g2d.GetCells())
                     {
                         foreach (var crv in cell.GetTrimmedCellGeometry())
                         {
-                            cellComplex.AddCell((Polygon)crv, levelVolume.Height, levelElevation, g2d.U, g2d.V);
+                            cellComplex.AddCell((Polygon)crv, lastLevelVolume.Height, levelElevation - lastLevelVolume.Height, g2d.U, g2d.V);
+                            if (i == levelVolumes.Count - 1)
+                            {
+                                cellComplex.AddCell((Polygon)crv, levelVolume.Height, levelElevation, g2d.U, g2d.V);
+                            }
                         }
                     }
                 }
