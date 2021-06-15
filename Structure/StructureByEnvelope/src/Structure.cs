@@ -13,7 +13,9 @@ namespace Structure
     {
         private const string BAYS_MODEL_NAME = "Bays";
         private const string GRIDS_MODEL_NAME = "Grids";
-
+        private const string LEVELS_MODEL_NAME = "Levels";
+        private const double DEFAULT_U = 5.0;
+        private const double DEFAULT_V = 7.0;
         private static List<Material> _lengthGradient = new List<Material>(){
             new Material(Colors.Green, 0.0f, 0.0f, false, null, false, Guid.NewGuid(), "Gradient 1"),
             new Material(Colors.Cyan, 0.0f, 0.0f, false, null, false, Guid.NewGuid(), "Gradient 2"),
@@ -36,12 +38,100 @@ namespace Structure
         {
             var model = new Model();
 
-            var cellsModel = models[BAYS_MODEL_NAME];
-            var cellComplex = cellsModel.AllElementsOfType<CellComplex>().First();
+            CellComplex cellComplex = null;
+            Line longestEdge = null;
 
-            var gridsModel = models[GRIDS_MODEL_NAME];
-            var gridLines = gridsModel.AllElementsOfType<GridLine>();
-            var primaryDirection = gridLines.ElementAt(0).Geometry.Segments()[0].Direction();
+            if (models.ContainsKey(BAYS_MODEL_NAME))
+            {
+                var cellsModel = models[BAYS_MODEL_NAME];
+                cellComplex = cellsModel.AllElementsOfType<CellComplex>().First();
+            }
+            else
+            {
+                // Create a cell complex with some defaults.
+                if (!models.ContainsKey(LEVELS_MODEL_NAME))
+                {
+                    throw new Exception("If Bays are not supplied Levels are required.");
+                }
+
+                var levels = models[LEVELS_MODEL_NAME];
+                var levelVolumes = levels.AllElementsOfType<LevelVolume>().ToList();
+                if (levelVolumes.Count == 0)
+                {
+                    throw new Exception("No LevelVolumes found in your Levels model. Please use a level function that generates LevelVolumes, such as Simple Levels by Envelope");
+                }
+
+                // Replicate the old behavior by creating a 
+                // grid using the envelope's first level base polygon's longest
+                // edge as the U axis and its perpendicular as the
+                // V axis.
+
+                var firstLevel = levelVolumes[0];
+                var firstLevelPerimeter = firstLevel.Profile.Perimeter;
+                longestEdge = firstLevelPerimeter.Segments().OrderBy(s => s.Length()).Last();
+                var cellComplexOrigin = firstLevel.Profile.Perimeter.Vertices[0];
+                var maxDistance = double.MinValue;
+                foreach (var levelV in firstLevelPerimeter.Vertices)
+                {
+                    var d = levelV.DistanceTo(longestEdge);
+                    if (d > maxDistance)
+                    {
+                        maxDistance = d;
+                    }
+                }
+
+                var uGrid = new Grid1d(new Line(cellComplexOrigin, cellComplexOrigin + longestEdge.Direction() * longestEdge.Length()));
+                uGrid.DivideByFixedLength(5);
+
+                var t = longestEdge.TransformAt(0.5);
+                var perpDirection = t.XAxis;
+                var c = firstLevelPerimeter.Centroid();
+                var dirToCentroid = (t.Origin - c).Unitized();
+                var dot = dirToCentroid.Dot(perpDirection);
+                var perpendicularEdge = new Line(cellComplexOrigin, cellComplexOrigin + (dot > 0.0 ? perpDirection : perpDirection.Negate()) * maxDistance);
+                var vGrid = new Grid1d(perpendicularEdge);
+                vGrid.DivideByFixedLength(7);
+                var grid = new Grid2d(uGrid, vGrid);
+
+                var u = grid.U;
+                var v = grid.V;
+
+                cellComplex = new CellComplex(Guid.NewGuid(), "Temporary Cell Complex");
+
+                Console.WriteLine($"There are {levelVolumes.Count} level volumes.");
+                foreach (var levelVolume in levelVolumes)
+                {
+                    if (levelVolume == levelVolumes.Last())
+                    {
+                        break;
+                    }
+
+                    var perimeter = levelVolume.Profile.Perimeter.Offset(-0.5)[0];
+                    var g2d = new Grid2d(perimeter, grid.U, grid.V);
+                    var levelElevation = levelVolume.Transform.Origin.Z;
+
+                    foreach (var cell in g2d.GetCells())
+                    {
+                        foreach (var crv in cell.GetTrimmedCellGeometry())
+                        {
+                            cellComplex.AddCell((Polygon)crv, levelVolume.Height, levelElevation, g2d.U, g2d.V);
+                        }
+                    }
+                }
+            }
+
+            Vector3 primaryDirection;
+            if (models.ContainsKey(GRIDS_MODEL_NAME))
+            {
+                var gridsModel = models[GRIDS_MODEL_NAME];
+                var gridLines = gridsModel.AllElementsOfType<GridLine>();
+                primaryDirection = gridLines.ElementAt(0).Geometry.Segments()[0].Direction();
+            }
+            else
+            {
+                // Define the primary direction from the longest edge of the site.
+                primaryDirection = longestEdge.Direction();
+            }
 
             var structureMaterial = new Material("Steel", Colors.Gray, 0.5, 0.3);
             model.AddElement(structureMaterial);
@@ -56,7 +146,6 @@ namespace Structure
             var beamProfile = wideFlangeFactory.GetProfileByName(input.BeamType.ToString());
             var beamProfileBounds = beamProfile.Perimeter.Bounds();
             var beamProfileDepth = beamProfileBounds.Max.Y - beamProfileBounds.Min.Y;
-
 
             var edges = cellComplex.GetEdges();
             var lowestTierSet = false;
@@ -105,6 +194,7 @@ namespace Structure
                         }
                     }
                 }
+
                 if (framing != null)
                 {
                     model.AddElement(framing, false);
@@ -115,16 +205,16 @@ namespace Structure
             {
                 var topFace = cell.GetTopFace();
                 var p = topFace.GetGeometry();
-                var longestEdge = p.Segments().OrderBy(s => s.Length()).Last();
-                var d = longestEdge.Direction();
-                var grid = new Grid1d(longestEdge);
-                grid.DivideByFixedLength(input.BeamSpacing, FixedDivisionMode.RemainderAtBothEnds);
+                var longestCellEdge = p.Segments().OrderBy(s => s.Length()).Last();
+                var d = longestCellEdge.Direction();
+                var beamGrid = new Grid1d(longestCellEdge);
+                beamGrid.DivideByFixedLength(input.BeamSpacing, FixedDivisionMode.RemainderAtBothEnds);
                 var segments = p.Segments();
-                foreach (var pt in grid.GetCellSeparators())
+                foreach (var pt in beamGrid.GetCellSeparators())
                 {
                     // Skip beams that would be too close to the ends 
                     // to be useful.
-                    if (pt.DistanceTo(longestEdge.Start) < 1 || pt.DistanceTo(longestEdge.End) < 1)
+                    if (pt.DistanceTo(longestCellEdge.Start) < 1 || pt.DistanceTo(longestCellEdge.End) < 1)
                     {
                         continue;
                     }
@@ -132,7 +222,7 @@ namespace Structure
                     var r = new Ray(t.Origin, t.YAxis);
                     foreach (var s in segments)
                     {
-                        if (s == longestEdge)
+                        if (s == longestCellEdge)
                         {
                             continue;
                         }
@@ -151,32 +241,33 @@ namespace Structure
                     // model.AddElements(t.ToModelCurves());
                 }
             }
+
             var output = new StructureOutputs(_longestGridSpan);
             output.Model = model;
             return output;
         }
     }
+}
 
-    internal static class Vector3Extensions
+internal static class Vector3Extensions
+{
+    public static bool IsDirectlyUnder(this Vector3 a, Vector3 b)
     {
-        public static bool IsDirectlyUnder(this Vector3 a, Vector3 b)
-        {
-            return a.Z > b.Z && a.X.ApproximatelyEquals(b.X) && a.Y.ApproximatelyEquals(b.Y);
-        }
+        return a.Z > b.Z && a.X.ApproximatelyEquals(b.X) && a.Y.ApproximatelyEquals(b.Y);
+    }
 
-        public static bool IsHigherThan(this Vector3 a, Vector3 b)
-        {
-            return a.Z > b.Z;
-        }
+    public static bool IsHigherThan(this Vector3 a, Vector3 b)
+    {
+        return a.Z > b.Z;
+    }
 
-        public static bool IsLowerThan(this Vector3 a, Vector3 b)
-        {
-            return a.Z < b.Z;
-        }
+    public static bool IsLowerThan(this Vector3 a, Vector3 b)
+    {
+        return a.Z < b.Z;
+    }
 
-        public static bool IsVertical(this Line line)
-        {
-            return line.Start.IsDirectlyUnder(line.End) || line.End.IsDirectlyUnder(line.Start);
-        }
+    public static bool IsVertical(this Line line)
+    {
+        return line.Start.IsDirectlyUnder(line.End) || line.End.IsDirectlyUnder(line.Start);
     }
 }
