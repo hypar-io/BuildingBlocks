@@ -7,7 +7,7 @@ using Elements;
 using Elements.GeoJSON;
 using Elements.Geometry;
 using Elements.Geometry.Solids;
-using Elements.Properties;
+using Elements.Spatial;
 using Elements.Validators;
 using Elements.Serialization.JSON;
 using System;
@@ -20,35 +20,32 @@ namespace Elements
 {
     #pragma warning disable // Disable all warnings
 
-    /// <summary>A horizontal planer datum.</summary>
+    /// <summary>A 2D grid line for a column grid</summary>
     [Newtonsoft.Json.JsonConverter(typeof(Elements.Serialization.JSON.JsonInheritanceConverter), "discriminator")]
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
-    [UserElement]
-	public partial class Level : Element
+    public partial class GridLine : Element
     {
         [Newtonsoft.Json.JsonConstructor]
-        public Level(double @elevation, System.Guid @id, string @name)
+        public GridLine(Polyline @geometry, System.Guid @id, string @name)
             : base(id, name)
         {
-            var validator = Validator.Instance.GetFirstValidatorForType<Level>
-            ();
+            var validator = Validator.Instance.GetFirstValidatorForType<GridLine>();
             if(validator != null)
             {
-                validator.PreConstruct(new object[]{ @elevation, @id, @name});
+                validator.PreConstruct(new object[]{ @geometry, @id, @name});
             }
         
-                this.Elevation = @elevation;
+            this.Geometry = @geometry;
             
             if(validator != null)
             {
-            validator.PostConstruct(this);
+                validator.PostConstruct(this);
             }
-            }
+        }
     
-        /// <summary>The elevation of the level.</summary>
-        [Newtonsoft.Json.JsonProperty("Elevation", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Range(0D, double.MaxValue)]
-        public double Elevation { get; set; }
+        /// <summary>The polyline geometry of the Grid Line</summary>
+        [Newtonsoft.Json.JsonProperty("Geometry", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public Polyline Geometry { get; set; }
     
     
     }
