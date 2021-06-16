@@ -148,7 +148,7 @@ namespace Structure
             var colProfileBounds = columnProfile.Perimeter.Bounds();
             var colProfileDepth = colProfileBounds.Max.Y - colProfileBounds.Min.Y;
             var girderProfile = wideFlangeFactory.GetProfileByName(input.GirderType.ToString());
-            var girdProfileBounds = columnProfile.Perimeter.Bounds();
+            var girdProfileBounds = girderProfile.Perimeter.Bounds();
             var girderProfileDepth = girdProfileBounds.Max.Y - girdProfileBounds.Min.Y;
             var beamProfile = wideFlangeFactory.GetProfileByName(input.BeamType.ToString());
             var beamProfileBounds = beamProfile.Perimeter.Bounds();
