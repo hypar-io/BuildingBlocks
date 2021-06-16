@@ -72,29 +72,32 @@ namespace Structure
                 var firstLevel = levelVolumes[0];
                 var firstLevelPerimeter = firstLevel.Profile.Perimeter;
                 longestEdge = firstLevelPerimeter.Segments().OrderBy(s => s.Length()).Last();
-                var cellComplexOrigin = firstLevel.Profile.Perimeter.Vertices[0];
-                var maxDistance = double.MinValue;
-                foreach (var levelV in firstLevelPerimeter.Vertices)
-                {
-                    var d = levelV.DistanceTo(longestEdge);
-                    if (d > maxDistance)
-                    {
-                        maxDistance = d;
-                    }
-                }
 
-                var uGrid = new Grid1d(new Line(cellComplexOrigin, cellComplexOrigin + longestEdge.Direction() * longestEdge.Length()));
+                var longestEdgeTransform = longestEdge.TransformAt(0.5);
+                var t = new Transform(longestEdge.Start, longestEdgeTransform.XAxis, longestEdge.Direction(), Vector3.ZAxis);
+
+                var toWorld = new Transform(t);
+                toWorld.Invert();
+                var bbox = new BBox3(firstLevelPerimeter.Vertices.Select(o => toWorld.OfVector(o)).ToList());
+
+                model.AddElements(new ModelCurve(Polygon.Rectangle(bbox.Min, bbox.Max).Transformed(t)));
+
+                // model.AddElements(toWorld.ToModelCurves());
+
+                var l = bbox.Max.Y - bbox.Min.Y;
+                var w = bbox.Max.X - bbox.Min.X;
+
+                var origin = t.OfVector(bbox.Min);
+
+                var uGrid = new Grid1d(new Line(origin, origin + t.YAxis * l));
                 uGrid.DivideByFixedLength(DEFAULT_U);
 
-                var t = longestEdge.TransformAt(0.5);
-                var perpDirection = t.XAxis;
-                var c = firstLevelPerimeter.Centroid();
-                var dirToCentroid = (t.Origin - c).Unitized();
-                var dot = dirToCentroid.Dot(perpDirection);
-                var perpendicularEdge = new Line(cellComplexOrigin, cellComplexOrigin + (dot > 0.0 ? perpDirection : perpDirection.Negate()) * maxDistance);
-                var vGrid = new Grid1d(perpendicularEdge);
+                var vGrid = new Grid1d(new Line(origin, origin + t.XAxis * w));
+
                 vGrid.DivideByFixedLength(DEFAULT_V);
                 var grid = new Grid2d(uGrid, vGrid);
+
+                // model.AddElements(grid.ToModelCurves());
 
                 var u = grid.U;
                 var v = grid.V;
