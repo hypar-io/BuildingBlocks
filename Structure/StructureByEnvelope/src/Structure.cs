@@ -37,6 +37,7 @@ namespace Structure
 		public static StructureOutputs Execute(Dictionary<string, Model> models, StructureInputs input)
         {
             var model = new Model();
+            var warnings = new List<string>();
 
             CellComplex cellComplex = null;
             Line longestEdge = null;
@@ -48,6 +49,8 @@ namespace Structure
             }
             else
             {
+                warnings.Add("Adding the Bays function to your workflow will give you more configurability. We'll use the default configuration for now.");
+
                 // Create a cell complex with some defaults.
                 if (!models.ContainsKey(LEVELS_MODEL_NAME))
                 {
@@ -81,7 +84,7 @@ namespace Structure
                 }
 
                 var uGrid = new Grid1d(new Line(cellComplexOrigin, cellComplexOrigin + longestEdge.Direction() * longestEdge.Length()));
-                uGrid.DivideByFixedLength(5);
+                uGrid.DivideByFixedLength(DEFAULT_U);
 
                 var t = longestEdge.TransformAt(0.5);
                 var perpDirection = t.XAxis;
@@ -90,7 +93,7 @@ namespace Structure
                 var dot = dirToCentroid.Dot(perpDirection);
                 var perpendicularEdge = new Line(cellComplexOrigin, cellComplexOrigin + (dot > 0.0 ? perpDirection : perpDirection.Negate()) * maxDistance);
                 var vGrid = new Grid1d(perpendicularEdge);
-                vGrid.DivideByFixedLength(7);
+                vGrid.DivideByFixedLength(DEFAULT_V);
                 var grid = new Grid2d(uGrid, vGrid);
 
                 var u = grid.U;
@@ -129,6 +132,7 @@ namespace Structure
             }
             else
             {
+                warnings.Add("Adding the Grids function to your workflow will enable you to position and orient the grid. We'll use the default configuration for now with the grid oriented along the longest edge of the structure.");
                 // Define the primary direction from the longest edge of the site.
                 primaryDirection = longestEdge.Direction();
             }
@@ -238,12 +242,12 @@ namespace Structure
                             model.AddElement(beam, false);
                         }
                     }
-                    // model.AddElements(t.ToModelCurves());
                 }
             }
 
             var output = new StructureOutputs(_longestGridSpan);
             output.Model = model;
+            output.Warnings = warnings;
             return output;
         }
     }
