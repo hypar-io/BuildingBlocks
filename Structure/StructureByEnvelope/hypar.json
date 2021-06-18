@@ -8,12 +8,17 @@
     {
       "autohide": true,
       "name": "Bays",
-      "optional": false
+      "optional": true
     },
     {
       "autohide": true,
       "name": "Grids",
-      "optional": false
+      "optional": true
+    },
+    {
+      "autohide": true,
+      "name": "Levels",
+      "optional": true
     }
   ],
   "model_output": "Structure",
@@ -1072,7 +1077,10 @@
     }
   ],
   "element_types": [
-    "https://prod-api.hypar.io/schemas/GridLine"
+    "https://prod-api.hypar.io/schemas/GridLine",
+    "https://raw.githubusercontent.com/hypar-io/Schemas/master/LevelPerimeter.json",
+    "https://prod-api.hypar.io/schemas/LevelVolume",
+    "https://prod-api.hypar.io/schemas/Grid2dElement"
   ],
   "repository_url": "https://github.com/hypar-io/BuildingBlocks/tree/master/Structure/StructureByEnvelope",
   "source_file_key": null,
