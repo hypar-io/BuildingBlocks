@@ -158,6 +158,10 @@ namespace Structure
             var lowestTierSet = false;
             var lowestTierElevation = double.MaxValue;
 
+            var columnDefintions = new Dictionary<(double memberLength, WideFlangeProfile memberProfile), Column>();
+            var girderDefinitions = new Dictionary<(double memberLength, WideFlangeProfile memberProfile), Beam>();
+            var beamDefinitions = new Dictionary<(double memberLength, WideFlangeProfile memberProfile), Beam>();
+
             // Order edges from lowest to highest.
             foreach (var edge in edges.OrderBy(e =>
                 Math.Min(cellComplex.GetVertex(e.StartVertexId).Value.Z, cellComplex.GetVertex(e.EndVertexId).Value.Z)
@@ -169,7 +173,7 @@ namespace Structure
                 var end = cellComplex.GetVertex(edge.EndVertexId).Value;
 
                 var l = new Line(start - new Vector3(0, 0, input.SlabThickness + girderProfileDepth / 2), end - new Vector3(0, 0, input.SlabThickness + girderProfileDepth / 2));
-                StructuralFraming framing = null;
+                var memberLength = l.Length();
 
                 if (l.IsVertical())
                 {
@@ -179,7 +183,25 @@ namespace Structure
                     }
                     var origin = start.IsLowerThan(end) ? start : end;
                     var rotation = Vector3.XAxis.AngleTo(primaryDirection);
-                    framing = new Column(origin, l.Length(), columnProfile, structureMaterial, rotation: rotation);
+                    Column columnDefinition;
+                    if (!columnDefintions.ContainsKey((memberLength, columnProfile)))
+                    {
+                        columnDefinition = new Column(Vector3.Origin, memberLength, columnProfile, structureMaterial)
+                        {
+                            IsElementDefinition = true
+                        };
+                        columnDefintions.Add((memberLength, columnProfile), columnDefinition);
+                        model.AddElement(columnDefinition);
+                    }
+                    else
+                    {
+                        columnDefinition = columnDefintions[(memberLength, columnProfile)];
+                    }
+                    var t = new Transform();
+                    t.Rotate(rotation);
+                    t.Move(origin);
+                    var instance = columnDefinition.CreateInstance(t, $"column_{edge.Id}");
+                    model.AddElement(instance, false);
                 }
                 else
                 {
@@ -189,22 +211,37 @@ namespace Structure
                         lowestTierSet = true;
                     }
 
+                    Beam girderDefinition;
+                    if (!girderDefinitions.ContainsKey((memberLength, girderProfile)))
+                    {
+                        // Beam definitions are defined along the Z axis
+                        girderDefinition = new Beam(new Line(Vector3.Origin, new Vector3(0, 0, memberLength)), girderProfile, structureMaterial)
+                        {
+                            IsElementDefinition = true
+                        };
+                        girderDefinitions.Add((memberLength, girderProfile), girderDefinition);
+                        model.AddElement(girderDefinition);
+                    }
+                    else
+                    {
+                        girderDefinition = girderDefinitions[(memberLength, girderProfile)];
+                    }
+
+                    // Beam instances are transformed to align with the member's center line.
+                    var t = new Transform(l.Start, l.Direction());
                     if (input.CreateBeamsOnFirstLevel)
                     {
-                        framing = new Beam(l, girderProfile, structureMaterial);
+                        var girderInstance = girderDefinition.CreateInstance(t, $"beam_{edge.Id}");
+                        model.AddElement(girderInstance, false);
                     }
                     else
                     {
                         if (l.Start.Z > lowestTierElevation)
                         {
-                            framing = new Beam(l, girderProfile, structureMaterial);
+                            var girderInstance = girderDefinition.CreateInstance(t, $"beam_{edge.Id}");
+                            model.AddElement(girderInstance, false);
                         }
                     }
-                }
-
-                if (framing != null)
-                {
-                    model.AddElement(framing, false);
                 }
             }
 
@@ -241,8 +278,24 @@ namespace Structure
                                 continue;
                             }
                             var l = new Line(t.Origin - new Vector3(0, 0, input.SlabThickness + beamProfileDepth / 2), xsect - new Vector3(0, 0, input.SlabThickness + beamProfileDepth / 2));
-                            var beam = new Beam(l, beamProfile, structureMaterial);
-                            model.AddElement(beam, false);
+                            var beamLength = l.Length();
+                            Beam beamDefinition;
+                            if (!beamDefinitions.ContainsKey((beamLength, beamProfile)))
+                            {
+                                beamDefinition = new Beam(new Line(Vector3.Origin, new Vector3(0, 0, beamLength)), beamProfile, structureMaterial)
+                                {
+                                    IsElementDefinition = true
+                                };
+                                beamDefinitions.Add((beamLength, beamProfile), beamDefinition);
+                                model.AddElement(beamDefinition);
+                            }
+                            else
+                            {
+                                beamDefinition = beamDefinitions[(beamLength, beamProfile)];
+                            }
+                            var instanceTransform = new Transform(l.Start, l.Direction());
+                            var beamInstance = beamDefinition.CreateInstance(instanceTransform, $"beam_{cell.Id}");
+                            model.AddElement(beamInstance, false);
                         }
                     }
                 }
