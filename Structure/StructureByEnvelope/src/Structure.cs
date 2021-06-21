@@ -14,6 +14,9 @@ namespace Structure
         private const string BAYS_MODEL_NAME = "Bays";
         private const string GRIDS_MODEL_NAME = "Grids";
         private const string LEVELS_MODEL_NAME = "Levels";
+        private const string EDGE_ID_PROPERTY_NAME = "EdgeId";
+        private const string EXTERNAL_EDGE_ID_PROPERTY_NAME = "ExternalEdgeId";
+        private const string CELL_ID_PROPERTY_NAME = "CellId";
         private const double DEFAULT_U = 5.0;
         private const double DEFAULT_V = 7.0;
         private static List<Material> _lengthGradient = new List<Material>(){
@@ -201,6 +204,7 @@ namespace Structure
                     t.Rotate(rotation);
                     t.Move(origin);
                     var instance = columnDefinition.CreateInstance(t, $"column_{edge.Id}");
+                    instance.AdditionalProperties.Add(EDGE_ID_PROPERTY_NAME, edge.Id);
                     model.AddElement(instance, false);
                 }
                 else
@@ -229,17 +233,26 @@ namespace Structure
 
                     // Beam instances are transformed to align with the member's center line.
                     var t = new Transform(l.Start, l.Direction());
+                    ElementInstance girderInstance = null;
                     if (input.CreateBeamsOnFirstLevel)
                     {
-                        var girderInstance = girderDefinition.CreateInstance(t, $"beam_{edge.Id}");
+                        girderInstance = girderDefinition.CreateInstance(t, $"beam_{edge.Id}");
                         model.AddElement(girderInstance, false);
                     }
                     else
                     {
                         if (l.Start.Z > lowestTierElevation)
                         {
-                            var girderInstance = girderDefinition.CreateInstance(t, $"beam_{edge.Id}");
+                            girderInstance = girderDefinition.CreateInstance(t, $"beam_{edge.Id}");
                             model.AddElement(girderInstance, false);
+                        }
+                    }
+                    if (girderInstance != null)
+                    {
+                        girderInstance.AdditionalProperties.Add(EDGE_ID_PROPERTY_NAME, edge.Id);
+                        if (IsExternal(edge))
+                        {
+                            girderInstance.AdditionalProperties.Add(EXTERNAL_EDGE_ID_PROPERTY_NAME, edge.Id);
                         }
                     }
                 }
@@ -295,6 +308,7 @@ namespace Structure
                             }
                             var instanceTransform = new Transform(l.Start, l.Direction());
                             var beamInstance = beamDefinition.CreateInstance(instanceTransform, $"beam_{cell.Id}");
+                            beamInstance.AdditionalProperties.Add(CELL_ID_PROPERTY_NAME, cell.Id);
                             model.AddElement(beamInstance, false);
                         }
                     }
@@ -305,6 +319,15 @@ namespace Structure
             output.Model = model;
             output.Warnings = warnings;
             return output;
+        }
+
+        private static bool IsExternal(Edge e)
+        {
+            if (e.GetFaces().Count <= 3)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }
