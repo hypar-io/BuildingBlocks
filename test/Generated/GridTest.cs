@@ -19,7 +19,7 @@ namespace Grid
             var input = GetInput();
 
             var modelDependencies = new Dictionary<string, Model> {
-                {"Envelope", Model.FromJson(File.ReadAllText(@"/Users/serenali/Github/hypar/function-Grid/test/Generated/GridTest/model_dependencies/Envelope/model.json")) },
+                {"Envelope", Model.FromJson(File.ReadAllText(@"/Users/serenali/Github/hypar/function-CustomGrids/test/Generated/GridTest/model_dependencies/Envelope/model.json")) },
             };
 
             var result = Grid.Execute(modelDependencies, input);
@@ -54,26 +54,48 @@ namespace Grid
         }
       },
       ""U"": {
-        ""Offset End"": 1,
-        ""Grid Lines"": [],
-        ""Target Typical Spacing"": 7.6,
+        ""Offset End"": 0.5,
+        ""Grid Lines"": [
+          {
+            ""Quantity"": 1,
+            ""Spacing"": 0.5,
+            ""Location"": 0.5
+          },
+          {
+            ""Quantity"": 2,
+            ""Spacing"": 7.6,
+            ""Location"": 8.1
+          }
+        ],
+        ""Target Typical Spacing"": 6,
         ""Spacing"": [],
         ""Offset Start"": 1,
         ""Name"": ""{A}""
       },
       ""V"": {
-        ""Offset End"": 1,
-        ""Grid Lines"": [],
-        ""Target Typical Spacing"": 7.6,
+        ""Offset End"": 0.5,
+        ""Grid Lines"": [
+          {
+            ""Quantity"": 1,
+            ""Spacing"": 0.5,
+            ""Location"": 0.5
+          },
+          {
+            ""Quantity"": 2,
+            ""Spacing"": 7.6,
+            ""Location"": 8.1
+          }
+        ],
+        ""Target Typical Spacing"": 6,
         ""Spacing"": [],
-        ""Offset Start"": 1,
+        ""Offset Start"": 0.5,
         ""Name"": ""{1}""
       },
-      ""Name"": ""Grid""
+      ""Name"": ""Main""
     }
   ],
   ""model_input_keys"": {
-    ""Envelope"": ""c323a306-e928-44a8-be7f-70f0067cc967_d4819507-d08b-41be-9157-376356d01491_elements.zip""
+    ""Envelope"": ""d6be38bc-ec9e-463c-8d9e-3a2d875bb09d_0c8d0526-9490-4d53-896b-88a1515de583_elements.zip""
   },
   ""overrides"": {
     ""Grid Origins"": [
@@ -82,26 +104,26 @@ namespace Grid
           ""Transform"": {
             ""Matrix"": {
               ""Components"": [
-                0.4590799938812189,
-                -0.8883949342595443,
-                3.5953008731802944E-16,
-                -58.47034701110173,
-                0.8883949342595445,
-                0.4590799938812188,
-                6.957495698884039E-16,
-                108.18430054586503,
-                -7.831534636881901E-16,
-                0,
-                1,
-                -1.1102230246251565E-15
+                -0.7116971973951175,
+                0.7024863694193189,
+                5.3764785488614194E-17,
+                21.481315746922444,
+                -0.7024863694193189,
+                -0.7116971973951175,
+                5.3068958397958386E-17,
+                16.104849721996278,
+                7.554446706464302E-17,
+                -1.232595164407831E-32,
+                1.0000000000000004,
+                0
               ]
             }
           }
         },
         ""identity"": {
-          ""Name"": ""Grid""
+          ""Name"": ""Main""
         },
-        ""id"": ""d1c36ce9-e94b-4fb7-9df0-f488e85dea99""
+        ""id"": ""29319f26-9ef8-4ee9-a7e7-bc8606d09fc0""
       }
     ]
   },
