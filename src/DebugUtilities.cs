@@ -6,7 +6,7 @@ using System;
 using System.Linq;
 using Newtonsoft.Json;
 
-namespace CustomGrids
+namespace Grid
 {
     class Debug
     {

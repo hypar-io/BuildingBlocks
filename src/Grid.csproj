@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\dependencies\CustomGrids.Dependencies.csproj" />
+    <ProjectReference Include="..\dependencies\Grid.Dependencies.csproj" />
   </ItemGroup>
 
   <ItemGroup>

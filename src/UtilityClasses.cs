@@ -1,6 +1,6 @@
 using Elements.Geometry;
 
-namespace CustomGrids
+namespace Grid
 {
     public class GridGuide
     {

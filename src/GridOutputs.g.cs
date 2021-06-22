@@ -12,17 +12,17 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System.Collections.Generic;
 
-namespace CustomGrids
+namespace Grid
 {
-    public class CustomGridsOutputs: ResultsBase
+    public class GridOutputs: ResultsBase
     {
 
 
         /// <summary>
-        /// Construct a CustomGridsOutputs with default inputs.
+        /// Construct a GridOutputs with default inputs.
         /// This should be used for testing only.
         /// </summary>
-        public CustomGridsOutputs() : base()
+        public GridOutputs() : base()
         {
 
         }

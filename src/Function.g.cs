@@ -13,15 +13,15 @@ using System.Reflection;
 using System.Threading.Tasks;
 
 [assembly: LambdaSerializer(typeof(Amazon.Lambda.Serialization.Json.JsonSerializer))]
-namespace CustomGrids
+namespace Grid
 {
     public class Function
     {
         // Cache the model store for use by subsequent
         // executions of this lambda.
-        private IModelStore<CustomGridsInputs> store;
+        private IModelStore<GridInputs> store;
 
-        public async Task<CustomGridsOutputs> Handler(CustomGridsInputs args, ILambdaContext context)
+        public async Task<GridOutputs> Handler(GridInputs args, ILambdaContext context)
         {
             // Preload dependencies (if they exist),
             // so that they are available during model deserialization.
@@ -61,10 +61,10 @@ namespace CustomGrids
 
             if(this.store == null)
             {
-                this.store = new S3ModelStore<CustomGridsInputs>(RegionEndpoint.USWest1);
+                this.store = new S3ModelStore<GridInputs>(RegionEndpoint.USWest1);
             }
 
-            var l = new InvocationWrapper<CustomGridsInputs,CustomGridsOutputs>(store, CustomGrids.Execute);
+            var l = new InvocationWrapper<GridInputs,GridOutputs>(store, Grid.Execute);
             var output = await l.InvokeAsync(args);
             return output;
         }

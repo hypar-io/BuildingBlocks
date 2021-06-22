@@ -1,13 +1,13 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomGrids", "src\CustomGrids.csproj", "{E907B939-FA52-4DEC-A17C-42797868E249}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Grid", "src\Grid.csproj", "{E907B939-FA52-4DEC-A17C-42797868E249}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomGrids.Dependencies", "dependencies\CustomGrids.Dependencies.csproj", "{72C01792-FFE4-46B4-89F7-DE8988AF2099}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Grid.Dependencies", "dependencies\Grid.Dependencies.csproj", "{72C01792-FFE4-46B4-89F7-DE8988AF2099}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomGrids.Tests", "test\CustomGrids.Tests.csproj", "{0D3414BA-1826-4BB8-8DA5-15226A0502DD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Grid.Tests", "test\Grid.Tests.csproj", "{0D3414BA-1826-4BB8-8DA5-15226A0502DD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

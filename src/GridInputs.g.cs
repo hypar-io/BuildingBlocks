@@ -17,21 +17,21 @@ using System.Linq;
 using Line = Elements.Geometry.Line;
 using Polygon = Elements.Geometry.Polygon;
 
-namespace CustomGrids
+namespace Grid
 {
     #pragma warning disable // Disable all warnings
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
     
-    public  class CustomGridsInputs : S3Args
+    public  class GridInputs : S3Args
     
     {
         [Newtonsoft.Json.JsonConstructor]
         
-        public CustomGridsInputs(CustomGridsInputsMode @mode, IList<GridAreas> @gridAreas, bool @showDebugGeometry, Overrides @overrides, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey):
+        public GridInputs(GridInputsMode @mode, IList<GridAreas> @gridAreas, bool @showDebugGeometry, Overrides @overrides, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey):
         base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
         {
-            var validator = Validator.Instance.GetFirstValidatorForType<CustomGridsInputs>();
+            var validator = Validator.Instance.GetFirstValidatorForType<GridInputs>();
             if(validator != null)
             {
                 validator.PreConstruct(new object[]{ @mode, @gridAreas, @showDebugGeometry, @overrides});
@@ -51,7 +51,7 @@ namespace CustomGrids
         /// <summary>Are the gridlines calculated from a typical target, as grid positions absolute from their origin, or relative to the last gridline?</summary>
         [Newtonsoft.Json.JsonProperty("Mode", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public CustomGridsInputsMode Mode { get; set; } = CustomGridsInputsMode.Typical;
+        public GridInputsMode Mode { get; set; } = GridInputsMode.Typical;
     
         /// <summary>List of grids enclosed by the area they apply to.</summary>
         [Newtonsoft.Json.JsonProperty("Grid Areas", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
@@ -67,7 +67,7 @@ namespace CustomGrids
     }
     
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
-    public enum CustomGridsInputsMode
+    public enum GridInputsMode
     {
         [System.Runtime.Serialization.EnumMember(Value = @"Absolute")]
         Absolute = 0,

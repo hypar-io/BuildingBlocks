@@ -6,9 +6,9 @@ using System;
 using System.Linq;
 using Newtonsoft.Json;
 
-namespace CustomGrids
+namespace Grid
 {
-    public static class CustomGrids
+    public static class Grid
     {
         private static double MinCircleRadius = 0.5;
         private static double CircleRadius = 1;
@@ -23,10 +23,10 @@ namespace CustomGrids
         /// </summary>
         /// <param name="model">The input model.</param>
         /// <param name="input">The arguments to the execution.</param>
-        /// <returns>A CustomGridsOutputs instance containing computed results and the model with any new elements.</returns>
-        public static CustomGridsOutputs Execute(Dictionary<string, Model> inputModels, CustomGridsInputs input)
+        /// <returns>A GridOutputs instance containing computed results and the model with any new elements.</returns>
+        public static GridOutputs Execute(Dictionary<string, Model> inputModels, GridInputs input)
         {
-            var output = new CustomGridsOutputs();
+            var output = new GridOutputs();
 
             var envelopes = new List<Envelope>();
             inputModels.TryGetValue("Envelope", out var envelopeModel);
@@ -39,7 +39,7 @@ namespace CustomGrids
 
             var envelopePolygons = new List<Polygon>();
 
-            if (envelopes.Count == 0 && input.Mode == CustomGridsInputsMode.Typical)
+            if (envelopes.Count == 0 && input.Mode == GridInputsMode.Typical)
             {
                 output.Errors.Add("When using typical spacing, an envelope is required to calculate your number of gridlines. If you do not have an envelope available, please use Absolute or Relative spacing.");
                 return output;
@@ -56,7 +56,7 @@ namespace CustomGrids
             return output;
         }
 
-        private static Transform GetOrigin(GridAreas gridArea, List<Polygon> envelopePolygons, CustomGridsInputs input)
+        private static Transform GetOrigin(GridAreas gridArea, List<Polygon> envelopePolygons, GridInputs input)
         {
             var transform = new Transform();
 
@@ -89,8 +89,8 @@ namespace CustomGrids
         }
 
         private static List<Grid2dElement> CreateGridArea(
-            CustomGridsInputs input,
-            CustomGridsOutputs output,
+            GridInputs input,
+            GridOutputs output,
             List<Polygon> envelopePolygons,
             GridAreas gridArea
         )
@@ -338,9 +338,9 @@ namespace CustomGrids
             return boxRect.TransformedPolygon(minBoxXform);
         }
 
-        private static (U u, U v) GetStandardizedRecords(CustomGridsOutputs output, U u, V v, CustomGridsInputs input, List<Polygon> envelopePolygons, Vector3 origin, Vector3 uDirection, Vector3 vDirection)
+        private static (U u, U v) GetStandardizedRecords(GridOutputs output, U u, V v, GridInputs input, List<Polygon> envelopePolygons, Vector3 origin, Vector3 uDirection, Vector3 vDirection)
         {
-            if (input.Mode == CustomGridsInputsMode.Typical)
+            if (input.Mode == GridInputsMode.Typical)
             {
                 var points = envelopePolygons.SelectMany(polygon => polygon.Vertices).Select(vertex => new Vector3(vertex.X, vertex.Y)).ToList();
                 var bounds = Polygon.FromAlignedBoundingBox2d(points);
@@ -377,7 +377,7 @@ namespace CustomGrids
         /// <param name="u"></param>
         /// <param name="input"></param>
         /// <returns></returns>
-        private static U GetStandardizedRecords(U u, CustomGridsInputs input, double axisLength)
+        private static U GetStandardizedRecords(U u, GridInputs input, double axisLength)
         {
             var gridlines = new List<GridLines>();
 
@@ -389,7 +389,7 @@ namespace CustomGrids
                     gridlines.Add(new GridLines(0, spacing, 1));
                 }
             }
-            else if (input.Mode == CustomGridsInputsMode.Typical)
+            else if (input.Mode == GridInputsMode.Typical)
             {
                 gridlines.Add(new GridLines(0, u.OffsetStart, 1));
                 var spaceInBetween = axisLength - u.OffsetStart - u.OffsetEnd;
@@ -405,7 +405,7 @@ namespace CustomGrids
                 }
 
             }
-            else if (input.Mode == CustomGridsInputsMode.Absolute)
+            else if (input.Mode == GridInputsMode.Absolute)
             {
                 var sortedGridlines = u.GridLines.OrderBy(gl => gl.Location).ToList();
                 for (var i = 0; i < sortedGridlines.Count; i++)
@@ -437,7 +437,7 @@ namespace CustomGrids
             return new U(u.Name, u.Spacing, gridlines, 0, 0, 0);
         }
 
-        private static U GetStandardizedRecords(V v, CustomGridsInputs input, double axisLength)
+        private static U GetStandardizedRecords(V v, GridInputs input, double axisLength)
         {
             var vAsU = new U(v.Name, v.Spacing, v.GridLines, v.TargetTypicalSpacing, v.OffsetStart, v.OffsetEnd);
             return GetStandardizedRecords(vAsU, input, axisLength);

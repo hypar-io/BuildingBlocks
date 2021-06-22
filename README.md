@@ -1,6 +1,6 @@
 
 
-# Custom Grids
+# Grid
 
 Create custom gridlines for your project using typical values, relative spacings, or absolute offsets.
 

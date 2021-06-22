@@ -10,7 +10,7 @@ using Xunit.Abstractions;
 using System;
 using System.Collections.Generic;
 
-namespace CustomGrids.Tests
+namespace Grid.Tests
 {
     public class FunctionTests
     {

@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\CustomGrids.csproj" />
+    <ProjectReference Include="..\src\Grid.csproj" />
   </ItemGroup>
 
 </Project>

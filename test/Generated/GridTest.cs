@@ -9,9 +9,9 @@ using System.IO;
 using System.Collections.Generic;
 using Elements.Serialization.glTF;
 
-namespace CustomGrids
+namespace Grid
 {
-    public class CustomGridsTest
+    public class GridTest
     {
         [Fact]
         public void TestExecute()
@@ -19,16 +19,16 @@ namespace CustomGrids
             var input = GetInput();
 
             var modelDependencies = new Dictionary<string, Model> {
-                {"Envelope", Model.FromJson(File.ReadAllText(@"/Users/serenali/Github/hypar/function-CustomGrids/test/Generated/CustomGridsTest/model_dependencies/Envelope/model.json")) },
+                {"Envelope", Model.FromJson(File.ReadAllText(@"/Users/serenali/Github/hypar/function-Grid/test/Generated/GridTest/model_dependencies/Envelope/model.json")) },
             };
 
-            var result = CustomGrids.Execute(modelDependencies, input);
-            result.Model.ToGlTF("../../../Generated/CustomGridsTest/results/CustomGridsTest.gltf", false);
-            result.Model.ToGlTF("../../../Generated/CustomGridsTest/results/CustomGridsTest.glb");
-            File.WriteAllText("../../../Generated/CustomGridsTest/results/CustomGridsTest.json", result.Model.ToJson());
+            var result = Grid.Execute(modelDependencies, input);
+            result.Model.ToGlTF("../../../Generated/GridTest/results/GridTest.gltf", false);
+            result.Model.ToGlTF("../../../Generated/GridTest/results/GridTest.glb");
+            File.WriteAllText("../../../Generated/GridTest/results/GridTest.json", result.Model.ToJson());
         }
 
-        public CustomGridsInputs GetInput()
+        public GridInputs GetInput()
         {
             var inputText = @"
             {
@@ -108,7 +108,7 @@ namespace CustomGrids
   ""Mode"": ""Typical""
 }
             ";
-            return Newtonsoft.Json.JsonConvert.DeserializeObject<CustomGridsInputs>(inputText);
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<GridInputs>(inputText);
         }
     }
 }
