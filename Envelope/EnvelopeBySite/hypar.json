@@ -11,62 +11,112 @@
     }
   ],
   "model_output": "Envelope",
-  "inputs": [
-    {
-      "min": 0.0,
-      "max": 30.0,
-      "step": 1.0,
-      "unit_type": "length",
-      "name": "Site Setback",
-      "description": "Distance from site boundary to building envelope.",
-      "type": "range"
-    },
-    {
-      "min": 5.0,
-      "max": 100.0,
-      "step": 1.0,
-      "unit_type": "length",
-      "name": "Building Height",
-      "description": "Overall height of the building from grade.",
-      "type": "range"
-    },
-    {
-      "min": 10.0,
-      "max": 30.0,
-      "step": 1.0,
-      "unit_type": "length",
-      "name": "Setback Interval",
-      "description": "Vertical distance between envelope setbacks.",
-      "type": "range"
-    },
-    {
-      "min": 1.0,
-      "max": 3.0,
-      "step": 0.5,
-      "unit_type": "length",
-      "name": "Setback Depth",
-      "description": "Offset depth from previous setback.",
-      "type": "range"
-    },
-    {
-      "min": 10.0,
-      "max": 100.0,
-      "step": 1.0,
-      "unit_type": "area",
-      "name": "Minimum Tier Area",
-      "description": "Minimum area allowed for a setback tier.",
-      "type": "range"
-    },
-    {
-      "min": 5.0,
-      "max": 20.0,
-      "step": 1.0,
-      "unit_type": "length",
-      "name": "Foundation Depth",
-      "description": "Depth of the building envelope below grade.",
-      "type": "range"
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "Building Height": {
+        "$hyparOrder": 1,
+        "$hyparUnitType": "length",
+        "type": "number",
+        "description": "Overall height of the building from grade.",
+        "default": 20,
+        "minimum": 5,
+        "maximum": 100,
+        "multipleOf": 1
+      },
+      "Foundation Depth": {
+        "$hyparOrder": 2,
+        "$hyparUnitType": "length",
+        "type": "number",
+        "description": "Depth of the building envelope below grade.",
+        "default": 10,
+        "minimum": 5,
+        "maximum": 20,
+        "multipleOf": 1
+      },
+      "Use Setbacks": {
+        "$hyparOrder": 3,
+        "type": "boolean",
+        "default": true
+      },
+      "Site Setback": {
+        "$hyparOrder": 4,
+        "$hyparUnitType": "length",
+        "$hyparShowIf": {
+          "type": "all",
+          "conditions": [
+            {
+              "property": "Use Setbacks",
+              "value": true
+            }
+          ]
+        },
+        "type": "number",
+        "description": "Distance from site boundary to building envelope.",
+        "default": 0,
+        "minimum": 0,
+        "maximum": 30,
+        "multipleOf": 1
+      },
+      "Setback Interval": {
+        "$hyparOrder": 5,
+        "$hyparUnitType": "length",
+        "$hyparShowIf": {
+          "type": "all",
+          "conditions": [
+            {
+              "property": "Use Setbacks",
+              "value": true
+            }
+          ]
+        },
+        "type": "number",
+        "description": "Vertical distance between envelope setbacks.",
+        "default": 20,
+        "minimum": 10,
+        "maximum": 30,
+        "multipleOf": 1
+      },
+      "Setback Depth": {
+        "$hyparOrder": 6,
+        "$hyparUnitType": "length",
+        "$hyparShowIf": {
+          "type": "all",
+          "conditions": [
+            {
+              "property": "Use Setbacks",
+              "value": true
+            }
+          ]
+        },
+        "type": "number",
+        "description": "Offset depth from previous setback.",
+        "default": 1,
+        "minimum": 1,
+        "maximum": 3,
+        "multipleOf": 0.5
+      },
+      "Minimum Tier Area": {
+        "$hyparOrder": 7,
+        "$hyparUnitType": "area",
+        "$hyparShowIf": {
+          "type": "all",
+          "conditions": [
+            {
+              "property": "Use Setbacks",
+              "value": true
+            }
+          ]
+        },
+        "type": "number",
+        "description": "Minimum area allowed for a setback tier.",
+        "default": 50,
+        "minimum": 10,
+        "maximum": 100,
+        "multipleOf": 1
+      }
     }
-  ],
+  },
   "outputs": [
     {
       "unit_type": "length",
