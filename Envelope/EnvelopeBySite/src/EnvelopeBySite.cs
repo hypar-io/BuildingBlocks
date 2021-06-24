@@ -28,9 +28,14 @@ namespace EnvelopeBySite
             sites = sites.OrderByDescending(e => e.Perimeter.Area()).ToList();
             var output = new EnvelopeBySiteOutputs(input.BuildingHeight, input.FoundationDepth);
 
+            // Set input values based on whether we should consider setbacks
+            var siteSetback = input.UseSetbacks ? input.SiteSetback : 0;
+            var setbackInterval = input.UseSetbacks ? input.SetbackInterval : 0;
+            var setbackDepth = input.UseSetbacks ? input.SetbackDepth : 0;
+
             foreach (var site in sites)
             {
-                var perims = site.Perimeter.Offset(input.SiteSetback * -1);
+                var perims = site.Perimeter.Offset(siteSetback * -1);
                 if (perims.Count() == 0)
                 {
                     continue;
@@ -54,7 +59,7 @@ namespace EnvelopeBySite
                 };
 
                 // Create the Envelope at the location's zero plane.
-                var tiers = Math.Floor(input.BuildingHeight / input.SetbackInterval);
+                var tiers = setbackInterval == 0 ? 0 : Math.Floor(input.BuildingHeight / setbackInterval);
                 var tierHeight = tiers > 0 ? input.BuildingHeight / tiers : input.BuildingHeight;
                 extrude = new Elements.Geometry.Solids.Extrude(perimeter, tierHeight, Vector3.ZAxis, false);
                 geomRep = new Representation(new List<Elements.Geometry.Solids.SolidOperation>() { extrude });
@@ -66,7 +71,7 @@ namespace EnvelopeBySite
                 var elevFactor = 1;
                 for (int i = 0; i < tiers; i++)
                 {
-                    var tryPer = perimeter.Offset(input.SetbackDepth * offsFactor);
+                    var tryPer = perimeter.Offset(setbackDepth * offsFactor);
                     if (tryPer.Count() == 0 || tryPer.First().Area() < input.MinimumTierArea)
                     {
                         break;
