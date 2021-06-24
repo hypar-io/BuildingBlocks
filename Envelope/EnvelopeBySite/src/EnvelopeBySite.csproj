@@ -10,4 +10,8 @@
     <PackageReference Include="Hypar.Functions" Version="0.9.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\dependencies\EnvelopeBySite.Dependencies.csproj" />
+  </ItemGroup>
+
 </Project>
