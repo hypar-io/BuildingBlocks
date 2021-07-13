@@ -46,7 +46,20 @@ namespace Grid
             }
             else
             {
-                envelopePolygons = envelopes.Select(e => (Polygon)e.Profile.Perimeter.Transformed(e.Transform)).ToList();
+                // Handle all envelopes which are extrusions. This is the old way.
+                if (envelopes.All(e => e.Profile != null))
+                {
+                    envelopePolygons = envelopes.Select(e => (Polygon)e.Profile.Perimeter.Transformed(e.Transform)).ToList();
+                }
+                // Handle envelopes of all shapes by using a more general method of convex hull projection onto the XY plane.
+                else
+                {
+                    foreach (var e in envelopes)
+                    {
+                        var polygon = ConvexHull.FromPoints(e.Representation.SolidOperations.SelectMany(o => o.Solid.Vertices.Select(v => new Vector3(v.Value.Point.X, v.Value.Point.Y))));
+                        envelopePolygons.Add(polygon);
+                    }
+                }
             }
 
             foreach (var gridArea in input.GridAreas)

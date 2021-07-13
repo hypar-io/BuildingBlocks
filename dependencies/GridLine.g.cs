@@ -26,7 +26,7 @@ namespace Elements
     public partial class GridLine : Element
     {
         [Newtonsoft.Json.JsonConstructor]
-        public GridLine(Polyline @geometry, System.Guid @id, string @name)
+        public GridLine(Polyline @geometry, System.Guid @id = default, string @name = null)
             : base(id, name)
         {
             var validator = Validator.Instance.GetFirstValidatorForType<GridLine>();

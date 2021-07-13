@@ -26,7 +26,7 @@ namespace Elements
     public partial class GridNode : Element
     {
         [Newtonsoft.Json.JsonConstructor]
-        public GridNode(Transform @location, System.Guid @id, string @name)
+        public GridNode(Transform @location, System.Guid @id = default, string @name = null)
             : base(id, name)
         {
             var validator = Validator.Instance.GetFirstValidatorForType<GridNode>();
