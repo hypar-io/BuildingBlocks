@@ -147,13 +147,21 @@ namespace Structure
             model.AddElement(structureMaterial);
 
             var wideFlangeFactory = new WideFlangeProfileFactory();
-            var columnProfile = wideFlangeFactory.GetProfileByName(input.ColumnType.ToString());
+            var shsProfileFactory = new SHSProfileFactory();
+            var rhsProfileFactory = new RHSProfileFactory();
+
+            var columnTypeName = input.ColumnType.ToString();
+            var columnProfile = GetProfileFromName(columnTypeName, wideFlangeFactory, rhsProfileFactory, shsProfileFactory);
             var colProfileBounds = columnProfile.Perimeter.Bounds();
             var colProfileDepth = colProfileBounds.Max.Y - colProfileBounds.Min.Y;
-            var girderProfile = wideFlangeFactory.GetProfileByName(input.GirderType.ToString());
+
+            var girderTypeName = input.GirderType.ToString();
+            var girderProfile = GetProfileFromName(girderTypeName, wideFlangeFactory, rhsProfileFactory, shsProfileFactory);
             var girdProfileBounds = girderProfile.Perimeter.Bounds();
             var girderProfileDepth = girdProfileBounds.Max.Y - girdProfileBounds.Min.Y;
-            var beamProfile = wideFlangeFactory.GetProfileByName(input.BeamType.ToString());
+
+            var beamTypeName = input.BeamType.ToString();
+            var beamProfile = GetProfileFromName(beamTypeName, wideFlangeFactory, rhsProfileFactory, shsProfileFactory);
             var beamProfileBounds = beamProfile.Perimeter.Bounds();
             var beamProfileDepth = beamProfileBounds.Max.Y - beamProfileBounds.Min.Y;
 
@@ -161,9 +169,9 @@ namespace Structure
             var lowestTierSet = false;
             var lowestTierElevation = double.MaxValue;
 
-            var columnDefintions = new Dictionary<(double memberLength, WideFlangeProfile memberProfile), Column>();
-            var girderDefinitions = new Dictionary<(double memberLength, WideFlangeProfile memberProfile), Beam>();
-            var beamDefinitions = new Dictionary<(double memberLength, WideFlangeProfile memberProfile), Beam>();
+            var columnDefintions = new Dictionary<(double memberLength, Profile memberProfile), Column>();
+            var girderDefinitions = new Dictionary<(double memberLength, Profile memberProfile), Beam>();
+            var beamDefinitions = new Dictionary<(double memberLength, Profile memberProfile), Beam>();
 
             // Order edges from lowest to highest.
             foreach (var edge in edges.OrderBy(e =>
@@ -328,6 +336,24 @@ namespace Structure
                 return true;
             }
             return false;
+        }
+
+        private static Profile GetProfileFromName(string name, WideFlangeProfileFactory wideFlangeFactory, RHSProfileFactory rhsFactory, SHSProfileFactory shsFactory)
+        {
+            Profile profile = wideFlangeFactory.GetProfileByType(WideFlangeProfileType.W4x13);
+            if (name.StartsWith("W"))
+            {
+                profile = wideFlangeFactory.GetProfileByName(name);
+            }
+            else if (name.StartsWith("RHS"))
+            {
+                profile = rhsFactory.GetProfileByName(name);
+            }
+            else if (name.StartsWith("SHS"))
+            {
+                profile = shsFactory.GetProfileByName(name);
+            }
+            return profile;
         }
     }
 }
