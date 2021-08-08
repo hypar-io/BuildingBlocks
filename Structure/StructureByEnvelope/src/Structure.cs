@@ -130,17 +130,23 @@ namespace Structure
             }
 
             Vector3 primaryDirection;
+            Vector3 secondaryDirection;
             if (models.ContainsKey(GRIDS_MODEL_NAME))
             {
                 var gridsModel = models[GRIDS_MODEL_NAME];
                 var gridLines = gridsModel.AllElementsOfType<GridLine>();
-                primaryDirection = gridLines.ElementAt(0).Geometry.Segments()[0].Direction();
+
+                // Group by direction.
+                var gridGroups = gridLines.GroupBy(gl => (gl.Geometry.Vertices[0] - gl.Geometry.Vertices[1]).Unitized()).ToList();
+                primaryDirection = gridGroups[0].Key;
+                secondaryDirection = gridGroups[1].Key;
             }
             else
             {
                 warnings.Add("Adding the Grids function to your workflow will enable you to position and orient the grid. We'll use the default configuration for now with the grid oriented along the longest edge of the structure.");
                 // Define the primary direction from the longest edge of the site.
                 primaryDirection = longestEdge.Direction();
+                secondaryDirection = longestEdge.TransformAt(0.5).XAxis;
             }
 
             var structureMaterial = new Material("Steel", Colors.Gray, 0.5, 0.3);
@@ -270,7 +276,14 @@ namespace Structure
             {
                 var topFace = cell.GetTopFace();
                 var p = topFace.GetGeometry();
-                var longestCellEdge = p.Segments().OrderBy(s => s.Length()).Last();
+
+                // Get the longest cell edge that is parallel to one of the primary directions.
+                var longestCellEdge = p.Segments().Where(s =>
+                {
+                    var d = s.Direction();
+                    return d.IsParallelTo(primaryDirection) || d.IsParallelTo(secondaryDirection);
+                }).OrderBy(s => s.Length()).Last();
+
                 var d = longestCellEdge.Direction();
                 var beamGrid = new Grid1d(longestCellEdge);
                 beamGrid.DivideByFixedLength(input.BeamSpacing, FixedDivisionMode.RemainderAtBothEnds);
