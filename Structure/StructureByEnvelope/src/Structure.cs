@@ -199,7 +199,7 @@ namespace Structure
                         continue;
                     }
                     var origin = start.IsLowerThan(end) ? start : end;
-                    var rotation = Vector3.XAxis.AngleTo(primaryDirection);
+                    var rotation = Vector3.XAxis.PlaneAngleTo(primaryDirection);
                     Column columnDefinition;
                     if (!columnDefintions.ContainsKey((memberLength, columnProfile)))
                     {
@@ -276,26 +276,25 @@ namespace Structure
             {
                 var topFace = cell.GetTopFace();
                 var p = topFace.GetGeometry();
+                var segments = p.Segments();
 
-                // Get the longest cell edge that is parallel to one of the primary directions.
-                var longestCellEdge = p.Segments().Where(s =>
+                // Get the longest cell edge that is parallel 
+                // to one of the primary directions.
+                var longestCellEdge = segments.Where(s =>
                 {
                     var d = s.Direction();
                     return d.IsParallelTo(primaryDirection) || d.IsParallelTo(secondaryDirection);
                 }).OrderBy(s => s.Length()).Last();
 
                 var d = longestCellEdge.Direction();
+                var length = longestCellEdge.Length();
+                var remainder = length % input.BeamSpacing;
+
                 var beamGrid = new Grid1d(longestCellEdge);
-                beamGrid.DivideByFixedLength(input.BeamSpacing, FixedDivisionMode.RemainderAtBothEnds);
-                var segments = p.Segments();
+                beamGrid.DivideByApproximateLength(input.BeamSpacing, EvenDivisionMode.RoundDown);
+
                 foreach (var pt in beamGrid.GetCellSeparators())
                 {
-                    // Skip beams that would be too close to the ends 
-                    // to be useful.
-                    if (pt.DistanceTo(longestCellEdge.Start) < 1 || pt.DistanceTo(longestCellEdge.End) < 1)
-                    {
-                        continue;
-                    }
                     var t = new Transform(pt, d, Vector3.ZAxis);
                     var r = new Ray(t.Origin, t.YAxis);
                     foreach (var s in segments)
