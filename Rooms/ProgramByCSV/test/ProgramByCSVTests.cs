@@ -25,8 +25,8 @@ namespace ProgramByCSV.Tests
                 new ProgramByCSVInputs(
                     new Hypar.Functions.Execution.InputData(INPUT + "Clinic.csv"),
                                                             useImperialUnits: false,
-                                                            suiteSequence: SuiteSequence.Listed, 
-                                                            roomSequence: RoomSequence.Listed,  
+                                                            suiteSequence: ProgramByCSVInputsSuiteSequence.Listed, 
+                                                            roomSequence: ProgramByCSVInputsRoomSequence.Listed,  
                                                             "", "", new Dictionary<string, string>(), "", "", "");
             var outputs = 
                 ProgramByCSV.Execute(new Dictionary<string, Model>{ {"Program", new Model() } }, inputs);
@@ -40,8 +40,8 @@ namespace ProgramByCSV.Tests
                 new ProgramByCSVInputs(
                     new Hypar.Functions.Execution.InputData(INPUT + "School.csv"),
                                                             useImperialUnits: false,
-                                                            suiteSequence: SuiteSequence.Listed,
-                                                            roomSequence: RoomSequence.Listed,
+                                                            suiteSequence: ProgramByCSVInputsSuiteSequence.Listed,
+                                                            roomSequence: ProgramByCSVInputsRoomSequence.Listed,
                                                             "", "", new Dictionary<string, string>(), "", "", "");
             var outputs = 
                 ProgramByCSV.Execute(new Dictionary<string, Model> { { "Program", new Model() } }, inputs);

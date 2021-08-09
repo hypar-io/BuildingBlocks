@@ -7,10 +7,10 @@ Converts a properly formatted Comma Separated Value (.csv) file into space progr
 
 |Input Name|Type|Description|
 |---|---|---|
-|Program|Data|A CSV list of room definitions.|
-|Use imperial units|Boolean|Default is metric units.|
-|Suite Sequence|Choice|Changes the sequence of the suites.|
-|Room Sequence|Choice|Changes the sequence of the rooms in each suite.|
+|Program|https://hypar.io/Schemas/InputData.json|A CSV list of room definitions.|
+|Use imperial units|boolean|Default is metric units.|
+|Suite Sequence|string|Changes the sequence of the suites.|
+|Room Sequence|string|Changes the sequence of the rooms in each suite.|
 
 
 <br>
