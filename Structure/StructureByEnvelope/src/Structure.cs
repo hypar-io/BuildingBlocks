@@ -293,8 +293,15 @@ namespace Structure
                 var beamGrid = new Grid1d(longestCellEdge);
                 beamGrid.DivideByApproximateLength(input.BeamSpacing, EvenDivisionMode.RoundDown);
 
-                foreach (var pt in beamGrid.GetCellSeparators())
+                var cellSeparators = beamGrid.GetCellSeparators();
+                for (var i = 0; i < cellSeparators.Count; i++)
                 {
+                    if (i == 0 || i == cellSeparators.Count - 1)
+                    {
+                        continue;
+                    }
+
+                    var pt = cellSeparators[i];
                     var t = new Transform(pt, d, Vector3.ZAxis);
                     var r = new Ray(t.Origin, t.YAxis);
                     foreach (var s in segments)
@@ -343,7 +350,8 @@ namespace Structure
 
         private static bool IsExternal(Edge e)
         {
-            if (e.GetFaces().Count <= 3)
+            var faces = e.GetFaces();
+            if (faces.Count <= 3)
             {
                 return true;
             }
