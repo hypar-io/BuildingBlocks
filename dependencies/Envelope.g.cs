@@ -26,7 +26,7 @@ namespace Elements
     public partial class Envelope : GeometricElement
     {
         [Newtonsoft.Json.JsonConstructor]
-        public Envelope(Profile @profile, double @elevation, double @height, Vector3 @direction, double @rotation, Transform @transform, Material @material, Representation @representation, bool @isElementDefinition, System.Guid @id, string @name)
+        public Envelope(Profile @profile, double @elevation, double @height, Vector3 @direction, double @rotation, Transform @transform = null, Material @material = null, Representation @representation = null, bool @isElementDefinition = false, System.Guid @id = default, string @name = null)
             : base(transform, material, representation, isElementDefinition, id, name)
         {
             var validator = Validator.Instance.GetFirstValidatorForType<Envelope>();
