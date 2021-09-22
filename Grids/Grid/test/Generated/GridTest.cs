@@ -18,8 +18,8 @@ namespace Grid
         {
             var input = GetInput();
 
-            var modelDependencies = new Dictionary<string, Model> {
-                {"Envelope", Model.FromJson(File.ReadAllText(@"/Users/serenali/Github/hypar/function-CustomGrids/test/Generated/GridTest/model_dependencies/Envelope/model.json")) },
+            var modelDependencies = new Dictionary<string, Model> { 
+                {"Envelope", Model.FromJson(File.ReadAllText(@"/Users/serenali/Github/hypar/BuildingBlocks/Grids/Grid/test/Generated/GridTest/model_dependencies/Envelope/model.json")) }, 
             };
 
             var result = Grid.Execute(modelDependencies, input);
@@ -32,7 +32,7 @@ namespace Grid
         {
             var inputText = @"
             {
-  ""Show Debug Geometry"": true,
+  ""Show Debug Geometry"": false,
   ""Grid Areas"": [
     {
       ""Orientation"": {
@@ -67,9 +67,9 @@ namespace Grid
             ""Location"": 8.1
           }
         ],
-        ""Target Typical Spacing"": 6,
+        ""Target Typical Spacing"": 7.6,
         ""Spacing"": [],
-        ""Offset Start"": 1,
+        ""Offset Start"": 0.5,
         ""Name"": ""{A}""
       },
       ""V"": {
@@ -86,7 +86,7 @@ namespace Grid
             ""Location"": 8.1
           }
         ],
-        ""Target Typical Spacing"": 6,
+        ""Target Typical Spacing"": 7.6,
         ""Spacing"": [],
         ""Offset Start"": 0.5,
         ""Name"": ""{1}""
@@ -95,37 +95,7 @@ namespace Grid
     }
   ],
   ""model_input_keys"": {
-    ""Envelope"": ""d6be38bc-ec9e-463c-8d9e-3a2d875bb09d_0c8d0526-9490-4d53-896b-88a1515de583_elements.zip""
-  },
-  ""overrides"": {
-    ""Grid Origins"": [
-      {
-        ""value"": {
-          ""Transform"": {
-            ""Matrix"": {
-              ""Components"": [
-                -0.7116971973951175,
-                0.7024863694193189,
-                5.3764785488614194E-17,
-                21.481315746922444,
-                -0.7024863694193189,
-                -0.7116971973951175,
-                5.3068958397958386E-17,
-                16.104849721996278,
-                7.554446706464302E-17,
-                -1.232595164407831E-32,
-                1.0000000000000004,
-                0
-              ]
-            }
-          }
-        },
-        ""identity"": {
-          ""Name"": ""Main""
-        },
-        ""id"": ""29319f26-9ef8-4ee9-a7e7-bc8606d09fc0""
-      }
-    ]
+    ""Envelope"": ""1cf4916d-258f-471e-a605-30018a237e5f_370e5e93-2050-4241-a6e1-88fe9eacd8bc_elements.zip""
   },
   ""Mode"": ""Typical""
 }
