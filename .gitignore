@@ -6,3 +6,5 @@ output.json
 input.json
 .vs/**/*.*
 .vscode/
+test/Generated/**/results/
+.DS_Store

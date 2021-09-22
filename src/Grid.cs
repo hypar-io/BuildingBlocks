@@ -120,7 +120,7 @@ namespace Grid
                 output.Model.AddElement(new Line(origin - vDirection, origin + vDirection));
             }
 
-            var standardizedRecords = GetStandardizedRecords(output, gridArea.U, gridArea.V, input, envelopePolygons, origin, uDirection, vDirection);
+            var standardizedRecords = GetStandardizedRecords(output, gridArea.U, gridArea.V, input, envelopePolygons, transform);
 
             var u = standardizedRecords.u;
             var v = standardizedRecords.v;
@@ -351,25 +351,29 @@ namespace Grid
             return boxRect.TransformedPolygon(minBoxXform);
         }
 
-        private static (U u, U v) GetStandardizedRecords(GridOutputs output, U u, V v, GridInputs input, List<Polygon> envelopePolygons, Vector3 origin, Vector3 uDirection, Vector3 vDirection)
+        private static (U u, U v) GetStandardizedRecords(GridOutputs output, U u, V v, GridInputs input, List<Polygon> envelopePolygons, Transform transform)
         {
+            var origin = transform.Origin;
+            var uDirection = transform.XAxis;
+            var vDirection = transform.YAxis;
+
             if (input.Mode == GridInputsMode.Typical)
             {
                 var points = envelopePolygons.SelectMany(polygon => polygon.Vertices).Select(vertex => new Vector3(vertex.X, vertex.Y)).ToList();
-                var bounds = Polygon.FromAlignedBoundingBox2d(points);
+                var bounds = GetBoundingBox2d(points, transform);
 
                 if (origin.DistanceTo(bounds) > 0)
                 {
                     points.Add(origin);
-                    bounds = Polygon.FromAlignedBoundingBox2d(points);
+                    bounds = GetBoundingBox2d(points, transform);
                     output.Warnings.Add("Your origin is outside of your envelope boundaries. There are some assumptions made in this calculation that may not align to what you expect");
                 }
 
                 var xAxis = new Line(origin, origin + uDirection);
-                xAxis = xAxis.ExtendTo(bounds, true, true);
+                xAxis = xAxis.ExtendTo(bounds, false, true);
 
                 var yAxis = new Line(origin, origin + vDirection);
-                yAxis = yAxis.ExtendTo(bounds, true, true);
+                yAxis = yAxis.ExtendTo(bounds, false, true);
 
                 if (input.ShowDebugGeometry)
                 {
@@ -381,6 +385,17 @@ namespace Grid
             {
                 return (u: GetStandardizedRecords(u, input, 0), v: GetStandardizedRecords(v, input, 0));
             }
+        }
+
+        private static Polygon GetBoundingBox2d(IEnumerable<Vector3> points, Transform transform) {
+            var hull = ConvexHull.FromPoints(points);
+            var invertedXform = new Transform(transform);
+            invertedXform.Invert();
+            var transformedPolygon = hull.TransformedPolygon(invertedXform);
+            var bbox = new BBox3(transformedPolygon.Vertices);
+            var xy = new Plane(Vector3.Origin, Vector3.ZAxis);
+            var boxRect = Polygon.Rectangle(bbox.Min.Project(xy), bbox.Max.Project(xy));
+            return boxRect.TransformedPolygon(transform);
         }
 
         /// <summary>
