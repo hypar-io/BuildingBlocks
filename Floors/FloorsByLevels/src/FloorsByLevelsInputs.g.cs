@@ -48,7 +48,7 @@ namespace FloorsByLevels
     
         /// <summary>Setback of all floors from each level's perimeter.</summary>
         [Newtonsoft.Json.JsonProperty("Floor Setback", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        [System.ComponentModel.DataAnnotations.Range(0.0D, 0.5D)]
+        [System.ComponentModel.DataAnnotations.Range(0D, 0.5D)]
         public double FloorSetback { get; set; } = 0D;
     
         /// <summary>Thickness of all floors.</summary>

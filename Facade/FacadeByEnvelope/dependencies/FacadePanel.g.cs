@@ -7,6 +7,7 @@ using Elements;
 using Elements.GeoJSON;
 using Elements.Geometry;
 using Elements.Geometry.Solids;
+using Elements.Spatial;
 using Elements.Validators;
 using Elements.Serialization.JSON;
 using System;
@@ -25,22 +26,11 @@ namespace Elements
     public partial class FacadePanel : GeometricElement
     {
         [Newtonsoft.Json.JsonConstructor]
-        public FacadePanel(double @thickness, Transform @transform, Material @material, Representation @representation, bool @isElementDefinition, System.Guid @id, string @name)
+        public FacadePanel(double @thickness, Transform @transform = null, Material @material = null, Representation @representation = null, bool @isElementDefinition = false, System.Guid @id = default, string @name = null)
             : base(transform, material, representation, isElementDefinition, id, name)
         {
-            var validator = Validator.Instance.GetFirstValidatorForType<FacadePanel>();
-            if(validator != null)
-            {
-                validator.PreConstruct(new object[]{ @thickness, @transform, @material, @representation, @isElementDefinition, @id, @name});
-            }
-        
             this.Thickness = @thickness;
-            
-            if(validator != null)
-            {
-                validator.PostConstruct(this);
             }
-        }
     
         /// <summary>The total thickness of the panel.</summary>
         [Newtonsoft.Json.JsonProperty("Thickness", Required = Newtonsoft.Json.Required.Always)]

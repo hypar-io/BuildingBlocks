@@ -29,19 +29,8 @@ namespace Elements
         public GridNode(Transform @location, System.Guid @id = default, string @name = null)
             : base(id, name)
         {
-            var validator = Validator.Instance.GetFirstValidatorForType<GridNode>();
-            if(validator != null)
-            {
-                validator.PreConstruct(new object[]{ @location, @id, @name});
-            }
-        
             this.Location = @location;
-            
-            if(validator != null)
-            {
-                validator.PostConstruct(this);
             }
-        }
     
         /// <summary>The location of this grid node.</summary>
         [Newtonsoft.Json.JsonProperty("Location", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
