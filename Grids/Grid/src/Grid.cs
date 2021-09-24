@@ -4,7 +4,6 @@ using Elements.Spatial;
 using System.Collections.Generic;
 using System;
 using System.Linq;
-using Newtonsoft.Json;
 
 namespace Grid
 {
@@ -125,7 +124,7 @@ namespace Grid
             var u = standardizedRecords.u;
             var v = standardizedRecords.v;
 
-            CircleRadius = GetCircleRadius(u, v);
+            // CircleRadius = GetCircleRadius(u, v);
 
             var uDivisions = GetDivisions(origin, uDirection, u);
             var vDivisions = GetDivisions(origin, vDirection, v);
@@ -164,7 +163,7 @@ namespace Grid
             {
                 gridPolygon = Polygon.FromAlignedBoundingBox2d(gridPoints);
             }
-            catch (Exception _)
+            catch
             {
                 gridPolygon = Polygon.FromAlignedBoundingBox2d(new List<Vector3>() { origin, origin + uDirection, origin + vDirection });
             }
@@ -189,11 +188,13 @@ namespace Grid
 
             var gridNodes = new List<GridNode>();
 
+            var texts = new List<(Vector3 location, Vector3 facingDirection, Vector3 lineDirection, string text, Color? color)>();
+
             foreach (var boundary in boundaries.SelectMany(boundaryList => boundaryList).ToList())
             {
                 var grid = MakeGrid(boundary, origin, uDirection, vDirection, uPoints, vPoints);
-                var uGridLines = DrawLines(output.Model, origin, uDivisions, grid.V, boundary, GridlineMaterialU);
-                var vGridLines = DrawLines(output.Model, origin, vDivisions, grid.U, boundary, GridlineMaterialV);
+                var uGridLines = DrawLines(output.Model, origin, uDivisions, grid.V, boundary, GridlineMaterialU, texts);
+                var vGridLines = DrawLines(output.Model, origin, vDivisions, grid.U, boundary, GridlineMaterialV, texts);
                 grids.Add((grid: grid, boundary: boundary));
 
                 if (input.ShowDebugGeometry)
@@ -232,6 +233,8 @@ namespace Grid
                     Debug.DrawGrid(output.Model, grid, uPoints, vPoints);
                 }
             }
+
+            output.Model.AddElement(new ModelText(texts, FontSize.PT72, 50));
 
             return grids.Select(grid =>
             {
@@ -280,13 +283,25 @@ namespace Grid
             return name;
         }
 
-        private static GridLine DrawLine(Model model, Line line, Material material, string name)
+        private static GridLine DrawLine(Model model,
+                                         Line line,
+                                         Material material,
+                                         string name,
+                                         List<(Vector3 location, Vector3 facingDirection, Vector3 lineDirection, string text, Color? color)> texts)
         {
-            var circleCenter = line.Start - (line.End - line.Start).Unitized() * CircleRadius;
+            // Offset the heads from the base lines.
+            var lineHeadExtension = 2.0;
+
+            // Offset the grid visual from the XY plane to avoid z-fighting.
+            var elevation = new Vector3(0, 0, 0.01);
+
+            var lineDir = (line.End - line.Start).Unitized();
+            var circleCenter = line.Start - (lineDir * (CircleRadius + lineHeadExtension));
 
             model.AddElement(new Elements.GridLine(new Polyline(new List<Vector3>() { line.Start, line.End }), Guid.NewGuid(), name));
-            model.AddElement(new ModelCurve(line, material, name: name));
-            model.AddElement(new ModelCurve(new Circle(circleCenter, CircleRadius), material));
+            model.AddElement(new ModelCurve(new Line(line.Start - (lineDir * lineHeadExtension) + elevation, line.End + elevation), material, name: name));
+            model.AddElement(new ModelCurve(new Circle(circleCenter + elevation, CircleRadius), material));
+            texts.Add((circleCenter + elevation, Vector3.ZAxis, lineDir, name, Colors.Darkgray));
             model.AddElement(new LabelDot(circleCenter, name));
             return new GridLine(line, name);
         }
@@ -305,7 +320,13 @@ namespace Grid
             return gridGuides;
         }
 
-        private static List<GridLine> DrawLines(Model model, Vector3 origin, List<GridGuide> gridGuides, Grid1d opposingGrid1d, Polygon bounds, Material material)
+        private static List<GridLine> DrawLines(Model model,
+                                                Vector3 origin,
+                                                List<GridGuide> gridGuides,
+                                                Grid1d opposingGrid1d,
+                                                Polygon bounds,
+                                                Material material,
+                                                List<(Vector3 location, Vector3 facingDirection, Vector3 lineDirection, string text, Color? color)> texts)
         {
             var baseLine = new Line(opposingGrid1d.Curve.PointAt(0), opposingGrid1d.Curve.PointAt(1));
 
@@ -317,7 +338,7 @@ namespace Grid
             foreach (var gridGuide in gridGuides)
             {
                 var line = new Line(gridGuide.Point - startExtend, gridGuide.Point - endExtend);
-                var gridLine = DrawLine(model, line, material, gridGuide.Name);
+                var gridLine = DrawLine(model, line, material, gridGuide.Name, texts);
                 gridLines.Add(gridLine);
             }
 
@@ -387,7 +408,8 @@ namespace Grid
             }
         }
 
-        private static Polygon GetBoundingBox2d(IEnumerable<Vector3> points, Transform transform) {
+        private static Polygon GetBoundingBox2d(IEnumerable<Vector3> points, Transform transform)
+        {
             var hull = ConvexHull.FromPoints(points);
             var invertedXform = new Transform(transform);
             invertedXform.Invert();
