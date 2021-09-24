@@ -6,7 +6,7 @@ Creates a Site from a polygon sketch.
 
 |Input Name|Type|Description|
 |---|---|---|
-|Perimeter|Geometry|Perimeter of the building envelope.|
+|Perimeter|https://hypar.io/Schemas/Geometry/Polygon.json|Perimeter of the building envelope.|
 
 
 <br>

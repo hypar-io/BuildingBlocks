@@ -112,6 +112,53 @@
       "type": "number"
     }
   ],
+  "messages": {
+    "ja": {
+      "name": "エンベロープ・バイ・スケッチ",
+      "description": "ポリゴンスケッチとセットバック設定から、建物のエンベロープ要素を作成します。",
+      "input_schema": {
+        "properties": {
+          "Perimeter": {
+            "description": "建物の外周部。",
+            "name": "ペリメーター"
+          },
+          "Setback Interval": {
+            "description": "エンベロープセットバックの垂直方向の距離",
+            "name": "セットバックインターバル"
+          },
+          "Use Setbacks": {
+            "name": "用途別セットバック"
+          },
+          "Setback Depth": {
+            "description": "前のセットバックからのオフセット深度",
+            "name": "セットバックの深さ"
+          },
+          "Minimum Tier Area": {
+            "description": "セットバック層に許される最小面積。",
+            "name": "最低限のティアエリア"
+          },
+          "Building Height": {
+            "description": "建物のグレードからの全体的な高さ",
+            "name": "建物の高さ"
+          },
+          "Foundation Depth": {
+            "description": "グレード以下の建物外壁の深さ。",
+            "name": "基礎の深さ"
+          }
+        }
+      },
+      "outputs": [
+        {
+          "name": "高さ",
+          "description": "建物の高さ"
+        },
+        {
+          "name": "サブグレード",
+          "description": "サブグラウンドセクションの深さ。"
+        }
+      ]
+    }
+  },
   "element_types": [
     "https://raw.githubusercontent.com/hypar-io/Schemas/master/Origin.json",
     "https://raw.githubusercontent.com/hypar-io/Schemas/master/Envelope.json"

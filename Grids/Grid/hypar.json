@@ -498,5 +498,128 @@
   "source_file_key": null,
   "preview_image": null,
   "thumbnail_id": null,
-  "last_updated": "0001-01-01T00:00:00"
+  "last_updated": "0001-01-01T00:00:00",
+  "messages": {
+    "ja": {
+      "name": "グリッド",
+      "description": "典型的な値、相対的な間隔、または絶対的なオフセットを使用して、プロジェクト用のカスタムグリッドラインを作成します。",
+      "input_schema": {
+        "properties": {
+          "Mode": {
+            "description": "一般的なターゲットから計算されたグリッドラインは、グリッドの位置が原点から絶対的なものなのか、それとも最後のグリッドラインからの相対的なものなのか？",
+            "enum": [
+              "アブソリュート",
+              "相対的な",
+              "典型的な"
+            ],
+            "name": "モード"
+          },
+          "Grid Areas": {
+            "description": "該当するエリアで囲まれたグリッドの一覧です。",
+            "items": {
+              "properties": {
+                "Name": {
+                  "name": "名前"
+                },
+                "Orientation": {
+                  "description": "グリッドの原点と回転",
+                  "name": "オリエンテーション"
+                },
+                "U": {
+                  "properties": {
+                    "Name": {
+                      "name": "名前"
+                    },
+                    "Spacing": {
+                      "description": "Spacingではなく、RelativeモードとGrid Lines > Spacingを使用してください。",
+                      "items": {},
+                      "name": "スペーシング"
+                    },
+                    "Grid Lines": {
+                      "items": {
+                        "properties": {
+                          "Location": {
+                            "name": "所在地"
+                          },
+                          "Spacing": {
+                            "name": "スペーシング"
+                          },
+                          "Quantity": {
+                            "name": "数量"
+                          }
+                        }
+                      },
+                      "name": "グリッドライン"
+                    },
+                    "Target Typical Spacing": {
+                      "name": "ターゲット 標準的な間隔"
+                    },
+                    "Offset Start": {
+                      "name": "オフセットスタート"
+                    },
+                    "Offset End": {
+                      "name": "オフセットエンド"
+                    }
+                  },
+                  "name": "U"
+                },
+                "V": {
+                  "properties": {
+                    "Name": {
+                      "name": "名前"
+                    },
+                    "Spacing": {
+                      "description": "Spacingではなく、RelativeモードとGrid Lines > Spacingを使用してください。",
+                      "items": {},
+                      "name": "スペーシング"
+                    },
+                    "Grid Lines": {
+                      "items": {
+                        "properties": {
+                          "Location": {
+                            "name": "所在地"
+                          },
+                          "Spacing": {
+                            "name": "スペーシング"
+                          },
+                          "Quantity": {
+                            "name": "数量"
+                          }
+                        }
+                      },
+                      "name": "グリッドライン"
+                    },
+                    "Target Typical Spacing": {
+                      "name": "ターゲット 標準的な間隔"
+                    },
+                    "Offset Start": {
+                      "name": "オフセットスタート"
+                    },
+                    "Offset End": {
+                      "name": "オフセットエンド"
+                    }
+                  },
+                  "name": "V"
+                }
+              }
+            },
+            "name": "グリッドエリア"
+          },
+          "Show Debug Geometry": {
+            "name": "デバッグジオメトリの表示"
+          }
+        }
+      },
+      "overrides": {
+        "Grid Origins": {
+          "name": "グリッド・オリジン",
+          "schema": {
+            "Transform": {
+              "name": "トランスフォーム"
+            }
+          }
+        }
+      }
+    }
+  }
 }
