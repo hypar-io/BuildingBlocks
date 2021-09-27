@@ -26,24 +26,13 @@ namespace Elements
     public partial class LevelVolume : GeometricElement
     {
         [Newtonsoft.Json.JsonConstructor]
-        public LevelVolume(Profile @profile, double @height, double @area, Transform @transform, Material @material, Representation @representation, bool @isElementDefinition, System.Guid @id, string @name)
+        public LevelVolume(Profile @profile, double @height, double @area, Transform @transform = null, Material @material = null, Representation @representation = null, bool @isElementDefinition = false, System.Guid @id = default, string @name = null)
             : base(transform, material, representation, isElementDefinition, id, name)
         {
-            var validator = Validator.Instance.GetFirstValidatorForType<LevelVolume>();
-            if(validator != null)
-            {
-                validator.PreConstruct(new object[]{ @profile, @height, @area, @transform, @material, @representation, @isElementDefinition, @id, @name});
-            }
-        
             this.Profile = @profile;
             this.Height = @height;
             this.Area = @area;
-            
-            if(validator != null)
-            {
-                validator.PostConstruct(this);
             }
-        }
     
         /// <summary>The profile of the level Volume</summary>
         [Newtonsoft.Json.JsonProperty("Profile", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]

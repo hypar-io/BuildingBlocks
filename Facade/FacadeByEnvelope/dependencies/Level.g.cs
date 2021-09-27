@@ -7,6 +7,7 @@ using Elements;
 using Elements.GeoJSON;
 using Elements.Geometry;
 using Elements.Geometry.Solids;
+using Elements.Spatial;
 using Elements.Validators;
 using Elements.Serialization.JSON;
 using System;
@@ -25,22 +26,11 @@ namespace Elements
     public partial class Level : Element
     {
         [Newtonsoft.Json.JsonConstructor]
-        public Level(double @elevation, System.Guid @id, string @name)
+        public Level(double @elevation, System.Guid @id = default, string @name = null)
             : base(id, name)
         {
-            var validator = Validator.Instance.GetFirstValidatorForType<Level>();
-            if(validator != null)
-            {
-                validator.PreConstruct(new object[]{ @elevation, @id, @name});
-            }
-        
             this.Elevation = @elevation;
-            
-            if(validator != null)
-            {
-                validator.PostConstruct(this);
             }
-        }
     
         /// <summary>The elevation of the level.</summary>
         [Newtonsoft.Json.JsonProperty("Elevation", Required = Newtonsoft.Json.Required.Always)]

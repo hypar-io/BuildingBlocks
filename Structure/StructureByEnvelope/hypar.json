@@ -2310,5 +2310,73 @@
   "source_file_key": null,
   "preview_image": null,
   "thumbnail_id": null,
-  "last_updated": "0001-01-01T00:00:00"
+  "last_updated": "0001-01-01T00:00:00",
+  "messages": {
+    "ja": {
+      "name": "構造",
+      "description": "レベル」と「エンベロープ」のセットから構造フレームを生成します。",
+      "input_schema": {
+        "properties": {
+          "Grid X-Axis Interval": {
+            "description": "X方向のGrix間隔。",
+            "name": "グリッドのX軸間隔"
+          },
+          "Grid Y-Axis Interval": {
+            "description": "Y方向のグリッド間隔。",
+            "name": "グリッドのY軸間隔"
+          },
+          "Slab Edge Offset": {
+            "description": "スラブのエッジからのグリッドラインのオフセット。",
+            "name": "スラブエッジのオフセット"
+          },
+          "Display Grid": {
+            "description": "グランドプレーンにグリッドを表示するのか？",
+            "name": "グリッド表示"
+          },
+          "Type of Construction": {
+            "description": "建設に使用されるシステムです。",
+            "enum": [
+              "スチール",
+              "マスティンバー"
+            ],
+            "name": "工事の種類"
+          },
+          "Column Type": {
+            "description": "すべての柱に使用するためのワイドフランジ断面形状です。",
+            "name": "コラムタイプ"
+          },
+          "Girder Type": {
+            "description": "すべての桁に使用するワイドフランジ断面の形状です。",
+            "name": "ガーダータイプ"
+          },
+          "Beam Type": {
+            "description": "すべてのビームに使用するワイドフランジ断面形状。",
+            "name": "ビームタイプ"
+          },
+          "Beam Spacing": {
+            "description": "梁の間隔です。",
+            "name": "ビームスペーシング"
+          },
+          "Create Beams On First Level": {
+            "description": "ビームは構造体の最下層に作るべきでしょうか？",
+            "name": "1階にビームを作る"
+          },
+          "Slab Thickness": {
+            "description": "スラブの厚さです。レベルからの構造体のオフセットを制御します。",
+            "name": "スラブ厚"
+          },
+          "Insert Columns At External Edges": {
+            "description": "カラムは外部に作るべきですか？",
+            "name": "外周部にコラムを挿入"
+          }
+        }
+      },
+      "outputs": [
+        {
+          "name": "最大ビーム長",
+          "description": "最大のビームの長さです。"
+        }
+      ]
+    }
+  }
 }

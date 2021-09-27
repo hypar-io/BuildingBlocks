@@ -49,17 +49,17 @@ namespace LevelsByEnvelope
     
         /// <summary>Height of ground level.</summary>
         [Newtonsoft.Json.JsonProperty("Ground Level Height", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        [System.ComponentModel.DataAnnotations.Range(2.0D, 20.0D)]
+        [System.ComponentModel.DataAnnotations.Range(2D, 20D)]
         public double GroundLevelHeight { get; set; } = 5D;
     
         /// <summary>Standard height of repeated levels.</summary>
         [Newtonsoft.Json.JsonProperty("Standard Level Height", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        [System.ComponentModel.DataAnnotations.Range(2.0D, 20.0D)]
+        [System.ComponentModel.DataAnnotations.Range(2D, 20D)]
         public double StandardLevelHeight { get; set; } = 4D;
     
         /// <summary>Height of the top level.</summary>
         [Newtonsoft.Json.JsonProperty("Penthouse Level Height", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        [System.ComponentModel.DataAnnotations.Range(2.0D, 20.0D)]
+        [System.ComponentModel.DataAnnotations.Range(2D, 20D)]
         public double PenthouseLevelHeight { get; set; } = 5D;
     
     

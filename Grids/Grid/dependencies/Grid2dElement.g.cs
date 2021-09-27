@@ -29,20 +29,9 @@ namespace Elements
         public Grid2dElement(Grid2d @grid, IList<GridNode> @gridNodes, Transform @transform = null, Material @material = null, Representation @representation = null, bool @isElementDefinition = false, System.Guid @id = default, string @name = null)
             : base(transform, material, representation, isElementDefinition, id, name)
         {
-            var validator = Validator.Instance.GetFirstValidatorForType<Grid2dElement>();
-            if(validator != null)
-            {
-                validator.PreConstruct(new object[]{ @grid, @gridNodes, @transform, @material, @representation, @isElementDefinition, @id, @name});
-            }
-        
             this.Grid = @grid;
             this.GridNodes = @gridNodes;
-            
-            if(validator != null)
-            {
-                validator.PostConstruct(this);
             }
-        }
     
         /// <summary>Contains a Grid2d in absolute space (is not intended to be modified by the transform)</summary>
         [Newtonsoft.Json.JsonProperty("Grid", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]

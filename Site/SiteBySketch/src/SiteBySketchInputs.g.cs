@@ -5,51 +5,50 @@
 using Elements;
 using Elements.GeoJSON;
 using Elements.Geometry;
+using Elements.Geometry.Solids;
+using Elements.Validators;
+using Elements.Serialization.JSON;
 using Hypar.Functions;
 using Hypar.Functions.Execution;
 using Hypar.Functions.Execution.AWS;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using Line = Elements.Geometry.Line;
+using Polygon = Elements.Geometry.Polygon;
 
 namespace SiteBySketch
 {
-    public class SiteBySketchInputs: S3Args
+    #pragma warning disable // Disable all warnings
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
+    
+    public  class SiteBySketchInputs : S3Args
+    
     {
-		/// <summary>
-		/// Perimeter of the building envelope.
-		/// </summary>
-		[JsonProperty("Perimeter")]
-		public Elements.Geometry.Polygon Perimeter {get;}
-
-
-
-        /// <summary>
-        /// Construct a SiteBySketchInputs with default inputs.
-        /// This should be used for testing only.
-        /// </summary>
-        public SiteBySketchInputs() : base()
+        [Newtonsoft.Json.JsonConstructor]
+        
+        public SiteBySketchInputs(Polygon @perimeter, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey):
+        base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
         {
-			this.Perimeter = Elements.Geometry.Polygon.Rectangle(1, 1);
-
+            var validator = Validator.Instance.GetFirstValidatorForType<SiteBySketchInputs>();
+            if(validator != null)
+            {
+                validator.PreConstruct(new object[]{ @perimeter});
+            }
+        
+            this.Perimeter = @perimeter;
+        
+            if(validator != null)
+            {
+                validator.PostConstruct(this);
+            }
         }
-
-
-        /// <summary>
-        /// Construct a SiteBySketchInputs specifying all inputs.
-        /// </summary>
-        /// <returns></returns>
-        [JsonConstructor]
-        public SiteBySketchInputs(Elements.Geometry.Polygon perimeter, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
-        {
-			this.Perimeter = perimeter;
-
-		}
-
-		public override string ToString()
-		{
-			var json = JsonConvert.SerializeObject(this);
-			return json;
-		}
-	}
+    
+        /// <summary>Perimeter of the building envelope.</summary>
+        [Newtonsoft.Json.JsonProperty("Perimeter", Required = Newtonsoft.Json.Required.AllowNull)]
+        public Polygon Perimeter { get; set; }
+    
+    
+    }
 }

@@ -29,19 +29,8 @@ namespace Elements
         public GridLine(Polyline @geometry, System.Guid @id = default, string @name = null)
             : base(id, name)
         {
-            var validator = Validator.Instance.GetFirstValidatorForType<GridLine>();
-            if(validator != null)
-            {
-                validator.PreConstruct(new object[]{ @geometry, @id, @name});
-            }
-        
             this.Geometry = @geometry;
-            
-            if(validator != null)
-            {
-                validator.PostConstruct(this);
             }
-        }
     
         /// <summary>The polyline geometry of the Grid Line</summary>
         [Newtonsoft.Json.JsonProperty("Geometry", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
