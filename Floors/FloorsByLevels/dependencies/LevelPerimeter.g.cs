@@ -26,7 +26,7 @@ namespace Elements
     public partial class LevelPerimeter : Element
     {
         [Newtonsoft.Json.JsonConstructor]
-        public LevelPerimeter(double @area, double @elevation, Polygon @perimeter, System.Guid @id, string @name)
+        public LevelPerimeter(double @area, double @elevation, Polygon @perimeter, System.Guid @id = default, string @name = null)
             : base(id, name)
         {
             var validator = Validator.Instance.GetFirstValidatorForType<LevelPerimeter>();
