@@ -148,7 +148,6 @@ namespace Grid
                     {
                         output.Model.AddElement(new Panel(new Circle(0.25).ToPolygon(), null, new Transform(gridpoint)));
                     }
-
                 }
             }
 
@@ -173,17 +172,25 @@ namespace Grid
                 output.Model.AddElement(new ModelCurve(gridPolygon));
             }
 
+            var uDirectionEnd = origin + uDirection;
+            var vDirectionEnd = origin + vDirection;
+            var guideSegments = new List<Line>() { new Line(origin, uDirectionEnd), new Line(origin, vDirectionEnd) };
             if (envelopePolygons.Count() > 0)
             {
                 var polygons = envelopePolygons.Concat(new List<Polygon>() { gridPolygon }).ToList();
                 var unions = Polygon.UnionAll(polygons).ToList();
-                var boundary = PolygonFromAlignedBoundingBox2d(unions.Select(u => u.Vertices).SelectMany(x => x), new List<Line>() { new Line(origin, origin + uDirection), new Line(origin, origin + vDirection) });
+                var boundary = PolygonFromAlignedBoundingBox2d(
+                    unions.Select(u => u.Vertices).SelectMany(x => x).Append(origin).Append(uDirectionEnd).Append(vDirectionEnd),
+                    guideSegments);
                 boundaries.Add(new List<Polygon>() { boundary });
             }
             else
             {
                 // use points min and max
-                boundaries.Add(new List<Polygon>() { gridPolygon });
+                var boundary = PolygonFromAlignedBoundingBox2d(
+                    gridPolygon.Vertices.Append(origin).Append(uDirectionEnd).Append(vDirectionEnd),
+                    guideSegments);
+                boundaries.Add(new List<Polygon>() { boundary });
             }
 
             var gridNodes = new List<GridNode>();
@@ -347,7 +354,6 @@ namespace Grid
 
         private static Polygon PolygonFromAlignedBoundingBox2d(IEnumerable<Vector3> points, List<Line> segments)
         {
-            var hull = ConvexHull.FromPoints(points);
             var minBoxArea = double.MaxValue;
             BBox3 minBox = new BBox3();
             Transform minBoxXform = new Transform();
@@ -357,8 +363,7 @@ namespace Grid
                 var xform = new Transform(Vector3.Origin, edgeVector, Vector3.ZAxis, 0);
                 var invertedXform = new Transform(xform);
                 invertedXform.Invert();
-                var transformedPolygon = hull.TransformedPolygon(invertedXform);
-                var bbox = new BBox3(transformedPolygon.Vertices);
+                var bbox = new BBox3(points.Select(p => invertedXform.OfPoint(p)).ToList());
                 var bboxArea = (bbox.Max.X - bbox.Min.X) * (bbox.Max.Y - bbox.Min.Y);
                 if (bboxArea < minBoxArea)
                 {
