@@ -18,7 +18,7 @@ using Polygon = Elements.Geometry.Polygon;
 
 namespace Elements
 {
-#pragma warning disable // Disable all warnings
+    #pragma warning disable // Disable all warnings
 
     /// <summary>Represents one part of a building enclosure.</summary>
     [Newtonsoft.Json.JsonConverter(typeof(Elements.Serialization.JSON.JsonInheritanceConverter), "discriminator")]
@@ -29,35 +29,46 @@ namespace Elements
         public Envelope(Profile @profile, double @elevation, double @height, Vector3 @direction, double @rotation, Transform @transform = null, Material @material = null, Representation @representation = null, bool @isElementDefinition = false, System.Guid @id = default, string @name = null)
             : base(transform, material, representation, isElementDefinition, id, name)
         {
+            var validator = Validator.Instance.GetFirstValidatorForType<Envelope>();
+            if(validator != null)
+            {
+                validator.PreConstruct(new object[]{ @profile, @elevation, @height, @direction, @rotation, @transform, @material, @representation, @isElementDefinition, @id, @name});
+            }
+        
             this.Profile = @profile;
             this.Elevation = @elevation;
             this.Height = @height;
             this.Direction = @direction;
             this.Rotation = @rotation;
+            
+            if(validator != null)
+            {
+                validator.PostConstruct(this);
+            }
         }
-
+    
         /// <summary>The id of the profile to extrude.</summary>
         [Newtonsoft.Json.JsonProperty("Profile", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public Profile Profile { get; set; }
-
+    
         /// <summary>The elevation of the envelope.</summary>
         [Newtonsoft.Json.JsonProperty("Elevation", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.Range(0D, double.MaxValue)]
         public double Elevation { get; set; }
-
+    
         /// <summary>The height of the envelope.</summary>
         [Newtonsoft.Json.JsonProperty("Height", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.Range(0D, double.MaxValue)]
         public double Height { get; set; }
-
+    
         /// <summary>The direction in which to extrude.</summary>
         [Newtonsoft.Json.JsonProperty("Direction", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public Vector3 Direction { get; set; }
-
+    
         /// <summary>The rotation in degrees of the envelope.</summary>
         [Newtonsoft.Json.JsonProperty("Rotation", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public double Rotation { get; set; }
-
-
+    
+    
     }
 }
