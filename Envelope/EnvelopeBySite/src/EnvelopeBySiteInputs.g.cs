@@ -61,6 +61,7 @@ namespace EnvelopeBySite
         [System.ComponentModel.DataAnnotations.Range(5D, 20D)]
         public double FoundationDepth { get; set; } = 10D;
     
+        /// <summary>Enable envelope setbacks at regular intervals.</summary>
         [Newtonsoft.Json.JsonProperty("Use Setbacks", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public bool UseSetbacks { get; set; } = true;
     

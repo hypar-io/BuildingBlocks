@@ -38,7 +38,8 @@
       "Use Setbacks": {
         "$hyparOrder": 3,
         "type": "boolean",
-        "default": true
+        "default": true,
+        "description": "Enable envelope setbacks at regular intervals."
       },
       "Site Setback": {
         "$hyparOrder": 4,
@@ -145,13 +146,21 @@
       "description": "他の機能によって提供されたサイト境界からエンベロープを作成します。",
       "input_schema": {
         "properties": {
-          "Site Setback": {
-            "description": "敷地境界から建物外周までの距離",
-            "name": "サイトセットバック"
-          },
           "Building Height": {
             "description": "建物のグレードからの全体的な高さ",
             "name": "建物の高さ"
+          },
+          "Foundation Depth": {
+            "description": "グレード以下の建物外壁の深さ。",
+            "name": "基礎の深さ"
+          },
+          "Use Setbacks": {
+            "name": "セットバック",
+            "description": "この機能を使用するには"
+          },
+          "Site Setback": {
+            "description": "敷地境界から建物外周までの距離",
+            "name": "サイトセットバック"
           },
           "Setback Interval": {
             "description": "エンベロープセットバックの垂直方向の距離",
@@ -164,10 +173,6 @@
           "Minimum Tier Area": {
             "description": "セットバック層に許される最小面積。",
             "name": "最低限のティアエリア"
-          },
-          "Foundation Depth": {
-            "description": "グレード以下の建物外壁の深さ。",
-            "name": "基礎の深さ"
           }
         }
       },
