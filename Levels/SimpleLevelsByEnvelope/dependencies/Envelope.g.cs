@@ -26,26 +26,15 @@ namespace Elements
     public partial class Envelope : GeometricElement
     {
         [Newtonsoft.Json.JsonConstructor]
-        public Envelope(Profile @profile, double @elevation, double @height, Vector3 @direction, double @rotation, Transform @transform, Material @material, Representation @representation, bool @isElementDefinition, System.Guid @id, string @name)
+        public Envelope(Profile @profile, double @elevation, double @height, Vector3 @direction, double @rotation, Transform @transform = null, Material @material = null, Representation @representation = null, bool @isElementDefinition = false, System.Guid @id = default, string @name = null)
             : base(transform, material, representation, isElementDefinition, id, name)
         {
-            var validator = Validator.Instance.GetFirstValidatorForType<Envelope>();
-            if(validator != null)
-            {
-                validator.PreConstruct(new object[]{ @profile, @elevation, @height, @direction, @rotation, @transform, @material, @representation, @isElementDefinition, @id, @name});
-            }
-        
             this.Profile = @profile;
             this.Elevation = @elevation;
             this.Height = @height;
             this.Direction = @direction;
             this.Rotation = @rotation;
-            
-            if(validator != null)
-            {
-                validator.PostConstruct(this);
             }
-        }
     
         /// <summary>The id of the profile to extrude.</summary>
         [Newtonsoft.Json.JsonProperty("Profile", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
@@ -62,7 +51,7 @@ namespace Elements
         public double Height { get; set; }
     
         /// <summary>The direction in which to extrude.</summary>
-        [Newtonsoft.Json.JsonProperty("Direction", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonProperty("Direction", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public Vector3 Direction { get; set; }
     
         /// <summary>The rotation in degrees of the envelope.</summary>

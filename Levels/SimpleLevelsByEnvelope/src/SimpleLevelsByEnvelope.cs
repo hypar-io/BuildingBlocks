@@ -69,6 +69,7 @@ namespace SimpleLevelsByEnvelope
 
             var levelPerimeters = new List<LevelPerimeter>();
             var levelVolumes = new List<LevelVolume>();
+            var scopes = new List<ViewScope>();
             var areaTotal = 0.0;
             var subGradeArea = 0.0;
             var aboveGradeArea = 0.0;
@@ -93,7 +94,15 @@ namespace SimpleLevelsByEnvelope
 
                     var levelHeight = levelAbove.Elevation - l.Elevation;
                     var representation = new Representation(new SolidOperation[] { new Extrude(envelope.Profile, levelHeight, Vector3.ZAxis, false) });
-                    var subGradeVolume = new LevelVolume(envelope.Profile, levelHeight, envelope.Profile.Area(), new Transform(0, 0, l.Elevation), matl, representation, false, Guid.NewGuid(), l.Name);
+                    var subGradeVolume = new LevelVolume(envelope.Profile, levelHeight, envelope.Profile.Area(), envelope.Name, new Transform(0, 0, l.Elevation), matl, representation, false, Guid.NewGuid(), l.Name);
+                    var bbox = new BBox3(subGradeVolume);
+                    bbox.Max = bbox.Max + (0, 0, -1);
+                    var scope = new ViewScope(
+                       bbox,
+                        new Camera(default(Vector3), CameraNamedPosition.Top, CameraProjection.Orthographic),
+                        true);
+                    subGradeVolume.AdditionalProperties["Scope"] = scope;
+                    scopes.Add(scope);
                     levelVolumes.Add(subGradeVolume);
                 }
                 if (envSubGrade.Count > 0)
@@ -139,9 +148,15 @@ namespace SimpleLevelsByEnvelope
                     {
 
                     }
-                    var representation = new Representation(new SolidOperation[] { new Extrude(newProfile, levelHeight, Vector3.ZAxis, false) });
-                    var subGradeVolume = new LevelVolume(envelope.Profile, levelHeight, envelope.Profile.Area(), new Transform(0, 0, levelElevation), matl, representation, false, Guid.NewGuid(), name);
-                    levelVolumes.Add(subGradeVolume);
+                    var representation = new Extrude(newProfile, levelHeight, Vector3.ZAxis, false);
+                    var volume = new LevelVolume(envelope.Profile, levelHeight, envelope.Profile.Area(), envelope.Name, new Transform(0, 0, levelElevation), matl, representation, false, Guid.NewGuid(), name);
+                    var bbox = new BBox3(volume);
+                    bbox.Max = bbox.Max + (0, 0, -1);
+                    bbox.Min = bbox.Min + (0, 0, 0.01);
+                    var scope = new ViewScope(bbox, new Camera(default(Vector3), CameraNamedPosition.Top, CameraProjection.Orthographic), true);
+                    volume.AdditionalProperties["Scope"] = scope;
+                    scopes.Add(scope);
+                    levelVolumes.Add(volume);
 
                 }
 
@@ -155,6 +170,7 @@ namespace SimpleLevelsByEnvelope
             output.Model.AddElements(levels.OrderByDescending(l => l.Elevation));
             output.Model.AddElements(levelPerimeters);
             output.Model.AddElements(levelVolumes);
+            output.Model.AddElements(scopes);
 
             foreach (var levelPerimeter in levelPerimeters)
             {

@@ -31,13 +31,15 @@ namespace FloorsByLevels
             var floorMaterial = new Material("Concrete", new Color(0.34, 0.34, 0.34, 1.0), 0.3, 0.3);
 
             levels.AddRange(model.AllElementsOfType<LevelPerimeter>());
-
+            var levelProxies = new List<ElementProxy<LevelVolume>>();
             var floors = new List<Floor>();
             var floorArea = 0.0;
             if (levelVolumes.Count() > 0)
             {
                 foreach (var level in levelVolumes)
                 {
+                    var levelProxy = level.Proxy("Levels");
+                    levelProxies.Add(levelProxy);
                     var flrOffsets = level.Profile.Offset(input.FloorSetback * -1);
                     var elevation = level.Transform.Origin.Z;
                     if (flrOffsets.Count() > 0)
@@ -47,6 +49,7 @@ namespace FloorsByLevels
                             var floor = new Floor(fo, input.FloorThickness,
                                                             new Transform(0.0, 0.0, elevation - input.FloorThickness),
                                                             floorMaterial, null, false, Guid.NewGuid(), null);
+                            floor.AdditionalProperties["Level"] = levelProxy;
                             floors.Add(floor);
                             floorArea += floor.Area();
                         }
@@ -56,6 +59,7 @@ namespace FloorsByLevels
                         var floor = new Floor(level.Profile, input.FloorThickness,
                                 new Transform(0.0, 0.0, elevation - input.FloorThickness),
                                 floorMaterial, null, false, Guid.NewGuid(), null);
+                        floor.AdditionalProperties["Level"] = levelProxy;
                         floors.Add(floor);
                         floorArea += floor.Area();
                     }
@@ -87,6 +91,7 @@ namespace FloorsByLevels
             floors = floors.OrderBy(f => f.Elevation).ToList();
             floors.First().Transform.Move(new Vector3(0.0, 0.0, input.FloorThickness));
             var output = new FloorsByLevelsOutputs(floorArea, floors.Count());
+            output.Model.AddElements(levelProxies);
             output.Model.AddElements(floors);
             return output;
         }
