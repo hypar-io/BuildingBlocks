@@ -6,12 +6,13 @@ Creates an Envelope from a Site boundary supplied by another function.
 
 |Input Name|Type|Description|
 |---|---|---|
-|Site Setback|number|Distance from site boundary to building envelope.|
 |Building Height|number|Overall height of the building from grade.|
+|Foundation Depth|number|Depth of the building envelope below grade.|
+|Use Setbacks|boolean|Enable envelope setbacks at regular intervals.|
+|Site Setback|number|Distance from site boundary to building envelope.|
 |Setback Interval|number|Vertical distance between envelope setbacks.|
 |Setback Depth|number|Offset depth from previous setback.|
 |Minimum Tier Area|number|Minimum area allowed for a setback tier.|
-|Foundation Depth|number|Depth of the building envelope below grade.|
 
 
 <br>

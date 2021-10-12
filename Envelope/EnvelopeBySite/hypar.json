@@ -15,65 +15,107 @@
   "input_schema": {
     "type": "object",
     "properties": {
-      "Site Setback": {
-        "description": "Distance from site boundary to building envelope.",
-        "type": "number",
-        "minimum": 0,
-        "maximum": 30,
-        "multipleOf": 1,
-        "default": 15,
-        "$hyparUnitType": "length",
-        "$hyparOrder": 0
-      },
       "Building Height": {
-        "description": "Overall height of the building from grade.",
+        "$hyparOrder": 1,
+        "$hyparUnitType": "length",
         "type": "number",
+        "description": "Overall height of the building from grade.",
+        "default": 20,
         "minimum": 5,
         "maximum": 100,
-        "multipleOf": 1,
-        "default": 52,
-        "$hyparUnitType": "length",
-        "$hyparOrder": 1
-      },
-      "Setback Interval": {
-        "description": "Vertical distance between envelope setbacks.",
-        "type": "number",
-        "minimum": 10,
-        "maximum": 30,
-        "multipleOf": 1,
-        "default": 20,
-        "$hyparUnitType": "length",
-        "$hyparOrder": 2
-      },
-      "Setback Depth": {
-        "description": "Offset depth from previous setback.",
-        "type": "number",
-        "minimum": 1,
-        "maximum": 3,
-        "multipleOf": 0.5,
-        "default": 2,
-        "$hyparUnitType": "length",
-        "$hyparOrder": 3
-      },
-      "Minimum Tier Area": {
-        "description": "Minimum area allowed for a setback tier.",
-        "type": "number",
-        "minimum": 10,
-        "maximum": 100,
-        "multipleOf": 1,
-        "default": 55,
-        "$hyparUnitType": "area",
-        "$hyparOrder": 4
+        "multipleOf": 1
       },
       "Foundation Depth": {
-        "description": "Depth of the building envelope below grade.",
+        "$hyparOrder": 2,
+        "$hyparUnitType": "length",
         "type": "number",
+        "description": "Depth of the building envelope below grade.",
+        "default": 10,
         "minimum": 5,
         "maximum": 20,
-        "multipleOf": 1,
-        "default": 12,
+        "multipleOf": 1
+      },
+      "Use Setbacks": {
+        "$hyparOrder": 3,
+        "type": "boolean",
+        "default": true,
+        "description": "Enable envelope setbacks at regular intervals."
+      },
+      "Site Setback": {
+        "$hyparOrder": 4,
         "$hyparUnitType": "length",
-        "$hyparOrder": 5
+        "$hyparShowIf": {
+          "type": "all",
+          "conditions": [
+            {
+              "property": "Use Setbacks",
+              "value": true
+            }
+          ]
+        },
+        "type": "number",
+        "description": "Distance from site boundary to building envelope.",
+        "default": 0,
+        "minimum": 0,
+        "maximum": 30,
+        "multipleOf": 1
+      },
+      "Setback Interval": {
+        "$hyparOrder": 5,
+        "$hyparUnitType": "length",
+        "$hyparShowIf": {
+          "type": "all",
+          "conditions": [
+            {
+              "property": "Use Setbacks",
+              "value": true
+            }
+          ]
+        },
+        "type": "number",
+        "description": "Vertical distance between envelope setbacks.",
+        "default": 20,
+        "minimum": 10,
+        "maximum": 30,
+        "multipleOf": 1
+      },
+      "Setback Depth": {
+        "$hyparOrder": 6,
+        "$hyparUnitType": "length",
+        "$hyparShowIf": {
+          "type": "all",
+          "conditions": [
+            {
+              "property": "Use Setbacks",
+              "value": true
+            }
+          ]
+        },
+        "type": "number",
+        "description": "Offset depth from previous setback.",
+        "default": 1,
+        "minimum": 1,
+        "maximum": 3,
+        "multipleOf": 0.5
+      },
+      "Minimum Tier Area": {
+        "$hyparOrder": 7,
+        "$hyparUnitType": "area",
+        "$hyparShowIf": {
+          "type": "all",
+          "conditions": [
+            {
+              "property": "Use Setbacks",
+              "value": true
+            }
+          ]
+        },
+        "type": "number",
+        "description": "Minimum area allowed for a setback tier.",
+        "default": 50,
+        "minimum": 10,
+        "maximum": 100,
+        "multipleOf": 1
       }
     }
   },
@@ -104,13 +146,21 @@
       "description": "他の機能によって提供されたサイト境界からエンベロープを作成します。",
       "input_schema": {
         "properties": {
-          "Site Setback": {
-            "description": "敷地境界から建物外周までの距離",
-            "name": "サイトセットバック"
-          },
           "Building Height": {
             "description": "建物のグレードからの全体的な高さ",
             "name": "建物の高さ"
+          },
+          "Foundation Depth": {
+            "description": "グレード以下の建物外壁の深さ。",
+            "name": "基礎の深さ"
+          },
+          "Use Setbacks": {
+            "description": "この機能を使用するには",
+            "name": "セットバック"
+          },
+          "Site Setback": {
+            "description": "敷地境界から建物外周までの距離",
+            "name": "サイトセットバック"
           },
           "Setback Interval": {
             "description": "エンベロープセットバックの垂直方向の距離",
@@ -123,10 +173,6 @@
           "Minimum Tier Area": {
             "description": "セットバック層に許される最小面積。",
             "name": "最低限のティアエリア"
-          },
-          "Foundation Depth": {
-            "description": "グレード以下の建物外壁の深さ。",
-            "name": "基礎の深さ"
           }
         }
       },
