@@ -29,20 +29,9 @@ namespace Elements
         public Site(Polygon @perimeter, double @area, Transform @transform = null, Material @material = null, Representation @representation = null, bool @isElementDefinition = false, System.Guid @id = default, string @name = null)
             : base(transform, material, representation, isElementDefinition, id, name)
         {
-            var validator = Validator.Instance.GetFirstValidatorForType<Site>();
-            if(validator != null)
-            {
-                validator.PreConstruct(new object[]{ @perimeter, @area, @transform, @material, @representation, @isElementDefinition, @id, @name});
-            }
-        
             this.Perimeter = @perimeter;
             this.Area = @area;
-            
-            if(validator != null)
-            {
-                validator.PostConstruct(this);
             }
-        }
     
         /// <summary>The perimeter of the site.</summary>
         [Newtonsoft.Json.JsonProperty("Perimeter", Required = Newtonsoft.Json.Required.AllowNull)]
