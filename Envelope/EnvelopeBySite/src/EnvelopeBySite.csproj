@@ -3,15 +3,14 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
-
   <ItemGroup>
-    <PackageReference Include="GeometryEx" Version="6.10.0" />
-    <PackageReference Include="Hypar.Elements" Version="0.9.1" />
-    <PackageReference Include="Hypar.Functions" Version="0.9.1" />
+    <ProjectReference Include="..\dependencies\EnvelopeBySite.Dependencies.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\dependencies\EnvelopeBySite.Dependencies.csproj" />
+    <PackageReference Include="GeometryEx" Version="6.10.0" />
+    <PackageReference Include="Hypar.Elements" Version="0.9.4" />
+    <PackageReference Include="Hypar.Functions" Version="0.9.5" />
   </ItemGroup>
 
 </Project>

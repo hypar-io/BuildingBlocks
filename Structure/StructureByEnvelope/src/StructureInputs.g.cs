@@ -1076,6 +1076,1230 @@ namespace Structure
         [System.Runtime.Serialization.EnumMember(Value = @"W44x335")]
         W44x335 = 315,
     
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS60x30x1_6")]
+        RHS60x30x1_6 = 316,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS60x30x2")]
+        RHS60x30x2 = 317,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS60x30x2_3")]
+        RHS60x30x2_3 = 318,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS60x30x2_5")]
+        RHS60x30x2_5 = 319,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS60x30x3")]
+        RHS60x30x3 = 320,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS60x30x3_2")]
+        RHS60x30x3_2 = 321,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS60x30x4")]
+        RHS60x30x4 = 322,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS60x30x4_5")]
+        RHS60x30x4_5 = 323,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS60x40x1_6")]
+        RHS60x40x1_6 = 324,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS60x40x2")]
+        RHS60x40x2 = 325,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS60x40x2_3")]
+        RHS60x40x2_3 = 326,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS60x40x2_5")]
+        RHS60x40x2_5 = 327,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS60x40x3")]
+        RHS60x40x3 = 328,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS60x40x3_2")]
+        RHS60x40x3_2 = 329,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS60x40x4")]
+        RHS60x40x4 = 330,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS60x40x4_5")]
+        RHS60x40x4_5 = 331,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS70x40x1_6")]
+        RHS70x40x1_6 = 332,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS70x40x2")]
+        RHS70x40x2 = 333,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS70x40x2_3")]
+        RHS70x40x2_3 = 334,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS70x40x2_5")]
+        RHS70x40x2_5 = 335,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS70x40x3")]
+        RHS70x40x3 = 336,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS70x40x3_2")]
+        RHS70x40x3_2 = 337,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS70x40x4")]
+        RHS70x40x4 = 338,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS70x40x4_5")]
+        RHS70x40x4_5 = 339,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS75x45x1_6")]
+        RHS75x45x1_6 = 340,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS75x45x2")]
+        RHS75x45x2 = 341,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS75x45x2_3")]
+        RHS75x45x2_3 = 342,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS75x45x2_5")]
+        RHS75x45x2_5 = 343,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS75x45x3")]
+        RHS75x45x3 = 344,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS75x45x3_2")]
+        RHS75x45x3_2 = 345,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS75x45x4")]
+        RHS75x45x4 = 346,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS75x45x4_5")]
+        RHS75x45x4_5 = 347,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS75x45x5")]
+        RHS75x45x5 = 348,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS75x45x6")]
+        RHS75x45x6 = 349,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS75x50x2_3")]
+        RHS75x50x2_3 = 350,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS75x50x2_5")]
+        RHS75x50x2_5 = 351,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS75x50x3")]
+        RHS75x50x3 = 352,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS75x50x3_2")]
+        RHS75x50x3_2 = 353,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS75x50x4")]
+        RHS75x50x4 = 354,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS75x50x4_5")]
+        RHS75x50x4_5 = 355,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS75x50x5")]
+        RHS75x50x5 = 356,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS75x50x6")]
+        RHS75x50x6 = 357,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS100x40x1_6")]
+        RHS100x40x1_6 = 358,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS100x40x2")]
+        RHS100x40x2 = 359,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS100x40x2_3")]
+        RHS100x40x2_3 = 360,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS100x40x2_5")]
+        RHS100x40x2_5 = 361,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS100x40x3")]
+        RHS100x40x3 = 362,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS100x40x3_2")]
+        RHS100x40x3_2 = 363,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS100x40x4")]
+        RHS100x40x4 = 364,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS100x40x4_5")]
+        RHS100x40x4_5 = 365,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS100x50x1_6")]
+        RHS100x50x1_6 = 366,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS100x50x2")]
+        RHS100x50x2 = 367,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS100x50x2_3")]
+        RHS100x50x2_3 = 368,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS100x50x2_5")]
+        RHS100x50x2_5 = 369,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS100x50x3")]
+        RHS100x50x3 = 370,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS100x50x3_2")]
+        RHS100x50x3_2 = 371,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS100x50x4")]
+        RHS100x50x4 = 372,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS100x50x4_5")]
+        RHS100x50x4_5 = 373,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS100x50x5")]
+        RHS100x50x5 = 374,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS100x50x6")]
+        RHS100x50x6 = 375,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x40x1_6")]
+        RHS125x40x1_6 = 376,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x40x2")]
+        RHS125x40x2 = 377,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x40x2_3")]
+        RHS125x40x2_3 = 378,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x40x2_5")]
+        RHS125x40x2_5 = 379,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x40x3")]
+        RHS125x40x3 = 380,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x40x3_2")]
+        RHS125x40x3_2 = 381,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x40x4")]
+        RHS125x40x4 = 382,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x40x4_5")]
+        RHS125x40x4_5 = 383,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x50x1_6")]
+        RHS125x50x1_6 = 384,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x50x2")]
+        RHS125x50x2 = 385,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x50x2_3")]
+        RHS125x50x2_3 = 386,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x50x2_5")]
+        RHS125x50x2_5 = 387,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x50x3")]
+        RHS125x50x3 = 388,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x50x3_2")]
+        RHS125x50x3_2 = 389,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x50x4")]
+        RHS125x50x4 = 390,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x50x4_5")]
+        RHS125x50x4_5 = 391,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x50x5")]
+        RHS125x50x5 = 392,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x50x6")]
+        RHS125x50x6 = 393,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x75x1_6")]
+        RHS125x75x1_6 = 394,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x75x2")]
+        RHS125x75x2 = 395,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x75x2_3")]
+        RHS125x75x2_3 = 396,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x75x2_5")]
+        RHS125x75x2_5 = 397,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x75x3")]
+        RHS125x75x3 = 398,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x75x3_2")]
+        RHS125x75x3_2 = 399,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x75x4")]
+        RHS125x75x4 = 400,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x75x4_5")]
+        RHS125x75x4_5 = 401,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x75x5")]
+        RHS125x75x5 = 402,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x75x6")]
+        RHS125x75x6 = 403,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x75x6_3")]
+        RHS125x75x6_3 = 404,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x75x8")]
+        RHS125x75x8 = 405,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x75x9")]
+        RHS125x75x9 = 406,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x50x2_3")]
+        RHS150x50x2_3 = 407,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x50x2_5")]
+        RHS150x50x2_5 = 408,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x50x3")]
+        RHS150x50x3 = 409,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x50x3_2")]
+        RHS150x50x3_2 = 410,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x50x4")]
+        RHS150x50x4 = 411,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x50x4_5")]
+        RHS150x50x4_5 = 412,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x50x5")]
+        RHS150x50x5 = 413,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x50x6")]
+        RHS150x50x6 = 414,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x75x3")]
+        RHS150x75x3 = 415,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x75x3_2")]
+        RHS150x75x3_2 = 416,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x75x4")]
+        RHS150x75x4 = 417,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x75x4_5")]
+        RHS150x75x4_5 = 418,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x75x5")]
+        RHS150x75x5 = 419,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x75x6")]
+        RHS150x75x6 = 420,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x75x6_3")]
+        RHS150x75x6_3 = 421,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x75x8")]
+        RHS150x75x8 = 422,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x75x9")]
+        RHS150x75x9 = 423,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x80x3")]
+        RHS150x80x3 = 424,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x80x3_2")]
+        RHS150x80x3_2 = 425,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x80x4")]
+        RHS150x80x4 = 426,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x80x4_5")]
+        RHS150x80x4_5 = 427,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x80x5")]
+        RHS150x80x5 = 428,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x80x6")]
+        RHS150x80x6 = 429,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x100x2_3")]
+        RHS150x100x2_3 = 430,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x100x2_5")]
+        RHS150x100x2_5 = 431,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x100x3")]
+        RHS150x100x3 = 432,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x100x3_2")]
+        RHS150x100x3_2 = 433,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x100x4")]
+        RHS150x100x4 = 434,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x100x4_5")]
+        RHS150x100x4_5 = 435,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x100x5")]
+        RHS150x100x5 = 436,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x100x6")]
+        RHS150x100x6 = 437,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x100x6_3")]
+        RHS150x100x6_3 = 438,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x100x8")]
+        RHS150x100x8 = 439,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x100x9")]
+        RHS150x100x9 = 440,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x100x10")]
+        RHS150x100x10 = 441,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x100x12")]
+        RHS150x100x12 = 442,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS175x125x4_5")]
+        RHS175x125x4_5 = 443,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS175x125x5")]
+        RHS175x125x5 = 444,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS175x125x6")]
+        RHS175x125x6 = 445,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS175x125x6_3")]
+        RHS175x125x6_3 = 446,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS175x125x8")]
+        RHS175x125x8 = 447,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS175x125x9")]
+        RHS175x125x9 = 448,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS175x125x10")]
+        RHS175x125x10 = 449,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS175x125x12")]
+        RHS175x125x12 = 450,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS200x100x3_2")]
+        RHS200x100x3_2 = 451,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS200x100x4")]
+        RHS200x100x4 = 452,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS200x100x4_5")]
+        RHS200x100x4_5 = 453,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS200x100x5")]
+        RHS200x100x5 = 454,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS200x100x6")]
+        RHS200x100x6 = 455,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS200x100x6_3")]
+        RHS200x100x6_3 = 456,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS200x100x8")]
+        RHS200x100x8 = 457,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS200x100x9")]
+        RHS200x100x9 = 458,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS200x100x10")]
+        RHS200x100x10 = 459,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS200x100x12")]
+        RHS200x100x12 = 460,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS200x100x12_5")]
+        RHS200x100x12_5 = 461,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS200x150x4_5")]
+        RHS200x150x4_5 = 462,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS200x150x5")]
+        RHS200x150x5 = 463,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS200x150x6")]
+        RHS200x150x6 = 464,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS200x150x6_3")]
+        RHS200x150x6_3 = 465,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS200x150x8")]
+        RHS200x150x8 = 466,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS200x150x9")]
+        RHS200x150x9 = 467,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS200x150x10")]
+        RHS200x150x10 = 468,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS200x150x12")]
+        RHS200x150x12 = 469,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS200x150x12_5")]
+        RHS200x150x12_5 = 470,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS250x100x4_5")]
+        RHS250x100x4_5 = 471,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS250x100x5")]
+        RHS250x100x5 = 472,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS250x100x6")]
+        RHS250x100x6 = 473,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS250x100x6_3")]
+        RHS250x100x6_3 = 474,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS250x100x8")]
+        RHS250x100x8 = 475,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS250x100x9")]
+        RHS250x100x9 = 476,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS250x100x10")]
+        RHS250x100x10 = 477,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS250x100x12")]
+        RHS250x100x12 = 478,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS225x175x4_5")]
+        RHS225x175x4_5 = 479,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS225x175x5")]
+        RHS225x175x5 = 480,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS225x175x6")]
+        RHS225x175x6 = 481,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS250x150x4_5")]
+        RHS250x150x4_5 = 482,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS250x150x5")]
+        RHS250x150x5 = 483,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS250x150x6")]
+        RHS250x150x6 = 484,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS250x150x6_3")]
+        RHS250x150x6_3 = 485,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS250x150x8")]
+        RHS250x150x8 = 486,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS250x150x9")]
+        RHS250x150x9 = 487,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS250x150x10")]
+        RHS250x150x10 = 488,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS250x150x12")]
+        RHS250x150x12 = 489,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS250x150x12_5")]
+        RHS250x150x12_5 = 490,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS300x100x4_5")]
+        RHS300x100x4_5 = 491,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS300x100x5")]
+        RHS300x100x5 = 492,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS300x100x6")]
+        RHS300x100x6 = 493,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS300x100x6_3")]
+        RHS300x100x6_3 = 494,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS300x100x8")]
+        RHS300x100x8 = 495,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS300x100x9")]
+        RHS300x100x9 = 496,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS250x200x6")]
+        RHS250x200x6 = 497,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS250x200x6_3")]
+        RHS250x200x6_3 = 498,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS250x200x8")]
+        RHS250x200x8 = 499,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS250x200x9")]
+        RHS250x200x9 = 500,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS250x200x10")]
+        RHS250x200x10 = 501,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS250x200x12")]
+        RHS250x200x12 = 502,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS250x200x12_5")]
+        RHS250x200x12_5 = 503,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS300x150x6")]
+        RHS300x150x6 = 504,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS300x150x6_3")]
+        RHS300x150x6_3 = 505,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS300x150x8")]
+        RHS300x150x8 = 506,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS300x150x9")]
+        RHS300x150x9 = 507,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS300x150x10")]
+        RHS300x150x10 = 508,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS300x150x12")]
+        RHS300x150x12 = 509,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS300x150x12_5")]
+        RHS300x150x12_5 = 510,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS300x200x6")]
+        RHS300x200x6 = 511,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS300x200x6_3")]
+        RHS300x200x6_3 = 512,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS300x200x8")]
+        RHS300x200x8 = 513,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS300x200x9")]
+        RHS300x200x9 = 514,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS300x200x10")]
+        RHS300x200x10 = 515,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS300x200x12")]
+        RHS300x200x12 = 516,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS300x200x12_5")]
+        RHS300x200x12_5 = 517,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS300x200x16")]
+        RHS300x200x16 = 518,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS350x150x6")]
+        RHS350x150x6 = 519,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS350x150x6_3")]
+        RHS350x150x6_3 = 520,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS350x150x8")]
+        RHS350x150x8 = 521,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS350x150x9")]
+        RHS350x150x9 = 522,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS350x150x10")]
+        RHS350x150x10 = 523,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS350x150x12")]
+        RHS350x150x12 = 524,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS350x150x12_5")]
+        RHS350x150x12_5 = 525,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS350x250x6")]
+        RHS350x250x6 = 526,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS350x250x6_3")]
+        RHS350x250x6_3 = 527,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS350x250x8")]
+        RHS350x250x8 = 528,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS350x250x9")]
+        RHS350x250x9 = 529,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS350x250x10")]
+        RHS350x250x10 = 530,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS350x250x12")]
+        RHS350x250x12 = 531,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS350x250x12_5")]
+        RHS350x250x12_5 = 532,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS350x250x16")]
+        RHS350x250x16 = 533,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS400x200x6")]
+        RHS400x200x6 = 534,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS400x200x6_3")]
+        RHS400x200x6_3 = 535,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS400x200x8")]
+        RHS400x200x8 = 536,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS400x200x9")]
+        RHS400x200x9 = 537,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS400x200x10")]
+        RHS400x200x10 = 538,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS400x200x12")]
+        RHS400x200x12 = 539,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS400x200x12_5")]
+        RHS400x200x12_5 = 540,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS400x300x9")]
+        RHS400x300x9 = 541,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS400x300x10")]
+        RHS400x300x10 = 542,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS400x300x12")]
+        RHS400x300x12 = 543,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS400x300x12_5")]
+        RHS400x300x12_5 = 544,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS400x300x16")]
+        RHS400x300x16 = 545,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS500x300x12")]
+        RHS500x300x12 = 546,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS500x300x12_5")]
+        RHS500x300x12_5 = 547,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS500x300x16")]
+        RHS500x300x16 = 548,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS500x300x19")]
+        RHS500x300x19 = 549,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS600x300x12")]
+        RHS600x300x12 = 550,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS600x300x12_5")]
+        RHS600x300x12_5 = 551,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS600x300x16")]
+        RHS600x300x16 = 552,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS600x300x19")]
+        RHS600x300x19 = 553,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS600x300x22")]
+        RHS600x300x22 = 554,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS50xs00x1_6")]
+        SHS50xs00x1_6 = 555,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS50xs00x2")]
+        SHS50xs00x2 = 556,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS50xs00x2_3")]
+        SHS50xs00x2_3 = 557,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS50xs00x2_5")]
+        SHS50xs00x2_5 = 558,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS50xs00x3")]
+        SHS50xs00x3 = 559,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS50xs00x3_2")]
+        SHS50xs00x3_2 = 560,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS50xs00x4")]
+        SHS50xs00x4 = 561,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS50xs00x4_5")]
+        SHS50xs00x4_5 = 562,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS50xs00x5")]
+        SHS50xs00x5 = 563,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS50xs00x6")]
+        SHS50xs00x6 = 564,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS60xs00x1_6")]
+        SHS60xs00x1_6 = 565,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS60xs00x2")]
+        SHS60xs00x2 = 566,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS60xs00x2_3")]
+        SHS60xs00x2_3 = 567,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS60xs00x2_5")]
+        SHS60xs00x2_5 = 568,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS60xs00x3")]
+        SHS60xs00x3 = 569,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS60xs00x3_2")]
+        SHS60xs00x3_2 = 570,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS60xs00x4")]
+        SHS60xs00x4 = 571,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS60xs00x4_5")]
+        SHS60xs00x4_5 = 572,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS60xs00x5")]
+        SHS60xs00x5 = 573,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS60xs00x6")]
+        SHS60xs00x6 = 574,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS75xs00x1_6")]
+        SHS75xs00x1_6 = 575,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS75xs00x2")]
+        SHS75xs00x2 = 576,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS75xs00x2_3")]
+        SHS75xs00x2_3 = 577,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS75xs00x2_5")]
+        SHS75xs00x2_5 = 578,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS75xs00x3")]
+        SHS75xs00x3 = 579,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS75xs00x3_2")]
+        SHS75xs00x3_2 = 580,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS75xs00x4")]
+        SHS75xs00x4 = 581,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS75xs00x4_5")]
+        SHS75xs00x4_5 = 582,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS75xs00x5")]
+        SHS75xs00x5 = 583,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS75xs00x6")]
+        SHS75xs00x6 = 584,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS75xs00x6_3")]
+        SHS75xs00x6_3 = 585,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS75xs00x8")]
+        SHS75xs00x8 = 586,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS80xs00x1_6")]
+        SHS80xs00x1_6 = 587,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS80xs00x2")]
+        SHS80xs00x2 = 588,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS80xs00x2_3")]
+        SHS80xs00x2_3 = 589,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS80xs00x2_5")]
+        SHS80xs00x2_5 = 590,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS80xs00x3")]
+        SHS80xs00x3 = 591,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS80xs00x3_2")]
+        SHS80xs00x3_2 = 592,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS80xs00x4")]
+        SHS80xs00x4 = 593,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS80xs00x4_5")]
+        SHS80xs00x4_5 = 594,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS80xs00x5")]
+        SHS80xs00x5 = 595,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS80xs00x6")]
+        SHS80xs00x6 = 596,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS80xs00x6_3")]
+        SHS80xs00x6_3 = 597,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS80xs00x8")]
+        SHS80xs00x8 = 598,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS90xs00x2_3")]
+        SHS90xs00x2_3 = 599,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS90xs00x2_5")]
+        SHS90xs00x2_5 = 600,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS90xs00x3")]
+        SHS90xs00x3 = 601,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS90xs00x3_2")]
+        SHS90xs00x3_2 = 602,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS90xs00x4")]
+        SHS90xs00x4 = 603,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS90xs00x4_5")]
+        SHS90xs00x4_5 = 604,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS90xs00x5")]
+        SHS90xs00x5 = 605,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS90xs00x6")]
+        SHS90xs00x6 = 606,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS90xs00x6_3")]
+        SHS90xs00x6_3 = 607,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS100xs00x1_6")]
+        SHS100xs00x1_6 = 608,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS100xs00x2")]
+        SHS100xs00x2 = 609,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS100xs00x2_3")]
+        SHS100xs00x2_3 = 610,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS100xs00x2_5")]
+        SHS100xs00x2_5 = 611,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS100xs00x3")]
+        SHS100xs00x3 = 612,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS100xs00x3_2")]
+        SHS100xs00x3_2 = 613,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS100xs00x4")]
+        SHS100xs00x4 = 614,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS100xs00x4_5")]
+        SHS100xs00x4_5 = 615,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS100xs00x5")]
+        SHS100xs00x5 = 616,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS100xs00x6")]
+        SHS100xs00x6 = 617,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS100xs00x6_3")]
+        SHS100xs00x6_3 = 618,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS100xs00x8")]
+        SHS100xs00x8 = 619,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS100xs00x9")]
+        SHS100xs00x9 = 620,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS100xs00x10")]
+        SHS100xs00x10 = 621,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS100xs00x12")]
+        SHS100xs00x12 = 622,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS120xs00x6")]
+        SHS120xs00x6 = 623,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS120xs00x6_3")]
+        SHS120xs00x6_3 = 624,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS120xs00x8")]
+        SHS120xs00x8 = 625,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS120xs00x9")]
+        SHS120xs00x9 = 626,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS120xs00x10")]
+        SHS120xs00x10 = 627,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS120xs00x12")]
+        SHS120xs00x12 = 628,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS125xs00x2_3")]
+        SHS125xs00x2_3 = 629,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS125xs00x2_5")]
+        SHS125xs00x2_5 = 630,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS125xs00x3")]
+        SHS125xs00x3 = 631,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS125xs00x3_2")]
+        SHS125xs00x3_2 = 632,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS125xs00x4")]
+        SHS125xs00x4 = 633,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS125xs00x4_5")]
+        SHS125xs00x4_5 = 634,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS125xs00x5")]
+        SHS125xs00x5 = 635,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS125xs00x6")]
+        SHS125xs00x6 = 636,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS125xs00x6_3")]
+        SHS125xs00x6_3 = 637,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS125xs00x8")]
+        SHS125xs00x8 = 638,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS125xs00x9")]
+        SHS125xs00x9 = 639,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS125xs00x10")]
+        SHS125xs00x10 = 640,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS125xs00x12")]
+        SHS125xs00x12 = 641,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS125xs00x12_5")]
+        SHS125xs00x12_5 = 642,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS150xs00x3_2")]
+        SHS150xs00x3_2 = 643,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS150xs00x4")]
+        SHS150xs00x4 = 644,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS150xs00x4_5")]
+        SHS150xs00x4_5 = 645,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS150xs00x5")]
+        SHS150xs00x5 = 646,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS150xs00x6")]
+        SHS150xs00x6 = 647,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS150xs00x6_3")]
+        SHS150xs00x6_3 = 648,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS150xs00x8")]
+        SHS150xs00x8 = 649,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS150xs00x9")]
+        SHS150xs00x9 = 650,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS150xs00x10")]
+        SHS150xs00x10 = 651,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS150xs00x12")]
+        SHS150xs00x12 = 652,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS150xs00x12_5")]
+        SHS150xs00x12_5 = 653,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS175xs00x4_5")]
+        SHS175xs00x4_5 = 654,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS175xs00x5")]
+        SHS175xs00x5 = 655,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS175xs00x6")]
+        SHS175xs00x6 = 656,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS175xs00x6_3")]
+        SHS175xs00x6_3 = 657,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS175xs00x8")]
+        SHS175xs00x8 = 658,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS175xs00x9")]
+        SHS175xs00x9 = 659,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS175xs00x10")]
+        SHS175xs00x10 = 660,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS175xs00x12")]
+        SHS175xs00x12 = 661,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS175xs00x12_5")]
+        SHS175xs00x12_5 = 662,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS200xs00x4_5")]
+        SHS200xs00x4_5 = 663,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS200xs00x5")]
+        SHS200xs00x5 = 664,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS200xs00x6")]
+        SHS200xs00x6 = 665,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS200xs00x6_3")]
+        SHS200xs00x6_3 = 666,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS200xs00x8")]
+        SHS200xs00x8 = 667,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS200xs00x9")]
+        SHS200xs00x9 = 668,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS200xs00x10")]
+        SHS200xs00x10 = 669,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS200xs00x12")]
+        SHS200xs00x12 = 670,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS200xs00x12_5")]
+        SHS200xs00x12_5 = 671,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS200xs00x16")]
+        SHS200xs00x16 = 672,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS250xs00x6")]
+        SHS250xs00x6 = 673,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS250xs00x6_3")]
+        SHS250xs00x6_3 = 674,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS250xs00x8")]
+        SHS250xs00x8 = 675,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS250xs00x9")]
+        SHS250xs00x9 = 676,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS250xs00x10")]
+        SHS250xs00x10 = 677,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS250xs00x12")]
+        SHS250xs00x12 = 678,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS250xs00x12_5")]
+        SHS250xs00x12_5 = 679,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS250xs00x16")]
+        SHS250xs00x16 = 680,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS250xs00x19")]
+        SHS250xs00x19 = 681,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS300xs00x6")]
+        SHS300xs00x6 = 682,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS300xs00x6_3")]
+        SHS300xs00x6_3 = 683,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS300xs00x8")]
+        SHS300xs00x8 = 684,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS300xs00x9")]
+        SHS300xs00x9 = 685,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS300xs00x10")]
+        SHS300xs00x10 = 686,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS300xs00x12")]
+        SHS300xs00x12 = 687,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS300xs00x12_5")]
+        SHS300xs00x12_5 = 688,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS300xs00x16")]
+        SHS300xs00x16 = 689,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS300xs00x19")]
+        SHS300xs00x19 = 690,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS350xs00x9")]
+        SHS350xs00x9 = 691,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS350xs00x10")]
+        SHS350xs00x10 = 692,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS350xs00x12")]
+        SHS350xs00x12 = 693,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS350xs00x12_5")]
+        SHS350xs00x12_5 = 694,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS350xs00x16")]
+        SHS350xs00x16 = 695,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS350xs00x19")]
+        SHS350xs00x19 = 696,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS350xs00x22")]
+        SHS350xs00x22 = 697,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS400xs00x9")]
+        SHS400xs00x9 = 698,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS400xs00x10")]
+        SHS400xs00x10 = 699,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS400xs00x12")]
+        SHS400xs00x12 = 700,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS400xs00x12_5")]
+        SHS400xs00x12_5 = 701,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS400xs00x16")]
+        SHS400xs00x16 = 702,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS400xs00x19")]
+        SHS400xs00x19 = 703,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS400xs00x22")]
+        SHS400xs00x22 = 704,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS450xs00x9")]
+        SHS450xs00x9 = 705,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS450xs00x10")]
+        SHS450xs00x10 = 706,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS450xs00x12")]
+        SHS450xs00x12 = 707,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS450xs00x12_5")]
+        SHS450xs00x12_5 = 708,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS450xs00x16")]
+        SHS450xs00x16 = 709,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS450xs00x19")]
+        SHS450xs00x19 = 710,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS450xs00x22")]
+        SHS450xs00x22 = 711,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS500xs00x9")]
+        SHS500xs00x9 = 712,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS500xs00x10")]
+        SHS500xs00x10 = 713,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS500xs00x12")]
+        SHS500xs00x12 = 714,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS500xs00x12_5")]
+        SHS500xs00x12_5 = 715,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS500xs00x16")]
+        SHS500xs00x16 = 716,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS500xs00x19")]
+        SHS500xs00x19 = 717,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS500xs00x22")]
+        SHS500xs00x22 = 718,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS550xs00x12")]
+        SHS550xs00x12 = 719,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS550xs00x12_5")]
+        SHS550xs00x12_5 = 720,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS550xs00x16")]
+        SHS550xs00x16 = 721,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS550xs00x19")]
+        SHS550xs00x19 = 722,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS550xs00x22")]
+        SHS550xs00x22 = 723,
+    
     }
     
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
@@ -2029,6 +3253,1230 @@ namespace Structure
         [System.Runtime.Serialization.EnumMember(Value = @"W44x335")]
         W44x335 = 315,
     
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS60x30x1_6")]
+        RHS60x30x1_6 = 316,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS60x30x2")]
+        RHS60x30x2 = 317,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS60x30x2_3")]
+        RHS60x30x2_3 = 318,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS60x30x2_5")]
+        RHS60x30x2_5 = 319,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS60x30x3")]
+        RHS60x30x3 = 320,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS60x30x3_2")]
+        RHS60x30x3_2 = 321,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS60x30x4")]
+        RHS60x30x4 = 322,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS60x30x4_5")]
+        RHS60x30x4_5 = 323,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS60x40x1_6")]
+        RHS60x40x1_6 = 324,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS60x40x2")]
+        RHS60x40x2 = 325,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS60x40x2_3")]
+        RHS60x40x2_3 = 326,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS60x40x2_5")]
+        RHS60x40x2_5 = 327,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS60x40x3")]
+        RHS60x40x3 = 328,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS60x40x3_2")]
+        RHS60x40x3_2 = 329,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS60x40x4")]
+        RHS60x40x4 = 330,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS60x40x4_5")]
+        RHS60x40x4_5 = 331,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS70x40x1_6")]
+        RHS70x40x1_6 = 332,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS70x40x2")]
+        RHS70x40x2 = 333,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS70x40x2_3")]
+        RHS70x40x2_3 = 334,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS70x40x2_5")]
+        RHS70x40x2_5 = 335,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS70x40x3")]
+        RHS70x40x3 = 336,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS70x40x3_2")]
+        RHS70x40x3_2 = 337,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS70x40x4")]
+        RHS70x40x4 = 338,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS70x40x4_5")]
+        RHS70x40x4_5 = 339,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS75x45x1_6")]
+        RHS75x45x1_6 = 340,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS75x45x2")]
+        RHS75x45x2 = 341,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS75x45x2_3")]
+        RHS75x45x2_3 = 342,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS75x45x2_5")]
+        RHS75x45x2_5 = 343,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS75x45x3")]
+        RHS75x45x3 = 344,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS75x45x3_2")]
+        RHS75x45x3_2 = 345,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS75x45x4")]
+        RHS75x45x4 = 346,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS75x45x4_5")]
+        RHS75x45x4_5 = 347,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS75x45x5")]
+        RHS75x45x5 = 348,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS75x45x6")]
+        RHS75x45x6 = 349,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS75x50x2_3")]
+        RHS75x50x2_3 = 350,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS75x50x2_5")]
+        RHS75x50x2_5 = 351,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS75x50x3")]
+        RHS75x50x3 = 352,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS75x50x3_2")]
+        RHS75x50x3_2 = 353,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS75x50x4")]
+        RHS75x50x4 = 354,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS75x50x4_5")]
+        RHS75x50x4_5 = 355,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS75x50x5")]
+        RHS75x50x5 = 356,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS75x50x6")]
+        RHS75x50x6 = 357,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS100x40x1_6")]
+        RHS100x40x1_6 = 358,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS100x40x2")]
+        RHS100x40x2 = 359,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS100x40x2_3")]
+        RHS100x40x2_3 = 360,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS100x40x2_5")]
+        RHS100x40x2_5 = 361,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS100x40x3")]
+        RHS100x40x3 = 362,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS100x40x3_2")]
+        RHS100x40x3_2 = 363,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS100x40x4")]
+        RHS100x40x4 = 364,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS100x40x4_5")]
+        RHS100x40x4_5 = 365,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS100x50x1_6")]
+        RHS100x50x1_6 = 366,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS100x50x2")]
+        RHS100x50x2 = 367,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS100x50x2_3")]
+        RHS100x50x2_3 = 368,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS100x50x2_5")]
+        RHS100x50x2_5 = 369,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS100x50x3")]
+        RHS100x50x3 = 370,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS100x50x3_2")]
+        RHS100x50x3_2 = 371,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS100x50x4")]
+        RHS100x50x4 = 372,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS100x50x4_5")]
+        RHS100x50x4_5 = 373,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS100x50x5")]
+        RHS100x50x5 = 374,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS100x50x6")]
+        RHS100x50x6 = 375,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x40x1_6")]
+        RHS125x40x1_6 = 376,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x40x2")]
+        RHS125x40x2 = 377,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x40x2_3")]
+        RHS125x40x2_3 = 378,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x40x2_5")]
+        RHS125x40x2_5 = 379,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x40x3")]
+        RHS125x40x3 = 380,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x40x3_2")]
+        RHS125x40x3_2 = 381,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x40x4")]
+        RHS125x40x4 = 382,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x40x4_5")]
+        RHS125x40x4_5 = 383,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x50x1_6")]
+        RHS125x50x1_6 = 384,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x50x2")]
+        RHS125x50x2 = 385,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x50x2_3")]
+        RHS125x50x2_3 = 386,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x50x2_5")]
+        RHS125x50x2_5 = 387,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x50x3")]
+        RHS125x50x3 = 388,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x50x3_2")]
+        RHS125x50x3_2 = 389,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x50x4")]
+        RHS125x50x4 = 390,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x50x4_5")]
+        RHS125x50x4_5 = 391,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x50x5")]
+        RHS125x50x5 = 392,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x50x6")]
+        RHS125x50x6 = 393,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x75x1_6")]
+        RHS125x75x1_6 = 394,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x75x2")]
+        RHS125x75x2 = 395,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x75x2_3")]
+        RHS125x75x2_3 = 396,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x75x2_5")]
+        RHS125x75x2_5 = 397,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x75x3")]
+        RHS125x75x3 = 398,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x75x3_2")]
+        RHS125x75x3_2 = 399,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x75x4")]
+        RHS125x75x4 = 400,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x75x4_5")]
+        RHS125x75x4_5 = 401,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x75x5")]
+        RHS125x75x5 = 402,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x75x6")]
+        RHS125x75x6 = 403,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x75x6_3")]
+        RHS125x75x6_3 = 404,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x75x8")]
+        RHS125x75x8 = 405,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x75x9")]
+        RHS125x75x9 = 406,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x50x2_3")]
+        RHS150x50x2_3 = 407,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x50x2_5")]
+        RHS150x50x2_5 = 408,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x50x3")]
+        RHS150x50x3 = 409,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x50x3_2")]
+        RHS150x50x3_2 = 410,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x50x4")]
+        RHS150x50x4 = 411,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x50x4_5")]
+        RHS150x50x4_5 = 412,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x50x5")]
+        RHS150x50x5 = 413,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x50x6")]
+        RHS150x50x6 = 414,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x75x3")]
+        RHS150x75x3 = 415,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x75x3_2")]
+        RHS150x75x3_2 = 416,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x75x4")]
+        RHS150x75x4 = 417,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x75x4_5")]
+        RHS150x75x4_5 = 418,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x75x5")]
+        RHS150x75x5 = 419,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x75x6")]
+        RHS150x75x6 = 420,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x75x6_3")]
+        RHS150x75x6_3 = 421,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x75x8")]
+        RHS150x75x8 = 422,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x75x9")]
+        RHS150x75x9 = 423,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x80x3")]
+        RHS150x80x3 = 424,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x80x3_2")]
+        RHS150x80x3_2 = 425,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x80x4")]
+        RHS150x80x4 = 426,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x80x4_5")]
+        RHS150x80x4_5 = 427,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x80x5")]
+        RHS150x80x5 = 428,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x80x6")]
+        RHS150x80x6 = 429,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x100x2_3")]
+        RHS150x100x2_3 = 430,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x100x2_5")]
+        RHS150x100x2_5 = 431,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x100x3")]
+        RHS150x100x3 = 432,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x100x3_2")]
+        RHS150x100x3_2 = 433,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x100x4")]
+        RHS150x100x4 = 434,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x100x4_5")]
+        RHS150x100x4_5 = 435,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x100x5")]
+        RHS150x100x5 = 436,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x100x6")]
+        RHS150x100x6 = 437,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x100x6_3")]
+        RHS150x100x6_3 = 438,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x100x8")]
+        RHS150x100x8 = 439,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x100x9")]
+        RHS150x100x9 = 440,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x100x10")]
+        RHS150x100x10 = 441,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x100x12")]
+        RHS150x100x12 = 442,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS175x125x4_5")]
+        RHS175x125x4_5 = 443,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS175x125x5")]
+        RHS175x125x5 = 444,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS175x125x6")]
+        RHS175x125x6 = 445,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS175x125x6_3")]
+        RHS175x125x6_3 = 446,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS175x125x8")]
+        RHS175x125x8 = 447,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS175x125x9")]
+        RHS175x125x9 = 448,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS175x125x10")]
+        RHS175x125x10 = 449,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS175x125x12")]
+        RHS175x125x12 = 450,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS200x100x3_2")]
+        RHS200x100x3_2 = 451,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS200x100x4")]
+        RHS200x100x4 = 452,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS200x100x4_5")]
+        RHS200x100x4_5 = 453,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS200x100x5")]
+        RHS200x100x5 = 454,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS200x100x6")]
+        RHS200x100x6 = 455,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS200x100x6_3")]
+        RHS200x100x6_3 = 456,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS200x100x8")]
+        RHS200x100x8 = 457,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS200x100x9")]
+        RHS200x100x9 = 458,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS200x100x10")]
+        RHS200x100x10 = 459,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS200x100x12")]
+        RHS200x100x12 = 460,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS200x100x12_5")]
+        RHS200x100x12_5 = 461,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS200x150x4_5")]
+        RHS200x150x4_5 = 462,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS200x150x5")]
+        RHS200x150x5 = 463,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS200x150x6")]
+        RHS200x150x6 = 464,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS200x150x6_3")]
+        RHS200x150x6_3 = 465,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS200x150x8")]
+        RHS200x150x8 = 466,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS200x150x9")]
+        RHS200x150x9 = 467,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS200x150x10")]
+        RHS200x150x10 = 468,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS200x150x12")]
+        RHS200x150x12 = 469,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS200x150x12_5")]
+        RHS200x150x12_5 = 470,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS250x100x4_5")]
+        RHS250x100x4_5 = 471,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS250x100x5")]
+        RHS250x100x5 = 472,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS250x100x6")]
+        RHS250x100x6 = 473,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS250x100x6_3")]
+        RHS250x100x6_3 = 474,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS250x100x8")]
+        RHS250x100x8 = 475,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS250x100x9")]
+        RHS250x100x9 = 476,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS250x100x10")]
+        RHS250x100x10 = 477,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS250x100x12")]
+        RHS250x100x12 = 478,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS225x175x4_5")]
+        RHS225x175x4_5 = 479,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS225x175x5")]
+        RHS225x175x5 = 480,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS225x175x6")]
+        RHS225x175x6 = 481,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS250x150x4_5")]
+        RHS250x150x4_5 = 482,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS250x150x5")]
+        RHS250x150x5 = 483,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS250x150x6")]
+        RHS250x150x6 = 484,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS250x150x6_3")]
+        RHS250x150x6_3 = 485,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS250x150x8")]
+        RHS250x150x8 = 486,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS250x150x9")]
+        RHS250x150x9 = 487,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS250x150x10")]
+        RHS250x150x10 = 488,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS250x150x12")]
+        RHS250x150x12 = 489,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS250x150x12_5")]
+        RHS250x150x12_5 = 490,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS300x100x4_5")]
+        RHS300x100x4_5 = 491,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS300x100x5")]
+        RHS300x100x5 = 492,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS300x100x6")]
+        RHS300x100x6 = 493,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS300x100x6_3")]
+        RHS300x100x6_3 = 494,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS300x100x8")]
+        RHS300x100x8 = 495,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS300x100x9")]
+        RHS300x100x9 = 496,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS250x200x6")]
+        RHS250x200x6 = 497,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS250x200x6_3")]
+        RHS250x200x6_3 = 498,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS250x200x8")]
+        RHS250x200x8 = 499,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS250x200x9")]
+        RHS250x200x9 = 500,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS250x200x10")]
+        RHS250x200x10 = 501,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS250x200x12")]
+        RHS250x200x12 = 502,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS250x200x12_5")]
+        RHS250x200x12_5 = 503,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS300x150x6")]
+        RHS300x150x6 = 504,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS300x150x6_3")]
+        RHS300x150x6_3 = 505,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS300x150x8")]
+        RHS300x150x8 = 506,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS300x150x9")]
+        RHS300x150x9 = 507,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS300x150x10")]
+        RHS300x150x10 = 508,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS300x150x12")]
+        RHS300x150x12 = 509,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS300x150x12_5")]
+        RHS300x150x12_5 = 510,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS300x200x6")]
+        RHS300x200x6 = 511,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS300x200x6_3")]
+        RHS300x200x6_3 = 512,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS300x200x8")]
+        RHS300x200x8 = 513,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS300x200x9")]
+        RHS300x200x9 = 514,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS300x200x10")]
+        RHS300x200x10 = 515,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS300x200x12")]
+        RHS300x200x12 = 516,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS300x200x12_5")]
+        RHS300x200x12_5 = 517,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS300x200x16")]
+        RHS300x200x16 = 518,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS350x150x6")]
+        RHS350x150x6 = 519,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS350x150x6_3")]
+        RHS350x150x6_3 = 520,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS350x150x8")]
+        RHS350x150x8 = 521,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS350x150x9")]
+        RHS350x150x9 = 522,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS350x150x10")]
+        RHS350x150x10 = 523,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS350x150x12")]
+        RHS350x150x12 = 524,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS350x150x12_5")]
+        RHS350x150x12_5 = 525,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS350x250x6")]
+        RHS350x250x6 = 526,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS350x250x6_3")]
+        RHS350x250x6_3 = 527,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS350x250x8")]
+        RHS350x250x8 = 528,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS350x250x9")]
+        RHS350x250x9 = 529,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS350x250x10")]
+        RHS350x250x10 = 530,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS350x250x12")]
+        RHS350x250x12 = 531,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS350x250x12_5")]
+        RHS350x250x12_5 = 532,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS350x250x16")]
+        RHS350x250x16 = 533,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS400x200x6")]
+        RHS400x200x6 = 534,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS400x200x6_3")]
+        RHS400x200x6_3 = 535,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS400x200x8")]
+        RHS400x200x8 = 536,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS400x200x9")]
+        RHS400x200x9 = 537,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS400x200x10")]
+        RHS400x200x10 = 538,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS400x200x12")]
+        RHS400x200x12 = 539,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS400x200x12_5")]
+        RHS400x200x12_5 = 540,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS400x300x9")]
+        RHS400x300x9 = 541,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS400x300x10")]
+        RHS400x300x10 = 542,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS400x300x12")]
+        RHS400x300x12 = 543,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS400x300x12_5")]
+        RHS400x300x12_5 = 544,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS400x300x16")]
+        RHS400x300x16 = 545,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS500x300x12")]
+        RHS500x300x12 = 546,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS500x300x12_5")]
+        RHS500x300x12_5 = 547,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS500x300x16")]
+        RHS500x300x16 = 548,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS500x300x19")]
+        RHS500x300x19 = 549,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS600x300x12")]
+        RHS600x300x12 = 550,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS600x300x12_5")]
+        RHS600x300x12_5 = 551,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS600x300x16")]
+        RHS600x300x16 = 552,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS600x300x19")]
+        RHS600x300x19 = 553,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS600x300x22")]
+        RHS600x300x22 = 554,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS50xs00x1_6")]
+        SHS50xs00x1_6 = 555,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS50xs00x2")]
+        SHS50xs00x2 = 556,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS50xs00x2_3")]
+        SHS50xs00x2_3 = 557,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS50xs00x2_5")]
+        SHS50xs00x2_5 = 558,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS50xs00x3")]
+        SHS50xs00x3 = 559,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS50xs00x3_2")]
+        SHS50xs00x3_2 = 560,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS50xs00x4")]
+        SHS50xs00x4 = 561,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS50xs00x4_5")]
+        SHS50xs00x4_5 = 562,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS50xs00x5")]
+        SHS50xs00x5 = 563,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS50xs00x6")]
+        SHS50xs00x6 = 564,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS60xs00x1_6")]
+        SHS60xs00x1_6 = 565,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS60xs00x2")]
+        SHS60xs00x2 = 566,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS60xs00x2_3")]
+        SHS60xs00x2_3 = 567,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS60xs00x2_5")]
+        SHS60xs00x2_5 = 568,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS60xs00x3")]
+        SHS60xs00x3 = 569,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS60xs00x3_2")]
+        SHS60xs00x3_2 = 570,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS60xs00x4")]
+        SHS60xs00x4 = 571,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS60xs00x4_5")]
+        SHS60xs00x4_5 = 572,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS60xs00x5")]
+        SHS60xs00x5 = 573,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS60xs00x6")]
+        SHS60xs00x6 = 574,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS75xs00x1_6")]
+        SHS75xs00x1_6 = 575,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS75xs00x2")]
+        SHS75xs00x2 = 576,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS75xs00x2_3")]
+        SHS75xs00x2_3 = 577,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS75xs00x2_5")]
+        SHS75xs00x2_5 = 578,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS75xs00x3")]
+        SHS75xs00x3 = 579,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS75xs00x3_2")]
+        SHS75xs00x3_2 = 580,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS75xs00x4")]
+        SHS75xs00x4 = 581,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS75xs00x4_5")]
+        SHS75xs00x4_5 = 582,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS75xs00x5")]
+        SHS75xs00x5 = 583,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS75xs00x6")]
+        SHS75xs00x6 = 584,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS75xs00x6_3")]
+        SHS75xs00x6_3 = 585,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS75xs00x8")]
+        SHS75xs00x8 = 586,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS80xs00x1_6")]
+        SHS80xs00x1_6 = 587,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS80xs00x2")]
+        SHS80xs00x2 = 588,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS80xs00x2_3")]
+        SHS80xs00x2_3 = 589,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS80xs00x2_5")]
+        SHS80xs00x2_5 = 590,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS80xs00x3")]
+        SHS80xs00x3 = 591,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS80xs00x3_2")]
+        SHS80xs00x3_2 = 592,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS80xs00x4")]
+        SHS80xs00x4 = 593,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS80xs00x4_5")]
+        SHS80xs00x4_5 = 594,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS80xs00x5")]
+        SHS80xs00x5 = 595,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS80xs00x6")]
+        SHS80xs00x6 = 596,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS80xs00x6_3")]
+        SHS80xs00x6_3 = 597,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS80xs00x8")]
+        SHS80xs00x8 = 598,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS90xs00x2_3")]
+        SHS90xs00x2_3 = 599,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS90xs00x2_5")]
+        SHS90xs00x2_5 = 600,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS90xs00x3")]
+        SHS90xs00x3 = 601,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS90xs00x3_2")]
+        SHS90xs00x3_2 = 602,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS90xs00x4")]
+        SHS90xs00x4 = 603,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS90xs00x4_5")]
+        SHS90xs00x4_5 = 604,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS90xs00x5")]
+        SHS90xs00x5 = 605,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS90xs00x6")]
+        SHS90xs00x6 = 606,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS90xs00x6_3")]
+        SHS90xs00x6_3 = 607,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS100xs00x1_6")]
+        SHS100xs00x1_6 = 608,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS100xs00x2")]
+        SHS100xs00x2 = 609,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS100xs00x2_3")]
+        SHS100xs00x2_3 = 610,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS100xs00x2_5")]
+        SHS100xs00x2_5 = 611,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS100xs00x3")]
+        SHS100xs00x3 = 612,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS100xs00x3_2")]
+        SHS100xs00x3_2 = 613,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS100xs00x4")]
+        SHS100xs00x4 = 614,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS100xs00x4_5")]
+        SHS100xs00x4_5 = 615,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS100xs00x5")]
+        SHS100xs00x5 = 616,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS100xs00x6")]
+        SHS100xs00x6 = 617,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS100xs00x6_3")]
+        SHS100xs00x6_3 = 618,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS100xs00x8")]
+        SHS100xs00x8 = 619,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS100xs00x9")]
+        SHS100xs00x9 = 620,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS100xs00x10")]
+        SHS100xs00x10 = 621,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS100xs00x12")]
+        SHS100xs00x12 = 622,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS120xs00x6")]
+        SHS120xs00x6 = 623,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS120xs00x6_3")]
+        SHS120xs00x6_3 = 624,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS120xs00x8")]
+        SHS120xs00x8 = 625,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS120xs00x9")]
+        SHS120xs00x9 = 626,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS120xs00x10")]
+        SHS120xs00x10 = 627,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS120xs00x12")]
+        SHS120xs00x12 = 628,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS125xs00x2_3")]
+        SHS125xs00x2_3 = 629,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS125xs00x2_5")]
+        SHS125xs00x2_5 = 630,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS125xs00x3")]
+        SHS125xs00x3 = 631,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS125xs00x3_2")]
+        SHS125xs00x3_2 = 632,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS125xs00x4")]
+        SHS125xs00x4 = 633,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS125xs00x4_5")]
+        SHS125xs00x4_5 = 634,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS125xs00x5")]
+        SHS125xs00x5 = 635,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS125xs00x6")]
+        SHS125xs00x6 = 636,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS125xs00x6_3")]
+        SHS125xs00x6_3 = 637,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS125xs00x8")]
+        SHS125xs00x8 = 638,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS125xs00x9")]
+        SHS125xs00x9 = 639,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS125xs00x10")]
+        SHS125xs00x10 = 640,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS125xs00x12")]
+        SHS125xs00x12 = 641,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS125xs00x12_5")]
+        SHS125xs00x12_5 = 642,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS150xs00x3_2")]
+        SHS150xs00x3_2 = 643,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS150xs00x4")]
+        SHS150xs00x4 = 644,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS150xs00x4_5")]
+        SHS150xs00x4_5 = 645,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS150xs00x5")]
+        SHS150xs00x5 = 646,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS150xs00x6")]
+        SHS150xs00x6 = 647,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS150xs00x6_3")]
+        SHS150xs00x6_3 = 648,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS150xs00x8")]
+        SHS150xs00x8 = 649,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS150xs00x9")]
+        SHS150xs00x9 = 650,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS150xs00x10")]
+        SHS150xs00x10 = 651,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS150xs00x12")]
+        SHS150xs00x12 = 652,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS150xs00x12_5")]
+        SHS150xs00x12_5 = 653,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS175xs00x4_5")]
+        SHS175xs00x4_5 = 654,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS175xs00x5")]
+        SHS175xs00x5 = 655,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS175xs00x6")]
+        SHS175xs00x6 = 656,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS175xs00x6_3")]
+        SHS175xs00x6_3 = 657,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS175xs00x8")]
+        SHS175xs00x8 = 658,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS175xs00x9")]
+        SHS175xs00x9 = 659,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS175xs00x10")]
+        SHS175xs00x10 = 660,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS175xs00x12")]
+        SHS175xs00x12 = 661,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS175xs00x12_5")]
+        SHS175xs00x12_5 = 662,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS200xs00x4_5")]
+        SHS200xs00x4_5 = 663,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS200xs00x5")]
+        SHS200xs00x5 = 664,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS200xs00x6")]
+        SHS200xs00x6 = 665,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS200xs00x6_3")]
+        SHS200xs00x6_3 = 666,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS200xs00x8")]
+        SHS200xs00x8 = 667,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS200xs00x9")]
+        SHS200xs00x9 = 668,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS200xs00x10")]
+        SHS200xs00x10 = 669,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS200xs00x12")]
+        SHS200xs00x12 = 670,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS200xs00x12_5")]
+        SHS200xs00x12_5 = 671,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS200xs00x16")]
+        SHS200xs00x16 = 672,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS250xs00x6")]
+        SHS250xs00x6 = 673,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS250xs00x6_3")]
+        SHS250xs00x6_3 = 674,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS250xs00x8")]
+        SHS250xs00x8 = 675,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS250xs00x9")]
+        SHS250xs00x9 = 676,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS250xs00x10")]
+        SHS250xs00x10 = 677,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS250xs00x12")]
+        SHS250xs00x12 = 678,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS250xs00x12_5")]
+        SHS250xs00x12_5 = 679,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS250xs00x16")]
+        SHS250xs00x16 = 680,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS250xs00x19")]
+        SHS250xs00x19 = 681,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS300xs00x6")]
+        SHS300xs00x6 = 682,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS300xs00x6_3")]
+        SHS300xs00x6_3 = 683,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS300xs00x8")]
+        SHS300xs00x8 = 684,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS300xs00x9")]
+        SHS300xs00x9 = 685,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS300xs00x10")]
+        SHS300xs00x10 = 686,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS300xs00x12")]
+        SHS300xs00x12 = 687,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS300xs00x12_5")]
+        SHS300xs00x12_5 = 688,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS300xs00x16")]
+        SHS300xs00x16 = 689,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS300xs00x19")]
+        SHS300xs00x19 = 690,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS350xs00x9")]
+        SHS350xs00x9 = 691,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS350xs00x10")]
+        SHS350xs00x10 = 692,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS350xs00x12")]
+        SHS350xs00x12 = 693,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS350xs00x12_5")]
+        SHS350xs00x12_5 = 694,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS350xs00x16")]
+        SHS350xs00x16 = 695,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS350xs00x19")]
+        SHS350xs00x19 = 696,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS350xs00x22")]
+        SHS350xs00x22 = 697,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS400xs00x9")]
+        SHS400xs00x9 = 698,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS400xs00x10")]
+        SHS400xs00x10 = 699,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS400xs00x12")]
+        SHS400xs00x12 = 700,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS400xs00x12_5")]
+        SHS400xs00x12_5 = 701,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS400xs00x16")]
+        SHS400xs00x16 = 702,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS400xs00x19")]
+        SHS400xs00x19 = 703,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS400xs00x22")]
+        SHS400xs00x22 = 704,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS450xs00x9")]
+        SHS450xs00x9 = 705,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS450xs00x10")]
+        SHS450xs00x10 = 706,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS450xs00x12")]
+        SHS450xs00x12 = 707,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS450xs00x12_5")]
+        SHS450xs00x12_5 = 708,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS450xs00x16")]
+        SHS450xs00x16 = 709,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS450xs00x19")]
+        SHS450xs00x19 = 710,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS450xs00x22")]
+        SHS450xs00x22 = 711,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS500xs00x9")]
+        SHS500xs00x9 = 712,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS500xs00x10")]
+        SHS500xs00x10 = 713,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS500xs00x12")]
+        SHS500xs00x12 = 714,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS500xs00x12_5")]
+        SHS500xs00x12_5 = 715,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS500xs00x16")]
+        SHS500xs00x16 = 716,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS500xs00x19")]
+        SHS500xs00x19 = 717,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS500xs00x22")]
+        SHS500xs00x22 = 718,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS550xs00x12")]
+        SHS550xs00x12 = 719,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS550xs00x12_5")]
+        SHS550xs00x12_5 = 720,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS550xs00x16")]
+        SHS550xs00x16 = 721,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS550xs00x19")]
+        SHS550xs00x19 = 722,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS550xs00x22")]
+        SHS550xs00x22 = 723,
+    
     }
     
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
@@ -2981,6 +5429,1230 @@ namespace Structure
     
         [System.Runtime.Serialization.EnumMember(Value = @"W44x335")]
         W44x335 = 315,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS60x30x1_6")]
+        RHS60x30x1_6 = 316,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS60x30x2")]
+        RHS60x30x2 = 317,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS60x30x2_3")]
+        RHS60x30x2_3 = 318,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS60x30x2_5")]
+        RHS60x30x2_5 = 319,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS60x30x3")]
+        RHS60x30x3 = 320,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS60x30x3_2")]
+        RHS60x30x3_2 = 321,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS60x30x4")]
+        RHS60x30x4 = 322,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS60x30x4_5")]
+        RHS60x30x4_5 = 323,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS60x40x1_6")]
+        RHS60x40x1_6 = 324,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS60x40x2")]
+        RHS60x40x2 = 325,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS60x40x2_3")]
+        RHS60x40x2_3 = 326,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS60x40x2_5")]
+        RHS60x40x2_5 = 327,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS60x40x3")]
+        RHS60x40x3 = 328,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS60x40x3_2")]
+        RHS60x40x3_2 = 329,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS60x40x4")]
+        RHS60x40x4 = 330,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS60x40x4_5")]
+        RHS60x40x4_5 = 331,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS70x40x1_6")]
+        RHS70x40x1_6 = 332,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS70x40x2")]
+        RHS70x40x2 = 333,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS70x40x2_3")]
+        RHS70x40x2_3 = 334,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS70x40x2_5")]
+        RHS70x40x2_5 = 335,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS70x40x3")]
+        RHS70x40x3 = 336,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS70x40x3_2")]
+        RHS70x40x3_2 = 337,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS70x40x4")]
+        RHS70x40x4 = 338,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS70x40x4_5")]
+        RHS70x40x4_5 = 339,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS75x45x1_6")]
+        RHS75x45x1_6 = 340,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS75x45x2")]
+        RHS75x45x2 = 341,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS75x45x2_3")]
+        RHS75x45x2_3 = 342,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS75x45x2_5")]
+        RHS75x45x2_5 = 343,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS75x45x3")]
+        RHS75x45x3 = 344,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS75x45x3_2")]
+        RHS75x45x3_2 = 345,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS75x45x4")]
+        RHS75x45x4 = 346,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS75x45x4_5")]
+        RHS75x45x4_5 = 347,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS75x45x5")]
+        RHS75x45x5 = 348,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS75x45x6")]
+        RHS75x45x6 = 349,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS75x50x2_3")]
+        RHS75x50x2_3 = 350,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS75x50x2_5")]
+        RHS75x50x2_5 = 351,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS75x50x3")]
+        RHS75x50x3 = 352,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS75x50x3_2")]
+        RHS75x50x3_2 = 353,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS75x50x4")]
+        RHS75x50x4 = 354,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS75x50x4_5")]
+        RHS75x50x4_5 = 355,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS75x50x5")]
+        RHS75x50x5 = 356,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS75x50x6")]
+        RHS75x50x6 = 357,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS100x40x1_6")]
+        RHS100x40x1_6 = 358,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS100x40x2")]
+        RHS100x40x2 = 359,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS100x40x2_3")]
+        RHS100x40x2_3 = 360,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS100x40x2_5")]
+        RHS100x40x2_5 = 361,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS100x40x3")]
+        RHS100x40x3 = 362,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS100x40x3_2")]
+        RHS100x40x3_2 = 363,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS100x40x4")]
+        RHS100x40x4 = 364,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS100x40x4_5")]
+        RHS100x40x4_5 = 365,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS100x50x1_6")]
+        RHS100x50x1_6 = 366,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS100x50x2")]
+        RHS100x50x2 = 367,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS100x50x2_3")]
+        RHS100x50x2_3 = 368,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS100x50x2_5")]
+        RHS100x50x2_5 = 369,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS100x50x3")]
+        RHS100x50x3 = 370,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS100x50x3_2")]
+        RHS100x50x3_2 = 371,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS100x50x4")]
+        RHS100x50x4 = 372,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS100x50x4_5")]
+        RHS100x50x4_5 = 373,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS100x50x5")]
+        RHS100x50x5 = 374,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS100x50x6")]
+        RHS100x50x6 = 375,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x40x1_6")]
+        RHS125x40x1_6 = 376,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x40x2")]
+        RHS125x40x2 = 377,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x40x2_3")]
+        RHS125x40x2_3 = 378,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x40x2_5")]
+        RHS125x40x2_5 = 379,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x40x3")]
+        RHS125x40x3 = 380,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x40x3_2")]
+        RHS125x40x3_2 = 381,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x40x4")]
+        RHS125x40x4 = 382,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x40x4_5")]
+        RHS125x40x4_5 = 383,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x50x1_6")]
+        RHS125x50x1_6 = 384,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x50x2")]
+        RHS125x50x2 = 385,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x50x2_3")]
+        RHS125x50x2_3 = 386,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x50x2_5")]
+        RHS125x50x2_5 = 387,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x50x3")]
+        RHS125x50x3 = 388,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x50x3_2")]
+        RHS125x50x3_2 = 389,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x50x4")]
+        RHS125x50x4 = 390,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x50x4_5")]
+        RHS125x50x4_5 = 391,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x50x5")]
+        RHS125x50x5 = 392,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x50x6")]
+        RHS125x50x6 = 393,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x75x1_6")]
+        RHS125x75x1_6 = 394,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x75x2")]
+        RHS125x75x2 = 395,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x75x2_3")]
+        RHS125x75x2_3 = 396,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x75x2_5")]
+        RHS125x75x2_5 = 397,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x75x3")]
+        RHS125x75x3 = 398,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x75x3_2")]
+        RHS125x75x3_2 = 399,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x75x4")]
+        RHS125x75x4 = 400,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x75x4_5")]
+        RHS125x75x4_5 = 401,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x75x5")]
+        RHS125x75x5 = 402,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x75x6")]
+        RHS125x75x6 = 403,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x75x6_3")]
+        RHS125x75x6_3 = 404,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x75x8")]
+        RHS125x75x8 = 405,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS125x75x9")]
+        RHS125x75x9 = 406,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x50x2_3")]
+        RHS150x50x2_3 = 407,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x50x2_5")]
+        RHS150x50x2_5 = 408,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x50x3")]
+        RHS150x50x3 = 409,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x50x3_2")]
+        RHS150x50x3_2 = 410,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x50x4")]
+        RHS150x50x4 = 411,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x50x4_5")]
+        RHS150x50x4_5 = 412,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x50x5")]
+        RHS150x50x5 = 413,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x50x6")]
+        RHS150x50x6 = 414,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x75x3")]
+        RHS150x75x3 = 415,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x75x3_2")]
+        RHS150x75x3_2 = 416,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x75x4")]
+        RHS150x75x4 = 417,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x75x4_5")]
+        RHS150x75x4_5 = 418,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x75x5")]
+        RHS150x75x5 = 419,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x75x6")]
+        RHS150x75x6 = 420,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x75x6_3")]
+        RHS150x75x6_3 = 421,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x75x8")]
+        RHS150x75x8 = 422,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x75x9")]
+        RHS150x75x9 = 423,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x80x3")]
+        RHS150x80x3 = 424,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x80x3_2")]
+        RHS150x80x3_2 = 425,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x80x4")]
+        RHS150x80x4 = 426,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x80x4_5")]
+        RHS150x80x4_5 = 427,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x80x5")]
+        RHS150x80x5 = 428,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x80x6")]
+        RHS150x80x6 = 429,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x100x2_3")]
+        RHS150x100x2_3 = 430,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x100x2_5")]
+        RHS150x100x2_5 = 431,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x100x3")]
+        RHS150x100x3 = 432,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x100x3_2")]
+        RHS150x100x3_2 = 433,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x100x4")]
+        RHS150x100x4 = 434,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x100x4_5")]
+        RHS150x100x4_5 = 435,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x100x5")]
+        RHS150x100x5 = 436,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x100x6")]
+        RHS150x100x6 = 437,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x100x6_3")]
+        RHS150x100x6_3 = 438,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x100x8")]
+        RHS150x100x8 = 439,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x100x9")]
+        RHS150x100x9 = 440,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x100x10")]
+        RHS150x100x10 = 441,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS150x100x12")]
+        RHS150x100x12 = 442,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS175x125x4_5")]
+        RHS175x125x4_5 = 443,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS175x125x5")]
+        RHS175x125x5 = 444,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS175x125x6")]
+        RHS175x125x6 = 445,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS175x125x6_3")]
+        RHS175x125x6_3 = 446,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS175x125x8")]
+        RHS175x125x8 = 447,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS175x125x9")]
+        RHS175x125x9 = 448,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS175x125x10")]
+        RHS175x125x10 = 449,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS175x125x12")]
+        RHS175x125x12 = 450,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS200x100x3_2")]
+        RHS200x100x3_2 = 451,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS200x100x4")]
+        RHS200x100x4 = 452,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS200x100x4_5")]
+        RHS200x100x4_5 = 453,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS200x100x5")]
+        RHS200x100x5 = 454,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS200x100x6")]
+        RHS200x100x6 = 455,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS200x100x6_3")]
+        RHS200x100x6_3 = 456,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS200x100x8")]
+        RHS200x100x8 = 457,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS200x100x9")]
+        RHS200x100x9 = 458,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS200x100x10")]
+        RHS200x100x10 = 459,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS200x100x12")]
+        RHS200x100x12 = 460,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS200x100x12_5")]
+        RHS200x100x12_5 = 461,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS200x150x4_5")]
+        RHS200x150x4_5 = 462,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS200x150x5")]
+        RHS200x150x5 = 463,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS200x150x6")]
+        RHS200x150x6 = 464,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS200x150x6_3")]
+        RHS200x150x6_3 = 465,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS200x150x8")]
+        RHS200x150x8 = 466,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS200x150x9")]
+        RHS200x150x9 = 467,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS200x150x10")]
+        RHS200x150x10 = 468,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS200x150x12")]
+        RHS200x150x12 = 469,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS200x150x12_5")]
+        RHS200x150x12_5 = 470,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS250x100x4_5")]
+        RHS250x100x4_5 = 471,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS250x100x5")]
+        RHS250x100x5 = 472,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS250x100x6")]
+        RHS250x100x6 = 473,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS250x100x6_3")]
+        RHS250x100x6_3 = 474,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS250x100x8")]
+        RHS250x100x8 = 475,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS250x100x9")]
+        RHS250x100x9 = 476,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS250x100x10")]
+        RHS250x100x10 = 477,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS250x100x12")]
+        RHS250x100x12 = 478,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS225x175x4_5")]
+        RHS225x175x4_5 = 479,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS225x175x5")]
+        RHS225x175x5 = 480,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS225x175x6")]
+        RHS225x175x6 = 481,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS250x150x4_5")]
+        RHS250x150x4_5 = 482,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS250x150x5")]
+        RHS250x150x5 = 483,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS250x150x6")]
+        RHS250x150x6 = 484,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS250x150x6_3")]
+        RHS250x150x6_3 = 485,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS250x150x8")]
+        RHS250x150x8 = 486,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS250x150x9")]
+        RHS250x150x9 = 487,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS250x150x10")]
+        RHS250x150x10 = 488,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS250x150x12")]
+        RHS250x150x12 = 489,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS250x150x12_5")]
+        RHS250x150x12_5 = 490,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS300x100x4_5")]
+        RHS300x100x4_5 = 491,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS300x100x5")]
+        RHS300x100x5 = 492,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS300x100x6")]
+        RHS300x100x6 = 493,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS300x100x6_3")]
+        RHS300x100x6_3 = 494,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS300x100x8")]
+        RHS300x100x8 = 495,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS300x100x9")]
+        RHS300x100x9 = 496,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS250x200x6")]
+        RHS250x200x6 = 497,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS250x200x6_3")]
+        RHS250x200x6_3 = 498,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS250x200x8")]
+        RHS250x200x8 = 499,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS250x200x9")]
+        RHS250x200x9 = 500,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS250x200x10")]
+        RHS250x200x10 = 501,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS250x200x12")]
+        RHS250x200x12 = 502,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS250x200x12_5")]
+        RHS250x200x12_5 = 503,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS300x150x6")]
+        RHS300x150x6 = 504,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS300x150x6_3")]
+        RHS300x150x6_3 = 505,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS300x150x8")]
+        RHS300x150x8 = 506,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS300x150x9")]
+        RHS300x150x9 = 507,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS300x150x10")]
+        RHS300x150x10 = 508,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS300x150x12")]
+        RHS300x150x12 = 509,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS300x150x12_5")]
+        RHS300x150x12_5 = 510,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS300x200x6")]
+        RHS300x200x6 = 511,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS300x200x6_3")]
+        RHS300x200x6_3 = 512,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS300x200x8")]
+        RHS300x200x8 = 513,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS300x200x9")]
+        RHS300x200x9 = 514,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS300x200x10")]
+        RHS300x200x10 = 515,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS300x200x12")]
+        RHS300x200x12 = 516,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS300x200x12_5")]
+        RHS300x200x12_5 = 517,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS300x200x16")]
+        RHS300x200x16 = 518,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS350x150x6")]
+        RHS350x150x6 = 519,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS350x150x6_3")]
+        RHS350x150x6_3 = 520,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS350x150x8")]
+        RHS350x150x8 = 521,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS350x150x9")]
+        RHS350x150x9 = 522,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS350x150x10")]
+        RHS350x150x10 = 523,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS350x150x12")]
+        RHS350x150x12 = 524,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS350x150x12_5")]
+        RHS350x150x12_5 = 525,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS350x250x6")]
+        RHS350x250x6 = 526,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS350x250x6_3")]
+        RHS350x250x6_3 = 527,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS350x250x8")]
+        RHS350x250x8 = 528,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS350x250x9")]
+        RHS350x250x9 = 529,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS350x250x10")]
+        RHS350x250x10 = 530,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS350x250x12")]
+        RHS350x250x12 = 531,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS350x250x12_5")]
+        RHS350x250x12_5 = 532,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS350x250x16")]
+        RHS350x250x16 = 533,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS400x200x6")]
+        RHS400x200x6 = 534,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS400x200x6_3")]
+        RHS400x200x6_3 = 535,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS400x200x8")]
+        RHS400x200x8 = 536,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS400x200x9")]
+        RHS400x200x9 = 537,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS400x200x10")]
+        RHS400x200x10 = 538,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS400x200x12")]
+        RHS400x200x12 = 539,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS400x200x12_5")]
+        RHS400x200x12_5 = 540,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS400x300x9")]
+        RHS400x300x9 = 541,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS400x300x10")]
+        RHS400x300x10 = 542,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS400x300x12")]
+        RHS400x300x12 = 543,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS400x300x12_5")]
+        RHS400x300x12_5 = 544,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS400x300x16")]
+        RHS400x300x16 = 545,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS500x300x12")]
+        RHS500x300x12 = 546,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS500x300x12_5")]
+        RHS500x300x12_5 = 547,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS500x300x16")]
+        RHS500x300x16 = 548,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS500x300x19")]
+        RHS500x300x19 = 549,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS600x300x12")]
+        RHS600x300x12 = 550,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS600x300x12_5")]
+        RHS600x300x12_5 = 551,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS600x300x16")]
+        RHS600x300x16 = 552,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS600x300x19")]
+        RHS600x300x19 = 553,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"RHS600x300x22")]
+        RHS600x300x22 = 554,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS50xs00x1_6")]
+        SHS50xs00x1_6 = 555,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS50xs00x2")]
+        SHS50xs00x2 = 556,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS50xs00x2_3")]
+        SHS50xs00x2_3 = 557,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS50xs00x2_5")]
+        SHS50xs00x2_5 = 558,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS50xs00x3")]
+        SHS50xs00x3 = 559,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS50xs00x3_2")]
+        SHS50xs00x3_2 = 560,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS50xs00x4")]
+        SHS50xs00x4 = 561,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS50xs00x4_5")]
+        SHS50xs00x4_5 = 562,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS50xs00x5")]
+        SHS50xs00x5 = 563,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS50xs00x6")]
+        SHS50xs00x6 = 564,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS60xs00x1_6")]
+        SHS60xs00x1_6 = 565,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS60xs00x2")]
+        SHS60xs00x2 = 566,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS60xs00x2_3")]
+        SHS60xs00x2_3 = 567,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS60xs00x2_5")]
+        SHS60xs00x2_5 = 568,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS60xs00x3")]
+        SHS60xs00x3 = 569,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS60xs00x3_2")]
+        SHS60xs00x3_2 = 570,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS60xs00x4")]
+        SHS60xs00x4 = 571,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS60xs00x4_5")]
+        SHS60xs00x4_5 = 572,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS60xs00x5")]
+        SHS60xs00x5 = 573,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS60xs00x6")]
+        SHS60xs00x6 = 574,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS75xs00x1_6")]
+        SHS75xs00x1_6 = 575,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS75xs00x2")]
+        SHS75xs00x2 = 576,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS75xs00x2_3")]
+        SHS75xs00x2_3 = 577,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS75xs00x2_5")]
+        SHS75xs00x2_5 = 578,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS75xs00x3")]
+        SHS75xs00x3 = 579,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS75xs00x3_2")]
+        SHS75xs00x3_2 = 580,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS75xs00x4")]
+        SHS75xs00x4 = 581,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS75xs00x4_5")]
+        SHS75xs00x4_5 = 582,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS75xs00x5")]
+        SHS75xs00x5 = 583,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS75xs00x6")]
+        SHS75xs00x6 = 584,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS75xs00x6_3")]
+        SHS75xs00x6_3 = 585,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS75xs00x8")]
+        SHS75xs00x8 = 586,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS80xs00x1_6")]
+        SHS80xs00x1_6 = 587,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS80xs00x2")]
+        SHS80xs00x2 = 588,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS80xs00x2_3")]
+        SHS80xs00x2_3 = 589,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS80xs00x2_5")]
+        SHS80xs00x2_5 = 590,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS80xs00x3")]
+        SHS80xs00x3 = 591,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS80xs00x3_2")]
+        SHS80xs00x3_2 = 592,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS80xs00x4")]
+        SHS80xs00x4 = 593,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS80xs00x4_5")]
+        SHS80xs00x4_5 = 594,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS80xs00x5")]
+        SHS80xs00x5 = 595,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS80xs00x6")]
+        SHS80xs00x6 = 596,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS80xs00x6_3")]
+        SHS80xs00x6_3 = 597,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS80xs00x8")]
+        SHS80xs00x8 = 598,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS90xs00x2_3")]
+        SHS90xs00x2_3 = 599,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS90xs00x2_5")]
+        SHS90xs00x2_5 = 600,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS90xs00x3")]
+        SHS90xs00x3 = 601,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS90xs00x3_2")]
+        SHS90xs00x3_2 = 602,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS90xs00x4")]
+        SHS90xs00x4 = 603,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS90xs00x4_5")]
+        SHS90xs00x4_5 = 604,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS90xs00x5")]
+        SHS90xs00x5 = 605,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS90xs00x6")]
+        SHS90xs00x6 = 606,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS90xs00x6_3")]
+        SHS90xs00x6_3 = 607,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS100xs00x1_6")]
+        SHS100xs00x1_6 = 608,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS100xs00x2")]
+        SHS100xs00x2 = 609,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS100xs00x2_3")]
+        SHS100xs00x2_3 = 610,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS100xs00x2_5")]
+        SHS100xs00x2_5 = 611,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS100xs00x3")]
+        SHS100xs00x3 = 612,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS100xs00x3_2")]
+        SHS100xs00x3_2 = 613,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS100xs00x4")]
+        SHS100xs00x4 = 614,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS100xs00x4_5")]
+        SHS100xs00x4_5 = 615,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS100xs00x5")]
+        SHS100xs00x5 = 616,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS100xs00x6")]
+        SHS100xs00x6 = 617,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS100xs00x6_3")]
+        SHS100xs00x6_3 = 618,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS100xs00x8")]
+        SHS100xs00x8 = 619,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS100xs00x9")]
+        SHS100xs00x9 = 620,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS100xs00x10")]
+        SHS100xs00x10 = 621,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS100xs00x12")]
+        SHS100xs00x12 = 622,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS120xs00x6")]
+        SHS120xs00x6 = 623,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS120xs00x6_3")]
+        SHS120xs00x6_3 = 624,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS120xs00x8")]
+        SHS120xs00x8 = 625,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS120xs00x9")]
+        SHS120xs00x9 = 626,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS120xs00x10")]
+        SHS120xs00x10 = 627,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS120xs00x12")]
+        SHS120xs00x12 = 628,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS125xs00x2_3")]
+        SHS125xs00x2_3 = 629,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS125xs00x2_5")]
+        SHS125xs00x2_5 = 630,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS125xs00x3")]
+        SHS125xs00x3 = 631,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS125xs00x3_2")]
+        SHS125xs00x3_2 = 632,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS125xs00x4")]
+        SHS125xs00x4 = 633,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS125xs00x4_5")]
+        SHS125xs00x4_5 = 634,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS125xs00x5")]
+        SHS125xs00x5 = 635,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS125xs00x6")]
+        SHS125xs00x6 = 636,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS125xs00x6_3")]
+        SHS125xs00x6_3 = 637,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS125xs00x8")]
+        SHS125xs00x8 = 638,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS125xs00x9")]
+        SHS125xs00x9 = 639,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS125xs00x10")]
+        SHS125xs00x10 = 640,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS125xs00x12")]
+        SHS125xs00x12 = 641,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS125xs00x12_5")]
+        SHS125xs00x12_5 = 642,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS150xs00x3_2")]
+        SHS150xs00x3_2 = 643,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS150xs00x4")]
+        SHS150xs00x4 = 644,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS150xs00x4_5")]
+        SHS150xs00x4_5 = 645,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS150xs00x5")]
+        SHS150xs00x5 = 646,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS150xs00x6")]
+        SHS150xs00x6 = 647,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS150xs00x6_3")]
+        SHS150xs00x6_3 = 648,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS150xs00x8")]
+        SHS150xs00x8 = 649,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS150xs00x9")]
+        SHS150xs00x9 = 650,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS150xs00x10")]
+        SHS150xs00x10 = 651,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS150xs00x12")]
+        SHS150xs00x12 = 652,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS150xs00x12_5")]
+        SHS150xs00x12_5 = 653,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS175xs00x4_5")]
+        SHS175xs00x4_5 = 654,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS175xs00x5")]
+        SHS175xs00x5 = 655,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS175xs00x6")]
+        SHS175xs00x6 = 656,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS175xs00x6_3")]
+        SHS175xs00x6_3 = 657,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS175xs00x8")]
+        SHS175xs00x8 = 658,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS175xs00x9")]
+        SHS175xs00x9 = 659,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS175xs00x10")]
+        SHS175xs00x10 = 660,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS175xs00x12")]
+        SHS175xs00x12 = 661,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS175xs00x12_5")]
+        SHS175xs00x12_5 = 662,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS200xs00x4_5")]
+        SHS200xs00x4_5 = 663,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS200xs00x5")]
+        SHS200xs00x5 = 664,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS200xs00x6")]
+        SHS200xs00x6 = 665,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS200xs00x6_3")]
+        SHS200xs00x6_3 = 666,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS200xs00x8")]
+        SHS200xs00x8 = 667,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS200xs00x9")]
+        SHS200xs00x9 = 668,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS200xs00x10")]
+        SHS200xs00x10 = 669,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS200xs00x12")]
+        SHS200xs00x12 = 670,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS200xs00x12_5")]
+        SHS200xs00x12_5 = 671,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS200xs00x16")]
+        SHS200xs00x16 = 672,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS250xs00x6")]
+        SHS250xs00x6 = 673,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS250xs00x6_3")]
+        SHS250xs00x6_3 = 674,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS250xs00x8")]
+        SHS250xs00x8 = 675,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS250xs00x9")]
+        SHS250xs00x9 = 676,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS250xs00x10")]
+        SHS250xs00x10 = 677,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS250xs00x12")]
+        SHS250xs00x12 = 678,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS250xs00x12_5")]
+        SHS250xs00x12_5 = 679,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS250xs00x16")]
+        SHS250xs00x16 = 680,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS250xs00x19")]
+        SHS250xs00x19 = 681,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS300xs00x6")]
+        SHS300xs00x6 = 682,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS300xs00x6_3")]
+        SHS300xs00x6_3 = 683,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS300xs00x8")]
+        SHS300xs00x8 = 684,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS300xs00x9")]
+        SHS300xs00x9 = 685,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS300xs00x10")]
+        SHS300xs00x10 = 686,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS300xs00x12")]
+        SHS300xs00x12 = 687,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS300xs00x12_5")]
+        SHS300xs00x12_5 = 688,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS300xs00x16")]
+        SHS300xs00x16 = 689,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS300xs00x19")]
+        SHS300xs00x19 = 690,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS350xs00x9")]
+        SHS350xs00x9 = 691,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS350xs00x10")]
+        SHS350xs00x10 = 692,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS350xs00x12")]
+        SHS350xs00x12 = 693,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS350xs00x12_5")]
+        SHS350xs00x12_5 = 694,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS350xs00x16")]
+        SHS350xs00x16 = 695,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS350xs00x19")]
+        SHS350xs00x19 = 696,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS350xs00x22")]
+        SHS350xs00x22 = 697,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS400xs00x9")]
+        SHS400xs00x9 = 698,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS400xs00x10")]
+        SHS400xs00x10 = 699,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS400xs00x12")]
+        SHS400xs00x12 = 700,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS400xs00x12_5")]
+        SHS400xs00x12_5 = 701,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS400xs00x16")]
+        SHS400xs00x16 = 702,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS400xs00x19")]
+        SHS400xs00x19 = 703,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS400xs00x22")]
+        SHS400xs00x22 = 704,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS450xs00x9")]
+        SHS450xs00x9 = 705,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS450xs00x10")]
+        SHS450xs00x10 = 706,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS450xs00x12")]
+        SHS450xs00x12 = 707,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS450xs00x12_5")]
+        SHS450xs00x12_5 = 708,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS450xs00x16")]
+        SHS450xs00x16 = 709,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS450xs00x19")]
+        SHS450xs00x19 = 710,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS450xs00x22")]
+        SHS450xs00x22 = 711,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS500xs00x9")]
+        SHS500xs00x9 = 712,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS500xs00x10")]
+        SHS500xs00x10 = 713,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS500xs00x12")]
+        SHS500xs00x12 = 714,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS500xs00x12_5")]
+        SHS500xs00x12_5 = 715,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS500xs00x16")]
+        SHS500xs00x16 = 716,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS500xs00x19")]
+        SHS500xs00x19 = 717,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS500xs00x22")]
+        SHS500xs00x22 = 718,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS550xs00x12")]
+        SHS550xs00x12 = 719,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS550xs00x12_5")]
+        SHS550xs00x12_5 = 720,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS550xs00x16")]
+        SHS550xs00x16 = 721,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS550xs00x19")]
+        SHS550xs00x19 = 722,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"SHS550xs00x22")]
+        SHS550xs00x22 = 723,
     
     }
 }

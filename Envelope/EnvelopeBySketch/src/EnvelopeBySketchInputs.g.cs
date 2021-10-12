@@ -28,22 +28,22 @@ namespace EnvelopeBySketch
     {
         [Newtonsoft.Json.JsonConstructor]
         
-        public EnvelopeBySketchInputs(Polygon @perimeter, double @buildingHeight, double @foundationDepth, bool @useSetbacks, double @setbackInterval, double @setbackDepth, double @minimumTierArea, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey):
+        public EnvelopeBySketchInputs(Polygon @perimeter, double @setbackInterval, bool @useSetbacks, double @setbackDepth, double @minimumTierArea, double @buildingHeight, double @foundationDepth, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey):
         base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
         {
             var validator = Validator.Instance.GetFirstValidatorForType<EnvelopeBySketchInputs>();
             if(validator != null)
             {
-                validator.PreConstruct(new object[]{ @perimeter, @buildingHeight, @foundationDepth, @useSetbacks, @setbackInterval, @setbackDepth, @minimumTierArea});
+                validator.PreConstruct(new object[]{ @perimeter, @setbackInterval, @useSetbacks, @setbackDepth, @minimumTierArea, @buildingHeight, @foundationDepth});
             }
         
             this.Perimeter = @perimeter;
-            this.BuildingHeight = @buildingHeight;
-            this.FoundationDepth = @foundationDepth;
-            this.UseSetbacks = @useSetbacks;
             this.SetbackInterval = @setbackInterval;
+            this.UseSetbacks = @useSetbacks;
             this.SetbackDepth = @setbackDepth;
             this.MinimumTierArea = @minimumTierArea;
+            this.BuildingHeight = @buildingHeight;
+            this.FoundationDepth = @foundationDepth;
         
             if(validator != null)
             {
@@ -52,36 +52,36 @@ namespace EnvelopeBySketch
         }
     
         /// <summary>Perimeter of the building envelope.</summary>
-        [Newtonsoft.Json.JsonProperty("Perimeter", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonProperty("Perimeter", Required = Newtonsoft.Json.Required.AllowNull)]
         public Polygon Perimeter { get; set; }
     
-        /// <summary>Overall height of the building from grade.</summary>
-        [Newtonsoft.Json.JsonProperty("Building Height", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        [System.ComponentModel.DataAnnotations.Range(5.0D, 100.0D)]
-        public double BuildingHeight { get; set; } = 20D;
-    
-        /// <summary>Depth of the building envelope below grade.</summary>
-        [Newtonsoft.Json.JsonProperty("Foundation Depth", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        [System.ComponentModel.DataAnnotations.Range(0.0D, 20.0D)]
-        public double FoundationDepth { get; set; } = 10D;
+        /// <summary>Vertical distance between envelope setbacks.</summary>
+        [Newtonsoft.Json.JsonProperty("Setback Interval", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.Range(10D, 30D)]
+        public double SetbackInterval { get; set; } = 20D;
     
         [Newtonsoft.Json.JsonProperty("Use Setbacks", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public bool UseSetbacks { get; set; } = false;
     
-        /// <summary>Vertical distance between envelope setbacks.</summary>
-        [Newtonsoft.Json.JsonProperty("Setback Interval", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        [System.ComponentModel.DataAnnotations.Range(10.0D, 30.0D)]
-        public double SetbackInterval { get; set; } = 20D;
-    
         /// <summary>Offset depth from previous setback.</summary>
         [Newtonsoft.Json.JsonProperty("Setback Depth", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        [System.ComponentModel.DataAnnotations.Range(1.0D, 3.0D)]
+        [System.ComponentModel.DataAnnotations.Range(1D, 3D)]
         public double SetbackDepth { get; set; } = 1D;
     
         /// <summary>Minimum area allowed for a setback tier.</summary>
         [Newtonsoft.Json.JsonProperty("Minimum Tier Area", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        [System.ComponentModel.DataAnnotations.Range(10.0D, 100.0D)]
+        [System.ComponentModel.DataAnnotations.Range(10D, 100D)]
         public double MinimumTierArea { get; set; } = 50D;
+    
+        /// <summary>Overall height of the building from grade.</summary>
+        [Newtonsoft.Json.JsonProperty("Building Height", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.Range(5D, 100D)]
+        public double BuildingHeight { get; set; } = 20D;
+    
+        /// <summary>Depth of the building envelope below grade.</summary>
+        [Newtonsoft.Json.JsonProperty("Foundation Depth", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.Range(0D, 20D)]
+        public double FoundationDepth { get; set; } = 10D;
     
     
     }
