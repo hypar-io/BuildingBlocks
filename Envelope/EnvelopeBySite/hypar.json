@@ -155,8 +155,8 @@
             "name": "基礎の深さ"
           },
           "Use Setbacks": {
-            "name": "セットバック",
-            "description": "この機能を使用するには"
+            "description": "この機能を使用するには",
+            "name": "セットバック"
           },
           "Site Setback": {
             "description": "敷地境界から建物外周までの距離",
