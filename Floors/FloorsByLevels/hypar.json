@@ -9,6 +9,11 @@
       "autohide": true,
       "name": "Levels",
       "optional": false
+    },
+    {
+      "autohide": false,
+      "name": "Core",
+      "optional": true
     }
   ],
   "model_output": "Floors",
