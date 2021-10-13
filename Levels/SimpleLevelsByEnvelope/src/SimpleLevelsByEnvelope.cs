@@ -152,7 +152,7 @@ namespace SimpleLevelsByEnvelope
                     var volume = new LevelVolume(envelope.Profile, levelHeight, envelope.Profile.Area(), envelope.Name, new Transform(0, 0, levelElevation), matl, representation, false, Guid.NewGuid(), name);
                     var bbox = new BBox3(volume);
                     bbox.Max = bbox.Max + (0, 0, -1);
-                    bbox.Min = bbox.Min + (0, 0, 0.01);
+                    bbox.Min = bbox.Min + (0, 0, -0.3);
                     var scope = new ViewScope(bbox, new Camera(default(Vector3), CameraNamedPosition.Top, CameraProjection.Orthographic), true);
                     volume.AdditionalProperties["Scope"] = scope;
                     scopes.Add(scope);
