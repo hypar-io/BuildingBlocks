@@ -195,7 +195,17 @@
           "name": "サブグレード",
           "description": "下地部分の深さ.a"
         }
-      ]
+      ],
+      "overrides": {
+        "Envelope Footprint": {
+          "name": "エンベロープのフットプリント",
+          "schema": {
+            "Perimeter": {
+              "name": "ペリメーター"
+            }
+          }
+        }
+      }
     }
   }
 }
