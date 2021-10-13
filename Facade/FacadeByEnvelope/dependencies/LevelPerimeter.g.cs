@@ -7,6 +7,7 @@ using Elements;
 using Elements.GeoJSON;
 using Elements.Geometry;
 using Elements.Geometry.Solids;
+using Elements.Spatial;
 using Elements.Validators;
 using Elements.Serialization.JSON;
 using System;
@@ -25,24 +26,13 @@ namespace Elements
     public partial class LevelPerimeter : Element
     {
         [Newtonsoft.Json.JsonConstructor]
-        public LevelPerimeter(double @area, double @elevation, Polygon @perimeter, System.Guid @id, string @name)
+        public LevelPerimeter(double @area, double @elevation, Polygon @perimeter, System.Guid @id = default, string @name = null)
             : base(id, name)
         {
-            var validator = Validator.Instance.GetFirstValidatorForType<LevelPerimeter>();
-            if(validator != null)
-            {
-                validator.PreConstruct(new object[]{ @area, @elevation, @perimeter, @id, @name});
-            }
-        
             this.Area = @area;
             this.Elevation = @elevation;
             this.Perimeter = @perimeter;
-            
-            if(validator != null)
-            {
-                validator.PostConstruct(this);
             }
-        }
     
         /// <summary>The area of the level perimeter.</summary>
         [Newtonsoft.Json.JsonProperty("Area", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]

@@ -16,6 +16,9 @@ namespace FloorsByLevels
         /// <returns>A FloorsByLevelsOutputs instance containing computed results and the model with any new elements.</returns>
         public static FloorsByLevelsOutputs Execute(Dictionary<string, Model> inputModels, FloorsByLevelsInputs input)
         {
+            inputModels.Keys.ToList().ForEach(key => Console.WriteLine(key));
+
+            // Extract LevelVolumes from Levels dependency
             var levels = new List<LevelPerimeter>();
             inputModels.TryGetValue("Levels", out var model);
             if (model == null ||
@@ -32,6 +35,18 @@ namespace FloorsByLevels
 
             levels.AddRange(model.AllElementsOfType<LevelPerimeter>());
             var levelProxies = new List<ElementProxy<LevelVolume>>();
+
+            // Extract shafts from Core dependency, if it exists
+            var shafts = new List<Polygon>();
+            inputModels.TryGetValue("Core", out var core);
+            if (core != null)
+            {
+                var shaftMasses = core.AllElementsOfType<Mass>();
+                var shaftPerimeters = shaftMasses.Where(mass => mass.Name == "void").Select(mass => mass.Profile.Perimeter.Project(new Plane(Vector3.Origin, Vector3.ZAxis)));
+
+                shafts.AddRange(shaftPerimeters);
+            }
+
             var floors = new List<Floor>();
             var floorArea = 0.0;
             if (levelVolumes.Count() > 0)
@@ -44,6 +59,11 @@ namespace FloorsByLevels
                     var elevation = level.Transform.Origin.Z;
                     if (flrOffsets.Count() > 0)
                     {
+                        if (shafts.Count() > 0)
+                        {
+                            flrOffsets = flrOffsets.Select(offset => new Profile(offset.Perimeter, shafts)).ToList();
+                        }
+
                         foreach (var fo in flrOffsets)
                         {
                             var floor = new Floor(fo, input.FloorThickness,
@@ -56,7 +76,9 @@ namespace FloorsByLevels
                     }
                     else
                     {
-                        var floor = new Floor(level.Profile, input.FloorThickness,
+                        var floorProfile = shafts.Count() > 0 ? new Profile(level.Profile.Perimeter, shafts) : level.Profile;
+
+                        var floor = new Floor(floorProfile, input.FloorThickness,
                                 new Transform(0.0, 0.0, elevation - input.FloorThickness),
                                 floorMaterial, null, false, Guid.NewGuid(), null);
                         floor.AdditionalProperties["Level"] = levelProxy;
