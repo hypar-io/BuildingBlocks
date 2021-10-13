@@ -27,11 +27,12 @@ namespace EnvelopeBySite.Tests
             var inputs = new EnvelopeBySiteInputs(
                 60,
                 5,
-                true,
                 3.0,
+                true,
                 10,
                 1,
                 100,
+                null,
                 "",
                 "",
                 new Dictionary<string, string>(),
