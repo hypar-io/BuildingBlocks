@@ -517,6 +517,7 @@
           "Grid Areas": {
             "description": "該当するエリアで囲まれたグリッドの一覧です。",
             "items": {
+              "name": "グリッドエリア",
               "properties": {
                 "Name": {
                   "name": "名前"

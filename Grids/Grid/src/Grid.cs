@@ -298,7 +298,7 @@ namespace Grid
             var lineDir = (line.End - line.Start).Unitized();
             var circleCenter = line.Start - (lineDir * (CircleRadius + lineHeadExtension));
 
-            model.AddElement(new Elements.GridLine(new Polyline(new List<Vector3>() { line.Start, line.End }), Guid.NewGuid(), name));
+            model.AddElement(new Elements.GridLine(new Polyline(new List<Vector3>() { line.Start, line.End }), null, null, null, false, Guid.NewGuid(), name));
             model.AddElement(new ModelCurve(new Line(line.Start - (lineDir * lineHeadExtension) + elevation, line.End + elevation), material, name: name));
             model.AddElement(new ModelCurve(new Circle(circleCenter + elevation, CircleRadius), material));
             texts.Add((circleCenter + elevation, Vector3.ZAxis, lineDir, name, Colors.Darkgray));
