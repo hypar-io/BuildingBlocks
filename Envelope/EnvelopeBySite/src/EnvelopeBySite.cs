@@ -29,12 +29,16 @@ namespace EnvelopeBySite
             var output = new EnvelopeBySiteOutputs(input.BuildingHeight, input.FoundationDepth);
 
             // Set input values based on whether we should consider setbacks
-            var siteSetback = input.UseSetbacks ? input.SiteSetback : 0;
+            var siteSetback = input.SiteSetback;
             var setbackInterval = input.UseSetbacks ? input.SetbackInterval : 0;
             var setbackDepth = input.UseSetbacks ? input.SetbackDepth : 0;
 
+            var xy = new Plane((0, 0, 0), (0, 0, 1));
+
             foreach (var site in sites)
             {
+                var siteCentroid = site.Perimeter.Centroid();
+                var overridesForSite = input.Overrides?.EnvelopeFootprint?.Where(o => site.Perimeter.Contains(o.Identity.SiteCentroid)) ?? new List<EnvelopeFootprintOverride>();
                 var perims = site.Perimeter.Offset(siteSetback * -1);
                 if (perims.Count() == 0)
                 {
@@ -46,25 +50,49 @@ namespace EnvelopeBySite
                 {
                     continue;
                 }
+                var envelopes = new List<Envelope>();
 
                 // Create the foundation Envelope.
+                var fndElevation = input.FoundationDepth * -1;
+                var matchingFndOverride = overridesForSite.FirstOrDefault(o => o.Identity.Elevation.ApproximatelyEquals(fndElevation, 1));
+                var fndPerimeter = matchingFndOverride?.Value?.Perimeter?.Project(xy) ?? perimeter;
                 var extrude = new Elements.Geometry.Solids.Extrude(perimeter, input.FoundationDepth, Vector3.ZAxis, false);
                 var geomRep = new Representation(new List<Elements.Geometry.Solids.SolidOperation>() { extrude });
                 var fndMatl = new Material("foundation", Palette.Gray, 0.0f, 0.0f);
                 var envMatl = new Material("envelope", Palette.Aqua, 0.0f, 0.0f);
-                var envelopes = new List<Envelope>()
+                var fndXform = new Transform(0.0, 0.0, input.FoundationDepth * -1);
+                var fndEnvelope = new Envelope(fndPerimeter, fndElevation, input.FoundationDepth, Vector3.ZAxis,
+                                                 0.0, fndXform, fndMatl, geomRep, false, Guid.NewGuid(), "")
                 {
-                    new Envelope(perimeter, input.FoundationDepth * -1, input.FoundationDepth, Vector3.ZAxis,
-                                 0.0, new Transform(0.0, 0.0, input.FoundationDepth * -1), fndMatl, geomRep, false, Guid.NewGuid(), "")
+                    Perimeter = fndPerimeter.TransformedPolygon(fndXform),
+                    SiteCentroid = siteCentroid
                 };
+                if (matchingFndOverride != null)
+                {
+                    Identity.AddOverrideIdentity(fndEnvelope, matchingFndOverride);
+                }
+                envelopes.Add(fndEnvelope);
+
 
                 // Create the Envelope at the location's zero plane.
+                var matchingZeroOverride = overridesForSite.FirstOrDefault(o => o.Identity.Elevation.ApproximatelyEquals(0, 1));
+                var zeroPerimeter = matchingZeroOverride?.Value?.Perimeter?.Project(xy) ?? perimeter;
                 var tiers = setbackInterval == 0 ? 0 : Math.Floor(input.BuildingHeight / setbackInterval) - 1;
                 var tierHeight = tiers > 0 ? input.BuildingHeight / (tiers + 1) : input.BuildingHeight;
-                extrude = new Elements.Geometry.Solids.Extrude(perimeter, tierHeight, Vector3.ZAxis, false);
+                extrude = new Elements.Geometry.Solids.Extrude(zeroPerimeter, tierHeight, Vector3.ZAxis, false);
                 geomRep = new Representation(new List<Elements.Geometry.Solids.SolidOperation>() { extrude });
-                envelopes.Add(new Envelope(perimeter, 0.0, tierHeight, Vector3.ZAxis, 0.0,
-                              new Transform(), envMatl, geomRep, false, Guid.NewGuid(), ""));
+                var zeroEnvelope = new Envelope(zeroPerimeter, 0.0, tierHeight, Vector3.ZAxis, 0.0,
+                              new Transform(), envMatl, geomRep, false, Guid.NewGuid(), "")
+                {
+                    Perimeter = zeroPerimeter,
+                    SiteCentroid = siteCentroid
+                };
+                if (matchingZeroOverride != null)
+                {
+                    Identity.AddOverrideIdentity(zeroEnvelope, matchingZeroOverride);
+                    perimeter = zeroPerimeter; // this way tiers above, if not overridden, respect the ground floor boundary.
+                }
+                envelopes.Add(zeroEnvelope);
 
                 // Create the remaining Envelope Elements.
                 var offsFactor = -1;
@@ -77,6 +105,7 @@ namespace EnvelopeBySite
                     {
                         break;
                     }
+                    var tierElev = tierHeight * elevFactor;
 
                     var tryPer = perimeter.Offset(setbackDepth * offsFactor);
                     if (tryPer.Count() == 0 || tryPer.First().Area() < input.MinimumTierArea)
@@ -84,11 +113,26 @@ namespace EnvelopeBySite
                         break;
                     }
 
+
                     tryPer = tryPer.OrderByDescending(p => p.Area()).ToArray();
-                    extrude = new Elements.Geometry.Solids.Extrude(tryPer.First(), tierHeight, Vector3.ZAxis, false);
+
+                    var matchingTierOverride = overridesForSite.FirstOrDefault(o => o.Identity.Elevation.ApproximatelyEquals(tierElev, 1));
+                    var tierPerimeter = matchingTierOverride?.Value?.Perimeter?.Project(xy) ?? tryPer.First();
+
+                    extrude = new Elements.Geometry.Solids.Extrude(tierPerimeter, tierHeight, Vector3.ZAxis, false);
                     geomRep = new Representation(new List<Elements.Geometry.Solids.SolidOperation>() { extrude });
-                    envelopes.Add(new Envelope(tryPer.First(), tierHeight * elevFactor, tierHeight, Vector3.ZAxis, 0.0,
-                                  new Transform(0.0, 0.0, tierHeight * elevFactor), envMatl, geomRep, false, Guid.NewGuid(), ""));
+                    var elevationXform = new Transform(0.0, 0.0, tierElev);
+                    var tierEnvelope = new Envelope(tierPerimeter, tierElev, tierHeight, Vector3.ZAxis, 0.0,
+                                  elevationXform, envMatl, geomRep, false, Guid.NewGuid(), "")
+                    {
+                        Perimeter = tierPerimeter.TransformedPolygon(elevationXform),
+                        SiteCentroid = siteCentroid
+                    };
+                    if (matchingTierOverride != null)
+                    {
+                        Identity.AddOverrideIdentity(tierEnvelope, matchingTierOverride);
+                    }
+                    envelopes.Add(tierEnvelope);
 
                     offsFactor--;
                     elevFactor++;

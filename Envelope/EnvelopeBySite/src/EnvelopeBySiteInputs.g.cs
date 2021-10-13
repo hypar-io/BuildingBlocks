@@ -28,22 +28,23 @@ namespace EnvelopeBySite
     {
         [Newtonsoft.Json.JsonConstructor]
         
-        public EnvelopeBySiteInputs(double @buildingHeight, double @foundationDepth, bool @useSetbacks, double @siteSetback, double @setbackInterval, double @setbackDepth, double @minimumTierArea, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey):
+        public EnvelopeBySiteInputs(double @buildingHeight, double @foundationDepth, double @siteSetback, bool @useSetbacks, double @setbackInterval, double @setbackDepth, double @minimumTierArea, Overrides @overrides, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey):
         base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
         {
             var validator = Validator.Instance.GetFirstValidatorForType<EnvelopeBySiteInputs>();
             if(validator != null)
             {
-                validator.PreConstruct(new object[]{ @buildingHeight, @foundationDepth, @useSetbacks, @siteSetback, @setbackInterval, @setbackDepth, @minimumTierArea});
+                validator.PreConstruct(new object[]{ @buildingHeight, @foundationDepth, @siteSetback, @useSetbacks, @setbackInterval, @setbackDepth, @minimumTierArea, @overrides});
             }
         
             this.BuildingHeight = @buildingHeight;
             this.FoundationDepth = @foundationDepth;
-            this.UseSetbacks = @useSetbacks;
             this.SiteSetback = @siteSetback;
+            this.UseSetbacks = @useSetbacks;
             this.SetbackInterval = @setbackInterval;
             this.SetbackDepth = @setbackDepth;
             this.MinimumTierArea = @minimumTierArea;
+            this.Overrides = @overrides;
         
             if(validator != null)
             {
@@ -61,14 +62,14 @@ namespace EnvelopeBySite
         [System.ComponentModel.DataAnnotations.Range(5D, 20D)]
         public double FoundationDepth { get; set; } = 10D;
     
-        /// <summary>Enable envelope setbacks at regular intervals.</summary>
-        [Newtonsoft.Json.JsonProperty("Use Setbacks", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public bool UseSetbacks { get; set; } = true;
-    
         /// <summary>Distance from site boundary to building envelope.</summary>
         [Newtonsoft.Json.JsonProperty("Site Setback", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.Range(0D, 30D)]
         public double SiteSetback { get; set; } = 0D;
+    
+        /// <summary>Enable envelope setbacks at regular intervals.</summary>
+        [Newtonsoft.Json.JsonProperty("Use Setbacks", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public bool UseSetbacks { get; set; } = true;
     
         /// <summary>Vertical distance between envelope setbacks.</summary>
         [Newtonsoft.Json.JsonProperty("Setback Interval", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
@@ -84,6 +85,133 @@ namespace EnvelopeBySite
         [Newtonsoft.Json.JsonProperty("Minimum Tier Area", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.Range(10D, 100D)]
         public double MinimumTierArea { get; set; } = 50D;
+    
+        [Newtonsoft.Json.JsonProperty("overrides", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public Overrides Overrides { get; set; }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
+    
+    public partial class Overrides 
+    
+    {
+        [Newtonsoft.Json.JsonConstructor]
+        public Overrides(IList<EnvelopeFootprintOverride> @envelopeFootprint)
+        {
+            var validator = Validator.Instance.GetFirstValidatorForType<Overrides>();
+            if(validator != null)
+            {
+                validator.PreConstruct(new object[]{ @envelopeFootprint});
+            }
+        
+            this.EnvelopeFootprint = @envelopeFootprint;
+        
+            if(validator != null)
+            {
+                validator.PostConstruct(this);
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("Envelope Footprint", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public IList<EnvelopeFootprintOverride> EnvelopeFootprint { get; set; }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
+    
+    public partial class EnvelopeFootprintOverride 
+    
+    {
+        [Newtonsoft.Json.JsonConstructor]
+        public EnvelopeFootprintOverride(string @id, EnvelopeFootprintIdentity @identity, EnvelopeFootprintValue @value)
+        {
+            var validator = Validator.Instance.GetFirstValidatorForType<EnvelopeFootprintOverride>();
+            if(validator != null)
+            {
+                validator.PreConstruct(new object[]{ @id, @identity, @value});
+            }
+        
+            this.Id = @id;
+            this.Identity = @identity;
+            this.Value = @value;
+        
+            if(validator != null)
+            {
+                validator.PostConstruct(this);
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Id { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("Identity", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public EnvelopeFootprintIdentity Identity { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("Value", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public EnvelopeFootprintValue Value { get; set; }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
+    
+    public partial class EnvelopeFootprintIdentity 
+    
+    {
+        [Newtonsoft.Json.JsonConstructor]
+        public EnvelopeFootprintIdentity(double @elevation, Vector3 @siteCentroid)
+        {
+            var validator = Validator.Instance.GetFirstValidatorForType<EnvelopeFootprintIdentity>();
+            if(validator != null)
+            {
+                validator.PreConstruct(new object[]{ @elevation, @siteCentroid});
+            }
+        
+            this.Elevation = @elevation;
+            this.SiteCentroid = @siteCentroid;
+        
+            if(validator != null)
+            {
+                validator.PostConstruct(this);
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("Elevation", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public double Elevation { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("Site Centroid", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public Vector3 SiteCentroid { get; set; }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
+    
+    public partial class EnvelopeFootprintValue 
+    
+    {
+        [Newtonsoft.Json.JsonConstructor]
+        public EnvelopeFootprintValue(Polygon @perimeter)
+        {
+            var validator = Validator.Instance.GetFirstValidatorForType<EnvelopeFootprintValue>();
+            if(validator != null)
+            {
+                validator.PreConstruct(new object[]{ @perimeter});
+            }
+        
+            this.Perimeter = @perimeter;
+        
+            if(validator != null)
+            {
+                validator.PostConstruct(this);
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("Perimeter", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public Polygon Perimeter { get; set; }
     
     
     }

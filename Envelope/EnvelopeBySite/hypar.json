@@ -35,30 +35,21 @@
         "maximum": 20,
         "multipleOf": 1
       },
-      "Use Setbacks": {
-        "$hyparOrder": 3,
-        "type": "boolean",
-        "default": true,
-        "description": "Enable envelope setbacks at regular intervals."
-      },
       "Site Setback": {
-        "$hyparOrder": 4,
+        "$hyparOrder": 3,
         "$hyparUnitType": "length",
-        "$hyparShowIf": {
-          "type": "all",
-          "conditions": [
-            {
-              "property": "Use Setbacks",
-              "value": true
-            }
-          ]
-        },
         "type": "number",
         "description": "Distance from site boundary to building envelope.",
         "default": 0,
         "minimum": 0,
         "maximum": 30,
         "multipleOf": 1
+      },
+      "Use Setbacks": {
+        "$hyparOrder": 4,
+        "type": "boolean",
+        "default": true,
+        "description": "Enable envelope setbacks at regular intervals."
       },
       "Setback Interval": {
         "$hyparOrder": 5,
@@ -116,6 +107,25 @@
         "minimum": 10,
         "maximum": 100,
         "multipleOf": 1
+      }
+    }
+  },
+  "overrides": {
+    "Envelope Footprint": {
+      "context": "[*discriminator=Elements.Envelope]",
+      "paradigm": "edit",
+      "identity": {
+        "Elevation": {
+          "type": "number"
+        },
+        "Site Centroid": {
+          "$ref": "https://hypar.io/Schemas/Geometry/Vector3.json"
+        }
+      },
+      "schema": {
+        "Perimeter": {
+          "$ref": "https://hypar.io/Schemas/Geometry/Polygon.json"
+        }
       }
     }
   },
