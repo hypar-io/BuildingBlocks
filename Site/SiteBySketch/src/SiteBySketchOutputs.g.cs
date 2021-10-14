@@ -20,7 +20,7 @@ namespace SiteBySketch
 		/// Area of the site.
 		/// </summary>
 		[JsonProperty("Area")]
-		public double Area {get;}
+		public double Area {get; set;}
 
 
 
