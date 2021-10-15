@@ -116,21 +116,29 @@ namespace FloorsByLevels
         {
             var initialProfile = new Profile(perimeter, openings);
 
-            var firstOffset = initialProfile.Offset(0.1);
+            try
+            {
+                var firstOffset = initialProfile.Offset(0.1);
 
-            if (firstOffset.FirstOrDefault() == null)
+                if (firstOffset.FirstOrDefault() == null)
+                {
+                    return initialProfile;
+                }
+
+                var secondOffset = firstOffset.OrderByDescending(profile => profile.Area()).First().Offset(-0.1);
+
+                if (secondOffset.FirstOrDefault() == null)
+                {
+                    return initialProfile;
+                }
+
+                return secondOffset.OrderByDescending(profile => profile.Area()).First();
+            }
+            catch
             {
                 return initialProfile;
             }
 
-            var secondOffset = firstOffset.OrderByDescending(profile => profile.Area()).First().Offset(-0.1);
-
-            if (secondOffset.FirstOrDefault() == null)
-            {
-                return initialProfile;
-            }
-
-            return secondOffset.OrderByDescending(profile => profile.Area()).First();
         }
     }
 }
