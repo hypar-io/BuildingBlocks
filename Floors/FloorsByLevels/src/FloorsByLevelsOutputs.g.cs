@@ -20,13 +20,13 @@ namespace FloorsByLevels
 		/// Aggregate area of all floors.
 		/// </summary>
 		[JsonProperty("Total Area")]
-		public double TotalArea {get; set;}
+		public double TotalArea {get;}
 
 		/// <summary>
 		/// Quantity of floors.
 		/// </summary>
 		[JsonProperty("Floor Quantity")]
-		public double FloorQuantity {get; set;}
+		public double FloorQuantity {get;}
 
 
 
