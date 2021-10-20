@@ -486,6 +486,34 @@
         "edit": null,
         "revert": null
       }
+    },
+    "U Grid Subdivisions": {
+      "context": "[*discriminator=Elements.Grid2dElement]",
+      "identity": {
+        "Name": {
+          "type": "string"
+        }
+      },
+      "paradigm": "edit",
+      "schema": {
+        "UGrid": {
+          "$ref": "https://prod-api.hypar.io/schemas/Grid1dInput"
+        }
+      }
+    },
+    "V Grid Subdivisions": {
+      "context": "[*discriminator=Elements.Grid2dElement]",
+      "identity": {
+        "Name": {
+          "type": "string"
+        }
+      },
+      "paradigm": "edit",
+      "schema": {
+        "VGrid": {
+          "$ref": "https://prod-api.hypar.io/schemas/Grid1dInput"
+        }
+      }
     }
   },
   "outputs": [],

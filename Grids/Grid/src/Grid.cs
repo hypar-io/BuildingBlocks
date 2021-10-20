@@ -119,7 +119,9 @@ namespace Grid
                 output.Model.AddElement(new Line(origin - vDirection, origin + vDirection));
             }
 
-            var standardizedRecords = GetStandardizedRecords(output, gridArea.U, gridArea.V, input, envelopePolygons, transform);
+            var uOverride = input.Overrides?.UGridSubdivisions?.FirstOrDefault(o => o.Identity.Name.Equals(gridArea.Name))?.Value.UGrid;
+            var vOverride = input.Overrides?.VGridSubdivisions?.FirstOrDefault(o => o.Identity.Name.Equals(gridArea.Name))?.Value.VGrid;
+            var standardizedRecords = GetStandardizedRecords(output, gridArea, input, envelopePolygons, transform, uOverride, vOverride);
 
             var u = standardizedRecords.u;
             var v = standardizedRecords.v;
@@ -172,8 +174,8 @@ namespace Grid
                 output.Model.AddElement(new ModelCurve(gridPolygon));
             }
 
-            var uDirectionEnd = origin + uDirection;
-            var vDirectionEnd = origin + vDirection;
+            var uDirectionEnd = origin + uDirection * (uOverride?.Curve.Length() ?? 1);
+            var vDirectionEnd = origin + vDirection * (vOverride?.Curve.Length() ?? 1);
             var guideSegments = new List<Line>() { new Line(origin, uDirectionEnd), new Line(origin, vDirectionEnd) };
             if (envelopePolygons.Count() > 0)
             {
@@ -195,13 +197,11 @@ namespace Grid
 
             var gridNodes = new List<GridNode>();
 
-            var texts = new List<(Vector3 location, Vector3 facingDirection, Vector3 lineDirection, string text, Color? color)>();
-
             foreach (var boundary in boundaries.SelectMany(boundaryList => boundaryList).ToList())
             {
                 var grid = MakeGrid(boundary, origin, uDirection, vDirection, uPoints, vPoints);
-                var uGridLines = DrawLines(output.Model, origin, uDivisions, grid.V, boundary, GridlineMaterialU, texts);
-                var vGridLines = DrawLines(output.Model, origin, vDivisions, grid.U, boundary, GridlineMaterialV, texts);
+                var uGridLines = DrawLines(output.Model, origin, uDivisions, grid.V, boundary, GridlineMaterialU);
+                var vGridLines = DrawLines(output.Model, origin, vDivisions, grid.U, boundary, GridlineMaterialV);
                 grids.Add((grid: grid, boundary: boundary));
 
                 if (input.ShowDebugGeometry)
@@ -217,7 +217,7 @@ namespace Grid
                 {
                     foreach (var vGridLine in vGridLines)
                     {
-                        if (uGridLine.Line.Intersects(vGridLine.Line, out var intersection))
+                        if (uGridLine.Line.Intersects(vGridLine.Line, out var intersection, includeEnds: true))
                         {
                             var gridNodeTransform = new Transform(intersection);
                             gridNodes.Add(new GridNode(gridNodeTransform, Guid.NewGuid(), $"{uGridLine.Name}{vGridLine.Name}"));
@@ -241,8 +241,6 @@ namespace Grid
                 }
             }
 
-            output.Model.AddElement(new ModelText(texts, FontSize.PT72, 50));
-
             return grids.Select(grid =>
             {
                 var transform = new Transform(origin, uDirection, vDirection, Vector3.ZAxis);
@@ -250,7 +248,20 @@ namespace Grid
                 invert.Invert();
                 var boundary = (Polygon)grid.boundary.Transformed(invert);
                 var rep = new Representation(new List<Elements.Geometry.Solids.SolidOperation>() { new Elements.Geometry.Solids.Lamina(boundary, false) });
-                return new Grid2dElement(grid.grid, gridNodes, transform, Grid2dElementMaterial, rep, false, Guid.NewGuid(), gridArea.Name);
+                var grid2dElement = new Grid2dElement(grid.grid, gridNodes, transform, Grid2dElementMaterial, rep, false, Guid.NewGuid(), gridArea.Name);
+
+                grid2dElement.AdditionalProperties["UGrid"] = new Grid1dInput(
+                    new Polyline(grid.grid.U.Curve.PointAt(0), grid.grid.U.Curve.PointAt(1)),
+                    uPoints,
+                    uOverride?.SubdivisionMode ?? Grid1dInputSubdivisionMode.Manual,
+                    uOverride?.SubdivisionSettings);
+                grid2dElement.AdditionalProperties["VGrid"] = new Grid1dInput(
+                    new Polyline(grid.grid.V.Curve.PointAt(0), grid.grid.V.Curve.PointAt(1)),
+                    vPoints,
+                    vOverride?.SubdivisionMode ?? Grid1dInputSubdivisionMode.Manual,
+                    vOverride?.SubdivisionSettings);
+
+                return grid2dElement;
             }).ToList();
         }
 
@@ -293,8 +304,7 @@ namespace Grid
         private static GridLine DrawLine(Model model,
                                          Line line,
                                          Material material,
-                                         string name,
-                                         List<(Vector3 location, Vector3 facingDirection, Vector3 lineDirection, string text, Color? color)> texts)
+                                         string name)
         {
             // Offset the heads from the base lines.
             var lineHeadExtension = 2.0;
@@ -308,8 +318,11 @@ namespace Grid
             model.AddElement(new Elements.GridLine(new Polyline(new List<Vector3>() { line.Start, line.End }), null, null, null, false, Guid.NewGuid(), name));
             model.AddElement(new ModelCurve(new Line(line.Start - (lineDir * lineHeadExtension) + elevation, line.End + elevation), material, name: name));
             model.AddElement(new ModelCurve(new Circle(circleCenter + elevation, CircleRadius), material));
-            texts.Add((circleCenter + elevation, Vector3.ZAxis, lineDir, name, Colors.Darkgray));
-            model.AddElement(new LabelDot(circleCenter, name));
+            var text = new List<(Vector3 location, Vector3 facingDirection, Vector3 lineDirection, string text, Color? color)>
+            {
+                (circleCenter + elevation, Vector3.ZAxis, lineDir, name, Colors.Darkgray)
+            };
+            model.AddElement(new ModelText(text, FontSize.PT72, 50));
             return new GridLine(line, name);
         }
 
@@ -332,8 +345,7 @@ namespace Grid
                                                 List<GridGuide> gridGuides,
                                                 Grid1d opposingGrid1d,
                                                 Polygon bounds,
-                                                Material material,
-                                                List<(Vector3 location, Vector3 facingDirection, Vector3 lineDirection, string text, Color? color)> texts)
+                                                Material material)
         {
             var baseLine = new Line(opposingGrid1d.Curve.PointAt(0), opposingGrid1d.Curve.PointAt(1));
 
@@ -345,7 +357,7 @@ namespace Grid
             foreach (var gridGuide in gridGuides)
             {
                 var line = new Line(gridGuide.Point - startExtend, gridGuide.Point - endExtend);
-                var gridLine = DrawLine(model, line, material, gridGuide.Name, texts);
+                var gridLine = DrawLine(model, line, material, gridGuide.Name);
                 gridLines.Add(gridLine);
             }
 
@@ -377,11 +389,27 @@ namespace Grid
             return boxRect.TransformedPolygon(minBoxXform);
         }
 
-        private static (U u, U v) GetStandardizedRecords(GridOutputs output, U u, V v, GridInputs input, List<Polygon> envelopePolygons, Transform transform)
+        private static (U u, U v) GetStandardizedRecords(GridOutputs output, GridAreas gridArea, GridInputs input, List<Polygon> envelopePolygons, Transform transform, Grid1dInput uOverride, Grid1dInput vOverride)
         {
             var origin = transform.Origin;
             var uDirection = transform.XAxis;
             var vDirection = transform.YAxis;
+            var u = gridArea.U;
+            var v = gridArea.V;
+
+            U uStandardized = null;
+            U vStandardized = null;
+
+            if (uOverride != null)
+            {
+                uStandardized = GetStandardizedRecords(u, uOverride);
+            }
+
+            if (vOverride != null)
+            {
+                var vAsU = new U(v.Name, v.Spacing, v.GridLines, v.TargetTypicalSpacing, v.OffsetStart, v.OffsetEnd);
+                vStandardized = GetStandardizedRecords(vAsU, vOverride);
+            }
 
             if (input.Mode == GridInputsMode.Typical)
             {
@@ -405,12 +433,33 @@ namespace Grid
                 {
                     output.Model.AddElement(new ModelCurve(bounds));
                 }
-                return (u: GetStandardizedRecords(u, input, xAxis.Length()), v: GetStandardizedRecords(v, input, yAxis.Length()));
+
+                uStandardized ??= GetStandardizedRecords(u, input, xAxis.Length());
+                vStandardized ??= GetStandardizedRecords(v, input, yAxis.Length());
             }
             else
             {
-                return (u: GetStandardizedRecords(u, input, 0), v: GetStandardizedRecords(v, input, 0));
+                uStandardized ??= GetStandardizedRecords(u, input, 0);
+                vStandardized ??= GetStandardizedRecords(v, input, 0);
             }
+            return (u: uStandardized, v: vStandardized);
+        }
+
+        private static U GetStandardizedRecords(U u, Grid1dInput uOverride)
+        {
+            var gridlines = new List<GridLines>();
+            var start = uOverride.Curve.PointAt(0);
+            var splitPoints = uOverride.SplitPoints
+                                .Select(p => p.DistanceTo(start))
+                                .OrderBy(d => d)
+                                .ToList();
+            for (var i = 0; i < splitPoints.Count; i++)
+            {
+                var prev = i == 0 ? 0 : splitPoints[i - 1];
+                var spacing = splitPoints[i] - prev;
+                gridlines.Add(new GridLines(0, spacing, 1));
+            }
+            return new U(u.Name, u.Spacing, gridlines, 0, 0, 0);
         }
 
         private static Polygon GetBoundingBox2d(IEnumerable<Vector3> points, Transform transform)
