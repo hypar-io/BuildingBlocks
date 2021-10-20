@@ -1,0 +1,103 @@
+{
+  "$schema": "https://hypar.io/Schemas/Function.json",
+  "id": "bc63cf84-80e7-43a9-b5ef-3fe3ba1bc97e",
+  "name": "Columns from Grid",
+  "description": "The ColumnsFromGrid function.",
+  "language": "C#",
+  "model_dependencies": [
+    {
+      "name": "Grids"
+    },
+    {
+      "autohide": false,
+      "name": "Envelope",
+      "optional": true
+    }
+  ],
+  "model_output": "Columns",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "Height": {
+        "type": "number",
+        "description": "The Height.",
+        "minimum": 0.1,
+        "default": 10,
+        "$hyparUnitType": "length"
+      },
+      "Width": {
+        "type": "number",
+        "description": "The Width.",
+        "minimum": 0.2,
+        "maximum": 2.0,
+        "multipleOf": 0.1,
+        "$hyparUnitType": "length"
+      },
+      "Depth": {
+        "type": "number",
+        "description": "The Depth.",
+        "minimum": 0.2,
+        "maximum": 2.0,
+        "multipleOf": 0.1,
+        "$hyparUnitType": "length"
+      }
+    }
+  },
+  "overrides": {
+    "Column Positions": {
+      "context": "[*discriminator=Elements.Column]",
+      "identity": {
+        "Name": {
+          "type": "string"
+        }
+      },
+      "paradigm": "edit",
+      "schema": {
+        "Location": {
+          "$ref": "https://hypar.io/Schemas/Geometry/Vector3.json"
+        }
+      }
+    },
+    "Sizes": {
+      "context": "[*discriminator=Elements.Column]",
+      "identity": {
+        "Name": {
+          "type": "string"
+        }
+      },
+      "schema": {
+        "Height": {
+          "type": "number",
+          "description": "The Height.",
+          "minimum": 0.1,
+          "default": 10,
+          "$hyparUnitType": "length"
+        },
+        "Width": {
+          "type": "number",
+          "description": "The Width.",
+          "minimum": 0.2,
+          "maximum": 2.0,
+          "multipleOf": 0.1,
+          "$hyparUnitType": "length"
+        },
+        "Depth": {
+          "type": "number",
+          "description": "The Depth.",
+          "minimum": 0.2,
+          "maximum": 2.0,
+          "multipleOf": 0.1,
+          "$hyparUnitType": "length"
+        }
+      }
+    }
+  },
+  "outputs": [],
+  "element_types": [
+    "https://prod-api.hypar.io/schemas/Envelope",
+    "https://prod-api.hypar.io/schemas/Grid2dElement"
+  ],
+  "repository_url": "https://github.com/hypar-io/function",
+  "last_updated": "0001-01-01T00:00:00",
+  "cli_version": "0.9.5"
+}
