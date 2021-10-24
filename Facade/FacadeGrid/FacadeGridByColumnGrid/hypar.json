@@ -1,0 +1,86 @@
+{
+  "$schema": "https://hypar.io/Schemas/Function.json",
+  "id": "571aa428-0966-43d1-badd-2594ba0bd923",
+  "name": "Facade Grid By Column Grid",
+  "description": "The FacadeGridByColumnGrid function.",
+  "model_dependencies": [
+    {
+      "autohide": true,
+      "name": "Levels",
+      "optional": false
+    },
+    {
+      "name": "Column Grid",
+      "autohide": false,
+      "optional": false
+    }
+  ],
+  "model_output": "Facade Grid",
+  "language": "C#",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "Max Panel Width": {
+        "default": 0,
+        "description": "If a panel created by the column grid is wider than this value, it will be subdivided further. If set to zero, no subdivisions will be made.",
+        "maximum": 10,
+        "multipleOf": 0.1,
+        "type": "number",
+        "$hyparUnitType": "length",
+        "minimum": 0
+      },
+      "Min Panel Width": {
+        "default": 0,
+        "description": "If a column grid line is less than this distance from a corner, it will be ignored. If set to zero, all intersections will be used.",
+        "maximum": 10,
+        "multipleOf": 0.1,
+        "type": "number",
+        "$hyparUnitType": "length",
+        "minimum": 0
+      },
+      "Offset From Facade": {
+        "description": "Optionally, offset the facade grid at a distance from the base envelope.",
+        "default": 0,
+        "type": "number",
+        "$hyparUnitType": "length"
+      },
+      "Display Mode": {
+        "default": "Color By Type",
+        "type": "string",
+        "$hyparOrder": 4,
+        "enum": [
+          "Color By Type",
+          "Solid Color",
+          "Edges Only"
+        ]
+      }
+    }
+  },
+  "outputs": [
+    {
+      "unit_type": "none",
+      "name": "Unique Panel Count",
+      "description": "The number of unique facade panels.",
+      "type": "number"
+    },
+    {
+      "unit_type": "none",
+      "name": "Total Panel Count",
+      "description": "The total number of facade panels.",
+      "type": "number"
+    }
+  ],
+  "default_camera": {
+    "named_position": "north",
+    "projection": "orthographic"
+  },
+  "repository_url": "https://github.com/hypar-io/function",
+  "source_file_key": null,
+  "preview_image": null,
+  "element_types": [
+    "https://prod-api.hypar.io/schemas/CurtainWallPanel",
+    "https://prod-api.hypar.io/schemas/LevelVolume",
+    "https://prod-api.hypar.io/schemas/GridLine",
+    "https://prod-api.hypar.io/schemas/LevelEdge"
+  ]
+}
