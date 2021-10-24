@@ -95,12 +95,18 @@ namespace SimpleLevelsByEnvelope
                     var levelHeight = levelAbove.Elevation - l.Elevation;
                     var representation = new Representation(new SolidOperation[] { new Extrude(envelope.Profile, levelHeight, Vector3.ZAxis, false) });
                     var subGradeVolume = new LevelVolume(envelope.Profile, levelHeight, envelope.Profile.Area(), envelope.Name, new Transform(0, 0, l.Elevation), matl, representation, false, Guid.NewGuid(), l.Name);
+                    var scopeName = subGradeVolume.Name;
+                    if (!String.IsNullOrEmpty(subGradeVolume.BuildingName))
+                    {
+                        scopeName = $"{subGradeVolume.BuildingName}: ${scopeName}";
+                    }
                     var bbox = new BBox3(subGradeVolume);
                     bbox.Max = bbox.Max + (0, 0, -1);
                     var scope = new ViewScope(
                        bbox,
                         new Camera(default(Vector3), CameraNamedPosition.Top, CameraProjection.Orthographic),
-                        true);
+                        true,
+                        name: scopeName);
                     subGradeVolume.AdditionalProperties["Scope"] = scope;
                     scopes.Add(scope);
                     levelVolumes.Add(subGradeVolume);
@@ -153,7 +159,12 @@ namespace SimpleLevelsByEnvelope
                     var bbox = new BBox3(volume);
                     bbox.Max = bbox.Max + (0, 0, -1);
                     bbox.Min = bbox.Min + (0, 0, -0.3);
-                    var scope = new ViewScope(bbox, new Camera(default(Vector3), CameraNamedPosition.Top, CameraProjection.Orthographic), true);
+                    var scopeName = volume.Name;
+                    if (!String.IsNullOrEmpty(volume.BuildingName))
+                    {
+                        scopeName = $"{volume.BuildingName}: ${scopeName}";
+                    }
+                    var scope = new ViewScope(bbox, new Camera(default(Vector3), CameraNamedPosition.Top, CameraProjection.Orthographic), true, name: scopeName);
                     volume.AdditionalProperties["Scope"] = scope;
                     scopes.Add(scope);
                     levelVolumes.Add(volume);
