@@ -26,21 +26,26 @@ namespace Elements
     public partial class Camera 
     {
         [Newtonsoft.Json.JsonConstructor]
-        public Camera(Vector3 @angle, CameraNamedPosition @namedPosition, CameraProjection @projection)
+        public Camera(Vector3 @angle, CameraNamedPosition? @namedPosition, CameraProjection @projection)
         {
             this.Angle = @angle;
             this.NamedPosition = @namedPosition;
             this.Projection = @projection;
             }
+        
+        // Empty constructor
+        public Camera()
+        {
+        }
     
         /// <summary>A unit vector in model coordinates indicating which direction the camera is pointing.</summary>
         [Newtonsoft.Json.JsonProperty("angle", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public Vector3 Angle { get; set; }
     
         /// <summary>Camera positions, viewing from this direction to the opposite direction. Do not set angle if setting this.</summary>
-        [Newtonsoft.Json.JsonProperty("named_position", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonProperty("named_position", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public CameraNamedPosition NamedPosition { get; set; }
+        public CameraNamedPosition? NamedPosition { get; set; }
     
         /// <summary>How the camera collapses the 3d scene into a 2d image</summary>
         [Newtonsoft.Json.JsonProperty("projection", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]

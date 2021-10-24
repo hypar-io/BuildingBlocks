@@ -33,6 +33,12 @@ namespace Elements
             this.Camera = @camera;
             this.Inclusive = @inclusive;
             }
+        
+        // Empty constructor
+        public ViewScope()
+            : base()
+        {
+        }
     
         /// <summary>The "focus" extent for this view.</summary>
         [Newtonsoft.Json.JsonProperty("Bounding Box", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
