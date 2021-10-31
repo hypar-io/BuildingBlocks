@@ -122,7 +122,7 @@ namespace SimpleLevelsByEnvelope
                     var scopeName = subGradeVolume.Name;
                     if (!String.IsNullOrEmpty(subGradeVolume.BuildingName))
                     {
-                        scopeName = $"{subGradeVolume.BuildingName}: ${scopeName}";
+                        scopeName = $"{subGradeVolume.BuildingName}: {scopeName}";
                     }
                     var bbox = new BBox3(subGradeVolume);
                     bbox.Max = bbox.Max + (0, 0, -1);
@@ -202,7 +202,7 @@ namespace SimpleLevelsByEnvelope
                     var scopeName = volume.Name;
                     if (!String.IsNullOrEmpty(volume.BuildingName))
                     {
-                        scopeName = $"{volume.BuildingName}: ${scopeName}";
+                        scopeName = $"{volume.BuildingName}: {scopeName}";
                     }
                     var scope = new ViewScope(bbox, new Camera(default(Vector3), CameraNamedPosition.Top, CameraProjection.Orthographic), true, name: scopeName);
                     volume.AdditionalProperties["Scope"] = scope;
@@ -218,10 +218,10 @@ namespace SimpleLevelsByEnvelope
             }
 
             var output = new SimpleLevelsByEnvelopeOutputs(levels.Count, areaTotal, subGradeArea, aboveGradeArea);
+            output.Model.AddElements(scopes);
             output.Model.AddElements(levels.OrderByDescending(l => l.Elevation));
             output.Model.AddElements(levelPerimeters);
             output.Model.AddElements(levelVolumes);
-            output.Model.AddElements(scopes);
 
             foreach (var levelPerimeter in levelPerimeters)
             {
