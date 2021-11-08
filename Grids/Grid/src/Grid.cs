@@ -195,13 +195,11 @@ namespace Grid
 
             var gridNodes = new List<GridNode>();
 
-            var texts = new List<(Vector3 location, Vector3 facingDirection, Vector3 lineDirection, string text, Color? color)>();
-
             foreach (var boundary in boundaries.SelectMany(boundaryList => boundaryList).ToList())
             {
                 var grid = MakeGrid(boundary, origin, uDirection, vDirection, uPoints, vPoints);
-                var uGridLines = DrawLines(output.Model, origin, uDivisions, grid.V, boundary, GridlineMaterialU, texts);
-                var vGridLines = DrawLines(output.Model, origin, vDivisions, grid.U, boundary, GridlineMaterialV, texts);
+                var uGridLines = DrawLines(output.Model, origin, uDivisions, grid.V, boundary, GridlineMaterialU);
+                var vGridLines = DrawLines(output.Model, origin, vDivisions, grid.U, boundary, GridlineMaterialV);
                 grids.Add((grid: grid, boundary: boundary));
 
                 if (input.ShowDebugGeometry)
@@ -240,8 +238,6 @@ namespace Grid
                     Debug.DrawGrid(output.Model, grid, uPoints, vPoints);
                 }
             }
-
-            output.Model.AddElement(new ModelText(texts, FontSize.PT72, 50));
 
             return grids.Select(grid =>
             {
@@ -293,8 +289,7 @@ namespace Grid
         private static GridLine DrawLine(Model model,
                                          Line line,
                                          Material material,
-                                         string name,
-                                         List<(Vector3 location, Vector3 facingDirection, Vector3 lineDirection, string text, Color? color)> texts)
+                                         string name)
         {
             // Offset the heads from the base lines.
             var lineHeadExtension = 2.0;
@@ -308,7 +303,11 @@ namespace Grid
             model.AddElement(new Elements.GridLine(new Polyline(new List<Vector3>() { line.Start, line.End }), null, null, null, false, Guid.NewGuid(), name));
             model.AddElement(new ModelCurve(new Line(line.Start - (lineDir * lineHeadExtension) + elevation, line.End + elevation), material, name: name));
             model.AddElement(new ModelCurve(new Circle(circleCenter + elevation, CircleRadius), material));
-            texts.Add((circleCenter + elevation, Vector3.ZAxis, lineDir, name, Colors.Darkgray));
+            var text = new List<(Vector3 location, Vector3 facingDirection, Vector3 lineDirection, string text, Color? color)>
+            {
+                (circleCenter + elevation, Vector3.ZAxis, lineDir, name, Colors.Darkgray)
+            };
+            model.AddElement(new ModelText(text, FontSize.PT72, 50));
             model.AddElement(new LabelDot(circleCenter, name));
             return new GridLine(line, name);
         }
@@ -332,8 +331,7 @@ namespace Grid
                                                 List<GridGuide> gridGuides,
                                                 Grid1d opposingGrid1d,
                                                 Polygon bounds,
-                                                Material material,
-                                                List<(Vector3 location, Vector3 facingDirection, Vector3 lineDirection, string text, Color? color)> texts)
+                                                Material material)
         {
             var baseLine = new Line(opposingGrid1d.Curve.PointAt(0), opposingGrid1d.Curve.PointAt(1));
 
@@ -345,7 +343,7 @@ namespace Grid
             foreach (var gridGuide in gridGuides)
             {
                 var line = new Line(gridGuide.Point - startExtend, gridGuide.Point - endExtend);
-                var gridLine = DrawLine(model, line, material, gridGuide.Name, texts);
+                var gridLine = DrawLine(model, line, material, gridGuide.Name);
                 gridLines.Add(gridLine);
             }
 
