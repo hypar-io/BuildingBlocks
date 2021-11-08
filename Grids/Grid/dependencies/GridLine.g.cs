@@ -31,6 +31,12 @@ namespace Elements
         {
             this.Geometry = @geometry;
             }
+        
+        // Empty constructor
+        public GridLine()
+            : base()
+        {
+        }
     
         /// <summary>The polyline geometry of the Grid Line</summary>
         [Newtonsoft.Json.JsonProperty("Geometry", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
