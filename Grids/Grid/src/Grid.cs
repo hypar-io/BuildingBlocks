@@ -87,7 +87,7 @@ namespace Grid
             }
 
             // Apply origin overrides if set
-            if (input.Overrides != null)
+            if (input.Overrides?.GridOrigins != null)
             {
                 foreach (var overrideOrigin in input.Overrides.GridOrigins)
                 {
