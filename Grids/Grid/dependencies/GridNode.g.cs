@@ -31,6 +31,12 @@ namespace Elements
         {
             this.Location = @location;
             }
+        
+        // Empty constructor
+        public GridNode()
+            : base()
+        {
+        }
     
         /// <summary>The location of this grid node.</summary>
         [Newtonsoft.Json.JsonProperty("Location", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
