@@ -26,13 +26,20 @@ namespace Elements
     public partial class LevelVolume : GeometricElement
     {
         [Newtonsoft.Json.JsonConstructor]
-        public LevelVolume(Profile @profile, double @height, double @area, Transform @transform = null, Material @material = null, Representation @representation = null, bool @isElementDefinition = false, System.Guid @id = default, string @name = null)
+        public LevelVolume(Profile @profile, double @height, double @area, string @buildingName, Transform @transform = null, Material @material = null, Representation @representation = null, bool @isElementDefinition = false, System.Guid @id = default, string @name = null)
             : base(transform, material, representation, isElementDefinition, id, name)
         {
             this.Profile = @profile;
             this.Height = @height;
             this.Area = @area;
+            this.BuildingName = @buildingName;
             }
+        
+        // Empty constructor
+        public LevelVolume()
+            : base()
+        {
+        }
     
         /// <summary>The profile of the level Volume</summary>
         [Newtonsoft.Json.JsonProperty("Profile", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
@@ -45,6 +52,10 @@ namespace Elements
         /// <summary>The area of the level's profile.</summary>
         [Newtonsoft.Json.JsonProperty("Area", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public double Area { get; set; }
+    
+        /// <summary>The name of the building or mass this level belongs to (optional)</summary>
+        [Newtonsoft.Json.JsonProperty("Building Name", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string BuildingName { get; set; }
     
     
     }

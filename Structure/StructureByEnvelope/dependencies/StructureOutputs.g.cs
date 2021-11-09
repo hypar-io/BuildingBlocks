@@ -20,7 +20,7 @@ namespace Structure
 		/// The maximum beam length.
 		/// </summary>
 		[JsonProperty("Maximum Beam Length")]
-		public double MaximumBeamLength {get;}
+		public double MaximumBeamLength {get; set;}
 
 
 

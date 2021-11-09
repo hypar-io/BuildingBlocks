@@ -20,12 +20,12 @@ namespace Structure
         private const double DEFAULT_U = 5.0;
         private const double DEFAULT_V = 7.0;
         private static List<Material> _lengthGradient = new List<Material>(){
-            new Material(Colors.Green, 0.0f, 0.0f, false, null, false, Guid.NewGuid(), "Gradient 1"),
-            new Material(Colors.Cyan, 0.0f, 0.0f, false, null, false, Guid.NewGuid(), "Gradient 2"),
-            new Material(Colors.Lime, 0.0f, 0.0f, false, null, false, Guid.NewGuid(), "Gradient 3"),
-            new Material(Colors.Yellow, 0.0f, 0.0f, false, null, false, Guid.NewGuid(), "Gradient 4"),
-            new Material(Colors.Orange, 0.0f, 0.0f, false, null, false, Guid.NewGuid(), "Gradient 5"),
-            new Material(Colors.Red, 0.0f, 0.0f, false, null, false, Guid.NewGuid(), "Gradient 6"),
+            new Material(Colors.Green, 0.0f, 0.0f, false, null, false, false, "", false, id: Guid.NewGuid(), name: "Gradient 1"),
+            new Material(Colors.Cyan, 0.0f, 0.0f, false, null, false, false, "",  false, id: Guid.NewGuid(), name: "Gradient 2"),
+            new Material(Colors.Lime, 0.0f, 0.0f, false, null, false, false, "", false, id: Guid.NewGuid(), name: "Gradient 3"),
+            new Material(Colors.Yellow, 0.0f, 0.0f, false, null, false, false, "", false, id: Guid.NewGuid(), name: "Gradient 4"),
+            new Material(Colors.Orange, 0.0f, 0.0f, false, null, false, false, "", false, id: Guid.NewGuid(), name: "Gradient 5"),
+            new Material(Colors.Red, 0.0f, 0.0f, false, null, false, false, "", false, id: Guid.NewGuid(), name: "Gradient 6"),
         };
 
         private static double _longestGridSpan = 0.0;
@@ -33,7 +33,7 @@ namespace Structure
         /// <summary>
 		/// The Structure function.
 		/// </summary>
-		/// <param name="model">The model. 
+		/// <param name="model">The model.
 		/// Add elements to the model to have them persisted.</param>
 		/// <param name="input">The arguments to the execution.</param>
 		/// <returns>A StructureOutputs instance containing computed results.</returns>
@@ -44,6 +44,29 @@ namespace Structure
 
             CellComplex cellComplex = null;
             Line longestEdge = null;
+            Grid2dElement grid2dElement = null;
+
+            Vector3 primaryDirection;
+            Vector3 secondaryDirection;
+            if (models.ContainsKey(GRIDS_MODEL_NAME))
+            {
+                var gridsModel = models[GRIDS_MODEL_NAME];
+                var gridLines = gridsModel.AllElementsOfType<GridLine>();
+
+                // Group by direction.
+                var gridGroups = gridLines.GroupBy(gl => (gl.Geometry.Vertices[0] - gl.Geometry.Vertices[1]).Unitized()).ToList();
+                primaryDirection = gridGroups[0].Key;
+                secondaryDirection = gridGroups[1].Key;
+
+                grid2dElement = gridsModel.AllElementsOfType<Grid2dElement>().FirstOrDefault();
+            }
+            else
+            {
+                warnings.Add("Adding the Grids function to your workflow will enable you to position and orient the grid. We'll use the default configuration for now with the grid oriented along the longest edge of the structure.");
+                // Define the primary direction from the longest edge of the site.
+                primaryDirection = longestEdge.Direction();
+                secondaryDirection = longestEdge.TransformAt(0.5).XAxis;
+            }
 
             if (models.ContainsKey(BAYS_MODEL_NAME))
             {
@@ -66,87 +89,11 @@ namespace Structure
                 {
                     throw new Exception("No LevelVolumes found in your Levels model. Please use a level function that generates LevelVolumes, such as Simple Levels by Envelope");
                 }
-
-                // Replicate the old behavior by creating a 
+                // Replicate the old behavior by creating a
                 // grid using the envelope's first level base polygon's longest
                 // edge as the U axis and its perpendicular as the
                 // V axis.
-
-                var firstLevel = levelVolumes[0];
-                var firstLevelPerimeter = firstLevel.Profile.Perimeter;
-                longestEdge = firstLevelPerimeter.Segments().OrderBy(s => s.Length()).Last();
-
-                var longestEdgeTransform = longestEdge.TransformAt(0.5);
-                var t = new Transform(longestEdge.Start, longestEdgeTransform.XAxis, longestEdge.Direction(), Vector3.ZAxis);
-
-                var toWorld = new Transform(t);
-                toWorld.Invert();
-                var bbox = new BBox3(firstLevelPerimeter.Vertices.Select(o => toWorld.OfVector(o)).ToList());
-
-                model.AddElements(new ModelCurve(Polygon.Rectangle(bbox.Min, bbox.Max).Transformed(t)));
-
-                // model.AddElements(toWorld.ToModelCurves());
-
-                var l = bbox.Max.Y - bbox.Min.Y;
-                var w = bbox.Max.X - bbox.Min.X;
-
-                var origin = t.OfVector(bbox.Min);
-
-                var uGrid = new Grid1d(new Line(origin, origin + t.YAxis * l));
-                uGrid.DivideByFixedLength(DEFAULT_U);
-
-                var vGrid = new Grid1d(new Line(origin, origin + t.XAxis * w));
-
-                vGrid.DivideByFixedLength(DEFAULT_V);
-                var grid = new Grid2d(uGrid, vGrid);
-
-                // model.AddElements(grid.ToModelCurves());
-
-                var u = grid.U;
-                var v = grid.V;
-
-                cellComplex = new CellComplex(Guid.NewGuid(), "Temporary Cell Complex");
-
-                // Draw level volumes from each level down.
-                for (var i = 1; i < levelVolumes.Count; i++)
-                {
-                    var levelVolume = levelVolumes.ElementAt(i);
-                    var perimeter = levelVolume.Profile.Perimeter.Offset(-0.5)[0];
-                    var g2d = new Grid2d(perimeter, grid.U, grid.V);
-                    var levelElevation = levelVolume.Transform.Origin.Z;
-                    var lastLevelVolume = levelVolumes.ElementAt(i - 1);
-                    foreach (var cell in g2d.GetCells())
-                    {
-                        foreach (var crv in cell.GetTrimmedCellGeometry())
-                        {
-                            cellComplex.AddCell((Polygon)crv, lastLevelVolume.Height, levelElevation - lastLevelVolume.Height, g2d.U, g2d.V);
-                            if (i == levelVolumes.Count - 1)
-                            {
-                                cellComplex.AddCell((Polygon)crv, levelVolume.Height, levelElevation, g2d.U, g2d.V);
-                            }
-                        }
-                    }
-                }
-            }
-
-            Vector3 primaryDirection;
-            Vector3 secondaryDirection;
-            if (models.ContainsKey(GRIDS_MODEL_NAME))
-            {
-                var gridsModel = models[GRIDS_MODEL_NAME];
-                var gridLines = gridsModel.AllElementsOfType<GridLine>();
-
-                // Group by direction.
-                var gridGroups = gridLines.GroupBy(gl => (gl.Geometry.Vertices[0] - gl.Geometry.Vertices[1]).Unitized()).ToList();
-                primaryDirection = gridGroups[0].Key;
-                secondaryDirection = gridGroups[1].Key;
-            }
-            else
-            {
-                warnings.Add("Adding the Grids function to your workflow will enable you to position and orient the grid. We'll use the default configuration for now with the grid oriented along the longest edge of the structure.");
-                // Define the primary direction from the longest edge of the site.
-                primaryDirection = longestEdge.Direction();
-                secondaryDirection = longestEdge.TransformAt(0.5).XAxis;
+                cellComplex = CreateCellComplex(levelVolumes, out longestEdge, grid2dElement);
             }
 
             var structureMaterial = new Material("Steel", Colors.Gray, 0.5, 0.3);
@@ -278,7 +225,7 @@ namespace Structure
                 var p = topFace.GetGeometry();
                 var segments = p.Segments();
 
-                // Get the longest cell edge that is parallel 
+                // Get the longest cell edge that is parallel
                 // to one of the primary directions.
                 var longestCellEdge = segments.Where(s =>
                 {
@@ -374,6 +321,76 @@ namespace Structure
                 profile = shsFactory.GetProfileByName(name);
             }
             return profile;
+        }
+
+        public static CellComplex CreateCellComplex(List<LevelVolume> levelVolumes, out Line longestEdge, Grid2dElement grid2DElement = null)
+        {
+            Grid2d grid = null;
+
+            var firstLevel = levelVolumes[0];
+            var firstLevelPerimeter = firstLevel.Profile.Perimeter;
+            longestEdge = firstLevelPerimeter.Segments().OrderBy(s => s.Length()).Last();
+
+            if (grid2DElement != null)
+            {
+                grid = grid2DElement.Grid;
+            }
+            else
+            {
+                var longestEdgeTransform = longestEdge.TransformAt(0.5);
+                var t = new Transform(longestEdge.Start, longestEdgeTransform.XAxis, longestEdge.Direction(), Vector3.ZAxis);
+
+                var toWorld = new Transform(t);
+                toWorld.Invert();
+                var bbox = new BBox3(firstLevelPerimeter.Vertices.Select(o => toWorld.OfVector(o)).ToList());
+
+                // model.AddElements(new ModelCurve(Polygon.Rectangle(bbox.Min, bbox.Max).Transformed(t)));
+
+                // model.AddElements(toWorld.ToModelCurves());
+
+                var l = bbox.Max.Y - bbox.Min.Y;
+                var w = bbox.Max.X - bbox.Min.X;
+
+                var origin = t.OfVector(bbox.Min);
+
+                var uGrid = new Grid1d(new Line(origin, origin + t.YAxis * l));
+                uGrid.DivideByFixedLength(DEFAULT_U);
+
+                var vGrid = new Grid1d(new Line(origin, origin + t.XAxis * w));
+
+                vGrid.DivideByFixedLength(DEFAULT_V);
+                grid = new Grid2d(uGrid, vGrid);
+            }
+
+            // model.AddElements(grid.ToModelCurves());
+
+            var u = grid.U;
+            var v = grid.V;
+
+            var cellComplex = new CellComplex(Guid.NewGuid(), "Temporary Cell Complex");
+
+            // Draw level volumes from each level down.
+            for (var i = 1; i < levelVolumes.Count; i++)
+            {
+                var levelVolume = levelVolumes.ElementAt(i);
+                var perimeter = levelVolume.Profile.Perimeter.Offset(-0.5)[0];
+                var g2d = new Grid2d(perimeter, grid.U, grid.V);
+                var levelElevation = levelVolume.Transform.Origin.Z;
+                var lastLevelVolume = levelVolumes.ElementAt(i - 1);
+                foreach (var cell in g2d.GetCells())
+                {
+                    foreach (var crv in cell.GetTrimmedCellGeometry())
+                    {
+                        cellComplex.AddCell((Polygon)crv, lastLevelVolume.Height, levelElevation - lastLevelVolume.Height, g2d.U, g2d.V);
+                        if (i == levelVolumes.Count - 1)
+                        {
+                            cellComplex.AddCell((Polygon)crv, levelVolume.Height, levelElevation, g2d.U, g2d.V);
+                        }
+                    }
+                }
+            }
+
+            return cellComplex;
         }
     }
 }
