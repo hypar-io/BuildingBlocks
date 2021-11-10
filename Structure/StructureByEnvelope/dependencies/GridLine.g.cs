@@ -23,14 +23,20 @@ namespace Elements
     /// <summary>A 2D grid line for a column grid</summary>
     [Newtonsoft.Json.JsonConverter(typeof(Elements.Serialization.JSON.JsonInheritanceConverter), "discriminator")]
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
-    public partial class GridLine : Element
+    public partial class GridLine : GeometricElement
     {
         [Newtonsoft.Json.JsonConstructor]
-        public GridLine(Polyline @geometry, System.Guid @id = default, string @name = null)
-            : base(id, name)
+        public GridLine(Polyline @geometry, Transform @transform = null, Material @material = null, Representation @representation = null, bool @isElementDefinition = false, System.Guid @id = default, string @name = null)
+            : base(transform, material, representation, isElementDefinition, id, name)
         {
             this.Geometry = @geometry;
             }
+        
+        // Empty constructor
+        public GridLine()
+            : base()
+        {
+        }
     
         /// <summary>The polyline geometry of the Grid Line</summary>
         [Newtonsoft.Json.JsonProperty("Geometry", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]

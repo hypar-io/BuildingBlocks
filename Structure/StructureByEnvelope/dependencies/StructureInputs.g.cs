@@ -4477,6 +4477,24 @@ namespace Structure
         [System.Runtime.Serialization.EnumMember(Value = @"SHS550xs00x22")]
         SHS550xs00x22 = 723,
     
+        [System.Runtime.Serialization.EnumMember(Value = @"LH12")]
+        LH12 = 724,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"LH24")]
+        LH24 = 725,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"LH36")]
+        LH36 = 726,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"LH48")]
+        LH48 = 727,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"LH60")]
+        LH60 = 728,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"LH72")]
+        LH72 = 729,
+    
     }
     
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
@@ -6653,6 +6671,24 @@ namespace Structure
     
         [System.Runtime.Serialization.EnumMember(Value = @"SHS550xs00x22")]
         SHS550xs00x22 = 723,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"LH12")]
+        LH12 = 724,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"LH24")]
+        LH24 = 725,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"LH36")]
+        LH36 = 726,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"LH48")]
+        LH48 = 727,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"LH60")]
+        LH60 = 728,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"LH72")]
+        LH72 = 729,
     
     }
 }

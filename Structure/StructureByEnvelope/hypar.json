@@ -1535,7 +1535,13 @@
           "SHS550xs00x12_5",
           "SHS550xs00x16",
           "SHS550xs00x19",
-          "SHS550xs00x22"
+          "SHS550xs00x22",
+          "LH12",
+          "LH24",
+          "LH36",
+          "LH48",
+          "LH60",
+          "LH72"
         ]
       },
       "Beam Type": {
@@ -2266,7 +2272,13 @@
           "SHS550xs00x12_5",
           "SHS550xs00x16",
           "SHS550xs00x19",
-          "SHS550xs00x22"
+          "SHS550xs00x22",
+          "LH12",
+          "LH24",
+          "LH36",
+          "LH48",
+          "LH60",
+          "LH72"
         ]
       },
       "Beam Spacing": {
