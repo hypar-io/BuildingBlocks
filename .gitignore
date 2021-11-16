@@ -7,3 +7,4 @@ TestOutput/
 output.json
 input.json
 .DS_Store
+Walls/Walls/test/Generated/WallsTest/results/*

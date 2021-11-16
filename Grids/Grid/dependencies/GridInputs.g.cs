@@ -21,6 +21,53 @@ namespace Grid
 {
     #pragma warning disable // Disable all warnings
 
+    /// <summary>A simplified schema for a 1d grid used for a special geometry input</summary>
+    [Newtonsoft.Json.JsonConverter(typeof(Elements.Serialization.JSON.JsonInheritanceConverter), "discriminator")]
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
+    
+    public partial class Grid1dInput 
+    
+    {
+        [Newtonsoft.Json.JsonConstructor]
+        public Grid1dInput(Polyline @curve, IList<Vector3> @splitPoints, Grid1dInputSubdivisionMode? @subdivisionMode, SubdivisionSettings @subdivisionSettings)
+        {
+            var validator = Validator.Instance.GetFirstValidatorForType<Grid1dInput>();
+            if(validator != null)
+            {
+                validator.PreConstruct(new object[]{ @curve, @splitPoints, @subdivisionMode, @subdivisionSettings});
+            }
+        
+            this.Curve = @curve;
+            this.SplitPoints = @splitPoints;
+            this.SubdivisionMode = @subdivisionMode;
+            this.SubdivisionSettings = @subdivisionSettings;
+        
+            if(validator != null)
+            {
+                validator.PostConstruct(this);
+            }
+        }
+    
+        /// <summary>The base curve for the grid</summary>
+        [Newtonsoft.Json.JsonProperty("Curve", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public Polyline Curve { get; set; }
+    
+        /// <summary>The points at which the grid is split</summary>
+        [Newtonsoft.Json.JsonProperty("SplitPoints", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public IList<Vector3> SplitPoints { get; set; }
+    
+        /// <summary>How is this curve subdivided</summary>
+        [Newtonsoft.Json.JsonProperty("SubdivisionMode", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        public Grid1dInputSubdivisionMode? SubdivisionMode { get; set; } = Grid1dInputSubdivisionMode.Manual;
+    
+        /// <summary>What parameters drive the subdivision?</summary>
+        [Newtonsoft.Json.JsonProperty("SubdivisionSettings", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public SubdivisionSettings SubdivisionSettings { get; set; }
+    
+    
+    }
+    
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
     
     public  class GridInputs : S3Args
@@ -62,6 +109,81 @@ namespace Grid
     
         [Newtonsoft.Json.JsonProperty("overrides", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public Overrides Overrides { get; set; }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
+    public enum Grid1dInputSubdivisionMode
+    {
+        [System.Runtime.Serialization.EnumMember(Value = @"Manual")]
+        Manual = 0,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"Divide by count")]
+        Divide_by_count = 1,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"Divide by approximate length")]
+        Divide_by_approximate_length = 2,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"Divide by fixed length")]
+        Divide_by_fixed_length = 3,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"Divide by pattern")]
+        Divide_by_pattern = 4,
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
+    
+    public partial class SubdivisionSettings 
+    
+    {
+        [Newtonsoft.Json.JsonConstructor]
+        public SubdivisionSettings(int @count, double @targetLength, double @length, SubdivisionSettingsRemainderMode @remainderMode, SubdivisionSettingsCycleMode @cycleMode)
+        {
+            var validator = Validator.Instance.GetFirstValidatorForType<SubdivisionSettings>();
+            if(validator != null)
+            {
+                validator.PreConstruct(new object[]{ @count, @targetLength, @length, @remainderMode, @cycleMode});
+            }
+        
+            this.Count = @count;
+            this.TargetLength = @targetLength;
+            this.Length = @length;
+            this.RemainderMode = @remainderMode;
+            this.CycleMode = @cycleMode;
+        
+            if(validator != null)
+            {
+                validator.PostConstruct(this);
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("Count", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int Count { get; set; } = 1;
+    
+        [Newtonsoft.Json.JsonProperty("Target Length", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public double TargetLength { get; set; } = 1D;
+    
+        [Newtonsoft.Json.JsonProperty("Length", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public double Length { get; set; } = 1D;
+    
+        [Newtonsoft.Json.JsonProperty("Remainder Mode", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        public SubdivisionSettingsRemainderMode RemainderMode { get; set; } = SubdivisionSettingsRemainderMode.Remainder_at_both_ends;
+    
+        [Newtonsoft.Json.JsonProperty("Cycle Mode", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        public SubdivisionSettingsCycleMode CycleMode { get; set; } = SubdivisionSettingsCycleMode.Cycle;
+    
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+    
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
     
     
     }
@@ -136,15 +258,17 @@ namespace Grid
     
     {
         [Newtonsoft.Json.JsonConstructor]
-        public Overrides(IList<GridOriginsOverride> @gridOrigins)
+        public Overrides(IList<GridOriginsOverride> @gridOrigins, IList<UGridSubdivisionsOverride> @uGridSubdivisions, IList<VGridSubdivisionsOverride> @vGridSubdivisions)
         {
             var validator = Validator.Instance.GetFirstValidatorForType<Overrides>();
             if(validator != null)
             {
-                validator.PreConstruct(new object[]{ @gridOrigins});
+                validator.PreConstruct(new object[]{ @gridOrigins, @uGridSubdivisions, @vGridSubdivisions});
             }
         
             this.GridOrigins = @gridOrigins;
+            this.UGridSubdivisions = @uGridSubdivisions;
+            this.VGridSubdivisions = @vGridSubdivisions;
         
             if(validator != null)
             {
@@ -155,6 +279,43 @@ namespace Grid
         [Newtonsoft.Json.JsonProperty("Grid Origins", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public IList<GridOriginsOverride> GridOrigins { get; set; }
     
+        [Newtonsoft.Json.JsonProperty("U Grid Subdivisions", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public IList<UGridSubdivisionsOverride> UGridSubdivisions { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("V Grid Subdivisions", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public IList<VGridSubdivisionsOverride> VGridSubdivisions { get; set; }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
+    public enum SubdivisionSettingsRemainderMode
+    {
+        [System.Runtime.Serialization.EnumMember(Value = @"Remainder at end")]
+        Remainder_at_end = 0,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"Remainder at start")]
+        Remainder_at_start = 1,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"Remainder at both ends")]
+        Remainder_at_both_ends = 2,
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
+    public enum SubdivisionSettingsCycleMode
+    {
+        [System.Runtime.Serialization.EnumMember(Value = @"Repeat Last")]
+        Repeat_Last = 0,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"Cycle")]
+        Cycle = 1,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"Wrap")]
+        Wrap = 2,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"None")]
+        None = 3,
     
     }
     
@@ -318,6 +479,78 @@ namespace Grid
     
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
     
+    public partial class UGridSubdivisionsOverride 
+    
+    {
+        [Newtonsoft.Json.JsonConstructor]
+        public UGridSubdivisionsOverride(string @id, UGridSubdivisionsIdentity @identity, UGridSubdivisionsValue @value)
+        {
+            var validator = Validator.Instance.GetFirstValidatorForType<UGridSubdivisionsOverride>();
+            if(validator != null)
+            {
+                validator.PreConstruct(new object[]{ @id, @identity, @value});
+            }
+        
+            this.Id = @id;
+            this.Identity = @identity;
+            this.Value = @value;
+        
+            if(validator != null)
+            {
+                validator.PostConstruct(this);
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Id { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("Identity", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public UGridSubdivisionsIdentity Identity { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("Value", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public UGridSubdivisionsValue Value { get; set; }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
+    
+    public partial class VGridSubdivisionsOverride 
+    
+    {
+        [Newtonsoft.Json.JsonConstructor]
+        public VGridSubdivisionsOverride(string @id, VGridSubdivisionsIdentity @identity, VGridSubdivisionsValue @value)
+        {
+            var validator = Validator.Instance.GetFirstValidatorForType<VGridSubdivisionsOverride>();
+            if(validator != null)
+            {
+                validator.PreConstruct(new object[]{ @id, @identity, @value});
+            }
+        
+            this.Id = @id;
+            this.Identity = @identity;
+            this.Value = @value;
+        
+            if(validator != null)
+            {
+                validator.PostConstruct(this);
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Id { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("Identity", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public VGridSubdivisionsIdentity Identity { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("Value", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public VGridSubdivisionsValue Value { get; set; }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
+    
     public partial class GridLines 
     
     {
@@ -415,5 +648,132 @@ namespace Grid
         public Transform Transform { get; set; }
     
     
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
+    
+    public partial class UGridSubdivisionsIdentity 
+    
+    {
+        [Newtonsoft.Json.JsonConstructor]
+        public UGridSubdivisionsIdentity(string @name)
+        {
+            var validator = Validator.Instance.GetFirstValidatorForType<UGridSubdivisionsIdentity>();
+            if(validator != null)
+            {
+                validator.PreConstruct(new object[]{ @name});
+            }
+        
+            this.Name = @name;
+        
+            if(validator != null)
+            {
+                validator.PostConstruct(this);
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("Name", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Name { get; set; }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
+    
+    public partial class UGridSubdivisionsValue 
+    
+    {
+        [Newtonsoft.Json.JsonConstructor]
+        public UGridSubdivisionsValue(Grid1dInput @uGrid)
+        {
+            var validator = Validator.Instance.GetFirstValidatorForType<UGridSubdivisionsValue>();
+            if(validator != null)
+            {
+                validator.PreConstruct(new object[]{ @uGrid});
+            }
+        
+            this.UGrid = @uGrid;
+        
+            if(validator != null)
+            {
+                validator.PostConstruct(this);
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("UGrid", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public Grid1dInput UGrid { get; set; }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
+    
+    public partial class VGridSubdivisionsIdentity 
+    
+    {
+        [Newtonsoft.Json.JsonConstructor]
+        public VGridSubdivisionsIdentity(string @name)
+        {
+            var validator = Validator.Instance.GetFirstValidatorForType<VGridSubdivisionsIdentity>();
+            if(validator != null)
+            {
+                validator.PreConstruct(new object[]{ @name});
+            }
+        
+            this.Name = @name;
+        
+            if(validator != null)
+            {
+                validator.PostConstruct(this);
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("Name", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Name { get; set; }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
+    
+    public partial class VGridSubdivisionsValue 
+    
+    {
+        [Newtonsoft.Json.JsonConstructor]
+        public VGridSubdivisionsValue(Grid1dInput @vGrid)
+        {
+            var validator = Validator.Instance.GetFirstValidatorForType<VGridSubdivisionsValue>();
+            if(validator != null)
+            {
+                validator.PreConstruct(new object[]{ @vGrid});
+            }
+        
+            this.VGrid = @vGrid;
+        
+            if(validator != null)
+            {
+                validator.PostConstruct(this);
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("VGrid", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public Grid1dInput VGrid { get; set; }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
+    [System.AttributeUsage(System.AttributeTargets.Class, AllowMultiple = true)]
+    internal class JsonInheritanceAttribute : System.Attribute
+    {
+        public JsonInheritanceAttribute(string key, System.Type type)
+        {
+            Key = key;
+            Type = type;
+        }
+    
+        public string Key { get; }
+    
+        public System.Type Type { get; }
     }
 }

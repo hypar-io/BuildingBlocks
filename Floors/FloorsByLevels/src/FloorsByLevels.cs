@@ -58,7 +58,7 @@ namespace FloorsByLevels
                     {
                         if (shafts.Count() > 0)
                         {
-                            flrOffsets = flrOffsets.Select(offset => new Profile(offset.Perimeter, shafts)).ToList();
+                            flrOffsets = flrOffsets.Select(offset => CreateFloorProfile(offset.Perimeter, shafts)).ToList();
                         }
 
                         foreach (var fo in flrOffsets)
@@ -73,7 +73,7 @@ namespace FloorsByLevels
                     }
                     else
                     {
-                        var floorProfile = shafts.Count() > 0 ? new Profile(level.Profile.Perimeter, shafts) : level.Profile;
+                        var floorProfile = shafts.Count() > 0 ? CreateFloorProfile(level.Profile.Perimeter, shafts) : level.Profile;
 
                         var floor = new Floor(floorProfile, input.FloorThickness,
                                 new Transform(0.0, 0.0, elevation - input.FloorThickness),
@@ -112,6 +112,35 @@ namespace FloorsByLevels
             var output = new FloorsByLevelsOutputs(floorArea, floors.Count());
             output.Model.AddElements(floors);
             return output;
+        }
+
+        private static Profile CreateFloorProfile(Polygon perimeter, List<Polygon> openings)
+        {
+            var initialProfile = new Profile(perimeter, openings);
+
+            try
+            {
+                var firstOffset = initialProfile.Offset(0.1);
+
+                if (firstOffset.FirstOrDefault() == null)
+                {
+                    return initialProfile;
+                }
+
+                var secondOffset = firstOffset.OrderByDescending(profile => profile.Area()).First().Offset(-0.1);
+
+                if (secondOffset.FirstOrDefault() == null)
+                {
+                    return initialProfile;
+                }
+
+                return secondOffset.OrderByDescending(profile => profile.Area()).First();
+            }
+            catch
+            {
+                return initialProfile;
+            }
+
         }
     }
 }

@@ -7,14 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.0.0" />
+    <PackageReference Include="Hypar.Model" Version="0.9.6" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
     <PackageReference Include="xunit" Version="2.4.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
-    <ProjectReference Include="..\..\..\..\Hypar\Hypar.Functions\src\Hypar.Functions.csproj" />
+    <PackageReference Include="coverlet.collector" Version="1.2.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\Structure.csproj" />
-    <ProjectReference Include="..\dependencies\Structure.Dependencies.csproj" />
+    <ProjectReference Include="..\src\Walls.csproj" />
   </ItemGroup>
+
 </Project>
