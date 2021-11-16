@@ -34,7 +34,6 @@ namespace FloorsByLevels
             var floorMaterial = new Material("Concrete", new Color(0.34, 0.34, 0.34, 1.0), 0.3, 0.3);
 
             levels.AddRange(model.AllElementsOfType<LevelPerimeter>());
-            var levelProxies = new List<ElementProxy<LevelVolume>>();
 
             // Extract shafts from Core dependency, if it exists
             var shafts = new List<Polygon>();
@@ -53,8 +52,6 @@ namespace FloorsByLevels
             {
                 foreach (var level in levelVolumes)
                 {
-                    var levelProxy = level.Proxy("Levels");
-                    levelProxies.Add(levelProxy);
                     var flrOffsets = level.Profile.Offset(input.FloorSetback * -1);
                     var elevation = level.Transform.Origin.Z;
                     if (flrOffsets.Count() > 0)
@@ -69,7 +66,7 @@ namespace FloorsByLevels
                             var floor = new Floor(fo, input.FloorThickness,
                                                             new Transform(0.0, 0.0, elevation - input.FloorThickness),
                                                             floorMaterial, null, false, Guid.NewGuid(), null);
-                            floor.AdditionalProperties["Level"] = levelProxy;
+                            floor.AdditionalProperties["Level"] = level.Id;
                             floors.Add(floor);
                             floorArea += floor.Area();
                         }
@@ -81,7 +78,7 @@ namespace FloorsByLevels
                         var floor = new Floor(floorProfile, input.FloorThickness,
                                 new Transform(0.0, 0.0, elevation - input.FloorThickness),
                                 floorMaterial, null, false, Guid.NewGuid(), null);
-                        floor.AdditionalProperties["Level"] = levelProxy;
+                        floor.AdditionalProperties["Level"] = level.Id;
                         floors.Add(floor);
                         floorArea += floor.Area();
                     }
@@ -113,7 +110,6 @@ namespace FloorsByLevels
             floors = floors.OrderBy(f => f.Elevation).ToList();
             floors.First().Transform.Move(new Vector3(0.0, 0.0, input.FloorThickness));
             var output = new FloorsByLevelsOutputs(floorArea, floors.Count());
-            output.Model.AddElements(levelProxies);
             output.Model.AddElements(floors);
             return output;
         }
