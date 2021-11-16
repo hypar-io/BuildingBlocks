@@ -233,10 +233,13 @@ namespace LevelsByEnvelope
                         Name = thisLevelPerimeter.Name
                     };
                     var bbox = new BBox3(levelVolume);
-                    bbox.Max = bbox.Max + (0, 0, -1);
+                    // drop the box by a meter to avoid ceilings / beams, etc.
+                    bbox.Max += (0, 0, -1);
+                    // drop the bottom to encompass floors below
+                    bbox.Min += (0, 0, -0.3);
                     var scope = new ViewScope(
                        bbox,
-                        new Camera(default(Vector3), CameraNamedPosition.Top, CameraProjection.Orthographic),
+                        new Camera(default, CameraNamedPosition.Top, CameraProjection.Orthographic),
                         true,
                         name: thisLevelPerimeter.Name);
                     levelVolume.AdditionalProperties["Plan View"] = scope;

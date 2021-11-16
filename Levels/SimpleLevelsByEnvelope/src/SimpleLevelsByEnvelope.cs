@@ -125,6 +125,7 @@ namespace SimpleLevelsByEnvelope
                         scopeName = $"{subGradeVolume.BuildingName}: {scopeName}";
                     }
                     var bbox = new BBox3(subGradeVolume);
+                    // drop the box by a meter to avoid ceilings / beams, etc.
                     bbox.Max = bbox.Max + (0, 0, -1);
                     var scope = new ViewScope(
                        bbox,
@@ -197,8 +198,10 @@ namespace SimpleLevelsByEnvelope
                     var volume = new LevelVolume(envelopeProfile, levelHeight, envelopeProfile.Area(), envelope.Name, new Transform(0, 0, levelElevation), matl, representation, false, Guid.NewGuid(), name);
                     volume.AdditionalProperties["Envelope"] = envelope.Id;
                     var bbox = new BBox3(volume);
-                    bbox.Max = bbox.Max + (0, 0, -1);
-                    bbox.Min = bbox.Min + (0, 0, -0.3);
+                    // drop the box by a meter to avoid ceilings / beams, etc.
+                    bbox.Max += (0, 0, -1);
+                    // drop the bottom to encompass floors below
+                    bbox.Min += (0, 0, -0.3);
                     var scopeName = volume.Name;
                     if (!String.IsNullOrEmpty(volume.BuildingName))
                     {
