@@ -20,31 +20,31 @@ namespace LevelsByEnvelope
 		/// Total number of levels.
 		/// </summary>
 		[JsonProperty("Level Quantity")]
-		public double LevelQuantity {get;}
+		public double LevelQuantity {get; set;}
 
 		/// <summary>
 		/// Total aggregate area of all levels.
 		/// </summary>
 		[JsonProperty("Total Level Area")]
-		public double TotalLevelArea {get;}
+		public double TotalLevelArea {get; set;}
 
 		/// <summary>
 		/// Height of the ground level.
 		/// </summary>
 		[JsonProperty("Entry Level Height")]
-		public double EntryLevelHeight {get;}
+		public double EntryLevelHeight {get; set;}
 
 		/// <summary>
 		/// Height of the standard levels.
 		/// </summary>
 		[JsonProperty("Repeating Level Height")]
-		public double RepeatingLevelHeight {get;}
+		public double RepeatingLevelHeight {get; set;}
 
 		/// <summary>
 		/// Height of the penthouse level.
 		/// </summary>
 		[JsonProperty("Top Level Height")]
-		public double TopLevelHeight {get;}
+		public double TopLevelHeight {get; set;}
 
 
 

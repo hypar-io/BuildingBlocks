@@ -20,14 +20,34 @@ namespace LevelsByEnvelope
             GradeLevels(stdHeight, grdHeight);
             HighLevels(stdHeight, pntHeight);
             MidLevels(stdHeight);
-            LevelVolumes = MakeLevelVolumes();
-
+            var belowGrade = LevelPerimeters.Where(p => p.Elevation < 0);
+            var bgNameIndex = 1;
+            foreach (var lp in belowGrade.OrderBy(p => -p.Elevation))
+            {
+                lp.Name = $"B{bgNameIndex:0}";
+                bgNameIndex++;
+            }
+            var grade = LevelPerimeters.Where(p => p.Elevation == 0);
+            foreach (var lp in grade)
+            {
+                lp.Name = "Ground Level";
+            }
+            var aboveGrade = LevelPerimeters.Where(p => p.Elevation > 0);
+            var agNameIndex = 1;
+            foreach (var lp in aboveGrade.OrderBy(p => p.Elevation))
+            {
+                lp.Name = $"Level {agNameIndex:0}";
+                agNameIndex++;
+            }
+            LevelVolumes = MakeLevelVolumes(out var viewScopes);
+            ViewScopes = viewScopes;
         }
 
         private List<Envelope> Envelopes { get; set; }
         public List<Level> Levels { get; private set; }
         public List<LevelPerimeter> LevelPerimeters { get; private set; }
         public List<LevelVolume> LevelVolumes { get; private set; }
+        public List<ViewScope> ViewScopes { get; private set; }
 
 
 
@@ -191,9 +211,10 @@ namespace LevelsByEnvelope
             }
         }
 
-        private List<LevelVolume> MakeLevelVolumes()
+        private List<LevelVolume> MakeLevelVolumes(out List<ViewScope> scopes)
         {
             List<LevelVolume> volumes = new List<LevelVolume>();
+            List<ViewScope> viewScopes = new List<ViewScope>();
             for (int i = 0; i < LevelPerimeters.Count - 1; i++)
             {
                 var thisLevelPerimeter = LevelPerimeters[i];
@@ -201,22 +222,30 @@ namespace LevelsByEnvelope
                 var levelHeight = nextLevelPerimeter.Elevation - thisLevelPerimeter.Elevation;
                 if (levelHeight > 0.01)
                 {
-                    volumes.Add(
-                        new LevelVolume(
-                            thisLevelPerimeter.Perimeter,
-                            levelHeight,
-                            thisLevelPerimeter.Area,
-                            new Transform(0, 0, thisLevelPerimeter.Elevation),
-                            BuiltInMaterials.Glass,
-                            new Representation(
-                                new[] { new Extrude(thisLevelPerimeter.Perimeter, levelHeight, Vector3.ZAxis, false) }
-                                ),
-                            false,
-                            Guid.NewGuid(),
-                            thisLevelPerimeter.Name));
+                    var levelVolume = new LevelVolume()
+                    {
+                        Profile = thisLevelPerimeter.Perimeter,
+                        Height = levelHeight,
+                        Area = thisLevelPerimeter.Area,
+                        Transform = new Transform(0, 0, thisLevelPerimeter.Elevation),
+                        Material = BuiltInMaterials.Glass,
+                        Representation = new Extrude(thisLevelPerimeter.Perimeter, levelHeight, Vector3.ZAxis, false),
+                        Name = thisLevelPerimeter.Name
+                    };
+                    var bbox = new BBox3(levelVolume);
+                    bbox.Max = bbox.Max + (0, 0, -1);
+                    var scope = new ViewScope(
+                       bbox,
+                        new Camera(default(Vector3), CameraNamedPosition.Top, CameraProjection.Orthographic),
+                        true,
+                        name: thisLevelPerimeter.Name);
+                    levelVolume.AdditionalProperties["Plan View"] = scope;
+                    viewScopes.Add(scope);
+                    volumes.Add(levelVolume);
                 }
 
             }
+            scopes = viewScopes;
             return volumes;
         }
     }

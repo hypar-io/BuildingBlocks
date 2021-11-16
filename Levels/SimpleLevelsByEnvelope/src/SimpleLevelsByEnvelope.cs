@@ -131,7 +131,7 @@ namespace SimpleLevelsByEnvelope
                         new Camera(default(Vector3), CameraNamedPosition.Top, CameraProjection.Orthographic),
                         true,
                         name: scopeName);
-                    subGradeVolume.AdditionalProperties["Scope"] = scope;
+                    subGradeVolume.AdditionalProperties["Plan View"] = scope;
                     scopes.Add(scope);
                     levelVolumes.Add(subGradeVolume);
                 }
@@ -205,7 +205,7 @@ namespace SimpleLevelsByEnvelope
                         scopeName = $"{volume.BuildingName}: {scopeName}";
                     }
                     var scope = new ViewScope(bbox, new Camera(default(Vector3), CameraNamedPosition.Top, CameraProjection.Orthographic), true, name: scopeName);
-                    volume.AdditionalProperties["Scope"] = scope;
+                    volume.AdditionalProperties["Plan View"] = scope;
                     scopes.Add(scope);
                     levelVolumes.Add(volume);
 
