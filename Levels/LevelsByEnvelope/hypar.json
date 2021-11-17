@@ -77,7 +77,8 @@
     "https://dev-api.hypar.io/schemas/Envelope",
     "https://raw.githubusercontent.com/hypar-io/Schemas/master/Level.json",
     "https://raw.githubusercontent.com/hypar-io/Schemas/master/LevelPerimeter.json",
-    "https://prod-api.hypar.io/schemas/LevelVolume"
+    "https://prod-api.hypar.io/schemas/LevelVolume",
+    "https://prod-api.hypar.io/schemas/ViewScope"
   ],
   "repository_url": "",
   "source_file_key": null,
