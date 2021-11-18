@@ -320,11 +320,18 @@ namespace Grid
             var lineDir = (line.End - line.Start).Unitized();
             var circleCenter = line.Start - (lineDir * (CircleRadius + lineHeadExtension));
 
-            model.AddElement(new Elements.GridLine(new Polyline(new List<Vector3>() { line.Start, line.End }), null, null, null, false, Guid.NewGuid(), name));
+            var gridline = new GridLine();
+            gridline.Radius = CircleRadius;
+            gridline.ExtensionBeginning = lineHeadExtension;
+            gridline.Line = line;
+            gridline.Name = name;
+            gridline.Material = material;
+
+            model.AddElement(gridline);
             model.AddElement(new ModelCurve(new Line(line.Start - (lineDir * lineHeadExtension) + elevation, line.End + elevation), material, name: name));
             model.AddElement(new ModelCurve(new Circle(circleCenter + elevation, CircleRadius), material));
             texts.Add((circleCenter + elevation, Vector3.ZAxis, lineDir, name, Colors.Darkgray));
-            return new GridLine(line, name);
+            return gridline;
         }
 
         private static List<GridGuide> GetDivisions(Vector3 origin, Vector3 gridDir, U u)

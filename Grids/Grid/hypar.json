@@ -518,7 +518,6 @@
   },
   "outputs": [],
   "element_types": [
-    "https://prod-api.hypar.io/schemas/GridLine",
     "https://prod-api.hypar.io/schemas/Envelope",
     "https://prod-api.hypar.io/schemas/Grid2dElement"
   ],
