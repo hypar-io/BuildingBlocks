@@ -19,8 +19,8 @@ namespace FacadeGridByLevels
             var input = GetInput();
 
             var modelDependencies = new Dictionary<string, Model> { 
-                {"Envelope", Model.FromJson(File.ReadAllText(@"/Users/andrewheumann/Dev/BuildingBlocks/Facade/FacadeGrid/FacadeGridByLevels/test/Generated/FacadeGridByLevelsTest/model_dependencies/Envelope/model.json")) }, 
-                {"Levels", Model.FromJson(File.ReadAllText(@"/Users/andrewheumann/Dev/BuildingBlocks/Facade/FacadeGrid/FacadeGridByLevels/test/Generated/FacadeGridByLevelsTest/model_dependencies/Levels/model.json")) }, 
+                {"Envelope", Model.FromJson(File.ReadAllText(@"/Users/andrewheumann/Dev/BuildingBlocks/Facade/FacadeGrid/FacadeGridByLevels/test/Generated/FacadeGridByLevelsTest/model_dependencies/Envelope/fe435ad5-3597-467d-b6d3-a41f79e90287.json")) }, 
+                {"Levels", Model.FromJson(File.ReadAllText(@"/Users/andrewheumann/Dev/BuildingBlocks/Facade/FacadeGrid/FacadeGridByLevels/test/Generated/FacadeGridByLevelsTest/model_dependencies/Levels/cab7c31c-ba34-4a51-8e41-ef87ed143948.json")) }, 
             };
 
             var result = FacadeGridByLevels.Execute(modelDependencies, input);
@@ -36,11 +36,11 @@ namespace FacadeGridByLevels
   ""Offset From Facade"": 0,
   ""Remainder Position"": ""At Both Ends"",
   ""Target Facade Panel Width"": 3,
-  ""Mode"": ""Fixed Width"",
+  ""Mode"": ""Approximate Width"",
   ""Display Mode"": ""Color By Type"",
   ""model_input_keys"": {
-    ""Envelope"": ""10a98edc-0751-4ed9-beca-fc2f7577ef2c_6b2fa817-e74f-42af-abae-28b80745f699_elements.zip"",
-    ""Levels"": ""7c530e33-0d2f-43ac-8ed2-1e5563f09217_3bc5767f-173f-49e8-a645-b5faa750f32d_elements.zip""
+    ""Envelope"": ""fe435ad5-3597-467d-b6d3-a41f79e90287_0c8d0526-9490-4d53-896b-88a1515de583_elements.zip"",
+    ""Levels"": ""cab7c31c-ba34-4a51-8e41-ef87ed143948_3bc5767f-173f-49e8-a645-b5faa750f32d_elements.zip""
   },
   ""Fixed Width Settings"": {
     ""Height Shift"": 0,

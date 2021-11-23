@@ -64,6 +64,7 @@ namespace FacadeGridByLevels
                 envelopesModel?.Elements.TryGetValue(envelopeGroup.Key, out envelopeElem);
                 if (envelopeElem is Envelope envelope)
                 {
+                    var envTransform = envelope.Transform;
                     var rep = envelope.Representation;
                     var solids = rep.SolidOperations.Select(so => so.Solid);
                     var faces = solids.SelectMany(s => s.Faces.Values);
@@ -73,11 +74,11 @@ namespace FacadeGridByLevels
 
                     foreach (var face in sideFaces)
                     {
-                        var outer = face.Outer.ToPolygon();
+                        var outer = face.Outer.ToPolygon().TransformedPolygon(envTransform);
                         var normal = outer.Normal();
                         var horizontalVector = Vector3.ZAxis.Cross(normal);
                         var polygons = new List<Polygon> { outer };
-                        var inner = face.Inner?.Select(i => i.ToPolygon()).ToList();
+                        var inner = face.Inner?.Select(i => i.ToPolygon().TransformedPolygon(envTransform)).ToList();
                         if (inner == null)
                         {
                             inner = new List<Polygon>();
@@ -128,7 +129,7 @@ namespace FacadeGridByLevels
                         {
                             cell.Type = $"{cell.Domain.Length:0.00}";
                         }
-                        foreach (var cell in grid2d.V.Cells)
+                        foreach (var cell in grid2d.V.GetCells())
                         {
                             cell.Type = $"{cell.Domain.Length:0.00}";
                         }
