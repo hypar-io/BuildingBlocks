@@ -16,11 +16,18 @@ namespace SiteBySketch
         /// <returns>A SiteBySketchOutputs instance containing computed results and the model with any new elements.</returns>
         public static SiteBySketchOutputs Execute(Dictionary<string, Model> inputModels, SiteBySketchInputs input)
         {
-            var lamina = new Elements.Geometry.Solids.Lamina(input.Perimeter, false);
-            var geomRep = new Representation(new List<Elements.Geometry.Solids.SolidOperation>() { lamina });
-            var sitMatl = new Material("site", Palette.Emerald, 0.0f, 0.0f);
-            var output = new SiteBySketchOutputs(Math.Abs(input.Perimeter.Area()));
-            var site = new Site(input.Perimeter, Math.Abs(input.Perimeter.Area()), null, sitMatl, geomRep, false, Guid.NewGuid(), "");
+
+            var geomRep = new Elements.Geometry.Solids.Lamina(input.Perimeter, false);
+            var siteMaterial = new Material("site", Palette.Emerald, 0.0f, 0.0f);
+            var area = input.Perimeter.Area();
+            var output = new SiteBySketchOutputs(area);
+            var site = new Site()
+            {
+                Perimeter = input.Perimeter,
+                Area = area,
+                Material = siteMaterial,
+                Representation = geomRep,
+            };
             output.Model.AddElement(site);
             return output;
         }
