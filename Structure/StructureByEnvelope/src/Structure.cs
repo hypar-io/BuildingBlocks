@@ -129,7 +129,7 @@ namespace Structure
                 var gridLines = gridsModel.AllElementsOfType<GridLine>();
 
                 // Group by direction.
-                var gridGroups = gridLines.GroupBy(gl => (gl.Geometry.Vertices[0] - gl.Geometry.Vertices[1]).Unitized()).ToList();
+                var gridGroups = gridLines.GroupBy(gl => gl.Line.Direction().Unitized()).ToList();
                 primaryDirection = gridGroups[0].Key;
                 secondaryDirection = gridGroups[1].Key;
             }
@@ -338,11 +338,18 @@ namespace Structure
 
                 // Get the longest cell edge that is parallel 
                 // to one of the primary directions.
-                var longestCellEdge = segments.Where(s =>
+                var cellEdges = segments.Where(s =>
                 {
                     var d = s.Direction();
                     return d.IsParallelTo(primaryDirection) || d.IsParallelTo(secondaryDirection);
-                }).OrderBy(s => s.Length()).Last();
+                });
+
+                if (!cellEdges.Any())
+                {
+                    continue;
+                }
+
+                var longestCellEdge = cellEdges.OrderBy(s => s.Length()).Last();
 
                 var d = longestCellEdge.Direction();
                 var length = longestCellEdge.Length();

@@ -2313,7 +2313,6 @@
     }
   ],
   "element_types": [
-    "https://prod-api.hypar.io/schemas/GridLine",
     "https://raw.githubusercontent.com/hypar-io/Schemas/master/LevelPerimeter.json",
     "https://prod-api.hypar.io/schemas/LevelVolume",
     "https://prod-api.hypar.io/schemas/Grid2dElement"
