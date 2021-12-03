@@ -9,8 +9,13 @@ namespace Grid
 {
     public static class Grid
     {
+        private const string parametrizedPositionPropertyName = "ParametrizedPosition";
+        private const string axisPropertyName = "Axis";
+
         private static double MinCircleRadius = 0.5;
         private static double CircleRadius = 1;
+        // Offset the heads from the base lines.
+        private static double lineHeadExtension = 2.0;
 
         private static Material GridlineMaterialU = new Material("GridlineU", Colors.Red);
         private static Material GridlineMaterialV = new Material("GridlineV", new Color(0, 0.5, 0, 1));
@@ -202,8 +207,11 @@ namespace Grid
             foreach (var boundary in boundaries.SelectMany(boundaryList => boundaryList).ToList())
             {
                 var grid = MakeGrid(boundary, origin, uDirection, vDirection, uPoints, vPoints);
-                var uGridLines = DrawLines(output.Model, origin, uDivisions, grid.V, boundary, GridlineMaterialU, texts);
-                var vGridLines = DrawLines(output.Model, origin, vDivisions, grid.U, boundary, GridlineMaterialV, texts);
+                var uGridLines = CreateGridLines(input, output.Model, origin, uDivisions, grid.V, GridlineMaterialU, GridlineNamesIdentityAxis.U);
+                var vGridLines = CreateGridLines(input, output.Model, origin, vDivisions, grid.U, GridlineMaterialV, GridlineNamesIdentityAxis.V);
+                var allGridLines = uGridLines.Union(vGridLines);
+                CheckDuplicatedNames(allGridLines, out var duplicatedNamesGridLines);
+                AddGridLinesTexts(allGridLines, duplicatedNamesGridLines, texts);
                 grids.Add((grid: grid, boundary: boundary));
 
                 if (input.ShowDebugGeometry)
@@ -255,12 +263,12 @@ namespace Grid
                 var grid2dElement = new Grid2dElement(grid.grid, gridNodes, transform, Grid2dElementMaterial, rep, false, Guid.NewGuid(), gridArea.Name);
 
                 grid2dElement.AdditionalProperties["UGrid"] = new Grid1dInput(
-                    new Polyline(grid.grid.U.Curve.PointAt(0), grid.grid.U.Curve.PointAt(1)),
+                    new Polyline(origin, grid.grid.U.Curve.PointAt(1)),
                     uPoints,
                     uOverride?.SubdivisionMode ?? Grid1dInputSubdivisionMode.Manual,
                     uOverride?.SubdivisionSettings);
                 grid2dElement.AdditionalProperties["VGrid"] = new Grid1dInput(
-                    new Polyline(grid.grid.V.Curve.PointAt(0), grid.grid.V.Curve.PointAt(1)),
+                    new Polyline(origin, grid.grid.V.Curve.PointAt(1)),
                     vPoints,
                     vOverride?.SubdivisionMode ?? Grid1dInputSubdivisionMode.Manual,
                     vOverride?.SubdivisionSettings);
@@ -305,26 +313,21 @@ namespace Grid
             return name;
         }
 
-        private static GridLine DrawLine(Model model,
-                                         Line line,
-                                         Material material,
-                                         string name,
-                                         List<(Vector3 location, Vector3 facingDirection, Vector3 lineDirection, string text, Color? color)> texts)
+        private static void AddGridLinesTexts(
+            IEnumerable<GridLine> gridlines,
+            HashSet<GridLine> duplicatedNamesGridLines,
+            List<(Vector3 location, Vector3 facingDirection, Vector3 lineDirection, string text, Color? color)> texts)
         {
-            // Offset the heads from the base lines.
-            var lineHeadExtension = 2.0;
-
-            // Offset the grid visual from the XY plane to avoid z-fighting.
-            var elevation = new Vector3(0, 0, 0.01);
-
-            var lineDir = (line.End - line.Start).Unitized();
-            var circleCenter = line.Start - (lineDir * (CircleRadius + lineHeadExtension));
-
-            model.AddElement(new Elements.GridLine(new Polyline(new List<Vector3>() { line.Start, line.End }), null, null, null, false, Guid.NewGuid(), name));
-            model.AddElement(new ModelCurve(new Line(line.Start - (lineDir * lineHeadExtension) + elevation, line.End + elevation), material, name: name));
-            model.AddElement(new ModelCurve(new Circle(circleCenter + elevation, CircleRadius), material));
-            texts.Add((circleCenter + elevation, Vector3.ZAxis, lineDir, name, Colors.Darkgray));
-            return new GridLine(line, name);
+            foreach (var gridline in gridlines)
+            {
+                // Offset the grid visual from the XY plane to avoid z-fighting.
+                var elevation = new Vector3(0, 0, 0.01);
+                var line = gridline.Line;
+                var lineDir = (line.End - line.Start).Unitized();
+                var circleCenter = line.Start - (lineDir * (CircleRadius + lineHeadExtension));
+                var color = duplicatedNamesGridLines.Contains(gridline) ? Colors.Red : Colors.Darkgray;
+                texts.Add((circleCenter + elevation, Vector3.ZAxis, lineDir, gridline.Name, color));
+            }
         }
 
         private static List<GridGuide> GetDivisions(Vector3 origin, Vector3 gridDir, U u)
@@ -332,22 +335,43 @@ namespace Grid
             var gridGuides = new List<GridGuide>();
             var curPoint = origin;
             var sectionIdx = 0;
+            var parametrizedPosition = 0.0;
             foreach (var gridline in u.GridLines)
             {
                 curPoint = curPoint + gridDir * gridline.Spacing;
-                gridGuides.Add(new GridGuide(curPoint, GetName(u.Name, sectionIdx)));
+                parametrizedPosition += gridline.Spacing;
+                gridGuides.Add(new GridGuide(curPoint, parametrizedPosition, GetName(u.Name, sectionIdx)));
                 sectionIdx += 1;
             }
             return gridGuides;
         }
 
-        private static List<GridLine> DrawLines(Model model,
+        private static void CheckDuplicatedNames(IEnumerable<GridLine> allGridLines, out HashSet<GridLine> duplicatedNamesGridLines)
+        {
+            var gridLinesGroups = allGridLines.GroupBy(g => g.Name);
+            duplicatedNamesGridLines = new HashSet<GridLine>();
+            foreach (var group in gridLinesGroups)
+            {
+                if (group.Count() > 1)
+                {
+                    var index = 1;
+                    foreach (var gridLine in group.Skip(1))
+                    {
+                        gridLine.Name = $"{gridLine.Name}({index})";
+                        duplicatedNamesGridLines.Add(gridLine);
+                        index++;
+                    }
+                }
+            }
+        }
+
+        private static List<GridLine> CreateGridLines(GridInputs input,
+                                                Model model,
                                                 Vector3 origin,
                                                 List<GridGuide> gridGuides,
                                                 Grid1d opposingGrid1d,
-                                                Polygon bounds,
                                                 Material material,
-                                                List<(Vector3 location, Vector3 facingDirection, Vector3 lineDirection, string text, Color? color)> texts)
+                                                GridlineNamesIdentityAxis axis)
         {
             var baseLine = new Line(opposingGrid1d.Curve.PointAt(0), opposingGrid1d.Curve.PointAt(1));
 
@@ -355,15 +379,41 @@ namespace Grid
             var endExtend = origin - baseLine.End;
 
             List<GridLine> gridLines = new List<GridLine>();
-
             foreach (var gridGuide in gridGuides)
             {
                 var line = new Line(gridGuide.Point - startExtend, gridGuide.Point - endExtend);
-                var gridLine = DrawLine(model, line, material, gridGuide.Name, texts);
-                gridLines.Add(gridLine);
+                var gridline = new GridLine
+                {
+                    Radius = CircleRadius,
+                    ExtensionBeginning = lineHeadExtension,
+                    Line = line,
+                    Name = gridGuide.Name,
+                    Material = material
+                };
+                gridline.AdditionalProperties[parametrizedPositionPropertyName] = gridGuide.ParametrizedPosition;
+                gridline.AdditionalProperties[axisPropertyName] = axis;
+                ApplyGridLineNameOverride(gridline, input, gridGuide.ParametrizedPosition, axis);
+                model.AddElement(gridline);
+                gridLines.Add(gridline);
             }
 
             return gridLines;
+        }
+
+        private static void ApplyGridLineNameOverride(
+            GridLine gridLine,
+            GridInputs input,
+            double parametrizedPosition,
+            GridlineNamesIdentityAxis axis)
+        {
+            var nameOverride = input.Overrides?.GridlineNames?
+                               .FirstOrDefault(o => o.Identity.ParametrizedPosition.ApproximatelyEquals(parametrizedPosition)
+                                                    && o.Identity.Axis.Equals(axis));
+            if (nameOverride != null)
+            {
+                gridLine.Name = nameOverride.Value.Name;
+                gridLine.AddOverrideIdentity("Gridline Names", nameOverride.Id, nameOverride.Identity);
+            }
         }
 
         private static Polygon PolygonFromAlignedBoundingBox2d(IEnumerable<Vector3> points, List<Line> segments)
