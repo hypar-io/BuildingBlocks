@@ -20,25 +20,25 @@ namespace SimpleLevelsByEnvelope
 		/// Total number of levels.
 		/// </summary>
 		[JsonProperty("Level Quantity")]
-		public double LevelQuantity {get;}
+		public double LevelQuantity {get; set;}
 
 		/// <summary>
 		/// Total aggregate area of all interior levels, excluding the roof.
 		/// </summary>
 		[JsonProperty("Total Level Area")]
-		public double TotalLevelArea {get;}
+		public double TotalLevelArea {get; set;}
 
 		/// <summary>
 		/// Total area of all levels below grade.
 		/// </summary>
 		[JsonProperty("Subgrade Level Area")]
-		public double SubgradeLevelArea {get;}
+		public double SubgradeLevelArea {get; set;}
 
 		/// <summary>
 		/// Total area of all levels above or at grade, excluding the roof.
 		/// </summary>
 		[JsonProperty("Above Grade Level Area")]
-		public double AboveGradeLevelArea {get;}
+		public double AboveGradeLevelArea {get; set;}
 
 
 

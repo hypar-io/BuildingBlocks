@@ -31,6 +31,12 @@ namespace Elements
         {
             this.Elevation = @elevation;
             }
+        
+        // Empty constructor
+        public Level()
+            : base()
+        {
+        }
     
         /// <summary>The elevation of the level.</summary>
         [Newtonsoft.Json.JsonProperty("Elevation", Required = Newtonsoft.Json.Required.Always)]

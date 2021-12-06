@@ -11,7 +11,7 @@ namespace Hypar.Server
         {
             await HyparServer.StartAsync(
                 args,
-                Path.GetFullPath(Path.Combine(@"/Users/ikeough/Documents/Hypar/BuildingBlocks/Structure/StructureByEnvelope/server", "..")),
+                Path.GetFullPath(Path.Combine(Assembly.GetExecutingAssembly().Location, "../../../../..")),
                 typeof(Structure.Function),
                 typeof(Structure.StructureInputs));
         }

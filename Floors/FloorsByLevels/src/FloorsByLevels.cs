@@ -66,6 +66,7 @@ namespace FloorsByLevels
                             var floor = new Floor(fo, input.FloorThickness,
                                                             new Transform(0.0, 0.0, elevation - input.FloorThickness),
                                                             floorMaterial, null, false, Guid.NewGuid(), null);
+                            floor.AdditionalProperties["Level"] = level.Id;
                             floors.Add(floor);
                             floorArea += floor.Area();
                         }
@@ -77,6 +78,7 @@ namespace FloorsByLevels
                         var floor = new Floor(floorProfile, input.FloorThickness,
                                 new Transform(0.0, 0.0, elevation - input.FloorThickness),
                                 floorMaterial, null, false, Guid.NewGuid(), null);
+                        floor.AdditionalProperties["Level"] = level.Id;
                         floors.Add(floor);
                         floorArea += floor.Area();
                     }

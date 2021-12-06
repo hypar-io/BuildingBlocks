@@ -32,6 +32,12 @@ namespace Elements
             this.Perimeter = @perimeter;
             this.Area = @area;
             }
+        
+        // Empty constructor
+        public Site()
+            : base()
+        {
+        }
     
         /// <summary>The perimeter of the site.</summary>
         [Newtonsoft.Json.JsonProperty("Perimeter", Required = Newtonsoft.Json.Required.AllowNull)]
