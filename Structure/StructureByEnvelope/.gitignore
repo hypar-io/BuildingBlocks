@@ -6,3 +6,4 @@ output.json
 input.json
 .vs/**/*.*
 server/
+*.nupkg
