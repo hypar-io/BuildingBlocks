@@ -129,7 +129,7 @@ namespace Structure
                 var gridLines = gridsModel.AllElementsOfType<GridLine>();
 
                 // Group by direction.
-                var gridGroups = gridLines.GroupBy(gl => gl.Line.Direction().Unitized()).ToList();
+                var gridGroups = gridLines.GroupBy(gl => gl.Line.Direction()).ToList();
                 primaryDirection = gridGroups[0].Key;
                 secondaryDirection = gridGroups[1].Key;
             }
