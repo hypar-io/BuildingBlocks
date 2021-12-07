@@ -129,7 +129,7 @@ namespace Structure
                 var gridLines = gridsModel.AllElementsOfType<GridLine>();
 
                 // Group by direction.
-                var gridGroups = gridLines.GroupBy(gl => (gl.Geometry.Vertices[0] - gl.Geometry.Vertices[1]).Unitized()).ToList();
+                var gridGroups = gridLines.GroupBy(gl => gl.Line.Direction()).ToList();
                 primaryDirection = gridGroups[0].Key;
                 secondaryDirection = gridGroups[1].Key;
             }
@@ -165,6 +165,10 @@ namespace Structure
                 girderProfile = GetProfileFromName(girderTypeName, wideFlangeFactory, rhsProfileFactory, shsProfileFactory);
                 var girdProfileBounds = girderProfile.Perimeter.Bounds();
                 girderProfileDepth = girdProfileBounds.Max.Y - girdProfileBounds.Min.Y;
+
+                // Set the profile down by half its depth so that 
+                // it sits under the slab.
+                girderProfile = girderProfile.Transformed(new Transform(new Vector3(0, -girderProfileDepth / 2 - input.SlabThickness)));
             }
 
             Profile beamProfile = null;
@@ -180,6 +184,10 @@ namespace Structure
                 beamProfile = GetProfileFromName(beamTypeName, wideFlangeFactory, rhsProfileFactory, shsProfileFactory);
                 var beamProfileBounds = beamProfile.Perimeter.Bounds();
                 beamProfileDepth = beamProfileBounds.Max.Y - beamProfileBounds.Min.Y;
+
+                // Set the profile down by half its depth so that 
+                // it sits under the slab.
+                beamProfile = beamProfile.Transformed(new Transform(new Vector3(0, -beamProfileDepth / 2 - input.SlabThickness)));
             }
 
             var edges = cellComplex.GetEdges();
@@ -217,8 +225,7 @@ namespace Structure
                 var start = cellComplex.GetVertex(edge.StartVertexId).Value;
                 var end = cellComplex.GetVertex(edge.EndVertexId).Value;
 
-                var offset = girderProfile == null ? input.SlabThickness : input.SlabThickness + girderProfileDepth / 2;
-                var l = new Line(start - new Vector3(0, 0, offset), end - new Vector3(0, 0, offset));
+                var l = new Line(start, end);
                 var memberLength = l.Length();
 
                 if (l.IsVertical())
@@ -263,7 +270,7 @@ namespace Structure
                     {
                         if (!girderDefinitions.ContainsKey((memberLength, girderProfile)))
                         {
-                            // Beam definitions are defined along the Z axis
+                            // Beam definitions are defined along the X axis
                             var cl = new Line(Vector3.Origin, new Vector3(memberLength, 0));
                             girderDefinition = new Beam(cl, girderProfile, structureMaterial)
                             {
@@ -282,7 +289,7 @@ namespace Structure
                         // Create a joist
                         if (!girderJoistDefinitions.ContainsKey((memberLength, girderProfileDepth)))
                         {
-                            // Beam definitions are defined along the Z axis
+                            // Beam definitions are defined along the X axis
                             var cl = new Line(Vector3.Origin, new Vector3(memberLength, 0));
                             if (memberLength < girderProfileDepth)
                             {
@@ -338,11 +345,21 @@ namespace Structure
 
                 // Get the longest cell edge that is parallel 
                 // to one of the primary directions.
-                var longestCellEdge = segments.Where(s =>
+                var cellEdges = segments.Where(s =>
                 {
                     var d = s.Direction();
                     return d.IsParallelTo(primaryDirection) || d.IsParallelTo(secondaryDirection);
-                }).OrderBy(s => s.Length()).Last();
+                });
+
+                Line longestCellEdge;
+                if (cellEdges.Any())
+                {
+                    longestCellEdge = cellEdges.OrderBy(s => s.Length()).Last();
+                }
+                else
+                {
+                    longestCellEdge = segments.OrderBy(s => s.Length()).Last();
+                }
 
                 var d = longestCellEdge.Direction();
                 var length = longestCellEdge.Length();
@@ -352,6 +369,7 @@ namespace Structure
                 beamGrid.DivideByApproximateLength(input.BeamSpacing, EvenDivisionMode.RoundDown);
 
                 var cellSeparators = beamGrid.GetCellSeparators();
+
                 for (var i = 0; i < cellSeparators.Count; i++)
                 {
                     if (i == 0 || i == cellSeparators.Count - 1)
@@ -376,8 +394,7 @@ namespace Structure
                                 continue;
                             }
 
-                            var offset = beamProfile == null ? input.SlabThickness : input.SlabThickness + beamProfileDepth / 2;
-                            var l = new Line(t.Origin - new Vector3(0, 0, offset), xsect - new Vector3(0, 0, offset));
+                            var l = new Line(t.Origin, xsect);
                             var beamLength = l.Length();
 
                             GeometricElement beamDefinition;
@@ -402,7 +419,7 @@ namespace Structure
                                 // Create a joist
                                 if (!beamJoistDefinitions.ContainsKey((beamLength, beamProfileDepth)))
                                 {
-                                    // Beam definitions are defined along the Z axis
+                                    // Beam definitions are defined along the X axis
                                     var cl = new Line(Vector3.Origin, new Vector3(beamLength, 0));
                                     if (beamLength < beamProfileDepth)
                                     {
