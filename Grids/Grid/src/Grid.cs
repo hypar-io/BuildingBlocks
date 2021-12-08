@@ -210,8 +210,8 @@ namespace Grid
                 var uGridLines = CreateGridLines(input, output.Model, origin, uDivisions, grid.V, GridlineMaterialU, GridlineNamesIdentityAxis.U);
                 var vGridLines = CreateGridLines(input, output.Model, origin, vDivisions, grid.U, GridlineMaterialV, GridlineNamesIdentityAxis.V);
                 var allGridLines = uGridLines.Union(vGridLines);
-                CheckDuplicatedNames(allGridLines, out var duplicatedNamesGridLines);
-                AddGridLinesTexts(allGridLines, duplicatedNamesGridLines, texts);
+                CheckDuplicatedNames(allGridLines, out var deduplicatedNamesGridLines);
+                AddGridLinesTexts(allGridLines, deduplicatedNamesGridLines, texts);
                 grids.Add((grid: grid, boundary: boundary));
 
                 if (input.ShowDebugGeometry)
@@ -315,7 +315,7 @@ namespace Grid
 
         private static void AddGridLinesTexts(
             IEnumerable<GridLine> gridlines,
-            HashSet<GridLine> duplicatedNamesGridLines,
+            HashSet<GridLine> deduplicatedNamesGridLines,
             List<(Vector3 location, Vector3 facingDirection, Vector3 lineDirection, string text, Color? color)> texts)
         {
             foreach (var gridline in gridlines)
@@ -325,7 +325,7 @@ namespace Grid
                 var line = gridline.Line;
                 var lineDir = (line.End - line.Start).Unitized();
                 var circleCenter = line.Start - (lineDir * (CircleRadius + lineHeadExtension));
-                var color = duplicatedNamesGridLines.Contains(gridline) ? Colors.Red : Colors.Darkgray;
+                var color = deduplicatedNamesGridLines.Contains(gridline) ? Colors.Red : Colors.Darkgray;
                 texts.Add((circleCenter + elevation, Vector3.ZAxis, lineDir, gridline.Name, color));
             }
         }
@@ -346,10 +346,10 @@ namespace Grid
             return gridGuides;
         }
 
-        private static void CheckDuplicatedNames(IEnumerable<GridLine> allGridLines, out HashSet<GridLine> duplicatedNamesGridLines)
+        private static void CheckDuplicatedNames(IEnumerable<GridLine> allGridLines, out HashSet<GridLine> deduplicatedNamesGridLines)
         {
             var gridLinesGroups = allGridLines.GroupBy(g => g.Name);
-            duplicatedNamesGridLines = new HashSet<GridLine>();
+            deduplicatedNamesGridLines = new HashSet<GridLine>();
             foreach (var group in gridLinesGroups)
             {
                 if (group.Count() > 1)
@@ -358,7 +358,7 @@ namespace Grid
                     foreach (var gridLine in group.Skip(1))
                     {
                         gridLine.Name = $"{gridLine.Name}({index})";
-                        duplicatedNamesGridLines.Add(gridLine);
+                        deduplicatedNamesGridLines.Add(gridLine);
                         index++;
                     }
                 }
