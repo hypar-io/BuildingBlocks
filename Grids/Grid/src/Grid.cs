@@ -316,9 +316,6 @@ namespace Grid
             // Offset the heads from the base lines.
             var lineHeadExtension = 2.0;
 
-            // Offset the grid visual from the XY plane to avoid z-fighting.
-            var elevation = new Vector3();
-
             var lineDir = (line.End - line.Start).Unitized();
             var circleCenter = line.Start - (lineDir * (CircleRadius + lineHeadExtension));
 
@@ -327,12 +324,10 @@ namespace Grid
             gridline.ExtensionBeginning = lineHeadExtension;
             gridline.Curve = line;
             gridline.Name = name;
-            gridline.Material = new Material("Try me", new Color(0, 0, 1, 1));
+            gridline.Material = material;
 
             model.AddElement(gridline);
-            model.AddElement(new ModelCurve(new Line(line.Start - (lineDir * lineHeadExtension) + elevation, line.End + elevation), material, name: name));
-            model.AddElement(new ModelCurve(new Circle(circleCenter + elevation, CircleRadius), material));
-            texts.Add((circleCenter + elevation, Vector3.ZAxis, lineDir, name, Colors.Darkgray));
+            texts.Add((circleCenter, Vector3.ZAxis, lineDir, name, Colors.Darkgray));
             return gridline;
         }
 
