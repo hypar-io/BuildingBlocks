@@ -255,7 +255,7 @@ namespace Structure
                     var instance = columnDefinition.CreateInstance(t, $"column_{edge.Id}");
                     instance.AdditionalProperties.Add(EDGE_ID_PROPERTY_NAME, edge.Id);
                     model.AddElement(instance, false);
-                    // model.AddElement(new ModelCurve(new Line(columnDefinition.Location, columnDefinition.Location + new Vector3(0, 0, columnDefinition.Height)).TransformedLine(t), BuiltInMaterials.ZAxis));
+                    model.AddElement(new ModelCurve(new Line(columnDefinition.Location, columnDefinition.Location + new Vector3(0, 0, columnDefinition.Height)).TransformedLine(t), BuiltInMaterials.ZAxis));
                 }
                 else
                 {
@@ -318,14 +318,14 @@ namespace Structure
                         girderInstance = girderDefinition.CreateInstance(t, $"beam_{edge.Id}");
                         model.AddElement(girderInstance, false);
 
-                        // if (girderDefinition is Beam beam)
-                        // {
-                        //     model.AddElement(new ModelCurve(beam.Curve.Transformed(t), BuiltInMaterials.ZAxis));
-                        // }
-                        // else if (girderDefinition is Joist joist)
-                        // {
-                        //     model.AddElement(new ModelCurve(joist.Curve.Transformed(t), BuiltInMaterials.ZAxis));
-                        // }
+                        if (girderDefinition is Beam beam)
+                        {
+                            model.AddElement(new ModelCurve(beam.Curve.Transformed(t), BuiltInMaterials.ZAxis));
+                        }
+                        else if (girderDefinition is Joist joist)
+                        {
+                            model.AddElement(new ModelCurve(joist.Curve.Transformed(t), BuiltInMaterials.ZAxis));
+                        }
                     }
                     else
                     {
@@ -333,14 +333,14 @@ namespace Structure
                         {
                             girderInstance = girderDefinition.CreateInstance(t, $"beam_{edge.Id}");
                             model.AddElement(girderInstance, false);
-                            // if (girderDefinition is Beam beam)
-                            // {
-                            //     model.AddElement(new ModelCurve(beam.Curve.Transformed(t), BuiltInMaterials.ZAxis));
-                            // }
-                            // else if (girderDefinition is Joist joist)
-                            // {
-                            //     model.AddElement(new ModelCurve(joist.Curve.Transformed(t), BuiltInMaterials.ZAxis));
-                            // }
+                            if (girderDefinition is Beam beam)
+                            {
+                                model.AddElement(new ModelCurve(beam.Curve.Transformed(t), BuiltInMaterials.ZAxis));
+                            }
+                            else if (girderDefinition is Joist joist)
+                            {
+                                model.AddElement(new ModelCurve(joist.Curve.Transformed(t), BuiltInMaterials.ZAxis));
+                            }
                         }
                     }
 
@@ -462,14 +462,14 @@ namespace Structure
                             beamInstance.AdditionalProperties.Add(CELL_ID_PROPERTY_NAME, cell.Id);
                             model.AddElement(beamInstance, false);
 
-                            // if (beamDefinition is Beam beam)
-                            // {
-                            //     model.AddElement(new ModelCurve(beam.Curve.Transformed(instanceTransform), BuiltInMaterials.ZAxis));
-                            // }
-                            // else if (beamDefinition is Joist joist)
-                            // {
-                            //     model.AddElement(new ModelCurve(joist.Curve.Transformed(instanceTransform), BuiltInMaterials.ZAxis));
-                            // }
+                            if (beamDefinition is Beam beam)
+                            {
+                                model.AddElement(new ModelCurve(beam.Curve.Transformed(instanceTransform), BuiltInMaterials.ZAxis));
+                            }
+                            else if (beamDefinition is Joist joist)
+                            {
+                                model.AddElement(new ModelCurve(joist.Curve.Transformed(instanceTransform), BuiltInMaterials.ZAxis));
+                            }
                         }
                     }
                 }

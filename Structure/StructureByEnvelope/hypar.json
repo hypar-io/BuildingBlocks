@@ -2317,8 +2317,17 @@
     "https://prod-api.hypar.io/schemas/LevelVolume",
     "https://prod-api.hypar.io/schemas/Grid2dElement",
     "https://prod-api.hypar.io/schemas/WarningMessage",
-    "https://prod-api.hypar.io/schemas/ViewScope",
+    "https://prod-api.hypar.io/schemas/ViewScope"
   ],
+  "filters": {
+    "Structure": {
+      "context": "[*discriminator=Elements.Beam || discriminator=Elements.Column || discriminator=Elements.WarningMessage]",
+      "default": true
+    },
+    "Analytical Model": {
+      "context": "[*discriminator=Elements.ModelCurve || discriminator=Elements.WarningMessage]"
+    }
+  },
   "repository_url": "https://github.com/hypar-io/BuildingBlocks/tree/master/Structure/StructureByEnvelope",
   "source_file_key": null,
   "preview_image": null,
