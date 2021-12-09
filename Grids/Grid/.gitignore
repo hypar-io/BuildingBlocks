@@ -8,3 +8,4 @@ input.json
 .vscode/
 test/Generated/**/results/
 .DS_Store
+server/
