@@ -217,12 +217,14 @@ namespace Grid
 
                 foreach (var uGridLine in uGridLines)
                 {
+                    var uGridLineGeo = (Line)uGridLine.Curve; // we know that we only made lines here, not arbitrary curves
                     foreach (var vGridLine in vGridLines)
                     {
-                        if (uGridLine.Line.Intersects(vGridLine.Line, out var intersection, includeEnds: true))
+                        var vGridLineGeo = (Line)vGridLine.Curve; // we know that we only made lines here, not arbitrary curves
+                        if (uGridLineGeo.Intersects(vGridLineGeo, out var intersection, includeEnds: true))
                         {
                             var gridNodeTransform = new Transform(intersection);
-                            gridNodes.Add(new GridNode(gridNodeTransform, Guid.NewGuid(), $"{uGridLine.Name}{vGridLine.Name}"));
+                            gridNodes.Add(new GridNode(gridNodeTransform, "nany", "vwhatevs", id: Guid.NewGuid(), $"{uGridLine.Name}{vGridLine.Name}"));
 
                             if (input.ShowDebugGeometry)
                             {
@@ -315,7 +317,7 @@ namespace Grid
             var lineHeadExtension = 2.0;
 
             // Offset the grid visual from the XY plane to avoid z-fighting.
-            var elevation = new Vector3(0, 0, 0.01);
+            var elevation = new Vector3();
 
             var lineDir = (line.End - line.Start).Unitized();
             var circleCenter = line.Start - (lineDir * (CircleRadius + lineHeadExtension));
@@ -323,9 +325,9 @@ namespace Grid
             var gridline = new GridLine();
             gridline.Radius = CircleRadius;
             gridline.ExtensionBeginning = lineHeadExtension;
-            gridline.Line = line;
+            gridline.Curve = line;
             gridline.Name = name;
-            gridline.Material = material;
+            gridline.Material = new Material("Try me", new Color(0, 0, 1, 1));
 
             model.AddElement(gridline);
             model.AddElement(new ModelCurve(new Line(line.Start - (lineDir * lineHeadExtension) + elevation, line.End + elevation), material, name: name));

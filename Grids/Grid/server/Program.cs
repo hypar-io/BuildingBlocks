@@ -11,7 +11,7 @@ namespace Hypar.Server
         {
             await HyparServer.StartAsync(
                 args,
-                Path.GetFullPath(Path.Combine("/Users/serenali/Github/hypar/BuildingBlocks/Grids/Grid/server", "..")),
+                Path.GetFullPath(Path.Combine(@"/Users/serenali/Github/hypar/BuildingBlocks/Grids/Grid/server", "..")),
                 typeof(Grid.Function),
                 typeof(Grid.GridInputs));
         }

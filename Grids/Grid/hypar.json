@@ -161,7 +161,7 @@
               "$ref": "https://prod-api.hypar.io/schemas/Transform",
               "$hyparDeprecated": true,
               "$hyparConstraints": {
-                "enablePosition": true,
+                "enableTranslation": true,
                 "enableRotation": true,
                 "positionZ": 0,
                 "rotationZ": 0
@@ -475,8 +475,8 @@
         "Transform": {
           "$ref": "https://prod-api.hypar.io/schemas/Transform",
           "$hyparConstraints": {
-            "enablePosition": true,
-            "enableRotation": true,
+            "enableTranslation": false,
+            "enableRotation": "z",
             "positionZ": 0,
             "rotationZ": 0
           }
