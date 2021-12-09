@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Elements;
 using Elements.Geometry;
 using Elements.Geometry.Profiles;
+using Elements.Geometry.Solids;
 using Elements.Spatial;
 using Elements.Spatial.CellComplex;
 
@@ -75,10 +76,6 @@ namespace Structure
                 toWorld.Invert();
                 var bbox = new BBox3(firstLevelPerimeter.Vertices.Select(o => toWorld.OfVector(o)).ToList());
 
-                model.AddElements(new ModelCurve(Polygon.Rectangle(bbox.Min, bbox.Max).Transformed(t)));
-
-                // model.AddElements(toWorld.ToModelCurves());
-
                 var l = bbox.Max.Y - bbox.Min.Y;
                 var w = bbox.Max.X - bbox.Min.X;
 
@@ -91,8 +88,6 @@ namespace Structure
 
                 vGrid.DivideByFixedLength(DEFAULT_V);
                 var grid = new Grid2d(uGrid, vGrid);
-
-                // model.AddElements(grid.ToModelCurves());
 
                 var u = grid.U;
                 var v = grid.V;
@@ -123,10 +118,12 @@ namespace Structure
 
             Vector3 primaryDirection;
             Vector3 secondaryDirection;
+            IEnumerable<GridLine> gridLines = null;
+
             if (models.ContainsKey(GRIDS_MODEL_NAME))
             {
                 var gridsModel = models[GRIDS_MODEL_NAME];
-                var gridLines = gridsModel.AllElementsOfType<GridLine>();
+                gridLines = gridsModel.AllElementsOfType<GridLine>();
 
                 // Group by direction.
                 var gridGroups = gridLines.GroupBy(gl => gl.Line.Direction()).ToList();
@@ -216,7 +213,7 @@ namespace Structure
             }
 
             // Order edges from lowest to highest.
-            foreach (var edge in edges.OrderBy(e =>
+            foreach (Elements.Spatial.CellComplex.Edge edge in edges.OrderBy(e =>
                 Math.Min(cellComplex.GetVertex(e.StartVertexId).Value.Z, cellComplex.GetVertex(e.EndVertexId).Value.Z)
             ))
             {
@@ -227,6 +224,8 @@ namespace Structure
 
                 var l = new Line(start, end);
                 var memberLength = l.Length();
+
+                var warningRepresentation = new Representation(new List<SolidOperation>() { new Extrude(Polygon.Rectangle(0.01, 0.01), 0.01, Vector3.ZAxis, false) });
 
                 if (l.IsVertical())
                 {
@@ -256,6 +255,7 @@ namespace Structure
                     var instance = columnDefinition.CreateInstance(t, $"column_{edge.Id}");
                     instance.AdditionalProperties.Add(EDGE_ID_PROPERTY_NAME, edge.Id);
                     model.AddElement(instance, false);
+                    // model.AddElement(new ModelCurve(new Line(columnDefinition.Location, columnDefinition.Location + new Vector3(0, 0, columnDefinition.Height)).TransformedLine(t), BuiltInMaterials.ZAxis));
                 }
                 else
                 {
@@ -317,6 +317,15 @@ namespace Structure
                     {
                         girderInstance = girderDefinition.CreateInstance(t, $"beam_{edge.Id}");
                         model.AddElement(girderInstance, false);
+
+                        // if (girderDefinition is Beam beam)
+                        // {
+                        //     model.AddElement(new ModelCurve(beam.Curve.Transformed(t), BuiltInMaterials.ZAxis));
+                        // }
+                        // else if (girderDefinition is Joist joist)
+                        // {
+                        //     model.AddElement(new ModelCurve(joist.Curve.Transformed(t), BuiltInMaterials.ZAxis));
+                        // }
                     }
                     else
                     {
@@ -324,8 +333,17 @@ namespace Structure
                         {
                             girderInstance = girderDefinition.CreateInstance(t, $"beam_{edge.Id}");
                             model.AddElement(girderInstance, false);
+                            // if (girderDefinition is Beam beam)
+                            // {
+                            //     model.AddElement(new ModelCurve(beam.Curve.Transformed(t), BuiltInMaterials.ZAxis));
+                            // }
+                            // else if (girderDefinition is Joist joist)
+                            // {
+                            //     model.AddElement(new ModelCurve(joist.Curve.Transformed(t), BuiltInMaterials.ZAxis));
+                            // }
                         }
                     }
+
                     if (girderInstance != null)
                     {
                         girderInstance.AdditionalProperties.Add(EDGE_ID_PROPERTY_NAME, edge.Id);
@@ -421,10 +439,10 @@ namespace Structure
                                 {
                                     // Beam definitions are defined along the X axis
                                     var cl = new Line(Vector3.Origin, new Vector3(beamLength, 0));
-                                    if (beamLength < beamProfileDepth)
-                                    {
-                                        continue;
-                                    }
+                                    // if (beamLength < beamProfileDepth)
+                                    // {
+                                    //     continue;
+                                    // }
 
                                     var cellCount = (int)Math.Ceiling((beamLength - Units.InchesToMeters(24)) / beamProfileDepth);
                                     beamDefinition = new Joist(cl, L3, L3, L2, beamProfileDepth, cellCount, Units.InchesToMeters(2.5), Units.InchesToMeters(12), structureMaterial)
@@ -443,10 +461,21 @@ namespace Structure
                             var beamInstance = beamDefinition.CreateInstance(instanceTransform, $"beam_{cell.Id}");
                             beamInstance.AdditionalProperties.Add(CELL_ID_PROPERTY_NAME, cell.Id);
                             model.AddElement(beamInstance, false);
+
+                            // if (beamDefinition is Beam beam)
+                            // {
+                            //     model.AddElement(new ModelCurve(beam.Curve.Transformed(instanceTransform), BuiltInMaterials.ZAxis));
+                            // }
+                            // else if (beamDefinition is Joist joist)
+                            // {
+                            //     model.AddElement(new ModelCurve(joist.Curve.Transformed(instanceTransform), BuiltInMaterials.ZAxis));
+                            // }
                         }
                     }
                 }
             }
+
+            model.AddElements(CreateViewScopesForLevelsAndGrids(model, gridLines));
 
             var output = new StructureOutputs(_longestGridSpan)
             {
@@ -456,7 +485,73 @@ namespace Structure
             return output;
         }
 
-        private static bool IsExternal(Edge e)
+        private static List<ViewScope> CreateViewScopesForLevelsAndGrids(Model model, IEnumerable<GridLine> gridLines)
+        {
+            var beams = model.AllElementsOfType<ElementInstance>().Where(e => e.BaseDefinition is Beam);
+            var beamGroups = beams.GroupBy(b => b.Transform.Origin.Z);
+
+            var scopes = new List<ViewScope>();
+            var minZ = double.MaxValue;
+            var maxZ = double.MinValue;
+
+            foreach (var bg in beamGroups)
+            {
+                var bbox = new BBox3(bg.SelectMany(b =>
+                {
+                    var def = (Beam)b.BaseDefinition;
+                    var start = b.Transform.OfPoint(def.Curve.PointAt(0));
+                    var end = b.Transform.OfPoint(def.Curve.PointAt(1));
+
+                    if (start.Z > maxZ)
+                    {
+                        maxZ = start.Z;
+                    }
+                    if (start.Z < minZ)
+                    {
+                        minZ = start.Z;
+                    }
+                    if (end.Z > maxZ)
+                    {
+                        maxZ = end.Z;
+                    }
+                    if (end.Z < minZ)
+                    {
+                        minZ = end.Z;
+                    }
+                    return new[] { start, end };
+                }));
+
+                var scope = new ViewScope()
+                {
+                    BoundingBox = new BBox3(bbox.Min + new Vector3(0, 0, -1), bbox.Max + new Vector3(0, 0, 1)),
+                    Name = $"Structure elevation {bg.Key}"
+                };
+                scopes.Add(scope);
+            }
+
+            // TODO: Create view scopes along grid lines when view scopes
+            // support non-axis aligned bounding boxes.
+            // if (gridLines != null)
+            // {
+            //     foreach (var gridLine in gridLines)
+            //     {
+
+            //         var d = gridLine.Line.Direction();
+            //         var ortho = Vector3.ZAxis.Cross(gridLine.Line.Direction());
+            //         var bbox = new BBox3(gridLine);
+            //         var scope = new ViewScope()
+            //         {
+            //             BoundingBox = new BBox3(bbox.Min + ortho * -1, bbox.Max + ortho * 1),
+            //             Name = $"Structure Grid {gridLine.Name}",
+            //             Camera = new Camera(ortho, null, CameraProjection.Perspective)
+            //         };
+            //         scopes.Add(scope);
+            //     }
+            // }
+            return scopes;
+        }
+
+        private static bool IsExternal(Elements.Spatial.CellComplex.Edge e)
         {
             var faces = e.GetFaces();
             if (faces.Count <= 3)
