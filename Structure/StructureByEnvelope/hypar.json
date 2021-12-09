@@ -11,7 +11,7 @@
       "optional": true
     },
     {
-      "autohide": true,
+      "autohide": false,
       "name": "Grids",
       "optional": true
     },
@@ -2313,10 +2313,11 @@
     }
   ],
   "element_types": [
-    "https://prod-api.hypar.io/schemas/GridLine",
     "https://raw.githubusercontent.com/hypar-io/Schemas/master/LevelPerimeter.json",
     "https://prod-api.hypar.io/schemas/LevelVolume",
-    "https://prod-api.hypar.io/schemas/Grid2dElement"
+    "https://prod-api.hypar.io/schemas/Grid2dElement",
+    "https://prod-api.hypar.io/schemas/WarningMessage",
+    "https://prod-api.hypar.io/schemas/ViewScope",
   ],
   "repository_url": "https://github.com/hypar-io/BuildingBlocks/tree/master/Structure/StructureByEnvelope",
   "source_file_key": null,
