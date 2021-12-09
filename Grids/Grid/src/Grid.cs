@@ -217,14 +217,16 @@ namespace Grid
 
                 foreach (var uGridLine in uGridLines)
                 {
-                    var uGridLineGeo = (Line)uGridLine.Curve; // we know that we only made lines here, not arbitrary curves
                     foreach (var vGridLine in vGridLines)
                     {
-                        var vGridLineGeo = (Line)vGridLine.Curve; // we know that we only made lines here, not arbitrary curves
-                        if (uGridLineGeo.Intersects(vGridLineGeo, out var intersection, includeEnds: true))
+                        if (uGridLine.Line.Intersects(vGridLine.Line, out var intersection, includeEnds: true))
                         {
                             var gridNodeTransform = new Transform(intersection);
-                            gridNodes.Add(new GridNode(gridNodeTransform, "nany", "vwhatevs", id: Guid.NewGuid(), $"{uGridLine.Name}{vGridLine.Name}"));
+                            gridNodes.Add(new GridNode(gridNodeTransform,
+                                                        uGridLine.Id.ToString(),
+                                                        vGridLine.Id.ToString(),
+                                                        id: Guid.NewGuid(),
+                                                        $"{uGridLine.Name}{vGridLine.Name}"));
 
                             if (input.ShowDebugGeometry)
                             {
@@ -322,7 +324,7 @@ namespace Grid
             var gridline = new GridLine();
             gridline.Radius = CircleRadius;
             gridline.ExtensionBeginning = lineHeadExtension;
-            gridline.Curve = line;
+            gridline.Line = line;
             gridline.Name = name;
             gridline.Material = material;
 
