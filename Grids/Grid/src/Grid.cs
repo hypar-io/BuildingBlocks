@@ -222,7 +222,11 @@ namespace Grid
                         if (uGridLine.Line.Intersects(vGridLine.Line, out var intersection, includeEnds: true))
                         {
                             var gridNodeTransform = new Transform(intersection);
-                            gridNodes.Add(new GridNode(gridNodeTransform, Guid.NewGuid(), $"{uGridLine.Name}{vGridLine.Name}"));
+                            gridNodes.Add(new GridNode(gridNodeTransform,
+                                                       uGridLine.Id.ToString(),
+                                                       vGridLine.Id.ToString(),
+                                                       Guid.NewGuid(),
+                                                       $"{uGridLine.Name}{vGridLine.Name}"));
 
                             if (input.ShowDebugGeometry)
                             {
