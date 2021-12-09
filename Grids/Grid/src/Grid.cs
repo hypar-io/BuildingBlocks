@@ -223,10 +223,10 @@ namespace Grid
                         {
                             var gridNodeTransform = new Transform(intersection);
                             gridNodes.Add(new GridNode(gridNodeTransform,
-                                                        uGridLine.Id.ToString(),
-                                                        vGridLine.Id.ToString(),
-                                                        id: Guid.NewGuid(),
-                                                        $"{uGridLine.Name}{vGridLine.Name}"));
+                                                       uGridLine.Id.ToString(),
+                                                       vGridLine.Id.ToString(),
+                                                       Guid.NewGuid(),
+                                                       $"{uGridLine.Name}{vGridLine.Name}"));
 
                             if (input.ShowDebugGeometry)
                             {
