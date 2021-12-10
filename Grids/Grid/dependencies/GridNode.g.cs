@@ -26,10 +26,12 @@ namespace Elements
     public partial class GridNode : Element
     {
         [Newtonsoft.Json.JsonConstructor]
-        public GridNode(Transform @location, System.Guid @id = default, string @name = null)
+        public GridNode(Transform @location, string @uGridline, string @vGridline, System.Guid @id = default, string @name = null)
             : base(id, name)
         {
             this.Location = @location;
+            this.UGridline = @uGridline;
+            this.VGridline = @vGridline;
             }
         
         // Empty constructor
@@ -41,6 +43,12 @@ namespace Elements
         /// <summary>The location of this grid node.</summary>
         [Newtonsoft.Json.JsonProperty("Location", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public Transform Location { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("U Gridline", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string UGridline { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("V Gridline", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string VGridline { get; set; }
     
     
     }

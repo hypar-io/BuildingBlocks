@@ -13,16 +13,4 @@ namespace Grid
             this.Name = name;
         }
     }
-
-    public class GridLine
-    {
-        public Line Line;
-        public string Name;
-
-        public GridLine(Line line, string name = null)
-        {
-            this.Line = line;
-            this.Name = name;
-        }
-    }
 }
