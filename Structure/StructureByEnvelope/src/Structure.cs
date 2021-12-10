@@ -165,7 +165,7 @@ namespace Structure
 
                 // Set the profile down by half its depth so that 
                 // it sits under the slab.
-                girderProfile = girderProfile.Transformed(new Transform(new Vector3(0, -girderProfileDepth / 2 - input.SlabThickness)));
+                girderProfile.Transform(new Transform(new Vector3(0, -girderProfileDepth / 2 - input.SlabThickness)));
             }
 
             Profile beamProfile = null;
@@ -184,7 +184,7 @@ namespace Structure
 
                 // Set the profile down by half its depth so that 
                 // it sits under the slab.
-                beamProfile = beamProfile.Transformed(new Transform(new Vector3(0, -beamProfileDepth / 2 - input.SlabThickness)));
+                beamProfile.Transform(new Transform(new Vector3(0, -beamProfileDepth / 2 - input.SlabThickness)));
             }
 
             var edges = cellComplex.GetEdges();
