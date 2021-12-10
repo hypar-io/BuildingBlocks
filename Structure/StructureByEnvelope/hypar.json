@@ -2321,7 +2321,7 @@
   ],
   "filters": {
     "Structure": {
-      "context": "[*discriminator=Elements.Beam || discriminator=Elements.Column || discriminator=Elements.WarningMessage]",
+      "context": "[*discriminator=Elements.Beam || discriminator=Elements.Column || discriminator=Elements.Joist || discriminator=Elements.WarningMessage]",
       "default": true
     },
     "Analytical Model": {
