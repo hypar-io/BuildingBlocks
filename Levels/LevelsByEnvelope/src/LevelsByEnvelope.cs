@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace LevelsByEnvelope
 {
-      public static class LevelsByEnvelope
+    public static class LevelsByEnvelope
     {
         /// <summary>
         /// makes levels by envelope.
@@ -40,6 +40,7 @@ namespace LevelsByEnvelope
             output.Model.AddElements(levelMaker.Levels);
             output.Model.AddElements(levelMaker.LevelPerimeters);
             output.Model.AddElements(levelMaker.LevelVolumes);
+            output.Model.AddElements(levelMaker.ViewScopes);
             var matl = BuiltInMaterials.Glass;
             matl.SpecularFactor = 0.0;
             matl.GlossinessFactor = 0.0;

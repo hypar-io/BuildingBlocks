@@ -32,6 +32,12 @@ namespace Elements
             this.Grid = @grid;
             this.GridNodes = @gridNodes;
             }
+        
+        // Empty constructor
+        public Grid2dElement()
+            : base()
+        {
+        }
     
         /// <summary>Contains a Grid2d in absolute space (is not intended to be modified by the transform)</summary>
         [Newtonsoft.Json.JsonProperty("Grid", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]

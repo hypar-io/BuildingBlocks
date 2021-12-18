@@ -1,0 +1,64 @@
+{
+  "$schema": "https://hypar.io/Schemas/Function.json",
+  "id": "1a3dbec1-1224-4985-b522-80922def8692",
+  "name": "Walls",
+  "description": "Create Walls by drawing them.",
+  "language": "C#",
+  "model_output": "Walls",
+  "input_schema": {
+    "type": "object",
+    "properties": {}
+  },
+  "overrides": {
+    "Walls": {
+      "context": "[*discriminator=Elements.StandardWall]",
+      "identity": {
+        "Rough Location": {
+          "$ref": "https://hypar.io/Schemas/Geometry/Vector3.json"
+        }
+      },
+      "schema": {
+        "CenterLine": {
+          "$ref": "https://prod-api.hypar.io/schemas/Line"
+        }
+      },
+      "behaviors": {
+        "add": {
+          "schema": {
+            "CenterLine": {
+              "$ref": "https://prod-api.hypar.io/schemas/Line"
+            }
+          }
+        },
+        "remove": true
+      }
+    },
+    "Wall Properties": {
+      "context": "[*discriminator=Elements.StandardWall]",
+      "identity": {
+        "Rough Location": {
+          "$ref": "https://hypar.io/Schemas/Geometry/Vector3.json"
+        }
+      },
+      "schema": {
+        "Height": {
+          "type": "number",
+          "$hyparUnitType": "length",
+          "default": 3.0
+        },
+        "Thickness": {
+          "type": "number",
+          "$hyparUnitType": "length",
+          "default": 0.15,
+          "$hyparPreferredUnits": {
+            "imperial": "in",
+            "metric": "mm"
+          }
+        }
+      }
+    }
+  },
+  "repository_url": "https://github.com/hypar-io/function",
+  "last_updated": "0001-01-01T00:00:00",
+  "cli_version": "0.9.6-alpha.3"
+}

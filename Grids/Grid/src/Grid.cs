@@ -87,7 +87,7 @@ namespace Grid
             }
 
             // Apply origin overrides if set
-            if (input.Overrides != null)
+            if (input.Overrides?.GridOrigins != null)
             {
                 foreach (var overrideOrigin in input.Overrides.GridOrigins)
                 {
@@ -119,7 +119,9 @@ namespace Grid
                 output.Model.AddElement(new Line(origin - vDirection, origin + vDirection));
             }
 
-            var standardizedRecords = GetStandardizedRecords(output, gridArea.U, gridArea.V, input, envelopePolygons, transform);
+            var uOverride = input.Overrides?.UGridSubdivisions?.FirstOrDefault(o => o.Identity.Name.Equals(gridArea.Name))?.Value.UGrid;
+            var vOverride = input.Overrides?.VGridSubdivisions?.FirstOrDefault(o => o.Identity.Name.Equals(gridArea.Name))?.Value.VGrid;
+            var standardizedRecords = GetStandardizedRecords(output, gridArea, input, envelopePolygons, transform, uOverride, vOverride);
 
             var u = standardizedRecords.u;
             var v = standardizedRecords.v;
@@ -172,8 +174,8 @@ namespace Grid
                 output.Model.AddElement(new ModelCurve(gridPolygon));
             }
 
-            var uDirectionEnd = origin + uDirection;
-            var vDirectionEnd = origin + vDirection;
+            var uDirectionEnd = origin + uDirection * (uOverride?.Curve.Length() ?? 1);
+            var vDirectionEnd = origin + vDirection * (vOverride?.Curve.Length() ?? 1);
             var guideSegments = new List<Line>() { new Line(origin, uDirectionEnd), new Line(origin, vDirectionEnd) };
             if (envelopePolygons.Count() > 0)
             {
@@ -217,10 +219,14 @@ namespace Grid
                 {
                     foreach (var vGridLine in vGridLines)
                     {
-                        if (uGridLine.Line.Intersects(vGridLine.Line, out var intersection))
+                        if (uGridLine.Line.Intersects(vGridLine.Line, out var intersection, includeEnds: true))
                         {
                             var gridNodeTransform = new Transform(intersection);
-                            gridNodes.Add(new GridNode(gridNodeTransform, Guid.NewGuid(), $"{uGridLine.Name}{vGridLine.Name}"));
+                            gridNodes.Add(new GridNode(gridNodeTransform,
+                                                       uGridLine.Id.ToString(),
+                                                       vGridLine.Id.ToString(),
+                                                       Guid.NewGuid(),
+                                                       $"{uGridLine.Name}{vGridLine.Name}"));
 
                             if (input.ShowDebugGeometry)
                             {
@@ -250,7 +256,20 @@ namespace Grid
                 invert.Invert();
                 var boundary = (Polygon)grid.boundary.Transformed(invert);
                 var rep = new Representation(new List<Elements.Geometry.Solids.SolidOperation>() { new Elements.Geometry.Solids.Lamina(boundary, false) });
-                return new Grid2dElement(grid.grid, gridNodes, transform, Grid2dElementMaterial, rep, false, Guid.NewGuid(), gridArea.Name);
+                var grid2dElement = new Grid2dElement(grid.grid, gridNodes, transform, Grid2dElementMaterial, rep, false, Guid.NewGuid(), gridArea.Name);
+
+                grid2dElement.AdditionalProperties["UGrid"] = new Grid1dInput(
+                    new Polyline(grid.grid.U.Curve.PointAt(0), grid.grid.U.Curve.PointAt(1)),
+                    uPoints,
+                    uOverride?.SubdivisionMode ?? Grid1dInputSubdivisionMode.Manual,
+                    uOverride?.SubdivisionSettings);
+                grid2dElement.AdditionalProperties["VGrid"] = new Grid1dInput(
+                    new Polyline(grid.grid.V.Curve.PointAt(0), grid.grid.V.Curve.PointAt(1)),
+                    vPoints,
+                    vOverride?.SubdivisionMode ?? Grid1dInputSubdivisionMode.Manual,
+                    vOverride?.SubdivisionSettings);
+
+                return grid2dElement;
             }).ToList();
         }
 
@@ -299,18 +318,19 @@ namespace Grid
             // Offset the heads from the base lines.
             var lineHeadExtension = 2.0;
 
-            // Offset the grid visual from the XY plane to avoid z-fighting.
-            var elevation = new Vector3(0, 0, 0.01);
-
             var lineDir = (line.End - line.Start).Unitized();
             var circleCenter = line.Start - (lineDir * (CircleRadius + lineHeadExtension));
 
-            model.AddElement(new Elements.GridLine(new Polyline(new List<Vector3>() { line.Start, line.End }), null, null, null, false, Guid.NewGuid(), name));
-            model.AddElement(new ModelCurve(new Line(line.Start - (lineDir * lineHeadExtension) + elevation, line.End + elevation), material, name: name));
-            model.AddElement(new ModelCurve(new Circle(circleCenter + elevation, CircleRadius), material));
-            texts.Add((circleCenter + elevation, Vector3.ZAxis, lineDir, name, Colors.Darkgray));
-            model.AddElement(new LabelDot(circleCenter, name));
-            return new GridLine(line, name);
+            var gridline = new GridLine();
+            gridline.Radius = CircleRadius;
+            gridline.ExtensionBeginning = lineHeadExtension;
+            gridline.Line = line;
+            gridline.Name = name;
+            gridline.Material = material;
+
+            model.AddElement(gridline);
+            texts.Add((circleCenter, Vector3.ZAxis, lineDir, name, Colors.Darkgray));
+            return gridline;
         }
 
         private static List<GridGuide> GetDivisions(Vector3 origin, Vector3 gridDir, U u)
@@ -377,11 +397,27 @@ namespace Grid
             return boxRect.TransformedPolygon(minBoxXform);
         }
 
-        private static (U u, U v) GetStandardizedRecords(GridOutputs output, U u, V v, GridInputs input, List<Polygon> envelopePolygons, Transform transform)
+        private static (U u, U v) GetStandardizedRecords(GridOutputs output, GridAreas gridArea, GridInputs input, List<Polygon> envelopePolygons, Transform transform, Grid1dInput uOverride, Grid1dInput vOverride)
         {
             var origin = transform.Origin;
             var uDirection = transform.XAxis;
             var vDirection = transform.YAxis;
+            var u = gridArea.U;
+            var v = gridArea.V;
+
+            U uStandardized = null;
+            U vStandardized = null;
+
+            if (uOverride != null)
+            {
+                uStandardized = GetStandardizedRecords(u, uOverride);
+            }
+
+            if (vOverride != null)
+            {
+                var vAsU = new U(v.Name, v.Spacing, v.GridLines, v.TargetTypicalSpacing, v.OffsetStart, v.OffsetEnd);
+                vStandardized = GetStandardizedRecords(vAsU, vOverride);
+            }
 
             if (input.Mode == GridInputsMode.Typical)
             {
@@ -405,12 +441,33 @@ namespace Grid
                 {
                     output.Model.AddElement(new ModelCurve(bounds));
                 }
-                return (u: GetStandardizedRecords(u, input, xAxis.Length()), v: GetStandardizedRecords(v, input, yAxis.Length()));
+
+                uStandardized ??= GetStandardizedRecords(u, input, xAxis.Length());
+                vStandardized ??= GetStandardizedRecords(v, input, yAxis.Length());
             }
             else
             {
-                return (u: GetStandardizedRecords(u, input, 0), v: GetStandardizedRecords(v, input, 0));
+                uStandardized ??= GetStandardizedRecords(u, input, 0);
+                vStandardized ??= GetStandardizedRecords(v, input, 0);
             }
+            return (u: uStandardized, v: vStandardized);
+        }
+
+        private static U GetStandardizedRecords(U u, Grid1dInput uOverride)
+        {
+            var gridlines = new List<GridLines>();
+            var start = uOverride.Curve.PointAt(0);
+            var splitPoints = uOverride.SplitPoints
+                                .Select(p => p.DistanceTo(start))
+                                .OrderBy(d => d)
+                                .ToList();
+            for (var i = 0; i < splitPoints.Count; i++)
+            {
+                var prev = i == 0 ? 0 : splitPoints[i - 1];
+                var spacing = splitPoints[i] - prev;
+                gridlines.Add(new GridLines(0, spacing, 1));
+            }
+            return new U(u.Name, u.Spacing, gridlines, 0, 0, 0);
         }
 
         private static Polygon GetBoundingBox2d(IEnumerable<Vector3> points, Transform transform)

@@ -81,7 +81,8 @@
     "https://raw.githubusercontent.com/hypar-io/Schemas/master/Envelope.json",
     "https://raw.githubusercontent.com/hypar-io/Schemas/master/Level.json",
     "https://raw.githubusercontent.com/hypar-io/Schemas/master/LevelPerimeter.json",
-    "https://prod-api.hypar.io/schemas/LevelVolume"
+    "https://prod-api.hypar.io/schemas/LevelVolume",
+    "https://prod-api.hypar.io/schemas/ViewScope"
   ],
   "repository_url": "https://github.com/hypar-io/BuildingBlocks/tree/master/Levels/LevelsByEnvelope",
   "source_file_key": null,

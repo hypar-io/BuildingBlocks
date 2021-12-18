@@ -35,6 +35,12 @@ namespace Elements
             this.Direction = @direction;
             this.Rotation = @rotation;
             }
+        
+        // Empty constructor
+        public Envelope()
+            : base()
+        {
+        }
     
         /// <summary>The profile to extrude.</summary>
         [Newtonsoft.Json.JsonProperty("Profile", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]

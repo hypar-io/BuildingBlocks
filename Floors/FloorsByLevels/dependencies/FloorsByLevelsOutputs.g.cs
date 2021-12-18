@@ -12,36 +12,43 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System.Collections.Generic;
 
-namespace Structure
+namespace FloorsByLevels
 {
-    public class StructureOutputs: ResultsBase
+    public class FloorsByLevelsOutputs: ResultsBase
     {
 		/// <summary>
-		/// The maximum beam length.
+		/// Aggregate area of all floors.
 		/// </summary>
-		[JsonProperty("Maximum Beam Length")]
-		public double MaximumBeamLength {get;}
+		[JsonProperty("Total Area")]
+		public double TotalArea {get; set;}
+
+		/// <summary>
+		/// Quantity of floors.
+		/// </summary>
+		[JsonProperty("Floor Quantity")]
+		public double FloorQuantity {get; set;}
 
 
 
         /// <summary>
-        /// Construct a StructureOutputs with default inputs.
+        /// Construct a FloorsByLevelsOutputs with default inputs.
         /// This should be used for testing only.
         /// </summary>
-        public StructureOutputs() : base()
+        public FloorsByLevelsOutputs() : base()
         {
 
         }
 
 
         /// <summary>
-        /// Construct a StructureOutputs specifying all inputs.
+        /// Construct a FloorsByLevelsOutputs specifying all inputs.
         /// </summary>
         /// <returns></returns>
         [JsonConstructor]
-        public StructureOutputs(double maximumBeamLength): base()
+        public FloorsByLevelsOutputs(double totalArea, double floorQuantity): base()
         {
-			this.MaximumBeamLength = maximumBeamLength;
+			this.TotalArea = totalArea;
+			this.FloorQuantity = floorQuantity;
 
 		}
 

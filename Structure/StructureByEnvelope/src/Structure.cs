@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Elements;
 using Elements.Geometry;
 using Elements.Geometry.Profiles;
+using Elements.Geometry.Solids;
 using Elements.Spatial;
 using Elements.Spatial.CellComplex;
 
@@ -19,16 +21,7 @@ namespace Structure
         private const string CELL_ID_PROPERTY_NAME = "CellId";
         private const double DEFAULT_U = 5.0;
         private const double DEFAULT_V = 7.0;
-        private static List<Material> _lengthGradient = new List<Material>(){
-            new Material(Colors.Green, 0.0f, 0.0f, false, null, false, Guid.NewGuid(), "Gradient 1"),
-            new Material(Colors.Cyan, 0.0f, 0.0f, false, null, false, Guid.NewGuid(), "Gradient 2"),
-            new Material(Colors.Lime, 0.0f, 0.0f, false, null, false, Guid.NewGuid(), "Gradient 3"),
-            new Material(Colors.Yellow, 0.0f, 0.0f, false, null, false, Guid.NewGuid(), "Gradient 4"),
-            new Material(Colors.Orange, 0.0f, 0.0f, false, null, false, Guid.NewGuid(), "Gradient 5"),
-            new Material(Colors.Red, 0.0f, 0.0f, false, null, false, Guid.NewGuid(), "Gradient 6"),
-        };
-
-        private static double _longestGridSpan = 0.0;
+        private static readonly double _longestGridSpan = 0.0;
 
         /// <summary>
 		/// The Structure function.
@@ -83,10 +76,6 @@ namespace Structure
                 toWorld.Invert();
                 var bbox = new BBox3(firstLevelPerimeter.Vertices.Select(o => toWorld.OfVector(o)).ToList());
 
-                model.AddElements(new ModelCurve(Polygon.Rectangle(bbox.Min, bbox.Max).Transformed(t)));
-
-                // model.AddElements(toWorld.ToModelCurves());
-
                 var l = bbox.Max.Y - bbox.Min.Y;
                 var w = bbox.Max.X - bbox.Min.X;
 
@@ -99,8 +88,6 @@ namespace Structure
 
                 vGrid.DivideByFixedLength(DEFAULT_V);
                 var grid = new Grid2d(uGrid, vGrid);
-
-                // model.AddElements(grid.ToModelCurves());
 
                 var u = grid.U;
                 var v = grid.V;
@@ -131,13 +118,15 @@ namespace Structure
 
             Vector3 primaryDirection;
             Vector3 secondaryDirection;
+            IEnumerable<GridLine> gridLines = null;
+
             if (models.ContainsKey(GRIDS_MODEL_NAME))
             {
                 var gridsModel = models[GRIDS_MODEL_NAME];
-                var gridLines = gridsModel.AllElementsOfType<GridLine>();
+                gridLines = gridsModel.AllElementsOfType<GridLine>();
 
                 // Group by direction.
-                var gridGroups = gridLines.GroupBy(gl => (gl.Geometry.Vertices[0] - gl.Geometry.Vertices[1]).Unitized()).ToList();
+                var gridGroups = gridLines.GroupBy(gl => gl.Line.Direction()).ToList();
                 primaryDirection = gridGroups[0].Key;
                 secondaryDirection = gridGroups[1].Key;
             }
@@ -162,25 +151,69 @@ namespace Structure
             var colProfileDepth = colProfileBounds.Max.Y - colProfileBounds.Min.Y;
 
             var girderTypeName = input.GirderType.ToString();
-            var girderProfile = GetProfileFromName(girderTypeName, wideFlangeFactory, rhsProfileFactory, shsProfileFactory);
-            var girdProfileBounds = girderProfile.Perimeter.Bounds();
-            var girderProfileDepth = girdProfileBounds.Max.Y - girdProfileBounds.Min.Y;
+            Profile girderProfile = null;
+            double girderProfileDepth = 0;
+            if (girderTypeName.StartsWith("LH"))
+            {
+                girderProfileDepth = Units.InchesToMeters(double.Parse(girderTypeName.Split("LH")[1]));
+            }
+            else
+            {
+                girderProfile = GetProfileFromName(girderTypeName, wideFlangeFactory, rhsProfileFactory, shsProfileFactory);
+                var girdProfileBounds = girderProfile.Perimeter.Bounds();
+                girderProfileDepth = girdProfileBounds.Max.Y - girdProfileBounds.Min.Y;
+
+                // Set the profile down by half its depth so that 
+                // it sits under the slab.
+                girderProfile.Transform(new Transform(new Vector3(0, -girderProfileDepth / 2 - input.SlabThickness)));
+            }
+
+            Profile beamProfile = null;
+            double beamProfileDepth = 0;
 
             var beamTypeName = input.BeamType.ToString();
-            var beamProfile = GetProfileFromName(beamTypeName, wideFlangeFactory, rhsProfileFactory, shsProfileFactory);
-            var beamProfileBounds = beamProfile.Perimeter.Bounds();
-            var beamProfileDepth = beamProfileBounds.Max.Y - beamProfileBounds.Min.Y;
+            if (beamTypeName.StartsWith("LH"))
+            {
+                beamProfileDepth = Units.InchesToMeters(double.Parse(beamTypeName.Split("LH")[1]));
+            }
+            else
+            {
+                beamProfile = GetProfileFromName(beamTypeName, wideFlangeFactory, rhsProfileFactory, shsProfileFactory);
+                var beamProfileBounds = beamProfile.Perimeter.Bounds();
+                beamProfileDepth = beamProfileBounds.Max.Y - beamProfileBounds.Min.Y;
+
+                // Set the profile down by half its depth so that 
+                // it sits under the slab.
+                beamProfile.Transform(new Transform(new Vector3(0, -beamProfileDepth / 2 - input.SlabThickness)));
+            }
 
             var edges = cellComplex.GetEdges();
             var lowestTierSet = false;
             var lowestTierElevation = double.MaxValue;
 
             var columnDefintions = new Dictionary<(double memberLength, Profile memberProfile), Column>();
-            var girderDefinitions = new Dictionary<(double memberLength, Profile memberProfile), Beam>();
-            var beamDefinitions = new Dictionary<(double memberLength, Profile memberProfile), Beam>();
+            var girderDefinitions = new Dictionary<(double memberLength, Profile memberProfile), GeometricElement>();
+            var beamDefinitions = new Dictionary<(double memberLength, Profile memberProfile), GeometricElement>();
+            var girderJoistDefinitions = new Dictionary<(double memberLength, double depth), GeometricElement>();
+            var beamJoistDefinitions = new Dictionary<(double memberLength, double depth), GeometricElement>();
+
+            LProfileFactory lProfileFactory;
+            LProfile L8 = null;
+            LProfile L5 = null;
+            LProfile L2 = null;
+            LProfile L3 = null;
+
+            if (girderProfile == null || beamProfile == null)
+            {
+                lProfileFactory = new LProfileFactory();
+                L8 = Task.Run(async () => await lProfileFactory.GetProfileByTypeAsync(LProfileType.L8X8X1_2)).Result;
+                L5 = Task.Run(async () => await lProfileFactory.GetProfileByTypeAsync(LProfileType.L5X5X1_2)).Result;
+                L2 = Task.Run(async () => await lProfileFactory.GetProfileByTypeAsync(LProfileType.L2X2X1_8)).Result;
+                L3 = Task.Run(async () => await lProfileFactory.GetProfileByTypeAsync(LProfileType.L3X2X3_16)).Result;
+            }
 
             // Order edges from lowest to highest.
-            foreach (var edge in edges.OrderBy(e =>
+            foreach (Elements.Spatial.CellComplex.Edge edge in edges.OrderBy(e =>
                 Math.Min(cellComplex.GetVertex(e.StartVertexId).Value.Z, cellComplex.GetVertex(e.EndVertexId).Value.Z)
             ))
             {
@@ -189,8 +222,10 @@ namespace Structure
                 var start = cellComplex.GetVertex(edge.StartVertexId).Value;
                 var end = cellComplex.GetVertex(edge.EndVertexId).Value;
 
-                var l = new Line(start - new Vector3(0, 0, input.SlabThickness + girderProfileDepth / 2), end - new Vector3(0, 0, input.SlabThickness + girderProfileDepth / 2));
+                var l = new Line(start, end);
                 var memberLength = l.Length();
+
+                var warningRepresentation = new Representation(new List<SolidOperation>() { new Extrude(Polygon.Rectangle(0.01, 0.01), 0.01, Vector3.ZAxis, false) });
 
                 if (l.IsVertical())
                 {
@@ -220,6 +255,7 @@ namespace Structure
                     var instance = columnDefinition.CreateInstance(t, $"column_{edge.Id}");
                     instance.AdditionalProperties.Add(EDGE_ID_PROPERTY_NAME, edge.Id);
                     model.AddElement(instance, false);
+                    model.AddElement(new ModelCurve(new Line(columnDefinition.Location, columnDefinition.Location + new Vector3(0, 0, columnDefinition.Height)).TransformedLine(t), BuiltInMaterials.ZAxis));
                 }
                 else
                 {
@@ -229,29 +265,67 @@ namespace Structure
                         lowestTierSet = true;
                     }
 
-                    Beam girderDefinition;
-                    if (!girderDefinitions.ContainsKey((memberLength, girderProfile)))
+                    GeometricElement girderDefinition;
+                    if (girderProfile != null)
                     {
-                        // Beam definitions are defined along the Z axis
-                        girderDefinition = new Beam(new Line(Vector3.Origin, new Vector3(0, 0, memberLength)), girderProfile, structureMaterial)
+                        if (!girderDefinitions.ContainsKey((memberLength, girderProfile)))
                         {
-                            IsElementDefinition = true
-                        };
-                        girderDefinitions.Add((memberLength, girderProfile), girderDefinition);
-                        model.AddElement(girderDefinition);
+                            // Beam definitions are defined along the X axis
+                            var cl = new Line(Vector3.Origin, new Vector3(memberLength, 0));
+                            girderDefinition = new Beam(cl, girderProfile, structureMaterial)
+                            {
+                                IsElementDefinition = true
+                            };
+                            girderDefinitions.Add((memberLength, girderProfile), girderDefinition);
+                            model.AddElement(girderDefinition);
+                        }
+                        else
+                        {
+                            girderDefinition = girderDefinitions[(memberLength, girderProfile)];
+                        }
                     }
                     else
                     {
-                        girderDefinition = girderDefinitions[(memberLength, girderProfile)];
+                        // Create a joist
+                        if (!girderJoistDefinitions.ContainsKey((memberLength, girderProfileDepth)))
+                        {
+                            // Beam definitions are defined along the X axis
+                            var cl = new Line(Vector3.Origin, new Vector3(memberLength, 0));
+                            if (memberLength < girderProfileDepth)
+                            {
+                                continue;
+                            }
+
+                            var cellCount = (int)Math.Ceiling((memberLength - Units.InchesToMeters(24)) / girderProfileDepth);
+                            girderDefinition = new Joist(cl, L8, L8, L2, girderProfileDepth, cellCount, Units.InchesToMeters(2.5), Units.InchesToMeters(12), structureMaterial)
+                            {
+                                IsElementDefinition = true
+                            };
+                            girderJoistDefinitions.Add((memberLength, girderProfileDepth), girderDefinition);
+                            model.AddElement(girderDefinition);
+                        }
+                        else
+                        {
+                            girderDefinition = girderJoistDefinitions[(memberLength, girderProfileDepth)];
+                        }
                     }
 
                     // Beam instances are transformed to align with the member's center line.
-                    var t = new Transform(l.Start, l.Direction());
+                    var t = new Transform(l.Start, l.Direction(), Vector3.ZAxis);
                     ElementInstance girderInstance = null;
                     if (input.CreateBeamsOnFirstLevel)
                     {
                         girderInstance = girderDefinition.CreateInstance(t, $"beam_{edge.Id}");
                         model.AddElement(girderInstance, false);
+
+                        if (girderDefinition is Beam beam)
+                        {
+                            model.AddElement(new ModelCurve(beam.Curve.Transformed(t), BuiltInMaterials.ZAxis));
+                        }
+                        else if (girderDefinition is Joist joist)
+                        {
+                            model.AddElement(new ModelCurve(joist.Curve.Transformed(t), BuiltInMaterials.ZAxis));
+                        }
                     }
                     else
                     {
@@ -259,8 +333,17 @@ namespace Structure
                         {
                             girderInstance = girderDefinition.CreateInstance(t, $"beam_{edge.Id}");
                             model.AddElement(girderInstance, false);
+                            if (girderDefinition is Beam beam)
+                            {
+                                model.AddElement(new ModelCurve(beam.Curve.Transformed(t), BuiltInMaterials.ZAxis));
+                            }
+                            else if (girderDefinition is Joist joist)
+                            {
+                                model.AddElement(new ModelCurve(joist.Curve.Transformed(t), BuiltInMaterials.ZAxis));
+                            }
                         }
                     }
+
                     if (girderInstance != null)
                     {
                         girderInstance.AdditionalProperties.Add(EDGE_ID_PROPERTY_NAME, edge.Id);
@@ -280,11 +363,21 @@ namespace Structure
 
                 // Get the longest cell edge that is parallel 
                 // to one of the primary directions.
-                var longestCellEdge = segments.Where(s =>
+                var cellEdges = segments.Where(s =>
                 {
                     var d = s.Direction();
                     return d.IsParallelTo(primaryDirection) || d.IsParallelTo(secondaryDirection);
-                }).OrderBy(s => s.Length()).Last();
+                });
+
+                Line longestCellEdge;
+                if (cellEdges.Any())
+                {
+                    longestCellEdge = cellEdges.OrderBy(s => s.Length()).Last();
+                }
+                else
+                {
+                    longestCellEdge = segments.OrderBy(s => s.Length()).Last();
+                }
 
                 var d = longestCellEdge.Direction();
                 var length = longestCellEdge.Length();
@@ -294,6 +387,7 @@ namespace Structure
                 beamGrid.DivideByApproximateLength(input.BeamSpacing, EvenDivisionMode.RoundDown);
 
                 var cellSeparators = beamGrid.GetCellSeparators();
+
                 for (var i = 0; i < cellSeparators.Count; i++)
                 {
                     if (i == 0 || i == cellSeparators.Count - 1)
@@ -317,38 +411,147 @@ namespace Structure
                             {
                                 continue;
                             }
-                            var l = new Line(t.Origin - new Vector3(0, 0, input.SlabThickness + beamProfileDepth / 2), xsect - new Vector3(0, 0, input.SlabThickness + beamProfileDepth / 2));
+
+                            var l = new Line(t.Origin, xsect);
                             var beamLength = l.Length();
-                            Beam beamDefinition;
-                            if (!beamDefinitions.ContainsKey((beamLength, beamProfile)))
+
+                            GeometricElement beamDefinition;
+                            if (beamProfile != null)
                             {
-                                beamDefinition = new Beam(new Line(Vector3.Origin, new Vector3(0, 0, beamLength)), beamProfile, structureMaterial)
+                                if (!beamDefinitions.ContainsKey((beamLength, beamProfile)))
                                 {
-                                    IsElementDefinition = true
-                                };
-                                beamDefinitions.Add((beamLength, beamProfile), beamDefinition);
-                                model.AddElement(beamDefinition);
+                                    beamDefinition = new Beam(new Line(Vector3.Origin, new Vector3(beamLength, 0)), beamProfile, structureMaterial)
+                                    {
+                                        IsElementDefinition = true
+                                    };
+                                    beamDefinitions.Add((beamLength, beamProfile), beamDefinition);
+                                    model.AddElement(beamDefinition);
+                                }
+                                else
+                                {
+                                    beamDefinition = beamDefinitions[(beamLength, beamProfile)];
+                                }
                             }
                             else
                             {
-                                beamDefinition = beamDefinitions[(beamLength, beamProfile)];
+                                // Create a joist
+                                if (!beamJoistDefinitions.ContainsKey((beamLength, beamProfileDepth)))
+                                {
+                                    // Beam definitions are defined along the X axis
+                                    var cl = new Line(Vector3.Origin, new Vector3(beamLength, 0));
+                                    // if (beamLength < beamProfileDepth)
+                                    // {
+                                    //     continue;
+                                    // }
+
+                                    var cellCount = (int)Math.Ceiling((beamLength - Units.InchesToMeters(24)) / beamProfileDepth);
+                                    beamDefinition = new Joist(cl, L3, L3, L2, beamProfileDepth, cellCount, Units.InchesToMeters(2.5), Units.InchesToMeters(12), structureMaterial)
+                                    {
+                                        IsElementDefinition = true
+                                    };
+                                    beamJoistDefinitions.Add((beamLength, beamProfileDepth), beamDefinition);
+                                    model.AddElement(beamDefinition);
+                                }
+                                else
+                                {
+                                    beamDefinition = beamJoistDefinitions[(beamLength, beamProfileDepth)];
+                                }
                             }
-                            var instanceTransform = new Transform(l.Start, l.Direction());
+                            var instanceTransform = new Transform(l.Start, l.Direction(), Vector3.ZAxis);
                             var beamInstance = beamDefinition.CreateInstance(instanceTransform, $"beam_{cell.Id}");
                             beamInstance.AdditionalProperties.Add(CELL_ID_PROPERTY_NAME, cell.Id);
                             model.AddElement(beamInstance, false);
+
+                            if (beamDefinition is Beam beam)
+                            {
+                                model.AddElement(new ModelCurve(beam.Curve.Transformed(instanceTransform), BuiltInMaterials.ZAxis));
+                            }
+                            else if (beamDefinition is Joist joist)
+                            {
+                                model.AddElement(new ModelCurve(joist.Curve.Transformed(instanceTransform), BuiltInMaterials.ZAxis));
+                            }
                         }
                     }
                 }
             }
 
-            var output = new StructureOutputs(_longestGridSpan);
-            output.Model = model;
-            output.Warnings = warnings;
+            model.AddElements(CreateViewScopesForLevelsAndGrids(model, gridLines));
+
+            var output = new StructureOutputs(_longestGridSpan)
+            {
+                Model = model,
+                Warnings = warnings
+            };
             return output;
         }
 
-        private static bool IsExternal(Edge e)
+        private static List<ViewScope> CreateViewScopesForLevelsAndGrids(Model model, IEnumerable<GridLine> gridLines)
+        {
+            var beams = model.AllElementsOfType<ElementInstance>().Where(e => e.BaseDefinition is Beam);
+            var beamGroups = beams.GroupBy(b => b.Transform.Origin.Z);
+
+            var scopes = new List<ViewScope>();
+            var minZ = double.MaxValue;
+            var maxZ = double.MinValue;
+
+            foreach (var bg in beamGroups)
+            {
+                var bbox = new BBox3(bg.SelectMany(b =>
+                {
+                    var def = (Beam)b.BaseDefinition;
+                    var start = b.Transform.OfPoint(def.Curve.PointAt(0));
+                    var end = b.Transform.OfPoint(def.Curve.PointAt(1));
+
+                    if (start.Z > maxZ)
+                    {
+                        maxZ = start.Z;
+                    }
+                    if (start.Z < minZ)
+                    {
+                        minZ = start.Z;
+                    }
+                    if (end.Z > maxZ)
+                    {
+                        maxZ = end.Z;
+                    }
+                    if (end.Z < minZ)
+                    {
+                        minZ = end.Z;
+                    }
+                    return new[] { start, end };
+                }));
+
+                var scope = new ViewScope()
+                {
+                    BoundingBox = new BBox3(bbox.Min + new Vector3(0, 0, -1), bbox.Max + new Vector3(0, 0, 1)),
+                    Name = $"Structure elevation {bg.Key}"
+                };
+                scopes.Add(scope);
+            }
+
+            // TODO: Create view scopes along grid lines when view scopes
+            // support non-axis aligned bounding boxes.
+            // if (gridLines != null)
+            // {
+            //     foreach (var gridLine in gridLines)
+            //     {
+
+            //         var d = gridLine.Line.Direction();
+            //         var ortho = Vector3.ZAxis.Cross(gridLine.Line.Direction());
+            //         var bbox = new BBox3(gridLine);
+            //         var scope = new ViewScope()
+            //         {
+            //             BoundingBox = new BBox3(bbox.Min + ortho * -1, bbox.Max + ortho * 1),
+            //             Name = $"Structure Grid {gridLine.Name}",
+            //             Camera = new Camera(ortho, null, CameraProjection.Perspective)
+            //         };
+            //         scopes.Add(scope);
+            //     }
+            // }
+            return scopes;
+        }
+
+        private static bool IsExternal(Elements.Spatial.CellComplex.Edge e)
         {
             var faces = e.GetFaces();
             if (faces.Count <= 3)
