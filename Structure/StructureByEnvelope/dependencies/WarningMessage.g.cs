@@ -20,27 +20,27 @@ namespace Elements
 {
     #pragma warning disable // Disable all warnings
 
-    /// <summary>A 2D grid line for a column grid</summary>
+    /// <summary>An element that stores warning messages.</summary>
     [Newtonsoft.Json.JsonConverter(typeof(Elements.Serialization.JSON.JsonInheritanceConverter), "discriminator")]
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
-    public partial class GridLine : GeometricElement
+    public partial class WarningMessage : GeometricElement
     {
         [Newtonsoft.Json.JsonConstructor]
-        public GridLine(Polyline @geometry, Transform @transform = null, Material @material = null, Representation @representation = null, bool @isElementDefinition = false, System.Guid @id = default, string @name = null)
+        public WarningMessage(string @message, Transform @transform = null, Material @material = null, Representation @representation = null, bool @isElementDefinition = false, System.Guid @id = default, string @name = null)
             : base(transform, material, representation, isElementDefinition, id, name)
         {
-            this.Geometry = @geometry;
+            this.Message = @message;
             }
         
         // Empty constructor
-        public GridLine()
+        public WarningMessage()
             : base()
         {
         }
     
-        /// <summary>The polyline geometry of the Grid Line</summary>
-        [Newtonsoft.Json.JsonProperty("Geometry", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public Polyline Geometry { get; set; }
+        /// <summary>A warning message for the user.</summary>
+        [Newtonsoft.Json.JsonProperty("Message", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Message { get; set; }
     
     
     }

@@ -740,7 +740,7 @@ namespace Grid
             }
         }
     
-        [Newtonsoft.Json.JsonProperty("UGrid", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonProperty("UGrid", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public Grid1dInput UGrid { get; set; }
     
     
@@ -796,7 +796,7 @@ namespace Grid
             }
         }
     
-        [Newtonsoft.Json.JsonProperty("VGrid", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonProperty("VGrid", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public Grid1dInput VGrid { get; set; }
     
     
