@@ -514,6 +514,27 @@
           "$ref": "https://prod-api.hypar.io/schemas/Grid1dInput"
         }
       }
+    },
+    "Gridline Names": {
+      "context": "[*discriminator=Elements.GridLine]",
+      "identity": {
+        "ParametrizedPosition": {
+          "type": "number"
+        },
+        "Axis": {
+          "type": "string",
+          "enum": [
+            "U",
+            "V"
+          ]
+        }
+      },
+      "paradigm": "edit",
+      "schema": {
+        "Name": {
+          "type": "string"
+        }
+      }
     }
   },
   "outputs": [],

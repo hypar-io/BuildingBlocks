@@ -258,17 +258,18 @@ namespace Grid
     
     {
         [Newtonsoft.Json.JsonConstructor]
-        public Overrides(IList<GridOriginsOverride> @gridOrigins, IList<UGridSubdivisionsOverride> @uGridSubdivisions, IList<VGridSubdivisionsOverride> @vGridSubdivisions)
+        public Overrides(IList<GridOriginsOverride> @gridOrigins, IList<UGridSubdivisionsOverride> @uGridSubdivisions, IList<VGridSubdivisionsOverride> @vGridSubdivisions, IList<GridlineNamesOverride> @gridlineNames)
         {
             var validator = Validator.Instance.GetFirstValidatorForType<Overrides>();
             if(validator != null)
             {
-                validator.PreConstruct(new object[]{ @gridOrigins, @uGridSubdivisions, @vGridSubdivisions});
+                validator.PreConstruct(new object[]{ @gridOrigins, @uGridSubdivisions, @vGridSubdivisions, @gridlineNames});
             }
         
             this.GridOrigins = @gridOrigins;
             this.UGridSubdivisions = @uGridSubdivisions;
             this.VGridSubdivisions = @vGridSubdivisions;
+            this.GridlineNames = @gridlineNames;
         
             if(validator != null)
             {
@@ -284,6 +285,9 @@ namespace Grid
     
         [Newtonsoft.Json.JsonProperty("V Grid Subdivisions", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public IList<VGridSubdivisionsOverride> VGridSubdivisions { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("Gridline Names", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public IList<GridlineNamesOverride> GridlineNames { get; set; }
     
     
     }
@@ -551,6 +555,42 @@ namespace Grid
     
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
     
+    public partial class GridlineNamesOverride 
+    
+    {
+        [Newtonsoft.Json.JsonConstructor]
+        public GridlineNamesOverride(string @id, GridlineNamesIdentity @identity, GridlineNamesValue @value)
+        {
+            var validator = Validator.Instance.GetFirstValidatorForType<GridlineNamesOverride>();
+            if(validator != null)
+            {
+                validator.PreConstruct(new object[]{ @id, @identity, @value});
+            }
+        
+            this.Id = @id;
+            this.Identity = @identity;
+            this.Value = @value;
+        
+            if(validator != null)
+            {
+                validator.PostConstruct(this);
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Id { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("Identity", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public GridlineNamesIdentity Identity { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("Value", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public GridlineNamesValue Value { get; set; }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
+    
     public partial class GridLines 
     
     {
@@ -700,7 +740,7 @@ namespace Grid
             }
         }
     
-        [Newtonsoft.Json.JsonProperty("UGrid", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonProperty("UGrid", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public Grid1dInput UGrid { get; set; }
     
     
@@ -756,9 +796,81 @@ namespace Grid
             }
         }
     
-        [Newtonsoft.Json.JsonProperty("VGrid", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonProperty("VGrid", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public Grid1dInput VGrid { get; set; }
     
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
+    
+    public partial class GridlineNamesIdentity 
+    
+    {
+        [Newtonsoft.Json.JsonConstructor]
+        public GridlineNamesIdentity(double @parametrizedPosition, GridlineNamesIdentityAxis @axis)
+        {
+            var validator = Validator.Instance.GetFirstValidatorForType<GridlineNamesIdentity>();
+            if(validator != null)
+            {
+                validator.PreConstruct(new object[]{ @parametrizedPosition, @axis});
+            }
+        
+            this.ParametrizedPosition = @parametrizedPosition;
+            this.Axis = @axis;
+        
+            if(validator != null)
+            {
+                validator.PostConstruct(this);
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("ParametrizedPosition", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public double ParametrizedPosition { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("Axis", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        public GridlineNamesIdentityAxis Axis { get; set; }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
+    
+    public partial class GridlineNamesValue 
+    
+    {
+        [Newtonsoft.Json.JsonConstructor]
+        public GridlineNamesValue(string @name)
+        {
+            var validator = Validator.Instance.GetFirstValidatorForType<GridlineNamesValue>();
+            if(validator != null)
+            {
+                validator.PreConstruct(new object[]{ @name});
+            }
+        
+            this.Name = @name;
+        
+            if(validator != null)
+            {
+                validator.PostConstruct(this);
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("Name", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Name { get; set; }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
+    public enum GridlineNamesIdentityAxis
+    {
+        [System.Runtime.Serialization.EnumMember(Value = @"U")]
+        U = 0,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"V")]
+        V = 1,
     
     }
     
