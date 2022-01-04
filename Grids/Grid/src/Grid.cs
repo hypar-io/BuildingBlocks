@@ -324,13 +324,11 @@ namespace Grid
         {
             foreach (var gridline in gridlines)
             {
-                // Offset the grid visual from the XY plane to avoid z-fighting.
-                var elevation = new Vector3(0, 0, 0.01);
                 var line = gridline.Line;
                 var lineDir = (line.End - line.Start).Unitized();
                 var circleCenter = line.Start - (lineDir * (CircleRadius + lineHeadExtension));
                 var color = deduplicatedNamesGridLines.Contains(gridline) ? Colors.Red : Colors.Darkgray;
-                texts.Add((circleCenter + elevation, Vector3.ZAxis, lineDir, gridline.Name, color));
+                texts.Add((circleCenter, Vector3.ZAxis, lineDir, gridline.Name, color));
             }
         }
 
