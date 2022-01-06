@@ -2299,8 +2299,14 @@
       },
       "Insert Columns At External Edges": {
         "type": "boolean",
-        "default": false,
-        "description": "Should columns be created at external locations?"
+        "default": true,
+        "description": "Should columns be created at external locations?",
+        "$hyparDeprecated": true
+      },
+      "Maximum Neighbor Span": {
+        "type": "number",
+        "default": 2.0,
+        "description": "The maximum allowable span between an off grid vertex location and its closest on-grid neighbor. If the distance between the two is greater than this value, a column will be placed."
       }
     }
   },
@@ -2316,8 +2322,8 @@
     "https://raw.githubusercontent.com/hypar-io/Schemas/master/LevelPerimeter.json",
     "https://prod-api.hypar.io/schemas/LevelVolume",
     "https://prod-api.hypar.io/schemas/Grid2dElement",
-    "https://prod-api.hypar.io/schemas/WarningMessage",
-    "https://prod-api.hypar.io/schemas/ViewScope"
+    "https://prod-api.hypar.io/schemas/ViewScope",
+    "https://prod-api.hypar.io/schemas/LabelConfiguration"
   ],
   "filters": {
     "Structure": {
