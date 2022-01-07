@@ -1,0 +1,133 @@
+{
+  "overrides": {
+    "Facade Type Settings": [
+      {
+        "value": {
+          "Thickness": 0.10159994513602963,
+          "Vertical Spandrel Settings": {
+            "Width": 1,
+            "Material": {
+              "Shine": 0,
+              "Color": {
+                "Red": 0.44412195967016777,
+                "Alpha": 1,
+                "Blue": 0.7462934663524223,
+                "Green": 0.5982250951229195
+              }
+            }
+          },
+          "Mullions": true,
+          "Horizontal Spandrel Settings": {
+            "Height": 1,
+            "Material": {
+              "Shine": 0.41,
+              "Color": {
+                "Red": 0.0784313725490196,
+                "Alpha": 1,
+                "Blue": 0.4235294117647059,
+                "Green": 0.054901960784313725
+              }
+            }
+          },
+          "Horizontal Spandrel": true,
+          "Material": {
+            "Shine": 0.3,
+            "Color": {
+              "Red": 0.7,
+              "Alpha": 1,
+              "Blue": 0.9,
+              "Green": 0.7
+            },
+            "Opacity": 0.5
+          },
+          "Vertical Spandrel": false,
+          "Id": "b85cebf9-e6ba-45a8-8df6-1c8a8fd5f851",
+          "Mullion Settings": {
+            "Material": {
+              "Shine": 0,
+              "Color": {
+                "Red": 0,
+                "Alpha": 1,
+                "Blue": 0,
+                "Green": 0
+              }
+            },
+            "Vertical Spacing": null,
+            "Horizontal Spacing": null,
+            "Width": 0.1,
+            "Depth": 0.2
+          },
+          "Offset": 0
+        },
+        "identity": {
+          "Name": "Primary"
+        },
+        "id": "8646e5bb-1c04-4edc-aa77-fcee41d99ce2"
+      },
+      {
+        "value": {
+          "Thickness": 0.17779990398805184,
+          "Vertical Spandrel Settings": {
+            "Width": 1,
+            "Material": {
+              "Shine": 0,
+              "Color": {
+                "Red": 0.6704230949590491,
+                "Alpha": 1,
+                "Blue": 0.29218127780001235,
+                "Green": 0.8329969717242047
+              }
+            }
+          },
+          "Mullions": false,
+          "Horizontal Spandrel Settings": {
+            "Height": 1,
+            "Material": {
+              "Shine": 0,
+              "Color": {
+                "Red": 0.90608275125893,
+                "Alpha": 1,
+                "Blue": 0.22173804975342204,
+                "Green": 0.2999676331257839
+              }
+            }
+          },
+          "Horizontal Spandrel": false,
+          "Material": {
+            "Shine": 0.3,
+            "Color": {
+              "Red": 0.5686274509803921,
+              "Alpha": 1,
+              "Blue": 0.6313725490196078,
+              "Green": 0.5686274509803921
+            },
+            "Opacity": 1
+          },
+          "Vertical Spandrel": true,
+          "Id": "de5ba613-0985-435e-b8ee-5d40839206b7",
+          "Mullion Settings": {
+            "Material": {
+              "Shine": 0,
+              "Color": {
+                "Red": 0,
+                "Alpha": 1,
+                "Blue": 0,
+                "Green": 0
+              }
+            },
+            "Vertical Spacing": null,
+            "Horizontal Spacing": null,
+            "Width": 0.1,
+            "Depth": 0.2
+          },
+          "Create Generic Facade": false,
+          "Offset": 0
+        },
+        "identity": {
+          "Name": "Secondary"
+        },
+        "id": "764040c6-87df-46a1-b26e-a5f58285b66f"
+      }
+    ]
+  }
+}
