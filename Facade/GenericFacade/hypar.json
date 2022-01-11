@@ -22,7 +22,6 @@
       "dependency": "Facade Grid",
       "schema": {
         "Create Generic Facade": {
-          "$hyparOrder": -1,
           "type": [
             "boolean",
             "null"

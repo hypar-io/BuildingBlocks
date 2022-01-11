@@ -43,6 +43,44 @@
   },
   "model_output": "Facade Grid",
   "overrides": {
+    "Grid Defaults": {
+      "context": "[*discriminator=Elements.Footprint]",
+      "dependency": "Masterplan",
+      "identity": {
+        "Boundary": {
+          "$ref": "https://hypar.io/Schemas/Geometry/Polygon.json"
+        },
+        "Building Name": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "schema": {
+        "Typical Panel Width": {
+          "type": "number",
+          "default": 3,
+          "$hyparUnitType": "length"
+        },
+        "Facade Type Name": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "$hyparAutocompleteQuery": {
+            "query": "[*discriminator=Elements.FacadeType].Name",
+            "selfDependency": true
+          },
+          "default": null
+        },
+        "Parapet Height": {
+          "type": "number",
+          "default": 0,
+          "$hyparUnitType": "length"
+        }
+      }
+    },
     "Grids": {
       "context": "[*discriminator=Elements.MassFaceSection]",
       "identity": {

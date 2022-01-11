@@ -83,6 +83,20 @@ namespace FacadeGrid
             var xy = new Plane((0, 0), (0, 0, 1));
             foreach (var mass in masses)
             {
+                var defaultWidth = 3.0;
+                string defaultFacadeType = null;
+                var parapetHeight = 0.0;
+                if (input.Overrides?.GridDefaults != null)
+                {
+                    var matchingOverride = input.Overrides.GridDefaults.FirstOrDefault(o => GridDefaultsIdentityMatch(o, mass));
+                    if (matchingOverride != null)
+                    {
+                        defaultWidth = matchingOverride.Value.TypicalPanelWidth;
+                        defaultFacadeType = matchingOverride.Value.FacadeTypeName;
+                        parapetHeight = matchingOverride.Value.ParapetHeight;
+                    }
+                }
+
                 var solids = mass.Representation.SolidOperations;
                 var elementXForm = mass.Transform;
 
@@ -132,7 +146,34 @@ namespace FacadeGrid
                     {
                         var outer = face.Perimeter.TransformedPolygon(elementXForm);
                         var normal = outer.Normal();
-                        var horizontalVector = Vector3.ZAxis.Cross(normal);
+                        var horizontalVector = Vector3.ZAxis.Cross(normal).Unitized();
+                        var upVector = normal.Cross(horizontalVector);
+                        // TODO — handle non-vertical faces by projecting the height vector onto the up vector
+                        var heightVector = new Vector3(0, 0, parapetHeight);
+                        if (parapetHeight > 0)
+                        {
+                            var topEdges = outer.Segments().Where(s => s.Direction().Dot(horizontalVector) < -0.7).ToList();
+                            var transformedTopEdges = topEdges.Select(e => e.TransformedLine(new Transform(heightVector))).ToList();
+                            var newVertices = new List<Vector3>();
+                            foreach (var v in outer.Vertices)
+                            {
+                                var topEdgeStartMatch = topEdges.FindIndex(te => te.Start == v);
+                                var topEdgeEndMatch = topEdges.FindIndex(te => te.End == v);
+                                if (topEdgeStartMatch >= 0)
+                                {
+                                    newVertices.Add(transformedTopEdges[topEdgeStartMatch].Start);
+                                }
+                                else if (topEdgeEndMatch >= 0)
+                                {
+                                    newVertices.Add(transformedTopEdges[topEdgeEndMatch].End);
+                                }
+                                else
+                                {
+                                    newVertices.Add(v);
+                                }
+                            }
+                            outer = new Polygon(newVertices);
+                        }
                         var polygons = new List<Polygon> { outer };
                         var inner = face.Voids?.Select(i => i.TransformedPolygon(elementXForm)).ToList();
                         if (inner == null)
@@ -144,7 +185,7 @@ namespace FacadeGrid
                         var massFace = new MassFace(profile, mass.Id);
                         var massFaceSection = new MassFaceSection(profile, massFace.Id)
                         {
-                            FacadeTypeName = "Primary"
+                            FacadeTypeName = defaultFacadeType ?? "Primary"
                         };
                         massFaceSection.GenerateOverrideIdentityProperties(solidBbox.Center());
                         TryFindOverrideMatchAndApply(massFaceSection, input);
@@ -157,7 +198,11 @@ namespace FacadeGrid
                         if (massFaceSection.Grid == null)
                         {
                             List<Vector3> points = GetLevelPoints(levelElevations, outer, normal, horizontalVector);
-                            massFaceSection.Grid = CreateAndApplyDefaultGridSettings(points, grid2d, transform);
+                            if (parapetHeight > 0)
+                            {
+                                points.Add(new Vector3(0, 0, solidBbox.Max.Z));
+                            }
+                            massFaceSection.Grid = CreateAndApplyDefaultGridSettings(points, grid2d, transform, defaultWidth);
                         }
                         else
                         {
@@ -177,6 +222,22 @@ namespace FacadeGrid
                     }
                 }
             }
+        }
+
+        private static bool GridDefaultsIdentityMatch<T>(GridDefaultsOverride o, T mass) where T : GeometricElement
+        {
+            if (mass is Footprint f)
+            {
+                if (f.AdditionalProperties.TryGetValue("Building Name", out var buildingName))
+                {
+                    return (string)buildingName == o.Identity.BuildingName;
+                }
+                else if (o.Identity.Boundary.Contains(f.Boundary.Centroid()))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         private static List<Vector3> GetLevelPoints(IEnumerable<double> levelElevations, Polygon outer, Vector3 normal, Vector3 horizontalVector)
@@ -209,12 +270,12 @@ namespace FacadeGrid
             }
         }
 
-        private static Grid2dInput CreateAndApplyDefaultGridSettings(List<Vector3> points, Grid2d grid2d, Transform transform)
+        private static Grid2dInput CreateAndApplyDefaultGridSettings(List<Vector3> points, Grid2d grid2d, Transform transform, double defaultWidth)
         {
 
             grid2d.V.SplitAtPoints(points);
             var uGrid = grid2d.U;
-            uGrid.DivideByFixedLength(3, FixedDivisionMode.RemainderAtBothEnds);
+            uGrid.DivideByFixedLength(defaultWidth, FixedDivisionMode.RemainderAtBothEnds);
 
             return new Grid2dInput
             (
@@ -224,8 +285,8 @@ namespace FacadeGrid
                     Grid1dInputSubdivisionMode.Divide_by_fixed_length,
                     new SubdivisionSettings(
                         1,
-                        3,
-                        3,
+                        defaultWidth,
+                        defaultWidth,
                         SubdivisionSettingsRemainderMode.Remainder_at_both_ends,
                         SubdivisionSettingsCycleMode.Wrap
                     )

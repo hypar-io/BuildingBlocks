@@ -94,11 +94,11 @@ namespace FacadeGrid
         }
     
         /// <summary>The 1d grid in the U axis</summary>
-        [Newtonsoft.Json.JsonProperty("U", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonProperty("U", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public Grid1dInput U { get; set; }
     
         /// <summary>The 1d grid in the V axis</summary>
-        [Newtonsoft.Json.JsonProperty("V", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonProperty("V", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public Grid1dInput V { get; set; }
     
     
@@ -237,14 +237,15 @@ namespace FacadeGrid
     
     {
         [Newtonsoft.Json.JsonConstructor]
-        public Overrides(IList<GridsOverride> @grids)
+        public Overrides(IList<GridDefaultsOverride> @gridDefaults, IList<GridsOverride> @grids)
         {
             var validator = Validator.Instance.GetFirstValidatorForType<Overrides>();
             if(validator != null)
             {
-                validator.PreConstruct(new object[]{ @grids});
+                validator.PreConstruct(new object[]{ @gridDefaults, @grids});
             }
         
+            this.GridDefaults = @gridDefaults;
             this.Grids = @grids;
         
             if(validator != null)
@@ -252,6 +253,9 @@ namespace FacadeGrid
                 validator.PostConstruct(this);
             }
         }
+    
+        [Newtonsoft.Json.JsonProperty("Grid Defaults", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public IList<GridDefaultsOverride> GridDefaults { get; set; }
     
         [Newtonsoft.Json.JsonProperty("Grids", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public IList<GridsOverride> Grids { get; set; }
@@ -292,6 +296,42 @@ namespace FacadeGrid
     
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
     
+    public partial class GridDefaultsOverride 
+    
+    {
+        [Newtonsoft.Json.JsonConstructor]
+        public GridDefaultsOverride(string @id, GridDefaultsIdentity @identity, GridDefaultsValue @value)
+        {
+            var validator = Validator.Instance.GetFirstValidatorForType<GridDefaultsOverride>();
+            if(validator != null)
+            {
+                validator.PreConstruct(new object[]{ @id, @identity, @value});
+            }
+        
+            this.Id = @id;
+            this.Identity = @identity;
+            this.Value = @value;
+        
+            if(validator != null)
+            {
+                validator.PostConstruct(this);
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Id { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("Identity", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public GridDefaultsIdentity Identity { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("Value", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public GridDefaultsValue Value { get; set; }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
+    
     public partial class GridsOverride 
     
     {
@@ -322,6 +362,74 @@ namespace FacadeGrid
     
         [Newtonsoft.Json.JsonProperty("Value", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public GridsValue Value { get; set; }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
+    
+    public partial class GridDefaultsIdentity 
+    
+    {
+        [Newtonsoft.Json.JsonConstructor]
+        public GridDefaultsIdentity(Polygon @boundary, string @buildingName)
+        {
+            var validator = Validator.Instance.GetFirstValidatorForType<GridDefaultsIdentity>();
+            if(validator != null)
+            {
+                validator.PreConstruct(new object[]{ @boundary, @buildingName});
+            }
+        
+            this.Boundary = @boundary;
+            this.BuildingName = @buildingName;
+        
+            if(validator != null)
+            {
+                validator.PostConstruct(this);
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("Boundary", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public Polygon Boundary { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("Building Name", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string BuildingName { get; set; }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
+    
+    public partial class GridDefaultsValue 
+    
+    {
+        [Newtonsoft.Json.JsonConstructor]
+        public GridDefaultsValue(double @typicalPanelWidth, string @facadeTypeName, double @parapetHeight)
+        {
+            var validator = Validator.Instance.GetFirstValidatorForType<GridDefaultsValue>();
+            if(validator != null)
+            {
+                validator.PreConstruct(new object[]{ @typicalPanelWidth, @facadeTypeName, @parapetHeight});
+            }
+        
+            this.TypicalPanelWidth = @typicalPanelWidth;
+            this.FacadeTypeName = @facadeTypeName;
+            this.ParapetHeight = @parapetHeight;
+        
+            if(validator != null)
+            {
+                validator.PostConstruct(this);
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("Typical Panel Width", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public double TypicalPanelWidth { get; set; } = 3D;
+    
+        [Newtonsoft.Json.JsonProperty("Facade Type Name", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string FacadeTypeName { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("Parapet Height", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public double ParapetHeight { get; set; } = 0D;
     
     
     }
@@ -386,7 +494,7 @@ namespace FacadeGrid
         }
     
         /// <summary>Adjust the grid for this portion of the facade.</summary>
-        [Newtonsoft.Json.JsonProperty("Grid", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonProperty("Grid", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public Grid2dInput Grid { get; set; }
     
         [Newtonsoft.Json.JsonProperty("Facade Type Name", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
