@@ -56,7 +56,7 @@ namespace Elements
         [Newtonsoft.Json.JsonProperty("Force Visible", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string ForceVisible { get; set; }
     
-        /// <summary>The desired screen space orientation of the label. The Z component of the vector will be ignored.</summary>
+        /// <summary>The label's world-space orientation which will be projected to screen space.</summary>
         [Newtonsoft.Json.JsonProperty("Direction", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public Vector3 Direction { get; set; }
     
