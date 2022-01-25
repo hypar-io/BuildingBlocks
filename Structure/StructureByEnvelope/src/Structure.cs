@@ -42,8 +42,10 @@ namespace Structure
             CellComplex cellComplex = null;
             Line longestEdge = null;
 
+#if DEBUG
             var sw = new Stopwatch();
             sw.Start();
+#endif
 
             if (models.ContainsKey(BAYS_MODEL_NAME))
             {
@@ -123,8 +125,10 @@ namespace Structure
                 }
             }
 
+#if DEBUG
             Console.WriteLine($"{sw.ElapsedMilliseconds} ms for getting or creating a cell complex.");
             sw.Restart();
+#endif
 
             Vector3 primaryDirection;
             Vector3 secondaryDirection;
@@ -148,8 +152,10 @@ namespace Structure
                 secondaryDirection = longestEdge.TransformAt(0.5).XAxis;
             }
 
+#if DEBUG
             Console.WriteLine($"{sw.ElapsedMilliseconds} ms for getting or creating grids.");
             sw.Restart();
+#endif
 
             var structureMaterial = new Material("Steel", Colors.Gray, 0.5, 0.3);
             model.AddElement(structureMaterial, false);
@@ -226,8 +232,10 @@ namespace Structure
                 L3 = Task.Run(async () => await lProfileFactory.GetProfileByTypeAsync(LProfileType.L3X2X3_16)).Result;
             }
 
+#if DEBUG
             Console.WriteLine($"{sw.ElapsedMilliseconds} ms for getting all beam and column profiles.");
             sw.Restart();
+#endif
 
             var xy = new Plane(Vector3.Origin, Vector3.ZAxis);
 
@@ -284,7 +292,7 @@ namespace Structure
                     Column columnDefinition;
                     if (!columnDefintions.ContainsKey((memberLength, columnProfile)))
                     {
-                        columnDefinition = new Column(Vector3.Origin, memberLength, columnProfile, structureMaterial)
+                        columnDefinition = new Column(Vector3.Origin, memberLength, columnProfile, structureMaterial, name: columnProfile.Name)
                         {
                             IsElementDefinition = true
                         };
@@ -299,7 +307,7 @@ namespace Structure
                     var t = new Transform();
                     t.Rotate(rotation);
                     t.Move(origin);
-                    var instance = columnDefinition.CreateInstance(t, $"column_{edge.Id}");
+                    var instance = columnDefinition.CreateInstance(t, $"{columnDefinition.Name}");
                     instance.AdditionalProperties.Add(EDGE_ID_PROPERTY_NAME, edge.Id);
                     model.AddElement(instance, false);
                     model.AddElement(new ModelCurve(new Line(columnDefinition.Location, columnDefinition.Location + new Vector3(0, 0, columnDefinition.Height)).TransformedLine(t), BuiltInMaterials.ZAxis), false);
@@ -330,7 +338,16 @@ namespace Structure
                             }
 
                             var cellCount = (int)Math.Ceiling((memberLength - Units.InchesToMeters(24)) / girderProfileDepth);
-                            girderDefinition = new Joist(cl, L8, L8, L2, girderProfileDepth, cellCount, Units.InchesToMeters(2.5), Units.InchesToMeters(12), structureMaterial)
+                            girderDefinition = new Joist(cl,
+                                                         L8,
+                                                         L8,
+                                                         L2,
+                                                         girderProfileDepth,
+                                                         cellCount,
+                                                         Units.InchesToMeters(2.5),
+                                                         Units.InchesToMeters(12),
+                                                         structureMaterial,
+                                                         L8.Name)
                             {
                                 IsElementDefinition = true
                             };
@@ -349,7 +366,7 @@ namespace Structure
                     ElementInstance girderInstance = null;
                     if (input.CreateBeamsOnFirstLevel)
                     {
-                        girderInstance = girderDefinition.CreateInstance(t, $"beam_{edge.Id}");
+                        girderInstance = girderDefinition.CreateInstance(t, $"{girderDefinition.Name}");
                         model.AddElement(girderInstance, false);
 
                         if (girderDefinition is Beam beam)
@@ -365,7 +382,7 @@ namespace Structure
                     {
                         if (start.Z > lowestTierElevation)
                         {
-                            girderInstance = girderDefinition.CreateInstance(t, $"beam_{edge.Id}");
+                            girderInstance = girderDefinition.CreateInstance(t, $"{girderDefinition.Name}");
                             model.AddElement(girderInstance, false);
                             if (girderDefinition is Beam beam)
                             {
@@ -389,8 +406,10 @@ namespace Structure
                 }
             }
 
+#if DEBUG
             Console.WriteLine($"{sw.ElapsedMilliseconds} ms for creating girders and columns.");
             sw.Restart();
+#endif
 
             foreach (var cell in cellComplex.GetCells())
             {
@@ -485,11 +504,11 @@ namespace Structure
                             }
                             var beamDir = l.Direction();
                             var instanceTransform = new Transform(l.Start, beamDir, Vector3.ZAxis);
-                            var beamInstance = beamDefinition.CreateInstance(instanceTransform, $"beam_{cell.Id}");
+                            var beamInstance = beamDefinition.CreateInstance(instanceTransform, $"{beamDefinition.Name}");
                             beamInstance.AdditionalProperties.Add(CELL_ID_PROPERTY_NAME, cell.Id);
                             model.AddElement(beamInstance, false);
                             var planDirection = beamDir.IsAlmostEqualTo(Vector3.ZAxis) ? Vector3.XAxis : beamDir.Project(xy).Unitized();
-                            beamInstance.AdditionalProperties.Add("LabelConfiguration", new LabelConfiguration(new Color(0, 0, 0, 1), Vector3.Origin, null, null, planDirection));
+                            beamInstance.AdditionalProperties.Add("LabelConfiguration", new LabelConfiguration(new Color(1, 1, 1, 0), Vector3.Origin, null, null, planDirection));
                             if (beamDefinition is Beam beam)
                             {
                                 model.AddElement(new ModelCurve(beam.Curve.Transformed(instanceTransform), BuiltInMaterials.ZAxis), false);
@@ -503,8 +522,10 @@ namespace Structure
                 }
             }
 
+#if DEBUG
             Console.WriteLine($"{sw.ElapsedMilliseconds} ms for creating beams.");
             sw.Restart();
+#endif
 
             model.AddElements(CreateViewScopesForLevelsAndGrids(model, gridLines), false);
 
@@ -517,27 +538,27 @@ namespace Structure
         }
 
         private static void FindOrCreateStructuralFramingDefinition(double memberLength,
-                                                             Profile girderProfile,
+                                                             Profile framingProfile,
                                                              Material material,
                                                              Dictionary<(double, Profile), GeometricElement> structuralFramingDefinitions,
                                                              Model model,
                                                              out GeometricElement structuralFramingDefinition)
         {
-            if (!structuralFramingDefinitions.ContainsKey((memberLength, girderProfile)))
+            if (!structuralFramingDefinitions.ContainsKey((memberLength, framingProfile)))
             {
                 // Beam definitions are defined along the X axis
                 var cl = new Line(Vector3.Origin, new Vector3(memberLength, 0));
-                structuralFramingDefinition = new Beam(cl, girderProfile, material)
+                structuralFramingDefinition = new Beam(cl, framingProfile, material, name: framingProfile.Name)
                 {
                     IsElementDefinition = true
                 };
                 structuralFramingDefinition.Representation.SkipCSGUnion = true;
-                structuralFramingDefinitions.Add((memberLength, girderProfile), structuralFramingDefinition);
+                structuralFramingDefinitions.Add((memberLength, framingProfile), structuralFramingDefinition);
                 model.AddElement(structuralFramingDefinition, false);
             }
             else
             {
-                structuralFramingDefinition = structuralFramingDefinitions[(memberLength, girderProfile)];
+                structuralFramingDefinition = structuralFramingDefinitions[(memberLength, framingProfile)];
             }
         }
 
