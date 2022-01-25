@@ -7,6 +7,7 @@ using Elements;
 using Elements.GeoJSON;
 using Elements.Geometry;
 using Elements.Geometry.Solids;
+using Elements.Spatial;
 using Elements.Validators;
 using Elements.Serialization.JSON;
 using System;
@@ -25,23 +26,18 @@ namespace Elements
     public partial class Origin : Element
     {
         [Newtonsoft.Json.JsonConstructor]
-        public Origin(Position @position, double @elevation, Transform @transform, System.Guid @id, string @name)
+        public Origin(Position @position, double @elevation, Transform @transform = null, System.Guid @id = default, string @name = null)
             : base(id, name)
         {
-            var validator = Validator.Instance.GetFirstValidatorForType<Origin>();
-            if(validator != null)
-            {
-                validator.PreConstruct(new object[]{ @position, @elevation, @transform, @id, @name});
-            }
-        
             this.Position = @position;
             this.Elevation = @elevation;
             this.Transform = @transform;
-            
-            if(validator != null)
-            {
-                validator.PostConstruct(this);
             }
+        
+        // Empty constructor
+        public Origin()
+            : base()
+        {
         }
     
         /// <summary>The latitude of the origin.</summary>
