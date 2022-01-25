@@ -10,7 +10,7 @@ using Xunit.Abstractions;
 using System;
 using System.Collections.Generic;
 
-namespace StructureByEnvelope.Tests
+namespace Structure.Tests
 {
     public class FunctionTests
     {

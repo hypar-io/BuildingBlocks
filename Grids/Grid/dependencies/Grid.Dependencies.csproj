@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <PackageReference Include="Hypar.Client" Version="0.9.7-alpha.5" />
+    <PackageReference Include="Hypar.Elements" Version="0.9.7-alpha.7" />
+    <PackageReference Include="Hypar.Functions" Version="0.9.9" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+</Project>

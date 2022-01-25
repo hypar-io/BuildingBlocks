@@ -1,0 +1,674 @@
+{
+  "$schema": "https://hypar.io/Schemas/Function.json",
+  "id": "c918ea51-b05b-4e14-a30b-ea53799365d5",
+  "name": "Grid",
+  "description": "Create custom gridlines for your project using typical values, relative spacings, or absolute offsets.",
+  "language": "C#",
+  "model_dependencies": [
+    {
+      "autohide": false,
+      "name": "Envelope",
+      "optional": true
+    }
+  ],
+  "model_output": "Grids",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "Mode": {
+        "type": "string",
+        "description": "Are the gridlines calculated from a typical target, as grid positions absolute from their origin, or relative to the last gridline?",
+        "$hyparOrder": 0,
+        "default": "Typical",
+        "$hyparDisableRange": true,
+        "enum": [
+          "Absolute",
+          "Relative",
+          "Typical"
+        ]
+      },
+      "Grid Areas": {
+        "type": "array",
+        "description": "List of grids enclosed by the area they apply to.",
+        "$hyparOrder": 1,
+        "default": [
+          {
+            "Name": "Main",
+            "Orientation": {
+              "Matrix": {
+                "Components": [
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1,
+                  0
+                ]
+              }
+            },
+            "U": {
+              "Name": "{A}",
+              "Grid Lines": [
+                {
+                  "Spacing": 0.5,
+                  "Quantity": 1,
+                  "Location": 0.5
+                },
+                {
+                  "Spacing": 7.6,
+                  "Quantity": 2,
+                  "Location": 8.1
+                }
+              ],
+              "Offset Start": 0.5,
+              "Target Typical Spacing": 7.6,
+              "Offset End": 0.5
+            },
+            "V": {
+              "Name": "{1}",
+              "Grid Lines": [
+                {
+                  "Spacing": 0.5,
+                  "Quantity": 1,
+                  "Location": 0.5
+                },
+                {
+                  "Spacing": 7.6,
+                  "Quantity": 2,
+                  "Location": 8.1
+                }
+              ],
+              "Offset Start": 0.5,
+              "Target Typical Spacing": 7.6,
+              "Offset End": 0.5
+            }
+          }
+        ],
+        "items": {
+          "name": "Grid Area",
+          "type": "object",
+          "required": [],
+          "default": {
+            "Name": "Main",
+            "Orientation": {
+              "Matrix": {
+                "Components": [
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1,
+                  0
+                ]
+              }
+            },
+            "U": {
+              "Name": "{A}",
+              "Grid Lines": [
+                {
+                  "Spacing": 0.5,
+                  "Quantity": 1,
+                  "Location": 0.5
+                },
+                {
+                  "Spacing": 7.6,
+                  "Quantity": 2,
+                  "Location": 8.1
+                }
+              ],
+              "Offset Start": 0.5,
+              "Target Typical Spacing": 7.6,
+              "Offset End": 0.5
+            },
+            "V": {
+              "Name": "{1}",
+              "Grid Lines": [
+                {
+                  "Spacing": 0.5,
+                  "Quantity": 1,
+                  "Location": 0.5
+                },
+                {
+                  "Spacing": 7.6,
+                  "Quantity": 2,
+                  "Location": 8.1
+                }
+              ],
+              "Offset Start": 0.5,
+              "Target Typical Spacing": 7.6,
+              "Offset End": 0.5
+            }
+          },
+          "properties": {
+            "Name": {
+              "type": "string",
+              "default": "Main"
+            },
+            "Orientation": {
+              "description": "The origin and rotation of your grid",
+              "$ref": "https://prod-api.hypar.io/schemas/Transform",
+              "$hyparDeprecated": true,
+              "$hyparConstraints": {
+                "enableTranslation": ["x", "y"],
+                "enableRotation": "z",
+                "positionZ": 0,
+                "rotationZ": 0
+              },
+              "default": {
+                "Matrix": {
+                  "Components": [
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1,
+                    0
+                  ]
+                }
+              }
+            },
+            "U": {
+              "type": "object",
+              "properties": {
+                "Name": {
+                  "type": "string",
+                  "$hyparOrder": 99,
+                  "default": "{A}"
+                },
+                "Spacing": {
+                  "type": "array",
+                  "description": "Please use Relative mode and Grid Lines > Spacing instead of Spacing.",
+                  "$hyparStyle": "singleField",
+                  "items": {
+                    "type": "number"
+                  },
+                  "$hyparDeprecated": true
+                },
+                "Grid Lines": {
+                  "type": "array",
+                  "$hyparShowIf": {
+                    "type": "any",
+                    "conditions": [
+                      {
+                        "property": "Mode",
+                        "value": "Relative"
+                      },
+                      {
+                        "property": "Mode",
+                        "value": "Absolute"
+                      }
+                    ]
+                  },
+                  "items": {
+                    "type": "object",
+                    "$hyparStyle": "row",
+                    "default": {
+                      "Location": 0,
+                      "Spacing": 0,
+                      "Quantity": 1
+                    },
+                    "properties": {
+                      "Location": {
+                        "type": "number",
+                        "$hyparOrder": 1,
+                        "$hyparUnitType": "length",
+                        "$hyparShowIf": {
+                          "conditions": [
+                            {
+                              "property": "Mode",
+                              "value": "Absolute"
+                            }
+                          ]
+                        }
+                      },
+                      "Spacing": {
+                        "type": "number",
+                        "$hyparOrder": 2,
+                        "$hyparUnitType": "length",
+                        "$hyparShowIf": {
+                          "conditions": [
+                            {
+                              "property": "Mode",
+                              "value": "Relative"
+                            }
+                          ]
+                        }
+                      },
+                      "Quantity": {
+                        "type": "integer",
+                        "default": 1,
+                        "$hyparOrder": 3,
+                        "$hyparShowIf": {
+                          "conditions": [
+                            {
+                              "property": "Mode",
+                              "value": "Relative"
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                },
+                "Target Typical Spacing": {
+                  "type": "number",
+                  "$hyparOrder": 1,
+                  "$hyparUnitType": "length",
+                  "default": 7.6,
+                  "minimum": 3,
+                  "maximum": 15,
+                  "$hyparShowIf": {
+                    "conditions": [
+                      {
+                        "property": "Mode",
+                        "value": "Typical"
+                      }
+                    ]
+                  }
+                },
+                "Offset Start": {
+                  "type": "number",
+                  "$hyparOrder": 2,
+                  "$hyparUnitType": "length",
+                  "default": 0.5,
+                  "minimum": 0,
+                  "maximum": 15,
+                  "$hyparShowIf": {
+                    "conditions": [
+                      {
+                        "property": "Mode",
+                        "value": "Typical"
+                      }
+                    ]
+                  }
+                },
+                "Offset End": {
+                  "type": "number",
+                  "$hyparOrder": 3,
+                  "$hyparUnitType": "length",
+                  "default": 0.5,
+                  "minimum": 0,
+                  "maximum": 15,
+                  "$hyparShowIf": {
+                    "conditions": [
+                      {
+                        "property": "Mode",
+                        "value": "Typical"
+                      }
+                    ]
+                  }
+                }
+              }
+            },
+            "V": {
+              "type": "object",
+              "properties": {
+                "Name": {
+                  "type": "string",
+                  "$hyparOrder": 99,
+                  "default": "{1}"
+                },
+                "Spacing": {
+                  "type": "array",
+                  "description": "Please use Relative mode and Grid Lines > Spacing instead of Spacing.",
+                  "$hyparStyle": "singleField",
+                  "items": {
+                    "type": "number"
+                  },
+                  "$hyparDeprecated": true
+                },
+                "Grid Lines": {
+                  "type": "array",
+                  "$hyparShowIf": {
+                    "type": "any",
+                    "conditions": [
+                      {
+                        "property": "Mode",
+                        "value": "Relative"
+                      },
+                      {
+                        "property": "Mode",
+                        "value": "Absolute"
+                      }
+                    ]
+                  },
+                  "items": {
+                    "type": "object",
+                    "$hyparStyle": "row",
+                    "default": {
+                      "Location": 0,
+                      "Spacing": 0,
+                      "Quantity": 1
+                    },
+                    "properties": {
+                      "Location": {
+                        "type": "number",
+                        "$hyparOrder": 1,
+                        "$hyparUnitType": "length",
+                        "$hyparShowIf": {
+                          "conditions": [
+                            {
+                              "property": "Mode",
+                              "value": "Absolute"
+                            }
+                          ]
+                        }
+                      },
+                      "Spacing": {
+                        "type": "number",
+                        "$hyparOrder": 2,
+                        "$hyparUnitType": "length",
+                        "$hyparShowIf": {
+                          "conditions": [
+                            {
+                              "property": "Mode",
+                              "value": "Relative"
+                            }
+                          ]
+                        }
+                      },
+                      "Quantity": {
+                        "type": "integer",
+                        "default": 1,
+                        "$hyparOrder": 3,
+                        "$hyparShowIf": {
+                          "conditions": [
+                            {
+                              "property": "Mode",
+                              "value": "Relative"
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                },
+                "Target Typical Spacing": {
+                  "type": "number",
+                  "$hyparOrder": 1,
+                  "$hyparUnitType": "length",
+                  "default": 7.6,
+                  "minimum": 3,
+                  "maximum": 15,
+                  "$hyparShowIf": {
+                    "conditions": [
+                      {
+                        "property": "Mode",
+                        "value": "Typical"
+                      }
+                    ]
+                  }
+                },
+                "Offset Start": {
+                  "type": "number",
+                  "$hyparOrder": 2,
+                  "$hyparUnitType": "length",
+                  "default": 0.5,
+                  "minimum": 0,
+                  "maximum": 15,
+                  "$hyparShowIf": {
+                    "conditions": [
+                      {
+                        "property": "Mode",
+                        "value": "Typical"
+                      }
+                    ]
+                  }
+                },
+                "Offset End": {
+                  "type": "number",
+                  "$hyparOrder": 3,
+                  "$hyparUnitType": "length",
+                  "default": 0.5,
+                  "minimum": 0,
+                  "maximum": 15,
+                  "$hyparShowIf": {
+                    "conditions": [
+                      {
+                        "property": "Mode",
+                        "value": "Typical"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "Show Debug Geometry": {
+        "type": "boolean",
+        "default": false,
+        "$hyparDisableRange": true,
+        "$hyparOrder": 2
+      }
+    }
+  },
+  "overrides": {
+    "Grid Origins": {
+      "context": "[*discriminator=Elements.Grid2dElement]",
+      "identity": {
+        "Name": {
+          "type": "string"
+        }
+      },
+      "paradigm": "edit",
+      "schema": {
+        "Transform": {
+          "$ref": "https://prod-api.hypar.io/schemas/Transform",
+          "$hyparConstraints": {
+            "enableTranslation": ["x", "y"],
+            "enableRotation": "z",
+            "positionZ": 0,
+            "rotationZ": 0
+          }
+        }
+      },
+      "verbs": {
+        "edit": null,
+        "revert": null
+      }
+    },
+    "U Grid Subdivisions": {
+      "context": "[*discriminator=Elements.Grid2dElement]",
+      "identity": {
+        "Name": {
+          "type": "string"
+        }
+      },
+      "paradigm": "edit",
+      "schema": {
+        "UGrid": {
+          "$ref": "https://prod-api.hypar.io/schemas/Grid1dInput"
+        }
+      }
+    },
+    "V Grid Subdivisions": {
+      "context": "[*discriminator=Elements.Grid2dElement]",
+      "identity": {
+        "Name": {
+          "type": "string"
+        }
+      },
+      "paradigm": "edit",
+      "schema": {
+        "VGrid": {
+          "$ref": "https://prod-api.hypar.io/schemas/Grid1dInput"
+        }
+      }
+    },
+    "Gridline Names": {
+      "context": "[*discriminator=Elements.GridLine]",
+      "identity": {
+        "ParametrizedPosition": {
+          "type": "number"
+        },
+        "Axis": {
+          "type": "string",
+          "enum": [
+            "U",
+            "V"
+          ]
+        }
+      },
+      "paradigm": "edit",
+      "schema": {
+        "Name": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "outputs": [],
+  "element_types": [
+    "https://prod-api.hypar.io/schemas/Envelope",
+    "https://prod-api.hypar.io/schemas/Grid2dElement"
+  ],
+  "repository_url": "",
+  "source_file_key": null,
+  "preview_image": null,
+  "thumbnail_id": null,
+  "last_updated": "0001-01-01T00:00:00",
+  "messages": {
+    "ja": {
+      "name": "グリッド",
+      "description": "典型的な値、相対的な間隔、または絶対的なオフセットを使用して、プロジェクト用のカスタムグリッドラインを作成します。",
+      "input_schema": {
+        "properties": {
+          "Mode": {
+            "description": "一般的なターゲットから計算されたグリッドラインは、グリッドの位置が原点から絶対的なものなのか、それとも最後のグリッドラインからの相対的なものなのか？",
+            "enum": [
+              "アブソリュート",
+              "相対的な",
+              "典型的な"
+            ],
+            "name": "モード"
+          },
+          "Grid Areas": {
+            "description": "該当するエリアで囲まれたグリッドの一覧です。",
+            "items": {
+              "name": "グリッドエリア",
+              "properties": {
+                "Name": {
+                  "name": "名前"
+                },
+                "Orientation": {
+                  "description": "グリッドの原点と回転",
+                  "name": "オリエンテーション"
+                },
+                "U": {
+                  "properties": {
+                    "Name": {
+                      "name": "名前"
+                    },
+                    "Spacing": {
+                      "description": "Spacingではなく、RelativeモードとGrid Lines > Spacingを使用してください。",
+                      "items": {},
+                      "name": "スペーシング"
+                    },
+                    "Grid Lines": {
+                      "items": {
+                        "properties": {
+                          "Location": {
+                            "name": "所在地"
+                          },
+                          "Spacing": {
+                            "name": "スペーシング"
+                          },
+                          "Quantity": {
+                            "name": "数量"
+                          }
+                        }
+                      },
+                      "name": "グリッドライン"
+                    },
+                    "Target Typical Spacing": {
+                      "name": "ターゲット 標準的な間隔"
+                    },
+                    "Offset Start": {
+                      "name": "オフセットスタート"
+                    },
+                    "Offset End": {
+                      "name": "オフセットエンド"
+                    }
+                  },
+                  "name": "U"
+                },
+                "V": {
+                  "properties": {
+                    "Name": {
+                      "name": "名前"
+                    },
+                    "Spacing": {
+                      "description": "Spacingではなく、RelativeモードとGrid Lines > Spacingを使用してください。",
+                      "items": {},
+                      "name": "スペーシング"
+                    },
+                    "Grid Lines": {
+                      "items": {
+                        "properties": {
+                          "Location": {
+                            "name": "所在地"
+                          },
+                          "Spacing": {
+                            "name": "スペーシング"
+                          },
+                          "Quantity": {
+                            "name": "数量"
+                          }
+                        }
+                      },
+                      "name": "グリッドライン"
+                    },
+                    "Target Typical Spacing": {
+                      "name": "ターゲット 標準的な間隔"
+                    },
+                    "Offset Start": {
+                      "name": "オフセットスタート"
+                    },
+                    "Offset End": {
+                      "name": "オフセットエンド"
+                    }
+                  },
+                  "name": "V"
+                }
+              }
+            },
+            "name": "グリッドエリア"
+          },
+          "Show Debug Geometry": {
+            "name": "デバッグジオメトリの表示"
+          }
+        }
+      },
+      "overrides": {
+        "Grid Origins": {
+          "name": "グリッド・オリジン",
+          "schema": {
+            "Transform": {
+              "name": "トランスフォーム"
+            }
+          }
+        }
+      }
+    }
+  }
+}

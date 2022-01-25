@@ -6,9 +6,9 @@ Makes Levels and LevelPerimeters from an incoming Envelope.
 
 |Input Name|Type|Description|
 |---|---|---|
-|Penthouse Level Height|number|Height of the top level.|
 |Ground Level Height|number|Height of ground level.|
 |Standard Level Height|number|Standard height of repeated levels.|
+|Penthouse Level Height|number|Height of the top level.|
 
 
 <br>

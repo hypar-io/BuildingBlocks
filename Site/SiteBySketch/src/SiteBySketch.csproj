@@ -5,9 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\dependencies\SiteBySketch.Dependencies.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="GeometryEx" Version="6.10.0" />
-    <PackageReference Include="Hypar.Elements" Version="0.7.3" />
-    <PackageReference Include="Hypar.Functions" Version="0.7.3" />
+    <PackageReference Include="Hypar.Elements" Version="0.9.5" />
+    <PackageReference Include="Hypar.Functions" Version="0.9.6" />
   </ItemGroup>
 
 </Project>

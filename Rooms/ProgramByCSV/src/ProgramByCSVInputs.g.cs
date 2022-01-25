@@ -5,79 +5,113 @@
 using Elements;
 using Elements.GeoJSON;
 using Elements.Geometry;
+using Elements.Geometry.Solids;
+using Elements.Validators;
+using Elements.Serialization.JSON;
 using Hypar.Functions;
 using Hypar.Functions.Execution;
 using Hypar.Functions.Execution.AWS;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using Line = Elements.Geometry.Line;
+using Polygon = Elements.Geometry.Polygon;
 
 namespace ProgramByCSV
 {
-    public class ProgramByCSVInputs: S3Args
+    #pragma warning disable // Disable all warnings
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
+    
+    public  class ProgramByCSVInputs : S3Args
+    
     {
-		/// <summary>
-		/// A CSV list of room definitions.
-		/// The system will set this property to the data's path on disk.
-		/// </summary>
-		[JsonProperty("Program")]
-		[JsonConverter(typeof(StringToInputDataConverter))]
-		public InputData Program {get; internal set;}
-
-		/// <summary>
-		/// Default is metric units.
-		/// </summary>
-		[JsonProperty("Use imperial units")]
-		public bool UseImperialUnits {get;}
-
-		/// <summary>
-		/// Changes the sequence of the suites.
-		/// </summary>
-		[JsonProperty("Suite Sequence")]
-		[JsonConverter(typeof(StringEnumConverter))]
-		public SuiteSequence SuiteSequence {get;}
-
-		/// <summary>
-		/// Changes the sequence of the rooms in each suite.
-		/// </summary>
-		[JsonProperty("Room Sequence")]
-		[JsonConverter(typeof(StringEnumConverter))]
-		public RoomSequence RoomSequence {get;}
-
-
-
-        /// <summary>
-        /// Construct a ProgramByCSVInputs with default inputs.
-        /// This should be used for testing only.
-        /// </summary>
-        public ProgramByCSVInputs() : base()
+        [Newtonsoft.Json.JsonConstructor]
+        
+        public ProgramByCSVInputs(InputData @program, bool @useImperialUnits, ProgramByCSVInputsSuiteSequence @suiteSequence, ProgramByCSVInputsRoomSequence @roomSequence, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey):
+        base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
         {
-			this.Program = new InputData("default_input.csv");
-			this.UseImperialUnits = false;
-			this.SuiteSequence = SuiteSequence.Listed;
-			this.RoomSequence = RoomSequence.Listed;
-
+            var validator = Validator.Instance.GetFirstValidatorForType<ProgramByCSVInputs>();
+            if(validator != null)
+            {
+                validator.PreConstruct(new object[]{ @program, @useImperialUnits, @suiteSequence, @roomSequence});
+            }
+        
+            this.Program = @program;
+            this.UseImperialUnits = @useImperialUnits;
+            this.SuiteSequence = @suiteSequence;
+            this.RoomSequence = @roomSequence;
+        
+            if(validator != null)
+            {
+                validator.PostConstruct(this);
+            }
         }
-
-
-        /// <summary>
-        /// Construct a ProgramByCSVInputs specifying all inputs.
-        /// </summary>
-        /// <returns></returns>
-        [JsonConstructor]
-        public ProgramByCSVInputs(InputData program, bool useImperialUnits, SuiteSequence suiteSequence, RoomSequence roomSequence, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
-        {
-			this.Program = program;
-			this.UseImperialUnits = useImperialUnits;
-			this.SuiteSequence = suiteSequence;
-			this.RoomSequence = roomSequence;
-
-		}
-
-		public override string ToString()
-		{
-			var json = JsonConvert.SerializeObject(this);
-			return json;
-		}
-	}
+    
+        /// <summary>A CSV list of room definitions.</summary>
+        [Newtonsoft.Json.JsonProperty("Program", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public InputData Program { get; set; }
+    
+        /// <summary>Default is metric units.</summary>
+        [Newtonsoft.Json.JsonProperty("Use imperial units", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public bool UseImperialUnits { get; set; }
+    
+        /// <summary>Changes the sequence of the suites.</summary>
+        [Newtonsoft.Json.JsonProperty("Suite Sequence", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        public ProgramByCSVInputsSuiteSequence SuiteSequence { get; set; } = ProgramByCSVInputsSuiteSequence.Listed;
+    
+        /// <summary>Changes the sequence of the rooms in each suite.</summary>
+        [Newtonsoft.Json.JsonProperty("Room Sequence", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        public ProgramByCSVInputsRoomSequence RoomSequence { get; set; } = ProgramByCSVInputsRoomSequence.Listed;
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
+    public enum ProgramByCSVInputsSuiteSequence
+    {
+        [System.Runtime.Serialization.EnumMember(Value = @"Listed")]
+        Listed = 0,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"Reverse")]
+        Reverse = 1,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"AreaAscending")]
+        AreaAscending = 2,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"AreaDescending")]
+        AreaDescending = 3,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"NameAscending")]
+        NameAscending = 4,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"NameDescending")]
+        NameDescending = 5,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"NumberAscending")]
+        NumberAscending = 6,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"NumberDescending")]
+        NumberDescending = 7,
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
+    public enum ProgramByCSVInputsRoomSequence
+    {
+        [System.Runtime.Serialization.EnumMember(Value = @"Listed")]
+        Listed = 0,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"Reverse")]
+        Reverse = 1,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"AreaAscending")]
+        AreaAscending = 2,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"AreaDescending")]
+        AreaDescending = 3,
+    
+    }
 }

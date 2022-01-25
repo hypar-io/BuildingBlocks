@@ -1,9 +1,9 @@
 using Elements;
 using Elements.Geometry;
+using Elements.Geometry.Solids;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using GeometryEx;
 
 namespace LevelsByEnvelope
 {
@@ -12,7 +12,7 @@ namespace LevelsByEnvelope
 
         public LevelMaker(List<Envelope> envelopes, double stdHeight, double grdHeight, double pntHeight)
         {
-            Envelopes = new List<Envelope> ();
+            Envelopes = new List<Envelope>();
             Envelopes.AddRange(envelopes.OrderBy(e => e.Elevation));
             Levels = new List<Level>();
             LevelPerimeters = new List<LevelPerimeter>();
@@ -20,11 +20,34 @@ namespace LevelsByEnvelope
             GradeLevels(stdHeight, grdHeight);
             HighLevels(stdHeight, pntHeight);
             MidLevels(stdHeight);
+            var belowGrade = LevelPerimeters.Where(p => p.Elevation < 0);
+            var bgNameIndex = 1;
+            foreach (var lp in belowGrade.OrderBy(p => -p.Elevation))
+            {
+                lp.Name = $"B{bgNameIndex:0}";
+                bgNameIndex++;
+            }
+            var grade = LevelPerimeters.Where(p => p.Elevation == 0);
+            foreach (var lp in grade)
+            {
+                lp.Name = "Ground Level";
+            }
+            var aboveGrade = LevelPerimeters.Where(p => p.Elevation > 0);
+            var agNameIndex = 1;
+            foreach (var lp in aboveGrade.OrderBy(p => p.Elevation))
+            {
+                lp.Name = $"Level {agNameIndex:0}";
+                agNameIndex++;
+            }
+            LevelVolumes = MakeLevelVolumes(out var viewScopes);
+            ViewScopes = viewScopes;
         }
 
         private List<Envelope> Envelopes { get; set; }
         public List<Level> Levels { get; private set; }
         public List<LevelPerimeter> LevelPerimeters { get; private set; }
+        public List<LevelVolume> LevelVolumes { get; private set; }
+        public List<ViewScope> ViewScopes { get; private set; }
 
 
 
@@ -159,7 +182,7 @@ namespace LevelsByEnvelope
         /// <param name="envelope">Envelope that will encompass the new Levels.</param>
         /// <param name="interval">Desired vertical distance between Levels.</param>
         /// <returns>A List of Levels ordered from lowest Elevation to highest.</returns>
-        public void MakeLevels (Envelope envelope, double interval, bool first = true, bool last = true)
+        public void MakeLevels(Envelope envelope, double interval, bool first = true, bool last = true)
         {
             var perimeter = envelope.Profile.Perimeter;
             if (perimeter.IsClockWise())
@@ -186,6 +209,47 @@ namespace LevelsByEnvelope
                 Levels.Add(new Level(envelope.Elevation + envelope.Height, Guid.NewGuid(), ""));
                 LevelPerimeters.Add(new LevelPerimeter(perimeter.Area(), envelope.Elevation + envelope.Height, perimeter, Guid.NewGuid(), ""));
             }
+        }
+
+        private List<LevelVolume> MakeLevelVolumes(out List<ViewScope> scopes)
+        {
+            List<LevelVolume> volumes = new List<LevelVolume>();
+            List<ViewScope> viewScopes = new List<ViewScope>();
+            for (int i = 0; i < LevelPerimeters.Count - 1; i++)
+            {
+                var thisLevelPerimeter = LevelPerimeters[i];
+                var nextLevelPerimeter = LevelPerimeters[i + 1];
+                var levelHeight = nextLevelPerimeter.Elevation - thisLevelPerimeter.Elevation;
+                if (levelHeight > 0.01)
+                {
+                    var levelVolume = new LevelVolume()
+                    {
+                        Profile = thisLevelPerimeter.Perimeter,
+                        Height = levelHeight,
+                        Area = thisLevelPerimeter.Area,
+                        Transform = new Transform(0, 0, thisLevelPerimeter.Elevation),
+                        Material = BuiltInMaterials.Glass,
+                        Representation = new Extrude(thisLevelPerimeter.Perimeter, levelHeight, Vector3.ZAxis, false),
+                        Name = thisLevelPerimeter.Name
+                    };
+                    var bbox = new BBox3(levelVolume);
+                    // drop the box by a meter to avoid ceilings / beams, etc.
+                    bbox.Max += (0, 0, -1);
+                    // drop the bottom to encompass floors below
+                    bbox.Min += (0, 0, -0.3);
+                    var scope = new ViewScope(
+                       bbox,
+                        new Camera(default, CameraNamedPosition.Top, CameraProjection.Orthographic),
+                        true,
+                        name: thisLevelPerimeter.Name);
+                    levelVolume.AdditionalProperties["Plan View"] = scope;
+                    viewScopes.Add(scope);
+                    volumes.Add(levelVolume);
+                }
+
+            }
+            scopes = viewScopes;
+            return volumes;
         }
     }
 }

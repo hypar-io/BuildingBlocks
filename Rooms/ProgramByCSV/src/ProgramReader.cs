@@ -132,15 +132,15 @@ namespace ProgramByCSV
                         suiteArea += roomEntry.area * roomEntry.quantity;
                     }
                 }
-                if (input.RoomSequence == RoomSequence.Reverse)
+                if (input.RoomSequence == ProgramByCSVInputsRoomSequence.Reverse)
                 {
                     suiteRooms.Reverse();
                 }
-                if (input.RoomSequence == RoomSequence.AreaAscending)
+                if (input.RoomSequence == ProgramByCSVInputsRoomSequence.AreaAscending)
                 {
                     suiteRooms = suiteRooms.OrderBy(r => r.area).ToList();
                 }
-                if (input.RoomSequence == RoomSequence.AreaDescending)
+                if (input.RoomSequence == ProgramByCSVInputsRoomSequence.AreaDescending)
                 {
                     suiteRooms = suiteRooms.OrderByDescending(r => r.area).ToList();
                 }
@@ -153,31 +153,31 @@ namespace ProgramByCSV
                         Area = suiteArea
                     });
             }
-            if (input.SuiteSequence == SuiteSequence.Reverse)
+            if (input.SuiteSequence == ProgramByCSVInputsSuiteSequence.Reverse)
             {
                 suites.Reverse();
             }
-            if (input.SuiteSequence == SuiteSequence.AreaAscending)
+            if (input.SuiteSequence == ProgramByCSVInputsSuiteSequence.AreaAscending)
             {
                 suites = suites.OrderBy(s => s.Area).ToList();
             }
-            if (input.SuiteSequence == SuiteSequence.AreaDescending)
+            if (input.SuiteSequence == ProgramByCSVInputsSuiteSequence.AreaDescending)
             {
                 suites = suites.OrderByDescending(s => s.Area).ToList();
             }
-            if (input.SuiteSequence == SuiteSequence.NameAscending)
+            if (input.SuiteSequence == ProgramByCSVInputsSuiteSequence.NameAscending)
             {
                 suites = suites.OrderBy(s => s.Name).ToList();
             }
-            if (input.SuiteSequence == SuiteSequence.NameDescending)
+            if (input.SuiteSequence == ProgramByCSVInputsSuiteSequence.NameDescending)
             {
                 suites = suites.OrderByDescending(s => s.Name).ToList();
             }
-            if (input.SuiteSequence == SuiteSequence.NumberAscending)
+            if (input.SuiteSequence == ProgramByCSVInputsSuiteSequence.NumberAscending)
             {
                 suites = suites.OrderBy(s => s.Number).ToList();
             }
-            if (input.SuiteSequence == SuiteSequence.NumberDescending)
+            if (input.SuiteSequence == ProgramByCSVInputsSuiteSequence.NumberDescending)
             {
                 suites = suites.OrderByDescending(s => s.Number).ToList();
             }
