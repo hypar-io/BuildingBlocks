@@ -28,13 +28,13 @@ namespace Structure
     {
         [Newtonsoft.Json.JsonConstructor]
         
-        public StructureInputs(double @gridXAxisInterval, double @gridYAxisInterval, double @slabEdgeOffset, bool @displayGrid, StructureInputsTypeOfConstruction @typeOfConstruction, StructureInputsColumnType @columnType, StructureInputsGirderType @girderType, StructureInputsBeamType @beamType, double @beamSpacing, bool @createBeamsOnFirstLevel, double @slabThickness, bool @insertColumnsAtExternalEdges, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey):
+        public StructureInputs(double @gridXAxisInterval, double @gridYAxisInterval, double @slabEdgeOffset, bool @displayGrid, StructureInputsTypeOfConstruction @typeOfConstruction, StructureInputsColumnType @columnType, StructureInputsGirderType @girderType, StructureInputsBeamType @beamType, double @beamSpacing, bool @createBeamsOnFirstLevel, double @slabThickness, bool @insertColumnsAtExternalEdges, double @maximumNeighborSpan, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey):
         base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
         {
             var validator = Validator.Instance.GetFirstValidatorForType<StructureInputs>();
             if(validator != null)
             {
-                validator.PreConstruct(new object[]{ @gridXAxisInterval, @gridYAxisInterval, @slabEdgeOffset, @displayGrid, @typeOfConstruction, @columnType, @girderType, @beamType, @beamSpacing, @createBeamsOnFirstLevel, @slabThickness, @insertColumnsAtExternalEdges});
+                validator.PreConstruct(new object[]{ @gridXAxisInterval, @gridYAxisInterval, @slabEdgeOffset, @displayGrid, @typeOfConstruction, @columnType, @girderType, @beamType, @beamSpacing, @createBeamsOnFirstLevel, @slabThickness, @insertColumnsAtExternalEdges, @maximumNeighborSpan});
             }
         
             this.GridXAxisInterval = @gridXAxisInterval;
@@ -49,6 +49,7 @@ namespace Structure
             this.CreateBeamsOnFirstLevel = @createBeamsOnFirstLevel;
             this.SlabThickness = @slabThickness;
             this.InsertColumnsAtExternalEdges = @insertColumnsAtExternalEdges;
+            this.MaximumNeighborSpan = @maximumNeighborSpan;
         
             if(validator != null)
             {
@@ -109,7 +110,11 @@ namespace Structure
     
         /// <summary>Should columns be created at external locations?</summary>
         [Newtonsoft.Json.JsonProperty("Insert Columns At External Edges", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public bool InsertColumnsAtExternalEdges { get; set; } = false;
+        public bool InsertColumnsAtExternalEdges { get; set; } = true;
+    
+        /// <summary>The maximum allowable span between an off grid vertex location and its closest on-grid neighbor. If the distance between the two is greater than this value, a column will be placed.</summary>
+        [Newtonsoft.Json.JsonProperty("Maximum Neighbor Span", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public double MaximumNeighborSpan { get; set; } = 2D;
     
     
     }

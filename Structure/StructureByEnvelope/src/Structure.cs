@@ -8,6 +8,8 @@ using Elements.Geometry.Profiles;
 using Elements.Geometry.Solids;
 using Elements.Spatial;
 using Elements.Spatial.CellComplex;
+using System.Diagnostics;
+using System.IO;
 
 namespace Structure
 {
@@ -35,8 +37,15 @@ namespace Structure
             var model = new Model();
             var warnings = new List<string>();
 
+            Elements.Validators.Validator.DisableValidationOnConstruction = true;
+
             CellComplex cellComplex = null;
             Line longestEdge = null;
+
+#if DEBUG
+            var sw = new Stopwatch();
+            sw.Start();
+#endif
 
             if (models.ContainsKey(BAYS_MODEL_NAME))
             {
@@ -116,6 +125,11 @@ namespace Structure
                 }
             }
 
+#if DEBUG
+            Console.WriteLine($"{sw.ElapsedMilliseconds} ms for getting or creating a cell complex.");
+            sw.Restart();
+#endif
+
             Vector3 primaryDirection;
             Vector3 secondaryDirection;
             IEnumerable<GridLine> gridLines = null;
@@ -126,7 +140,7 @@ namespace Structure
                 gridLines = gridsModel.AllElementsOfType<GridLine>();
 
                 // Group by direction.
-                var gridGroups = gridLines.GroupBy(gl => gl.Line.Direction()).ToList();
+                var gridGroups = gridLines.GroupBy(gl => gl.Curve.TransformAt(0).ZAxis).ToList();
                 primaryDirection = gridGroups[0].Key;
                 secondaryDirection = gridGroups[1].Key;
             }
@@ -138,8 +152,14 @@ namespace Structure
                 secondaryDirection = longestEdge.TransformAt(0.5).XAxis;
             }
 
+#if DEBUG
+            Console.WriteLine($"{sw.ElapsedMilliseconds} ms for getting or creating grids.");
+            sw.Restart();
+#endif
+
             var structureMaterial = new Material("Steel", Colors.Gray, 0.5, 0.3);
-            model.AddElement(structureMaterial);
+            model.AddElement(structureMaterial, false);
+            model.AddElement(BuiltInMaterials.ZAxis, false);
 
             var wideFlangeFactory = new WideFlangeProfileFactory();
             var shsProfileFactory = new SHSProfileFactory();
@@ -212,23 +232,57 @@ namespace Structure
                 L3 = Task.Run(async () => await lProfileFactory.GetProfileByTypeAsync(LProfileType.L3X2X3_16)).Result;
             }
 
+#if DEBUG
+            Console.WriteLine($"{sw.ElapsedMilliseconds} ms for getting all beam and column profiles.");
+            sw.Restart();
+#endif
+
+            var xy = new Plane(Vector3.Origin, Vector3.ZAxis);
+
             // Order edges from lowest to highest.
             foreach (Elements.Spatial.CellComplex.Edge edge in edges.OrderBy(e =>
                 Math.Min(cellComplex.GetVertex(e.StartVertexId).Value.Z, cellComplex.GetVertex(e.EndVertexId).Value.Z)
             ))
             {
                 var isExternal = edge.GetFaces().Count < 4;
-
+                var memberLength = edge.Length(cellComplex);
                 var start = cellComplex.GetVertex(edge.StartVertexId).Value;
                 var end = cellComplex.GetVertex(edge.EndVertexId).Value;
-
-                var l = new Line(start, end);
-                var memberLength = l.Length();
+                var direction = (end - start).Unitized();
 
                 var warningRepresentation = new Representation(new List<SolidOperation>() { new Extrude(Polygon.Rectangle(0.01, 0.01), 0.01, Vector3.ZAxis, false) });
 
-                if (l.IsVertical())
+                if (edge.IsVertical(cellComplex))
                 {
+                    // For vertical edges that are not on the grid, we need
+                    // a heuristic to determine when we should place a column.
+                    // You don't want to place a column all the time because
+                    // for non-grid-aligned structures, when you place columns
+                    // at every intersection of the envelope and the grid, you
+                    // can get columns that are too close together. Instead, we
+                    // place a column based on the distance from that column along
+                    // a grid line back to a primary grid intersection. If that
+                    // distance exceeds the maximum allowable neighbor span,
+                    // we place a column.
+                    if (!edge.StartsOnGrid(cellComplex))
+                    {
+                        var maxDistance = double.MinValue;
+                        foreach (var e in edge.GetCells().SelectMany(c => c.GetEdges().Where(e =>
+                                                e != edge &&
+                                                e.StartsOrEndsOnGrid(cellComplex) &&
+                                                e.StartsOrEndsAtThisVertex(edge.StartVertexId, cellComplex) &&
+                                                e.IsHorizontal(cellComplex))))
+                        {
+                            var d = e.Length(cellComplex);
+                            maxDistance = Math.Max(maxDistance, d);
+                        }
+
+                        if (maxDistance < input.MaximumNeighborSpan)
+                        {
+                            continue;
+                        }
+                    }
+
                     if (!input.InsertColumnsAtExternalEdges && isExternal)
                     {
                         continue;
@@ -238,12 +292,13 @@ namespace Structure
                     Column columnDefinition;
                     if (!columnDefintions.ContainsKey((memberLength, columnProfile)))
                     {
-                        columnDefinition = new Column(Vector3.Origin, memberLength, columnProfile, structureMaterial)
+                        columnDefinition = new Column(Vector3.Origin, memberLength, columnProfile, structureMaterial, name: columnProfile.Name)
                         {
                             IsElementDefinition = true
                         };
+                        columnDefinition.Representation.SkipCSGUnion = true;
                         columnDefintions.Add((memberLength, columnProfile), columnDefinition);
-                        model.AddElement(columnDefinition);
+                        model.AddElement(columnDefinition, false);
                     }
                     else
                     {
@@ -252,37 +307,23 @@ namespace Structure
                     var t = new Transform();
                     t.Rotate(rotation);
                     t.Move(origin);
-                    var instance = columnDefinition.CreateInstance(t, $"column_{edge.Id}");
+                    var instance = columnDefinition.CreateInstance(t, $"{columnDefinition.Name}");
                     instance.AdditionalProperties.Add(EDGE_ID_PROPERTY_NAME, edge.Id);
                     model.AddElement(instance, false);
-                    model.AddElement(new ModelCurve(new Line(columnDefinition.Location, columnDefinition.Location + new Vector3(0, 0, columnDefinition.Height)).TransformedLine(t), BuiltInMaterials.ZAxis));
+                    model.AddElement(new ModelCurve(new Line(columnDefinition.Location, columnDefinition.Location + new Vector3(0, 0, columnDefinition.Height)).TransformedLine(t), BuiltInMaterials.ZAxis), false);
                 }
                 else
                 {
                     if (!lowestTierSet)
                     {
-                        lowestTierElevation = l.Start.Z;
+                        lowestTierElevation = start.Z;
                         lowestTierSet = true;
                     }
 
                     GeometricElement girderDefinition;
                     if (girderProfile != null)
                     {
-                        if (!girderDefinitions.ContainsKey((memberLength, girderProfile)))
-                        {
-                            // Beam definitions are defined along the X axis
-                            var cl = new Line(Vector3.Origin, new Vector3(memberLength, 0));
-                            girderDefinition = new Beam(cl, girderProfile, structureMaterial)
-                            {
-                                IsElementDefinition = true
-                            };
-                            girderDefinitions.Add((memberLength, girderProfile), girderDefinition);
-                            model.AddElement(girderDefinition);
-                        }
-                        else
-                        {
-                            girderDefinition = girderDefinitions[(memberLength, girderProfile)];
-                        }
+                        FindOrCreateStructuralFramingDefinition(memberLength, girderProfile, structureMaterial, girderDefinitions, model, out girderDefinition);
                     }
                     else
                     {
@@ -291,18 +332,28 @@ namespace Structure
                         {
                             // Beam definitions are defined along the X axis
                             var cl = new Line(Vector3.Origin, new Vector3(memberLength, 0));
-                            if (memberLength < girderProfileDepth)
+                            if (memberLength < 1.0)
                             {
                                 continue;
                             }
 
                             var cellCount = (int)Math.Ceiling((memberLength - Units.InchesToMeters(24)) / girderProfileDepth);
-                            girderDefinition = new Joist(cl, L8, L8, L2, girderProfileDepth, cellCount, Units.InchesToMeters(2.5), Units.InchesToMeters(12), structureMaterial)
+                            girderDefinition = new Joist(cl,
+                                                         L8,
+                                                         L8,
+                                                         L2,
+                                                         girderProfileDepth,
+                                                         cellCount,
+                                                         Units.InchesToMeters(2.5),
+                                                         Units.InchesToMeters(12),
+                                                         structureMaterial,
+                                                         L8.Name)
                             {
                                 IsElementDefinition = true
                             };
+                            girderDefinition.Representation.SkipCSGUnion = true;
                             girderJoistDefinitions.Add((memberLength, girderProfileDepth), girderDefinition);
-                            model.AddElement(girderDefinition);
+                            model.AddElement(girderDefinition, false);
                         }
                         else
                         {
@@ -311,35 +362,35 @@ namespace Structure
                     }
 
                     // Beam instances are transformed to align with the member's center line.
-                    var t = new Transform(l.Start, l.Direction(), Vector3.ZAxis);
+                    var t = new Transform(start, direction, Vector3.ZAxis);
                     ElementInstance girderInstance = null;
                     if (input.CreateBeamsOnFirstLevel)
                     {
-                        girderInstance = girderDefinition.CreateInstance(t, $"beam_{edge.Id}");
+                        girderInstance = girderDefinition.CreateInstance(t, $"{girderDefinition.Name}");
                         model.AddElement(girderInstance, false);
 
                         if (girderDefinition is Beam beam)
                         {
-                            model.AddElement(new ModelCurve(beam.Curve.Transformed(t), BuiltInMaterials.ZAxis));
+                            model.AddElement(new ModelCurve(beam.Curve.Transformed(t), BuiltInMaterials.ZAxis), false);
                         }
                         else if (girderDefinition is Joist joist)
                         {
-                            model.AddElement(new ModelCurve(joist.Curve.Transformed(t), BuiltInMaterials.ZAxis));
+                            model.AddElement(new ModelCurve(joist.Curve.Transformed(t), BuiltInMaterials.ZAxis), false);
                         }
                     }
                     else
                     {
-                        if (l.Start.Z > lowestTierElevation)
+                        if (start.Z > lowestTierElevation)
                         {
-                            girderInstance = girderDefinition.CreateInstance(t, $"beam_{edge.Id}");
+                            girderInstance = girderDefinition.CreateInstance(t, $"{girderDefinition.Name}");
                             model.AddElement(girderInstance, false);
                             if (girderDefinition is Beam beam)
                             {
-                                model.AddElement(new ModelCurve(beam.Curve.Transformed(t), BuiltInMaterials.ZAxis));
+                                model.AddElement(new ModelCurve(beam.Curve.Transformed(t), BuiltInMaterials.ZAxis), false);
                             }
                             else if (girderDefinition is Joist joist)
                             {
-                                model.AddElement(new ModelCurve(joist.Curve.Transformed(t), BuiltInMaterials.ZAxis));
+                                model.AddElement(new ModelCurve(joist.Curve.Transformed(t), BuiltInMaterials.ZAxis), false);
                             }
                         }
                     }
@@ -354,6 +405,11 @@ namespace Structure
                     }
                 }
             }
+
+#if DEBUG
+            Console.WriteLine($"{sw.ElapsedMilliseconds} ms for creating girders and columns.");
+            sw.Restart();
+#endif
 
             foreach (var cell in cellComplex.GetCells())
             {
@@ -418,19 +474,7 @@ namespace Structure
                             GeometricElement beamDefinition;
                             if (beamProfile != null)
                             {
-                                if (!beamDefinitions.ContainsKey((beamLength, beamProfile)))
-                                {
-                                    beamDefinition = new Beam(new Line(Vector3.Origin, new Vector3(beamLength, 0)), beamProfile, structureMaterial)
-                                    {
-                                        IsElementDefinition = true
-                                    };
-                                    beamDefinitions.Add((beamLength, beamProfile), beamDefinition);
-                                    model.AddElement(beamDefinition);
-                                }
-                                else
-                                {
-                                    beamDefinition = beamDefinitions[(beamLength, beamProfile)];
-                                }
+                                FindOrCreateStructuralFramingDefinition(beamLength, beamProfile, structureMaterial, beamDefinitions, model, out beamDefinition);
                             }
                             else
                             {
@@ -449,33 +493,41 @@ namespace Structure
                                     {
                                         IsElementDefinition = true
                                     };
+                                    beamDefinition.Representation.SkipCSGUnion = true;
                                     beamJoistDefinitions.Add((beamLength, beamProfileDepth), beamDefinition);
-                                    model.AddElement(beamDefinition);
+                                    model.AddElement(beamDefinition, false);
                                 }
                                 else
                                 {
                                     beamDefinition = beamJoistDefinitions[(beamLength, beamProfileDepth)];
                                 }
                             }
-                            var instanceTransform = new Transform(l.Start, l.Direction(), Vector3.ZAxis);
-                            var beamInstance = beamDefinition.CreateInstance(instanceTransform, $"beam_{cell.Id}");
+                            var beamDir = l.Direction();
+                            var instanceTransform = new Transform(l.Start, beamDir, Vector3.ZAxis);
+                            var beamInstance = beamDefinition.CreateInstance(instanceTransform, $"{beamDefinition.Name}");
                             beamInstance.AdditionalProperties.Add(CELL_ID_PROPERTY_NAME, cell.Id);
                             model.AddElement(beamInstance, false);
-
+                            var planDirection = beamDir.IsAlmostEqualTo(Vector3.ZAxis) ? Vector3.XAxis : beamDir.Project(xy).Unitized();
+                            beamInstance.AdditionalProperties.Add("LabelConfiguration", new LabelConfiguration(new Color(1, 1, 1, 0), Vector3.Origin, null, null, planDirection));
                             if (beamDefinition is Beam beam)
                             {
-                                model.AddElement(new ModelCurve(beam.Curve.Transformed(instanceTransform), BuiltInMaterials.ZAxis));
+                                model.AddElement(new ModelCurve(beam.Curve.Transformed(instanceTransform), BuiltInMaterials.ZAxis), false);
                             }
                             else if (beamDefinition is Joist joist)
                             {
-                                model.AddElement(new ModelCurve(joist.Curve.Transformed(instanceTransform), BuiltInMaterials.ZAxis));
+                                model.AddElement(new ModelCurve(joist.Curve.Transformed(instanceTransform), BuiltInMaterials.ZAxis), false);
                             }
                         }
                     }
                 }
             }
 
-            model.AddElements(CreateViewScopesForLevelsAndGrids(model, gridLines));
+#if DEBUG
+            Console.WriteLine($"{sw.ElapsedMilliseconds} ms for creating beams.");
+            sw.Restart();
+#endif
+
+            model.AddElements(CreateViewScopesForLevelsAndGrids(model, gridLines), false);
 
             var output = new StructureOutputs(_longestGridSpan)
             {
@@ -485,9 +537,34 @@ namespace Structure
             return output;
         }
 
+        private static void FindOrCreateStructuralFramingDefinition(double memberLength,
+                                                             Profile framingProfile,
+                                                             Material material,
+                                                             Dictionary<(double, Profile), GeometricElement> structuralFramingDefinitions,
+                                                             Model model,
+                                                             out GeometricElement structuralFramingDefinition)
+        {
+            if (!structuralFramingDefinitions.ContainsKey((memberLength, framingProfile)))
+            {
+                // Beam definitions are defined along the X axis
+                var cl = new Line(Vector3.Origin, new Vector3(memberLength, 0));
+                structuralFramingDefinition = new Beam(cl, framingProfile, material, name: framingProfile.Name)
+                {
+                    IsElementDefinition = true
+                };
+                structuralFramingDefinition.Representation.SkipCSGUnion = true;
+                structuralFramingDefinitions.Add((memberLength, framingProfile), structuralFramingDefinition);
+                model.AddElement(structuralFramingDefinition, false);
+            }
+            else
+            {
+                structuralFramingDefinition = structuralFramingDefinitions[(memberLength, framingProfile)];
+            }
+        }
+
         private static List<ViewScope> CreateViewScopesForLevelsAndGrids(Model model, IEnumerable<GridLine> gridLines)
         {
-            var beams = model.AllElementsOfType<ElementInstance>().Where(e => e.BaseDefinition is Beam);
+            var beams = model.AllElementsOfType<ElementInstance>().Where(e => e.BaseDefinition is Beam || e.BaseDefinition is Joist);
             var beamGroups = beams.GroupBy(b => b.Transform.Origin.Z);
 
             var scopes = new List<ViewScope>();
@@ -498,7 +575,7 @@ namespace Structure
             {
                 var bbox = new BBox3(bg.SelectMany(b =>
                 {
-                    var def = (Beam)b.BaseDefinition;
+                    var def = (StructuralFraming)b.BaseDefinition;
                     var start = b.Transform.OfPoint(def.Curve.PointAt(0));
                     var end = b.Transform.OfPoint(def.Curve.PointAt(1));
 
@@ -524,7 +601,8 @@ namespace Structure
                 var scope = new ViewScope()
                 {
                     BoundingBox = new BBox3(bbox.Min + new Vector3(0, 0, -1), bbox.Max + new Vector3(0, 0, 1)),
-                    Name = $"Structure elevation {bg.Key}"
+                    Name = $"Structure elevation {bg.Key}",
+                    Camera = new Camera(new Vector3(0, 0, -1), null, CameraProjection.Orthographic)
                 };
                 scopes.Add(scope);
             }
@@ -550,7 +628,6 @@ namespace Structure
             // }
             return scopes;
         }
-
         private static bool IsExternal(Elements.Spatial.CellComplex.Edge e)
         {
             var faces = e.GetFaces();
@@ -560,7 +637,6 @@ namespace Structure
             }
             return false;
         }
-
         private static Profile GetProfileFromName(string name, WideFlangeProfileFactory wideFlangeFactory, RHSProfileFactory rhsFactory, SHSProfileFactory shsFactory)
         {
             Profile profile = wideFlangeFactory.GetProfileByType(WideFlangeProfileType.W4x13);
@@ -601,5 +677,49 @@ internal static class Vector3Extensions
     public static bool IsVertical(this Line line)
     {
         return line.Start.IsDirectlyUnder(line.End) || line.End.IsDirectlyUnder(line.Start);
+    }
+
+    public static bool IsHorizontal(this Elements.Spatial.CellComplex.Edge edge, CellComplex cellComplex)
+    {
+        return cellComplex.GetVertex(edge.StartVertexId).Value.Z.ApproximatelyEquals(cellComplex.GetVertex(edge.EndVertexId).Value.Z);
+    }
+
+    public static bool IsVertical(this Elements.Spatial.CellComplex.Edge edge, CellComplex cellComplex)
+    {
+        return cellComplex.GetVertex(edge.StartVertexId).Value.IsDirectlyUnder(cellComplex.GetVertex(edge.EndVertexId).Value) ||
+            cellComplex.GetVertex(edge.EndVertexId).Value.IsDirectlyUnder(cellComplex.GetVertex(edge.StartVertexId).Value);
+    }
+
+    public static double Length(this Elements.Spatial.CellComplex.Edge edge, CellComplex cellComplex)
+    {
+        return cellComplex.GetVertex(edge.StartVertexId).Value.DistanceTo(cellComplex.GetVertex(edge.EndVertexId).Value);
+    }
+
+    public static Line ToLine(this Elements.Spatial.CellComplex.Edge edge, CellComplex cellComplex)
+    {
+        var start = cellComplex.GetVertex(edge.StartVertexId).Value;
+        var end = cellComplex.GetVertex(edge.EndVertexId).Value;
+        var l = new Line(start, end);
+        return l;
+    }
+
+    public static bool StartsOnGrid(this Elements.Spatial.CellComplex.Edge edge, CellComplex cellComplex)
+    {
+        return !string.IsNullOrEmpty(cellComplex.GetVertex(edge.StartVertexId).Name);
+    }
+
+    public static bool EndsOnGrid(this Elements.Spatial.CellComplex.Edge edge, CellComplex cellComplex)
+    {
+        return !string.IsNullOrEmpty(cellComplex.GetVertex(edge.EndVertexId).Name);
+    }
+
+    public static bool StartsOrEndsOnGrid(this Elements.Spatial.CellComplex.Edge edge, CellComplex cellComplex)
+    {
+        return StartsOnGrid(edge, cellComplex) || EndsOnGrid(edge, cellComplex);
+    }
+
+    public static bool StartsOrEndsAtThisVertex(this Elements.Spatial.CellComplex.Edge edge, ulong vertexId, CellComplex cellComplex)
+    {
+        return edge.StartVertexId == vertexId || edge.EndVertexId == vertexId;
     }
 }

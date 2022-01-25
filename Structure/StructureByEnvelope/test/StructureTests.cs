@@ -33,6 +33,7 @@ namespace Structure.tests
                 false,
                 0.1254,
                 false,
+                maximumNeighborSpan: 2,
                 bucketName: "",
                 uploadsBucket: "",
                 modelInputKeys: new Dictionary<string, string>(), gltfKey: "", elementsKey: "", ifcKey: "");

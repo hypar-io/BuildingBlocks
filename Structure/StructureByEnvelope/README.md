@@ -18,6 +18,7 @@ Generates a structural frame from a set of Levels and an Envelope.
 |Create Beams On First Level|boolean|Should beams be created at the lowest level of the structure?|
 |Slab Thickness|number|The slab thickness. Control the offset of the structure from a level.|
 |Insert Columns At External Edges|boolean|Should columns be created at external locations?|
+|Maximum Neighbor Span|number|The maximum allowable span between an off grid vertex location and its closest on-grid neighbor. If the distance between the two is greater than this value, a column will be placed.|
 
 
 <br>
