@@ -140,7 +140,7 @@ namespace Structure
                 gridLines = gridsModel.AllElementsOfType<GridLine>();
 
                 // Group by direction.
-                var gridGroups = gridLines.GroupBy(gl => ((Line)gl.Curve).Direction()).ToList();
+                var gridGroups = gridLines.GroupBy(gl => gl.Curve.TransformAt(0).ZAxis).ToList();
                 primaryDirection = gridGroups[0].Key;
                 secondaryDirection = gridGroups[1].Key;
             }
