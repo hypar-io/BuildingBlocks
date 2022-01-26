@@ -75,7 +75,7 @@ namespace EnvelopeBySketch
     
         /// <summary>Overall height of the building from grade.</summary>
         [Newtonsoft.Json.JsonProperty("Building Height", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        [System.ComponentModel.DataAnnotations.Range(5D, 100D)]
+        [System.ComponentModel.DataAnnotations.Range(5D, 200D)]
         public double BuildingHeight { get; set; } = 20D;
     
         /// <summary>Depth of the building envelope below grade.</summary>
