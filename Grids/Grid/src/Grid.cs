@@ -140,8 +140,6 @@ namespace Grid
             var vPoints = vDivisions.Select(division => division.Point).ToList();
 
             var boundaries = new List<List<Polygon>>();
-            var grids = new List<(Grid2d grid, Polygon boundary)>();
-
             var gridPoints = new List<Vector3>();
 
             foreach (var uPoint in uPoints)
@@ -200,19 +198,17 @@ namespace Grid
                 boundaries.Add(new List<Polygon>() { boundary });
             }
 
-            var gridNodes = new List<GridNode>();
-
             var texts = new List<(Vector3 location, Vector3 facingDirection, Vector3 lineDirection, string text, Color? color)>();
-
+            var grid2dElements = new List<Grid2dElement>();
             foreach (var boundary in boundaries.SelectMany(boundaryList => boundaryList).ToList())
             {
+                var gridNodes = new List<GridNode>();
                 var grid = MakeGrid(boundary, origin, uDirection, vDirection, uPoints, vPoints);
                 var uGridLines = CreateGridLines(input, output.Model, origin, uDivisions, grid.V, GridlineMaterialU, GridlineNamesIdentityAxis.U);
                 var vGridLines = CreateGridLines(input, output.Model, origin, vDivisions, grid.U, GridlineMaterialV, GridlineNamesIdentityAxis.V);
                 var allGridLines = uGridLines.Union(vGridLines);
                 CheckDuplicatedNames(allGridLines, out var deduplicatedNamesGridLines);
                 AddGridLinesTexts(allGridLines, deduplicatedNamesGridLines, texts);
-                grids.Add((grid: grid, boundary: boundary));
 
                 if (input.ShowDebugGeometry)
                 {
@@ -253,32 +249,33 @@ namespace Grid
                 {
                     Debug.DrawGrid(output.Model, grid, uPoints, vPoints);
                 }
-            }
 
-            output.Model.AddElement(new ModelText(texts, FontSize.PT72, 50));
-
-            return grids.Select(grid =>
-            {
-                var transform = new Transform(origin, uDirection, vDirection, Vector3.ZAxis);
                 var invert = new Transform(origin, uDirection, vDirection, Vector3.ZAxis);
                 invert.Invert();
-                var boundary = (Polygon)grid.boundary.Transformed(invert);
-                var rep = new Representation(new List<Elements.Geometry.Solids.SolidOperation>() { new Elements.Geometry.Solids.Lamina(boundary, false) });
-                var grid2dElement = new Grid2dElement(grid.grid, gridNodes, transform, Grid2dElementMaterial, rep, false, Guid.NewGuid(), gridArea.Name);
+                var transformedBoundary = (Polygon)boundary.Transformed(invert);
+                var rep = new Representation(new List<Elements.Geometry.Solids.SolidOperation>() { new Elements.Geometry.Solids.Lamina(transformedBoundary, false) });
+                var grid2dElement = new Grid2dElement(grid, gridNodes,
+                    uGridLines.Select(l => l.Id.ToString()).ToList(),
+                    vGridLines.Select(l => l.Id.ToString()).ToList(),
+                    transform, Grid2dElementMaterial, rep, false, Guid.NewGuid(), gridArea.Name);
 
                 grid2dElement.AdditionalProperties["UGrid"] = new Grid1dInput(
-                    new Polyline(origin, grid.grid.U.Curve.PointAt(1)),
+                    new Polyline(origin, grid.U.Curve.PointAt(1)),
                     uPoints,
                     uOverride?.SubdivisionMode ?? Grid1dInputSubdivisionMode.Manual,
                     uOverride?.SubdivisionSettings);
                 grid2dElement.AdditionalProperties["VGrid"] = new Grid1dInput(
-                    new Polyline(origin, grid.grid.V.Curve.PointAt(1)),
+                    new Polyline(origin, grid.V.Curve.PointAt(1)),
                     vPoints,
                     vOverride?.SubdivisionMode ?? Grid1dInputSubdivisionMode.Manual,
                     vOverride?.SubdivisionSettings);
 
-                return grid2dElement;
-            }).ToList();
+                grid2dElements.Add(grid2dElement);
+            }
+
+            output.Model.AddElement(new ModelText(texts, FontSize.PT72, 50));
+
+            return grid2dElements;
         }
 
         private static double GetCircleRadius(U u, U v)
