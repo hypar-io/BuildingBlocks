@@ -26,11 +26,13 @@ namespace Elements
     public partial class Grid2dElement : GeometricElement
     {
         [Newtonsoft.Json.JsonConstructor]
-        public Grid2dElement(Grid2d @grid, IList<GridNode> @gridNodes, Transform @transform = null, Material @material = null, Representation @representation = null, bool @isElementDefinition = false, System.Guid @id = default, string @name = null)
+        public Grid2dElement(Grid2d @grid, IList<GridNode> @gridNodes, IList<string> @uGridLines, IList<string> @vGridLines, Transform @transform = null, Material @material = null, Representation @representation = null, bool @isElementDefinition = false, System.Guid @id = default, string @name = null)
             : base(transform, material, representation, isElementDefinition, id, name)
         {
             this.Grid = @grid;
             this.GridNodes = @gridNodes;
+            this.UGridLines = @uGridLines;
+            this.VGridLines = @vGridLines;
             }
         
         // Empty constructor
@@ -46,6 +48,14 @@ namespace Elements
         /// <summary>A list of grid intersections that fall within the grid boundaries, in absolute space (is not intended to be modified by the transform)</summary>
         [Newtonsoft.Json.JsonProperty("GridNodes", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public IList<GridNode> GridNodes { get; set; }
+    
+        /// <summary>List of U GridLine Element IDs</summary>
+        [Newtonsoft.Json.JsonProperty("U GridLines", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public IList<string> UGridLines { get; set; }
+    
+        /// <summary>List ofV GridLine Element IDs</summary>
+        [Newtonsoft.Json.JsonProperty("V GridLines", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public IList<string> VGridLines { get; set; }
     
     
     }

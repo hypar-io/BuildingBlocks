@@ -20,13 +20,13 @@ namespace EnvelopeBySketch
 		/// Height of the building.
 		/// </summary>
 		[JsonProperty("Height")]
-		public double Height {get;}
+		public double Height {get; set;}
 
 		/// <summary>
 		/// Depth of the subgrade section.
 		/// </summary>
 		[JsonProperty("Subgrade")]
-		public double Subgrade {get;}
+		public double Subgrade {get; set;}
 
 
 

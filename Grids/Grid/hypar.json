@@ -497,7 +497,8 @@
       "paradigm": "edit",
       "schema": {
         "UGrid": {
-          "$ref": "https://prod-api.hypar.io/schemas/Grid1dInput"
+          "$ref": "https://prod-api.hypar.io/schemas/Grid1dInput",
+          "$hyparCanEditGridCurve": true
         }
       }
     },
@@ -511,7 +512,8 @@
       "paradigm": "edit",
       "schema": {
         "VGrid": {
-          "$ref": "https://prod-api.hypar.io/schemas/Grid1dInput"
+          "$ref": "https://prod-api.hypar.io/schemas/Grid1dInput",
+          "$hyparCanEditGridCurve": true
         }
       }
     },
@@ -667,6 +669,16 @@
               "name": "トランスフォーム"
             }
           }
+        }
+      }
+    },
+    "en": {
+      "overrides": {
+        "U Grid Subdivisions": {
+          "name": "U Grid"
+        },
+        "V Grid Subdivisions": {
+          "name": "V Grid"
         }
       }
     }
