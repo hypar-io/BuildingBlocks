@@ -2,10 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\src\Facade.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Hypar.Server" Version="0.9.10" />
+    <ProjectReference Include="..\..\..\..\Hypar\Hypar.Server\Hypar.Server.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

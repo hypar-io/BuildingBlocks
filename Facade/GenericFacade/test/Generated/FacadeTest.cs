@@ -18,8 +18,8 @@ namespace Facade
         {
             var input = GetInput();
 
-            var modelDependencies = new Dictionary<string, Model> {
-                {"Facade Grid", Model.FromJson(File.ReadAllText(@"/Users/andrewheumann/Dev/Facade/test/Generated/FacadeTest/model_dependencies/Facade Grid/model 121.json")) },
+            var modelDependencies = new Dictionary<string, Model> { 
+                {"Facade Grid", Model.FromJson(File.ReadAllText(@"/Users/andrewheumann/Dev/BuildingBlocks/Facade/GenericFacade/test/Generated/FacadeTest/model_dependencies/Facade Grid/d1fae26a-d2c2-4673-a479-30972b45d1c7.json")) }, 
             };
 
             var result = Facade.Execute(modelDependencies, input);

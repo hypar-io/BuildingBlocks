@@ -2,11 +2,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\dependencies\Facade.Dependencies.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Hypar.Elements" Version="0.9.7" />
-    <PackageReference Include="Hypar.Functions" Version="0.9.10" />
+    <ProjectReference Include="..\..\..\..\elements\Elements\src\Elements.csproj" />
+    <ProjectReference Include="..\..\..\..\Hypar\Hypar.Functions\src\Hypar.Functions.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

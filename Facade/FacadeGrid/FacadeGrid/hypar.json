@@ -50,6 +50,50 @@
         "Boundary": {
           "$ref": "https://hypar.io/Schemas/Geometry/Polygon.json"
         },
+        "Profile": {
+          "$ref": "https://hypar.io/Schemas/Geometry/Profile.json"
+        },
+        "Building Name": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "schema": {
+        "Typical Panel Width": {
+          "type": "number",
+          "default": 3,
+          "$hyparUnitType": "length"
+        },
+        "Facade Type Name": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "$hyparAutocompleteQuery": {
+            "query": "[*discriminator=Elements.FacadeType].Name",
+            "selfDependency": true
+          },
+          "default": null
+        },
+        "Parapet Height": {
+          "type": "number",
+          "default": 0,
+          "$hyparUnitType": "length"
+        }
+      }
+    },
+    "Grid Defaults - Envelope": {
+      "context": "[*discriminator=Elements.Envelope]",
+      "dependency": "Envelope",
+      "identity": {
+        "Boundary": {
+          "$ref": "https://hypar.io/Schemas/Geometry/Polygon.json"
+        },
+        "Profile": {
+          "$ref": "https://hypar.io/Schemas/Geometry/Profile.json"
+        },
         "Building Name": {
           "type": [
             "string",

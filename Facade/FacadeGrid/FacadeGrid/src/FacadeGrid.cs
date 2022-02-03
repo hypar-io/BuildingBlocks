@@ -86,16 +86,33 @@ namespace FacadeGrid
                 var defaultWidth = 3.0;
                 string defaultFacadeType = null;
                 var parapetHeight = 0.0;
-                if (input.Overrides?.GridDefaults != null)
+                if (input.Overrides?.GridDefaultsEnvelope != null)
                 {
+                    var proxy = mass.Proxy("Grid Defaults - Envelope");
+                    var matchingOverride = input.Overrides.GridDefaultsEnvelope.FirstOrDefault(o => GridDefaultsIdentityMatch(o, mass));
+                    if (matchingOverride != null)
+                    {
+                        defaultWidth = matchingOverride.Value.TypicalPanelWidth;
+                        defaultFacadeType = matchingOverride.Value.FacadeTypeName;
+                        parapetHeight = matchingOverride.Value.ParapetHeight;
+                        Identity.AddOverrideIdentity(proxy, matchingOverride);
+                        Identity.AddOverrideValue(proxy, "Grid Defaults - Envelope", matchingOverride.Value);
+                    }
+                }
+                else if (input.Overrides?.GridDefaults != null)
+                {
+                    var proxy = mass.Proxy("Grid Defaults");
                     var matchingOverride = input.Overrides.GridDefaults.FirstOrDefault(o => GridDefaultsIdentityMatch(o, mass));
                     if (matchingOverride != null)
                     {
                         defaultWidth = matchingOverride.Value.TypicalPanelWidth;
                         defaultFacadeType = matchingOverride.Value.FacadeTypeName;
                         parapetHeight = matchingOverride.Value.ParapetHeight;
+                        Identity.AddOverrideIdentity(proxy, matchingOverride);
+                        Identity.AddOverrideValue(proxy, "Grid Defaults", matchingOverride.Value);
                     }
                 }
+
 
                 var solids = mass.Representation.SolidOperations;
                 var elementXForm = mass.Transform;
@@ -107,7 +124,7 @@ namespace FacadeGrid
 
                     faces.AddRange(solid.Solid.Faces.Select(f =>
                     {
-                        var pgon = f.Value.Outer.ToPolygon().TransformedPolygon(mass.Transform);
+                        var pgon = f.Value.Outer.ToPolygon().TransformedPolygon(elementXForm);
                         if (pgon.Normal().Z < 0)
                         {
                             return pgon.Reversed();
@@ -137,23 +154,29 @@ namespace FacadeGrid
                 {
                     var solidBbox = new BBox3(solidGrp.SelectMany(grp => grp.solid.Vertices.Select(v => elementXForm.OfPoint(v.Value.Point))));
                     var levelsInSolid = levels.Where(l => solidBbox.Contains(l.Transform.OfPoint(l.Profile.Perimeter.PointInternal()) + (0, 0, 0.01)));
-                    var horizontalFaces = solidGrp
-                      .SelectMany(s => s.solid.Faces.Values)
-                      .Where(f => Math.Abs(f.Outer.ToPolygon().Normal().Dot(Vector3.ZAxis)) < 0.7);
+                    var allFaces = solidGrp
+                      .SelectMany(s => s.solid.Faces.Values).Select(f => ((Face f, Polygon p))(f, f.Outer.ToPolygon().TransformedPolygon(elementXForm)));
+                    var topFaces = allFaces
+                      .Where((f) => f.p.Normal().Dot(Vector3.ZAxis) > 0.7);
+                    var allTopEdges = topFaces.SelectMany(f => f.p.Segments());
+                    var verticalFaces = allFaces
+                      .Where((f) => Math.Abs(f.p.Normal().Dot(Vector3.ZAxis)) < 0.7);
                     var levelElevations = levelsInSolid.Select(lv => lv.Transform.Origin.Z).Distinct();
-                    var mergedFaces = MergeFaces(horizontalFaces);
+                    var mergedFaces = MergeFaces(verticalFaces);
                     foreach (var face in mergedFaces)
                     {
-                        var outer = face.Perimeter.TransformedPolygon(elementXForm);
+                        var outer = face.Perimeter;
                         var normal = outer.Normal();
                         var horizontalVector = Vector3.ZAxis.Cross(normal).Unitized();
                         var upVector = normal.Cross(horizontalVector);
                         // TODO — handle non-vertical faces by projecting the height vector onto the up vector
                         var heightVector = new Vector3(0, 0, parapetHeight);
-                        if (parapetHeight > 0)
+                        // If we have a strictly vertical face, we modify it by moving its top edges upwards.
+                        if (parapetHeight > 0 && normal.Dot(Vector3.ZAxis) < 0.01)
                         {
                             var topEdges = outer.Segments().Where(s => s.Direction().Dot(horizontalVector) < -0.7).ToList();
                             var transformedTopEdges = topEdges.Select(e => e.TransformedLine(new Transform(heightVector))).ToList();
+
                             var newVertices = new List<Vector3>();
                             foreach (var v in outer.Vertices)
                             {
@@ -174,8 +197,48 @@ namespace FacadeGrid
                             }
                             outer = new Polygon(newVertices);
                         }
+                        else if (parapetHeight > 0) // non-vertical face — add separate parapet polygon
+                        {
+                            var topEdges = outer.Segments().Where(s => s.Direction().Dot(horizontalVector) < -0.7).ToList();
+                            foreach (var te in topEdges)
+                            {
+                                var transformedEdge = te.TransformedLine(new Transform(heightVector));
+                                var parapetMidPt = te.PointAt(0.5);
+                                var newPolygon = new Polygon(te.End, te.Start, transformedEdge.Start, transformedEdge.End);
+                                // this is a check to make sure we only create parapets along roof faces
+                                if (!allTopEdges.Any(e =>
+                                {
+                                    return parapetMidPt.DistanceTo(e.PointAt(0.5)) < 0.01;
+                                }))
+                                {
+                                    continue;
+                                }
+                                var angledFaceParapetTransform = new Transform(newPolygon.Vertices.OrderBy(v => v.Z).First(), te.Direction().Unitized(), normal.Project(new Plane((0, 0, 0), (0, 0, 1))));
+
+                                var angledParapetMassFace = new MassFace(newPolygon, mass.Id);
+                                var angledParapetMassFaceSection = new MassFaceSection(newPolygon, angledParapetMassFace.Id)
+                                {
+                                    FacadeTypeName = defaultFacadeType ?? "Primary"
+                                };
+                                CreateGridInstances(
+                                    outputModel,
+                                    mass,
+                                    defaultWidth,
+                                    parapetHeight,
+                                    ref solidBbox,
+                                    levelElevations,
+                                    outer,
+                                    normal,
+                                    horizontalVector,
+                                    new List<Polygon> { newPolygon },
+                                    angledParapetMassFace,
+                                    ref angledParapetMassFaceSection,
+                                    angledFaceParapetTransform);
+                            }
+
+                        }
                         var polygons = new List<Polygon> { outer };
-                        var inner = face.Voids?.Select(i => i.TransformedPolygon(elementXForm)).ToList();
+                        var inner = face.Voids?.ToList();
                         if (inner == null)
                         {
                             inner = new List<Polygon>();
@@ -193,38 +256,43 @@ namespace FacadeGrid
                         outputModel.AddElements(massFace, massFaceSection);
                         var transform = new Transform(outer.Vertices.OrderBy(v => v.Z).First(), horizontalVector, normal);
                         var inverse = transform.Inverted();
-                        var grid2d = new Grid2d(polygons, transform);
-
-                        if (massFaceSection.Grid == null)
-                        {
-                            List<Vector3> points = GetLevelPoints(levelElevations, outer, normal, horizontalVector);
-                            if (parapetHeight > 0)
-                            {
-                                points.Add(new Vector3(0, 0, solidBbox.Max.Z));
-                            }
-                            massFaceSection.Grid = CreateAndApplyDefaultGridSettings(points, grid2d, transform, defaultWidth);
-                        }
-                        else
-                        {
-                            ApplyGridSettings(grid2d, massFaceSection.Grid);
-                        }
-                        var uGrid = grid2d.U;
-
-                        foreach (var cell in uGrid.Cells ?? new List<Grid1d>())
-                        {
-                            cell.Type = $"{cell.Domain.Length:0.00}";
-                        }
-                        foreach (var cell in grid2d.V.GetCells())
-                        {
-                            cell.Type = $"{cell.Domain.Length:0.00}";
-                        }
-                        InstancesFromGrid2d(outputModel, mass, massFace, massFaceSection, grid2d);
+                        CreateGridInstances(outputModel, mass, defaultWidth, parapetHeight, ref solidBbox, levelElevations, outer, normal, horizontalVector, polygons, massFace, ref massFaceSection, transform);
                     }
                 }
             }
         }
 
-        private static bool GridDefaultsIdentityMatch<T>(GridDefaultsOverride o, T mass) where T : GeometricElement
+        private static void CreateGridInstances<T>(Model outputModel, T mass, double defaultWidth, double parapetHeight, ref BBox3 solidBbox, IEnumerable<double> levelElevations, Polygon outer, Vector3 normal, Vector3 horizontalVector, List<Polygon> polygons, MassFace massFace, ref MassFaceSection massFaceSection, Transform transform) where T : GeometricElement
+        {
+            var grid2d = new Grid2d(polygons, transform);
+
+            if (massFaceSection.Grid == null)
+            {
+                List<Vector3> points = GetLevelPoints(levelElevations, outer, normal, horizontalVector);
+                if (parapetHeight > 0)
+                {
+                    points.Add(new Vector3(0, 0, solidBbox.Max.Z));
+                }
+                massFaceSection.Grid = CreateAndApplyDefaultGridSettings(points, grid2d, transform, defaultWidth);
+            }
+            else
+            {
+                ApplyGridSettings(grid2d, massFaceSection.Grid);
+            }
+            var uGrid = grid2d.U;
+
+            foreach (var cell in uGrid.Cells ?? new List<Grid1d>())
+            {
+                cell.Type = $"{cell.Domain.Length:0.00}";
+            }
+            foreach (var cell in grid2d.V.GetCells())
+            {
+                cell.Type = $"{cell.Domain.Length:0.00}";
+            }
+            InstancesFromGrid2d(outputModel, mass, massFace, massFaceSection, grid2d);
+        }
+
+        private static bool GridDefaultsIdentityMatch<T>(dynamic o, T mass) where T : GeometricElement
         {
             if (mass is Footprint f)
             {
@@ -232,7 +300,18 @@ namespace FacadeGrid
                 {
                     return (string)buildingName == o.Identity.BuildingName;
                 }
-                else if (o.Identity.Boundary.Contains(f.Boundary.Centroid()))
+                else if (o.Identity.Boundary != null && o.Identity.Boundary.Contains(f.Boundary.PointInternal()))
+                {
+                    return true;
+                }
+            }
+            else if (mass is Envelope e)
+            {
+                if (e.AdditionalProperties.TryGetValue("Building Name", out var buildingName))
+                {
+                    return (string)buildingName == o.Identity.BuildingName;
+                }
+                else if (o.Identity.Profile != null && o.Identity.Profile.Perimeter.Contains(e.Profile.Perimeter.PointInternal()))
                 {
                     return true;
                 }
@@ -345,16 +424,16 @@ namespace FacadeGrid
             massFaceSection.FacadeType = globalFacadeTypes[massFaceSection.FacadeTypeName].Id;
         }
 
-        private static List<Profile> MergeFaces(IEnumerable<Face> horizontalFaces)
+        private static List<Profile> MergeFaces(IEnumerable<(Face f, Polygon outer)> horizontalFaces)
         {
             var profiles = new List<Profile>();
             var faceDirections = horizontalFaces.Select((face) =>
             {
-                var faceBoundary = face.Outer.ToPolygon();
+                var faceBoundary = face.outer;
                 var normal = faceBoundary.Normal();
                 var centroid = faceBoundary.Centroid();
                 var positionAlongNormal = centroid.Dot(normal);
-                return ((Face face, Vector3 normal, Vector3 centroid, double position))(face, normal, centroid, positionAlongNormal);
+                return ((Face face, Vector3 normal, Vector3 centroid, double position))(face.f, normal, centroid, positionAlongNormal);
             });
             var possibleKeys = new Dictionary<(double nx, double ny, double nz, double o), List<(Face face, Vector3 normal, Vector3 centroid, double position)>>();
             foreach (var faceDirection in faceDirections)

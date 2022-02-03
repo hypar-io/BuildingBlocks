@@ -11,7 +11,7 @@ namespace Hypar.Server
         {
             await HyparServer.StartAsync(
                 args,
-                Path.GetFullPath(Path.Combine(@"/Users/andrewheumann/Dev/BuildingBlocks/Facade/FacadeGrid/FacadeGrid/server", "..")),
+                Path.GetFullPath(Path.Combine(Assembly.GetExecutingAssembly().Location, "../../../../..")),
                 typeof(FacadeGrid.Function),
                 typeof(FacadeGrid.FacadeGridInputs));
         }

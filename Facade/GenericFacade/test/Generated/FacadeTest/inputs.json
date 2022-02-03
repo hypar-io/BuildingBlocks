@@ -9,10 +9,10 @@
             "Material": {
               "Shine": 0,
               "Color": {
-                "Red": 0.44412195967016777,
+                "Red": 0.6460538745632873,
                 "Alpha": 1,
-                "Blue": 0.7462934663524223,
-                "Green": 0.5982250951229195
+                "Blue": 0.3495171771082337,
+                "Green": 0.41629996911368927
               }
             }
           },
@@ -20,16 +20,16 @@
           "Horizontal Spandrel Settings": {
             "Height": 1,
             "Material": {
-              "Shine": 0.41,
+              "Shine": 0,
               "Color": {
-                "Red": 0.0784313725490196,
+                "Red": 0.04733347060116544,
                 "Alpha": 1,
-                "Blue": 0.4235294117647059,
-                "Green": 0.054901960784313725
+                "Blue": 0.44742267891634935,
+                "Green": 0.03179694900244501
               }
             }
           },
-          "Horizontal Spandrel": true,
+          "Horizontal Spandrel": false,
           "Material": {
             "Shine": 0.3,
             "Color": {
@@ -40,9 +40,10 @@
             },
             "Opacity": 0.5
           },
-          "Vertical Spandrel": false,
-          "Id": "b85cebf9-e6ba-45a8-8df6-1c8a8fd5f851",
+          "Vertical Spandrel": true,
+          "Id": "d0ef238c-1324-4de6-887e-7c778201e8b6",
           "Mullion Settings": {
+            "Vertical Spacing": null,
             "Material": {
               "Shine": 0,
               "Color": {
@@ -52,17 +53,17 @@
                 "Green": 0
               }
             },
-            "Vertical Spacing": null,
             "Horizontal Spacing": null,
             "Width": 0.1,
             "Depth": 0.2
           },
+          "Create Generic Facade": true,
           "Offset": 0
         },
         "identity": {
-          "Name": "Primary"
+          "Name": "Tertiary"
         },
-        "id": "8646e5bb-1c04-4edc-aa77-fcee41d99ce2"
+        "id": "f9c5ac21-a6ac-4839-acf2-d155580bcdf1"
       },
       {
         "value": {
@@ -126,7 +127,71 @@
         "identity": {
           "Name": "Secondary"
         },
-        "id": "764040c6-87df-46a1-b26e-a5f58285b66f"
+        "id": "dbc404d9-61aa-405f-a5d0-7deaecf9bb22"
+      },
+      {
+        "value": {
+          "Thickness": 0.10159994513602963,
+          "Vertical Spandrel Settings": {
+            "Width": 1,
+            "Material": {
+              "Shine": 0,
+              "Color": {
+                "Red": 0.44412195967016777,
+                "Alpha": 1,
+                "Blue": 0.7462934663524223,
+                "Green": 0.5982250951229195
+              }
+            }
+          },
+          "Mullions": true,
+          "Horizontal Spandrel Settings": {
+            "Height": 1.0159994513602963,
+            "Material": {
+              "Shine": 0.41,
+              "Color": {
+                "Red": 0.0784313725490196,
+                "Alpha": 1,
+                "Blue": 0.4235294117647059,
+                "Green": 0.054901960784313725
+              }
+            }
+          },
+          "Horizontal Spandrel": true,
+          "Material": {
+            "Shine": 0.3,
+            "Color": {
+              "Red": 0.7,
+              "Alpha": 1,
+              "Blue": 0.9,
+              "Green": 0.7
+            },
+            "Opacity": 0.5
+          },
+          "Vertical Spandrel": false,
+          "Id": "ec9839f7-de40-43c0-a16d-73c1670e0317",
+          "Mullion Settings": {
+            "Material": {
+              "Shine": 0,
+              "Color": {
+                "Red": 0,
+                "Alpha": 1,
+                "Blue": 0,
+                "Green": 0
+              }
+            },
+            "Vertical Spacing": null,
+            "Horizontal Spacing": null,
+            "Width": 0.1,
+            "Depth": 0.2
+          },
+          "Create Generic Facade": true,
+          "Offset": 0
+        },
+        "identity": {
+          "Name": "Primary"
+        },
+        "id": "f5ed7647-f98d-4b6c-9078-2facc1766987"
       }
     ]
   }
