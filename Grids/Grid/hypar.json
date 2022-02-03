@@ -503,6 +503,20 @@
         "revert": null
       }
     },
+    "Grid Extents": {
+      "context": "[*discriminator=Elements.Grid2dElement]",
+      "identity": {
+        "Name": {
+          "type": "string"
+        }
+      },
+      "paradigm": "edit",
+      "schema": {
+        "Extents": {
+          "$ref": "https://hypar.io/Schemas/Geometry/Polygon.json"
+        }
+      }
+    },
     "U Grid Subdivisions": {
       "context": "[*discriminator=Elements.Grid2dElement]",
       "identity": {

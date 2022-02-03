@@ -127,6 +127,19 @@ namespace Grid
         )
         {
             var transform = GetOrigin(gridArea, envelopePolygons, input);
+
+            GridExtentsOverride extentsOverrideMatch = null;
+            if (input.Overrides?.GridExtents != null)
+            {
+                extentsOverrideMatch = input.Overrides.GridExtents.FirstOrDefault(o => o.Identity.Name.Equals(gridArea.Name));
+                if (extentsOverrideMatch != null)
+                {
+                    // TODO: multiple grid areas doesn't seem to be working right now, so we just assume a single grid area,
+                    // and totally overwrite the grid polygons.
+                    envelopePolygons = new List<Polygon>() { extentsOverrideMatch.Value.Extents };
+                }
+            }
+
             var origin = transform.Origin;
             var uDirection = transform.XAxis;
             var vDirection = transform.YAxis;
@@ -272,7 +285,7 @@ namespace Grid
                     uGridLines.Select(l => l.Id.ToString()).ToList(),
                     vGridLines.Select(l => l.Id.ToString()).ToList(),
                     transform, Grid2dElementMaterial, rep, false, Guid.NewGuid(), gridArea.Name);
-
+                grid2dElement.Extents = boundary;
                 grid2dElement.AdditionalProperties["UGrid"] = new Grid1dInput(
                     new Polyline(origin, grid.U.Curve.PointAt(1)),
                     uPoints,
@@ -283,7 +296,10 @@ namespace Grid
                     vPoints,
                     vOverride?.SubdivisionMode ?? Grid1dInputSubdivisionMode.Manual,
                     vOverride?.SubdivisionSettings);
-
+                if (extentsOverrideMatch != null)
+                {
+                    Identity.AddOverrideIdentity(grid2dElement, extentsOverrideMatch);
+                }
                 grid2dElements.Add(grid2dElement);
             }
 
