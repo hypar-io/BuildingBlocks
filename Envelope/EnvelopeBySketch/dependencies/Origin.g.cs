@@ -33,6 +33,12 @@ namespace Elements
             this.Elevation = @elevation;
             this.Transform = @transform;
             }
+        
+        // Empty constructor
+        public Origin()
+            : base()
+        {
+        }
     
         /// <summary>The latitude of the origin.</summary>
         [Newtonsoft.Json.JsonProperty("Position", Required = Newtonsoft.Json.Required.AllowNull)]
