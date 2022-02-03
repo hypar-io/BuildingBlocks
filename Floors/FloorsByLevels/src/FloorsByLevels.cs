@@ -52,35 +52,54 @@ namespace FloorsByLevels
             {
                 foreach (var level in levelVolumes)
                 {
-                    var flrOffsets = level.Profile.Offset(input.FloorSetback * -1);
-                    var elevation = level.Transform.Origin.Z;
-                    if (flrOffsets.Count() > 0)
+                    var representation = level.Representation;
+                    var profiles = new List<Profile> { level.Profile };
+                    if (representation.SolidOperations.Count > 1)
                     {
-                        if (shafts.Count() > 0)
+                        profiles.Clear();
+                        var solids = representation.SolidOperations.Where(so => !so.IsVoid).Select(s => s.Solid);
+                        foreach (var solid in solids)
                         {
-                            flrOffsets = flrOffsets.Select(offset => CreateFloorProfile(offset.Perimeter, shafts)).ToList();
+                            var downFaces = solid.Faces.Where(f => f.Value.Outer.ToPolygon().Normal().Z < -0.99);
+                            foreach (var face in downFaces)
+                            {
+                                var profile = new Profile(face.Value.Outer.ToPolygon(), face.Value.Inner.Select(i => i.ToPolygon()).ToList());
+                                profiles.Add(profile);
+                            }
                         }
-
-                        foreach (var fo in flrOffsets)
+                    }
+                    foreach (var profile in profiles)
+                    {
+                        var flrOffsets = profile.Offset(input.FloorSetback * -1);
+                        var elevation = level.Transform.Origin.Z;
+                        if (flrOffsets.Count() > 0)
                         {
-                            var floor = new Floor(fo, input.FloorThickness,
-                                                            new Transform(0.0, 0.0, elevation - input.FloorThickness),
-                                                            floorMaterial, null, false, Guid.NewGuid(), null);
+                            if (shafts.Count() > 0)
+                            {
+                                flrOffsets = flrOffsets.Select(offset => CreateFloorProfile(offset.Perimeter, shafts)).ToList();
+                            }
+
+                            foreach (var fo in flrOffsets)
+                            {
+                                var floor = new Floor(fo, input.FloorThickness,
+                                                                new Transform(0.0, 0.0, elevation - input.FloorThickness),
+                                                                floorMaterial, null, false, Guid.NewGuid(), null);
+                                floor.AdditionalProperties["Level"] = level.Id;
+                                floors.Add(floor);
+                                floorArea += floor.Area();
+                            }
+                        }
+                        else
+                        {
+                            var floorProfile = shafts.Count() > 0 ? CreateFloorProfile(profile.Perimeter, shafts.Union(profile.Voids).ToList()) : profile;
+
+                            var floor = new Floor(floorProfile, input.FloorThickness,
+                                    new Transform(0.0, 0.0, elevation - input.FloorThickness),
+                                    floorMaterial, null, false, Guid.NewGuid(), null);
                             floor.AdditionalProperties["Level"] = level.Id;
                             floors.Add(floor);
                             floorArea += floor.Area();
                         }
-                    }
-                    else
-                    {
-                        var floorProfile = shafts.Count() > 0 ? CreateFloorProfile(level.Profile.Perimeter, shafts) : level.Profile;
-
-                        var floor = new Floor(floorProfile, input.FloorThickness,
-                                new Transform(0.0, 0.0, elevation - input.FloorThickness),
-                                floorMaterial, null, false, Guid.NewGuid(), null);
-                        floor.AdditionalProperties["Level"] = level.Id;
-                        floors.Add(floor);
-                        floorArea += floor.Area();
                     }
                 }
             }
