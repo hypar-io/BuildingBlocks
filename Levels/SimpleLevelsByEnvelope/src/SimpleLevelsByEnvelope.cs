@@ -95,7 +95,7 @@ namespace SimpleLevelsByEnvelope
                     ProcessSingleLevel(l.Elevation, l.Name, levelHeight, hasAnyNonExtrudeEnvelopes, envelope, levelMaterial, scopes, levelVolumes, ref envelopeProfile, ref subGradeArea, ref areaTotal, ref levelPerimeters);
                 }
                 if (envSubGrade.Count > 0)
-                { // if this was a subgrade envelope, let's not add anything else.
+                { // if this was a subgrade envelope, let's not consider levels above grade.
                     continue;
                 }
                 // We want to make sure we start a level at the very base of the envelope. 
@@ -117,40 +117,7 @@ namespace SimpleLevelsByEnvelope
                     }
                     var levelHeight = nextLevelElevation - levelElevation;
                     ProcessSingleLevel(levelElevation, name, levelHeight, hasAnyNonExtrudeEnvelopes, envelope, levelMaterial, scopes, levelVolumes, ref envelopeProfile, ref aboveGradeArea, ref areaTotal, ref levelPerimeters);
-                    // levelPerimeters.Add(new LevelPerimeter(envelopeProfile.Area(), levelElevation, envelopeProfile.Perimeter, Guid.NewGuid(), name));
-                    // aboveGradeArea += envelopeProfile.Area();
-                    // areaTotal += aboveGradeArea;
-
-                    // var newProfile = envelopeProfile;
-                    // try
-                    // {
-                    //     var profileOffset = envelopeProfile.Perimeter.Offset(-0.1);
-                    //     newProfile = new Profile(profileOffset[0], envelopeProfile.Voids, Guid.NewGuid(), "Level volume representation");
-                    // }
-                    // catch
-                    // {
-
-                    // }
-                    // var representation = new Extrude(newProfile, levelHeight, Vector3.ZAxis, false);
-                    // var volume = new LevelVolume(envelopeProfile, levelHeight, envelopeProfile.Area(), envelope.Name, new Transform(0, 0, levelElevation), levelMaterial, representation, false, Guid.NewGuid(), name);
-                    // volume.AdditionalProperties["Envelope"] = envelope.Id;
-                    // var bbox = new BBox3(volume);
-                    // // drop the box by a meter to avoid ceilings / beams, etc.
-                    // bbox.Max += (0, 0, -1);
-                    // // drop the bottom to encompass floors below
-                    // bbox.Min += (0, 0, -0.3);
-                    // var scopeName = volume.Name;
-                    // if (!String.IsNullOrEmpty(volume.BuildingName))
-                    // {
-                    //     scopeName = $"{volume.BuildingName}: {scopeName}";
-                    // }
-                    // var scope = new ViewScope(bbox, new Camera(default(Vector3), CameraNamedPosition.Top, CameraProjection.Orthographic), true, name: scopeName);
-                    // volume.AdditionalProperties["Plan View"] = scope;
-                    // scopes.Add(scope);
-                    // levelVolumes.Add(volume);
-
                 }
-
             }
 
             var output = new SimpleLevelsByEnvelopeOutputs(levels.Count, areaTotal, subGradeArea, aboveGradeArea);
@@ -183,7 +150,9 @@ namespace SimpleLevelsByEnvelope
                     };
                     foreach (var solidOp in envelope.Representation.SolidOperations)
                     {
-                        // TODO — handle solid operations containing voids or overlapping solids
+                        // TODO — handle solid operations containing voids or overlapping solids.
+                        // (Solids constructed via the boolean APIs should be fine, but SolidRepresentations
+                        // containing Void operations are not yet handled.)
                         if (solidOp.IsVoid)
                         {
                             continue;
