@@ -21,6 +21,10 @@ namespace RoofFunction
             var hasFootprints = inputModels.TryGetValue("Masterplan", out var masterplanModel);
             var hasEnvelopes = inputModels.TryGetValue("Envelope", out var envelopeModel);
             var hasLevels = inputModels.TryGetValue("Levels", out var levelsModel);
+            if (!hasEnvelopes && !hasFootprints && !hasLevels)
+            {
+                output.Warnings.Add("There's nothing in the model from which to create a roof. Please add a footprint, envelope, or levels.");
+            }
             if (hasFootprints)
             {
                 var footprints = masterplanModel.AllElementsOfType<Footprint>();
