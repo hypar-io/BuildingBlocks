@@ -53,21 +53,9 @@ namespace FloorsByLevels
                 foreach (var level in levelVolumes)
                 {
                     var representation = level.Representation;
-                    var profiles = new List<Profile> { level.Profile };
-                    if (representation.SolidOperations.Count > 1)
-                    {
-                        profiles.Clear();
-                        var solids = representation.SolidOperations.Where(so => !so.IsVoid).Select(s => s.Solid);
-                        foreach (var solid in solids)
-                        {
-                            var downFaces = solid.Faces.Where(f => f.Value.Outer.ToPolygon().Normal().Z < -0.99);
-                            foreach (var face in downFaces)
-                            {
-                                var profile = new Profile(face.Value.Outer.ToPolygon(), face.Value.Inner.Select(i => i.ToPolygon()).ToList());
-                                profiles.Add(profile);
-                            }
-                        }
-                    }
+                    var profiles = representation.SolidOperations.Count > 1 ?
+                        GetProfilesFromRepresentation(representation) :
+                        new List<Profile> { level.Profile };
                     foreach (var profile in profiles)
                     {
                         var flrOffsets = profile.Offset(input.FloorSetback * -1);
@@ -131,6 +119,22 @@ namespace FloorsByLevels
             var output = new FloorsByLevelsOutputs(floorArea, floors.Count());
             output.Model.AddElements(floors);
             return output;
+        }
+
+        private static List<Profile> GetProfilesFromRepresentation(Representation representation)
+        {
+            var profiles = new List<Profile>();
+            var solids = representation.SolidOperations.Where(so => !so.IsVoid).Select(s => s.Solid);
+            foreach (var solid in solids)
+            {
+                var downFaces = solid.Faces.Where(f => f.Value.Outer.ToPolygon().Normal().Z < -0.99);
+                foreach (var face in downFaces)
+                {
+                    var profile = new Profile(face.Value.Outer.ToPolygon(), face.Value.Inner.Select(i => i.ToPolygon()).ToList());
+                    profiles.Add(profile);
+                }
+            }
+            return profiles;
         }
 
         private static Profile CreateFloorProfile(Polygon perimeter, List<Polygon> openings)
