@@ -165,7 +165,7 @@ namespace FacadeGrid
                     var mergedFaces = MergeFaces(verticalFaces);
                     foreach (var face in mergedFaces)
                     {
-                        var outer = face.Perimeter;
+                        var outer = face.Perimeter.TransformedPolygon(elementXForm);
                         var normal = outer.Normal();
                         var horizontalVector = Vector3.ZAxis.Cross(normal).Unitized();
                         var upVector = normal.Cross(horizontalVector);
