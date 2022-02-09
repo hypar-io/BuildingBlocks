@@ -244,7 +244,6 @@ namespace Structure
                 Math.Min(cellComplex.GetVertex(e.StartVertexId).Value.Z, cellComplex.GetVertex(e.EndVertexId).Value.Z)
             ))
             {
-                var isExternal = edge.GetFaces().Count < 4;
                 var memberLength = edge.Length(cellComplex);
                 var start = cellComplex.GetVertex(edge.StartVertexId).Value;
                 var end = cellComplex.GetVertex(edge.EndVertexId).Value;
@@ -283,10 +282,6 @@ namespace Structure
                         }
                     }
 
-                    if (!input.InsertColumnsAtExternalEdges && isExternal)
-                    {
-                        continue;
-                    }
                     var origin = start.IsLowerThan(end) ? start : end;
                     var rotation = Vector3.XAxis.PlaneAngleTo(primaryDirection);
                     Column columnDefinition;
