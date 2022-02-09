@@ -258,15 +258,16 @@ namespace Grid
     
     {
         [Newtonsoft.Json.JsonConstructor]
-        public Overrides(IList<GridOriginsOverride> @gridOrigins, IList<UGridSubdivisionsOverride> @uGridSubdivisions, IList<VGridSubdivisionsOverride> @vGridSubdivisions, IList<GridlineNamesOverride> @gridlineNames)
+        public Overrides(IList<GridOriginsOverride> @gridOrigins, IList<GridExtentsOverride> @gridExtents, IList<UGridSubdivisionsOverride> @uGridSubdivisions, IList<VGridSubdivisionsOverride> @vGridSubdivisions, IList<GridlineNamesOverride> @gridlineNames)
         {
             var validator = Validator.Instance.GetFirstValidatorForType<Overrides>();
             if(validator != null)
             {
-                validator.PreConstruct(new object[]{ @gridOrigins, @uGridSubdivisions, @vGridSubdivisions, @gridlineNames});
+                validator.PreConstruct(new object[]{ @gridOrigins, @gridExtents, @uGridSubdivisions, @vGridSubdivisions, @gridlineNames});
             }
         
             this.GridOrigins = @gridOrigins;
+            this.GridExtents = @gridExtents;
             this.UGridSubdivisions = @uGridSubdivisions;
             this.VGridSubdivisions = @vGridSubdivisions;
             this.GridlineNames = @gridlineNames;
@@ -279,6 +280,9 @@ namespace Grid
     
         [Newtonsoft.Json.JsonProperty("Grid Origins", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public IList<GridOriginsOverride> GridOrigins { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("Grid Extents", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public IList<GridExtentsOverride> GridExtents { get; set; }
     
         [Newtonsoft.Json.JsonProperty("U Grid Subdivisions", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public IList<UGridSubdivisionsOverride> UGridSubdivisions { get; set; }
@@ -477,6 +481,42 @@ namespace Grid
     
         [Newtonsoft.Json.JsonProperty("Value", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public GridOriginsValue Value { get; set; }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
+    
+    public partial class GridExtentsOverride 
+    
+    {
+        [Newtonsoft.Json.JsonConstructor]
+        public GridExtentsOverride(string @id, GridExtentsIdentity @identity, GridExtentsValue @value)
+        {
+            var validator = Validator.Instance.GetFirstValidatorForType<GridExtentsOverride>();
+            if(validator != null)
+            {
+                validator.PreConstruct(new object[]{ @id, @identity, @value});
+            }
+        
+            this.Id = @id;
+            this.Identity = @identity;
+            this.Value = @value;
+        
+            if(validator != null)
+            {
+                validator.PostConstruct(this);
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Id { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("Identity", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public GridExtentsIdentity Identity { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("Value", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public GridExtentsValue Value { get; set; }
     
     
     }
@@ -686,6 +726,62 @@ namespace Grid
     
         [Newtonsoft.Json.JsonProperty("Transform", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public Transform Transform { get; set; }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
+    
+    public partial class GridExtentsIdentity 
+    
+    {
+        [Newtonsoft.Json.JsonConstructor]
+        public GridExtentsIdentity(string @name)
+        {
+            var validator = Validator.Instance.GetFirstValidatorForType<GridExtentsIdentity>();
+            if(validator != null)
+            {
+                validator.PreConstruct(new object[]{ @name});
+            }
+        
+            this.Name = @name;
+        
+            if(validator != null)
+            {
+                validator.PostConstruct(this);
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("Name", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Name { get; set; }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
+    
+    public partial class GridExtentsValue 
+    
+    {
+        [Newtonsoft.Json.JsonConstructor]
+        public GridExtentsValue(Polygon @extents)
+        {
+            var validator = Validator.Instance.GetFirstValidatorForType<GridExtentsValue>();
+            if(validator != null)
+            {
+                validator.PreConstruct(new object[]{ @extents});
+            }
+        
+            this.Extents = @extents;
+        
+            if(validator != null)
+            {
+                validator.PostConstruct(this);
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("Extents", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public Polygon Extents { get; set; }
     
     
     }

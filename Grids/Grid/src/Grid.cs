@@ -33,45 +33,59 @@ namespace Grid
         {
             var output = new GridOutputs();
 
-            var envelopes = new List<Envelope>();
-            inputModels.TryGetValue("Envelope", out var envelopeModel);
+            var extentPolygons = new List<Polygon>();
 
+            inputModels.TryGetValue("Envelope", out var envelopeModel);
             if (envelopeModel != null)
             {
                 Console.WriteLine("Got envelope model");
-                envelopes.AddRange(envelopeModel.AllElementsOfType<Envelope>());
+                var envelopes = envelopeModel.AllElementsOfType<Envelope>();
+                extentPolygons = ExtractPolygonsFromElements(envelopes, (e) => e.Profile?.Perimeter?.TransformedPolygon(e.Transform));
             }
 
-            var envelopePolygons = new List<Polygon>();
-
-            if (envelopes.Count == 0 && input.Mode == GridInputsMode.Typical)
+            inputModels.TryGetValue("Levels", out var levelsModel);
+            if (levelsModel != null && extentPolygons.Count == 0)
             {
-                output.Errors.Add("When using typical spacing, an envelope is required to calculate your number of gridlines. If you do not have an envelope available, please use Absolute or Relative spacing.");
-                return output;
+                var levelVolumes = levelsModel.AllElementsOfType<LevelVolume>();
+                extentPolygons = ExtractPolygonsFromElements(levelVolumes, (e) => e.Profile?.Perimeter?.TransformedPolygon(e.Transform));
             }
-            else
+
+            inputModels.TryGetValue("Floors", out var floorsModel);
+            if (floorsModel != null && extentPolygons.Count == 0)
             {
-                // Handle envelopes of all shapes by using a more general method of convex hull projection onto the XY plane.
-                if (envelopes.All(e => e.Representation.SolidOperations.All(o => o is ConstructedSolid)))
-                {
-                    foreach (var e in envelopes)
-                    {
-                        var polygon = ConvexHull.FromPoints(e.Representation.SolidOperations.SelectMany(o => o.Solid.Vertices.Select(v => new Vector3(v.Value.Point.X, v.Value.Point.Y))));
-                        envelopePolygons.Add(polygon);
-                    }
-                }
-                // Handle all envelopes which are extrusions. This is the old way.
-                else if (envelopes.All(e => e.Profile != null))
-                {
-                    envelopePolygons = envelopes.Select(e => (Polygon)e.Profile.Perimeter.Transformed(e.Transform)).ToList();
-                }
+                var floorVolumes = floorsModel.AllElementsOfType<Floor>();
+                extentPolygons = ExtractPolygonsFromElements(floorVolumes, (e) => e.Profile?.Perimeter?.TransformedPolygon(e.Transform));
+            }
+
+            if (extentPolygons.Count == 0 && input.Mode == GridInputsMode.Typical)
+            {
+                // establish a default grid if there's nothing to base it on
+                extentPolygons.Add(Polygon.Rectangle((0, 0), (40, 40)));
+                output.Warnings.Add("Your model contains no Envelopes, Levels, or Floors from which to calculate extents — we've created a default grid for you.");
             }
 
             foreach (var gridArea in input.GridAreas)
             {
-                output.Model.AddElements(CreateGridArea(input, output, envelopePolygons, gridArea));
+                output.Model.AddElements(CreateGridArea(input, output, extentPolygons, gridArea));
             }
             return output;
+        }
+
+        /// <summary>
+        /// Extract polygons from a collection of elements. 
+        /// </summary>
+        /// <param name="elements">The elements to get polygons from.</param>
+        /// <param name="getDefaultPolygon">A function for extracting the default relevant polygon from an envelope. 
+        /// If this returns null, we'll use the 2D convex hull of the geometry of the element's representation </param>
+        private static List<Polygon> ExtractPolygonsFromElements<T>(IEnumerable<T> elements, Func<T, Polygon> getDefaultPolygon) where T : GeometricElement
+        {
+            var polygons = new List<Polygon>();
+            foreach (var element in elements)
+            {
+                var polygon = getDefaultPolygon(element) ?? ConvexHull.FromPoints(element.Representation.SolidOperations.SelectMany(o => o.Solid.Vertices.Select(v => new Vector3(v.Value.Point.X, v.Value.Point.Y))));
+                polygons.Add(polygon);
+            }
+            return polygons;
         }
 
         private static Transform GetOrigin(GridAreas gridArea, List<Polygon> envelopePolygons, GridInputs input)
@@ -114,6 +128,19 @@ namespace Grid
         )
         {
             var transform = GetOrigin(gridArea, envelopePolygons, input);
+
+            GridExtentsOverride extentsOverrideMatch = null;
+            if (input.Overrides?.GridExtents != null)
+            {
+                extentsOverrideMatch = input.Overrides.GridExtents.FirstOrDefault(o => o.Identity.Name.Equals(gridArea.Name));
+                if (extentsOverrideMatch != null)
+                {
+                    // TODO: multiple grid areas doesn't seem to be working right now, so we just assume a single grid area,
+                    // and totally overwrite the grid polygons.
+                    envelopePolygons = new List<Polygon>() { extentsOverrideMatch.Value.Extents };
+                }
+            }
+
             var origin = transform.Origin;
             var uDirection = transform.XAxis;
             var vDirection = transform.YAxis;
@@ -259,7 +286,7 @@ namespace Grid
                     uGridLines.Select(l => l.Id.ToString()).ToList(),
                     vGridLines.Select(l => l.Id.ToString()).ToList(),
                     transform, Grid2dElementMaterial, rep, false, Guid.NewGuid(), gridArea.Name);
-
+                grid2dElement.Extents = boundary;
                 grid2dElement.AdditionalProperties["UGrid"] = new Grid1dInput(
                     new Polyline(origin, grid.U.Curve.PointAt(1)),
                     uPoints,
@@ -270,7 +297,10 @@ namespace Grid
                     vPoints,
                     vOverride?.SubdivisionMode ?? Grid1dInputSubdivisionMode.Manual,
                     vOverride?.SubdivisionSettings);
-
+                if (extentsOverrideMatch != null)
+                {
+                    Identity.AddOverrideIdentity(grid2dElement, extentsOverrideMatch);
+                }
                 grid2dElements.Add(grid2dElement);
             }
 
