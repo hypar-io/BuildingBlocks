@@ -52,35 +52,42 @@ namespace FloorsByLevels
             {
                 foreach (var level in levelVolumes)
                 {
-                    var flrOffsets = level.Profile.Offset(input.FloorSetback * -1);
-                    var elevation = level.Transform.Origin.Z;
-                    if (flrOffsets.Count() > 0)
+                    var representation = level.Representation;
+                    var profiles = representation.SolidOperations.Count > 1 ?
+                        GetProfilesFromRepresentation(representation) :
+                        new List<Profile> { level.Profile };
+                    foreach (var profile in profiles)
                     {
-                        if (shafts.Count() > 0)
+                        var flrOffsets = profile.Offset(input.FloorSetback * -1);
+                        var elevation = level.Transform.Origin.Z;
+                        if (flrOffsets.Count() > 0)
                         {
-                            flrOffsets = flrOffsets.Select(offset => CreateFloorProfile(offset.Perimeter, shafts)).ToList();
-                        }
+                            if (shafts.Count() > 0)
+                            {
+                                flrOffsets = flrOffsets.Select(offset => CreateFloorProfile(offset.Perimeter, shafts)).ToList();
+                            }
 
-                        foreach (var fo in flrOffsets)
+                            foreach (var fo in flrOffsets)
+                            {
+                                var floor = new Floor(fo, input.FloorThickness,
+                                                                new Transform(0.0, 0.0, elevation - input.FloorThickness),
+                                                                floorMaterial, null, false, Guid.NewGuid(), null);
+                                floor.AdditionalProperties["Level"] = level.Id;
+                                floors.Add(floor);
+                                floorArea += floor.Area();
+                            }
+                        }
+                        else
                         {
-                            var floor = new Floor(fo, input.FloorThickness,
-                                                            new Transform(0.0, 0.0, elevation - input.FloorThickness),
-                                                            floorMaterial, null, false, Guid.NewGuid(), null);
+                            var floorProfile = shafts.Count() > 0 ? CreateFloorProfile(profile.Perimeter, shafts.Union(profile.Voids).ToList()) : profile;
+
+                            var floor = new Floor(floorProfile, input.FloorThickness,
+                                    new Transform(0.0, 0.0, elevation - input.FloorThickness),
+                                    floorMaterial, null, false, Guid.NewGuid(), null);
                             floor.AdditionalProperties["Level"] = level.Id;
                             floors.Add(floor);
                             floorArea += floor.Area();
                         }
-                    }
-                    else
-                    {
-                        var floorProfile = shafts.Count() > 0 ? CreateFloorProfile(level.Profile.Perimeter, shafts) : level.Profile;
-
-                        var floor = new Floor(floorProfile, input.FloorThickness,
-                                new Transform(0.0, 0.0, elevation - input.FloorThickness),
-                                floorMaterial, null, false, Guid.NewGuid(), null);
-                        floor.AdditionalProperties["Level"] = level.Id;
-                        floors.Add(floor);
-                        floorArea += floor.Area();
                     }
                 }
             }
@@ -112,6 +119,22 @@ namespace FloorsByLevels
             var output = new FloorsByLevelsOutputs(floorArea, floors.Count());
             output.Model.AddElements(floors);
             return output;
+        }
+
+        private static List<Profile> GetProfilesFromRepresentation(Representation representation)
+        {
+            var profiles = new List<Profile>();
+            var solids = representation.SolidOperations.Where(so => !so.IsVoid).Select(s => s.Solid);
+            foreach (var solid in solids)
+            {
+                var downFaces = solid.Faces.Where(f => f.Value.Outer.ToPolygon().Normal().Z < -0.99);
+                foreach (var face in downFaces)
+                {
+                    var profile = new Profile(face.Value.Outer.ToPolygon(), face.Value.Inner.Select(i => i.ToPolygon()).ToList());
+                    profiles.Add(profile);
+                }
+            }
+            return profiles;
         }
 
         private static Profile CreateFloorProfile(Polygon perimeter, List<Polygon> openings)
