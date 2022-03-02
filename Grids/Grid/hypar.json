@@ -9,6 +9,16 @@
       "autohide": false,
       "name": "Envelope",
       "optional": true
+    },
+    {
+      "autohide": false,
+      "name": "Levels",
+      "optional": true
+    },
+    {
+      "autohide": false,
+      "name": "Floors",
+      "optional": true
     }
   ],
   "model_output": "Grids",
@@ -161,7 +171,10 @@
               "$ref": "https://prod-api.hypar.io/schemas/Transform",
               "$hyparDeprecated": true,
               "$hyparConstraints": {
-                "enableTranslation": ["x", "y"],
+                "enableTranslation": [
+                  "x",
+                  "y"
+                ],
                 "enableRotation": "z",
                 "positionZ": 0,
                 "rotationZ": 0
@@ -475,7 +488,10 @@
         "Transform": {
           "$ref": "https://prod-api.hypar.io/schemas/Transform",
           "$hyparConstraints": {
-            "enableTranslation": ["x", "y"],
+            "enableTranslation": [
+              "x",
+              "y"
+            ],
             "enableRotation": "z",
             "positionZ": 0,
             "rotationZ": 0
@@ -485,6 +501,20 @@
       "verbs": {
         "edit": null,
         "revert": null
+      }
+    },
+    "Grid Extents": {
+      "context": "[*discriminator=Elements.Grid2dElement]",
+      "identity": {
+        "Name": {
+          "type": "string"
+        }
+      },
+      "paradigm": "edit",
+      "schema": {
+        "Extents": {
+          "$ref": "https://hypar.io/Schemas/Geometry/Polygon.json"
+        }
       }
     },
     "U Grid Subdivisions": {
@@ -542,7 +572,8 @@
   "outputs": [],
   "element_types": [
     "https://prod-api.hypar.io/schemas/Envelope",
-    "https://prod-api.hypar.io/schemas/Grid2dElement"
+    "https://prod-api.hypar.io/schemas/Grid2dElement",
+    "https://prod-api.hypar.io/schemas/LevelVolume"
   ],
   "repository_url": "",
   "source_file_key": null,
