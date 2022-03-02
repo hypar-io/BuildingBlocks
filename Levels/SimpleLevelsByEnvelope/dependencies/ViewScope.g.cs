@@ -26,12 +26,12 @@ namespace Elements
     public partial class ViewScope : Element
     {
         [Newtonsoft.Json.JsonConstructor]
-        public ViewScope(BBox3 @boundingBox, Camera @camera, bool @inclusive, System.Guid @id = default, string @name = null)
+        public ViewScope(BBox3 @boundingBox, Camera @camera, bool? @lockRotation, System.Guid @id = default, string @name = null)
             : base(id, name)
         {
             this.BoundingBox = @boundingBox;
             this.Camera = @camera;
-            this.Inclusive = @inclusive;
+            this.LockRotation = @lockRotation;
             }
         
         // Empty constructor
@@ -48,9 +48,9 @@ namespace Elements
         [Newtonsoft.Json.JsonProperty("Camera", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public Camera Camera { get; set; }
     
-        /// <summary>Should the bounding box be treated as Inclusive?</summary>
-        [Newtonsoft.Json.JsonProperty("Inclusive", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public bool Inclusive { get; set; }
+        /// <summary>Whether this scope should lock view rotation. True to lock, False to unlock, and null to leave unchanged.</summary>
+        [Newtonsoft.Json.JsonProperty("Lock Rotation", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public bool? LockRotation { get; set; }
     
     
     }

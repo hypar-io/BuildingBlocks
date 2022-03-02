@@ -9,6 +9,7 @@ namespace SimpleLevelsByEnvelope
 {
     public static class SimpleLevelsByEnvelope
     {
+        private static Material LevelMaterial;
         /// <summary>
         /// Creates Levels and LevelPerimeters from an incoming Envelope and height arguments.
         /// </summary>
@@ -23,6 +24,7 @@ namespace SimpleLevelsByEnvelope
                 throw new ArgumentException("No Envelope found.");
             }
             var envelopes = model.AllElementsOfType<Envelope>();
+            CorrectEnvelopeHeightsAndElevations(envelopes);
             var envelopesOrdered = envelopes.OrderBy(e => e.Elevation);
             var topHeightsOrdered = envelopes.Select(e => e.Elevation + e.Height).OrderBy(e => e);
 
@@ -61,9 +63,9 @@ namespace SimpleLevelsByEnvelope
                 levels.Add(new Level(minElevation, Guid.NewGuid(), $"Level B{subgradeLevelCounter:0}"));
             }
 
-            var matl = BuiltInMaterials.Glass;
-            matl.SpecularFactor = 0.5;
-            matl.GlossinessFactor = 0.0;
+            LevelMaterial = BuiltInMaterials.Glass;
+            LevelMaterial.SpecularFactor = 0.5;
+            LevelMaterial.GlossinessFactor = 0.0;
 
             // construct level perimeters and calculate areas
 
@@ -83,68 +85,25 @@ namespace SimpleLevelsByEnvelope
                 var min = envelope.Elevation;
                 var max = envelope.Elevation + envelope.Height;
                 var envelopeProfile = envelope.Profile;
-                var nonExtrudeEnvelope = envelope.Representation.SolidOperations.First().GetType() != typeof(Extrude);
+                var hasAnyNonExtrudeEnvelopes = envelope.Representation.SolidOperations.Any(so => so.GetType() != typeof(Extrude));
 
                 var envSubGrade = subgradeLevels.Where(l => l.Elevation < max && l.Elevation >= min).ToList();
                 for (int i = 0; i < envSubGrade.Count(); i++)
                 {
                     var l = envSubGrade[i];
-                    if (nonExtrudeEnvelope)
-                    {
-                        try
-                        {
-                            var elev = l.Elevation;
-                            if (elev == 0)
-                            {
-                                elev += 0.01;
-                            }
-                            envelope.Representation.SolidOperations.First().Solid.Intersects(new Plane((0, 0, elev), Vector3.ZAxis), out var polygons);
-                            if (polygons != null)
-                            {
-                                envelopeProfile = new Profile(polygons.OrderBy(p => p.Area()).Last(), new List<Polygon>()).Project(new Plane((0, 0), Vector3.ZAxis));
-                            }
-                        }
-                        catch
-                        {
-                            // keep envelope profile as-is
-                        }
-                    }
                     var levelAbove = i == 0 ? aboveGradeLevels.First() : envSubGrade[i - 1];
-                    var subGradePerimeter = new LevelPerimeter(envelopeProfile.Area(), l.Elevation, envelopeProfile.Perimeter, Guid.NewGuid(), l.Name);
-                    levelPerimeters.Add(subGradePerimeter);
-                    subGradeArea += subGradePerimeter.Area;
-                    areaTotal += subGradePerimeter.Area;
-
                     var levelHeight = levelAbove.Elevation - l.Elevation;
-                    var representation = new Representation(new SolidOperation[] { new Extrude(envelopeProfile, levelHeight, Vector3.ZAxis, false) });
-                    var subGradeVolume = new LevelVolume(envelopeProfile, levelHeight, envelopeProfile.Area(), envelope.Name, new Transform(0, 0, l.Elevation), matl, representation, false, Guid.NewGuid(), l.Name);
-                    subGradeVolume.AdditionalProperties["Envelope"] = envelope.Id;
-                    var scopeName = subGradeVolume.Name;
-                    if (!String.IsNullOrEmpty(subGradeVolume.BuildingName))
-                    {
-                        scopeName = $"{subGradeVolume.BuildingName}: {scopeName}";
-                    }
-                    var bbox = new BBox3(subGradeVolume);
-                    // drop the box by a meter to avoid ceilings / beams, etc.
-                    bbox.Max = bbox.Max + (0, 0, -1);
-                    var scope = new ViewScope(
-                       bbox,
-                        new Camera(default(Vector3), CameraNamedPosition.Top, CameraProjection.Orthographic),
-                        true,
-                        name: scopeName);
-                    subGradeVolume.AdditionalProperties["Plan View"] = scope;
-                    scopes.Add(scope);
-                    levelVolumes.Add(subGradeVolume);
+                    var levelArea = ProcessSingleLevel(l.Elevation, l.Name, levelHeight, hasAnyNonExtrudeEnvelopes, envelope, scopes, levelVolumes, envelopeProfile, levelPerimeters);
+                    areaTotal += levelArea;
+                    subGradeArea += levelArea;
                 }
                 if (envSubGrade.Count > 0)
-                { // if this was a subgrade envelope, let's not add anything else.
+                { // if this was a subgrade envelope, let's not consider levels above grade.
                     continue;
                 }
-                // var envAboveGrade = aboveGradeLevels.Where(l => l.Elevation < max - minLevelHeight && l.Elevation >= min).ToList();
                 // We want to make sure we start a level at the very base of the envelope. 
                 var aboveGradeLevelsWithinEnvelope = aboveGradeLevels.Where(l => l.Elevation > min + minLevelHeight && l.Elevation < max - minLevelHeight).ToList();
                 var nameForMin = aboveGradeLevels.LastOrDefault(l => l.Elevation < min + minLevelHeight)?.Name ?? "";
-                var nameForMax = aboveGradeLevels.FirstOrDefault(l => l.Elevation > max - minLevelHeight)?.Name ?? "";
                 for (int i = -1; i < aboveGradeLevelsWithinEnvelope.Count(); i++)
                 {
                     var name = nameForMin;
@@ -154,70 +113,16 @@ namespace SimpleLevelsByEnvelope
                     }
 
                     var levelElevation = i == -1 ? min : aboveGradeLevelsWithinEnvelope[i].Elevation;
-                    if (nonExtrudeEnvelope)
-                    {
-                        try
-                        {
-                            var elev = levelElevation;
-                            if (elev == 0)
-                            {
-                                elev += 0.01;
-                            }
-                            envelope.Representation.SolidOperations.First().Solid.Intersects(new Plane((0, 0, elev), Vector3.ZAxis), out var polygons);
-                            if (polygons != null)
-                            {
-                                envelopeProfile = new Profile(polygons.OrderBy(p => p.Area()).Last(), new List<Polygon>()).Project(new Plane((0, 0), Vector3.ZAxis));
-                            }
-                        }
-                        catch
-                        {
-                            // keep envelope profile as-is
-                        }
-                    }
                     var nextLevelElevation = i == aboveGradeLevelsWithinEnvelope.Count - 1 ? max : aboveGradeLevelsWithinEnvelope[i + 1].Elevation;
                     if (nextLevelElevation > max - minLevelHeight)
                     {
                         nextLevelElevation = max;
                     }
-                    levelPerimeters.Add(new LevelPerimeter(envelopeProfile.Area(), levelElevation, envelopeProfile.Perimeter, Guid.NewGuid(), name));
-                    aboveGradeArea += envelopeProfile.Area();
-                    areaTotal += aboveGradeArea;
-
                     var levelHeight = nextLevelElevation - levelElevation;
-                    var newProfile = envelopeProfile;
-                    try
-                    {
-                        var profileOffset = envelopeProfile.Perimeter.Offset(-0.1);
-                        newProfile = new Profile(profileOffset[0], envelopeProfile.Voids, Guid.NewGuid(), "Level volume representation");
-                    }
-                    catch
-                    {
-
-                    }
-                    var representation = new Extrude(newProfile, levelHeight, Vector3.ZAxis, false);
-                    var volume = new LevelVolume(envelopeProfile, levelHeight, envelopeProfile.Area(), envelope.Name, new Transform(0, 0, levelElevation), matl, representation, false, Guid.NewGuid(), name);
-                    volume.AdditionalProperties["Envelope"] = envelope.Id;
-                    var bbox = new BBox3(volume);
-                    // drop the box by a meter to avoid ceilings / beams, etc.
-                    bbox.Max += (0, 0, -1);
-                    // drop the bottom to encompass floors below
-                    bbox.Min += (0, 0, -0.3);
-                    var scopeName = volume.Name;
-                    if (!String.IsNullOrEmpty(volume.BuildingName))
-                    {
-                        scopeName = $"{volume.BuildingName}: {scopeName}";
-                    }
-                    var scope = new ViewScope(bbox, new Camera(default(Vector3), CameraNamedPosition.Top, CameraProjection.Orthographic), true, name: scopeName);
-                    volume.AdditionalProperties["Plan View"] = scope;
-                    scopes.Add(scope);
-                    levelVolumes.Add(volume);
-
+                    var levelArea = ProcessSingleLevel(levelElevation, name, levelHeight, hasAnyNonExtrudeEnvelopes, envelope, scopes, levelVolumes, envelopeProfile, levelPerimeters);
+                    aboveGradeArea += levelArea;
+                    areaTotal += levelArea;
                 }
-
-                // Add a roof perimeter so floors are created, but don't count roof area
-
-                levelPerimeters.Add(new LevelPerimeter(envelopeProfile.Area(), max, envelopeProfile.Perimeter, Guid.NewGuid(), "Roof"));
-
             }
 
             var output = new SimpleLevelsByEnvelopeOutputs(levels.Count, areaTotal, subGradeArea, aboveGradeArea);
@@ -228,10 +133,125 @@ namespace SimpleLevelsByEnvelope
 
             foreach (var levelPerimeter in levelPerimeters)
             {
-                output.Model.AddElement(new Panel(levelPerimeter.Perimeter.Project(new Plane(Vector3.Origin, Vector3.ZAxis)), matl, new Transform(0.0, 0.0, levelPerimeter.Elevation),
+                output.Model.AddElement(new Panel(levelPerimeter.Perimeter.Project(new Plane(Vector3.Origin, Vector3.ZAxis)), LevelMaterial, new Transform(0.0, 0.0, levelPerimeter.Elevation),
                                         null, false, Guid.NewGuid(), levelPerimeter.Name));
             }
             return output;
+        }
+
+        private static double ProcessSingleLevel(double levelElevation, string levelName, double levelHeight, bool hasAnyNonExtrudeEnvelopes, Envelope envelope, List<ViewScope> scopes, List<LevelVolume> levelVolumes, Profile envelopeProfile, List<LevelPerimeter> levelPerimeters)
+        {
+            double profileAreaTotal = 0;
+            var levelArea = 0.0;
+            Representation representation = null;
+            var successfullyCreatedNonExtrudeEnvelopes = false;
+            if (hasAnyNonExtrudeEnvelopes)
+            {
+                try
+                {
+                    var solidOps = new List<SolidOperation>();
+                    representation = new Representation(solidOps)
+                    {
+                        SkipCSGUnion = true
+                    };
+                    foreach (var solidOp in envelope.Representation.SolidOperations)
+                    {
+                        // TODO — handle solid operations containing voids or overlapping solids.
+                        // (Solids constructed via the boolean APIs should be fine, but SolidRepresentations
+                        // containing Void operations are not yet handled.)
+                        if (solidOp.IsVoid)
+                        {
+                            continue;
+                        }
+                        // attempt to get intersection at level. If this fails, try slightly higher, and if that fails, try slightly lower.
+                        if (solidOp.Solid.Intersects(new Plane((0, 0, levelElevation), Vector3.ZAxis), out List<Polygon> polygons))
+                        {
+
+                        }
+                        else if (solidOp.Solid.Intersects(new Plane((0, 0, levelElevation + 0.01), Vector3.ZAxis), out polygons))
+                        {
+
+                        }
+                        else if (solidOp.Solid.Intersects(new Plane((0, 0, levelElevation - 0.01), Vector3.ZAxis), out polygons))
+                        {
+
+                        }
+
+                        if (polygons != null && polygons.Count > 0)
+                        {
+                            var profiles = Profile.CreateFromPolygons(polygons);
+                            envelopeProfile = profiles.OrderBy(p => p.Area()).Last();
+                            var extrudes = profiles.Select(p => new Extrude(p, levelHeight, Vector3.ZAxis, false)).ToArray();
+                            solidOps.AddRange(extrudes);
+                            foreach (var profile in profiles)
+                            {
+                                var profileArea = profile.Area();
+                                profileAreaTotal += profileArea;
+                                levelArea += profileArea;
+                                var subGradePerimeter = new LevelPerimeter(profile.Area(), levelElevation, profile.Perimeter, Guid.NewGuid(), levelName);
+                                levelPerimeters.Add(subGradePerimeter);
+                            }
+                            successfullyCreatedNonExtrudeEnvelopes = true;
+                        }
+                    }
+                }
+                catch
+                {
+                    // we pass through — the `successfullyCreatedNonExtrudeEnvelopes` variable will be false and we'll fall back to the simple extrude from one profile.
+                }
+            }
+
+            if (!hasAnyNonExtrudeEnvelopes || !successfullyCreatedNonExtrudeEnvelopes)
+            {
+                representation = new Extrude(envelopeProfile, levelHeight, Vector3.ZAxis, false);
+                var subGradePerimeter = new LevelPerimeter(envelopeProfile.Area(), levelElevation, envelopeProfile.Perimeter, Guid.NewGuid(), levelName);
+                levelPerimeters.Add(subGradePerimeter);
+                profileAreaTotal += subGradePerimeter.Area;
+                levelArea = envelopeProfile.Area();
+            }
+
+            var subGradeVolume = new LevelVolume()
+            {
+                Profile = envelopeProfile,
+                Height = levelHeight,
+                Area = envelopeProfile.Area(),
+                BuildingName = envelope.Name,
+                Transform = new Transform(0, 0, levelElevation),
+                Representation = representation,
+                Material = LevelMaterial,
+                Name = levelName
+            };
+            subGradeVolume.AdditionalProperties["Envelope"] = envelope.Id;
+            var scopeName = subGradeVolume.Name;
+            if (!String.IsNullOrEmpty(subGradeVolume.BuildingName))
+            {
+                scopeName = $"{subGradeVolume.BuildingName}: {scopeName}";
+            }
+            var bbox = new BBox3(subGradeVolume);
+            // drop the box by a meter to avoid ceilings / beams, etc.
+            bbox.Max += (0, 0, -1);
+            // drop the bottom to encompass floors below
+            bbox.Min += (0, 0, -0.3);
+            var scope = new ViewScope(
+               bbox,
+                new Camera(default, CameraNamedPosition.Top, CameraProjection.Orthographic),
+                true,
+                name: scopeName);
+            subGradeVolume.AdditionalProperties["Plan View"] = scope;
+            scopes.Add(scope);
+            levelVolumes.Add(subGradeVolume);
+            return profileAreaTotal;
+        }
+
+        private static void CorrectEnvelopeHeightsAndElevations(IEnumerable<Envelope> envelopes)
+        {
+            envelopes.ToList().ForEach(e =>
+            {
+                var bbox = new BBox3(e);
+                e.Elevation = bbox.Min.Z;
+                var height = bbox.Max.Z - bbox.Min.Z;
+                e.Height = height;
+            });
         }
     }
 }
