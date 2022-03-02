@@ -142,7 +142,7 @@ namespace FacadeGrid
                     foreach (var s in solids)
                     {
                         var bbox = new BBox3(s.Solid.Vertices.Select(v => v.Value.Point));
-                        if (group.Contains(bbox.Center()))
+                        if (s.Solid.Vertices.Any(v => group.Contains(v.Value.Point)))
                         {
                             groupSolids.Add((s.Solid, bbox));
                         }
