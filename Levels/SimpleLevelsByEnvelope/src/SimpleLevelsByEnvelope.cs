@@ -9,6 +9,7 @@ namespace SimpleLevelsByEnvelope
 {
     public static class SimpleLevelsByEnvelope
     {
+        private static Material LevelMaterial;
         /// <summary>
         /// Creates Levels and LevelPerimeters from an incoming Envelope and height arguments.
         /// </summary>
@@ -62,9 +63,9 @@ namespace SimpleLevelsByEnvelope
                 levels.Add(new Level(minElevation, Guid.NewGuid(), $"Level B{subgradeLevelCounter:0}"));
             }
 
-            var levelMaterial = BuiltInMaterials.Glass;
-            levelMaterial.SpecularFactor = 0.5;
-            levelMaterial.GlossinessFactor = 0.0;
+            LevelMaterial = BuiltInMaterials.Glass;
+            LevelMaterial.SpecularFactor = 0.5;
+            LevelMaterial.GlossinessFactor = 0.0;
 
             // construct level perimeters and calculate areas
 
@@ -92,7 +93,9 @@ namespace SimpleLevelsByEnvelope
                     var l = envSubGrade[i];
                     var levelAbove = i == 0 ? aboveGradeLevels.First() : envSubGrade[i - 1];
                     var levelHeight = levelAbove.Elevation - l.Elevation;
-                    ProcessSingleLevel(l.Elevation, l.Name, levelHeight, hasAnyNonExtrudeEnvelopes, envelope, levelMaterial, scopes, levelVolumes, ref envelopeProfile, ref subGradeArea, ref areaTotal, ref levelPerimeters);
+                    var levelArea = ProcessSingleLevel(l.Elevation, l.Name, levelHeight, hasAnyNonExtrudeEnvelopes, envelope, scopes, levelVolumes, envelopeProfile, levelPerimeters);
+                    areaTotal += levelArea;
+                    subGradeArea += levelArea;
                 }
                 if (envSubGrade.Count > 0)
                 { // if this was a subgrade envelope, let's not consider levels above grade.
@@ -116,7 +119,9 @@ namespace SimpleLevelsByEnvelope
                         nextLevelElevation = max;
                     }
                     var levelHeight = nextLevelElevation - levelElevation;
-                    ProcessSingleLevel(levelElevation, name, levelHeight, hasAnyNonExtrudeEnvelopes, envelope, levelMaterial, scopes, levelVolumes, ref envelopeProfile, ref aboveGradeArea, ref areaTotal, ref levelPerimeters);
+                    var levelArea = ProcessSingleLevel(levelElevation, name, levelHeight, hasAnyNonExtrudeEnvelopes, envelope, scopes, levelVolumes, envelopeProfile, levelPerimeters);
+                    aboveGradeArea += levelArea;
+                    areaTotal += levelArea;
                 }
             }
 
@@ -128,16 +133,17 @@ namespace SimpleLevelsByEnvelope
 
             foreach (var levelPerimeter in levelPerimeters)
             {
-                output.Model.AddElement(new Panel(levelPerimeter.Perimeter.Project(new Plane(Vector3.Origin, Vector3.ZAxis)), levelMaterial, new Transform(0.0, 0.0, levelPerimeter.Elevation),
+                output.Model.AddElement(new Panel(levelPerimeter.Perimeter.Project(new Plane(Vector3.Origin, Vector3.ZAxis)), LevelMaterial, new Transform(0.0, 0.0, levelPerimeter.Elevation),
                                         null, false, Guid.NewGuid(), levelPerimeter.Name));
             }
             return output;
         }
 
-        private static void ProcessSingleLevel(double levelElevation, string levelName, double levelHeight, bool hasAnyNonExtrudeEnvelopes, Envelope envelope, Material levelMaterial, List<ViewScope> scopes, List<LevelVolume> levelVolumes, ref Profile envelopeProfile, ref double areaGroup, ref double areaTotal, ref List<LevelPerimeter> levelPerimeters)
+        private static double ProcessSingleLevel(double levelElevation, string levelName, double levelHeight, bool hasAnyNonExtrudeEnvelopes, Envelope envelope, List<ViewScope> scopes, List<LevelVolume> levelVolumes, Profile envelopeProfile, List<LevelPerimeter> levelPerimeters)
         {
-            Representation representation = null;
+            double profileAreaTotal = 0;
             var levelArea = 0.0;
+            Representation representation = null;
             var successfullyCreatedNonExtrudeEnvelopes = false;
             if (hasAnyNonExtrudeEnvelopes)
             {
@@ -180,9 +186,8 @@ namespace SimpleLevelsByEnvelope
                             foreach (var profile in profiles)
                             {
                                 var profileArea = profile.Area();
-                                areaGroup += profileArea;
+                                profileAreaTotal += profileArea;
                                 levelArea += profileArea;
-                                areaTotal += profileArea;
                                 var subGradePerimeter = new LevelPerimeter(profile.Area(), levelElevation, profile.Perimeter, Guid.NewGuid(), levelName);
                                 levelPerimeters.Add(subGradePerimeter);
                             }
@@ -201,12 +206,21 @@ namespace SimpleLevelsByEnvelope
                 representation = new Extrude(envelopeProfile, levelHeight, Vector3.ZAxis, false);
                 var subGradePerimeter = new LevelPerimeter(envelopeProfile.Area(), levelElevation, envelopeProfile.Perimeter, Guid.NewGuid(), levelName);
                 levelPerimeters.Add(subGradePerimeter);
-                areaGroup += subGradePerimeter.Area;
-                areaTotal += subGradePerimeter.Area;
+                profileAreaTotal += subGradePerimeter.Area;
                 levelArea = envelopeProfile.Area();
             }
 
-            var subGradeVolume = new LevelVolume(envelopeProfile, levelHeight, envelopeProfile.Area(), envelope.Name, new Transform(0, 0, levelElevation), levelMaterial, representation, false, Guid.NewGuid(), levelName);
+            var subGradeVolume = new LevelVolume()
+            {
+                Profile = envelopeProfile,
+                Height = levelHeight,
+                Area = envelopeProfile.Area(),
+                BuildingName = envelope.Name,
+                Transform = new Transform(0, 0, levelElevation),
+                Representation = representation,
+                Material = LevelMaterial,
+                Name = levelName
+            };
             subGradeVolume.AdditionalProperties["Envelope"] = envelope.Id;
             var scopeName = subGradeVolume.Name;
             if (!String.IsNullOrEmpty(subGradeVolume.BuildingName))
@@ -226,6 +240,7 @@ namespace SimpleLevelsByEnvelope
             subGradeVolume.AdditionalProperties["Plan View"] = scope;
             scopes.Add(scope);
             levelVolumes.Add(subGradeVolume);
+            return profileAreaTotal;
         }
 
         private static void CorrectEnvelopeHeightsAndElevations(IEnumerable<Envelope> envelopes)
