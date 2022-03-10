@@ -75,16 +75,17 @@ namespace Grid
     {
         [Newtonsoft.Json.JsonConstructor]
         
-        public GridInputs(GridInputsMode @mode, IList<GridAreas> @gridAreas, bool @showDebugGeometry, Overrides @overrides, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey):
+        public GridInputs(GridInputsMode @mode, double @bubbleRadius, IList<GridAreas> @gridAreas, bool @showDebugGeometry, Overrides @overrides, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey):
         base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
         {
             var validator = Validator.Instance.GetFirstValidatorForType<GridInputs>();
             if(validator != null)
             {
-                validator.PreConstruct(new object[]{ @mode, @gridAreas, @showDebugGeometry, @overrides});
+                validator.PreConstruct(new object[]{ @mode, @bubbleRadius, @gridAreas, @showDebugGeometry, @overrides});
             }
         
             this.Mode = @mode;
+            this.BubbleRadius = @bubbleRadius;
             this.GridAreas = @gridAreas;
             this.ShowDebugGeometry = @showDebugGeometry;
             this.Overrides = @overrides;
@@ -99,6 +100,10 @@ namespace Grid
         [Newtonsoft.Json.JsonProperty("Mode", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         public GridInputsMode Mode { get; set; } = GridInputsMode.Typical;
+    
+        [Newtonsoft.Json.JsonProperty("Bubble Radius", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.Range(0.15D, double.MaxValue)]
+        public double BubbleRadius { get; set; } = 1D;
     
         /// <summary>List of grids enclosed by the area they apply to.</summary>
         [Newtonsoft.Json.JsonProperty("Grid Areas", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]

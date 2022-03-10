@@ -37,10 +37,18 @@
           "Typical"
         ]
       },
+      "Bubble Radius": {
+        "default": 1,
+        "$hyparOrder": 1,
+        "type": "number",
+        "$hyparUnitType": "length",
+        "$hyparStyle": "number",
+        "minimum": 0.15
+      },
       "Grid Areas": {
         "type": "array",
         "description": "List of grids enclosed by the area they apply to.",
-        "$hyparOrder": 1,
+        "$hyparOrder": 2,
         "default": [
           {
             "Name": "Main",

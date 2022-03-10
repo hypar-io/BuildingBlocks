@@ -12,6 +12,7 @@ namespace Grid
     {
         private const string parametrizedPositionPropertyName = "ParametrizedPosition";
         private const string axisPropertyName = "Axis";
+        private const double pointsInMeter = 2835;
 
         private static double MinCircleRadius = 0.5;
         private static double CircleRadius = 1;
@@ -232,8 +233,8 @@ namespace Grid
             {
                 var gridNodes = new List<GridNode>();
                 var grid = MakeGrid(boundary, origin, uDirection, vDirection, uPoints, vPoints);
-                var uGridLines = CreateGridLines(input, output.Model, origin, uDivisions, grid.V, GridlineMaterialU, GridlineNamesIdentityAxis.U);
-                var vGridLines = CreateGridLines(input, output.Model, origin, vDivisions, grid.U, GridlineMaterialV, GridlineNamesIdentityAxis.V);
+                var uGridLines = CreateGridLines(input, output.Model, origin, uDivisions, grid.V, GridlineMaterialU, GridlineNamesIdentityAxis.U, input.BubbleRadius);
+                var vGridLines = CreateGridLines(input, output.Model, origin, vDivisions, grid.U, GridlineMaterialV, GridlineNamesIdentityAxis.V, input.BubbleRadius);
                 var allGridLines = uGridLines.Union(vGridLines);
                 CheckDuplicatedNames(allGridLines, out var deduplicatedNamesGridLines);
                 AddGridLinesTexts(allGridLines, deduplicatedNamesGridLines, texts);
@@ -304,9 +305,24 @@ namespace Grid
                 grid2dElements.Add(grid2dElement);
             }
 
-            output.Model.AddElement(new ModelText(texts, FontSize.PT72, 50));
-
+            output.Model.AddElement(new ModelText(texts, GetFontSize(input.BubbleRadius, 50), 50));
             return grid2dElements;
+        }
+
+        private static FontSize GetFontSize(double radius, double scale)
+        {
+            double h = (2 * radius * pointsInMeter) / (Math.Sqrt(2) * scale);
+            var fonts = Enum.GetValues(typeof(FontSize)).Cast<int>().ToList();
+
+            for (int i = fonts.Count - 1; i >= 0; i--)
+            {
+                if (fonts[i] < h)
+                {
+                    return (FontSize)fonts[i];
+                }
+            }
+
+            return (FontSize)fonts[0];
         }
 
         private static double GetCircleRadius(U u, U v)
@@ -354,7 +370,7 @@ namespace Grid
             {
                 var line = gridline.Line;
                 var lineDir = (line.End - line.Start).Unitized();
-                var circleCenter = line.Start - (lineDir * (CircleRadius + lineHeadExtension));
+                var circleCenter = line.Start - (lineDir * (gridline.Radius + lineHeadExtension));
                 var color = deduplicatedNamesGridLines.Contains(gridline) ? Colors.Red : Colors.Darkgray;
                 texts.Add((circleCenter, Vector3.ZAxis, lineDir, gridline.Name, color));
             }
@@ -401,7 +417,8 @@ namespace Grid
                                                 List<GridGuide> gridGuides,
                                                 Grid1d opposingGrid1d,
                                                 Material material,
-                                                GridlineNamesIdentityAxis axis)
+                                                GridlineNamesIdentityAxis axis,
+                                                double radius)
         {
             var baseLine = new Line(opposingGrid1d.Curve.PointAt(0), opposingGrid1d.Curve.PointAt(1));
 
@@ -414,7 +431,7 @@ namespace Grid
                 var line = new Line(gridGuide.Point - startExtend, gridGuide.Point - endExtend);
                 var gridline = new GridLine
                 {
-                    Radius = CircleRadius,
+                    Radius = radius,
                     ExtensionBeginning = lineHeadExtension,
                     Line = line,
                     Name = gridGuide.Name,
