@@ -119,8 +119,11 @@ namespace RoofFunction
                     {
                         continue;
                     }
-                    var profile = new Profile(roofFace.Outer.ToPolygon(), roofFace.Inner.Select(i => i.ToPolygon()).ToList());
-                    var roof = new Roof(profile, input.RoofThickness, element.Transform);
+                    var polygon = roofFace.Outer.ToPolygon();
+                    var polygonTransform = polygon.ToTransform();
+                    var inverse = polygonTransform.Inverted();
+                    var profile = new Profile(polygon.TransformedPolygon(inverse), roofFace.Inner.Select(i => i.ToPolygon().TransformedPolygon(inverse)).ToList());
+                    var roof = new Roof(profile, input.RoofThickness, polygonTransform.Concatenated(element.Transform));
                     roof.AdditionalProperties["Envelope"] = element.Id;
                     output.Model.AddElement(roof);
                 }
