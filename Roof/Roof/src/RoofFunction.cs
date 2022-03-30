@@ -105,6 +105,10 @@ namespace RoofFunction
             {
                 var solids = element.Representation.SolidOperations.Where(so => !so.IsVoid).Select(so => so.Solid);
                 var roofFaces = solids.SelectMany(s => s.Faces.Where(f => f.Value.Outer.ToPolygon().Normal().Dot(Vector3.ZAxis) > 0.7).Select(f => f.Value));
+                // Certain functions, like sketch masterplan, create their solids as a collection of stacked volumes with a very slight gap between them.
+                // This is a workaround for bugs in the unions created by solid operations containing multiple solids.
+                // We don't want to create "roof" elements in those gaps, so we look for cases where the potential roof face is very close to
+                // another face, and ignore those. 
                 var bottomFaceCentroids = solids.SelectMany(s => s.Faces.Where(f => f.Value.Outer.ToPolygon().Normal().Dot(Vector3.ZAxis) < -0.7).Select(f => f.Value.Outer.ToPolygon().Centroid()));
 
                 foreach (var roofFace in roofFaces)
