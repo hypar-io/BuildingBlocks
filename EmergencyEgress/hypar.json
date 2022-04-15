@@ -1,0 +1,43 @@
+{
+  "$schema": "https://hypar.io/Schemas/Function.json",
+  "id": "1dedb2d4-4a36-4c00-8f6c-34707bdd1909",
+  "name": "EmergencyEgress",
+  "display_name": "Emergency Egress",
+  "description": "The Emergency Egress function.",
+  "language": "C#",
+  "model_dependencies": [
+    {
+      "autohide": false,
+      "name": "Space Planning Zones",
+      "optional": false
+    },
+    {
+      "autohide": false,
+      "name": "Circulation",
+      "optional": false
+    }
+  ],
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "Exit Locations": {
+        "default": [],
+        "type": "array",
+        "$hyparOrder": 0,
+        "items": {
+          "description": "A point",
+          "$ref": "https://hypar.io/Schemas/Geometry/Vector3.json"
+        }
+      }
+    }
+  },
+  "outputs": [],
+  "element_types": [
+    "https://prod-api.hypar.io/schemas/SpaceBoundary",
+    "https://prod-api.hypar.io/schemas/CirculationSegment"
+  ],
+  "repository_url": "https://github.com/hypar-io/function",
+  "filters": {},
+  "last_updated": "2022-04-04T15:54:23.352068",
+  "cli_version": "0.9.10"
+}
