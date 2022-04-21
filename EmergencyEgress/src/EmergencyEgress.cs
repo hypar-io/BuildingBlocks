@@ -111,9 +111,14 @@ namespace EmergencyEgress
             return centerLine;
         }
 
-        //Create connection edges between corridors.
-        //Corridors itself are represented as middle lines without width.
-        //For each line points are found with other corridors and itself that are closer that their combined width.
+
+        /// <summary>
+        /// Create connection edges between corridors.
+        /// Corridors itself are represented as middle lines without width.
+        /// For each line points are found with other corridors and itself that are closer that their combined width.
+        /// </summary>
+        /// <param name="centerlines">Corridor segments with precalculated center lines.</param>
+        /// <param name="grid">AdaptiveGrid to insert new vertices and edge into.</param>
         private static void Intersect(
             List<(CirculationSegment Segment, Polyline Centerline)> centerlines,
             AdaptiveGrid grid)
@@ -280,9 +285,15 @@ namespace EmergencyEgress
             }
         }
 
-        //There are no defined exits. in the room. Every segment middle point is considered.
-        //This is very simple approaches that ignores voids or obstacles inside room and
-        //won't work for complex rooms. 
+        /// <summary>
+        /// Add SpaceBoundary, representing a room, to the grid.
+        /// There are no defined exits. in the room. Every segment middle point is considered.
+        /// This is very simple approaches that ignores voids or obstacles inside room and won't work for complex rooms. 
+        /// </summary>
+        /// <param name="room">Room geometry.</param>
+        /// <param name="centerlines">Corridor segments with precalculated center lines.</param>
+        /// <param name="grid">AdaptiveGrid to insert new vertices and edge into.</param>
+        /// <returns></returns>
         private static List<RoomEvacuationVariant> AddRoom(
             SpaceBoundary room,
             List<(CirculationSegment Segment, Polyline Centerline)> centerlines,
@@ -305,7 +316,7 @@ namespace EmergencyEgress
                     var corners = new List<(GridVertex Vertex, Vector3 ExactPosition)>();
                     foreach (var furthest in twoFurthest)
                     {
-                        //Two reasons why room corners edges are shrined:
+                        //Two reasons why room corners edges are inset from the corners:
                         //1)For better visualizations.
                         //2)To prevent vertex unifications if room boundaries overlap.
                         var direction = (furthest - exitVertex.Point).Unitized();
@@ -319,7 +330,14 @@ namespace EmergencyEgress
             return roomExits;
         }
 
-        //Find if edge middle point is close enough to any corridor to be considered connected.
+        /// <summary>
+        /// Find if edge middle point is close enough to any corridor to be considered connected.
+        /// If point is closer then half corridor width then it's connected to closest point by new edge.
+        /// </summary>
+        /// <param name="roomEdge">Line representing room wall.</param>
+        /// <param name="centerlines">Corridor segments with precalculated center lines.</param>
+        /// <param name="grid">AdaptiveGrid to insert new vertices and edge into.</param>
+        /// <returns>New Vertex on room edge midpoint.</returns>
         private static GridVertex FindRoomExit(
             Line roomEdge,
             List<(CirculationSegment Segment, Polyline Centerline)> centerlines,
@@ -330,7 +348,6 @@ namespace EmergencyEgress
             {
                 for (int i = 0; i < line.Centerline.Vertices.Count - 1; i++)
                 {
-                    //If point is closer then half corridor width then it touches.
                     var segment = new Line(line.Centerline.Vertices[i], line.Centerline.Vertices[i + 1]);
                     if (midpoint.DistanceTo(segment, out var closest) < line.Segment.Geometry.Width / 2 + 0.1)
                     {
@@ -403,7 +420,13 @@ namespace EmergencyEgress
             return null;
         }
 
-        //Add exit points to the grid
+
+        /// <summary>
+        /// Add exit points to the grid that are close enough to any of existing edges.
+        /// </summary>
+        /// <param name="exits">Exit points positions.</param>
+        /// <param name="grid">AdaptiveGrid to insert new vertices and edge into.</param>
+        /// <returns>Ids of exit vertices that are added to the grid.</returns>
         private static List<ulong> LinkExits(IList<Vector3> exits, AdaptiveGrid grid)
         {
             List<ulong> exitVertices = new List<ulong>();
@@ -450,7 +473,13 @@ namespace EmergencyEgress
             return exitVertices.Distinct().ToList();
         }
 
-        //For each room find exit that provides smallest distance for it's furthest corner.
+        /// <summary>
+        /// For each room find exit that provides smallest distance for it's furthest corner.
+        /// </summary>
+        /// <param name="grid">AdaptiveGrid to traverse.</param>
+        /// <param name="tree">Traveling tree from rooms corners to exits.</param>
+        /// <param name="roomInfos">Combinations of exits and their corresponding corners for each room.</param>
+        /// <returns>Most distance efficient exit information for each room.</returns>
         public static List<RoomEvacuationVariant> ChooseRoutes(
             AdaptiveGrid grid,
             IDictionary<ulong, ulong?> tree,
