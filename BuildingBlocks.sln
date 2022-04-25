@@ -1,155 +1,161 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26124.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31729.503
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Columns", "Columns", "{037E922C-9117-4D14-AF83-F2F8B9C56127}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ColumnsByFloors", "ColumnsByFloors", "{D37B94E2-9D1F-4C3B-BA0D-365F0E9CA43B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ColumnsByFloors", "Columns\ColumnsByFloors\src\ColumnsByFloors.csproj", "{5DB09F7C-6C6E-42E6-AFC3-FD090B4BBE04}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ColumnsByFloors", "Columns\ColumnsByFloors\src\ColumnsByFloors.csproj", "{5DB09F7C-6C6E-42E6-AFC3-FD090B4BBE04}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ColumnsByFloors.tests", "Columns\ColumnsByFloors\test\ColumnsByFloors.tests.csproj", "{9F0CF85A-B29E-44E2-AA37-2A957C82A7CA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ColumnsByFloors.tests", "Columns\ColumnsByFloors\test\ColumnsByFloors.tests.csproj", "{9F0CF85A-B29E-44E2-AA37-2A957C82A7CA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{FFA5AF17-16E3-4F90-8CFC-D9952FDCC2CA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CoreByEnvelope", "CoreByEnvelope", "{2D160827-41E1-475F-92E8-C0886E3EEE49}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreByEnvelope", "Core\CoreByEnvelope\src\CoreByEnvelope.csproj", "{A5324AD3-B3D5-4537-A3BD-75C300E925D1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreByEnvelope", "Core\CoreByEnvelope\src\CoreByEnvelope.csproj", "{A5324AD3-B3D5-4537-A3BD-75C300E925D1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreByEnvelope.tests", "Core\CoreByEnvelope\test\CoreByEnvelope.tests.csproj", "{7675EF03-6618-4F6F-9730-D76F4C58EE10}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreByEnvelope.tests", "Core\CoreByEnvelope\test\CoreByEnvelope.tests.csproj", "{7675EF03-6618-4F6F-9730-D76F4C58EE10}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CoreByLevels", "CoreByLevels", "{BB5DEC1B-3FE7-4B40-97ED-9D86DBBDAEF4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreByLevels", "Core\CoreByLevels\src\CoreByLevels.csproj", "{E2AC3069-E73A-43A2-8EFF-FDA207B00302}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreByLevels", "Core\CoreByLevels\src\CoreByLevels.csproj", "{E2AC3069-E73A-43A2-8EFF-FDA207B00302}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreByLevels.tests", "Core\CoreByLevels\test\CoreByLevels.tests.csproj", "{DCE50C24-325E-4026-82FD-F7363E054125}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreByLevels.tests", "Core\CoreByLevels\test\CoreByLevels.tests.csproj", "{DCE50C24-325E-4026-82FD-F7363E054125}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CoreBySketch", "CoreBySketch", "{4A60A6D5-C03D-4DFA-B78F-033AC0F65179}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreBySketch", "Core\CoreBySketch\src\CoreBySketch.csproj", "{27FF4281-707D-4A22-873D-41FE0C09E5B2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreBySketch", "Core\CoreBySketch\src\CoreBySketch.csproj", "{27FF4281-707D-4A22-873D-41FE0C09E5B2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreBySketch.Tests", "Core\CoreBySketch\test\CoreBySketch.Tests.csproj", "{389000D3-6F6A-4D54-8C64-E8B263145B1D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreBySketch.Tests", "Core\CoreBySketch\test\CoreBySketch.Tests.csproj", "{389000D3-6F6A-4D54-8C64-E8B263145B1D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Envelope", "Envelope", "{8CB71796-7CF7-4918-8973-44018F655710}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EnvelopeByCenterline", "EnvelopeByCenterline", "{D1AE7525-0876-4D73-9B81-F61C5158335A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EnvelopeByCenterline", "Envelope\EnvelopeByCenterline\src\EnvelopeByCenterline.csproj", "{D897F1B2-F2A0-492A-9C44-B7E7CDCC4580}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EnvelopeByCenterline", "Envelope\EnvelopeByCenterline\src\EnvelopeByCenterline.csproj", "{D897F1B2-F2A0-492A-9C44-B7E7CDCC4580}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EnvelopeByCenterline.tests", "Envelope\EnvelopeByCenterline\test\EnvelopeByCenterline.tests.csproj", "{15B6A702-1EF4-456F-A0B5-E8306DEF92BF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EnvelopeByCenterline.tests", "Envelope\EnvelopeByCenterline\test\EnvelopeByCenterline.tests.csproj", "{15B6A702-1EF4-456F-A0B5-E8306DEF92BF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EnvelopeBySite", "EnvelopeBySite", "{C3EC8563-CBDE-4DD3-AE88-44DCD2E48C95}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EnvelopeBySite", "Envelope\EnvelopeBySite\src\EnvelopeBySite.csproj", "{95E0C04D-52B3-4DE5-A6DA-597B196419CD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EnvelopeBySite", "Envelope\EnvelopeBySite\src\EnvelopeBySite.csproj", "{95E0C04D-52B3-4DE5-A6DA-597B196419CD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EnvelopeBySite.tests", "Envelope\EnvelopeBySite\test\EnvelopeBySite.tests.csproj", "{69CCFA55-DE38-418D-8512-17FBE0E64485}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EnvelopeBySite.tests", "Envelope\EnvelopeBySite\test\EnvelopeBySite.tests.csproj", "{69CCFA55-DE38-418D-8512-17FBE0E64485}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EnvelopeBySketch", "EnvelopeBySketch", "{C0A4C638-0D5B-45B7-8AF5-5AFD3C603D60}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EnvelopeBySketch", "Envelope\EnvelopeBySketch\src\EnvelopeBySketch.csproj", "{305C18EF-5582-4CBA-B51C-76E726239B38}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EnvelopeBySketch", "Envelope\EnvelopeBySketch\src\EnvelopeBySketch.csproj", "{305C18EF-5582-4CBA-B51C-76E726239B38}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EnvelopeBySketch.tests", "Envelope\EnvelopeBySketch\test\EnvelopeBySketch.tests.csproj", "{32656F1E-AEF8-40D5-B419-BAE0D8DF9ACD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EnvelopeBySketch.tests", "Envelope\EnvelopeBySketch\test\EnvelopeBySketch.tests.csproj", "{32656F1E-AEF8-40D5-B419-BAE0D8DF9ACD}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Facade", "Facade", "{27DB02FD-4A02-4B90-AC4F-35BBB66C08EB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FacadeByEnvelope", "FacadeByEnvelope", "{5A962EC9-7A9D-4AED-9D41-C9E740FA48E6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FacadeByEnvelope", "Facade\FacadeByEnvelope\src\FacadeByEnvelope.csproj", "{A90A6535-DE90-4E3B-B747-5BB41C96CABE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FacadeByEnvelope", "Facade\FacadeByEnvelope\src\FacadeByEnvelope.csproj", "{A90A6535-DE90-4E3B-B747-5BB41C96CABE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FacadeByEnvelope.tests", "Facade\FacadeByEnvelope\test\FacadeByEnvelope.tests.csproj", "{C213E8AD-6DB1-4EAD-87F3-A32D64A0163E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FacadeByEnvelope.tests", "Facade\FacadeByEnvelope\test\FacadeByEnvelope.tests.csproj", "{C213E8AD-6DB1-4EAD-87F3-A32D64A0163E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Floors", "Floors", "{CA783379-5127-4C8F-A7A6-8C78FDC44F54}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FloorsByDXF", "FloorsByDXF", "{E75F7E04-4D55-4873-A519-50B59EDC8CC2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FloorsByDXF", "Floors\FloorsByDXF\src\FloorsByDXF.csproj", "{C2624925-9F3B-4125-BF65-85A00008272D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FloorsByDXF", "Floors\FloorsByDXF\src\FloorsByDXF.csproj", "{C2624925-9F3B-4125-BF65-85A00008272D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FloorsByDXF.Tests", "Floors\FloorsByDXF\test\FloorsByDXF.Tests.csproj", "{6DA42BBD-A086-4F3A-ADB2-D2D6EA91E2E9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FloorsByDXF.Tests", "Floors\FloorsByDXF\test\FloorsByDXF.Tests.csproj", "{6DA42BBD-A086-4F3A-ADB2-D2D6EA91E2E9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FloorsByLevels", "FloorsByLevels", "{F7943365-42D7-42FB-B51F-D85671044D5C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FloorsByLevels", "Floors\FloorsByLevels\src\FloorsByLevels.csproj", "{70CCF68F-477C-4FAE-BB5F-7355D828084C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FloorsByLevels", "Floors\FloorsByLevels\src\FloorsByLevels.csproj", "{70CCF68F-477C-4FAE-BB5F-7355D828084C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FloorsByLevels.tests", "Floors\FloorsByLevels\test\FloorsByLevels.tests.csproj", "{F5321584-7462-43C1-B8D6-E805B5ADFF99}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FloorsByLevels.tests", "Floors\FloorsByLevels\test\FloorsByLevels.tests.csproj", "{F5321584-7462-43C1-B8D6-E805B5ADFF99}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SubdivideSlab", "SubdivideSlab", "{470D83AD-9513-4E56-A460-F80458EA2A75}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SubdivideSlab", "Floors\SubdivideSlab\src\SubdivideSlab.csproj", "{7385F70F-20B5-48A1-81BF-801AB2DA1457}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SubdivideSlab", "Floors\SubdivideSlab\src\SubdivideSlab.csproj", "{7385F70F-20B5-48A1-81BF-801AB2DA1457}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SubdivideSlab.tests", "Floors\SubdivideSlab\test\SubdivideSlab.tests.csproj", "{4FB3948F-D4C3-4C40-B9FF-3B4F2B6CF0A1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SubdivideSlab.tests", "Floors\SubdivideSlab\test\SubdivideSlab.tests.csproj", "{4FB3948F-D4C3-4C40-B9FF-3B4F2B6CF0A1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Foundation", "Foundation", "{150F8D25-D074-444D-86D4-DA8AD7D61168}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FoundationByEnvelope", "FoundationByEnvelope", "{8C951D59-5878-4A8B-9608-701EE2875769}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoundationByEnvelope", "Foundation\FoundationByEnvelope\src\FoundationByEnvelope.csproj", "{1E19DEAB-B6B4-4E99-A559-812120928DEF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoundationByEnvelope", "Foundation\FoundationByEnvelope\src\FoundationByEnvelope.csproj", "{1E19DEAB-B6B4-4E99-A559-812120928DEF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoundationByEnvelope.Tests", "Foundation\FoundationByEnvelope\test\FoundationByEnvelope.Tests.csproj", "{62D103FD-11A4-4F02-88C4-224A8182492D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoundationByEnvelope.Tests", "Foundation\FoundationByEnvelope\test\FoundationByEnvelope.Tests.csproj", "{62D103FD-11A4-4F02-88C4-224A8182492D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Levels", "Levels", "{AB92D422-89C7-421E-9883-21AA6EC0DC12}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LevelBySketch", "LevelBySketch", "{12D0B62F-F7ED-430C-BAC8-65E48BD75FC6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LevelBySketch", "Levels\LevelBySketch\src\LevelBySketch.csproj", "{22561921-A6F5-478A-B6F1-44EF19F802EB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LevelBySketch", "Levels\LevelBySketch\src\LevelBySketch.csproj", "{22561921-A6F5-478A-B6F1-44EF19F802EB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LevelBySketch.tests", "Levels\LevelBySketch\test\LevelBySketch.tests.csproj", "{D3C2440C-2D4F-4D54-BADB-EBAFEB39979F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LevelBySketch.tests", "Levels\LevelBySketch\test\LevelBySketch.tests.csproj", "{D3C2440C-2D4F-4D54-BADB-EBAFEB39979F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LevelsByEnvelope", "LevelsByEnvelope", "{6030720E-A093-425F-B359-A8C7CDC7DC35}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LevelsByEnvelope", "Levels\LevelsByEnvelope\src\LevelsByEnvelope.csproj", "{B1E64DBD-E9A8-4728-BFB7-44B8FFE3C3BE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LevelsByEnvelope", "Levels\LevelsByEnvelope\src\LevelsByEnvelope.csproj", "{B1E64DBD-E9A8-4728-BFB7-44B8FFE3C3BE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LevelsByEnvelope.tests", "Levels\LevelsByEnvelope\test\LevelsByEnvelope.tests.csproj", "{908C582D-DE60-40A6-B936-4A6960ED52D1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LevelsByEnvelope.tests", "Levels\LevelsByEnvelope\test\LevelsByEnvelope.tests.csproj", "{908C582D-DE60-40A6-B936-4A6960ED52D1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Roof", "Roof", "{F87EF083-A121-48AD-B132-FA9905F45229}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RoofByDXF", "RoofByDXF", "{AF0FC962-BE8C-4FD1-B936-8FE017445BB4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoofByDXF", "Roof\RoofByDXF\src\RoofByDXF.csproj", "{0E9BAFFA-D3CB-401E-9649-DD5318CD1572}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RoofByDXF", "Roof\RoofByDXF\src\RoofByDXF.csproj", "{0E9BAFFA-D3CB-401E-9649-DD5318CD1572}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoofByDXF.Tests", "Roof\RoofByDXF\test\RoofByDXF.Tests.csproj", "{C67B17DD-39B3-4FCF-AC1A-454B6EE1FCD2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RoofByDXF.Tests", "Roof\RoofByDXF\test\RoofByDXF.Tests.csproj", "{C67B17DD-39B3-4FCF-AC1A-454B6EE1FCD2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RoofBySketch", "RoofBySketch", "{67352D86-955F-4287-990F-FF8410C64A5D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoofBySketch", "Roof\RoofBySketch\src\RoofBySketch.csproj", "{46D136B3-8C14-48D1-9A40-41C495149165}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RoofBySketch", "Roof\RoofBySketch\src\RoofBySketch.csproj", "{46D136B3-8C14-48D1-9A40-41C495149165}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoofBySketch.Tests", "Roof\RoofBySketch\test\RoofBySketch.Tests.csproj", "{8B446F68-968F-4DE6-8FF2-20B556DA34DB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RoofBySketch.Tests", "Roof\RoofBySketch\test\RoofBySketch.Tests.csproj", "{8B446F68-968F-4DE6-8FF2-20B556DA34DB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Rooms", "Rooms", "{F28411E7-0947-4417-90AF-E89427745E89}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PlanByProgram", "PlanByProgram", "{8D36B4D9-D69F-4422-98B4-DCB944D76D86}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlanByProgram", "Rooms\PlanByProgram\src\PlanByProgram.csproj", "{FCCD6C51-9ED6-421A-8A6A-6F3B55E45A47}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlanByProgram", "Rooms\PlanByProgram\src\PlanByProgram.csproj", "{FCCD6C51-9ED6-421A-8A6A-6F3B55E45A47}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlanByProgram.tests", "Rooms\PlanByProgram\test\PlanByProgram.tests.csproj", "{18624710-9A4D-40AB-B26F-C2EFA474B39E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlanByProgram.tests", "Rooms\PlanByProgram\test\PlanByProgram.tests.csproj", "{18624710-9A4D-40AB-B26F-C2EFA474B39E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ProgramByCSV", "ProgramByCSV", "{9672F189-CE99-43C0-B633-226CDC5965B9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProgramByCSV", "Rooms\ProgramByCSV\src\ProgramByCSV.csproj", "{6AA13FCF-A0F6-4402-829F-56FB79552A87}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProgramByCSV", "Rooms\ProgramByCSV\src\ProgramByCSV.csproj", "{6AA13FCF-A0F6-4402-829F-56FB79552A87}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProgramByCSV.tests", "Rooms\ProgramByCSV\test\ProgramByCSV.tests.csproj", "{A1064C2E-EBEC-4747-958F-BE897B6AB36B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProgramByCSV.tests", "Rooms\ProgramByCSV\test\ProgramByCSV.tests.csproj", "{A1064C2E-EBEC-4747-958F-BE897B6AB36B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RoomsByLevels", "RoomsByLevels", "{7038D1FD-EA58-4156-97AF-4C302212BDF0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoomsByLevels", "Rooms\RoomsByLevels\src\RoomsByLevels.csproj", "{0A13F2EE-AF84-4101-BD73-7AD6D0AFBCB9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RoomsByLevels", "Rooms\RoomsByLevels\src\RoomsByLevels.csproj", "{0A13F2EE-AF84-4101-BD73-7AD6D0AFBCB9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoomsByLevels.tests", "Rooms\RoomsByLevels\test\RoomsByLevels.tests.csproj", "{35999FB0-8078-4E2F-9E30-0BC17B14004B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RoomsByLevels.tests", "Rooms\RoomsByLevels\test\RoomsByLevels.tests.csproj", "{35999FB0-8078-4E2F-9E30-0BC17B14004B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Site", "Site", "{23A50DAB-0E8E-419F-906C-4BF355B26B45}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SiteBySketch", "SiteBySketch", "{A043356B-BC9E-4091-A262-C2570CD29822}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SiteBySketch", "Site\SiteBySketch\src\SiteBySketch.csproj", "{660E9C63-B5F5-427F-9B05-CD811712057E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SiteBySketch", "Site\SiteBySketch\src\SiteBySketch.csproj", "{660E9C63-B5F5-427F-9B05-CD811712057E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SiteBySketch.tests", "Site\SiteBySketch\test\SiteBySketch.tests.csproj", "{32BBFD95-3BB2-4C2E-A914-B12E78C774D2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SiteBySketch.tests", "Site\SiteBySketch\test\SiteBySketch.tests.csproj", "{32BBFD95-3BB2-4C2E-A914-B12E78C774D2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Structure", "Structure", "{7DDB0DD5-2535-47B8-B9BF-EE56EA50EED3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StructureByEnvelope", "StructureByEnvelope", "{FFEA9B75-30AF-419C-A025-7EC3D4FEB81F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StructureByEnvelope", "Structure\StructureByEnvelope\src\StructureByEnvelope.csproj", "{5063299B-676A-4375-B005-EEFBC38E91D1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Structure", "Structure\StructureByEnvelope\src\Structure.csproj", "{165D9802-51BE-414E-B7B3-D2CCAB78181B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StructureByEnvelope.tests", "Structure\StructureByEnvelope\test\StructureByEnvelope.tests.csproj", "{E0261316-1D81-4FD2-8F28-4FEC072F527C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Structure.tests", "Structure\StructureByEnvelope\test\Structure.tests.csproj", "{1363422C-A8BA-4296-AC50-443E53F88122}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EmergencyEgress", "EmergencyEgress", "{AA4CD55F-0B4C-4459-8419-CA065582EC0F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmergencyEgress", "EmergencyEgress\src\EmergencyEgress.csproj", "{09D6C75B-BDFB-4CC9-B2F7-A126C53BD63A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmergencyEgress.Tests", "EmergencyEgress\test\EmergencyEgress.Tests.csproj", "{FD1551B1-5DA0-457F-9BE2-6130FE9EE536}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -159,9 +165,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{5DB09F7C-6C6E-42E6-AFC3-FD090B4BBE04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -644,30 +647,57 @@ Global
 		{32BBFD95-3BB2-4C2E-A914-B12E78C774D2}.Release|x64.Build.0 = Release|Any CPU
 		{32BBFD95-3BB2-4C2E-A914-B12E78C774D2}.Release|x86.ActiveCfg = Release|Any CPU
 		{32BBFD95-3BB2-4C2E-A914-B12E78C774D2}.Release|x86.Build.0 = Release|Any CPU
-		{5063299B-676A-4375-B005-EEFBC38E91D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5063299B-676A-4375-B005-EEFBC38E91D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5063299B-676A-4375-B005-EEFBC38E91D1}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{5063299B-676A-4375-B005-EEFBC38E91D1}.Debug|x64.Build.0 = Debug|Any CPU
-		{5063299B-676A-4375-B005-EEFBC38E91D1}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{5063299B-676A-4375-B005-EEFBC38E91D1}.Debug|x86.Build.0 = Debug|Any CPU
-		{5063299B-676A-4375-B005-EEFBC38E91D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5063299B-676A-4375-B005-EEFBC38E91D1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5063299B-676A-4375-B005-EEFBC38E91D1}.Release|x64.ActiveCfg = Release|Any CPU
-		{5063299B-676A-4375-B005-EEFBC38E91D1}.Release|x64.Build.0 = Release|Any CPU
-		{5063299B-676A-4375-B005-EEFBC38E91D1}.Release|x86.ActiveCfg = Release|Any CPU
-		{5063299B-676A-4375-B005-EEFBC38E91D1}.Release|x86.Build.0 = Release|Any CPU
-		{E0261316-1D81-4FD2-8F28-4FEC072F527C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E0261316-1D81-4FD2-8F28-4FEC072F527C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E0261316-1D81-4FD2-8F28-4FEC072F527C}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{E0261316-1D81-4FD2-8F28-4FEC072F527C}.Debug|x64.Build.0 = Debug|Any CPU
-		{E0261316-1D81-4FD2-8F28-4FEC072F527C}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{E0261316-1D81-4FD2-8F28-4FEC072F527C}.Debug|x86.Build.0 = Debug|Any CPU
-		{E0261316-1D81-4FD2-8F28-4FEC072F527C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E0261316-1D81-4FD2-8F28-4FEC072F527C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E0261316-1D81-4FD2-8F28-4FEC072F527C}.Release|x64.ActiveCfg = Release|Any CPU
-		{E0261316-1D81-4FD2-8F28-4FEC072F527C}.Release|x64.Build.0 = Release|Any CPU
-		{E0261316-1D81-4FD2-8F28-4FEC072F527C}.Release|x86.ActiveCfg = Release|Any CPU
-		{E0261316-1D81-4FD2-8F28-4FEC072F527C}.Release|x86.Build.0 = Release|Any CPU
+		{165D9802-51BE-414E-B7B3-D2CCAB78181B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{165D9802-51BE-414E-B7B3-D2CCAB78181B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{165D9802-51BE-414E-B7B3-D2CCAB78181B}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{165D9802-51BE-414E-B7B3-D2CCAB78181B}.Debug|x64.Build.0 = Debug|Any CPU
+		{165D9802-51BE-414E-B7B3-D2CCAB78181B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{165D9802-51BE-414E-B7B3-D2CCAB78181B}.Debug|x86.Build.0 = Debug|Any CPU
+		{165D9802-51BE-414E-B7B3-D2CCAB78181B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{165D9802-51BE-414E-B7B3-D2CCAB78181B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{165D9802-51BE-414E-B7B3-D2CCAB78181B}.Release|x64.ActiveCfg = Release|Any CPU
+		{165D9802-51BE-414E-B7B3-D2CCAB78181B}.Release|x64.Build.0 = Release|Any CPU
+		{165D9802-51BE-414E-B7B3-D2CCAB78181B}.Release|x86.ActiveCfg = Release|Any CPU
+		{165D9802-51BE-414E-B7B3-D2CCAB78181B}.Release|x86.Build.0 = Release|Any CPU
+		{1363422C-A8BA-4296-AC50-443E53F88122}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1363422C-A8BA-4296-AC50-443E53F88122}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1363422C-A8BA-4296-AC50-443E53F88122}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{1363422C-A8BA-4296-AC50-443E53F88122}.Debug|x64.Build.0 = Debug|Any CPU
+		{1363422C-A8BA-4296-AC50-443E53F88122}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1363422C-A8BA-4296-AC50-443E53F88122}.Debug|x86.Build.0 = Debug|Any CPU
+		{1363422C-A8BA-4296-AC50-443E53F88122}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1363422C-A8BA-4296-AC50-443E53F88122}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1363422C-A8BA-4296-AC50-443E53F88122}.Release|x64.ActiveCfg = Release|Any CPU
+		{1363422C-A8BA-4296-AC50-443E53F88122}.Release|x64.Build.0 = Release|Any CPU
+		{1363422C-A8BA-4296-AC50-443E53F88122}.Release|x86.ActiveCfg = Release|Any CPU
+		{1363422C-A8BA-4296-AC50-443E53F88122}.Release|x86.Build.0 = Release|Any CPU
+		{09D6C75B-BDFB-4CC9-B2F7-A126C53BD63A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09D6C75B-BDFB-4CC9-B2F7-A126C53BD63A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09D6C75B-BDFB-4CC9-B2F7-A126C53BD63A}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{09D6C75B-BDFB-4CC9-B2F7-A126C53BD63A}.Debug|x64.Build.0 = Debug|Any CPU
+		{09D6C75B-BDFB-4CC9-B2F7-A126C53BD63A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{09D6C75B-BDFB-4CC9-B2F7-A126C53BD63A}.Debug|x86.Build.0 = Debug|Any CPU
+		{09D6C75B-BDFB-4CC9-B2F7-A126C53BD63A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09D6C75B-BDFB-4CC9-B2F7-A126C53BD63A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09D6C75B-BDFB-4CC9-B2F7-A126C53BD63A}.Release|x64.ActiveCfg = Release|Any CPU
+		{09D6C75B-BDFB-4CC9-B2F7-A126C53BD63A}.Release|x64.Build.0 = Release|Any CPU
+		{09D6C75B-BDFB-4CC9-B2F7-A126C53BD63A}.Release|x86.ActiveCfg = Release|Any CPU
+		{09D6C75B-BDFB-4CC9-B2F7-A126C53BD63A}.Release|x86.Build.0 = Release|Any CPU
+		{FD1551B1-5DA0-457F-9BE2-6130FE9EE536}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD1551B1-5DA0-457F-9BE2-6130FE9EE536}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD1551B1-5DA0-457F-9BE2-6130FE9EE536}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{FD1551B1-5DA0-457F-9BE2-6130FE9EE536}.Debug|x64.Build.0 = Debug|Any CPU
+		{FD1551B1-5DA0-457F-9BE2-6130FE9EE536}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{FD1551B1-5DA0-457F-9BE2-6130FE9EE536}.Debug|x86.Build.0 = Debug|Any CPU
+		{FD1551B1-5DA0-457F-9BE2-6130FE9EE536}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD1551B1-5DA0-457F-9BE2-6130FE9EE536}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD1551B1-5DA0-457F-9BE2-6130FE9EE536}.Release|x64.ActiveCfg = Release|Any CPU
+		{FD1551B1-5DA0-457F-9BE2-6130FE9EE536}.Release|x64.Build.0 = Release|Any CPU
+		{FD1551B1-5DA0-457F-9BE2-6130FE9EE536}.Release|x86.ActiveCfg = Release|Any CPU
+		{FD1551B1-5DA0-457F-9BE2-6130FE9EE536}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{D37B94E2-9D1F-4C3B-BA0D-365F0E9CA43B} = {037E922C-9117-4D14-AF83-F2F8B9C56127}
@@ -731,7 +761,12 @@ Global
 		{660E9C63-B5F5-427F-9B05-CD811712057E} = {A043356B-BC9E-4091-A262-C2570CD29822}
 		{32BBFD95-3BB2-4C2E-A914-B12E78C774D2} = {A043356B-BC9E-4091-A262-C2570CD29822}
 		{FFEA9B75-30AF-419C-A025-7EC3D4FEB81F} = {7DDB0DD5-2535-47B8-B9BF-EE56EA50EED3}
-		{5063299B-676A-4375-B005-EEFBC38E91D1} = {FFEA9B75-30AF-419C-A025-7EC3D4FEB81F}
-		{E0261316-1D81-4FD2-8F28-4FEC072F527C} = {FFEA9B75-30AF-419C-A025-7EC3D4FEB81F}
+		{165D9802-51BE-414E-B7B3-D2CCAB78181B} = {FFEA9B75-30AF-419C-A025-7EC3D4FEB81F}
+		{1363422C-A8BA-4296-AC50-443E53F88122} = {FFEA9B75-30AF-419C-A025-7EC3D4FEB81F}
+		{09D6C75B-BDFB-4CC9-B2F7-A126C53BD63A} = {AA4CD55F-0B4C-4459-8419-CA065582EC0F}
+		{FD1551B1-5DA0-457F-9BE2-6130FE9EE536} = {AA4CD55F-0B4C-4459-8419-CA065582EC0F}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2A6BDE75-6AB8-4471-82D0-D7B9220453B7}
 	EndGlobalSection
 EndGlobal
