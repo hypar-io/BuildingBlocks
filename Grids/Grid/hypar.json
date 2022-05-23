@@ -12,6 +12,11 @@
     },
     {
       "autohide": false,
+      "name": "Roof",
+      "optional": true
+    },
+    {
+      "autohide": false,
       "name": "Levels",
       "optional": true
     },
@@ -581,6 +586,7 @@
   "element_types": [
     "https://prod-api.hypar.io/schemas/Envelope",
     "https://prod-api.hypar.io/schemas/Grid2dElement",
+    "http://prod-api.hypar.io/schemas/Roof",
     "https://prod-api.hypar.io/schemas/LevelVolume"
   ],
   "repository_url": "",

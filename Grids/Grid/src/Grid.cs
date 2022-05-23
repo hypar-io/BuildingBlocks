@@ -44,6 +44,13 @@ namespace Grid
                 extentPolygons = ExtractPolygonsFromElements(envelopes, (e) => e.Profile?.Perimeter?.TransformedPolygon(e.Transform));
             }
 
+            inputModels.TryGetValue("Roof", out var roofModel);
+            if (roofModel != null && extentPolygons.Count == 0)
+            {
+                var roofs = roofModel.AllElementsOfType<Roof>();
+                extentPolygons = ExtractPolygonsFromElements(roofs, (e) => e.Profile?.Perimeter?.TransformedPolygon(e.Transform));
+            }
+
             inputModels.TryGetValue("Levels", out var levelsModel);
             if (levelsModel != null && extentPolygons.Count == 0)
             {
