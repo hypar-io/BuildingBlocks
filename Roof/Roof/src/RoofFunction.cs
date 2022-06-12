@@ -8,6 +8,8 @@ namespace RoofFunction
 {
     public static class RoofFunction
     {
+        private const int minRoofArea = 5;
+
         /// <summary>
         /// The RoofFunction function.
         /// </summary>
@@ -77,7 +79,7 @@ namespace RoofFunction
                             var difference = Profile.Difference(thisLevelprofiles, previousProfiles);
                             if (difference != null && difference.Count > 0)
                             {
-                                foreach (var profile in difference.Where(d => d.Area() > 5))
+                                foreach (var profile in difference.Where(d => d.Area() > minRoofArea))
                                 {
                                     var roof = new Roof(profile, input.RoofThickness, allLvs.First().Transform.Concatenated(new Transform(0, 0, allLvs.First().Height)));
                                     if (allLvs.First().AdditionalProperties.TryGetValue("Envelope", out var envId))
@@ -130,9 +132,9 @@ namespace RoofFunction
                     var thisLevelProfiles = GetFlatRoofProfiles(roofFaces);
 
                     var difference = Profile.Difference(thisLevelProfiles, previousProfiles);
-                    if (difference != null && difference.Count > 0)
+                    if (difference != null)
                     {
-                        foreach (var profile in difference.Where(d => d.Area() > 5))
+                        foreach (var profile in difference.Where(d => d.Area() > minRoofArea))
                         {
                             var flatProfileTransform = profile.Perimeter.ToTransform();
                             var profileTransform = profile.Perimeter.ProjectAlong(Vector3.ZAxis, firstPolygonPlane).ToTransform();
