@@ -8,6 +8,8 @@ namespace RoofFunction
 {
     public static class RoofFunction
     {
+        private const int minRoofArea = 5;
+
         /// <summary>
         /// The RoofFunction function.
         /// </summary>
@@ -77,7 +79,7 @@ namespace RoofFunction
                             var difference = Profile.Difference(thisLevelprofiles, previousProfiles);
                             if (difference != null && difference.Count > 0)
                             {
-                                foreach (var profile in difference.Where(d => d.Area() > 5))
+                                foreach (var profile in difference.Where(d => d.Area() > minRoofArea))
                                 {
                                     var roof = new Roof(profile, input.RoofThickness, allLvs.First().Transform.Concatenated(new Transform(0, 0, allLvs.First().Height)));
                                     if (allLvs.First().AdditionalProperties.TryGetValue("Envelope", out var envId))
@@ -101,6 +103,55 @@ namespace RoofFunction
 
         private static void CreateRoofsFromElements<T>(IEnumerable<T> elements, RoofFunctionInputs input, RoofFunctionOutputs output) where T : GeometricElement
         {
+            var allRoofFaces = GetAllRoofProfiles(elements)
+                      .GroupBy(el => el.Perimeter.Start.Z)
+                      .OrderBy(grp => grp.Key);
+            var keys = allRoofFaces.Select(g => g.Key).Reverse();
+            var dict = allRoofFaces.ToDictionary(grp => grp.Key, grp => grp);
+            List<Profile> previousProfiles = null;
+            foreach (var elevation in keys)
+            {
+                var roofFaces = dict[elevation];
+                if (previousProfiles == null)
+                {
+                    previousProfiles = GetFlatRoofProfiles(roofFaces);
+
+                    foreach (var roofFace in roofFaces)
+                    {
+                        var polygonTransform = roofFace.Perimeter.ToTransform();
+                        var inverse = polygonTransform.Inverted();
+                        var profile = new Profile(roofFace.Perimeter.TransformedPolygon(inverse), roofFace.Voids.Select(i => i.TransformedPolygon(inverse)).ToList());
+                        var roof = new Roof(profile, input.RoofThickness, polygonTransform);
+                        output.Model.AddElement(roof);
+                    }
+                }
+                else
+                {
+                    var firstPolygon = roofFaces.First().Perimeter;
+                    var firstPolygonPlane = new Plane(firstPolygon.Vertices.First(), firstPolygon.Normal());
+                    var thisLevelProfiles = GetFlatRoofProfiles(roofFaces);
+
+                    var difference = Profile.Difference(thisLevelProfiles, previousProfiles);
+                    if (difference != null)
+                    {
+                        foreach (var profile in difference.Where(d => d.Area() > minRoofArea))
+                        {
+                            var flatProfileTransform = profile.Perimeter.ToTransform();
+                            var profileTransform = profile.Perimeter.ProjectAlong(Vector3.ZAxis, firstPolygonPlane).ToTransform();
+                            var transform = profileTransform.Concatenated(flatProfileTransform.Inverted());
+                            var roof = new Roof(profile, input.RoofThickness, transform);
+                            output.Model.AddElement(roof);
+                        }
+                    }
+                    previousProfiles.AddRange(thisLevelProfiles.ToList());
+                }
+            }
+        }
+
+        private static List<Profile> GetAllRoofProfiles(IEnumerable<GeometricElement> elements)
+        {
+            var resultFaces = new List<Profile>();
+
             foreach (var element in elements)
             {
                 var solids = element.Representation.SolidOperations.Where(so => !so.IsVoid).Select(so => so.Solid);
@@ -110,24 +161,25 @@ namespace RoofFunction
                 // We don't want to create "roof" elements in those gaps, so we look for cases where the potential roof face is very close to
                 // another face, and ignore those. 
                 var bottomFaceCentroids = solids.SelectMany(s => s.Faces.Where(f => f.Value.Outer.ToPolygon().Normal().Dot(Vector3.ZAxis) < -0.7).Select(f => f.Value.Outer.ToPolygon().Centroid()));
-
                 foreach (var roofFace in roofFaces)
                 {
-                    var pgon = roofFace.Outer.ToPolygon();
-                    var centroid = pgon.Centroid();
-                    if (bottomFaceCentroids.Any(c => c.DistanceTo(centroid) < 0.5))
-                    {
-                        continue;
-                    }
                     var polygon = roofFace.Outer.ToPolygon();
-                    var polygonTransform = polygon.ToTransform();
-                    var inverse = polygonTransform.Inverted();
-                    var profile = new Profile(polygon.TransformedPolygon(inverse), roofFace.Inner.Select(i => i.ToPolygon().TransformedPolygon(inverse)).ToList());
-                    var roof = new Roof(profile, input.RoofThickness, polygonTransform.Concatenated(element.Transform));
-                    roof.AdditionalProperties["Envelope"] = element.Id;
-                    output.Model.AddElement(roof);
+                    var centroid = polygon.Centroid();
+                    if (!bottomFaceCentroids.Any(c => c.DistanceTo(centroid) < 0.5))
+                    {
+                        resultFaces.Add(new Profile(
+                            roofFace.Outer.ToPolygon().TransformedPolygon(element.Transform),
+                            roofFace.Inner?.Select(i => i.ToPolygon().TransformedPolygon(element.Transform)).ToList()));
+                    }
                 }
             }
+            return resultFaces;
+        }
+
+        private static List<Profile> GetFlatRoofProfiles(IEnumerable<Profile> roofFaces)
+        {
+            var xyPlane = new Plane(Vector3.Origin, Vector3.ZAxis);
+            return roofFaces.Select(rf => new Profile(rf.Perimeter, rf.Voids).Project(xyPlane)).ToList();
         }
     }
 }
