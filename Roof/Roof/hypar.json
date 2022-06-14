@@ -1,9 +1,9 @@
 {
   "$schema": "https://hypar.io/Schemas/Function.json",
-  "id": "768d61ab-dbf6-463c-9b61-9c18691cf8cc",
+  "id": "1bb2a652-29d9-4667-8038-0da052d085c8",
   "name": "Roof Function",
   "display_name": "Roof",
-  "description": "Create a simple, schematic roof",
+  "description": "Create a simple, schematic roof modified for Aliaxis_",
   "language": "C#",
   "model_dependencies": [
     {
@@ -17,6 +17,7 @@
       "optional": true
     },
     {
+      "autohide": false,
       "name": "Masterplan",
       "optional": true
     }
@@ -26,15 +27,60 @@
     "type": "object",
     "properties": {
       "Roof Color": {
-        "description": "What color should be used to display the roof",
         "default": {
           "Red": 0.7215686274509804,
           "Alpha": 1,
           "Blue": 0.7215686274509804,
           "Green": 0.7215686274509804
         },
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "x-namespace": "Elements.Geometry",
+        "description": "What color should be used to display the roof",
+        "additionalProperties": false,
         "$hyparOrder": 1,
-        "$ref": "https://hypar.io/Schemas/Geometry/Color.json"
+        "title": "Color",
+        "type": "object",
+        "required": [
+          "Red",
+          "Green",
+          "Blue",
+          "Alpha"
+        ],
+        "properties": {
+          "Red": {
+            "format": "float",
+            "description": "The red component of the color between 0.0 and 1.0.",
+            "maximum": 1,
+            "type": "number",
+            "$hyparOrder": 0,
+            "minimum": 0
+          },
+          "Alpha": {
+            "format": "float",
+            "description": "The alpha component of the color between 0.0 and 1.0.",
+            "maximum": 1,
+            "type": "number",
+            "$hyparOrder": 1,
+            "minimum": 0
+          },
+          "Blue": {
+            "format": "float",
+            "description": "The blue component of the color between 0.0 and 1.0.",
+            "maximum": 1,
+            "type": "number",
+            "$hyparOrder": 2,
+            "minimum": 0
+          },
+          "Green": {
+            "format": "float",
+            "description": "The green component of the color between 0.0 and 1.0.",
+            "maximum": 1,
+            "type": "number",
+            "$hyparOrder": 3,
+            "minimum": 0
+          }
+        },
+        "$id": "https://hypar.io/Schemas/Geometry/Color.json"
       },
       "Roof Thickness": {
         "multipleOf": 0.01,
@@ -44,6 +90,78 @@
         "$hyparUnitType": "length",
         "$hyparOrder": 0,
         "minimum": 0.1
+      },
+      "Insulation Thickness": {
+        "multipleOf": 0.01,
+        "default": 0.05,
+        "maximum": 2,
+        "description": "The Length.",
+        "type": "number",
+        "$hyparUnitType": "length",
+        "$hyparOrder": 2,
+        "minimum": 0.05
+      },
+      "Change Roof Level": {
+        "description": "The height of the envelope is the top of the roof level",
+        "default": false,
+        "type": "boolean",
+        "$hyparOrder": 4
+      },
+      "Insulation Color": {
+        "default": {
+          "Red": 0.9490196078431372,
+          "Alpha": 1,
+          "Blue": 0.5843137254901961,
+          "Green": 0.9764705882352941
+        },
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "x-namespace": "Elements.Geometry",
+        "description": "What color should be used to display the insulation",
+        "additionalProperties": false,
+        "$hyparOrder": 3,
+        "title": "Color",
+        "type": "object",
+        "required": [
+          "Red",
+          "Green",
+          "Blue",
+          "Alpha"
+        ],
+        "properties": {
+          "Red": {
+            "format": "float",
+            "description": "The red component of the color between 0.0 and 1.0.",
+            "maximum": 1,
+            "type": "number",
+            "$hyparOrder": 0,
+            "minimum": 0
+          },
+          "Alpha": {
+            "format": "float",
+            "description": "The alpha component of the color between 0.0 and 1.0.",
+            "maximum": 1,
+            "type": "number",
+            "$hyparOrder": 1,
+            "minimum": 0
+          },
+          "Blue": {
+            "format": "float",
+            "description": "The blue component of the color between 0.0 and 1.0.",
+            "maximum": 1,
+            "type": "number",
+            "$hyparOrder": 2,
+            "minimum": 0
+          },
+          "Green": {
+            "format": "float",
+            "description": "The green component of the color between 0.0 and 1.0.",
+            "maximum": 1,
+            "type": "number",
+            "$hyparOrder": 3,
+            "minimum": 0
+          }
+        },
+        "$id": "https://hypar.io/Schemas/Geometry/Color.json"
       }
     }
   },
@@ -63,6 +181,6 @@
   ],
   "repository_url": "https://github.com/hypar-io/function",
   "filters": {},
-  "last_updated": "2021-09-10T17:40:23.339199",
-  "cli_version": "0.9.5.0"
+  "last_updated": "2022-06-14T08:50:07.865682",
+  "cli_version": "1.1.1-alpha.1"
 }

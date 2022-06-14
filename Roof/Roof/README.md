@@ -2,12 +2,15 @@
 
 # Roof Function
 
-Create a simple, schematic roof
+Create a simple, schematic roof modified for Aliaxis_
 
 |Input Name|Type|Description|
 |---|---|---|
-|Roof Color|https://hypar.io/Schemas/Geometry/Color.json|What color should be used to display the roof|
+|Roof Color|object|What color should be used to display the roof|
 |Roof Thickness|number|The Length.|
+|Insulation Thickness|number|The Length.|
+|Change Roof Level|boolean|The height of the envelope is the top of the roof level|
+|Insulation Color|object|What color should be used to display the insulation|
 
 
 <br>
