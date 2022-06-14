@@ -1,9 +1,9 @@
 {
   "$schema": "https://hypar.io/Schemas/Function.json",
-  "id": "1bb2a652-29d9-4667-8038-0da052d085c8",
+  "id": "768d61ab-dbf6-463c-9b61-9c18691cf8cc",
   "name": "Roof Function",
   "display_name": "Roof",
-  "description": "Create a simple, schematic roof modified for Aliaxis_",
+  "description": "Create a simple, schematic roof",
   "language": "C#",
   "model_dependencies": [
     {
