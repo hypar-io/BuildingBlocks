@@ -1,0 +1,11 @@
+
+bin/
+obj/
+*.glb
+output.json
+input.json
+.vs/**/*.*
+*.g.cs
+
+**/test/results/
+**/Generated/
