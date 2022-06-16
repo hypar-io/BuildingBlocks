@@ -2,7 +2,7 @@
 
 # Roof Function
 
-Create a simple, schematic roof modified for Aliaxis_
+Create a simple, schematic roof
 
 |Input Name|Type|Description|
 |---|---|---|
