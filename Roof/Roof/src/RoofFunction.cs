@@ -160,9 +160,11 @@ namespace RoofFunction
                 insulationTransform.Move(new Vector3(0, 0, -input.RoofThickness - input.InsulationThickness));
             }
             roofs.Add(new Roof(profile, input.RoofThickness, polygonTransform, false));
-            if (input.InsulationThickness != 0)
+
+            if (!input.InsulationThickness.ApproximatelyEquals(0))
             {
                 roofs.Add(new Roof(profile, input.InsulationThickness, insulationTransform, true));
+                roofs[1].AdditionalProperties.Add("Roof", roofs[0].Id);
             }
             return roofs.ToArray();
         }
