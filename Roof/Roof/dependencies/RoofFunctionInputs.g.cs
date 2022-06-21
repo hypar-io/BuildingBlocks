@@ -29,17 +29,20 @@ namespace RoofFunction
     {
         [Newtonsoft.Json.JsonConstructor]
         
-        public RoofFunctionInputs(Color @roofColor, double @roofThickness, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey):
+        public RoofFunctionInputs(Color @roofColor, double @roofThickness, double @insulationThickness, Color @insulationColor, bool @keepRoofBelowEnvelope, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey):
         base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
         {
             var validator = Validator.Instance.GetFirstValidatorForType<RoofFunctionInputs>();
             if(validator != null)
             {
-                validator.PreConstruct(new object[]{ @roofColor, @roofThickness});
+                validator.PreConstruct(new object[]{ @roofColor, @roofThickness, @insulationThickness, @insulationColor, @keepRoofBelowEnvelope});
             }
         
             this.RoofColor = @roofColor;
             this.RoofThickness = @roofThickness;
+            this.InsulationThickness = @insulationThickness;
+            this.InsulationColor = @insulationColor;
+            this.KeepRoofBelowEnvelope = @keepRoofBelowEnvelope;
         
             if(validator != null)
             {
@@ -55,6 +58,19 @@ namespace RoofFunction
         [Newtonsoft.Json.JsonProperty("Roof Thickness", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.Range(0.1D, 2D)]
         public double RoofThickness { get; set; }
+    
+        /// <summary>The Length.</summary>
+        [Newtonsoft.Json.JsonProperty("Insulation Thickness", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.Range(0.0D, 2D)]
+        public double InsulationThickness { get; set; } = 0.05D;
+    
+        /// <summary>What color should be used to display the insulation</summary>
+        [Newtonsoft.Json.JsonProperty("Insulation Color", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public Color InsulationColor { get; set; }
+    
+        /// <summary>The height of the envelope is the top of the roof level</summary>
+        [Newtonsoft.Json.JsonProperty("Keep Roof Below Envelope", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public bool KeepRoofBelowEnvelope { get; set; } = false;
     
     }
 }

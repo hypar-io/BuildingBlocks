@@ -1,6 +1,7 @@
 using Elements;
 using Elements.Geometry;
 using Elements.Geometry.Solids;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -20,6 +21,7 @@ namespace RoofFunction
         {
             var output = new RoofFunctionOutputs();
             Roof.RoofMaterial.Color = input.RoofColor;
+            Roof.InsulationMaterial.Color = input.InsulationColor;
             var hasFootprints = inputModels.TryGetValue("Masterplan", out var masterplanModel);
             var hasEnvelopes = inputModels.TryGetValue("Envelope", out var envelopeModel);
             var hasLevels = inputModels.TryGetValue("Levels", out var levelsModel);
@@ -61,16 +63,16 @@ namespace RoofFunction
                             {
                                 var lvProfile = lv.Profile;
                                 previousProfiles.Add(lvProfile);
-                                var roof = new Roof(lv.Profile, input.RoofThickness, lv.Transform.Concatenated(new Transform(0, 0, lv.Height)));
+                                var roofs = CreateRoofAndInsulation(lv.Profile, input, lv.Transform.Concatenated(new Transform(0, 0, lv.Height)));
                                 if (lv.AdditionalProperties.TryGetValue("Envelope", out var envId))
                                 {
-                                    roof.AdditionalProperties.Add("Envelope", envId);
+                                    roofs[0].AdditionalProperties.Add("Envelope", envId);
                                 }
                                 if (lv.AdditionalProperties.TryGetValue("Footprint", out var fpId))
                                 {
-                                    roof.AdditionalProperties.Add("Footprint", fpId);
+                                    roofs[0].AdditionalProperties.Add("Footprint", fpId);
                                 }
-                                output.Model.AddElement(roof);
+                                output.Model.AddElements(roofs);
                             }
                         }
                         else
@@ -81,16 +83,16 @@ namespace RoofFunction
                             {
                                 foreach (var profile in difference.Where(d => d.Area() > minRoofArea))
                                 {
-                                    var roof = new Roof(profile, input.RoofThickness, allLvs.First().Transform.Concatenated(new Transform(0, 0, allLvs.First().Height)));
+                                    var roofs = CreateRoofAndInsulation(profile, input, allLvs.First().Transform.Concatenated(new Transform(0, 0, allLvs.First().Height)));
                                     if (allLvs.First().AdditionalProperties.TryGetValue("Envelope", out var envId))
                                     {
-                                        roof.AdditionalProperties.Add("Envelope", envId);
+                                        roofs[0].AdditionalProperties.Add("Envelope", envId);
                                     }
                                     if (allLvs.First().AdditionalProperties.TryGetValue("Footprint", out var fpId))
                                     {
-                                        roof.AdditionalProperties.Add("Footprint", fpId);
+                                        roofs[0].AdditionalProperties.Add("Footprint", fpId);
                                     }
-                                    output.Model.AddElement(roof);
+                                    output.Model.AddElements(roofs);
                                 }
                             }
                             previousProfiles = thisLevelprofiles.ToList();
@@ -121,8 +123,8 @@ namespace RoofFunction
                         var polygonTransform = roofFace.Perimeter.ToTransform();
                         var inverse = polygonTransform.Inverted();
                         var profile = new Profile(roofFace.Perimeter.TransformedPolygon(inverse), roofFace.Voids.Select(i => i.TransformedPolygon(inverse)).ToList());
-                        var roof = new Roof(profile, input.RoofThickness, polygonTransform);
-                        output.Model.AddElement(roof);
+                        var roofs = CreateRoofAndInsulation(profile, input, polygonTransform);
+                        output.Model.AddElements(roofs);
                     }
                 }
                 else
@@ -139,13 +141,32 @@ namespace RoofFunction
                             var flatProfileTransform = profile.Perimeter.ToTransform();
                             var profileTransform = profile.Perimeter.ProjectAlong(Vector3.ZAxis, firstPolygonPlane).ToTransform();
                             var transform = profileTransform.Concatenated(flatProfileTransform.Inverted());
-                            var roof = new Roof(profile, input.RoofThickness, transform);
-                            output.Model.AddElement(roof);
+                            var roofs = CreateRoofAndInsulation(profile, input, transform);
+                            output.Model.AddElements(roofs);
                         }
                     }
                     previousProfiles.AddRange(thisLevelProfiles.ToList());
                 }
             }
+        }
+
+        private static Roof[] CreateRoofAndInsulation(Profile profile, RoofFunctionInputs input, Transform polygonTransform)
+        {
+            List<Roof> roofs = new List<Roof>();
+            var insulationTransform = polygonTransform.Moved(0, 0, input.RoofThickness);
+            if (input.KeepRoofBelowEnvelope)
+            {
+                polygonTransform.Move(new Vector3(0, 0, -input.RoofThickness - input.InsulationThickness));
+                insulationTransform.Move(new Vector3(0, 0, -input.RoofThickness - input.InsulationThickness));
+            }
+            roofs.Add(new Roof(profile, input.RoofThickness, polygonTransform, false));
+
+            if (!input.InsulationThickness.ApproximatelyEquals(0))
+            {
+                roofs.Add(new Roof(profile, input.InsulationThickness, insulationTransform, true));
+                roofs[1].AdditionalProperties.Add("Roof", roofs[0].Id);
+            }
+            return roofs.ToArray();
         }
 
         private static List<Profile> GetAllRoofProfiles(IEnumerable<GeometricElement> elements)
@@ -181,5 +202,6 @@ namespace RoofFunction
             var xyPlane = new Plane(Vector3.Origin, Vector3.ZAxis);
             return roofFaces.Select(rf => new Profile(rf.Perimeter, rf.Voids).Project(xyPlane)).ToList();
         }
+
     }
 }
