@@ -211,6 +211,10 @@ namespace ColumnsFromGrid
                                         .Select(v => v.projectedLoc.Z);
                 height = sectionHeights.Any() ? sectionHeights.Max() : defaultSizeValue.Height;
             }
+            if (height == 0)
+            {
+                height = defaultSizeValue.Height;
+            }
             var currentAlignedPerim = Polygon.Rectangle(width, depth).TransformedPolygon(alignedTransform);
             var column = new Column(resultLocation,
                             height.Value,
