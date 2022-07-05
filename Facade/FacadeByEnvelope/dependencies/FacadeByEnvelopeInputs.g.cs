@@ -11,6 +11,7 @@ using Elements.Serialization.JSON;
 using Hypar.Functions;
 using Hypar.Functions.Execution;
 using Hypar.Functions.Execution.AWS;
+using Hypar.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -71,7 +72,6 @@ namespace FacadeByEnvelope
         [Newtonsoft.Json.JsonProperty("Ground Floor Setback", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.Range(0D, 2D)]
         public double GroundFloorSetback { get; set; } = 1D;
-    
     
     }
 }
