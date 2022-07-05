@@ -27,11 +27,11 @@ namespace FacadeByEnvelope
     public static class FacadeByEnvelope
     {
         private const int Elevation = 10;
-        private static string ENVELOPE_MODEL_NAME = "Envelope";
-        private static string LEVELS_MODEL_NAME = "Levels";
+        private static readonly string ENVELOPE_MODEL_NAME = "Envelope";
+        private static readonly string LEVELS_MODEL_NAME = "Levels";
 
-        private static Material _glazing = new Material("Glazing", new Color(1.0, 1.0, 1.0, 0.7), 0.8f, 1.0f);
-        private static Material _nonStandardPanel = new Material(Colors.Orange, 0.0f, 0.0f, false, null, false, Guid.NewGuid(), "Non-standard Panel");
+        private static readonly Material _glazing = new Material("Glazing", new Color(1.0, 1.0, 1.0, 0.7), 0.8f, 1.0f);
+        private static readonly Material _nonStandardPanel = new Material("Non-standard Panel", Colors.Orange, 0.0f, 0.0f);
 
         /// <summary>
         /// Adds facade Panels to one or more Masses named 'envelope'.
@@ -81,6 +81,11 @@ namespace FacadeByEnvelope
                 if (last != null)
                 {
                     envLevels.Insert(0, last);
+                }
+
+                if (envLevels.Last().Elevation != envelope.Height)
+                {
+                    envLevels.Add(new Level(envelope.Height, Guid.NewGuid(), "Roof"));
                 }
 
                 panelCount = PanelLevels(envLevels,
@@ -217,12 +222,12 @@ namespace FacadeByEnvelope
                 grid2d.V.DivideByCount(2);
                 foreach (var sep in grid2d.GetCellSeparators(GridDirection.U))
                 {
-                    var mullion = new Beam((Line)sep, Polygon.Rectangle(0.05, 0.05), BuiltInMaterials.Black);
+                    var mullion = new Beam((Line)sep, Polygon.Rectangle(0.05, 0.05), material: BuiltInMaterials.Black);
                     model.AddElement(mullion);
                 }
                 foreach (var sep in grid2d.GetCellSeparators(GridDirection.V))
                 {
-                    var mullion = new Beam((Line)sep, Polygon.Rectangle(0.05, 0.05), BuiltInMaterials.Black);
+                    var mullion = new Beam((Line)sep, Polygon.Rectangle(0.05, 0.05), material: BuiltInMaterials.Black);
                     model.AddElement(mullion);
                 }
                 var panel = new Panel(new Polygon(new[]{
