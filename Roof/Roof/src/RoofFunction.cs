@@ -163,7 +163,9 @@ namespace RoofFunction
 
             if (!input.InsulationThickness.ApproximatelyEquals(0))
             {
-                roofs.Add(new Roof(profile, input.InsulationThickness, insulationTransform, true));
+                var insulation = new Roof(profile, input.InsulationThickness, insulationTransform, true);
+                insulation.Name = "Insulation";
+                roofs.Add(insulation);
                 roofs[1].AdditionalProperties.Add("Roof", roofs[0].Id);
             }
             return roofs.ToArray();
@@ -180,7 +182,7 @@ namespace RoofFunction
                 // Certain functions, like sketch masterplan, create their solids as a collection of stacked volumes with a very slight gap between them.
                 // This is a workaround for bugs in the unions created by solid operations containing multiple solids.
                 // We don't want to create "roof" elements in those gaps, so we look for cases where the potential roof face is very close to
-                // another face, and ignore those. 
+                // another face, and ignore those.
                 var bottomFaceCentroids = solids.SelectMany(s => s.Faces.Where(f => f.Value.Outer.ToPolygon().Normal().Dot(Vector3.ZAxis) < -0.7).Select(f => f.Value.Outer.ToPolygon().Centroid()));
                 foreach (var roofFace in roofFaces)
                 {
