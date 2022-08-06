@@ -9,19 +9,42 @@
     "type": "object",
     "properties": {
       "Perimeter": {
+        "$hyparDeprecated": true,
         "description": "Perimeter of the building envelope.",
         "$ref": "https://hypar.io/Schemas/Geometry/Polygon.json"
       }
-    },
-    "required": [
-      "Perimeter"
-    ]
+    }
+  },
+  "overrides": {
+    "Site": {
+      "context": "[*discriminator=Elements.Site]",
+      "identity": {
+        "Add Id": {
+          "type": "string"
+        }
+      },
+      "behaviors": {
+        "add": {
+          "schema": {
+            "Perimeter": {
+              "$ref": "https://hypar.io/Schemas/Geometry/Polygon.json"
+            }
+          }
+        },
+        "remove": true
+      },
+      "schema": {
+        "Perimeter": {
+          "$ref": "https://hypar.io/Schemas/Geometry/Polygon.json"
+        }
+      }
+    }
   },
   "outputs": [
     {
       "unit_type": "area",
       "name": "Area",
-      "description": "Area of the site.",
+      "description": "Total site area.",
       "type": "number"
     }
   ],

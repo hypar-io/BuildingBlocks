@@ -14,10 +14,10 @@ using System.Collections.Generic;
 
 namespace SiteBySketch
 {
-    public class SiteBySketchOutputs: ResultsBase
+    public class SiteBySketchOutputs: SystemResults
     {
 		/// <summary>
-		/// Area of the site.
+		/// Total site area.
 		/// </summary>
 		[JsonProperty("Area")]
 		public double Area {get; set;}

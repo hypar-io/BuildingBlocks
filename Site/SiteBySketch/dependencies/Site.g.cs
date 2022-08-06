@@ -10,6 +10,7 @@ using Elements.Geometry.Solids;
 using Elements.Spatial;
 using Elements.Validators;
 using Elements.Serialization.JSON;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,11 +22,11 @@ namespace Elements
     #pragma warning disable // Disable all warnings
 
     /// <summary>A horizontal planar datum indicating a site boundary.</summary>
-    [Newtonsoft.Json.JsonConverter(typeof(Elements.Serialization.JSON.JsonInheritanceConverter), "discriminator")]
+    [JsonConverter(typeof(Elements.Serialization.JSON.JsonInheritanceConverter), "discriminator")]
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
     public partial class Site : GeometricElement
     {
-        [Newtonsoft.Json.JsonConstructor]
+        [JsonConstructor]
         public Site(Polygon @perimeter, double @area, Transform @transform = null, Material @material = null, Representation @representation = null, bool @isElementDefinition = false, System.Guid @id = default, string @name = null)
             : base(transform, material, representation, isElementDefinition, id, name)
         {
@@ -40,11 +41,11 @@ namespace Elements
         }
     
         /// <summary>The perimeter of the site.</summary>
-        [Newtonsoft.Json.JsonProperty("Perimeter", Required = Newtonsoft.Json.Required.AllowNull)]
+        [JsonProperty("Perimeter", Required = Newtonsoft.Json.Required.AllowNull)]
         public Polygon Perimeter { get; set; }
     
         /// <summary>The Area of the site.</summary>
-        [Newtonsoft.Json.JsonProperty("Area", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [JsonProperty("Area", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.Range(0D, double.MaxValue)]
         public double Area { get; set; }
     
