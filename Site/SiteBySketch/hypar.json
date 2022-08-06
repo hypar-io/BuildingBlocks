@@ -37,7 +37,15 @@
         "Perimeter": {
           "$ref": "https://hypar.io/Schemas/Geometry/Polygon.json"
         }
-      }
+      },
+      "validationRules": [
+        {
+          "type": "minimumAddedItems",
+          "value": 1,
+          "level": "hint",
+          "message": "Create a Site."
+        }
+      ]
     }
   },
   "outputs": [
@@ -71,7 +79,25 @@
           "name": "エリア",
           "description": "サイトのエリア"
         }
-      ]
+      ],
+      "overrides": {
+        "Site": {
+          "name": "サイト",
+          "schema": {
+            "Perimeter": {
+              "name": "ペリメーター"
+            }
+          },
+          "validationRules": [
+            {
+              "type": "minimumAddedItems",
+              "value": 1,
+              "level": "hint",
+              "message": "ポリゴンスケッチからサイトを作成します"
+            }
+          ]
+        }
+      }
     }
   }
 }
