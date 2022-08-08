@@ -62,7 +62,8 @@ namespace EmergencyEgress
 
                 foreach (var line in centerlines)
                 {
-                    grid.AddVertexStrip(line.Centerline.Vertices);
+                    grid.AddVertices(line.Centerline.Vertices, 
+                        AdaptiveGrid.VerticesInsertionMethod.ConnectAndSelfIntersect);
                 }
 
                 Intersect(centerlines, grid);
@@ -266,7 +267,9 @@ namespace EmergencyEgress
                                         {
                                             connections.Add(vertex);
                                             connections.Add(otherVertex);
-                                            grid.AddVertex(closestRightItem, connections);
+                                            grid.AddVertex(closestRightItem, 
+                                                           new ConnectVertexStrategy(connections.ToArray()),
+                                                           cut: false);
                                             grid.RemoveEdge(edge);
                                             break;
                                         }
@@ -321,7 +324,7 @@ namespace EmergencyEgress
                         //2)To prevent vertex unifications if room boundaries overlap.
                         var direction = (furthest - exitVertex.Point).Unitized();
                         var shrinked = furthest - direction * OffsetFromWall;
-                        var leaf = grid.AddVertex(shrinked, new List<GridVertex> { exitVertex });
+                        var leaf = grid.AddVertex(shrinked, new ConnectVertexStrategy(exitVertex), cut: false);
                         corners.Add((leaf, furthest));
                     }
                     roomExits.Add(new RoomEvacuationVariant(exitVertex, corners));
@@ -396,7 +399,9 @@ namespace EmergencyEgress
                                 var edgeLine = new Line(vertex.Point, otherVertex.Point);
                                 if (edgeLine.PointOnLine(closest))
                                 {
-                                    exitVertex = grid.AddVertex(closest, new List<GridVertex> { vertex, otherVertex });
+                                    exitVertex = grid.AddVertex(closest, 
+                                                                new ConnectVertexStrategy(vertex, otherVertex),
+                                                                cut: false);
                                     grid.RemoveEdge(edge);
                                 }
                                 vertex = otherVertex;
@@ -407,7 +412,7 @@ namespace EmergencyEgress
                         {
                             if (!exitVertex.Point.IsAlmostEqualTo(midpoint, grid.Tolerance))
                             {
-                                return grid.AddVertex(midpoint, new List<GridVertex> { exitVertex });
+                                return grid.AddVertex(midpoint, new ConnectVertexStrategy(exitVertex), cut: false);
                             }
                             else
                             {
@@ -465,7 +470,7 @@ namespace EmergencyEgress
                     }
                     else
                     {
-                        var vertex = grid.AddVertex(exitOnLevel, new List<GridVertex> { closestVertex });
+                        var vertex = grid.AddVertex(exitOnLevel, new ConnectVertexStrategy(closestVertex), cut: false);
                         exitVertices.Add(vertex.Id);
                     }
                 }
