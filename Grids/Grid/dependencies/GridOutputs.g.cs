@@ -14,7 +14,7 @@ using System.Collections.Generic;
 
 namespace Grid
 {
-    public class GridOutputs: ResultsBase
+    public class GridOutputs: SystemResults
     {
 
 
