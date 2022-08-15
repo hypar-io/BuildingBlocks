@@ -8,6 +8,11 @@ namespace SiteBySketch
 {
     public static class SiteBySketch
     {
+        // Constants
+        private static readonly Material SITE_MATERIAL = new Material("site", "#7ECD9F", 0.0f, 0.0f);
+
+        private const string LEGACY_IDENTITY_PREFIX = "legacy";
+
         /// <summary>
         /// Generates a planar Site from a supplied sketch.
         /// </summary>
@@ -17,7 +22,6 @@ namespace SiteBySketch
         public static SiteBySketchOutputs Execute(Dictionary<string, Model> inputModels, SiteBySketchInputs input)
         {
 
-            var siteMaterial = new Material("site", "#7ECD9F", 0.0f, 0.0f);
             var output = new SiteBySketchOutputs();
             var sites = new List<Site>();
             var zBump = new Transform(0, 0, 0.001);
@@ -25,14 +29,14 @@ namespace SiteBySketch
             {
                 var area = input.Perimeter.Area();
                 var geomRep = new Lamina(input.Perimeter.TransformedPolygon(zBump), false);
-                var site = new Site()
+                var site = new Site
                 {
                     Perimeter = input.Perimeter,
                     Area = area,
-                    Material = siteMaterial,
+                    Material = SITE_MATERIAL,
                     Representation = geomRep,
+                    AddId = LEGACY_IDENTITY_PREFIX
                 };
-                site.AdditionalProperties["Add Id"] = "legacy";
                 sites.Add(site);
             }
             var allSites = input.Overrides.Site.CreateElements(
@@ -42,19 +46,19 @@ namespace SiteBySketch
                 {
                     var perim = add.Value.Perimeter;
                     var area = Math.Abs(perim.Area());
-                    var s = new Site()
+                    var site = new Site
                     {
                         Perimeter = add.Value.Perimeter,
                         Area = area,
-                        Material = siteMaterial,
+                        Material = SITE_MATERIAL,
                         Representation = new Lamina(perim.TransformedPolygon(zBump), false),
+                        AddId = add.Id
                     };
-                    s.AdditionalProperties["Add Id"] = add.Id;
-                    return s;
+                    return site;
                 },
                 (site, identity) =>
                 {
-                    return site.AdditionalProperties["Add Id"] as string == identity.AddId;
+                    return site.AddId == identity.AddId;
                 },
                 (site, edit) =>
                 {
