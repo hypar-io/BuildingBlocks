@@ -1,0 +1,31 @@
+{
+    "name": "Roof",
+    "description": "Create a simple, schematic roof",
+    "input_schema": {
+        "properties": {
+            "Roof Color": {
+                "description": "What color should be used to display the roof",
+                "name": "Roof Color"
+            },
+            "Roof Thickness": {
+                "name": "Roof Thickness"
+            },
+            "Insulation Thickness": {
+                "name": "Insulation Thickness"
+            },
+            "Insulation Color": {
+                "name": "Insulation Color"
+            },
+            "Keep Roof Below Envelope": {
+                "description": "The height of the envelope is the top of the roof level",
+                "name": "Keep Roof Below Envelope"
+            }
+        }
+    },
+    "outputs": [
+        {
+            "name": "Total Roof Area",
+            "description": "The total roofing area."
+        }
+    ]
+}

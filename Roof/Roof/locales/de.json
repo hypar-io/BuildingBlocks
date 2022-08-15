@@ -1,0 +1,32 @@
+{
+    "description": "Erstellen Sie ein einfaches, schematisches Dach",
+    "input_schema": {
+        "properties": {
+            "Insulation Color": {
+                "name": "Isolierungsfarbe"
+            },
+            "Insulation Thickness": {
+                "name": "Isolierstärke"
+            },
+            "Keep Roof Below Envelope": {
+                "description": "Die Höhe der Hülle ist die Oberkante der Dachebene",
+                "name": "Halten Sie das Dach unter der Hülle"
+            },
+            "Roof Color": {
+                "description": "In welcher Farbe soll das Dach dargestellt werden?",
+                "name": "Dachfarbe"
+            },
+            "Roof Thickness": {
+                "name": "Dachstärke"
+            }
+        },
+        "type": "Objekt"
+    },
+    "name": "Dach",
+    "outputs": [
+        {
+            "description": "Die gesamte Dachfläche.",
+            "name": "Gesamte Dachfläche"
+        }
+    ]
+}
