@@ -2,12 +2,17 @@ using Elements;
 using Elements.Geometry;
 using System;
 using System.Collections.Generic;
-using GeometryEx;
+using Elements.Geometry.Solids;
 
 namespace SiteBySketch
 {
     public static class SiteBySketch
     {
+        // Constants
+        private static readonly Material SITE_MATERIAL = new Material("site", "#7ECD9F", 0.0f, 0.0f);
+
+        private const string LEGACY_IDENTITY_PREFIX = "legacy";
+
         /// <summary>
         /// Generates a planar Site from a supplied sketch.
         /// </summary>
@@ -17,18 +22,53 @@ namespace SiteBySketch
         public static SiteBySketchOutputs Execute(Dictionary<string, Model> inputModels, SiteBySketchInputs input)
         {
 
-            var geomRep = new Elements.Geometry.Solids.Lamina(input.Perimeter, false);
-            var siteMaterial = new Material("site", Palette.Emerald, 0.0f, 0.0f);
-            var area = input.Perimeter.Area();
-            var output = new SiteBySketchOutputs(area);
-            var site = new Site()
+            var output = new SiteBySketchOutputs();
+            var sites = new List<Site>();
+            var zBump = new Transform(0, 0, 0.001);
+            if (input.Perimeter != null)
             {
-                Perimeter = input.Perimeter,
-                Area = area,
-                Material = siteMaterial,
-                Representation = geomRep,
-            };
-            output.Model.AddElement(site);
+                var area = input.Perimeter.Area();
+                var geomRep = new Lamina(input.Perimeter.TransformedPolygon(zBump), false);
+                var site = new Site
+                {
+                    Perimeter = input.Perimeter,
+                    Area = area,
+                    Material = SITE_MATERIAL,
+                    Representation = geomRep,
+                    AddId = LEGACY_IDENTITY_PREFIX
+                };
+                sites.Add(site);
+            }
+            var allSites = input.Overrides.Site.CreateElements(
+                input.Overrides.Additions.Site,
+                input.Overrides.Removals.Site,
+                (add) =>
+                {
+                    var perim = add.Value.Perimeter;
+                    var area = Math.Abs(perim.Area());
+                    var site = new Site
+                    {
+                        Perimeter = add.Value.Perimeter,
+                        Area = area,
+                        Material = SITE_MATERIAL,
+                        Representation = new Lamina(perim.TransformedPolygon(zBump), false),
+                        AddId = add.Id
+                    };
+                    return site;
+                },
+                (site, identity) =>
+                {
+                    return site.AddId == identity.AddId;
+                },
+                (site, edit) =>
+                {
+                    site.Perimeter = edit.Value.Perimeter;
+                    site.Area = Math.Abs(edit.Value.Perimeter.Area());
+                    site.Representation = new Lamina(edit.Value.Perimeter.TransformedPolygon(zBump), false);
+                    return site;
+                },
+                sites);
+            output.Model.AddElements(allSites);
             return output;
         }
     }

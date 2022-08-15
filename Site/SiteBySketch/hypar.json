@@ -9,19 +9,50 @@
     "type": "object",
     "properties": {
       "Perimeter": {
+        "$hyparDeprecated": true,
         "description": "Perimeter of the building envelope.",
         "$ref": "https://hypar.io/Schemas/Geometry/Polygon.json"
       }
-    },
-    "required": [
-      "Perimeter"
-    ]
+    }
+  },
+  "overrides": {
+    "Site": {
+      "context": "[*discriminator=Elements.Site]",
+      "identity": {
+        "Add Id": {
+          "type": "string"
+        }
+      },
+      "behaviors": {
+        "add": {
+          "schema": {
+            "Perimeter": {
+              "$ref": "https://hypar.io/Schemas/Geometry/Polygon.json"
+            }
+          }
+        },
+        "remove": true
+      },
+      "schema": {
+        "Perimeter": {
+          "$ref": "https://hypar.io/Schemas/Geometry/Polygon.json"
+        }
+      },
+      "validationRules": [
+        {
+          "type": "minimumAddedItems",
+          "value": 1,
+          "level": "hint",
+          "message": "Create a Site."
+        }
+      ]
+    }
   },
   "outputs": [
     {
       "unit_type": "area",
       "name": "Area",
-      "description": "Area of the site.",
+      "description": "Total site area.",
       "type": "number"
     }
   ],
@@ -48,7 +79,25 @@
           "name": "エリア",
           "description": "サイトのエリア"
         }
-      ]
+      ],
+      "overrides": {
+        "Site": {
+          "name": "サイト",
+          "schema": {
+            "Perimeter": {
+              "name": "ペリメーター"
+            }
+          },
+          "validationRules": [
+            {
+              "type": "minimumAddedItems",
+              "value": 1,
+              "level": "hint",
+              "message": "ポリゴンスケッチからサイトを作成します"
+            }
+          ]
+        }
+      }
     }
   }
 }
