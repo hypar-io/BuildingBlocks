@@ -1,6 +1,7 @@
 using Elements;
 using Elements.Geometry;
 using Elements.Geometry.Solids;
+using Elements.Validators;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -132,8 +133,30 @@ namespace RoofFunction
                     var firstPolygon = roofFaces.First().Perimeter;
                     var firstPolygonPlane = new Plane(firstPolygon.Vertices.First(), firstPolygon.Normal());
                     var thisLevelProfiles = GetFlatRoofProfiles(roofFaces);
+                    IEnumerable<Profile> difference = null;
+                    try
+                    {
+                        difference = Profile.Difference(thisLevelProfiles, previousProfiles);
 
-                    var difference = Profile.Difference(thisLevelProfiles, previousProfiles);
+                    }
+                    catch
+                    {
+                        // in case of boolean failure, some last-ditch cleanup attempt
+                        try
+                        {
+                            Validator.DisableValidationOnConstruction = true;
+                            var diff = Profile.Difference(thisLevelProfiles, previousProfiles);
+                            var offset = Profile.Offset(diff, -0.01);
+                            var offsetOut = Profile.Offset(offset, 0.01);
+                            difference = offsetOut;
+                            Validator.DisableValidationOnConstruction = false;
+                        }
+                        catch
+                        {
+                            output.Warnings.Add("Something went wrong computing the geometry of the roof profiles.");
+                            difference = thisLevelProfiles;
+                        }
+                    }
                     if (difference != null)
                     {
                         foreach (var profile in difference.Where(d => d.Area() > minRoofArea))

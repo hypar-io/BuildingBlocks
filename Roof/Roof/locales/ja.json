@@ -1,0 +1,32 @@
+{
+    "description": "シンプルな概略屋根を作成する",
+    "input_schema": {
+        "properties": {
+            "Insulation Color": {
+                "name": "断熱材の色"
+            },
+            "Insulation Thickness": {
+                "name": "断熱材の厚さ"
+            },
+            "Keep Roof Below Envelope": {
+                "description": "エンベロープの高さはルーフ レベルの最上部です",
+                "name": "ルーフをエンベロープの下に保つ"
+            },
+            "Roof Color": {
+                "description": "屋根を表示するために使用する色",
+                "name": "屋根の色"
+            },
+            "Roof Thickness": {
+                "name": "屋根の厚さ"
+            }
+        },
+        "type": ""
+    },
+    "name": "屋根",
+    "outputs": [
+        {
+            "description": "屋根ふきの総面積。",
+            "name": "総屋根面積"
+        }
+    ]
+}

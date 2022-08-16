@@ -63,54 +63,7 @@
                     "Blue": 0.5843137254901961,
                     "Green": 0.9764705882352941
                 },
-                "$schema": "http://json-schema.org/draft-07/schema#",
-                "x-namespace": "Elements.Geometry",
-                "description": "What color should be used to display the insulation",
-                "additionalProperties": false,
-                "$hyparOrder": 3,
-                "title": "Color",
-                "type": "object",
-                "required": [
-                    "Red",
-                    "Green",
-                    "Blue",
-                    "Alpha"
-                ],
-                "properties": {
-                    "Red": {
-                        "format": "float",
-                        "description": "The red component of the color between 0.0 and 1.0.",
-                        "maximum": 1,
-                        "type": "number",
-                        "$hyparOrder": 0,
-                        "minimum": 0
-                    },
-                    "Alpha": {
-                        "format": "float",
-                        "description": "The alpha component of the color between 0.0 and 1.0.",
-                        "maximum": 1,
-                        "type": "number",
-                        "$hyparOrder": 1,
-                        "minimum": 0
-                    },
-                    "Blue": {
-                        "format": "float",
-                        "description": "The blue component of the color between 0.0 and 1.0.",
-                        "maximum": 1,
-                        "type": "number",
-                        "$hyparOrder": 2,
-                        "minimum": 0
-                    },
-                    "Green": {
-                        "format": "float",
-                        "description": "The green component of the color between 0.0 and 1.0.",
-                        "maximum": 1,
-                        "type": "number",
-                        "$hyparOrder": 3,
-                        "minimum": 0
-                    }
-                },
-                "$id": "https://hypar.io/Schemas/Geometry/Color.json"
+                "$ref": "https://hypar.io/Schemas/Geometry/Color.json"
             },
             "Keep Roof Below Envelope": {
                 "description": "The height of the envelope is the top of the roof level",
@@ -137,5 +90,102 @@
     "repository_url": "https://github.com/hypar-io/function",
     "filters": {},
     "last_updated": "2022-06-16T05:20:20.226902",
-    "cli_version": "1.2.0-alpha.0"
+    "cli_version": "1.2.0-alpha.0",
+    "messages": {
+        "en": {
+            "name": "Roof",
+            "description": "Create a simple, schematic roof",
+            "input_schema": {
+                "type": "object",
+                "properties": {
+                    "Roof Color": {
+                        "description": "What color should be used to display the roof",
+                        "name": "Roof Color"
+                    },
+                    "Roof Thickness": {
+                        "name": "Roof Thickness"
+                    },
+                    "Insulation Thickness": {
+                        "name": "Insulation Thickness"
+                    },
+                    "Insulation Color": {
+                        "name": "Insulation Color"
+                    },
+                    "Keep Roof Below Envelope": {
+                        "description": "The height of the envelope is the top of the roof level",
+                        "name": "Keep Roof Below Envelope"
+                    }
+                }
+            },
+            "outputs": [
+                {
+                    "name": "Total Roof Area",
+                    "description": "The total roofing area."
+                }
+            ]
+        },
+        "jp": {
+            "description": "シンプルな概略屋根を作成する",
+            "input_schema": {
+                "properties": {
+                    "Insulation Color": {
+                        "name": "断熱材の色"
+                    },
+                    "Insulation Thickness": {
+                        "name": "断熱材の厚さ"
+                    },
+                    "Keep Roof Below Envelope": {
+                        "description": "エンベロープの高さはルーフ レベルの最上部です",
+                        "name": "ルーフをエンベロープの下に保つ"
+                    },
+                    "Roof Color": {
+                        "description": "屋根を表示するために使用する色",
+                        "name": "屋根の色"
+                    },
+                    "Roof Thickness": {
+                        "name": "屋根の厚さ"
+                    }
+                },
+                "type": ""
+            },
+            "name": "屋根",
+            "outputs": [
+                {
+                    "description": "屋根ふきの総面積。",
+                    "name": "総屋根面積"
+                }
+            ]
+        },
+        "de": {
+            "description": "Erstellen Sie ein einfaches, schematisches Dach",
+            "input_schema": {
+                "properties": {
+                    "Insulation Color": {
+                        "name": "Isolierungsfarbe"
+                    },
+                    "Insulation Thickness": {
+                        "name": "Isolierstärke"
+                    },
+                    "Keep Roof Below Envelope": {
+                        "description": "Die Höhe der Hülle ist die Oberkante der Dachebene",
+                        "name": "Halten Sie das Dach unter der Hülle"
+                    },
+                    "Roof Color": {
+                        "description": "In welcher Farbe soll das Dach dargestellt werden?",
+                        "name": "Dachfarbe"
+                    },
+                    "Roof Thickness": {
+                        "name": "Dachstärke"
+                    }
+                }
+            },
+            "name": "Dach",
+            "outputs": [
+                {
+                    "description": "Die gesamte Dachfläche.",
+                    "name": "Gesamte Dachfläche"
+                }
+            ]
+        }
+    }
 }
