@@ -26,11 +26,17 @@ namespace RoofFunction
             var hasFootprints = inputModels.TryGetValue("Masterplan", out var masterplanModel);
             var hasEnvelopes = inputModels.TryGetValue("Envelope", out var envelopeModel);
             var hasLevels = inputModels.TryGetValue("Levels", out var levelsModel);
-            if (!hasEnvelopes && !hasFootprints && !hasLevels)
+            var hasConceptualMass = inputModels.TryGetValue("Conceptual Mass", out var massModel);
+            if (!hasEnvelopes && !hasFootprints && !hasLevels && !hasConceptualMass)
             {
-                output.Warnings.Add("There's nothing in the model from which to create a roof. Please add a footprint, envelope, or levels.");
+                output.Warnings.Add("There's nothing in the model from which to create a roof. Please add a conceptual mass, envelope, or levels.");
             }
-            if (hasFootprints)
+            if (hasConceptualMass)
+            {
+                var conceptualMass = massModel.AllElementsOfType<ConceptualMass>();
+                CreateRoofsFromElements(conceptualMass, input, output);
+            }
+            else if (hasFootprints)
             {
                 var footprints = masterplanModel.AllElementsOfType<Footprint>();
                 CreateRoofsFromElements(footprints, input, output);
