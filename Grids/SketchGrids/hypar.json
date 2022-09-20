@@ -2,7 +2,7 @@
   "$schema": "https://hypar.io/Schemas/Function.json",
   "id": "7b53fd3e-d94a-4333-9127-045722dddbd8",
   "name": "Sketch Grids",
-  "description": "Sketch grid lines.",
+  "description": "Generate grids automatically from conceptual masses or sketch grid lines.",
   "language": "C#",
   "input_schema": {
     "type": "object",
