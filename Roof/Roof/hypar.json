@@ -20,6 +20,11 @@
             "autohide": false,
             "name": "Masterplan",
             "optional": true
+        },
+        {
+            "autohide": false,
+            "name": "Conceptual Mass",
+            "optional": true
         }
     ],
     "model_output": "Roof",
@@ -85,7 +90,8 @@
         "https://prod-api.hypar.io/schemas/Roof",
         "https://prod-api.hypar.io/schemas/LevelVolume",
         "https://prod-api.hypar.io/schemas/Footprint",
-        "https://prod-api.hypar.io/schemas/Envelope"
+        "https://prod-api.hypar.io/schemas/Envelope",
+        "https://prod-api.hypar.io/schemas/ConceptualMass"
     ],
     "repository_url": "https://github.com/hypar-io/function",
     "filters": {},
