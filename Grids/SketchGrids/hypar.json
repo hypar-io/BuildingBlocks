@@ -1,0 +1,72 @@
+{
+  "$schema": "https://hypar.io/Schemas/Function.json",
+  "id": "7b53fd3e-d94a-4333-9127-045722dddbd8",
+  "name": "Sketch Grids",
+  "description": "Sketch grid lines.",
+  "language": "C#",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "Offset Distance From Conceptual Mass": {
+        "description": "The default grid offset from the conceptual mass.",
+        "type": "number",
+        "default": 1.5,
+        "$hyparUnitType": "length"
+      }
+    }
+  },
+  "filters": {
+    "Grids": {
+      "context": "[*discriminator=Elements.GridLine]",
+      "default": true
+    },
+    "Grid Cells": {
+      "context": "[*discriminator=Elements.Panel]"
+    }
+  },
+  "overrides": {
+    "Grid Lines": {
+      "context": "[*discriminator=Elements.GridLine]",
+      "identity": {
+        "Creation Id": {
+          "type": "string",
+          "format": "uuid"
+        }
+      },
+      "schema": {
+        "Curve": {
+          "$ref": "https://hypar.io/Schemas/Geometry/Line.json",
+          "$hyparAllowIntersection": true,
+          "$hyparContinueDrawing": true
+        }
+      },
+      "behaviors": {
+        "add": {
+          "schema": {
+            "Curve": {
+              "$ref": "https://hypar.io/Schemas/Geometry/Line.json",
+              "$hyparAllowIntersection": true,
+              "$hyparContinueDrawing": true
+            }
+          }
+        },
+        "remove": true
+      }
+    }
+  },
+  "outputs": [],
+  "model_dependencies": [
+    {
+      "name": "Conceptual Mass",
+      "autohide": false,
+      "optional": true
+    }
+  ],
+  "element_types": [
+    "https://prod-api.hypar.io/schemas/ConceptualMass"
+  ],
+  "model_output": "Grids",
+  "repository_url": "https://github.com/hypar-io/function",
+  "last_updated": "0001-01-01T00:00:00",
+  "cli_version": "1.1.1"
+}
