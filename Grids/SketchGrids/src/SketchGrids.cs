@@ -67,6 +67,8 @@ namespace SketchGrids
 
                 var gridIndex = 0;
 
+                var allVoids = new List<Polygon>();
+
                 foreach (var conceptualMass in conceptualMasses)
                 {
                     conceptualMass.UpdateRepresentations();
@@ -81,7 +83,6 @@ namespace SketchGrids
                         // }
 
                         var allPerimeters = new List<Polygon>();
-                        var allVoids = new List<Polygon>();
                         var intersectionPlane = new Plane(new Vector3(0, 0, conceptualMass.Transform.Origin.Z), Vector3.ZAxis);
                         foreach (var so in conceptualMass.Representation.SolidOperations)
                         {
@@ -129,15 +130,47 @@ namespace SketchGrids
 
                         if (conceptualMass.Profile.Voids != null)
                         {
-                            foreach (var profileVoid in conceptualMass.Profile.Voids)
+                            allVoids.AddRange(conceptualMass.Profile.Voids);
+                        }
+                    }
+                }
+
+                // We process the voids last so that we have all grids
+                // created from the faces of the conceptual masses to respond
+                // to. This will create the shortest spanning edge grids for holes.
+                foreach (var profileVoid in allVoids)
+                {
+                    var holeGridLines = new List<Line>();
+                    foreach (var segment in profileVoid.Offset(input.OffsetDistanceFromConceptualMass)[0].Segments())
+                    {
+                        var d = segment.Direction();
+                        var startRay = new Ray(segment.Start, d.Negate());
+                        var endRay = new Ray(segment.End, d);
+                        var startX = new List<Vector3>();
+                        var endX = new List<Vector3>();
+                        foreach (var gridLine in gridLines)
+                        {
+                            if (startRay.Intersects(gridLine.Curve as Line, out Vector3 startResult))
                             {
-                                foreach (var segment in profileVoid.Offset(input.OffsetDistanceFromConceptualMass)[0].Segments())
-                                {
-                                    var newGridLine = segment.ExtendTo(offsetHull);
-                                    CheckAndCreateGridline(newGridLine, gridLines, ref gridIndex, gridMaterial);
-                                }
+                                startX.Add(startResult);
+                            }
+                            if (endRay.Intersects(gridLine.Curve as Line, out Vector3 endResult))
+                            {
+                                endX.Add(endResult);
                             }
                         }
+                        startX.Sort(new DistanceComparer(segment.Start));
+                        endX.Sort(new DistanceComparer(segment.End));
+
+                        var newGridLine = new Line(startX[0], endX[0]);
+
+                        // Add these to a separate collection so we don't test against them.
+                        holeGridLines.Add(newGridLine);
+                    }
+
+                    foreach (var holeGridLine in holeGridLines)
+                    {
+                        CheckAndCreateGridline(holeGridLine, gridLines, ref gridIndex, gridMaterial);
                     }
                 }
             }
@@ -162,23 +195,23 @@ namespace SketchGrids
                 }
             }
 
-            var bbox = new BBox3(allNodeLocations);
+            // var bbox = new BBox3(allNodeLocations);
 
-            var vectorEqualityComparer = new VectorEqualityComparer();
-            var gridLineGroups = gridLines.GroupBy(gl => (gl.Curve as Line).Direction().Unitized(), vectorEqualityComparer);
-            var directionComparer = new DirectionComparer(bbox.Min);
+            // var vectorEqualityComparer = new VectorEqualityComparer();
+            // var gridLineGroups = gridLines.GroupBy(gl => (gl.Curve as Line).Direction().Unitized(), vectorEqualityComparer);
+            // var directionComparer = new DirectionComparer(bbox.Min);
 
-            foreach (var gridLineGroup in gridLineGroups)
-            {
-                var grids = gridLineGroup.ToList();
-                var orderedGrids = grids.OrderBy(gl => gl.Curve.PointAt(0), directionComparer).ToList();
-                for (var i = 0; i < orderedGrids.Count - 1; i++)
-                {
-                    var dim = new AlignedDimension(orderedGrids[i].Curve.PointAt(0), orderedGrids[i + 1].Curve.PointAt(0), 0);
-                    output.Model.AddElement(dim);
-                    // output.Model.AddElements(dim.ToModelArrowsAndText(Colors.Black));
-                }
-            }
+            // foreach (var gridLineGroup in gridLineGroups)
+            // {
+            //     var grids = gridLineGroup.ToList();
+            //     var orderedGrids = grids.OrderBy(gl => gl.Curve.PointAt(0), directionComparer).ToList();
+            //     for (var i = 0; i < orderedGrids.Count - 1; i++)
+            //     {
+            //         var dim = new AlignedDimension(orderedGrids[i].Curve.PointAt(0), orderedGrids[i + 1].Curve.PointAt(0), 0);
+            //         output.Model.AddElement(dim);
+            //         // output.Model.AddElements(dim.ToModelArrowsAndText(Colors.Black));
+            //     }
+            // }
 
             return output;
         }
