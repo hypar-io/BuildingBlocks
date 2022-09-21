@@ -14,13 +14,13 @@ using System.Collections.Generic;
 
 namespace FacadeByEnvelope
 {
-    public class FacadeByEnvelopeOutputs: ResultsBase
+    public class FacadeByEnvelopeOutputs: SystemResults
     {
 		/// <summary>
 		/// Total facade panels.
 		/// </summary>
 		[JsonProperty("Panel Quantity")]
-		public double PanelQuantity {get;}
+		public double PanelQuantity {get; set;}
 
 
 

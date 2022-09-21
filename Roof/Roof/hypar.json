@@ -1,141 +1,197 @@
 {
-  "$schema": "https://hypar.io/Schemas/Function.json",
-  "id": "768d61ab-dbf6-463c-9b61-9c18691cf8cc",
-  "name": "Roof Function",
-  "display_name": "Roof",
-  "description": "Create a simple, schematic roof",
-  "language": "C#",
-  "model_dependencies": [
-    {
-      "autohide": false,
-      "name": "Levels",
-      "optional": true
-    },
-    {
-      "autohide": false,
-      "name": "Envelope",
-      "optional": true
-    },
-    {
-      "autohide": false,
-      "name": "Masterplan",
-      "optional": true
-    }
-  ],
-  "model_output": "Roof",
-  "input_schema": {
-    "type": "object",
-    "properties": {
-      "Roof Color": {
-        "description": "What color should be used to display the roof",
-        "default": {
-          "Red": 0.7215686274509804,
-          "Alpha": 1,
-          "Blue": 0.7215686274509804,
-          "Green": 0.7215686274509804
+    "$schema": "https://hypar.io/Schemas/Function.json",
+    "id": "768d61ab-dbf6-463c-9b61-9c18691cf8cc",
+    "name": "Roof Function",
+    "display_name": "Roof",
+    "description": "Create a simple, schematic roof",
+    "language": "C#",
+    "model_dependencies": [
+        {
+            "autohide": false,
+            "name": "Levels",
+            "optional": true
         },
-        "$hyparOrder": 1,
-        "$ref": "https://hypar.io/Schemas/Geometry/Color.json"
-      },
-      "Roof Thickness": {
-        "multipleOf": 0.001,
-        "description": "The Length.",
-        "maximum": 2,
-        "type": "number",
-        "$hyparUnitType": "length",
-        "$hyparOrder": 0,
-        "minimum": 0.1
-      },
-      "Insulation Thickness": {
-        "multipleOf": 0.01,
-        "default": 0.05,
-        "maximum": 2,
-        "description": "The Length.",
-        "type": "number",
-        "$hyparUnitType": "length",
-        "$hyparOrder": 2,
-        "minimum": 0.0
-      },
-      "Insulation Color": {
-        "default": {
-          "Red": 0.9490196078431372,
-          "Alpha": 1,
-          "Blue": 0.5843137254901961,
-          "Green": 0.9764705882352941
+        {
+            "autohide": false,
+            "name": "Envelope",
+            "optional": true
         },
-        "$schema": "http://json-schema.org/draft-07/schema#",
-        "x-namespace": "Elements.Geometry",
-        "description": "What color should be used to display the insulation",
-        "additionalProperties": false,
-        "$hyparOrder": 3,
-        "title": "Color",
+        {
+            "autohide": false,
+            "name": "Masterplan",
+            "optional": true
+        },
+        {
+            "autohide": false,
+            "name": "Conceptual Mass",
+            "optional": true
+        }
+    ],
+    "model_output": "Roof",
+    "input_schema": {
         "type": "object",
-        "required": [
-          "Red",
-          "Green",
-          "Blue",
-          "Alpha"
-        ],
         "properties": {
-          "Red": {
-            "format": "float",
-            "description": "The red component of the color between 0.0 and 1.0.",
-            "maximum": 1,
-            "type": "number",
-            "$hyparOrder": 0,
-            "minimum": 0
-          },
-          "Alpha": {
-            "format": "float",
-            "description": "The alpha component of the color between 0.0 and 1.0.",
-            "maximum": 1,
-            "type": "number",
-            "$hyparOrder": 1,
-            "minimum": 0
-          },
-          "Blue": {
-            "format": "float",
-            "description": "The blue component of the color between 0.0 and 1.0.",
-            "maximum": 1,
-            "type": "number",
-            "$hyparOrder": 2,
-            "minimum": 0
-          },
-          "Green": {
-            "format": "float",
-            "description": "The green component of the color between 0.0 and 1.0.",
-            "maximum": 1,
-            "type": "number",
-            "$hyparOrder": 3,
-            "minimum": 0
-          }
+            "Roof Color": {
+                "description": "What color should be used to display the roof",
+                "default": {
+                    "Red": 0.7215686274509804,
+                    "Alpha": 1,
+                    "Blue": 0.7215686274509804,
+                    "Green": 0.7215686274509804
+                },
+                "$hyparOrder": 1,
+                "$ref": "https://hypar.io/Schemas/Geometry/Color.json"
+            },
+            "Roof Thickness": {
+                "multipleOf": 0.001,
+                "description": "The Length.",
+                "maximum": 2,
+                "type": "number",
+                "$hyparUnitType": "length",
+                "$hyparOrder": 0,
+                "minimum": 0.1
+            },
+            "Insulation Thickness": {
+                "multipleOf": 0.01,
+                "default": 0,
+                "maximum": 2,
+                "description": "The Length.",
+                "type": "number",
+                "$hyparUnitType": "length",
+                "$hyparOrder": 2,
+                "minimum": 0.0
+            },
+            "Insulation Color": {
+                "default": {
+                    "Red": 0.9490196078431372,
+                    "Alpha": 1,
+                    "Blue": 0.5843137254901961,
+                    "Green": 0.9764705882352941
+                },
+                "$ref": "https://hypar.io/Schemas/Geometry/Color.json"
+            },
+            "Keep Roof Below Envelope": {
+                "description": "The height of the envelope is the top of the roof level",
+                "default": false,
+                "type": "boolean",
+                "$hyparOrder": 4
+            }
+        }
+    },
+    "outputs": [
+        {
+            "unit_type": "area",
+            "name": "Total Roof Area",
+            "description": "The total roofing area.",
+            "type": "number"
+        }
+    ],
+    "element_types": [
+        "https://prod-api.hypar.io/schemas/Roof",
+        "https://prod-api.hypar.io/schemas/LevelVolume",
+        "https://prod-api.hypar.io/schemas/Footprint",
+        "https://prod-api.hypar.io/schemas/Envelope",
+        "https://prod-api.hypar.io/schemas/ConceptualMass"
+    ],
+    "repository_url": "https://github.com/hypar-io/function",
+    "filters": {},
+    "last_updated": "2022-06-16T05:20:20.226902",
+    "cli_version": "1.2.0-alpha.0",
+    "messages": {
+        "en": {
+            "name": "Roof",
+            "description": "Create a simple, schematic roof",
+            "input_schema": {
+                "type": "object",
+                "properties": {
+                    "Roof Color": {
+                        "description": "What color should be used to display the roof",
+                        "name": "Roof Color"
+                    },
+                    "Roof Thickness": {
+                        "name": "Roof Thickness"
+                    },
+                    "Insulation Thickness": {
+                        "name": "Insulation Thickness"
+                    },
+                    "Insulation Color": {
+                        "name": "Insulation Color"
+                    },
+                    "Keep Roof Below Envelope": {
+                        "description": "The height of the envelope is the top of the roof level",
+                        "name": "Keep Roof Below Envelope"
+                    }
+                }
+            },
+            "outputs": [
+                {
+                    "name": "Total Roof Area",
+                    "description": "The total roofing area."
+                }
+            ]
         },
-        "$id": "https://hypar.io/Schemas/Geometry/Color.json"
-      },
-      "Keep Roof Below Envelope": {
-        "description": "The height of the envelope is the top of the roof level",
-        "default": false,
-        "type": "boolean",
-        "$hyparOrder": 4
-      }
+        "jp": {
+            "description": "シンプルな概略屋根を作成する",
+            "input_schema": {
+                "properties": {
+                    "Insulation Color": {
+                        "name": "断熱材の色"
+                    },
+                    "Insulation Thickness": {
+                        "name": "断熱材の厚さ"
+                    },
+                    "Keep Roof Below Envelope": {
+                        "description": "エンベロープの高さはルーフ レベルの最上部です",
+                        "name": "ルーフをエンベロープの下に保つ"
+                    },
+                    "Roof Color": {
+                        "description": "屋根を表示するために使用する色",
+                        "name": "屋根の色"
+                    },
+                    "Roof Thickness": {
+                        "name": "屋根の厚さ"
+                    }
+                },
+                "type": ""
+            },
+            "name": "屋根",
+            "outputs": [
+                {
+                    "description": "屋根ふきの総面積。",
+                    "name": "総屋根面積"
+                }
+            ]
+        },
+        "de": {
+            "description": "Erstellen Sie ein einfaches, schematisches Dach",
+            "input_schema": {
+                "properties": {
+                    "Insulation Color": {
+                        "name": "Isolierungsfarbe"
+                    },
+                    "Insulation Thickness": {
+                        "name": "Isolierstärke"
+                    },
+                    "Keep Roof Below Envelope": {
+                        "description": "Die Höhe der Hülle ist die Oberkante der Dachebene",
+                        "name": "Halten Sie das Dach unter der Hülle"
+                    },
+                    "Roof Color": {
+                        "description": "In welcher Farbe soll das Dach dargestellt werden?",
+                        "name": "Dachfarbe"
+                    },
+                    "Roof Thickness": {
+                        "name": "Dachstärke"
+                    }
+                }
+            },
+            "name": "Dach",
+            "outputs": [
+                {
+                    "description": "Die gesamte Dachfläche.",
+                    "name": "Gesamte Dachfläche"
+                }
+            ]
+        }
     }
-  },
-  "outputs": [
-    {
-      "unit_type": "area",
-      "name": "Total Roof Area",
-      "description": "The total roofing area.",
-      "type": "number"
-    }
-  ],
-  "element_types": [
-    "https://prod-api.hypar.io/schemas/Roof",
-    "https://prod-api.hypar.io/schemas/LevelVolume",
-    "https://prod-api.hypar.io/schemas/Footprint",
-    "https://prod-api.hypar.io/schemas/Envelope"
-  ],
-  "repository_url": "https://github.com/hypar-io/function",
-  "filters": {},
-  "last_updated": "2022-06-16T05:20:20.226902",
-  "cli_version": "1.2.0-alpha.0"
 }

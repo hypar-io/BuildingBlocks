@@ -62,9 +62,8 @@ namespace RoofFunction
         /// <summary>The Length.</summary>
         [Newtonsoft.Json.JsonProperty("Insulation Thickness", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.Range(0.0D, 2D)]
-        public double InsulationThickness { get; set; } = 0.05D;
+        public double InsulationThickness { get; set; } = 0D;
     
-        /// <summary>What color should be used to display the insulation</summary>
         [Newtonsoft.Json.JsonProperty("Insulation Color", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public Color InsulationColor { get; set; }
     

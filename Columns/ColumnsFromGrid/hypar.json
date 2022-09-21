@@ -1,0 +1,183 @@
+{
+    "$schema": "https://hypar.io/Schemas/Function.json",
+    "id": "bc63cf84-80e7-43a9-b5ef-3fe3ba1bc97e",
+    "name": "Columns from Grid",
+    "description": "Create Columns from a grid.",
+    "language": "C#",
+    "model_dependencies": [
+        {
+            "autohide": false,
+            "name": "Grids",
+            "optional": false
+        },
+        {
+            "autohide": false,
+            "name": "Envelope",
+            "optional": true
+        },
+        {
+            "autohide": false,
+            "name": "Drainable Roof Sections",
+            "optional": true
+        },
+        {
+            "name": "Levels",
+            "optional": true
+        }
+    ],
+    "model_output": "Columns",
+    "input_schema": {
+        "type": "object",
+        "properties": {
+            "Height": {
+                "description": "Default height for columns, if it can't be inferred from context.",
+                "default": 10,
+                "type": "number",
+                "$hyparUnitType": "length",
+                "$hyparOrder": 0,
+                "minimum": 0.1
+            },
+            "Width": {
+                "multipleOf": 0.1,
+                "description": "Default width for columns.",
+                "maximum": 2,
+                "type": "number",
+                "$hyparUnitType": "length",
+                "$hyparOrder": 1,
+                "minimum": 0.2
+            },
+            "Depth": {
+                "multipleOf": 0.1,
+                "description": "Default depth for columns.",
+                "maximum": 2,
+                "type": "number",
+                "$hyparUnitType": "length",
+                "$hyparOrder": 2,
+                "minimum": 0.2
+            },
+            "Create All Columns": {
+                "type": "boolean",
+                "description": "Should create columns at all grid intersections by default",
+                "default": false,
+                "$hyparOrder": 2.5
+            },
+            "Perimeter Columns": {
+                "$hyparShowIf": {
+                    "conditions": [
+                        {
+                            "property": "Create All Columns",
+                            "value": false
+                        }
+                    ]
+                },
+                "description": "Should create all perimeter columns by default",
+                "default": false,
+                "type": "boolean",
+                "$hyparOrder": 3
+            }
+        }
+    },
+    "overrides": {
+        "Column Positions": {
+            "context": "[*discriminator=Elements.Column]",
+            "identity": {
+                "Name": {
+                    "type": "string"
+                },
+                "Level Elevation": {
+                    "type": "number"
+                }
+            },
+            "paradigm": "edit",
+            "schema": {
+                "Location": {
+                    "$ref": "https://hypar.io/Schemas/Geometry/Vector3.json",
+                    "$hyparRelativeToTransform": true
+                }
+            },
+            "behaviors": {
+                "add": {
+                    "schema": {
+                        "Location": {
+                            "$ref": "https://hypar.io/Schemas/Geometry/Vector3.json"
+                        }
+                    }
+                },
+                "remove": true
+            }
+        },
+        "Gridlines Options": {
+            "context": "[*discriminator=Elements.GridLine]",
+            "identity": {
+                "Name": {
+                    "type": "string"
+                }
+            },
+            "paradigm": "edit",
+            "schema": {
+                "Create Columns": {
+                    "type": "boolean",
+                    "default": false
+                }
+            },
+            "dependency": "Grids"
+        },
+        "Sizes": {
+            "context": "[*discriminator=Elements.Column]",
+            "identity": {
+                "Name": {
+                    "type": "string"
+                },
+                "Level Elevation": {
+                    "type": "number"
+                }
+            },
+            "paradigm": "edit",
+            "schema": {
+                "Width": {
+                    "multipleOf": 0.1,
+                    "maximum": 2,
+                    "type": "number",
+                    "$hyparUnitType": "length",
+                    "$hyparOrder": 1,
+                    "minimum": 0.2
+                },
+                "Height": {
+                    "default": 10,
+                    "type": "number",
+                    "$hyparUnitType": "length",
+                    "$hyparOrder": 0,
+                    "minimum": 0.1
+                },
+                "Depth": {
+                    "multipleOf": 0.1,
+                    "maximum": 2,
+                    "type": "number",
+                    "$hyparUnitType": "length",
+                    "$hyparOrder": 2,
+                    "minimum": 0.2
+                }
+            }
+        }
+    },
+    "outputs": null,
+    "element_types": [
+        "https://prod-api.hypar.io/schemas/Envelope",
+        "https://prod-api.hypar.io/schemas/DrainableRoofSection",
+        "https://prod-api.hypar.io/schemas/Grid2dElement",
+        "http://prod-api.hypar.io/schemas/LevelVolume",
+        "http://prod-api.hypar.io/schemas/WarningMessage"
+    ],
+    "repository_url": "https://github.com/hypar-io/function",
+    "last_updated": "2022-04-29T07:39:37.519156",
+    "cli_version": "1.0.1-alpha.1",
+    "messages": {
+        "en": {
+            "overrides": {
+                "Gridlines Options": {
+                    "name": "Column Options"
+                }
+            }
+        }
+    }
+}

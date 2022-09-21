@@ -10,6 +10,7 @@ using Elements.Geometry.Solids;
 using Elements.Spatial;
 using Elements.Validators;
 using Elements.Serialization.JSON;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,19 +22,25 @@ namespace Elements
     #pragma warning disable // Disable all warnings
 
     /// <summary>A single panel within a facade.</summary>
-    [Newtonsoft.Json.JsonConverter(typeof(Elements.Serialization.JSON.JsonInheritanceConverter), "discriminator")]
+    [JsonConverter(typeof(Elements.Serialization.JSON.JsonInheritanceConverter), "discriminator")]
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
     public partial class FacadePanel : GeometricElement
     {
-        [Newtonsoft.Json.JsonConstructor]
+        [JsonConstructor]
         public FacadePanel(double @thickness, Transform @transform = null, Material @material = null, Representation @representation = null, bool @isElementDefinition = false, System.Guid @id = default, string @name = null)
             : base(transform, material, representation, isElementDefinition, id, name)
         {
             this.Thickness = @thickness;
             }
+        
+        // Empty constructor
+        public FacadePanel()
+            : base()
+        {
+        }
     
         /// <summary>The total thickness of the panel.</summary>
-        [Newtonsoft.Json.JsonProperty("Thickness", Required = Newtonsoft.Json.Required.Always)]
+        [JsonProperty("Thickness", Required = Newtonsoft.Json.Required.Always)]
         public double Thickness { get; set; }
     
     

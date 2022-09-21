@@ -4,11 +4,6 @@
     <ProjectReference Include="..\dependencies\FacadeByEnvelope.Dependencies.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Hypar.Elements" Version="0.8.1" />
-    <PackageReference Include="Hypar.Functions" Version="0.8.2" />
-  </ItemGroup>
-
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>

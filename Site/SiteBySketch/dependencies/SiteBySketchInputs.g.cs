@@ -11,6 +11,7 @@ using Elements.Serialization.JSON;
 using Hypar.Functions;
 using Hypar.Functions.Execution;
 using Hypar.Functions.Execution.AWS;
+using Hypar.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,10 +29,265 @@ namespace SiteBySketch
     {
         [Newtonsoft.Json.JsonConstructor]
         
-        public SiteBySketchInputs(Polygon @perimeter, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey):
+        public SiteBySketchInputs(Polygon @perimeter, Overrides @overrides, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey):
         base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
         {
             var validator = Validator.Instance.GetFirstValidatorForType<SiteBySketchInputs>();
+            if(validator != null)
+            {
+                validator.PreConstruct(new object[]{ @perimeter, @overrides});
+            }
+        
+            this.Perimeter = @perimeter;
+            this.Overrides = @overrides ?? this.Overrides;
+        
+            if(validator != null)
+            {
+                validator.PostConstruct(this);
+            }
+        }
+    
+        /// <summary>Perimeter of the building envelope.</summary>
+        [Newtonsoft.Json.JsonProperty("Perimeter", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public Polygon Perimeter { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("overrides", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public Overrides Overrides { get; set; } = new Overrides();
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
+    
+    public partial class Overrides 
+    
+    {
+        public Overrides() { }
+        
+        [Newtonsoft.Json.JsonConstructor]
+        public Overrides(OverrideAdditions @additions, OverrideRemovals @removals, IList<SiteOverride> @site)
+        {
+            var validator = Validator.Instance.GetFirstValidatorForType<Overrides>();
+            if(validator != null)
+            {
+                validator.PreConstruct(new object[]{ @additions, @removals, @site});
+            }
+        
+            this.Additions = @additions ?? this.Additions;
+            this.Removals = @removals ?? this.Removals;
+            this.Site = @site ?? this.Site;
+        
+            if(validator != null)
+            {
+                validator.PostConstruct(this);
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("Additions", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public OverrideAdditions Additions { get; set; } = new OverrideAdditions();
+    
+        [Newtonsoft.Json.JsonProperty("Removals", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public OverrideRemovals Removals { get; set; } = new OverrideRemovals();
+    
+        [Newtonsoft.Json.JsonProperty("Site", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public IList<SiteOverride> Site { get; set; } = new List<SiteOverride>();
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
+    
+    public partial class OverrideAdditions 
+    
+    {
+        public OverrideAdditions() { }
+        
+        [Newtonsoft.Json.JsonConstructor]
+        public OverrideAdditions(IList<SiteOverrideAddition> @site)
+        {
+            var validator = Validator.Instance.GetFirstValidatorForType<OverrideAdditions>();
+            if(validator != null)
+            {
+                validator.PreConstruct(new object[]{ @site});
+            }
+        
+            this.Site = @site ?? this.Site;
+        
+            if(validator != null)
+            {
+                validator.PostConstruct(this);
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("Site", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public IList<SiteOverrideAddition> Site { get; set; } = new List<SiteOverrideAddition>();
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
+    
+    public partial class OverrideRemovals 
+    
+    {
+        public OverrideRemovals() { }
+        
+        [Newtonsoft.Json.JsonConstructor]
+        public OverrideRemovals(IList<SiteOverrideRemoval> @site)
+        {
+            var validator = Validator.Instance.GetFirstValidatorForType<OverrideRemovals>();
+            if(validator != null)
+            {
+                validator.PreConstruct(new object[]{ @site});
+            }
+        
+            this.Site = @site ?? this.Site;
+        
+            if(validator != null)
+            {
+                validator.PostConstruct(this);
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("Site", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public IList<SiteOverrideRemoval> Site { get; set; } = new List<SiteOverrideRemoval>();
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
+    
+    public partial class SiteOverride 
+    
+    {
+        [Newtonsoft.Json.JsonConstructor]
+        public SiteOverride(string @id, SiteIdentity @identity, SiteValue @value)
+        {
+            var validator = Validator.Instance.GetFirstValidatorForType<SiteOverride>();
+            if(validator != null)
+            {
+                validator.PreConstruct(new object[]{ @id, @identity, @value});
+            }
+        
+            this.Id = @id;
+            this.Identity = @identity;
+            this.Value = @value;
+        
+            if(validator != null)
+            {
+                validator.PostConstruct(this);
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Id { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("Identity", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public SiteIdentity Identity { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("Value", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public SiteValue Value { get; set; }
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
+    
+    public partial class SiteOverrideAddition 
+    
+    {
+        [Newtonsoft.Json.JsonConstructor]
+        public SiteOverrideAddition(string @id, SiteIdentity @identity, SiteOverrideAdditionValue @value)
+        {
+            var validator = Validator.Instance.GetFirstValidatorForType<SiteOverrideAddition>();
+            if(validator != null)
+            {
+                validator.PreConstruct(new object[]{ @id, @identity, @value});
+            }
+        
+            this.Id = @id;
+            this.Identity = @identity;
+            this.Value = @value;
+        
+            if(validator != null)
+            {
+                validator.PostConstruct(this);
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Id { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("Identity", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public SiteIdentity Identity { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("Value", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public SiteOverrideAdditionValue Value { get; set; }
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
+    
+    public partial class SiteOverrideRemoval 
+    
+    {
+        [Newtonsoft.Json.JsonConstructor]
+        public SiteOverrideRemoval(string @id, SiteIdentity @identity)
+        {
+            var validator = Validator.Instance.GetFirstValidatorForType<SiteOverrideRemoval>();
+            if(validator != null)
+            {
+                validator.PreConstruct(new object[]{ @id, @identity});
+            }
+        
+            this.Id = @id;
+            this.Identity = @identity;
+        
+            if(validator != null)
+            {
+                validator.PostConstruct(this);
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Id { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("Identity", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public SiteIdentity Identity { get; set; }
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
+    
+    public partial class SiteIdentity 
+    
+    {
+        [Newtonsoft.Json.JsonConstructor]
+        public SiteIdentity(string @addId)
+        {
+            var validator = Validator.Instance.GetFirstValidatorForType<SiteIdentity>();
+            if(validator != null)
+            {
+                validator.PreConstruct(new object[]{ @addId});
+            }
+        
+            this.AddId = @addId;
+        
+            if(validator != null)
+            {
+                validator.PostConstruct(this);
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("Add Id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string AddId { get; set; }
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
+    
+    public partial class SiteValue 
+    
+    {
+        [Newtonsoft.Json.JsonConstructor]
+        public SiteValue(Polygon @perimeter)
+        {
+            var validator = Validator.Instance.GetFirstValidatorForType<SiteValue>();
             if(validator != null)
             {
                 validator.PreConstruct(new object[]{ @perimeter});
@@ -45,10 +301,35 @@ namespace SiteBySketch
             }
         }
     
-        /// <summary>Perimeter of the building envelope.</summary>
-        [Newtonsoft.Json.JsonProperty("Perimeter", Required = Newtonsoft.Json.Required.AllowNull)]
+        [Newtonsoft.Json.JsonProperty("Perimeter", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public Polygon Perimeter { get; set; }
     
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
+    
+    public partial class SiteOverrideAdditionValue 
+    
+    {
+        [Newtonsoft.Json.JsonConstructor]
+        public SiteOverrideAdditionValue(Polygon @perimeter)
+        {
+            var validator = Validator.Instance.GetFirstValidatorForType<SiteOverrideAdditionValue>();
+            if(validator != null)
+            {
+                validator.PreConstruct(new object[]{ @perimeter});
+            }
+        
+            this.Perimeter = @perimeter;
+        
+            if(validator != null)
+            {
+                validator.PostConstruct(this);
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("Perimeter", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public Polygon Perimeter { get; set; }
     
     }
 }

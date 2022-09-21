@@ -1,6 +1,7 @@
 using Elements;
 using Elements.Geometry;
 using Elements.Geometry.Solids;
+using Elements.Validators;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,11 +26,17 @@ namespace RoofFunction
             var hasFootprints = inputModels.TryGetValue("Masterplan", out var masterplanModel);
             var hasEnvelopes = inputModels.TryGetValue("Envelope", out var envelopeModel);
             var hasLevels = inputModels.TryGetValue("Levels", out var levelsModel);
-            if (!hasEnvelopes && !hasFootprints && !hasLevels)
+            var hasConceptualMass = inputModels.TryGetValue("Conceptual Mass", out var massModel);
+            if (!hasEnvelopes && !hasFootprints && !hasLevels && !hasConceptualMass)
             {
-                output.Warnings.Add("There's nothing in the model from which to create a roof. Please add a footprint, envelope, or levels.");
+                output.Warnings.Add("There's nothing in the model from which to create a roof. Please add a conceptual mass, envelope, or levels.");
             }
-            if (hasFootprints)
+            if (hasConceptualMass)
+            {
+                var conceptualMass = massModel.AllElementsOfType<ConceptualMass>();
+                CreateRoofsFromElements(conceptualMass, input, output);
+            }
+            else if (hasFootprints)
             {
                 var footprints = masterplanModel.AllElementsOfType<Footprint>();
                 CreateRoofsFromElements(footprints, input, output);
@@ -132,8 +139,30 @@ namespace RoofFunction
                     var firstPolygon = roofFaces.First().Perimeter;
                     var firstPolygonPlane = new Plane(firstPolygon.Vertices.First(), firstPolygon.Normal());
                     var thisLevelProfiles = GetFlatRoofProfiles(roofFaces);
+                    IEnumerable<Profile> difference = null;
+                    try
+                    {
+                        difference = Profile.Difference(thisLevelProfiles, previousProfiles);
 
-                    var difference = Profile.Difference(thisLevelProfiles, previousProfiles);
+                    }
+                    catch
+                    {
+                        // in case of boolean failure, some last-ditch cleanup attempt
+                        try
+                        {
+                            Validator.DisableValidationOnConstruction = true;
+                            var diff = Profile.Difference(thisLevelProfiles, previousProfiles);
+                            var offset = Profile.Offset(diff, -0.01);
+                            var offsetOut = Profile.Offset(offset, 0.01);
+                            difference = offsetOut;
+                            Validator.DisableValidationOnConstruction = false;
+                        }
+                        catch
+                        {
+                            output.Warnings.Add("Something went wrong computing the geometry of the roof profiles.");
+                            difference = thisLevelProfiles;
+                        }
+                    }
                     if (difference != null)
                     {
                         foreach (var profile in difference.Where(d => d.Area() > minRoofArea))
@@ -163,7 +192,9 @@ namespace RoofFunction
 
             if (!input.InsulationThickness.ApproximatelyEquals(0))
             {
-                roofs.Add(new Roof(profile, input.InsulationThickness, insulationTransform, true));
+                var insulation = new Roof(profile, input.InsulationThickness, insulationTransform, true);
+                insulation.Name = "Insulation";
+                roofs.Add(insulation);
                 roofs[1].AdditionalProperties.Add("Roof", roofs[0].Id);
             }
             return roofs.ToArray();
@@ -180,7 +211,7 @@ namespace RoofFunction
                 // Certain functions, like sketch masterplan, create their solids as a collection of stacked volumes with a very slight gap between them.
                 // This is a workaround for bugs in the unions created by solid operations containing multiple solids.
                 // We don't want to create "roof" elements in those gaps, so we look for cases where the potential roof face is very close to
-                // another face, and ignore those. 
+                // another face, and ignore those.
                 var bottomFaceCentroids = solids.SelectMany(s => s.Faces.Where(f => f.Value.Outer.ToPolygon().Normal().Dot(Vector3.ZAxis) < -0.7).Select(f => f.Value.Outer.ToPolygon().Centroid()));
                 foreach (var roofFace in roofFaces)
                 {

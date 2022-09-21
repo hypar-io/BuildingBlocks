@@ -11,6 +11,7 @@ using Elements.Serialization.JSON;
 using Hypar.Functions;
 using Hypar.Functions.Execution;
 using Hypar.Functions.Execution.AWS;
+using Hypar.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -65,7 +66,6 @@ namespace Grid
         [Newtonsoft.Json.JsonProperty("SubdivisionSettings", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public SubdivisionSettings SubdivisionSettings { get; set; }
     
-    
     }
     
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
@@ -88,7 +88,7 @@ namespace Grid
             this.BubbleRadius = @bubbleRadius;
             this.GridAreas = @gridAreas;
             this.ShowDebugGeometry = @showDebugGeometry;
-            this.Overrides = @overrides;
+            this.Overrides = @overrides ?? this.Overrides;
         
             if(validator != null)
             {
@@ -112,9 +112,8 @@ namespace Grid
         [Newtonsoft.Json.JsonProperty("Show Debug Geometry", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public bool ShowDebugGeometry { get; set; } = false;
     
-        [Newtonsoft.Json.JsonProperty("overrides", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public Overrides Overrides { get; set; }
-    
+        [Newtonsoft.Json.JsonProperty("overrides", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public Overrides Overrides { get; set; } = new Overrides();
     
     }
     
@@ -189,8 +188,6 @@ namespace Grid
             get { return _additionalProperties; }
             set { _additionalProperties = value; }
         }
-    
-    
     }
     
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
@@ -253,8 +250,6 @@ namespace Grid
             get { return _additionalProperties; }
             set { _additionalProperties = value; }
         }
-    
-    
     }
     
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
@@ -262,6 +257,8 @@ namespace Grid
     public partial class Overrides 
     
     {
+        public Overrides() { }
+        
         [Newtonsoft.Json.JsonConstructor]
         public Overrides(IList<GridOriginsOverride> @gridOrigins, IList<GridExtentsOverride> @gridExtents, IList<UGridSubdivisionsOverride> @uGridSubdivisions, IList<VGridSubdivisionsOverride> @vGridSubdivisions, IList<GridlineNamesOverride> @gridlineNames)
         {
@@ -271,11 +268,11 @@ namespace Grid
                 validator.PreConstruct(new object[]{ @gridOrigins, @gridExtents, @uGridSubdivisions, @vGridSubdivisions, @gridlineNames});
             }
         
-            this.GridOrigins = @gridOrigins;
-            this.GridExtents = @gridExtents;
-            this.UGridSubdivisions = @uGridSubdivisions;
-            this.VGridSubdivisions = @vGridSubdivisions;
-            this.GridlineNames = @gridlineNames;
+            this.GridOrigins = @gridOrigins ?? this.GridOrigins;
+            this.GridExtents = @gridExtents ?? this.GridExtents;
+            this.UGridSubdivisions = @uGridSubdivisions ?? this.UGridSubdivisions;
+            this.VGridSubdivisions = @vGridSubdivisions ?? this.VGridSubdivisions;
+            this.GridlineNames = @gridlineNames ?? this.GridlineNames;
         
             if(validator != null)
             {
@@ -283,21 +280,20 @@ namespace Grid
             }
         }
     
-        [Newtonsoft.Json.JsonProperty("Grid Origins", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public IList<GridOriginsOverride> GridOrigins { get; set; }
+        [Newtonsoft.Json.JsonProperty("Grid Origins", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public IList<GridOriginsOverride> GridOrigins { get; set; } = new List<GridOriginsOverride>();
     
-        [Newtonsoft.Json.JsonProperty("Grid Extents", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public IList<GridExtentsOverride> GridExtents { get; set; }
+        [Newtonsoft.Json.JsonProperty("Grid Extents", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public IList<GridExtentsOverride> GridExtents { get; set; } = new List<GridExtentsOverride>();
     
-        [Newtonsoft.Json.JsonProperty("U Grid Subdivisions", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public IList<UGridSubdivisionsOverride> UGridSubdivisions { get; set; }
+        [Newtonsoft.Json.JsonProperty("U Grid Subdivisions", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public IList<UGridSubdivisionsOverride> UGridSubdivisions { get; set; } = new List<UGridSubdivisionsOverride>();
     
-        [Newtonsoft.Json.JsonProperty("V Grid Subdivisions", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public IList<VGridSubdivisionsOverride> VGridSubdivisions { get; set; }
+        [Newtonsoft.Json.JsonProperty("V Grid Subdivisions", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public IList<VGridSubdivisionsOverride> VGridSubdivisions { get; set; } = new List<VGridSubdivisionsOverride>();
     
-        [Newtonsoft.Json.JsonProperty("Gridline Names", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public IList<GridlineNamesOverride> GridlineNames { get; set; }
-    
+        [Newtonsoft.Json.JsonProperty("Gridline Names", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public IList<GridlineNamesOverride> GridlineNames { get; set; } = new List<GridlineNamesOverride>();
     
     }
     
@@ -389,8 +385,6 @@ namespace Grid
             get { return _additionalProperties; }
             set { _additionalProperties = value; }
         }
-    
-    
     }
     
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
@@ -450,8 +444,6 @@ namespace Grid
             get { return _additionalProperties; }
             set { _additionalProperties = value; }
         }
-    
-    
     }
     
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
@@ -486,7 +478,6 @@ namespace Grid
     
         [Newtonsoft.Json.JsonProperty("Value", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public GridOriginsValue Value { get; set; }
-    
     
     }
     
@@ -523,7 +514,6 @@ namespace Grid
         [Newtonsoft.Json.JsonProperty("Value", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public GridExtentsValue Value { get; set; }
     
-    
     }
     
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
@@ -558,7 +548,6 @@ namespace Grid
     
         [Newtonsoft.Json.JsonProperty("Value", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public UGridSubdivisionsValue Value { get; set; }
-    
     
     }
     
@@ -595,7 +584,6 @@ namespace Grid
         [Newtonsoft.Json.JsonProperty("Value", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public VGridSubdivisionsValue Value { get; set; }
     
-    
     }
     
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
@@ -630,7 +618,6 @@ namespace Grid
     
         [Newtonsoft.Json.JsonProperty("Value", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public GridlineNamesValue Value { get; set; }
-    
     
     }
     
@@ -675,8 +662,6 @@ namespace Grid
             get { return _additionalProperties; }
             set { _additionalProperties = value; }
         }
-    
-    
     }
     
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
@@ -703,7 +688,6 @@ namespace Grid
     
         [Newtonsoft.Json.JsonProperty("Name", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string Name { get; set; }
-    
     
     }
     
@@ -732,7 +716,6 @@ namespace Grid
         [Newtonsoft.Json.JsonProperty("Transform", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public Transform Transform { get; set; }
     
-    
     }
     
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
@@ -759,7 +742,6 @@ namespace Grid
     
         [Newtonsoft.Json.JsonProperty("Name", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string Name { get; set; }
-    
     
     }
     
@@ -788,7 +770,6 @@ namespace Grid
         [Newtonsoft.Json.JsonProperty("Extents", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public Polygon Extents { get; set; }
     
-    
     }
     
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
@@ -815,7 +796,6 @@ namespace Grid
     
         [Newtonsoft.Json.JsonProperty("Name", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string Name { get; set; }
-    
     
     }
     
@@ -844,7 +824,6 @@ namespace Grid
         [Newtonsoft.Json.JsonProperty("UGrid", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public Grid1dInput UGrid { get; set; }
     
-    
     }
     
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
@@ -872,7 +851,6 @@ namespace Grid
         [Newtonsoft.Json.JsonProperty("Name", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string Name { get; set; }
     
-    
     }
     
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
@@ -899,7 +877,6 @@ namespace Grid
     
         [Newtonsoft.Json.JsonProperty("VGrid", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public Grid1dInput VGrid { get; set; }
-    
     
     }
     
@@ -933,7 +910,6 @@ namespace Grid
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         public GridlineNamesIdentityAxis Axis { get; set; }
     
-    
     }
     
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
@@ -960,7 +936,6 @@ namespace Grid
     
         [Newtonsoft.Json.JsonProperty("Name", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string Name { get; set; }
-    
     
     }
     
