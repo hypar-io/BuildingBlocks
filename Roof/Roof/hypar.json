@@ -38,7 +38,7 @@
         "$ref": "https://hypar.io/Schemas/Geometry/Color.json"
       },
       "Roof Thickness": {
-        "multipleOf": 0.01,
+        "multipleOf": 0.001,
         "description": "The Length.",
         "maximum": 2,
         "type": "number",
