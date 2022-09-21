@@ -29,16 +29,17 @@ namespace SketchGrids
     {
         [Newtonsoft.Json.JsonConstructor]
         
-        public SketchGridsInputs(double @offsetDistanceFromConceptualMass, Overrides @overrides, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey):
+        public SketchGridsInputs(double @offsetDistanceFromConceptualMass, bool @addSkeletonGrids, Overrides @overrides, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey):
         base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
         {
             var validator = Validator.Instance.GetFirstValidatorForType<SketchGridsInputs>();
             if(validator != null)
             {
-                validator.PreConstruct(new object[]{ @offsetDistanceFromConceptualMass, @overrides});
+                validator.PreConstruct(new object[]{ @offsetDistanceFromConceptualMass, @addSkeletonGrids, @overrides});
             }
         
             this.OffsetDistanceFromConceptualMass = @offsetDistanceFromConceptualMass;
+            this.AddSkeletonGrids = @addSkeletonGrids;
             this.Overrides = @overrides ?? this.Overrides;
         
             if(validator != null)
@@ -50,6 +51,10 @@ namespace SketchGrids
         /// <summary>The default grid offset from the conceptual mass.</summary>
         [Newtonsoft.Json.JsonProperty("Offset Distance From Conceptual Mass", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public double OffsetDistanceFromConceptualMass { get; set; } = 1.5D;
+    
+        /// <summary>Add grids along conceptual mass skeletons.</summary>
+        [Newtonsoft.Json.JsonProperty("Add Skeleton Grids", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public bool AddSkeletonGrids { get; set; } = false;
     
         [Newtonsoft.Json.JsonProperty("overrides", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public Overrides Overrides { get; set; } = new Overrides();

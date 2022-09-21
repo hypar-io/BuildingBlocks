@@ -77,10 +77,14 @@ namespace SketchGrids
                     if (conceptualMass.Skeleton != null)
                     {
                         // Create grids for the skeleton
-                        // foreach (var edge in conceptualMass.Skeleton)
-                        // {
-                        //     CheckAndCreateGridline(edge, gridLines, ref gridIndex, gridMaterial);
-                        // }
+                        if (input.AddSkeletonGrids)
+                        {
+                            foreach (var edge in conceptualMass.Skeleton)
+                            {
+                                var newGridLine = edge.ExtendTo(hull);
+                                CheckAndCreateGridline(newGridLine, gridLines, ref gridIndex, gridMaterial);
+                            }
+                        }
 
                         var allPerimeters = new List<Polygon>();
                         var intersectionPlane = new Plane(new Vector3(0, 0, conceptualMass.Transform.Origin.Z), Vector3.ZAxis);

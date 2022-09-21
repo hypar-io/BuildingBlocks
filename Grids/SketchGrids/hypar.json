@@ -12,6 +12,11 @@
         "type": "number",
         "default": 1.5,
         "$hyparUnitType": "length"
+      },
+      "Add Skeleton Grids": {
+        "description": "Add grids along conceptual mass skeletons.",
+        "type": "boolean",
+        "default": false
       }
     }
   },
