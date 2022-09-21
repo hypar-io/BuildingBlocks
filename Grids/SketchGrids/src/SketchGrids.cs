@@ -171,7 +171,7 @@ namespace SketchGrids
             foreach (var gridLineGroup in gridLineGroups)
             {
                 var grids = gridLineGroup.ToList();
-                var orderedGrids = grids.OrderByDescending(gl => gl.Curve.PointAt(0), directionComparer).ToList();
+                var orderedGrids = grids.OrderBy(gl => gl.Curve.PointAt(0), directionComparer).ToList();
                 for (var i = 0; i < orderedGrids.Count - 1; i++)
                 {
                     var dim = new AlignedDimension(orderedGrids[i].Curve.PointAt(0), orderedGrids[i + 1].Curve.PointAt(0), 0);

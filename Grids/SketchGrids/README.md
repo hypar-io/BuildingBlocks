@@ -2,7 +2,7 @@
 
 # Sketch Grids
 
-Sketch grid lines.
+Generate grids automatically from conceptual masses or sketch grid lines.
 
 |Input Name|Type|Description|
 |---|---|---|
