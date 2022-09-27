@@ -58,7 +58,7 @@ namespace ColumnsFromGrid
 
                     if (input.PerimeterColumns && envelopePolygons.Any())
                     {
-                        if (envelopePolygons.Any(e => gridNode.Location.Origin.DistanceTo(e as Polyline) < 0.001))
+                        if (envelopePolygons.Any(e => gridNode.Location.Origin.DistanceTo(e as Polyline) < 0.01))
                         {
                             createColumn = true;
                         }
