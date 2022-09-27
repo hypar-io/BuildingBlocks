@@ -27,6 +27,7 @@ namespace RoofFunction
             var hasEnvelopes = inputModels.TryGetValue("Envelope", out var envelopeModel);
             var hasLevels = inputModels.TryGetValue("Levels", out var levelsModel);
             var hasConceptualMass = inputModels.TryGetValue("Conceptual Mass", out var massModel);
+            var hasEnclosure = inputModels.TryGetValue("Enclosure", out var enclosureModel);
             if (!hasEnvelopes && !hasFootprints && !hasLevels && !hasConceptualMass)
             {
                 output.Warnings.Add("There's nothing in the model from which to create a roof. Please add a conceptual mass, envelope, or levels.");
@@ -34,7 +35,31 @@ namespace RoofFunction
             if (hasConceptualMass)
             {
                 var conceptualMass = massModel.AllElementsOfType<ConceptualMass>();
-                CreateRoofsFromElements(conceptualMass, input, output);
+                var levelVolumes = massModel.AllElementsOfType<LevelVolume>();
+                if (hasEnclosure)
+                {
+                    var profiles = enclosureModel.AllElementsOfType<Profile>().Where(e => e.AdditionalProperties.ContainsKey("Level"));
+                    foreach (var p in profiles)
+                    {
+                        var level = new Guid(p.AdditionalProperties["Level"] as string);
+                        if (massModel.Elements.TryGetValue(level, out var lv))
+                        {
+                            var levelVol = lv as LevelVolume;
+                            levelVol.Profile = p;
+                        }
+                    }
+                }
+                var levelVolumesByBuilding = levelVolumes.GroupBy(lv =>
+                {
+                    var env = lv.Envelope;
+                    var mass = massModel.Elements[env.Value] as ConceptualMass;
+                    return mass.Building ?? lv.Envelope;
+                });
+                foreach (var lvlVolumeGrp in levelVolumesByBuilding)
+                {
+                    var levelVolumesOrdered = lvlVolumeGrp.GroupBy(lv => lv.Transform.Origin.Z).OrderBy(g => g.Key);
+                    ProcessLevelVolumes(input, output, levelVolumesOrdered);
+                }
             }
             else if (hasFootprints)
             {
@@ -52,62 +77,67 @@ namespace RoofFunction
                 var projectedProfiles = Profile.UnionAll(levelVolumes.Select(lv => lv.Profile));
                 foreach (var union in projectedProfiles)
                 {
-                    var profilesInUnion = levelVolumes
+                    var levelVolumesWithinUnion = levelVolumes
                       .Where(lv => union.Contains(lv.Profile.Perimeter.PointInternal()))
                       .GroupBy(lv => lv.Transform.Origin.Z)
                       .OrderBy(grp => grp.Key);
-                    var keys = profilesInUnion.Select(g => g.Key).Reverse();
-                    var dict = profilesInUnion.ToDictionary(grp => grp.Key, grp => grp);
-                    List<Profile> previousProfiles = null;
-                    // counting down from top
-                    foreach (var elevation in keys)
-                    {
-                        var allLvs = dict[elevation];
-                        if (previousProfiles == null)
-                        {
-                            previousProfiles = new List<Profile>();
-                            foreach (var lv in allLvs)
-                            {
-                                var lvProfile = lv.Profile;
-                                previousProfiles.Add(lvProfile);
-                                var roofs = CreateRoofAndInsulation(lv.Profile, input, lv.Transform.Concatenated(new Transform(0, 0, lv.Height)));
-                                if (lv.AdditionalProperties.TryGetValue("Envelope", out var envId))
-                                {
-                                    roofs[0].AdditionalProperties.Add("Envelope", envId);
-                                }
-                                if (lv.AdditionalProperties.TryGetValue("Footprint", out var fpId))
-                                {
-                                    roofs[0].AdditionalProperties.Add("Footprint", fpId);
-                                }
-                                output.Model.AddElements(roofs);
-                            }
-                        }
-                        else
-                        {
-                            var thisLevelprofiles = allLvs.Select(lv => lv.Profile);
-                            var difference = Profile.Difference(thisLevelprofiles, previousProfiles);
-                            if (difference != null && difference.Count > 0)
-                            {
-                                foreach (var profile in difference.Where(d => d.Area() > minRoofArea))
-                                {
-                                    var roofs = CreateRoofAndInsulation(profile, input, allLvs.First().Transform.Concatenated(new Transform(0, 0, allLvs.First().Height)));
-                                    if (allLvs.First().AdditionalProperties.TryGetValue("Envelope", out var envId))
-                                    {
-                                        roofs[0].AdditionalProperties.Add("Envelope", envId);
-                                    }
-                                    if (allLvs.First().AdditionalProperties.TryGetValue("Footprint", out var fpId))
-                                    {
-                                        roofs[0].AdditionalProperties.Add("Footprint", fpId);
-                                    }
-                                    output.Model.AddElements(roofs);
-                                }
-                            }
-                            previousProfiles = thisLevelprofiles.ToList();
-                        }
-                    }
+                    ProcessLevelVolumes(input, output, levelVolumesWithinUnion);
                 }
             }
             return output;
+        }
+
+        private static void ProcessLevelVolumes(RoofFunctionInputs input, RoofFunctionOutputs output, IOrderedEnumerable<IGrouping<double, LevelVolume>> profilesInUnion)
+        {
+            var keys = profilesInUnion.Select(g => g.Key).Reverse();
+            var dict = profilesInUnion.ToDictionary(grp => grp.Key, grp => grp);
+            List<Profile> previousProfiles = null;
+            // counting down from top
+            foreach (var elevation in keys)
+            {
+                var allLvs = dict[elevation];
+                if (previousProfiles == null)
+                {
+                    previousProfiles = new List<Profile>();
+                    foreach (var lv in allLvs)
+                    {
+                        var lvProfile = lv.Profile;
+                        previousProfiles.Add(lvProfile);
+                        var roofs = CreateRoofAndInsulation(lv.Profile, input, lv.Transform.Concatenated(new Transform(0, 0, lv.Height)));
+                        if (lv.AdditionalProperties.TryGetValue("Envelope", out var envId))
+                        {
+                            roofs[0].AdditionalProperties.Add("Envelope", envId);
+                        }
+                        if (lv.AdditionalProperties.TryGetValue("Footprint", out var fpId))
+                        {
+                            roofs[0].AdditionalProperties.Add("Footprint", fpId);
+                        }
+                        output.Model.AddElements(roofs);
+                    }
+                }
+                else
+                {
+                    var thisLevelprofiles = allLvs.Select(lv => lv.Profile);
+                    var difference = Profile.Difference(thisLevelprofiles, previousProfiles);
+                    if (difference != null && difference.Count > 0)
+                    {
+                        foreach (var profile in difference.Where(d => Math.Abs(d.Area()) > minRoofArea))
+                        {
+                            var roofs = CreateRoofAndInsulation(profile, input, allLvs.First().Transform.Concatenated(new Transform(0, 0, allLvs.First().Height)));
+                            if (allLvs.First().AdditionalProperties.TryGetValue("Envelope", out var envId))
+                            {
+                                roofs[0].AdditionalProperties.Add("Envelope", envId);
+                            }
+                            if (allLvs.First().AdditionalProperties.TryGetValue("Footprint", out var fpId))
+                            {
+                                roofs[0].AdditionalProperties.Add("Footprint", fpId);
+                            }
+                            output.Model.AddElements(roofs);
+                        }
+                    }
+                    previousProfiles = thisLevelprofiles.ToList();
+                }
+            }
         }
 
         private static void CreateRoofsFromElements<T>(IEnumerable<T> elements, RoofFunctionInputs input, RoofFunctionOutputs output) where T : GeometricElement
@@ -187,6 +217,11 @@ namespace RoofFunction
             {
                 polygonTransform.Move(new Vector3(0, 0, -input.RoofThickness - input.InsulationThickness));
                 insulationTransform.Move(new Vector3(0, 0, -input.RoofThickness - input.InsulationThickness));
+            }
+            if (profile.Perimeter.IsClockWise())
+            {
+                profile = new Profile(profile.Perimeter.Reversed(), profile.Voids);
+                profile.OrientVoids();
             }
             roofs.Add(new Roof(profile, input.RoofThickness, polygonTransform, false));
 

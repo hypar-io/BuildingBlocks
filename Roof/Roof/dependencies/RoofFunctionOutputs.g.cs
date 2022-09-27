@@ -14,7 +14,7 @@ using System.Collections.Generic;
 
 namespace RoofFunction
 {
-    public class RoofFunctionOutputs: ResultsBase
+    public class RoofFunctionOutputs: SystemResults
     {
 		/// <summary>
 		/// The total roofing area.
