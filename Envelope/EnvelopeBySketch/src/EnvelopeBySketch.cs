@@ -47,7 +47,7 @@ namespace EnvelopeBySketch
                 {
                     foundationDepth = -envelopeElevation;
                 }
-                buildingHeight = levels.Last().Elevation + levels.Last().Height ?? 0;
+                buildingHeight = levels.Last().Elevation + (levels.Last().Height ?? 0);
                 output.Model.AddElements(CreateLevelVolumes(levels, envelopeProfile));
             }
             else
