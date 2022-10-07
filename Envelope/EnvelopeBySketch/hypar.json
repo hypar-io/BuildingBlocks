@@ -5,6 +5,13 @@
     "description": "Creates building Envelope elements derived from a polygon sketch and setback settings.",
     "language": "C#",
     "model_output": "Envelope",
+    "model_dependencies": [
+        {
+            "autohide": false,
+            "name": "Levels",
+            "optional": true
+        }
+    ],
     "input_schema": {
         "type": "object",
         "properties": {
@@ -14,6 +21,10 @@
                 "type": "object",
                 "$ref": "https://hypar.io/Schemas/Geometry/Polygon.json"
             },
+            "Create Level Volumes": {
+                "type": "boolean",
+                "$hyparOrder": 0
+            },
             "Setback Interval": {
                 "default": 20,
                 "$hyparShowIf": {
@@ -21,6 +32,10 @@
                         {
                             "property": "Use Setbacks",
                             "value": true
+                        },
+                        {
+                            "property": "Create Level Volumes",
+                            "value": false
                         }
                     ]
                 },
@@ -35,7 +50,15 @@
             "Use Setbacks": {
                 "$hyparOrder": 3,
                 "type": "boolean",
-                "default": false
+                "default": false,
+                "$hyparShowIf": {
+                    "conditions": [
+                        {
+                            "property": "Create Level Volumes",
+                            "value": false
+                        }
+                    ]
+                }
             },
             "Setback Depth": {
                 "default": 1,
@@ -44,6 +67,10 @@
                         {
                             "property": "Use Setbacks",
                             "value": true
+                        },
+                        {
+                            "property": "Create Level Volumes",
+                            "value": false
                         }
                     ]
                 },
@@ -62,6 +89,10 @@
                         {
                             "property": "Use Setbacks",
                             "value": true
+                        },
+                        {
+                            "property": "Create Level Volumes",
+                            "value": false
                         }
                     ]
                 },
@@ -81,7 +112,15 @@
                 "$hyparOrder": 1,
                 "$hyparUnitType": "length",
                 "type": "number",
-                "minimum": 5
+                "minimum": 5,
+                "$hyparShowIf": {
+                    "conditions": [
+                        {
+                            "property": "Create Level Volumes",
+                            "value": false
+                        }
+                    ]
+                }
             },
             "Foundation Depth": {
                 "default": 10,
@@ -91,7 +130,15 @@
                 "$hyparOrder": 2,
                 "$hyparUnitType": "length",
                 "type": "number",
-                "minimum": 0
+                "minimum": 0,
+                "$hyparShowIf": {
+                    "conditions": [
+                        {
+                            "property": "Create Level Volumes",
+                            "value": false
+                        }
+                    ]
+                }
             }
         },
         "required": [
@@ -114,7 +161,9 @@
     ],
     "element_types": [
         "https://raw.githubusercontent.com/hypar-io/Schemas/master/Origin.json",
-        "https://raw.githubusercontent.com/hypar-io/Schemas/master/Envelope.json"
+        "https://raw.githubusercontent.com/hypar-io/Schemas/master/Envelope.json",
+        "https://prod-api.hypar.io/schemas/Level",
+        "https://prod-api.hypar.io/schemas/LevelVolume"
     ],
     "repository_url": "https://github.com/hypar-io/BuildingBlocks/tree/master/Envelope/EnvelopeBySketch",
     "source_file_key": null,

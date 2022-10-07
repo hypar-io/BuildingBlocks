@@ -21,38 +21,31 @@ namespace Elements
 {
     #pragma warning disable // Disable all warnings
 
-    /// <summary>The origin of a project.</summary>
+    /// <summary>A horizontal datum representing a building level at a specific elevation.</summary>
     [JsonConverter(typeof(Elements.Serialization.JSON.JsonInheritanceConverter), "discriminator")]
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
-    public partial class Origin : Element
+    public partial class Level : Element
     {
         [JsonConstructor]
-        public Origin(Position @position, double @elevation, Transform @transform = null, System.Guid @id = default, string @name = null)
+        public Level(double @elevation, double? @height, System.Guid @id = default, string @name = null)
             : base(id, name)
         {
-            this.Position = @position;
             this.Elevation = @elevation;
-            this.Transform = @transform;
+            this.Height = @height;
             }
         
         // Empty constructor
-        public Origin()
+        public Level()
             : base()
         {
         }
     
-        /// <summary>The latitude of the origin.</summary>
-        [JsonProperty("Position", Required = Newtonsoft.Json.Required.AllowNull)]
-        public Position Position { get; set; }
-    
-        /// <summary>The elevation in meters of the Origin.</summary>
-        [JsonProperty("Elevation", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Range(0.0D, double.MaxValue)]
+        [JsonProperty("Elevation", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public double Elevation { get; set; }
     
-        /// <summary>A coordinate system which defines the origin's rotation and translation relative to the latitude and longitude. The transform's Z translation will be equal to the Elevation</summary>
-        [JsonProperty("Transform", Required = Newtonsoft.Json.Required.AllowNull)]
-        public Transform Transform { get; set; }
+        /// <summary>The vertical distance from this level to the next. May be null for a top level, like a roof.</summary>
+        [JsonProperty("Height", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public double? Height { get; set; }
     
     
     }
