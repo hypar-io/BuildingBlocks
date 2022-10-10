@@ -1,5 +1,4 @@
 using Elements;
-using Elements.Annotations;
 using Elements.Geometry;
 using Elements.Search;
 using System;
@@ -23,9 +22,6 @@ namespace SketchGrids
             {
                 WidthMode = EdgeDisplayWidthMode.ScreenUnits,
                 LineWidth = 1,
-                // DashMode = EdgeDisplayDashMode.ScreenUnits,
-                // DashSize = 10,
-                // GapSize = 2
             };
 
             var gridMaterial = new Material("Grid Line", Colors.Darkgray)
@@ -87,19 +83,13 @@ namespace SketchGrids
                         }
 
                         var allPerimeters = new List<Polygon>();
-                        var intersectionPlane = new Plane(new Vector3(0, 0, conceptualMass.Transform.Origin.Z), Vector3.ZAxis);
-                        foreach (var so in conceptualMass.Representation.SolidOperations)
+
+                        if (conceptualMass.Profile != null && conceptualMass.Profile.Voids != null)
                         {
-                            if (so.Solid.Intersects(intersectionPlane, out var result))
+                            allPerimeters.Add(conceptualMass.Profile.Perimeter);
+                            foreach (var profileVoid in conceptualMass.Profile.Voids)
                             {
-                                if (so.IsVoid)
-                                {
-                                    allVoids.AddRange(result);
-                                }
-                                else
-                                {
-                                    allPerimeters.AddRange(result);
-                                }
+                                allVoids.Add(profileVoid);
                             }
                         }
 
@@ -199,6 +189,7 @@ namespace SketchGrids
                 }
             }
 
+            // TODO: Draw some annotations.
             // var bbox = new BBox3(allNodeLocations);
 
             // var vectorEqualityComparer = new VectorEqualityComparer();
