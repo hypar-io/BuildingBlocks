@@ -17,3 +17,6 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
 
 RUN dotnet tool install hypar.cli --tool-path /home/vscode/.dotnet/tools
 ENV PATH="${PATH}:/home/vscode/.dotnet/tools"
+
+# Reassign this to the user so that dotnet build can install more packages.
+RUN chown -R vscode /home/vscode/.dotnet
