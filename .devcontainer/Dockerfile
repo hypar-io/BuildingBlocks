@@ -9,4 +9,4 @@ FROM mcr.microsoft.com/dotnet/sdk:${VARIANT}
 # [Optional] Uncomment this line to install global node packages.
 # RUN su vscode -c "source /usr/local/share/nvm/nvm.sh && npm install -g <your-package-here>" 2>&1
 RUN dotnet tool install -g hypar.cli
-ENV PATH="${PATH}:/home/vscode/.dotnet/tools"
+ENV PATH="${PATH}:${HOME}/vscode/.dotnet/tools"
