@@ -21,10 +21,6 @@
                 "type": "object",
                 "$ref": "https://hypar.io/Schemas/Geometry/Polygon.json"
             },
-            "Create Level Volumes": {
-                "type": "boolean",
-                "$hyparOrder": 0
-            },
             "Setback Interval": {
                 "default": 20,
                 "$hyparShowIf": {
@@ -34,8 +30,8 @@
                             "value": true
                         },
                         {
-                            "property": "Create Level Volumes",
-                            "value": false
+                            "dependency": "Levels",
+                            "present": false
                         }
                     ]
                 },
@@ -54,8 +50,8 @@
                 "$hyparShowIf": {
                     "conditions": [
                         {
-                            "property": "Create Level Volumes",
-                            "value": false
+                            "dependency": "Levels",
+                            "present": false
                         }
                     ]
                 }
@@ -69,8 +65,8 @@
                             "value": true
                         },
                         {
-                            "property": "Create Level Volumes",
-                            "value": false
+                            "dependency": "Levels",
+                            "present": false
                         }
                     ]
                 },
@@ -91,8 +87,8 @@
                             "value": true
                         },
                         {
-                            "property": "Create Level Volumes",
-                            "value": false
+                            "dependency": "Levels",
+                            "present": false
                         }
                     ]
                 },
@@ -116,8 +112,8 @@
                 "$hyparShowIf": {
                     "conditions": [
                         {
-                            "property": "Create Level Volumes",
-                            "value": false
+                            "dependency": "Levels",
+                            "present": false
                         }
                     ]
                 }
@@ -134,8 +130,8 @@
                 "$hyparShowIf": {
                     "conditions": [
                         {
-                            "property": "Create Level Volumes",
-                            "value": false
+                            "dependency": "Levels",
+                            "present": false
                         }
                     ]
                 }

@@ -32,13 +32,12 @@ namespace EnvelopeBySketch
                 polygon = polygon.Reversed();
             }
             var envelopeProfile = polygon;
-
-            if (input.CreateLevelVolumes)
+            double tiers = 1;
+            if (inputModels.TryGetValue("Levels", out var levelsModel))
             {
-                inputModels.TryGetValue("Levels", out var levelsModel);
-                if (levelsModel == null || levelsModel.AllElementsOfType<Level>().Count() == 0)
+                if (levelsModel.AllElementsOfType<Level>().Count() == 0)
                 {
-                    throw new ArgumentException("Please add Levels function");
+                    throw new ArgumentException("Please create levels");
                 }
                 var levels = levelsModel.AllElementsOfType<Level>().ToList();
                 levels.Sort((l1, l2) => l1.Elevation.CompareTo(l2.Elevation));
@@ -62,10 +61,9 @@ namespace EnvelopeBySketch
                 }
                 buildingHeight = input.BuildingHeight;
                 foundationDepth = input.FoundationDepth;
+                // Create the Envelope at the location's zero plane.
+                tiers = input.UseSetbacks ? Math.Floor(buildingHeight / input.SetbackInterval) : 1;
             }
-
-            // Create the Envelope at the location's zero plane.
-            var tiers = input.UseSetbacks && !input.CreateLevelVolumes ? Math.Floor(buildingHeight / input.SetbackInterval) : 1;
             var tierHeight = tiers > 1 ? buildingHeight / tiers : buildingHeight;
 
             extrude = new Elements.Geometry.Solids.Extrude(polygon, tierHeight, Vector3.ZAxis, false);
