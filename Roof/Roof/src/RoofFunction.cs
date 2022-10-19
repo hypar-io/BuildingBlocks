@@ -51,9 +51,9 @@ namespace RoofFunction
                 }
                 var levelVolumesByBuilding = levelVolumes.GroupBy(lv =>
                 {
-                    var env = lv.Envelope;
+                    var env = lv.Mass ?? lv.Envelope;
                     var mass = massModel.Elements[env.Value] as ConceptualMass;
-                    return mass.Building ?? lv.Envelope;
+                    return mass.Building ?? lv.Mass ?? lv.Envelope;
                 });
                 foreach (var lvlVolumeGrp in levelVolumesByBuilding)
                 {
