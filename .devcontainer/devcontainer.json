@@ -1,27 +1,22 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.245.2/containers/dotnet
 {
-    "build": {
-        "dockerfile": "./Dockerfile",
-        "context": "."
-    },
-    "features": {
-        "ghcr.io/devcontainers/features/common-utils:1": {
-            "installZsh": "true",
-            "username": "vscode",
-            "uid": "1000",
-            "gid": "1000",
-            "upgradePackages": "true"
-        },
-        "ghcr.io/devcontainers/features/node:1": {
-            "version": "none"
-        }
-    },
-    "overrideFeatureInstallOrder": [
-        "ghcr.io/devcontainers/features/common-utils"
-    ],
+	"name": "C# (.NET)",
+	"build": {
+		"dockerfile": "Dockerfile",
+		"args": { 
+			// Update 'VARIANT' to pick a .NET Core version: 3.1, 6.0
+			// Append -bullseye or -focal to pin to an OS version.
+			"VARIANT": "3.1-bullseye",
+			// Options
+			"NODE_VERSION": "lts/*"
+		}
+	},
+
 	// Configure tool-specific properties.
 	"customizations": {
 		// Configure properties specific to VS Code.
-		"vscode": {
+		"vscode": {	
 			// Add the IDs of extensions you want installed when the container is created.
 			"extensions": [
 				"ms-dotnettools.csharp"
@@ -31,6 +26,7 @@
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [5000, 5001],
+
 	// [Optional] To reuse of your local HTTPS dev cert:
 	//
 	// 1. Export it locally using this command:
@@ -57,6 +53,7 @@
 	// Use 'postCreateCommand' to run commands after the container is created.
 	// "postCreateCommand": "dotnet restore",
 
-	// Set `remoteUser` to `root` to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
-	"remoteUser": "vscode"
+	// Comment out to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
+	"remoteUser": "vscode",
+	"features": {}
 }
