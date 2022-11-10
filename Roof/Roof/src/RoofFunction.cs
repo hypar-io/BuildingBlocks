@@ -118,7 +118,19 @@ namespace RoofFunction
                 else
                 {
                     var thisLevelprofiles = allLvs.Select(lv => lv.Profile);
-                    var difference = Profile.Difference(thisLevelprofiles, previousProfiles);
+                    List<Profile> difference = null;
+                    try
+                    {
+                        difference = Profile.Difference(thisLevelprofiles, previousProfiles);
+                    }
+                    catch
+                    {
+                        // try again if exceptions occur
+                        var offsetDistance = 0.01;
+                        var aOffset = Profile.Offset(thisLevelprofiles, -offsetDistance);
+                        var bOffset = Profile.Offset(previousProfiles, offsetDistance);
+                        difference = Profile.Offset(Profile.Difference(aOffset, bOffset), offsetDistance);
+                    }
                     if (difference != null && difference.Count > 0)
                     {
                         foreach (var profile in difference.Where(d => Math.Abs(d.Area()) > minRoofArea))
