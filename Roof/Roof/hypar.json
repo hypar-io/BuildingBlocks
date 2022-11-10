@@ -25,6 +25,10 @@
             "autohide": false,
             "name": "Conceptual Mass",
             "optional": true
+        },
+        {
+            "name": "Enclosure",
+            "optional": true
         }
     ],
     "model_output": "Roof",
