@@ -135,12 +135,16 @@ namespace RoofFunction
                     {
                         foreach (var profile in difference.Where(d => Math.Abs(d.Area()) > minRoofArea))
                         {
-                            var roofs = CreateRoofAndInsulation(profile, input, allLvs.First().Transform.Concatenated(new Transform(0, 0, allLvs.First().Height)));
-                            if (allLvs.First().AdditionalProperties.TryGetValue("Envelope", out var envId))
+                            var firstLevel = allLvs.FirstOrDefault();
+                            if(firstLevel == null) {
+                                continue;
+                            }
+                            var roofs = CreateRoofAndInsulation(profile, input, firstLevel.Transform.Concatenated(new Transform(0, 0, firstLevel.Height)));
+                            if (firstLevel.AdditionalProperties.TryGetValue("Envelope", out var envId))
                             {
                                 roofs[0].AdditionalProperties.Add("Envelope", envId);
                             }
-                            if (allLvs.First().AdditionalProperties.TryGetValue("Footprint", out var fpId))
+                            if (firstLevel.AdditionalProperties.TryGetValue("Footprint", out var fpId))
                             {
                                 roofs[0].AdditionalProperties.Add("Footprint", fpId);
                             }
