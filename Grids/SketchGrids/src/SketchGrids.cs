@@ -55,18 +55,17 @@ namespace SketchGrids
 
                 // Find the outer bounds of all the conceptual masses.
                 // This will be used to extend grids to cover the whole mass.
-                var hull = ConvexHull.FromPolylines(conceptualMasses.Select(m => m.Profile.Perimeter));
-                var offsetHull = hull.Offset(2)[0];
+                // var hull = ConvexHull.FromPolylines(conceptualMasses.Select(m => m.Profile.Perimeter));
+                // var offsetHull = hull.Offset(2)[0];
 
                 // TODO: Create an input for structural offset
-                var allGridLines = new List<Line>();
-
                 var gridIndex = 0;
-
                 var allVoids = new List<Polygon>();
 
                 foreach (var conceptualMass in conceptualMasses)
                 {
+                    var offsetHull = conceptualMass.Profile.Perimeter.Offset(1)[0];
+
                     conceptualMass.UpdateRepresentations();
                     conceptualMass.UpdateBoundsAndComputeSolid();
 
@@ -77,7 +76,7 @@ namespace SketchGrids
                         {
                             foreach (var edge in conceptualMass.Skeleton)
                             {
-                                var newGridLine = edge.ExtendTo(hull);
+                                var newGridLine = edge.ExtendTo(offsetHull);
                                 CheckAndCreateGridline(newGridLine, gridLines, ref gridIndex, gridMaterial);
                             }
                         }
@@ -135,31 +134,36 @@ namespace SketchGrids
                 foreach (var profileVoid in allVoids)
                 {
                     var holeGridLines = new List<Line>();
-                    foreach (var segment in profileVoid.Offset(input.OffsetDistanceFromConceptualMass)[0].Segments())
+                    var offsetHull = profileVoid.Offset(1)[0];
+                    // foreach (var segment in profileVoid.Offset(input.OffsetDistanceFromConceptualMass)[0].Segments())
+                    // {
+                    //     var d = segment.Direction();
+                    //     var startRay = new Ray(segment.Start, d.Negate());
+                    //     var endRay = new Ray(segment.End, d);
+                    //     var startX = new List<Vector3>();
+                    //     var endX = new List<Vector3>();
+                    //     foreach (var gridLine in gridLines)
+                    //     {
+                    //         if (startRay.Intersects(gridLine.Curve as Line, out Vector3 startResult))
+                    //         {
+                    //             startX.Add(startResult);
+                    //         }
+                    //         if (endRay.Intersects(gridLine.Curve as Line, out Vector3 endResult))
+                    //         {
+                    //             endX.Add(endResult);
+                    //         }    
+                    //     }
+                    //     startX.Sort(new DistanceComparer(segment.Start));
+                    //     endX.Sort(new DistanceComparer(segment.End));
+
+                    //     var newGridLine = new Line(startX[0], endX[0]);
+
+                    //     // Add these to a separate collection so we don't test against them.
+                    //     holeGridLines.Add(newGridLine);
+                    // }
+                    foreach (var segment in offsetHull.Segments())
                     {
-                        var d = segment.Direction();
-                        var startRay = new Ray(segment.Start, d.Negate());
-                        var endRay = new Ray(segment.End, d);
-                        var startX = new List<Vector3>();
-                        var endX = new List<Vector3>();
-                        foreach (var gridLine in gridLines)
-                        {
-                            if (startRay.Intersects(gridLine.Curve as Line, out Vector3 startResult))
-                            {
-                                startX.Add(startResult);
-                            }
-                            if (endRay.Intersects(gridLine.Curve as Line, out Vector3 endResult))
-                            {
-                                endX.Add(endResult);
-                            }
-                        }
-                        startX.Sort(new DistanceComparer(segment.Start));
-                        endX.Sort(new DistanceComparer(segment.End));
-
-                        var newGridLine = new Line(startX[0], endX[0]);
-
-                        // Add these to a separate collection so we don't test against them.
-                        holeGridLines.Add(newGridLine);
+                        holeGridLines.Add(segment);
                     }
 
                     foreach (var holeGridLine in holeGridLines)

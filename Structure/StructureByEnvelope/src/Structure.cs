@@ -10,6 +10,7 @@ using Elements.Spatial;
 using Elements.Spatial.CellComplex;
 using System.Diagnostics;
 using System.IO;
+using Elements.Search;
 
 namespace Structure
 {
@@ -287,7 +288,7 @@ namespace Structure
                     Column columnDefinition;
                     if (!columnDefintions.ContainsKey((memberLength, columnProfile)))
                     {
-                        columnDefinition = new Column(Vector3.Origin, memberLength, columnProfile, structureMaterial, name: columnProfile.Name)
+                        columnDefinition = new Column(Vector3.Origin, memberLength, null, columnProfile, null, structureMaterial, name: columnProfile.Name)
                         {
                             IsElementDefinition = true
                         };
@@ -434,7 +435,18 @@ namespace Structure
                 var length = longestCellEdge.Length();
                 var remainder = length % input.BeamSpacing;
 
-                var beamGrid = new Grid1d(longestCellEdge);
+                var cellPts = new List<Vector3>();
+                foreach (var cellPt in cell.GetEdges().Select(e => cellComplex.GetVertex(e.StartVertexId).Value))
+                {
+                    cellPts.Add(cellPt.ClosestPointOn(longestCellEdge, true));
+                }
+
+                // We've got all the cell points projected to the line, but we
+                // want to find the maximum spanning line, so we sort by distance
+                // relative to a point far away from the start of the line.
+                cellPts.Sort(new DistanceComparer(longestCellEdge.Start - d * 10000));
+
+                var beamGrid = new Grid1d(new Line(cellPts.First(), cellPts.Last()));
                 beamGrid.DivideByApproximateLength(input.BeamSpacing, EvenDivisionMode.RoundDown);
 
                 var cellSeparators = beamGrid.GetCellSeparators();
@@ -446,72 +458,66 @@ namespace Structure
                         continue;
                     }
 
+                    // Project a line across the polygon and trim it 
+                    // with the polygon.
                     var pt = cellSeparators[i];
                     var t = new Transform(pt, d, Vector3.ZAxis);
-                    var r = new Ray(t.Origin, t.YAxis);
-                    foreach (var s in segments)
+                    var testLine = new Line(t.Origin, t.Origin + t.YAxis * 10000);
+                    var trimmedLines = testLine.Trim(p, out _, true);
+
+                    foreach (var l in trimmedLines)
                     {
-                        if (s == longestCellEdge)
+                        var beamLength = l.Length();
+                        if (beamLength < 1)
                         {
                             continue;
                         }
 
-                        if (r.Intersects(s, out Vector3 xsect))
+                        GeometricElement beamDefinition;
+                        if (beamProfile != null)
                         {
-                            if (t.Origin.DistanceTo(xsect) < 1)
+                            FindOrCreateStructuralFramingDefinition(beamLength, beamProfile, structureMaterial, beamDefinitions, model, out beamDefinition);
+                        }
+                        else
+                        {
+                            // Create a joist
+                            if (!beamJoistDefinitions.ContainsKey((beamLength, beamProfileDepth)))
                             {
-                                continue;
-                            }
+                                // Beam definitions are defined along the X axis
+                                var cl = new Line(Vector3.Origin, new Vector3(beamLength, 0));
+                                // if (beamLength < beamProfileDepth)
+                                // {
+                                //     continue;
+                                // }
 
-                            var l = new Line(t.Origin, xsect);
-                            var beamLength = l.Length();
-
-                            GeometricElement beamDefinition;
-                            if (beamProfile != null)
-                            {
-                                FindOrCreateStructuralFramingDefinition(beamLength, beamProfile, structureMaterial, beamDefinitions, model, out beamDefinition);
+                                var cellCount = (int)Math.Ceiling((beamLength - Units.InchesToMeters(24)) / beamProfileDepth);
+                                beamDefinition = new Joist(cl, L3, L3, L2, beamProfileDepth, cellCount, Units.InchesToMeters(2.5), Units.InchesToMeters(12), structureMaterial)
+                                {
+                                    IsElementDefinition = true
+                                };
+                                beamDefinition.Representation.SkipCSGUnion = true;
+                                beamJoistDefinitions.Add((beamLength, beamProfileDepth), beamDefinition);
+                                model.AddElement(beamDefinition, false);
                             }
                             else
                             {
-                                // Create a joist
-                                if (!beamJoistDefinitions.ContainsKey((beamLength, beamProfileDepth)))
-                                {
-                                    // Beam definitions are defined along the X axis
-                                    var cl = new Line(Vector3.Origin, new Vector3(beamLength, 0));
-                                    // if (beamLength < beamProfileDepth)
-                                    // {
-                                    //     continue;
-                                    // }
-
-                                    var cellCount = (int)Math.Ceiling((beamLength - Units.InchesToMeters(24)) / beamProfileDepth);
-                                    beamDefinition = new Joist(cl, L3, L3, L2, beamProfileDepth, cellCount, Units.InchesToMeters(2.5), Units.InchesToMeters(12), structureMaterial)
-                                    {
-                                        IsElementDefinition = true
-                                    };
-                                    beamDefinition.Representation.SkipCSGUnion = true;
-                                    beamJoistDefinitions.Add((beamLength, beamProfileDepth), beamDefinition);
-                                    model.AddElement(beamDefinition, false);
-                                }
-                                else
-                                {
-                                    beamDefinition = beamJoistDefinitions[(beamLength, beamProfileDepth)];
-                                }
+                                beamDefinition = beamJoistDefinitions[(beamLength, beamProfileDepth)];
                             }
-                            var beamDir = l.Direction();
-                            var instanceTransform = new Transform(l.Start, beamDir, Vector3.ZAxis);
-                            var beamInstance = beamDefinition.CreateInstance(instanceTransform, $"{beamDefinition.Name}");
-                            beamInstance.AdditionalProperties.Add(CELL_ID_PROPERTY_NAME, cell.Id);
-                            model.AddElement(beamInstance, false);
-                            var planDirection = beamDir.IsAlmostEqualTo(Vector3.ZAxis) ? Vector3.XAxis : beamDir.Project(xy).Unitized();
-                            beamInstance.AdditionalProperties.Add("LabelConfiguration", new LabelConfiguration(new Color(1, 1, 1, 0), Vector3.Origin, null, null, planDirection));
-                            if (beamDefinition is Beam beam)
-                            {
-                                model.AddElement(new ModelCurve(beam.Curve.Transformed(instanceTransform), BuiltInMaterials.ZAxis), false);
-                            }
-                            else if (beamDefinition is Joist joist)
-                            {
-                                model.AddElement(new ModelCurve(joist.Curve.Transformed(instanceTransform), BuiltInMaterials.ZAxis), false);
-                            }
+                        }
+                        var beamDir = l.Direction();
+                        var instanceTransform = new Transform(l.Start, beamDir, Vector3.ZAxis);
+                        var beamInstance = beamDefinition.CreateInstance(instanceTransform, $"{beamDefinition.Name}");
+                        beamInstance.AdditionalProperties.Add(CELL_ID_PROPERTY_NAME, cell.Id);
+                        model.AddElement(beamInstance, false);
+                        var planDirection = beamDir.IsAlmostEqualTo(Vector3.ZAxis) ? Vector3.XAxis : beamDir.Project(xy).Unitized();
+                        beamInstance.AdditionalProperties.Add("LabelConfiguration", new LabelConfiguration(new Color(1, 1, 1, 0), Vector3.Origin, null, null, planDirection));
+                        if (beamDefinition is Beam beam)
+                        {
+                            model.AddElement(new ModelCurve(beam.Curve.Transformed(instanceTransform), BuiltInMaterials.ZAxis), false);
+                        }
+                        else if (beamDefinition is Joist joist)
+                        {
+                            model.AddElement(new ModelCurve(joist.Curve.Transformed(instanceTransform), BuiltInMaterials.ZAxis), false);
                         }
                     }
                 }
@@ -530,7 +536,9 @@ namespace Structure
                 Warnings = warnings
             };
             return output;
+
         }
+
 
         private static void FindOrCreateStructuralFramingDefinition(double memberLength,
                                                              Profile framingProfile,
@@ -543,7 +551,7 @@ namespace Structure
             {
                 // Beam definitions are defined along the X axis
                 var cl = new Line(Vector3.Origin, new Vector3(memberLength, 0));
-                structuralFramingDefinition = new Beam(cl, framingProfile, material, name: framingProfile.Name)
+                structuralFramingDefinition = new Beam(cl, framingProfile, null, material, name: framingProfile.Name)
                 {
                     IsElementDefinition = true
                 };
