@@ -11,12 +11,4 @@
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
-  <Target Name="clean_folders">
-    <RemoveDir Directories=".\ProjectName\bin" />
-    <RemoveDir Directories=".\ProjectName\obj" />
-    <RemoveDir Directories="$(ProjectVarName)\bin" />
-    <RemoveDir Directories="$(ProjectVarName)\obj" />
-    <RemoveDir Directories="$(ProjectVarName)\server" />
-  </Target>
-
 </Project>
