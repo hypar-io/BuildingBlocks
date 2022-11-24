@@ -3,10 +3,5 @@
   <ItemGroup>
     <ProjectReference Include="..\dependencies\Structure.Dependencies.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Hypar.Elements" Version="0.9.8-alpha.12" />
-    <PackageReference Include="Hypar.Functions" Version="0.9.10" />
-  </ItemGroup>
   
 </Project>
