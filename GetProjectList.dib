@@ -1,0 +1,15 @@
+#!markdown
+
+# Get Project List
+This small script in the form of a .Net interactive notebook looks in this directory to find all Hypar functions. It lists each function's root directory in a form that can be easily copy-pasted into `update-all.sh`.
+
+#!csharp
+
+using System.IO;
+// get all directories recursively
+var directories = Directory.GetDirectories(@"./", "*.*", SearchOption.AllDirectories);
+foreach(var dir in directories) {
+    if(File.Exists(Path.Combine(dir, "hypar.json"))) {
+        Console.WriteLine($"\"{dir}\"");
+    }
+} 

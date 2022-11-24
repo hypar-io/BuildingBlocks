@@ -237,11 +237,14 @@ namespace LevelsByEnvelope
                     bbox.Max += (0, 0, -1);
                     // drop the bottom to encompass floors below
                     bbox.Min += (0, 0, -0.3);
-                    var scope = new ViewScope(
-                       bbox,
-                        new Camera(default, CameraNamedPosition.Top, CameraProjection.Orthographic),
-                        true,
-                        name: thisLevelPerimeter.Name);
+                    var scope = new ViewScope()
+                    {
+                        BoundingBox = bbox,
+                        Camera = new Camera(default, CameraNamedPosition.Top, CameraProjection.Orthographic),
+                        LockRotation = true,
+                        ClipWithBoundingBox = true,
+                        Name = thisLevelPerimeter.Name
+                    };
                     levelVolume.AdditionalProperties["Plan View"] = scope;
                     viewScopes.Add(scope);
                     volumes.Add(levelVolume);

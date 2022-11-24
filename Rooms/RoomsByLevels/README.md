@@ -6,8 +6,8 @@ The Rooms By Levels function.
 
 |Input Name|Type|Description|
 |---|---|---|
-|Corridor Width|Range|Width of the corridor.|
-|Room Area|Range|Desired area of each room.|
+|Corridor Width|number|Width of the corridor.|
+|Room Area|number|Desired area of each room.|
 
 
 <br>

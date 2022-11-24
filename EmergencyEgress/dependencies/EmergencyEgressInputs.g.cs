@@ -11,6 +11,7 @@ using Elements.Serialization.JSON;
 using Hypar.Functions;
 using Hypar.Functions.Execution;
 using Hypar.Functions.Execution.AWS;
+using Hypar.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,8 +47,7 @@ namespace EmergencyEgress
         }
     
         [Newtonsoft.Json.JsonProperty("Exit Locations", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public IList<Vector3> ExitLocations { get; set; }
-    
+        public IList<Vector3> ExitLocations { get; set; } = new List<Vector3>();
     
     }
 }

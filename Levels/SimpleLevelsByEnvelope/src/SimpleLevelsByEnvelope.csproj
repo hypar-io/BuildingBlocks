@@ -4,9 +4,4 @@
     <ProjectReference Include="..\dependencies\SimpleLevelsByEnvelope.Dependencies.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Hypar.Elements" Version="0.9.8" />
-    <PackageReference Include="Hypar.Functions" Version="0.9.10" />
-  </ItemGroup>
-
 </Project>

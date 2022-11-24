@@ -6,10 +6,10 @@ Creates a building service core representation derived from the envelope footpri
 
 |Input Name|Type|Description|
 |---|---|---|
-|Percentage Area|Range|Percentage of highest square footage allocated to service core.|
-|Length to Width Ratio|Range|Ratio of X to Y length of service core sides.|
-|Minimum Perimeter Offset|Range|Minimum distance from service core perimeter to building perimeter.|
-|Service Core Penthouse Height|Range|Height of the service core above the highest Envelope.|
+|Percentage Area|number|Percentage of highest square footage allocated to service core.|
+|Length to Width Ratio|number|Ratio of X to Y length of service core sides.|
+|Minimum Perimeter Offset|number|Minimum distance from service core perimeter to building perimeter.|
+|Service Core Penthouse Height|number|Height of the service core above the highest Envelope.|
 
 
 <br>

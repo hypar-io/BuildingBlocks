@@ -6,8 +6,8 @@ The FloorsByDXF function.
 
 |Input Name|Type|Description|
 |---|---|---|
-|Length|Range|The length.|
-|Width|Range|The width.|
+|Length|number|The length.|
+|Width|number|The width.|
 
 
 <br>

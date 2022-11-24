@@ -8,6 +8,7 @@ using Hypar.Functions.Execution;
 using Hypar.Functions.Execution.AWS;
 using System;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 
@@ -22,28 +23,51 @@ namespace CoreByLevels
 
         public async Task<CoreByLevelsOutputs> Handler(CoreByLevelsInputs args, ILambdaContext context)
         {
-            if(this.store == null)
+            // Preload dependencies (if they exist),
+            // so that they are available during model deserialization.
+
+            var sw = System.Diagnostics.Stopwatch.StartNew();
+            var asmLocation = this.GetType().Assembly.Location;
+            var asmDir = Path.GetDirectoryName(asmLocation);
+
+            // Explicitly load the dependencies project, it might have types
+            // that aren't used in the function but are necessary for correct
+            // deserialization.
+            var asmName = Path.GetFileNameWithoutExtension(asmLocation);
+            var depPath = Path.Combine(asmDir, $"{asmName}.Dependencies.dll");
+            if (File.Exists(depPath))
             {
-                // Preload the dependencies (if they exist),
-                // so that they are available during model deserialization.
-                var asmLocation = this.GetType().Assembly.Location;
-                var asmDir = Path.GetDirectoryName(asmLocation);
-                var asmName = Path.GetFileNameWithoutExtension(asmLocation);
-                var depPath = Path.Combine(asmDir, $"{asmName}.Dependencies.dll");
+                Console.WriteLine($"Loading dependencies assembly from: {depPath}...");
+                Assembly.LoadFrom(depPath);
+                Console.WriteLine("Dependencies assembly loaded.");
+            }
 
-                if(File.Exists(depPath))
+            // Load all reference assemblies.
+            Console.WriteLine($"Loading all referenced assemblies.");
+            foreach (var asm in this.GetType().Assembly.GetReferencedAssemblies())
+            {
+                try
                 {
-                    Console.WriteLine($"Loading dependencies from assembly: {depPath}...");
-                    Assembly.LoadFrom(depPath);
-                    Console.WriteLine("Dependencies assembly loaded.");
+                    Console.WriteLine($"Assembly Name: {asm.FullName}");
+                    Assembly.Load(asm);
                 }
+                catch (Exception e)
+                {
+                    Console.WriteLine($"Failed to load {asm.FullName}");
+                    Console.WriteLine(e.Message);
+                }
+            }
+            sw.Stop();
+            Console.WriteLine($"Time to load assemblies: {sw.Elapsed.TotalSeconds})");
 
+            if (this.store == null)
+            {
                 this.store = new S3ModelStore<CoreByLevelsInputs>(RegionEndpoint.USWest1);
             }
 
-            var l = new InvocationWrapper<CoreByLevelsInputs,CoreByLevelsOutputs>(store, CoreByLevels.Execute);
+            var l = new InvocationWrapper<CoreByLevelsInputs, CoreByLevelsOutputs>(store, CoreByLevels.Execute);
             var output = await l.InvokeAsync(args);
             return output;
         }
-      }
+    }
 }

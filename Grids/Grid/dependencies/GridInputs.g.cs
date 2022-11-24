@@ -50,7 +50,7 @@ namespace Grid
         }
     
         /// <summary>The base curve for the grid</summary>
-        [Newtonsoft.Json.JsonProperty("Curve", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonProperty("Curve", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public Polyline Curve { get; set; }
     
         /// <summary>The points at which the grid is split</summary>
@@ -233,7 +233,7 @@ namespace Grid
         public string Name { get; set; } = "Main";
     
         /// <summary>The origin and rotation of your grid</summary>
-        [Newtonsoft.Json.JsonProperty("Orientation", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonProperty("Orientation", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public Transform Orientation { get; set; }
     
         [Newtonsoft.Json.JsonProperty("U", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
@@ -713,7 +713,7 @@ namespace Grid
             }
         }
     
-        [Newtonsoft.Json.JsonProperty("Transform", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonProperty("Transform", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public Transform Transform { get; set; }
     
     }

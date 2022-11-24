@@ -6,10 +6,10 @@ Creates building Envelope elements derived from a polyline centerline sketch, wi
 
 |Input Name|Type|Description|
 |---|---|---|
-|Centerline|Geometry|Centerline of the building envelope.|
-|Building Height|Range|Overall height of the building from grade.|
-|Bar Width|Range|Width of the mass perpendicular to the Centerline.|
-|Foundation Depth|Range|Depth of the building envelope below grade.|
+|Centerline|https://hypar.io/Schemas/Geometry/Polyline.json|Centerline of the building envelope.|
+|Building Height|number|Overall height of the building from grade.|
+|Bar Width|number|Width of the mass perpendicular to the Centerline.|
+|Foundation Depth|number|Depth of the building envelope below grade.|
 
 
 <br>

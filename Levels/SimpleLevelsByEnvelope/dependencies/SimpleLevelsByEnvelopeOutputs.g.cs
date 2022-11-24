@@ -14,7 +14,7 @@ using System.Collections.Generic;
 
 namespace SimpleLevelsByEnvelope
 {
-    public class SimpleLevelsByEnvelopeOutputs: ResultsBase
+    public class SimpleLevelsByEnvelopeOutputs: SystemResults
     {
 		/// <summary>
 		/// Total number of levels.
