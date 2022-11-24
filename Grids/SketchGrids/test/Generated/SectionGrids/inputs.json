@@ -1,0 +1,39 @@
+{
+  "overrides": {
+    "Grid Lines": [],
+    "additions": {
+      "Grid Lines": [
+        {
+          "value": {
+            "Curve": {
+              "Start": {
+                "X": -7.211414670457259,
+                "Y": -35.90108874354341,
+                "Z": 0
+              },
+              "End": {
+                "X": -0.6442985633156013,
+                "Y": -65.95099085347128,
+                "Z": 0
+              },
+              "discriminator": "Elements.Geometry.Line"
+            }
+          },
+          "id": "b38ac0e5-ecfd-49fd-a962-fc829c8b5684"
+        }
+      ]
+    },
+    "removals": {
+      "Grid Lines": [
+        {
+          "identity": {},
+          "id": "1a9e0cdc-16b1-4792-a9e1-79c911454072"
+        },
+        {
+          "identity": {},
+          "id": "426e1780-c0bb-4312-9818-3a2ecf60ec68"
+        }
+      ]
+    }
+  }
+}
