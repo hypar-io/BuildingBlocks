@@ -38,7 +38,7 @@ namespace EmergencyEgress
             var output = new EmergencyEgressOutputs();
 
             var corridorsByLevel = corridors.GroupBy(c => c.Level);
-            var roomsByLevel = rooms.GroupBy(r => Guid.Parse(r.AdditionalProperties["Level"].ToString()));
+            var roomsByLevel = rooms.GroupBy(r => r.Level);
 
             foreach (var levelRooms in roomsByLevel)
             {
