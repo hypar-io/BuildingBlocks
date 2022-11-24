@@ -80,11 +80,10 @@ namespace EmergencyEgress
                     roomInfos.Add(AddRoom(room, centerlines, grid));
                 }
 
-                var config = new AdaptiveGraphRouting.RoutingConfiguration(0, 0, 1);
-                var alg = new AdaptiveGraphRouting(grid, config);
+                var alg = new AdaptiveGraphRouting(grid, new RoutingConfiguration());
 
                 var tree = alg.BuildSimpleNetwork(
-                    roomInfos.SelectMany(r => r.Select(e => e.Exit)).Select(l => new AdaptiveGraphRouting.RoutingVertex(l.Id, 0)).ToList(),
+                    roomInfos.SelectMany(r => r.Select(e => e.Exit)).Select(l => new RoutingVertex(l.Id, 0)).ToList(),
                     exits, null);
 
                 //Grid visualization for debug purposes
@@ -487,7 +486,7 @@ namespace EmergencyEgress
         /// <returns>Most distance efficient exit information for each room.</returns>
         public static List<RoomEvacuationVariant> ChooseRoutes(
             AdaptiveGrid grid,
-            IDictionary<ulong, ulong?> tree,
+            IDictionary<ulong, TreeNode> tree,
             List<List<RoomEvacuationVariant>> roomInfos)
         {
             List<RoomEvacuationVariant> bestExits = new List<RoomEvacuationVariant>();
@@ -504,13 +503,13 @@ namespace EmergencyEgress
                     foreach (var exit in roomExits)
                     {
                         double accumulatedLength = 0;
-                        var current = exit.Exit.Id;
-                        var next = tree[current];
-                        while (next.HasValue)
+                        var current = tree[exit.Exit.Id];
+                        while (current.Trunk != null)
                         {
-                            accumulatedLength += grid.GetVertex(current).Point.DistanceTo(grid.GetVertex(next.Value).Point);
-                            current = next.Value;
-                            next = tree[current];
+                            var p0 = grid.GetVertex(current.Id).Point;
+                            var p1 = grid.GetVertex(current.Trunk.Id).Point;
+                            accumulatedLength += p0.DistanceTo(p1);
+                            current = current.Trunk;
                         }
 
                         var maxCornerDistance = exit.Corners.Max(c => c.ExactPosition.DistanceTo(exit.Exit.Point));
@@ -534,7 +533,7 @@ namespace EmergencyEgress
         private static List<ModelCurve> Visualize(
             AdaptiveGrid grid,
             List<RoomEvacuationVariant> inputs,
-            IDictionary<ulong, ulong?> tree)
+            IDictionary<ulong, TreeNode> tree)
         {
             Dictionary<Edge, double> accumulatedDistances = new Dictionary<Edge, double>();
             List<ModelCurve> visualizations = new List<ModelCurve>();
@@ -546,11 +545,11 @@ namespace EmergencyEgress
                 CalculateDistanceRecursive(grid, input.Exit, tree, accumulatedDistances);
 
                 double distanceOutside = 0;
-                var next = tree[input.Exit.Id];
-                if (next.HasValue)
+                var node = tree[input.Exit.Id];
+                if (node != null && node.Trunk != null)
                 {
-                    var outcommingEdge = input.Exit.GetEdge(next.Value);
-                    distanceOutside = accumulatedDistances[outcommingEdge];
+                    var outgoingEdge = input.Exit.GetEdge(node.Trunk.Id);
+                    distanceOutside = accumulatedDistances[outgoingEdge];
                 }
 
                 //Draw only furthest corner line except for the case if several corners are on the same distance.
@@ -594,22 +593,22 @@ namespace EmergencyEgress
         private static double CalculateDistanceRecursive(
             AdaptiveGrid grid,
             GridVertex head,
-            IDictionary<ulong, ulong?> tree,
+            IDictionary<ulong, TreeNode> tree,
             Dictionary<Edge, double> accumulatedDistances)
         {
-            var next = tree[head.Id];
-            if (next == null)
+            var node = tree[head.Id];
+            if (node == null || node.Trunk == null)
             {
                 return 0;
             }
 
-            var edge = head.GetEdge(next.Value);
+            var edge = head.GetEdge(node.Trunk.Id);
             if (accumulatedDistances.TryGetValue(edge, out double distance))
             {
                 return distance;
             }
 
-            var tail = grid.GetVertex(next.Value);
+            var tail = grid.GetVertex(node.Trunk.Id);
             var d = CalculateDistanceRecursive(grid, tail, tree, accumulatedDistances);
             d += tail.Point.DistanceTo(head.Point);
             accumulatedDistances[edge] = d;
