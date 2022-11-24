@@ -13,8 +13,4 @@
     <PackageReference Include="SkeletonNet" Version="1.0.0" />
   </ItemGroup>
 
-  <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-  </PropertyGroup>
-
 </Project>
