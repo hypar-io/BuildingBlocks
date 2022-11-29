@@ -11,6 +11,7 @@ using Elements.Serialization.JSON;
 using Hypar.Functions;
 using Hypar.Functions.Execution;
 using Hypar.Functions.Execution.AWS;
+using Hypar.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,15 +47,13 @@ namespace RoofBySketch
             }
         }
     
-        [Newtonsoft.Json.JsonProperty("Mesh", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
-        public Mesh Mesh { get; set; } = new Mesh();
+        [Newtonsoft.Json.JsonProperty("Mesh", Required = Newtonsoft.Json.Required.AllowNull)]
+        public Mesh Mesh { get; set; }
     
         /// <summary>Thickness of the Roof from its lowest point to its underside.</summary>
         [Newtonsoft.Json.JsonProperty("Thickness", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.Range(0.1D, 1.0D)]
         public double Thickness { get; set; } = 0.2D;
-    
     
     }
     
@@ -92,8 +91,6 @@ namespace RoofBySketch
             get { return _additionalProperties; }
             set { _additionalProperties = value; }
         }
-    
-    
     }
     
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
@@ -128,7 +125,7 @@ namespace RoofBySketch
         [Newtonsoft.Json.JsonProperty("isBoundary", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public bool IsBoundary { get; set; }
     
-        [Newtonsoft.Json.JsonProperty("position", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonProperty("position", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public Vector3 Position { get; set; }
     
         private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
@@ -139,7 +136,5 @@ namespace RoofBySketch
             get { return _additionalProperties; }
             set { _additionalProperties = value; }
         }
-    
-    
     }
 }

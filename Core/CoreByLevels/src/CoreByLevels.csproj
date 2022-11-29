@@ -1,9 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-  </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="GeometryEx" Version="6.10.0" />
     <PackageReference Include="Hypar.Elements" Version="0.7.3" />

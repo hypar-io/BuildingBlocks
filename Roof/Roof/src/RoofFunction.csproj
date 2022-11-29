@@ -4,8 +4,4 @@
     <ProjectReference Include="..\dependencies\RoofFunction.Dependencies.csproj" />
   </ItemGroup>
 
-  <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-  </PropertyGroup>
-
 </Project>

@@ -1,9 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-  </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="Hypar.Model" Version="0.9.5" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />

@@ -9,3 +9,5 @@ input.json
 .DS_Store
 **/results/*
 *.nupkg
+nupkg
+server

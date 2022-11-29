@@ -14,7 +14,7 @@ using System.Collections.Generic;
 
 namespace Structure
 {
-    public class StructureOutputs: ResultsBase
+    public class StructureOutputs: SystemResults
     {
 		/// <summary>
 		/// The maximum beam length.
