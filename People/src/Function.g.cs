@@ -62,7 +62,7 @@ namespace People
 
             if(this.store == null)
             {
-                this.store = new S3ModelStore<PeopleInputs>(RegionEndpoint.GetBySystemName("us-west-1"));
+                this.store = new S3ModelStore<PeopleInputs>(RegionEndpoint.USWest1);
             }
 
             var l = new InvocationWrapper<PeopleInputs,PeopleOutputs>(store, People.Execute);
