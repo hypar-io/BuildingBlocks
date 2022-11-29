@@ -1,0 +1,42 @@
+{
+  "$schema": "https://hypar.io/Schemas/Function.json",
+  "id": "6b0e66fb-cfac-4946-8714-234898334eae",
+  "name": "People",
+  "description": "Distribute people on all floors.",
+  "language": "C#",
+  "model_dependencies": [
+    {
+      "autohide": false,
+      "name": "Floors",
+      "optional": false
+    }
+  ],
+  "model_output": "People",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "People per floor": {
+        "description": "The number of people to be distributed around each floor.",
+        "multipleOf": 1,
+        "maximum": 500,
+        "default": 50,
+        "type": "number",
+        "$hyparOrder": 0,
+        "minimum": 0
+      },
+      "Include Seated People": {
+        "description": "Should seated people be included?",
+        "type": "boolean",
+        "default": false,
+        "$hyparOrder": 1
+      }
+    }
+  },
+  "outputs": [],
+  "repository_url": "",
+  "source_file_key": null,
+  "preview_image": null,
+  "element_types": [
+    "https://prod-api.hypar.io/schemas/Floor"
+  ]
+}
