@@ -12,8 +12,4 @@
     <PackageReference Include="RoomKit" Version="5.5.0" />
   </ItemGroup>
 
-  <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-  </PropertyGroup>
-
 </Project>

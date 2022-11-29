@@ -11,6 +11,7 @@ using Elements.Serialization.JSON;
 using Hypar.Functions;
 using Hypar.Functions.Execution;
 using Hypar.Functions.Execution.AWS;
+using Hypar.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -115,7 +116,6 @@ namespace Structure
         /// <summary>The maximum allowable span between an off grid vertex location and its closest on-grid neighbor. If the distance between the two is greater than this value, a column will be placed.</summary>
         [Newtonsoft.Json.JsonProperty("Maximum Neighbor Span", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public double MaximumNeighborSpan { get; set; } = 2D;
-    
     
     }
     

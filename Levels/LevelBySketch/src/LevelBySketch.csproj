@@ -10,8 +10,4 @@
     <PackageReference Include="Hypar.Functions" Version="0.9.5" />
   </ItemGroup>
 
-  <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-  </PropertyGroup>
-
 </Project>
