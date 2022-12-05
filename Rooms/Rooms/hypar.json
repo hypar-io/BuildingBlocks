@@ -1,0 +1,25 @@
+{
+  "$schema": "https://hypar.io/Schemas/Function.json",
+  "id": "018ad801-4b6a-4548-b49a-ca21fe307d22",
+  "name": "Rooms",
+  "description": "Create rooms automatically from areas bounded by walls or by drawing them.",
+  "language": "C#",
+  "input_schema": {
+    "type": "object",
+    "properties": {}
+  },
+  "outputs": [],
+  "model_dependencies": [
+    {
+      "name": "Walls",
+      "autohide": false,
+      "optional": false
+    }
+  ],
+  "element_types": [
+    "https://prod-api.hypar.io/schemas/Room"
+  ],
+  "repository_url": "https://prod-api.hypar.io/schemas/Room",
+  "last_updated": "0001-01-01T00:00:00",
+  "cli_version": "1.3.0"
+}
