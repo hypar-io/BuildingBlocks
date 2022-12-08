@@ -5,6 +5,7 @@
 
 using Elements;
 using Xunit;
+using System;
 using System.IO;
 using System.Collections.Generic;
 using Elements.Serialization.glTF;
@@ -19,46 +20,20 @@ namespace Walls
             var input = GetInput();
 
             var modelDependencies = new Dictionary<string, Model> { 
+                {"Levels", Model.FromJson(File.ReadAllText(@"/Users/andrewheumann/Dev/BuildingBlocks/Walls/Walls/test/Generated/WallsTest/model_dependencies/Levels/fb3792ee-44ff-4220-999c-10b31cb718af.json")) }, 
             };
 
             var result = Walls.Execute(modelDependencies, input);
             result.Model.ToGlTF("../../../Generated/WallsTest/results/WallsTest.gltf", false);
             result.Model.ToGlTF("../../../Generated/WallsTest/results/WallsTest.glb");
             File.WriteAllText("../../../Generated/WallsTest/results/WallsTest.json", result.Model.ToJson());
+
         }
 
         public WallsInputs GetInput()
         {
-            var inputText = @"
-            {
-  ""model_input_keys"": {},
-  ""overrides"": {
-    ""additions"": {
-      ""Walls"": [
-        {
-          ""value"": {
-            ""CenterLine"": {
-              ""Start"": {
-                ""X"": -10.253369005350589,
-                ""Y"": -203.25228188007446,
-                ""Z"": 0
-              },
-              ""End"": {
-                ""X"": 90.1953723546826,
-                ""Y"": -191.5876327340572,
-                ""Z"": 0
-              },
-              ""discriminator"": ""Elements.Geometry.Line""
-            }
-          },
-          ""id"": ""f685cd5d-d816-41b6-8e4c-9fe30659255a""
-        }
-      ]
-    }
-  }
-}
-            ";
-            return Newtonsoft.Json.JsonConvert.DeserializeObject<WallsInputs>(inputText);
+            var json = File.ReadAllText("../../../Generated/WallsTest/inputs.json");
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<WallsInputs>(json);
         }
     }
 }
