@@ -16,6 +16,7 @@
       "optional": false
     }
   ],
+  "model_output": "Rooms",
   "element_types": [
     "https://prod-api.hypar.io/schemas/Room"
   ],
