@@ -21,3 +21,7 @@ Makes Levels and LevelPerimeters from an incoming Envelope.
 |Repeating Level Height|Number|Height of the standard levels.|
 |Top Level Height|Number|Height of the penthouse level.|
 
+
+<br>
+
+## Additional Information

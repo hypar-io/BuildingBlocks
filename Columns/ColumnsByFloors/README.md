@@ -18,3 +18,7 @@ Creates a grid of columns on each floor with the central intervals spanning the 
 |---|---|---|
 |Column Quantity|Number|Total quantity of columns.|
 
+
+<br>
+
+## Additional Information

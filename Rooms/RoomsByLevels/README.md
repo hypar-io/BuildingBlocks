@@ -17,3 +17,7 @@ The Rooms By Levels function.
 |Rooms Per Floor|Number|Quantity of Rooms on each floor.|
 |Room Total|Number|Quantity of Rooms in the building.|
 
+
+<br>
+
+## Additional Information

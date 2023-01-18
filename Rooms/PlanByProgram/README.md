@@ -26,3 +26,7 @@ Creates plans from a program of Room Defintions as produced by Program By CSV.
 |Total Circulation Area|Number|Total area of horizontal circulation.|
 |Total Area|Number|Total area of rooms and circulation.|
 
+
+<br>
+
+## Additional Information

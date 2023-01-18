@@ -62,7 +62,7 @@ namespace SubdivideSlab
 
             if(this.store == null)
             {
-                this.store = new S3ModelStore<SubdivideSlabInputs>(RegionEndpoint.USWest1);
+                this.store = new S3ModelStore<SubdivideSlabInputs>(RegionEndpoint.GetBySystemName("us-west-1"));
             }
 
             var l = new InvocationWrapper<SubdivideSlabInputs,SubdivideSlabOutputs>(store, SubdivideSlab.Execute);

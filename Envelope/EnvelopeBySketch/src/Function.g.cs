@@ -62,7 +62,7 @@ namespace EnvelopeBySketch
 
             if(this.store == null)
             {
-                this.store = new S3ModelStore<EnvelopeBySketchInputs>(RegionEndpoint.USWest1);
+                this.store = new S3ModelStore<EnvelopeBySketchInputs>(RegionEndpoint.GetBySystemName("us-west-1"));
             }
 
             var l = new InvocationWrapper<EnvelopeBySketchInputs,EnvelopeBySketchOutputs>(store, EnvelopeBySketch.Execute);

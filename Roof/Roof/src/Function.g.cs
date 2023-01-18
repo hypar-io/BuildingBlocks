@@ -62,7 +62,7 @@ namespace RoofFunction
 
             if(this.store == null)
             {
-                this.store = new S3ModelStore<RoofFunctionInputs>(RegionEndpoint.USWest1);
+                this.store = new S3ModelStore<RoofFunctionInputs>(RegionEndpoint.GetBySystemName("us-west-1"));
             }
 
             var l = new InvocationWrapper<RoofFunctionInputs,RoofFunctionOutputs>(store, RoofFunction.Execute);

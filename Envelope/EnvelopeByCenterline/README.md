@@ -19,3 +19,7 @@ Creates building Envelope elements derived from a polyline centerline sketch, wi
 |Height|Number|Height of the building.|
 |Subgrade|Number|Depth of the subgrade section.|
 
+
+<br>
+
+## Additional Information

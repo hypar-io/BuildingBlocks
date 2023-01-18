@@ -27,3 +27,7 @@ Generates a structural frame from a set of Levels and an Envelope.
 |---|---|---|
 |Maximum Beam Length|Number|The maximum beam length.|
 
+
+<br>
+
+## Additional Information

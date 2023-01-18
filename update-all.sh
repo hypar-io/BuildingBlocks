@@ -1,6 +1,7 @@
 #!/bin/bash
 projects=(
     "./EmergencyEgress"
+    "./People"
     "./Walls/Walls"
     "./Core/CoreByEnvelope"
     "./Core/CoreBySketch"
@@ -21,6 +22,7 @@ projects=(
     "./Rooms/PlanByProgram"
     "./Rooms/ProgramByCSV"
     "./Floors/FloorsByDXF"
+    "./Floors/FloorsBySketch"
     "./Floors/FloorsByLevels"
     "./Floors/SubdivideSlab"
     "./Levels/LevelBySketch"

@@ -16,3 +16,7 @@ Creates the volume of a building service core by extruding a sketch to a height 
 |---|---|---|
 |Height|Number|Height of the service core.|
 
+
+<br>
+
+## Additional Information

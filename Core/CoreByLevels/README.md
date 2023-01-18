@@ -17,3 +17,7 @@ Creates a building core by referencing LevelPerimeters supplied by another funct
 |Restrooms|Number|Restroom quantity.|
 |Lifts|Number|Lift quantity.|
 
+
+<br>
+
+## Additional Information

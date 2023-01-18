@@ -62,7 +62,7 @@ namespace PlanByProgram
 
             if(this.store == null)
             {
-                this.store = new S3ModelStore<PlanByProgramInputs>(RegionEndpoint.USWest1);
+                this.store = new S3ModelStore<PlanByProgramInputs>(RegionEndpoint.GetBySystemName("us-west-1"));
             }
 
             var l = new InvocationWrapper<PlanByProgramInputs,PlanByProgramOutputs>(store, PlanByProgram.Execute);

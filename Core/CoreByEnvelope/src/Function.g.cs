@@ -62,7 +62,7 @@ namespace CoreByEnvelope
 
             if(this.store == null)
             {
-                this.store = new S3ModelStore<CoreByEnvelopeInputs>(RegionEndpoint.USWest1);
+                this.store = new S3ModelStore<CoreByEnvelopeInputs>(RegionEndpoint.GetBySystemName("us-west-1"));
             }
 
             var l = new InvocationWrapper<CoreByEnvelopeInputs,CoreByEnvelopeOutputs>(store, CoreByEnvelope.Execute);

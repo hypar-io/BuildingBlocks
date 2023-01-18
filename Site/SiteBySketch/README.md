@@ -15,3 +15,7 @@ Creates a Site from a polygon sketch.
 |---|---|---|
 |Area|Number|Total site area.|
 
+
+<br>
+
+## Additional Information

@@ -62,7 +62,7 @@ namespace FloorsBySketch
 
             if(this.store == null)
             {
-                this.store = new S3ModelStore<FloorsBySketchInputs>(RegionEndpoint.USWest1);
+                this.store = new S3ModelStore<FloorsBySketchInputs>(RegionEndpoint.GetBySystemName("us-west-1"));
             }
 
             var l = new InvocationWrapper<FloorsBySketchInputs,FloorsBySketchOutputs>(store, FloorsBySketch.Execute);

@@ -62,7 +62,7 @@ namespace ProgramByCSV
 
             if(this.store == null)
             {
-                this.store = new S3ModelStore<ProgramByCSVInputs>(RegionEndpoint.USWest1);
+                this.store = new S3ModelStore<ProgramByCSVInputs>(RegionEndpoint.GetBySystemName("us-west-1"));
             }
 
             var l = new InvocationWrapper<ProgramByCSVInputs,ProgramByCSVOutputs>(store, ProgramByCSV.Execute);

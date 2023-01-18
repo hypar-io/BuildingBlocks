@@ -62,7 +62,7 @@ namespace FloorsByDXF
 
             if(this.store == null)
             {
-                this.store = new S3ModelStore<FloorsByDXFInputs>(RegionEndpoint.USWest1);
+                this.store = new S3ModelStore<FloorsByDXFInputs>(RegionEndpoint.GetBySystemName("us-west-1"));
             }
 
             var l = new InvocationWrapper<FloorsByDXFInputs,FloorsByDXFOutputs>(store, FloorsByDXF.Execute);

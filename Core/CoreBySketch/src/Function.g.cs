@@ -62,7 +62,7 @@ namespace CoreBySketch
 
             if(this.store == null)
             {
-                this.store = new S3ModelStore<CoreBySketchInputs>(RegionEndpoint.USWest1);
+                this.store = new S3ModelStore<CoreBySketchInputs>(RegionEndpoint.GetBySystemName("us-west-1"));
             }
 
             var l = new InvocationWrapper<CoreBySketchInputs,CoreBySketchOutputs>(store, CoreBySketch.Execute);

@@ -20,3 +20,7 @@ Creates a building service core representation derived from the envelope footpri
 |Service Core Width|Number|Width of the service core.|
 |Service Core Rotation|Number|Rotation of the service core.|
 
+
+<br>
+
+## Additional Information

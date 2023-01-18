@@ -15,3 +15,13 @@ Create floors by drawing them manually.
 |---|---|---|
 |Area|Number|The total floor area|
 
+
+<br>
+
+## Additional Information
+
+
+
+
+
+

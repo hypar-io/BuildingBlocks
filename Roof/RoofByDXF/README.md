@@ -17,3 +17,7 @@ Generates a Roof from a DXF Polyline and supplied elevation and thickness values
 |---|---|---|
 |Area|Number|Area of the Roof.|
 
+
+<br>
+
+## Additional Information

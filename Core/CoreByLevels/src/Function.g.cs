@@ -35,7 +35,7 @@ namespace CoreByLevels
             // deserialization.
             var asmName = Path.GetFileNameWithoutExtension(asmLocation);
             var depPath = Path.Combine(asmDir, $"{asmName}.Dependencies.dll");
-            if (File.Exists(depPath))
+            if(File.Exists(depPath))
             {
                 Console.WriteLine($"Loading dependencies assembly from: {depPath}...");
                 Assembly.LoadFrom(depPath);
@@ -60,14 +60,14 @@ namespace CoreByLevels
             sw.Stop();
             Console.WriteLine($"Time to load assemblies: {sw.Elapsed.TotalSeconds})");
 
-            if (this.store == null)
+            if(this.store == null)
             {
-                this.store = new S3ModelStore<CoreByLevelsInputs>(RegionEndpoint.USWest1);
+                this.store = new S3ModelStore<CoreByLevelsInputs>(RegionEndpoint.GetBySystemName("us-west-1"));
             }
 
-            var l = new InvocationWrapper<CoreByLevelsInputs, CoreByLevelsOutputs>(store, CoreByLevels.Execute);
+            var l = new InvocationWrapper<CoreByLevelsInputs,CoreByLevelsOutputs>(store, CoreByLevels.Execute);
             var output = await l.InvokeAsync(args);
             return output;
         }
-    }
+      }
 }

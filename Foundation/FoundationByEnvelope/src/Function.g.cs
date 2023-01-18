@@ -62,7 +62,7 @@ namespace FoundationByEnvelope
 
             if(this.store == null)
             {
-                this.store = new S3ModelStore<FoundationByEnvelopeInputs>(RegionEndpoint.USWest1);
+                this.store = new S3ModelStore<FoundationByEnvelopeInputs>(RegionEndpoint.GetBySystemName("us-west-1"));
             }
 
             var l = new InvocationWrapper<FoundationByEnvelopeInputs,FoundationByEnvelopeOutputs>(store, FoundationByEnvelope.Execute);

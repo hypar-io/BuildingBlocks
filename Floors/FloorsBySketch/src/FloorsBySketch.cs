@@ -15,12 +15,16 @@ namespace FloorsBySketch
         /// <returns>A FloorsBySketchOutputs instance containing computed results and the model with any new elements.</returns>
         public static FloorsBySketchOutputs Execute(Dictionary<string, Model> inputModels, FloorsBySketchInputs input)
         {
+            var floorMaterial = new Material("Concrete")
+            {
+                Color = (0.7, 0.7, 0.7, 1.0)
+            };
             var floors = new List<Floor>();
 
             // deprecated pathway
             foreach (var floorInput in input.Floors)
             {
-                var f = new Floor(floorInput.Boundary, floorInput.Thickness, new Transform(0, 0, floorInput.Elevation), BuiltInMaterials.Concrete);
+                var f = new Floor(floorInput.Boundary, floorInput.Thickness, new Transform(0, 0, floorInput.Elevation), floorMaterial);
                 f.AdditionalProperties["Original Boundary"] = floorInput.Boundary;
                 f.AdditionalProperties["Boundary"] = floorInput.Boundary;
                 floors.Add(f);
@@ -37,7 +41,7 @@ namespace FloorsBySketch
                     {
                         elevation = floorsUnderThisFloor.Max(f => f.Transform.Origin.Z) + 3.0;
                     }
-                    var f = new Floor(floor.Value.Boundary, 0.3, new Transform(0, 0, elevation - 0.3), BuiltInMaterials.Concrete);
+                    var f = new Floor(floor.Value.Boundary, 0.3, new Transform(0, 0, elevation - 0.3), floorMaterial);
                     f.AdditionalProperties["Original Boundary"] = floor.Value.Boundary;
                     f.AdditionalProperties["Boundary"] = floor.Value.Boundary;
                     f.AdditionalProperties["Creation Id"] = floor.Id;

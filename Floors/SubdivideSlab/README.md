@@ -18,3 +18,7 @@ Subdivide floor slabs into sections
 |---|---|---|
 |Count|Number|Number of regions.|
 
+
+<br>
+
+## Additional Information

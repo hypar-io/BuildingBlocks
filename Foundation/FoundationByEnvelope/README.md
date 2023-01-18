@@ -15,3 +15,7 @@ Creates a Foundation from a building Envelope.
 |---|---|---|
 |Depth|Number|The calculated foundation depth.|
 
+
+<br>
+
+## Additional Information
