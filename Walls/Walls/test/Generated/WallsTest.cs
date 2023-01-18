@@ -20,7 +20,7 @@ namespace Walls
             var input = GetInput();
 
             var modelDependencies = new Dictionary<string, Model> { 
-                {"Levels", Model.FromJson(File.ReadAllText(@"/Users/andrewheumann/Dev/BuildingBlocks/Walls/Walls/test/Generated/WallsTest/model_dependencies/Levels/fb3792ee-44ff-4220-999c-10b31cb718af.json")) }, 
+                {"Levels", Model.FromJson(File.ReadAllText(@"/Users/andrewheumann/Dev/BuildingBlocks/Walls/Walls/test/Generated/WallsTest/model_dependencies/Levels/8217a572-7f01-42cf-9d48-eecad58dd190.json")) }, 
             };
 
             var result = Walls.Execute(modelDependencies, input);

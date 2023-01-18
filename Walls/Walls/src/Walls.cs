@@ -47,6 +47,7 @@ namespace Walls
                 Material = DEFAULT_WALL_MATERIAL
             };
             wall.AdditionalProperties["Add Id"] = add.Id;
+            Identity.AddOverrideIdentity(wall, add);
             return wall;
         }
 
@@ -67,7 +68,8 @@ namespace Walls
             var newWall = new StandardWall(centerline, wall.Thickness, wall.Height)
             {
                 Transform = wall.Transform,
-                AdditionalProperties = wall.AdditionalProperties
+                AdditionalProperties = wall.AdditionalProperties,
+                Material = wall.Material
             };
             Identity.AddOverrideIdentity(newWall, edit);
             return newWall;
@@ -93,9 +95,9 @@ namespace Walls
                 {
                     transform.Move(new Vector3(0, 0, bottomLevel.Elevation));
                 }
+                var topLevel = levels.FirstOrDefault(l => l.Id.ToString() == edit.Value.Levels.TopLevel.Id);
                 if (edit.Value.Levels?.TopLevel?.Id != null)
                 {
-                    var topLevel = levels.FirstOrDefault(l => l.Id.ToString() == edit.Value.Levels.TopLevel.Id);
                     if (topLevel == null && levels.Count() > 0)
                     {
                         topLevel = levels.OrderBy(l => Math.Abs(l.Elevation - edit.Value.Levels.TopLevel.Elevation.Value)).First();
@@ -105,6 +107,16 @@ namespace Walls
                         height = topLevel.Elevation - (bottomLevel?.Elevation ?? 0);
                     }
                 }
+                wall.AdditionalProperties["Levels"] = new WallPropertiesValueLevels(
+                    new WallPropertiesValueBottomLevel(
+                        bottomLevel?.Id.ToString(),
+                        bottomLevel?.Elevation
+                    ),
+                    new WallPropertiesValueTopLevel(
+                        topLevel?.Id.ToString(),
+                        topLevel?.Elevation
+                    )
+                );
             }
 
             var newWall = new StandardWall(centerline, thickness, height)
@@ -113,6 +125,36 @@ namespace Walls
                 AdditionalProperties = addlProps,
                 Transform = transform
             };
+
+            if (edit.Value.Openings != null)
+            {
+                foreach (var openingSpec in edit.Value.Openings)
+                {
+                    var sillHeight = openingSpec.SillHeight ?? 0;
+                    var topHeight = (openingSpec.TopOutHeight ?? Units.FeetToMeters(7.5));
+                    if (topHeight - sillHeight < 0.01)
+                    {
+                        topHeight += Units.FeetToMeters(7.5);
+                    }
+                    var openingHeight = topHeight - sillHeight;
+                    foreach (var line in openingSpec.Locations)
+                    {
+                        var pos1 = centerline.Start.DistanceTo(line.Start.ClosestPointOn(centerline));
+                        var pos2 = centerline.Start.DistanceTo(line.End.ClosestPointOn(centerline));
+                        if (pos2 < pos1)
+                        {
+                            (pos2, pos1) = (pos1, pos2);
+                        }
+                        var width = pos2 - pos1;
+
+                        var pgon = Polygon.Rectangle((pos1, sillHeight), (pos2, topHeight));
+                        var centerPos = pgon.Centroid();
+                        newWall.AddOpening(width, openingHeight, centerPos.X, centerPos.Y);
+                    }
+                }
+            }
+
+
             // This is only necessary because we're creating a new wall instead
             // of modifying the one that was passed in.
             Identity.AddOverrideIdentity(newWall, edit);

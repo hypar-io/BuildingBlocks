@@ -2,7 +2,7 @@
 
 # Walls
 
-The Walls function.
+Create Walls by drawing them.
 
 |Input Name|Type|Description|
 |---|---|---|
@@ -12,4 +12,10 @@ The Walls function.
 
 |Output Name|Type|Description|
 |---|---|---|
+
+
+<br>
+
+## Additional Information
+
 

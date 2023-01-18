@@ -126,6 +126,39 @@
               }
             }
           }
+        },
+        "Openings": {
+          "type": "array",
+          "items": {
+            "$hyparDisplayName": "Opening",
+            "type": "object",
+            "$hyparStyle": "row",
+            "properties": {
+              "Locations": {
+                "type": "array",
+                "$hyparRelativeToTransform": true,
+                "items": {
+                  "$ref": "https://hypar.io/Schemas/Geometry/Line.json"
+                }
+              },
+              "Sill Height": {
+                "type": [
+                  "number",
+                  "null"
+                ],
+                "multipleOf": 0.1,
+                "$hyparUnitType": "length"
+              },
+              "Top-Out Height": {
+                "type": [
+                  "number",
+                  "null"
+                ],
+                "multipleOf": 0.1,
+                "$hyparUnitType": "length"
+              }
+            }
+          }
         }
       }
     }

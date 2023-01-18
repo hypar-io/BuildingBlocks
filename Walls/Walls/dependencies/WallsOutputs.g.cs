@@ -14,7 +14,7 @@ using System.Collections.Generic;
 
 namespace Walls
 {
-    public class WallsOutputs: ResultsBase
+    public class WallsOutputs: SystemResults
     {
 
 
