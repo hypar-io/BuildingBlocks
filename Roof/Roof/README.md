@@ -19,3 +19,7 @@ Create a simple, schematic roof
 |---|---|---|
 |Total Roof Area|Number|The total roofing area.|
 
+
+<br>
+
+## Additional Information

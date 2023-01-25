@@ -1,0 +1,517 @@
+{
+  "overrides": {
+    "additions": {
+      "Walls": [
+        {
+          "value": {
+            "CenterLine": {
+              "Start": {
+                "X": -13.142688553449947,
+                "Y": -3.2173657656546837,
+                "Z": 0
+              },
+              "End": {
+                "X": -4.595220195966796,
+                "Y": -3.2173657656546837,
+                "Z": 0
+              },
+              "discriminator": "Elements.Geometry.Line"
+            }
+          },
+          "id": "3334f098-7332-4837-9d84-5d3f9ea62590"
+        },
+        {
+          "value": {
+            "CenterLine": {
+              "Start": {
+                "X": -4.595220195966796,
+                "Y": -3.2173657656546837,
+                "Z": 0
+              },
+              "End": {
+                "X": -4.595220195966796,
+                "Y": 2.9485876308008425,
+                "Z": 0
+              },
+              "discriminator": "Elements.Geometry.Line"
+            }
+          },
+          "id": "6e27b29e-109f-41c8-a330-9eab87a9ebab"
+        },
+        {
+          "value": {
+            "CenterLine": {
+              "Start": {
+                "X": -4.595220195966796,
+                "Y": 9.114541027256369,
+                "Z": 0
+              },
+              "End": {
+                "X": -10.451871744405238,
+                "Y": 9.114541027256369,
+                "Z": 0
+              },
+              "discriminator": "Elements.Geometry.Line"
+            }
+          },
+          "id": "2e86f889-67e9-4571-a316-b66212720e59"
+        },
+        {
+          "value": {
+            "CenterLine": {
+              "Start": {
+                "X": -10.451871744405238,
+                "Y": 9.114541027256369,
+                "Z": 0
+              },
+              "End": {
+                "X": -12.114515063579285,
+                "Y": 1.4947125896639308,
+                "Z": 0
+              },
+              "discriminator": "Elements.Geometry.Line"
+            }
+          },
+          "id": "a43ad6fa-5dbf-4729-9f07-7a2278e5eaf9"
+        },
+        {
+          "value": {
+            "CenterLine": {
+              "Start": {
+                "X": -12.114515063579285,
+                "Y": 1.4947125896639308,
+                "Z": 0
+              },
+              "End": {
+                "X": -13.142688553449947,
+                "Y": -3.2173657656546837,
+                "Z": 0
+              },
+              "discriminator": "Elements.Geometry.Line"
+            }
+          },
+          "id": "59eb1348-17a8-4308-96a5-fcd15ef34d03"
+        },
+        {
+          "value": {
+            "CenterLine": {
+              "Start": {
+                "X": -4.595220195966796,
+                "Y": 2.9485876308008425,
+                "Z": 0
+              },
+              "End": {
+                "X": -4.595220195966796,
+                "Y": 9.114541027256369,
+                "Z": 0
+              },
+              "discriminator": "Elements.Geometry.Line"
+            }
+          },
+          "id": "99a154b6-8315-4dc2-a886-7adbcb8d1753"
+        },
+        {
+          "value": {
+            "CenterLine": {
+              "Start": {
+                "X": -12.114515063579285,
+                "Y": 1.4947125896639308,
+                "Z": 0
+              },
+              "End": {
+                "X": -4.595220195966796,
+                "Y": 2.9485876308008425,
+                "Z": 0
+              },
+              "discriminator": "Elements.Geometry.Line"
+            }
+          },
+          "id": "40bb7c15-b65c-4a94-ab1e-a299d7ac022b"
+        },
+        {
+          "value": {
+            "CenterLine": {
+              "Start": {
+                "X": -2.8910431163605077,
+                "Y": 14.795248385347055,
+                "Z": 0
+              },
+              "End": {
+                "X": 3.4826681779671085,
+                "Y": 13.693222090249975,
+                "Z": 0
+              },
+              "discriminator": "Elements.Geometry.Line"
+            }
+          },
+          "id": "560420fd-ac80-49f2-b264-d84267c880c4"
+        },
+        {
+          "value": {
+            "CenterLine": {
+              "Start": {
+                "X": 3.4826681779671085,
+                "Y": 13.693222090249975,
+                "Z": 0
+              },
+              "End": {
+                "X": 2.9561046794649903,
+                "Y": 23.51900312972955,
+                "Z": 3.552713678800501E-15
+              },
+              "discriminator": "Elements.Geometry.Line"
+            }
+          },
+          "id": "56b91330-073f-406e-9dd4-accbd5a3f188"
+        },
+        {
+          "value": {
+            "CenterLine": {
+              "Start": {
+                "X": 2.9561046794649903,
+                "Y": 23.51900312972955,
+                "Z": 3.552713678800501E-15
+              },
+              "End": {
+                "X": -3.2766389044742366,
+                "Y": 23.184990469195085,
+                "Z": 1.2991367572156735E-15
+              },
+              "discriminator": "Elements.Geometry.Line"
+            }
+          },
+          "id": "7500cb19-1220-4a5a-b9d0-17607ddf31f3"
+        },
+        {
+          "value": {
+            "CenterLine": {
+              "Start": {
+                "X": -3.2766389044742366,
+                "Y": 23.184990469195085,
+                "Z": 1.2991367572156735E-15
+              },
+              "End": {
+                "X": -2.8910431163605077,
+                "Y": 14.795248385347055,
+                "Z": 0
+              },
+              "discriminator": "Elements.Geometry.Line"
+            }
+          },
+          "id": "4e8293ae-e8c3-4144-a9a1-17665df6b93c"
+        },
+        {
+          "value": {
+            "CenterLine": {
+              "Start": {
+                "X": -15.62104572327652,
+                "Y": -26.337648165924403,
+                "Z": 0
+              },
+              "End": {
+                "X": -4.840133977360969,
+                "Y": -30.601559328356057,
+                "Z": 0
+              },
+              "discriminator": "Elements.Geometry.Line"
+            }
+          },
+          "id": "90c91a05-1787-4c56-823d-961cd48ac257"
+        },
+        {
+          "value": {
+            "CenterLine": {
+              "Start": {
+                "X": -4.840133977360969,
+                "Y": -30.601559328356057,
+                "Z": 0
+              },
+              "End": {
+                "X": 1.022743870979622,
+                "Y": -25.053629463601233,
+                "Z": 0
+              },
+              "discriminator": "Elements.Geometry.Line"
+            }
+          },
+          "id": "46abc7ae-c4e9-4f4e-8a3d-3065d5a08cf2"
+        },
+        {
+          "value": {
+            "CenterLine": {
+              "Start": {
+                "X": 1.022743870979622,
+                "Y": -25.053629463601233,
+                "Z": 0
+              },
+              "End": {
+                "X": -5.174172419811768,
+                "Y": -21.812352000657576,
+                "Z": 0
+              },
+              "discriminator": "Elements.Geometry.Line"
+            }
+          },
+          "id": "4b1dd189-cfd2-44bd-ad19-40cca328ffe5"
+        },
+        {
+          "value": {
+            "CenterLine": {
+              "Start": {
+                "X": -5.174172419811768,
+                "Y": -21.812352000657576,
+                "Z": 0
+              },
+              "End": {
+                "X": -12.343726207485108,
+                "Y": -24.057549769012795,
+                "Z": 0
+              },
+              "discriminator": "Elements.Geometry.Line"
+            }
+          },
+          "id": "99f9b6a8-c1ef-486c-8ace-eef78fae68f4"
+        },
+        {
+          "value": {
+            "CenterLine": {
+              "Start": {
+                "X": -12.343726207485108,
+                "Y": -24.057549769012795,
+                "Z": 0
+              },
+              "End": {
+                "X": -15.62104572327652,
+                "Y": -26.337648165924403,
+                "Z": 0
+              },
+              "discriminator": "Elements.Geometry.Line"
+            }
+          },
+          "id": "3e080cb7-5fef-4469-90da-6cf9df068ca6"
+        }
+      ]
+    },
+    "Wall Properties": [
+      {
+        "value": {
+          "Openings": [
+            {
+              "Locations": [
+                {
+                  "Start": {
+                    "X": -10.637430947080778,
+                    "Y": 7.906692236415941,
+                    "Z": 0
+                  },
+                  "End": {
+                    "X": -11.119112536191817,
+                    "Y": 5.69916460361234,
+                    "Z": 0
+                  },
+                  "discriminator": "Elements.Geometry.Line"
+                },
+                {
+                  "Start": {
+                    "X": -12.015406066326634,
+                    "Y": 1.591486877072565,
+                    "Z": 0
+                  },
+                  "End": {
+                    "X": -12.554153482813192,
+                    "Y": -0.8775711809497917,
+                    "Z": 0
+                  },
+                  "discriminator": "Elements.Geometry.Line"
+                }
+              ],
+              "Sill Height": 0,
+              "Top-Out Height": 0
+            }
+          ]
+        },
+        "identity": {
+          "Add Id": "a43ad6fa-5dbf-4729-9f07-7a2278e5eaf9"
+        },
+        "id": "9cb66c9e-e0e6-4725-9322-8b04ce9561af"
+      },
+      {
+        "value": {
+          "Levels": {
+            "Bottom Level": {
+              "Elevation": 6.095999902464004,
+              "Id": "e3ab35e3-f0ab-4e45-8e72-368805a10ca6"
+            },
+            "Top Level": {
+              "Elevation": 12.191999902464005,
+              "Id": "6bde706b-5b91-443b-87b8-2332752f3fe5"
+            }
+          }
+        },
+        "identity": {
+          "Add Id": "90c91a05-1787-4c56-823d-961cd48ac257"
+        },
+        "id": "ba1aff4b-c277-49b5-badd-b870057c6606"
+      },
+      {
+        "value": {
+          "Levels": {
+            "Bottom Level": {
+              "Elevation": 6.095999902464004,
+              "Id": "e3ab35e3-f0ab-4e45-8e72-368805a10ca6"
+            },
+            "Top Level": {
+              "Elevation": 9.143999902464003,
+              "Id": "4a67516f-a878-45f4-8ea0-f49cb0bae2e1"
+            }
+          }
+        },
+        "identity": {
+          "Add Id": "46abc7ae-c4e9-4f4e-8a3d-3065d5a08cf2"
+        },
+        "id": "65ba622d-4582-48df-b150-758936fb7476"
+      },
+      {
+        "value": {
+          "Levels": {
+            "Bottom Level": {
+              "Elevation": 6.095999902464004,
+              "Id": "e3ab35e3-f0ab-4e45-8e72-368805a10ca6"
+            },
+            "Top Level": {
+              "Elevation": 9.143999902464003,
+              "Id": "4a67516f-a878-45f4-8ea0-f49cb0bae2e1"
+            }
+          }
+        },
+        "identity": {
+          "Add Id": "4b1dd189-cfd2-44bd-ad19-40cca328ffe5"
+        },
+        "id": "0a67fabf-10e3-47fa-a1c6-6705c8c45b3a"
+      },
+      {
+        "value": {
+          "Levels": {
+            "Bottom Level": {
+              "Elevation": 3.047999902464003,
+              "Id": "353e3377-dc9c-4111-907b-b12003756128"
+            },
+            "Top Level": {
+              "Elevation": 9.143999902464003,
+              "Id": "4a67516f-a878-45f4-8ea0-f49cb0bae2e1"
+            }
+          }
+        },
+        "identity": {
+          "Add Id": "99f9b6a8-c1ef-486c-8ace-eef78fae68f4"
+        },
+        "id": "b799fdca-c55f-4da2-a3e9-ab112a8e214b"
+      },
+      {
+        "value": {
+          "Levels": {
+            "Bottom Level": {
+              "Elevation": 0,
+              "Id": "85e320a8-b803-4ee7-953a-0685b1c7f0bb"
+            },
+            "Top Level": {
+              "Elevation": 11.582400000000002,
+              "Id": "4a67516f-a878-45f4-8ea0-f49cb0bae2e1"
+            }
+          }
+        },
+        "identity": {
+          "Add Id": "560420fd-ac80-49f2-b264-d84267c880c4"
+        },
+        "id": "7eadedf4-577a-4f58-a9d9-28f6df19413d"
+      },
+      {
+        "value": {
+          "Thickness": 0.2539998628400741,
+          "Height": 3.657599882956804
+        },
+        "identity": {
+          "Add Id": "3334f098-7332-4837-9d84-5d3f9ea62590"
+        },
+        "id": "9f9602fa-7ebc-4fe5-829e-87a0152a7ad1"
+      },
+      {
+        "value": {
+          "Levels": {
+            "Bottom Level": {
+              "Elevation": 0,
+              "Id": "85e320a8-b803-4ee7-953a-0685b1c7f0bb"
+            },
+            "Top Level": {
+              "Elevation": 5.486400000000001,
+              "Id": "353e3377-dc9c-4111-907b-b12003756128"
+            }
+          }
+        },
+        "identity": {
+          "Add Id": "6e27b29e-109f-41c8-a330-9eab87a9ebab"
+        },
+        "id": "0a86264b-170a-4e37-81bb-956dab38cbfc"
+      },
+      {
+        "value": {
+          "Levels": {
+            "Bottom Level": {
+              "Elevation": 0,
+              "Id": "85e320a8-b803-4ee7-953a-0685b1c7f0bb"
+            },
+            "Top Level": {
+              "Elevation": 5.486400000000001,
+              "Id": "353e3377-dc9c-4111-907b-b12003756128"
+            }
+          }
+        },
+        "identity": {
+          "Add Id": "99a154b6-8315-4dc2-a886-7adbcb8d1753"
+        },
+        "id": "4b5209b5-0eb6-4089-b001-537c677b1f4e"
+      },
+      {
+        "value": {
+          "Levels": {
+            "Bottom Level": {
+              "Elevation": 0,
+              "Id": "85e320a8-b803-4ee7-953a-0685b1c7f0bb"
+            },
+            "Top Level": {
+              "Elevation": 8.534400000000002,
+              "Id": "e3ab35e3-f0ab-4e45-8e72-368805a10ca6"
+            }
+          }
+        },
+        "identity": {
+          "Add Id": "40bb7c15-b65c-4a94-ab1e-a299d7ac022b"
+        },
+        "id": "e9f4c714-317e-4702-8fbe-2f556c77399e"
+      }
+    ],
+    "Walls": [
+      {
+        "value": {
+          "CenterLine": {
+            "Start": {
+              "X": -2.7581708553756195,
+              "Y": 11.209219362275846,
+              "Z": 0
+            },
+            "End": {
+              "X": 3.495650669786508,
+              "Y": 13.768308007079693,
+              "Z": -3.552713678800501E-15
+            },
+            "discriminator": "Elements.Geometry.Line"
+          }
+        },
+        "identity": {
+          "Add Id": "560420fd-ac80-49f2-b264-d84267c880c4"
+        },
+        "id": "029ebd0b-336a-49ac-91b8-d750b7fb8d7b"
+      }
+    ]
+  }
+}

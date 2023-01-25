@@ -41,7 +41,7 @@ namespace Elements
         }
     
         /// <summary>The roof's shape</summary>
-        [JsonProperty("Profile", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [JsonProperty("Profile", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public Profile Profile { get; set; }
     
         /// <summary>The roof's planar area</summary>

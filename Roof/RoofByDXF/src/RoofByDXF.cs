@@ -10,7 +10,7 @@ using GeometryEx;
 
 namespace RoofByDXF
 {
-      public static class RoofByDXF
+    public static class RoofByDXF
     {
         /// <summary>
         /// Generates a Roof from a DXF Polyline and supplied elevation and thickness values.
@@ -71,50 +71,25 @@ namespace RoofByDXF
 
             // Create an aggregated list of Triangles representing the Roof envelope.
             var envTriangles = new List<Elements.Geometry.Triangle>();
-            topSide.Triangles.ForEach(t => envTriangles.Add(t));
-            underSide.Triangles.ForEach(t => envTriangles.Add(t));
+            envTriangles.AddRange(topSide.Triangles);
+            envTriangles.AddRange(envTriangles);
             sideTriangles.ForEach(t => envTriangles.Add(t));
 
             // Create an aggregated list of Vertices representing the Roof envelope.
-            var enVertices = new List<Vertex>();
-            envTriangles.ForEach(t => enVertices.AddRange(t.Vertices));
+            var envVertices = new List<Vertex>();
+            envTriangles.ForEach(t => envVertices.AddRange(t.Vertices));
 
             // Construct the roof envelope in Elements.Geometry.mesh form.
-            var Envelope = new Elements.Geometry.Mesh();
-            envTriangles.ForEach(t => Envelope.AddTriangle(t));
-            enVertices.ForEach(v => Envelope.AddVertex(v));
-            Envelope.ComputeNormals();
-
-            // Construct serializable topside mesh
-            var triangles = new List<triangles>();
-            var indices = new List<vertices>();
-            var tsIV = topSide.ToIndexedVertices();
-            tsIV.triangles.ForEach(t => triangles.Add(new triangles(t)));
-            tsIV.vertices.ForEach(v => indices.Add(new vertices(v.index, v.isBoundary, v.position)));
-            var topside = new Elements.Mesh(triangles, indices);
-            
-
-            // Construct serializable underside mesh           
-            triangles.Clear();
-            indices.Clear();
-            var usIV = underSide.ToIndexedVertices();
-            usIV.triangles.ForEach(t => triangles.Add(new triangles(t)));
-            usIV.vertices.ForEach(v => indices.Add(new vertices(v.index, v.isBoundary, v.position)));
-            var underside = new Elements.Mesh(triangles, indices);
-
-            // Construct serializable envelope mesh           
-            triangles.Clear();
-            indices.Clear();
-            var enIV = Envelope.ToIndexedVertices();
-            enIV.triangles.ForEach(t => triangles.Add(new triangles(t)));
-            enIV.vertices.ForEach(v => indices.Add(new vertices(v.index, v.isBoundary, v.position)));
-            var envelope = new Elements.Mesh(triangles, indices);
+            var envelope = new Mesh();
+            envTriangles.ForEach(t => envelope.AddTriangle(t));
+            envVertices.ForEach(v => envelope.AddVertex(v));
+            envelope.ComputeNormals();
 
             var roof =
                 new Roof(
                     envelope,
-                    topside,
-                    underside,
+                    topSide,
+                    underSide,
                     underBoundary,
                     input.RoofElevation,
                     highPoint,
@@ -124,7 +99,11 @@ namespace RoofByDXF
                     BuiltInMaterials.Concrete,
                     null, false, Guid.NewGuid(), "Roof");
             var output = new RoofByDXFOutputs(polygon.Area());
-            output.Model.AddElement(new MeshElement(Envelope, BuiltInMaterials.Concrete));
+            output.Model.AddElement(new MeshElement
+            {
+                Mesh = envelope,
+                Material = BuiltInMaterials.Concrete
+            });
             output.Model.AddElement(roof);
             return output;
         }

@@ -6,8 +6,6 @@
 
   <ItemGroup>
     <PackageReference Include="GeometryEx" Version="6.10.0" />
-    <PackageReference Include="Hypar.Elements" Version="0.7.3" />
-    <PackageReference Include="Hypar.Functions" Version="0.7.3" />
     <PackageReference Include="ParagonClipper" Version="6.4.2" />
     <PackageReference Include="RoomKit" Version="5.5.0" />
   </ItemGroup>

@@ -3,9 +3,5 @@
   <ItemGroup>
     <ProjectReference Include="..\dependencies\EmergencyEgress.Dependencies.csproj" />
   </ItemGroup>
-  
-  <ItemGroup>
-    <PackageReference Include="Hypar.Functions" Version="0.9.10" />
-  </ItemGroup>
 
 </Project>

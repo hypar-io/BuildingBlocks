@@ -48,6 +48,7 @@ namespace EnvelopeBySite
             {
                 try
                 {
+                    Console.WriteLine($"Assembly Name: {asm.FullName}");
                     Assembly.Load(asm);
                 }
                 catch (Exception e)
@@ -61,7 +62,7 @@ namespace EnvelopeBySite
 
             if(this.store == null)
             {
-                this.store = new S3ModelStore<EnvelopeBySiteInputs>(RegionEndpoint.USWest1);
+                this.store = new S3ModelStore<EnvelopeBySiteInputs>(RegionEndpoint.GetBySystemName("us-west-1"));
             }
 
             var l = new InvocationWrapper<EnvelopeBySiteInputs,EnvelopeBySiteOutputs>(store, EnvelopeBySite.Execute);

@@ -16,3 +16,7 @@ Creates a Level from a sketch.
 |---|---|---|
 |Area|Number|Area of the Level Perimeter.|
 
+
+<br>
+
+## Additional Information

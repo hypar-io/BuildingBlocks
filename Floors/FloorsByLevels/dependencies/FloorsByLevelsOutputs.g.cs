@@ -14,7 +14,7 @@ using System.Collections.Generic;
 
 namespace FloorsByLevels
 {
-    public class FloorsByLevelsOutputs: ResultsBase
+    public class FloorsByLevelsOutputs: SystemResults
     {
 		/// <summary>
 		/// Aggregate area of all floors.

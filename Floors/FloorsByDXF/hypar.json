@@ -4,26 +4,31 @@
   "name": "Floors By DXF",
   "description": "The FloorsByDXF function.",
   "language": "C#",
-  "inputs": [
-    {
-      "min": 1.0,
-      "max": 10.0,
-      "step": 1.0,
-      "unit_type": "length",
-      "name": "Length",
-      "description": "The length.",
-      "type": "range"
-    },
-    {
-      "min": 1.0,
-      "max": 10.0,
-      "step": 1.0,
-      "unit_type": "length",
-      "name": "Width",
-      "description": "The width.",
-      "type": "range"
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "Length": {
+        "description": "The length.",
+        "type": "number",
+        "minimum": 1.0,
+        "maximum": 10.0,
+        "multipleOf": 1.0,
+        "default": 6.0,
+        "$hyparUnitType": "length",
+        "$hyparOrder": 0
+      },
+      "Width": {
+        "description": "The width.",
+        "type": "number",
+        "minimum": 1.0,
+        "maximum": 10.0,
+        "multipleOf": 1.0,
+        "default": 6.0,
+        "$hyparUnitType": "length",
+        "$hyparOrder": 1
+      }
     }
-  ],
+  },
   "outputs": [
     {
       "unit_type": "none",
@@ -33,6 +38,6 @@
     }
   ],
   "repository_url": "https://github.com/hypar-io/function",
-  "source_file_key": null,
-  "preview_image": null
+  "last_updated": "0001-01-01T00:00:00",
+  "cli_version": "1.3.0"
 }

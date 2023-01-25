@@ -7,7 +7,7 @@ using GeometryEx;
 using RoomKit;
 
 namespace PlanByProgram
-{    
+{
     public static class Placer
     {
         private struct SuiteID
@@ -55,12 +55,12 @@ namespace PlanByProgram
                             Name = rmDef.Name,
                             Suite = rmDef.SuiteName,
                             SuiteID = rmDef.SuiteNumber
-                        }) ;
+                        });
                     }
                     i++;
                 }
                 Suite.SuitePlan plan = Suite.SuitePlan.Reciprocal;
-                if (inputs.SuitePlanType == SuitePlanType.Axis)
+                if (inputs.SuitePlanType == PlanByProgramInputsSuitePlanType.Axis)
                 {
                     plan = Suite.SuitePlan.Axis;
                 }
@@ -200,11 +200,11 @@ namespace PlanByProgram
             bool northeast = true;
             bool minCoord = true;
             bool diagonal = inputs.DiagonalAdjacency;
-            if (inputs.PrimaryDirection == PrimaryDirection.Southwest)
+            if (inputs.PrimaryDirection == PlanByProgramInputsPrimaryDirection.Southwest)
             {
                 northeast = false;
             }
-            if (inputs.CoordinateAdjacency == CoordinateAdjacency.Maximum)
+            if (inputs.CoordinateAdjacency == PlanByProgramInputsCoordinateAdjacency.Maximum)
             {
                 minCoord = false;
             }

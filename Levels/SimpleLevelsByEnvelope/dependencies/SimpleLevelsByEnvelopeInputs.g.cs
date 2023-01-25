@@ -11,6 +11,7 @@ using Elements.Serialization.JSON;
 using Hypar.Functions;
 using Hypar.Functions.Execution;
 using Hypar.Functions.Execution.AWS;
+using Hypar.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -60,7 +61,6 @@ namespace SimpleLevelsByEnvelope
         [Newtonsoft.Json.JsonProperty("Subgrade Level Height", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.Range(2.7D, 6D)]
         public double SubgradeLevelHeight { get; set; } = 3D;
-    
     
     }
 }

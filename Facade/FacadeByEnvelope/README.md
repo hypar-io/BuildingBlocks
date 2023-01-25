@@ -19,3 +19,7 @@ Creates a Facade for an Envelope.
 |---|---|---|
 |Panel Quantity|Number|Total facade panels.|
 
+
+<br>
+
+## Additional Information

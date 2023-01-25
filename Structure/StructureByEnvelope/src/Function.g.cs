@@ -62,7 +62,7 @@ namespace Structure
 
             if(this.store == null)
             {
-                this.store = new S3ModelStore<StructureInputs>(RegionEndpoint.USWest1);
+                this.store = new S3ModelStore<StructureInputs>(RegionEndpoint.GetBySystemName("us-west-1"));
             }
 
             var l = new InvocationWrapper<StructureInputs,StructureOutputs>(store, Structure.Execute);

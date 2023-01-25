@@ -159,27 +159,27 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmergencyEgress.Tests", "Em
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ColumnsFromGrid", "ColumnsFromGrid", "{919938A0-66DF-464C-9C86-710F2BF82D3C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ColumnsFromGrid", "Columns\ColumnsFromGrid\src\ColumnsFromGrid.csproj", "{CC4AF7B8-50E2-4637-BB67-926D76C14C78}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ColumnsFromGrid", "Columns\ColumnsFromGrid\src\ColumnsFromGrid.csproj", "{CC4AF7B8-50E2-4637-BB67-926D76C14C78}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ColumnsFromGrid.Tests", "Columns\ColumnsFromGrid\test\ColumnsFromGrid.Tests.csproj", "{FBBDB7C4-C910-4C8C-BDE5-E8BB2441C083}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ColumnsFromGrid.Tests", "Columns\ColumnsFromGrid\test\ColumnsFromGrid.Tests.csproj", "{FBBDB7C4-C910-4C8C-BDE5-E8BB2441C083}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SimpleLevelsByEnvelope", "SimpleLevelsByEnvelope", "{AD00B794-6D25-4DD7-BEC1-FF4B9B4AA342}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleLevelsByEnvelope", "Levels\SimpleLevelsByEnvelope\src\SimpleLevelsByEnvelope.csproj", "{1C2E472C-E977-4329-81D2-954D31926F3F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleLevelsByEnvelope", "Levels\SimpleLevelsByEnvelope\src\SimpleLevelsByEnvelope.csproj", "{1C2E472C-E977-4329-81D2-954D31926F3F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleLevelsByEnvelope.Tests", "Levels\SimpleLevelsByEnvelope\test\SimpleLevelsByEnvelope.Tests.csproj", "{70321D22-BFFB-44B0-AD7F-F915207CDAA6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleLevelsByEnvelope.Tests", "Levels\SimpleLevelsByEnvelope\test\SimpleLevelsByEnvelope.Tests.csproj", "{70321D22-BFFB-44B0-AD7F-F915207CDAA6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Roof", "Roof", "{D2150815-9B12-48C9-9547-B10888BD39A6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoofFunction", "Roof\Roof\src\RoofFunction.csproj", "{8D9DF71F-7350-463C-8529-5E66A2A530EC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RoofFunction", "Roof\Roof\src\RoofFunction.csproj", "{8D9DF71F-7350-463C-8529-5E66A2A530EC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoofFunction.Tests", "Roof\Roof\test\RoofFunction.Tests.csproj", "{111B3507-3975-4585-89BE-E886247B22F0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RoofFunction.Tests", "Roof\Roof\test\RoofFunction.Tests.csproj", "{111B3507-3975-4585-89BE-E886247B22F0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Walls", "Walls", "{CD66A780-BBBD-4B01-A0A2-3C3E19D5A701}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Walls", "Walls", "{E05386D8-EEA3-466E-AC44-FDF706AD93A5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Walls", "Walls\Walls\src\Walls.csproj", "{D1AD5E24-D35D-4BB0-A497-E14A6600F144}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Walls", "Walls\Walls\src\Walls.csproj", "{D1AD5E24-D35D-4BB0-A497-E14A6600F144}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Walls.Tests", "Walls\Walls\test\Walls.Tests.csproj", "{AE1D189A-1A63-4434-9DB0-B20A5351CD8F}"
 EndProject

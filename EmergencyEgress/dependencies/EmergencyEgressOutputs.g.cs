@@ -14,7 +14,7 @@ using System.Collections.Generic;
 
 namespace EmergencyEgress
 {
-    public class EmergencyEgressOutputs: ResultsBase
+    public class EmergencyEgressOutputs: SystemResults
     {
 
 

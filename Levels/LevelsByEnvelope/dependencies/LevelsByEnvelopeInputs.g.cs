@@ -11,6 +11,7 @@ using Elements.Serialization.JSON;
 using Hypar.Functions;
 using Hypar.Functions.Execution;
 using Hypar.Functions.Execution.AWS;
+using Hypar.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -61,7 +62,6 @@ namespace LevelsByEnvelope
         [Newtonsoft.Json.JsonProperty("Penthouse Level Height", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.Range(2D, 20D)]
         public double PenthouseLevelHeight { get; set; } = 5D;
-    
     
     }
 }
