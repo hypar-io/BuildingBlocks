@@ -134,7 +134,13 @@ namespace CoreByLevels
             bathTopo = new CompassBox(bathPerim);
             bathPerim = bathPerim.Rotate(Position, Rotation);
             var bathLevels = Levels.Where(l => l.Elevation >= 0.0);
-            var bathMatl = new Material(new Color(0.0f, 0.6f, 1.0f, 0.8f), 0.0f, 0.0f, false, null, false, Guid.NewGuid(), "bath");
+            var bathMatl = new Material()
+            {
+                Name = "bath",
+                Color = new Color(0.0, 0.6, 1.0, 0.8),
+                SpecularFactor = 0.0,
+                GlossinessFactor = 0.0
+            };
 
             var i = 0;
             foreach (var level in bathLevels.SkipLast(2))
@@ -142,8 +148,26 @@ namespace CoreByLevels
                 var bathHeight = bathLevels.ElementAt(i + 1).Elevation - bathLevels.ElementAt(i).Elevation - 1.0;
                 var extrude = new Elements.Geometry.Solids.Extrude(bathPerim, bathHeight, Vector3.ZAxis, false);
                 var geomRep = new Representation(new List<Elements.Geometry.Solids.SolidOperation>() { extrude });
-                Restrooms.Add(new Room(bathPerim, Vector3.ZAxis, "", "", "", "", 0.0, 0.0, Rotation, bathLevels.ElementAt(i).Elevation,
-                                       bathHeight, bathPerim.Area(), new Transform(0.0, 0.0, bathLevels.ElementAt(i).Elevation),            bathMatl, geomRep, false, Guid.NewGuid(), "Restroom"));
+                Restrooms.Add(new Room
+                {
+                    Perimeter = bathPerim,
+                    Direction = Vector3.ZAxis,
+                    SuiteName = "",
+                    SuiteNumber = "",
+                    Department = "",
+                    Number = "",
+                    DesignArea = 0.0,
+                    DesignRatio = 0.0,
+                    Rotation = Rotation,
+                    LevelName = bathLevels.ElementAt(i).Name,
+                    Elevation = bathLevels.ElementAt(i).Elevation,
+                    Height = bathHeight,
+                    Area = bathPerim.Area(),
+                    Transform = new Transform(0.0, 0.0, bathLevels.ElementAt(i).Elevation),
+                    Material = bathMatl,
+                    Representation = geomRep,
+                    Name = "Restroom"
+                });
                 i++;
             }
             return bathTopo;
@@ -165,7 +189,13 @@ namespace CoreByLevels
             var mechHeight = lastLevel.Elevation - Levels.First().Elevation;
             var extrude = new Elements.Geometry.Solids.Extrude(mechPerim, mechHeight, Vector3.ZAxis, false);
             var geomRep = new Representation(new List<Elements.Geometry.Solids.SolidOperation>() { extrude });
-            var mechMatl = new Material(new Color(0.2f, 0.2f, 0.2f, 0.8f), 0.0f, 0.0f, false, null, false, Guid.NewGuid(), "mech");
+            var mechMatl = new Material()
+            {
+                Name = "mech",
+                Color = new Color(0.2, 0.2, 0.2, 0.8),
+                SpecularFactor = 0.0,
+                GlossinessFactor = 0.0
+            };
             var ctr = mechPerim.Centroid();
             Mechanicals.Add(new MechanicalCorridor(mechPerim, Vector3.ZAxis, Rotation,
                                                    new Vector3(ctr.X, ctr.Y, Levels.First().Elevation),
@@ -211,7 +241,13 @@ namespace CoreByLevels
                 stairPerim = stairPerim.Rotate(Position, Rotation);
                 var extrude = new Elements.Geometry.Solids.Extrude(stairPerim, stairHeight, Vector3.ZAxis, false);
                 var geomRep = new Representation(new List<Elements.Geometry.Solids.SolidOperation>() { extrude });
-                var stairMatl = new Material(new Color(1.0f, 0.0f, 0.0f, 0.8f), 0.0f, 0.0f, false, null, false, Guid.NewGuid(), "stair");
+                var stairMatl = new Material()
+                {
+                    Name = "stair",
+                    Color = new Color(1.0, 0.0, 0.0, 0.8),
+                    SpecularFactor = 0.0,
+                    GlossinessFactor = 0.0
+                };
                 Stairs.Add(new StairEnclosure(stairPerim, Vector3.ZAxis, Rotation, Levels.First().Elevation,
                                               stairHeight, stairPerim.Area() * stairHeight, "",
                                               new Transform(0.0, 0.0, Levels.First().Elevation),
@@ -227,7 +263,14 @@ namespace CoreByLevels
         /// <param name="liftSvc"></param>
         private void MakeLifts(List<CompassBox> stairs, int liftSvc)
         {
-            var liftMatl = new Material(new Color(1.0f, 0.9f, 0.4f, 0.8f), 0.0f, 0.0f, false, null, false, Guid.NewGuid(), "lift");
+            var liftMatl = new Material()
+            {
+                Name = "lift",
+                Color = new Color(1.0, 0.9, 0.4, 0.8),
+                SpecularFactor = 0.0,
+                GlossinessFactor = 0.0
+            };
+
             var liftPolys = new List<Polygon>() { Polygon.Rectangle(liftSize, liftSize) };
             for (var i = 0; i < (LiftQuantity * 0.5) - 1; i++)
             {

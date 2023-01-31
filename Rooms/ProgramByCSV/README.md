@@ -21,3 +21,7 @@ Converts a properly formatted Comma Separated Value (.csv) file into space progr
 |Room Quantity|Number|Quantity of Rooms which can be derived from the Room Definitions.|
 |Aggregate Program Area|Number|Aggregate area of all Room Definitions.|
 
+
+<br>
+
+## Additional Information

@@ -10,6 +10,7 @@ using Elements.Geometry.Solids;
 using Elements.Spatial;
 using Elements.Validators;
 using Elements.Serialization.JSON;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,11 +22,11 @@ namespace Elements
     #pragma warning disable // Disable all warnings
 
     /// <summary>The origin of a project.</summary>
-    [Newtonsoft.Json.JsonConverter(typeof(Elements.Serialization.JSON.JsonInheritanceConverter), "discriminator")]
+    [JsonConverter(typeof(Elements.Serialization.JSON.JsonInheritanceConverter), "discriminator")]
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
     public partial class Origin : Element
     {
-        [Newtonsoft.Json.JsonConstructor]
+        [JsonConstructor]
         public Origin(Position @position, double @elevation, Transform @transform = null, System.Guid @id = default, string @name = null)
             : base(id, name)
         {
@@ -41,16 +42,16 @@ namespace Elements
         }
     
         /// <summary>The latitude of the origin.</summary>
-        [Newtonsoft.Json.JsonProperty("Position", Required = Newtonsoft.Json.Required.AllowNull)]
+        [JsonProperty("Position", Required = Newtonsoft.Json.Required.AllowNull)]
         public Position Position { get; set; }
     
         /// <summary>The elevation in meters of the Origin.</summary>
-        [Newtonsoft.Json.JsonProperty("Elevation", Required = Newtonsoft.Json.Required.Always)]
+        [JsonProperty("Elevation", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Range(0.0D, double.MaxValue)]
         public double Elevation { get; set; }
     
         /// <summary>A coordinate system which defines the origin's rotation and translation relative to the latitude and longitude. The transform's Z translation will be equal to the Elevation</summary>
-        [Newtonsoft.Json.JsonProperty("Transform", Required = Newtonsoft.Json.Required.AllowNull)]
+        [JsonProperty("Transform", Required = Newtonsoft.Json.Required.AllowNull)]
         public Transform Transform { get; set; }
     
     

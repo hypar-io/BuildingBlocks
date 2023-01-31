@@ -10,6 +10,7 @@ using Elements.Geometry.Solids;
 using Elements.Spatial;
 using Elements.Validators;
 using Elements.Serialization.JSON;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,17 +22,20 @@ namespace Elements
     #pragma warning disable // Disable all warnings
 
     /// <summary>Represents a preset view attached to an element.</summary>
-    [Newtonsoft.Json.JsonConverter(typeof(Elements.Serialization.JSON.JsonInheritanceConverter), "discriminator")]
+    [JsonConverter(typeof(Elements.Serialization.JSON.JsonInheritanceConverter), "discriminator")]
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
     public partial class ViewScope : Element
     {
-        [Newtonsoft.Json.JsonConstructor]
-        public ViewScope(BBox3 @boundingBox, Camera @camera, bool? @lockRotation, System.Guid @id = default, string @name = null)
+        [JsonConstructor]
+        public ViewScope(BBox3 @boundingBox, Camera @camera, bool? @lockRotation, bool? @clipWithBoundingBox, bool? @modal, System.Collections.Generic.IDictionary<string, string> @functionVisibility, System.Guid @id = default, string @name = null)
             : base(id, name)
         {
             this.BoundingBox = @boundingBox;
             this.Camera = @camera;
             this.LockRotation = @lockRotation;
+            this.ClipWithBoundingBox = @clipWithBoundingBox;
+            this.Modal = @modal;
+            this.FunctionVisibility = @functionVisibility;
             }
         
         // Empty constructor
@@ -41,16 +45,27 @@ namespace Elements
         }
     
         /// <summary>The "focus" extent for this view.</summary>
-        [Newtonsoft.Json.JsonProperty("Bounding Box", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [JsonProperty("Bounding Box", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public BBox3 BoundingBox { get; set; }
     
         /// <summary>The camera to use for this view.</summary>
-        [Newtonsoft.Json.JsonProperty("Camera", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [JsonProperty("Camera", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public Camera Camera { get; set; }
     
         /// <summary>Whether this scope should lock view rotation. True to lock, False to unlock, and null to leave unchanged.</summary>
-        [Newtonsoft.Json.JsonProperty("Lock Rotation", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [JsonProperty("Lock Rotation", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public bool? LockRotation { get; set; }
+    
+        /// <summary>Whether this scope should clip to the specified bounding box. If false, it only zooms to the bounding box without clipping.</summary>
+        [JsonProperty("Clip With Bounding Box", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public bool? ClipWithBoundingBox { get; set; }
+    
+        /// <summary>If true, when the user exits this scope, they'll return to their previous camera settings.</summary>
+        [JsonProperty("Modal", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public bool? Modal { get; set; }
+    
+        [JsonProperty("Function Visibility", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.IDictionary<string, string> FunctionVisibility { get; set; }
     
     
     }

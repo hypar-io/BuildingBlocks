@@ -1,22 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-  </PropertyGroup>
-
   <ItemGroup>
-    <ProjectReference Include="..\dependencies\FloorsByLevelsDependencies.csproj" />
+    <ProjectReference Include="..\dependencies\FloorsByLevels.Dependencies.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="Textures\*.*">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>  
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Hypar.Elements" Version="0.9.5" />
-    <PackageReference Include="Hypar.Functions" Version="0.9.6" />
+    </Content>
   </ItemGroup>
 
 </Project>

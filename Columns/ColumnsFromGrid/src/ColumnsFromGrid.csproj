@@ -3,9 +3,5 @@
   <ItemGroup>
     <ProjectReference Include="..\dependencies\ColumnsFromGrid.Dependencies.csproj" />
   </ItemGroup>
-
-  <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-  </PropertyGroup>
-
+  
 </Project>

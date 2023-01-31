@@ -232,11 +232,14 @@ namespace SimpleLevelsByEnvelope
             bbox.Max += (0, 0, -1);
             // drop the bottom to encompass floors below
             bbox.Min += (0, 0, -0.3);
-            var scope = new ViewScope(
-               bbox,
-                new Camera(default, CameraNamedPosition.Top, CameraProjection.Orthographic),
-                true,
-                name: scopeName);
+            var scope = new ViewScope()
+            {
+                BoundingBox = bbox,
+                Camera = new Camera(default, CameraNamedPosition.Top, CameraProjection.Orthographic),
+                ClipWithBoundingBox = true,
+                LockRotation = true,
+                Name = scopeName,
+            };
             subGradeVolume.AdditionalProperties["Plan View"] = scope;
             scopes.Add(scope);
             levelVolumes.Add(subGradeVolume);

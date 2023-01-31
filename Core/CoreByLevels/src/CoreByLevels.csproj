@@ -1,13 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\dependencies\CoreByLevels.Dependencies.csproj" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="GeometryEx" Version="6.10.0" />
-    <PackageReference Include="Hypar.Elements" Version="0.7.3" />
-    <PackageReference Include="Hypar.Functions" Version="0.7.3" />
     <PackageReference Include="RoomKit" Version="5.5.0" />
   </ItemGroup>
 

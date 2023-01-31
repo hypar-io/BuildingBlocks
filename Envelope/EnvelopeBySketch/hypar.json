@@ -5,6 +5,13 @@
     "description": "Creates building Envelope elements derived from a polygon sketch and setback settings.",
     "language": "C#",
     "model_output": "Envelope",
+    "model_dependencies": [
+        {
+            "autohide": false,
+            "name": "Levels",
+            "optional": true
+        }
+    ],
     "input_schema": {
         "type": "object",
         "properties": {
@@ -21,6 +28,10 @@
                         {
                             "property": "Use Setbacks",
                             "value": true
+                        },
+                        {
+                            "dependency": "Levels",
+                            "present": false
                         }
                     ]
                 },
@@ -35,7 +46,15 @@
             "Use Setbacks": {
                 "$hyparOrder": 3,
                 "type": "boolean",
-                "default": false
+                "default": false,
+                "$hyparShowIf": {
+                    "conditions": [
+                        {
+                            "dependency": "Levels",
+                            "present": false
+                        }
+                    ]
+                }
             },
             "Setback Depth": {
                 "default": 1,
@@ -44,6 +63,10 @@
                         {
                             "property": "Use Setbacks",
                             "value": true
+                        },
+                        {
+                            "dependency": "Levels",
+                            "present": false
                         }
                     ]
                 },
@@ -62,6 +85,10 @@
                         {
                             "property": "Use Setbacks",
                             "value": true
+                        },
+                        {
+                            "dependency": "Levels",
+                            "present": false
                         }
                     ]
                 },
@@ -81,7 +108,15 @@
                 "$hyparOrder": 1,
                 "$hyparUnitType": "length",
                 "type": "number",
-                "minimum": 5
+                "minimum": 5,
+                "$hyparShowIf": {
+                    "conditions": [
+                        {
+                            "dependency": "Levels",
+                            "present": false
+                        }
+                    ]
+                }
             },
             "Foundation Depth": {
                 "default": 10,
@@ -91,7 +126,15 @@
                 "$hyparOrder": 2,
                 "$hyparUnitType": "length",
                 "type": "number",
-                "minimum": 0
+                "minimum": 0,
+                "$hyparShowIf": {
+                    "conditions": [
+                        {
+                            "dependency": "Levels",
+                            "present": false
+                        }
+                    ]
+                }
             }
         },
         "required": [
@@ -114,7 +157,9 @@
     ],
     "element_types": [
         "https://raw.githubusercontent.com/hypar-io/Schemas/master/Origin.json",
-        "https://raw.githubusercontent.com/hypar-io/Schemas/master/Envelope.json"
+        "https://raw.githubusercontent.com/hypar-io/Schemas/master/Envelope.json",
+        "https://prod-api.hypar.io/schemas/Level",
+        "https://prod-api.hypar.io/schemas/LevelVolume"
     ],
     "repository_url": "https://github.com/hypar-io/BuildingBlocks/tree/master/Envelope/EnvelopeBySketch",
     "source_file_key": null,

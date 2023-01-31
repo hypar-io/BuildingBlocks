@@ -48,6 +48,7 @@ namespace EmergencyEgress
             {
                 try
                 {
+                    Console.WriteLine($"Assembly Name: {asm.FullName}");
                     Assembly.Load(asm);
                 }
                 catch (Exception e)
@@ -61,7 +62,7 @@ namespace EmergencyEgress
 
             if(this.store == null)
             {
-                this.store = new S3ModelStore<EmergencyEgressInputs>(RegionEndpoint.USWest1);
+                this.store = new S3ModelStore<EmergencyEgressInputs>(RegionEndpoint.GetBySystemName("us-west-1"));
             }
 
             var l = new InvocationWrapper<EmergencyEgressInputs,EmergencyEgressOutputs>(store, EmergencyEgress.Execute);

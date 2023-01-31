@@ -288,7 +288,7 @@ namespace Structure
                     Column columnDefinition;
                     if (!columnDefintions.ContainsKey((memberLength, columnProfile)))
                     {
-                        columnDefinition = new Column(Vector3.Origin, memberLength, null, columnProfile, null, structureMaterial, name: columnProfile.Name)
+                        columnDefinition = new Column(Vector3.Origin, memberLength, null, columnProfile, material: structureMaterial, name: columnProfile.Name)
                         {
                             IsElementDefinition = true
                         };
@@ -551,7 +551,7 @@ namespace Structure
             {
                 // Beam definitions are defined along the X axis
                 var cl = new Line(Vector3.Origin, new Vector3(memberLength, 0));
-                structuralFramingDefinition = new Beam(cl, framingProfile, null, material, name: framingProfile.Name)
+                structuralFramingDefinition = new Beam(cl, framingProfile, material: material, name: framingProfile.Name)
                 {
                     IsElementDefinition = true
                 };

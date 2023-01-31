@@ -22,3 +22,7 @@ Creates an Envelope from a Site boundary supplied by another function.
 |Height|Number|Height of the building.|
 |Subgrade|Number|Depth of the subgrade section.|
 
+
+<br>
+
+## Additional Information

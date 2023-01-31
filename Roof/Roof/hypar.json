@@ -20,6 +20,15 @@
             "autohide": false,
             "name": "Masterplan",
             "optional": true
+        },
+        {
+            "autohide": false,
+            "name": "Conceptual Mass",
+            "optional": true
+        },
+        {
+            "name": "Enclosure",
+            "optional": true
         }
     ],
     "model_output": "Roof",
@@ -38,13 +47,13 @@
                 "$ref": "https://hypar.io/Schemas/Geometry/Color.json"
             },
             "Roof Thickness": {
-                "multipleOf": 0.01,
+                "multipleOf": 0.001,
                 "description": "The Length.",
                 "maximum": 2,
                 "type": "number",
                 "$hyparUnitType": "length",
                 "$hyparOrder": 0,
-                "minimum": 0.1
+                "minimum": 0.001
             },
             "Insulation Thickness": {
                 "multipleOf": 0.01,
@@ -85,7 +94,8 @@
         "https://prod-api.hypar.io/schemas/Roof",
         "https://prod-api.hypar.io/schemas/LevelVolume",
         "https://prod-api.hypar.io/schemas/Footprint",
-        "https://prod-api.hypar.io/schemas/Envelope"
+        "https://prod-api.hypar.io/schemas/Envelope",
+        "https://prod-api.hypar.io/schemas/ConceptualMass"
     ],
     "repository_url": "https://github.com/hypar-io/function",
     "filters": {},

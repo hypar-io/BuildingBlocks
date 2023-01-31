@@ -56,23 +56,26 @@ namespace ColumnsByFloors
                         ceiling = floors.ElementAt(i + next);
                         next++;
                     } while (!floor.Profile.Perimeter.Intersects(ceiling.Profile.Perimeter));
-                    
+
                     var height = ceiling.Elevation - floor.Elevation - floor.Thickness;
 
                     foreach (var point in grid.Available)
                     {
                         var colPerim = Polygon.Rectangle(input.ColumnDiameter, input.ColumnDiameter).MoveFromTo(Vector3.Origin, point);
-                        if (!floor.Profile.Perimeter.Covers(colPerim) || 
+                        if (!floor.Profile.Perimeter.Covers(colPerim) ||
                             !ceiling.Profile.Perimeter.Covers(colPerim))
                         {
                             continue;
                         }
-                        columns.Add(new Column(point, height,
-                                               new Profile(Polygon.Rectangle(input.ColumnDiameter, input.ColumnDiameter)),
-                                               BuiltInMaterials.Concrete, 
-                                               new Transform(0.0, 0.0, floor.Elevation + floor.Thickness),
-                                               0.0, 0.0, input.GridRotation, 
-                                               false, Guid.NewGuid(), ""));
+                        columns.Add(new Column()
+                        {
+                            Location = point,
+                            Height = height,
+                            Profile = Polygon.Rectangle(input.ColumnDiameter, input.ColumnDiameter),
+                            Material = BuiltInMaterials.Concrete,
+                            Transform = new Transform(0, 0, floor.Elevation + floor.Thickness),
+                            Rotation = input.GridRotation
+                        });
                     }
                 }
             }

@@ -45,7 +45,7 @@ namespace Elements
         }
     
         /// <summary>The profile to extrude.</summary>
-        [JsonProperty("Profile", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [JsonProperty("Profile", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public Profile Profile { get; set; }
     
         /// <summary>The elevation of the envelope.</summary>
