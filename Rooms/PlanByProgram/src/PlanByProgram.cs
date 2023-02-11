@@ -18,11 +18,13 @@ namespace PlanByProgram
         /// <returns>A PlanByProgramOutputs instance containing computed results and the model with any new elements.</returns>
         public static PlanByProgramOutputs Execute(Dictionary<string, Model> inputModels, PlanByProgramInputs input)
         {
+            var output = new PlanByProgramOutputs();
             var rmDefModel = inputModels["Program"];
             var rmDefs = new List<RoomDefinition>(rmDefModel.AllElementsOfType<RoomDefinition>().ToList());
             if (rmDefs.Count == 0)
             {
-                throw new ArgumentException("No Program found.");
+                output.Errors.Add($"No RoomDefinitions found in the model 'Program'. Check the output from the function upstream that has a model output 'Program'.");
+                return output;
             }
             var suites = Placer.PlaceSuites(input, rmDefs);
             var tmpput = new PlanByProgramOutputs();
@@ -94,10 +96,12 @@ namespace PlanByProgram
                     totalArea += footprint.Area();
                 }
             }
-            var output = new PlanByProgramOutputs(roomCount, roomArea, totalArea - roomArea, totalArea)
-            {
-                Model = tmpput.Model
-            };
+
+            output.RoomsPlaced = roomCount;
+            output.TotalPlacedRoomArea = roomArea;
+            output.TotalCirculationArea = totalArea - roomArea;
+            output.TotalArea = totalArea;
+            output.Model = tmpput.Model;
             return output;
         }
     }

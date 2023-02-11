@@ -18,11 +18,18 @@ namespace People
 
             if (!inputModels.TryGetValue("Floors", out var floorsModel))
             {
-                throw new Exception("Floors not found, sorry try again");
+                output.Errors.Add("The model output named 'Floors' could not be found. Check the upstream functions for errors.");
+                return output;
             }
 
             // ###### GET ALL OF THE FLOORS FROM THE MODEL
             var floors = floorsModel.AllElementsOfType<Floor>();
+
+            if (floors.Count() == 0)
+            {
+                output.Errors.Add($"No Floors found in the model 'Floors'. Check the output from the function upstream that has a model output 'Floors'.");
+                return output;
+            }
 
             // ###### ITERATE OVER ALL OF THE FLOORS
             // ###### ###### GENERATE THE X AND Y DOMAINS

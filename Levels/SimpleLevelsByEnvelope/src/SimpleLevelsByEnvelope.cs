@@ -19,10 +19,20 @@ namespace SimpleLevelsByEnvelope
         public static SimpleLevelsByEnvelopeOutputs Execute(Dictionary<string, Model> inputModels, SimpleLevelsByEnvelopeInputs input)
         {
             inputModels.TryGetValue("Envelope", out var model);
-            if (model == null || model.AllElementsOfType<Envelope>().Count() == 0)
+            var output = new SimpleLevelsByEnvelopeOutputs();
+
+            if (model == null)
             {
-                throw new ArgumentException("No Envelope found.");
+                output.Errors.Add("The model output named 'Envelope' could not be found. Check the upstream functions for errors.");
+                return output;
             }
+            else if (model.AllElementsOfType<Envelope>().Count() == 0)
+            {
+                output.Errors.Add($"No Envelopes found in the model 'Envelope'. Check the output from the function upstream that has a model output 'Envelope'.");
+                return output;
+            }
+
+
             var envelopes = model.AllElementsOfType<Envelope>();
             CorrectEnvelopeHeightsAndElevations(envelopes);
             var envelopesOrdered = envelopes.OrderBy(e => e.Elevation);
@@ -101,7 +111,7 @@ namespace SimpleLevelsByEnvelope
                 { // if this was a subgrade envelope, let's not consider levels above grade.
                     continue;
                 }
-                // We want to make sure we start a level at the very base of the envelope. 
+                // We want to make sure we start a level at the very base of the envelope.
                 var aboveGradeLevelsWithinEnvelope = aboveGradeLevels.Where(l => l.Elevation > min + minLevelHeight && l.Elevation < max - minLevelHeight).ToList();
                 var nameForMin = aboveGradeLevels.LastOrDefault(l => l.Elevation < min + minLevelHeight)?.Name ?? "";
                 for (int i = -1; i < aboveGradeLevelsWithinEnvelope.Count(); i++)
@@ -124,8 +134,10 @@ namespace SimpleLevelsByEnvelope
                     areaTotal += levelArea;
                 }
             }
-
-            var output = new SimpleLevelsByEnvelopeOutputs(levels.Count, areaTotal, subGradeArea, aboveGradeArea);
+            output.LevelQuantity = levels.Count;
+            output.TotalLevelArea = areaTotal;
+            output.SubgradeLevelArea = subGradeArea;
+            output.AboveGradeLevelArea = aboveGradeArea;
             output.Model.AddElements(scopes);
             output.Model.AddElements(levels.OrderByDescending(l => l.Elevation));
             output.Model.AddElements(levelPerimeters);

@@ -17,11 +17,18 @@ namespace ColumnsByFloors
         /// <returns>A ColumnsByFloorsOutputs instance containing computed results and the model with any new elements.</returns>
         public static ColumnsByFloorsOutputs Execute(Dictionary<string, Model> inputModels, ColumnsByFloorsInputs input)
         {
+            var output = new ColumnsByFloorsOutputs();
             var allFloors = new List<Floor>();
             inputModels.TryGetValue("Floors", out var flrModel);
-            if (flrModel == null || flrModel.AllElementsOfType<Floor>().Count() == 0)
+            if (flrModel == null)
             {
-                throw new ArgumentException("No Floors found.");
+                output.Errors.Add("The model output named 'Floors' could not be found. Check the upstream functions for errors.");
+                return output;
+            }
+            else if (flrModel.AllElementsOfType<Floor>().Count() == 0)
+            {
+                output.Errors.Add($"No Floors found in the model 'Floors'. Check the output from the function upstream that has a model output 'Floors'.");
+                return output;
             }
             allFloors.AddRange(flrModel.AllElementsOfType<Floor>());
             var floorGroups = new List<List<Floor>>();
@@ -79,7 +86,7 @@ namespace ColumnsByFloors
                     }
                 }
             }
-            var output = new ColumnsByFloorsOutputs(columns.Count());
+            output.ColumnQuantity = columns.Count;
             columns.ForEach(c => output.Model.AddElement(c));
             return output;
         }

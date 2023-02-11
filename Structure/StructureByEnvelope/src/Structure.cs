@@ -28,12 +28,13 @@ namespace Structure
         /// <summary>
 		/// The Structure function.
 		/// </summary>
-		/// <param name="model">The model. 
+		/// <param name="model">The model.
 		/// Add elements to the model to have them persisted.</param>
 		/// <param name="input">The arguments to the execution.</param>
 		/// <returns>A StructureOutputs instance containing computed results.</returns>
 		public static StructureOutputs Execute(Dictionary<string, Model> models, StructureInputs input)
         {
+            var output = new StructureOutputs();
             var model = new Model();
             var warnings = new List<string>();
 
@@ -59,17 +60,19 @@ namespace Structure
                 // Create a cell complex with some defaults.
                 if (!models.ContainsKey(LEVELS_MODEL_NAME))
                 {
-                    throw new Exception("If Bays are not supplied Levels are required.");
+                    output.Errors.Add("If Bays are not supplied then Levels are required.");
+                    return output;
                 }
 
                 var levels = models[LEVELS_MODEL_NAME];
                 var levelVolumes = levels.AllElementsOfType<LevelVolume>().ToList();
                 if (levelVolumes.Count == 0)
                 {
-                    throw new Exception("No LevelVolumes found in your Levels model. Please use a level function that generates LevelVolumes, such as Simple Levels by Envelope");
+                    output.Errors.Add($"No LevelVolumes found in the model 'Levels'. Check the output from the function upstream that has a model output 'Levels'.");
+                    return output;
                 }
 
-                // Replicate the old behavior by creating a 
+                // Replicate the old behavior by creating a
                 // grid using the envelope's first level base polygon's longest
                 // edge as the U axis and its perpendicular as the
                 // V axis.
@@ -183,7 +186,7 @@ namespace Structure
                 var girdProfileBounds = girderProfile.Perimeter.Bounds();
                 girderProfileDepth = girdProfileBounds.Max.Y - girdProfileBounds.Min.Y;
 
-                // Set the profile down by half its depth so that 
+                // Set the profile down by half its depth so that
                 // it sits under the slab.
                 girderProfile.Transform(new Transform(new Vector3(0, -girderProfileDepth / 2 - input.SlabThickness)));
             }
@@ -202,7 +205,7 @@ namespace Structure
                 var beamProfileBounds = beamProfile.Perimeter.Bounds();
                 beamProfileDepth = beamProfileBounds.Max.Y - beamProfileBounds.Min.Y;
 
-                // Set the profile down by half its depth so that 
+                // Set the profile down by half its depth so that
                 // it sits under the slab.
                 beamProfile.Transform(new Transform(new Vector3(0, -beamProfileDepth / 2 - input.SlabThickness)));
             }
@@ -412,7 +415,7 @@ namespace Structure
                 var p = topFace.GetGeometry();
                 var segments = p.Segments();
 
-                // Get the longest cell edge that is parallel 
+                // Get the longest cell edge that is parallel
                 // to one of the primary directions.
                 var cellEdges = segments.Where(s =>
                 {
@@ -524,11 +527,9 @@ namespace Structure
 
             model.AddElements(CreateViewScopesForLevelsAndGrids(model, gridLines), false);
 
-            var output = new StructureOutputs(_longestGridSpan)
-            {
-                Model = model,
-                Warnings = warnings
-            };
+            output.MaximumBeamLength = _longestGridSpan;
+            output.Model = model;
+            output.Warnings = warnings;
             return output;
         }
 

@@ -23,19 +23,21 @@ namespace EmergencyEgress
         /// <returns>A EmergencyEgressOutputs instance containing computed results and the model with any new elements.</returns>
         public static EmergencyEgressOutputs Execute(Dictionary<string, Model> inputModels, EmergencyEgressInputs input)
         {
+            var output = new EmergencyEgressOutputs();
             if (!inputModels.TryGetValue("Space Planning Zones", out Model spaceZonesModel))
             {
-                throw new Exception("Missing Space Planning Zones.");
+                output.Errors.Add("The model output named 'Space Planning Zones' could not be found. Check the upstream functions for errors.");
+                return output;
             }
 
             if (!inputModels.TryGetValue("Circulation", out Model circulationModel))
             {
-                throw new Exception("Missing Circulation.");
+                output.Errors.Add("The model output named 'Circulation' could not be found. Check the upstream functions for errors.");
+                return output;
             }
 
             var corridors = circulationModel.AllElementsOfType<CirculationSegment>();
             var rooms = spaceZonesModel.AllElementsOfType<SpaceBoundary>();
-            var output = new EmergencyEgressOutputs();
 
             var corridorsByLevel = corridors.GroupBy(c => c.Level);
             var roomsByLevel = rooms.GroupBy(r => r.Level);
@@ -62,7 +64,7 @@ namespace EmergencyEgress
 
                 foreach (var line in centerlines)
                 {
-                    grid.AddVertices(line.Centerline.Vertices, 
+                    grid.AddVertices(line.Centerline.Vertices,
                         AdaptiveGrid.VerticesInsertionMethod.ConnectAndSelfIntersect);
                 }
 
@@ -266,7 +268,7 @@ namespace EmergencyEgress
                                         {
                                             connections.Add(vertex);
                                             connections.Add(otherVertex);
-                                            grid.AddVertex(closestRightItem, 
+                                            grid.AddVertex(closestRightItem,
                                                            new ConnectVertexStrategy(connections.ToArray()),
                                                            cut: false);
                                             grid.RemoveEdge(edge);
@@ -290,7 +292,7 @@ namespace EmergencyEgress
         /// <summary>
         /// Add SpaceBoundary, representing a room, to the grid.
         /// There are no defined exits. in the room. Every segment middle point is considered.
-        /// This is very simple approaches that ignores voids or obstacles inside room and won't work for complex rooms. 
+        /// This is very simple approaches that ignores voids or obstacles inside room and won't work for complex rooms.
         /// </summary>
         /// <param name="room">Room geometry.</param>
         /// <param name="centerlines">Corridor segments with precalculated center lines.</param>
@@ -310,7 +312,7 @@ namespace EmergencyEgress
                 if (exitVertex != null)
                 {
                     //If it's close enough to corridors - it's two furthest corners are added.
-                    //Note that this is done for every possible exit, so in the end there will be 
+                    //Note that this is done for every possible exit, so in the end there will be
                     //a lot of possible combinations of exit to it's corners in the grid,
                     //not connected one with another.
                     var twoFurthest = room.Boundary.Perimeter.Vertices.OrderBy(v =>
@@ -398,7 +400,7 @@ namespace EmergencyEgress
                                 var edgeLine = new Line(vertex.Point, otherVertex.Point);
                                 if (edgeLine.PointOnLine(closest))
                                 {
-                                    exitVertex = grid.AddVertex(closest, 
+                                    exitVertex = grid.AddVertex(closest,
                                                                 new ConnectVertexStrategy(vertex, otherVertex),
                                                                 cut: false);
                                     grid.RemoveEdge(edge);
@@ -443,7 +445,7 @@ namespace EmergencyEgress
                 var exitOnLevel = new Vector3(exit.X, exit.Y, closest.Z);
                 var distance = exitOnLevel.DistanceTo(closest);
 
-                //TODO: do something better. 
+                //TODO: do something better.
                 //This is a way to filter exit points that are near other levels.
                 //It's done by distance but there should be a better way.
                 if (distance < 2)

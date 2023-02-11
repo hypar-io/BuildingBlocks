@@ -35,7 +35,7 @@ namespace CoreByLevels
         public double Elevation { get; private set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="levels"></param>
         /// <param name="rotation"></param>
@@ -49,7 +49,7 @@ namespace CoreByLevels
             Lifts = new List<LiftShaft>();
             Rotation = rotation;
             var corePerim = PlaceCore(setback, rotation);
-            Perimeter = corePerim ?? throw new InvalidOperationException("No valid service core location found.");
+            Perimeter = corePerim;
             Elevation = Levels.First().Elevation;
             var coreTopo = new CompassBox(corePerim);
             var bathTopo = MakeBaths(coreTopo.W);
@@ -57,7 +57,7 @@ namespace CoreByLevels
             var stairTopos = MakeStairs(bathTopo);
             MakeLifts(stairTopos, LiftService);
 
-            //Following section for debug. 
+            //Following section for debug.
             //Comment for deployment.
 
             //Mechanicals.Clear();
@@ -78,7 +78,7 @@ namespace CoreByLevels
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="shell"></param>
         /// <returns></returns>
@@ -122,7 +122,7 @@ namespace CoreByLevels
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="insertAt"></param>
         /// <returns></returns>
@@ -174,7 +174,7 @@ namespace CoreByLevels
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="moveTo"></param>
         /// <returns></returns>
@@ -207,7 +207,7 @@ namespace CoreByLevels
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="bathTopo"></param>
         /// <returns></returns>
@@ -257,7 +257,7 @@ namespace CoreByLevels
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="stairs"></param>
         /// <param name="liftSvc"></param>

@@ -20,9 +20,11 @@ namespace FoundationByEnvelope
 
             var envelopes = new List<Envelope>();
             inputModels.TryGetValue("Envelope", out var model);
+            var output = new FoundationByEnvelopeOutputs();
             if (model == null)
             {
-                throw new ArgumentException("No Envelope found.");
+                output.Errors.Add($"No Envelope found in the model 'Envelope'. Check the output from the function upstream that has a model output 'Envelope'.");
+                return output;
             }
             envelopes.AddRange(model.AllElementsOfType<Envelope>());
 
@@ -74,7 +76,7 @@ namespace FoundationByEnvelope
 
                 }
             }
-            var output = new FoundationByEnvelopeOutputs(outputDepth);
+            output.Depth = outputDepth;
             output.Model.AddElements(outputEnvelopes);
             return output;
         }
@@ -91,7 +93,7 @@ namespace FoundationByEnvelope
 
             var material = BuiltInMaterials.Concrete;
             return new Envelope(perimeter, depth * -1, depth, Vector3.ZAxis,
-                                0.0, new Transform(0.0, 0.0, depth * -1), material, 
+                                0.0, new Transform(0.0, 0.0, depth * -1), material,
                                 geomRep, false, Guid.NewGuid(), "");
         }
 

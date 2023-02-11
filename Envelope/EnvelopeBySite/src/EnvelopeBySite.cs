@@ -17,16 +17,17 @@ namespace EnvelopeBySite
         /// <returns>A EnvelopeBySiteOutputs instance containing computed results and the model with any new elements.</returns>
         public static EnvelopeBySiteOutputs Execute(Dictionary<string, Model> inputModels, EnvelopeBySiteInputs input)
         {
+            var output = new EnvelopeBySiteOutputs(input.BuildingHeight, input.FoundationDepth);
             // Retrieve site information from incoming models.
             var sites = new List<Site>();
             inputModels.TryGetValue("Site", out var model);
             if (model == null)
             {
-                throw new ArgumentException("No Site found.");
+                output.Errors.Add("The model output named 'Site' could not be found. Check the upstream functions for errors.");
+                return output;
             }
             sites.AddRange(model.AllElementsOfType<Site>());
             sites = sites.OrderByDescending(e => e.Perimeter.Area()).ToList();
-            var output = new EnvelopeBySiteOutputs(input.BuildingHeight, input.FoundationDepth);
 
             // Set input values based on whether we should consider setbacks
             var siteSetback = input.SiteSetback;
