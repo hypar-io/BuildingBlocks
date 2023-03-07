@@ -51,10 +51,12 @@ namespace Grid
                 extentPolygons = ExtractPolygonsFromElements(roofs, (e) => e.Profile?.Perimeter?.TransformedPolygon(e.Transform));
             }
 
+            inputModels.TryGetValue("Conceptual Mass", out var conceptualMassModel);
             inputModels.TryGetValue("Levels", out var levelsModel);
-            if (levelsModel != null && extentPolygons.Count == 0)
+            var levelVolumesModel = conceptualMassModel ?? levelsModel;
+            if (levelVolumesModel != null && extentPolygons.Count == 0)
             {
-                var levelVolumes = levelsModel.AllElementsOfType<LevelVolume>();
+                var levelVolumes = levelVolumesModel.AllElementsOfType<LevelVolume>();
                 extentPolygons = ExtractPolygonsFromElements(levelVolumes, (e) => e.Profile?.Perimeter?.TransformedPolygon(e.Transform));
             }
 

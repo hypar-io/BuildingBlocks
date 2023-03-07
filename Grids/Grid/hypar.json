@@ -21,6 +21,10 @@
       "optional": true
     },
     {
+      "name": "Conceptual Mass",
+      "optional": true
+    },
+    {
       "autohide": false,
       "name": "Floors",
       "optional": true
