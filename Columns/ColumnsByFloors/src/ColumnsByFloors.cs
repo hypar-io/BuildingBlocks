@@ -74,20 +74,16 @@ namespace ColumnsByFloors
                         {
                             continue;
                         }
-                        columns.Add(new Column()
-                        {
-                            Location = point,
-                            Height = height,
-                            Profile = Polygon.Rectangle(input.ColumnDiameter, input.ColumnDiameter),
-                            Material = BuiltInMaterials.Concrete,
-                            Transform = new Transform(0, 0, floor.Elevation + floor.Thickness),
-                            Rotation = input.GridRotation
-                        });
+
+                        columns.Add(new Column(point, height, new Line(point, point + Vector3.ZAxis * height),
+                         Polygon.Rectangle(input.ColumnDiameter, input.ColumnDiameter), 0, 0, input.GridRotation, new Transform(0, 0, floor.Elevation + floor.Thickness),
+                          BuiltInMaterials.Concrete, null, false, Guid.NewGuid(), "ColumnsByFloors"));
                     }
                 }
             }
+
             output.ColumnQuantity = columns.Count;
-            columns.ForEach(c => output.Model.AddElement(c));
+            output.Model.AddElements(columns);
             return output;
         }
     }

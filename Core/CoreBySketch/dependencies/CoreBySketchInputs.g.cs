@@ -48,7 +48,7 @@ namespace CoreBySketch
         }
     
         /// <summary>Perimeter of the building service core.</summary>
-        [Newtonsoft.Json.JsonProperty("Perimeter", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonProperty("Perimeter", Required = Newtonsoft.Json.Required.AllowNull)]
         public Polygon Perimeter { get; set; }
     
         /// <summary>The projection of the service core above the highest building level.</summary>

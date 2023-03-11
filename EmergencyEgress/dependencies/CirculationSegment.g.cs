@@ -27,11 +27,10 @@ namespace Elements
     public partial class CirculationSegment : Floor
     {
         [JsonConstructor]
-        public CirculationSegment(ThickenedPolyline @geometry, System.Guid @level, Profile @profile, double @thickness, Transform @transform, Material @material, Representation @representation, bool @isElementDefinition, System.Guid @id, string @name)
-            : base(profile, thickness, transform, material, representation, isElementDefinition, id, name)
+        public CirculationSegment(ThickenedPolyline @geometry, Profile @profile, double @thickness, System.Guid? @level, Transform @transform, Material @material, Representation @representation, bool @isElementDefinition, System.Guid @id, string @name)
+            : base(profile, thickness, level, transform, material, representation, isElementDefinition, id, name)
         {
             this.Geometry = @geometry;
-            this.Level = @level;
             }
         
         // Empty constructor
@@ -43,10 +42,6 @@ namespace Elements
         /// <summary>The geometry of this circulation segment</summary>
         [JsonProperty("Geometry", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public ThickenedPolyline Geometry { get; set; }
-    
-        /// <summary>The level this circulation segment belongs to</summary>
-        [JsonProperty("Level", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Guid Level { get; set; }
     
     
     }

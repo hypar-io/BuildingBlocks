@@ -31,11 +31,13 @@ namespace CoreBySketch
                     output.Errors.Add($"No Levels found in the model 'Levels'. Check the output from the function upstream that has a model output 'Levels'.");
                     return output;
                 }
+
                 levels.AddRange(model.AllElementsOfType<Level>());
                 var top = levels.OrderByDescending(l => l.Elevation).First().Elevation + input.CoreHeightAboveRoof;
                 var elevation = levels.OrderBy(l => l.Elevation).First().Elevation;
                 var height = top - elevation;
                 // Create the Core extrusion.
+
                 var extrude = new Elements.Geometry.Solids.Extrude(input.Perimeter, height, Vector3.ZAxis, false);
                 var geomRep = new Representation(new List<Elements.Geometry.Solids.SolidOperation>() { extrude });
                 var corMatl = new Material("core", new Color(1.0, 1.0, 1.0, 0.6), 0.0f, 0.0f);
