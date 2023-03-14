@@ -22,7 +22,7 @@ namespace PlanByProgram
 {
     #pragma warning disable // Disable all warnings
 
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v13.0.0.0)")]
     
     public  class PlanByProgramInputs : S3Args
     
@@ -98,7 +98,7 @@ namespace PlanByProgram
     
     }
     
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v13.0.0.0)")]
     public enum PlanByProgramInputsSuitePlanType
     {
         [System.Runtime.Serialization.EnumMember(Value = @"Axis")]
@@ -109,7 +109,7 @@ namespace PlanByProgram
     
     }
     
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v13.0.0.0)")]
     public enum PlanByProgramInputsPrimaryDirection
     {
         [System.Runtime.Serialization.EnumMember(Value = @"Northeast")]
@@ -120,7 +120,7 @@ namespace PlanByProgram
     
     }
     
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v13.0.0.0)")]
     public enum PlanByProgramInputsCoordinateAdjacency
     {
         [System.Runtime.Serialization.EnumMember(Value = @"Minimum")]

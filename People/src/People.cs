@@ -49,7 +49,7 @@ namespace People
                     var point = new Vector3(x, y, 0);
                     if (offsetPerimeter.Contains(point))
                     {
-                        var friend = GetNextFriend(input.IncludeSeatedPeople);
+                        var friend = GetNextFriend(!input.IncludeSeatedPeople);
                         var t = new Transform();
                         t.Rotate(Vector3.ZAxis, random.NextDouble() * 180.0);
                         t.Move(new Vector3(point.X, point.Y, floor.Elevation + floor.Thickness));

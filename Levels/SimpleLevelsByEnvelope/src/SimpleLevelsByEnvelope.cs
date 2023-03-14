@@ -26,7 +26,7 @@ namespace SimpleLevelsByEnvelope
                 output.Errors.Add("The model output named 'Envelope' could not be found. Check the upstream functions for errors.");
                 return output;
             }
-            else if (model.AllElementsOfType<Envelope>().Count() == 0)
+            else if (!model.AllElementsOfType<Envelope>().Any())
             {
                 output.Errors.Add($"No Envelopes found in the model 'Envelope'. Check the output from the function upstream that has a model output 'Envelope'.");
                 return output;

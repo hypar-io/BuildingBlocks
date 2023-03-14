@@ -28,6 +28,7 @@ namespace FloorsByLevels
                     model.AllElementsOfType<LevelVolume>().Count() == 0
                 )
             )
+
             {
                 output.Errors.Add($"No LevelPerimeters found in the model 'Levels'. Check the output from the function upstream that has a model output 'Levels'.");
                 return output;
@@ -36,6 +37,8 @@ namespace FloorsByLevels
             var floorMaterial = new Material("Concrete", new Color(0.34, 0.34, 0.34, 1.0), 0.3, 0.3);
 
             levels.AddRange(model.AllElementsOfType<LevelPerimeter>());
+
+
 
             // Extract shafts from Core dependency, if it exists
             var shafts = new List<Polygon>();

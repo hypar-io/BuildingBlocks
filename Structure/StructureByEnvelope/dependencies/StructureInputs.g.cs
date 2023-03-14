@@ -22,7 +22,7 @@ namespace Structure
 {
     #pragma warning disable // Disable all warnings
 
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v13.0.0.0)")]
     
     public  class StructureInputs : S3Args
     
@@ -119,7 +119,7 @@ namespace Structure
     
     }
     
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v13.0.0.0)")]
     public enum StructureInputsTypeOfConstruction
     {
         [System.Runtime.Serialization.EnumMember(Value = @"Steel")]
@@ -130,7 +130,7 @@ namespace Structure
     
     }
     
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v13.0.0.0)")]
     public enum StructureInputsColumnType
     {
         [System.Runtime.Serialization.EnumMember(Value = @"W4x13")]
@@ -2307,7 +2307,7 @@ namespace Structure
     
     }
     
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v13.0.0.0)")]
     public enum StructureInputsGirderType
     {
         [System.Runtime.Serialization.EnumMember(Value = @"W4x13")]
@@ -4502,7 +4502,7 @@ namespace Structure
     
     }
     
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v13.0.0.0)")]
     public enum StructureInputsBeamType
     {
         [System.Runtime.Serialization.EnumMember(Value = @"W4x13")]
