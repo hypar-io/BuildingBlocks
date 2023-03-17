@@ -15,21 +15,31 @@ namespace CoreByEnvelope
         /// <param name="model">The input model.</param>
         /// <param name="input">The arguments to the execution.</param>
         /// <returns>A CoreByEnvelopeOutputs instance containing computed results and the model with any new elements.</returns>
-        public static CoreByEnvelopeOutputs Execute(Dictionary<string, Model> inputModels, 
+        public static CoreByEnvelopeOutputs Execute(Dictionary<string, Model> inputModels,
                                                     CoreByEnvelopeInputs inputs)
         {
+            var output = new CoreByEnvelopeOutputs();
             var envelopes = new List<Envelope>();
             inputModels.TryGetValue("Envelope", out var model);
-            if (model == null || model.AllElementsOfType<Envelope>().Count() == 0)
+            if (model == null)
             {
-                throw new ArgumentException("No Envelope found.");
-            }     
+                output.Errors.Add("The model output named 'Envelope' could not be found. Check the upstream functions for errors.");
+                return output;
+            }
+            else if (model.AllElementsOfType<Envelope>().Count() == 0)
+            {
+                output.Errors.Add("The model output named 'Envelope' could not be found. Check the upstream functions for errors.");
+                return output;
+            }
             envelopes.AddRange(model.AllElementsOfType<Envelope>());
             var coreDef = CoreMaker.MakeCore(inputs, envelopes);
             var extrude = new Elements.Geometry.Solids.Extrude(coreDef.perimeter, coreDef.height, Vector3.ZAxis, false);
             var corRep = new Representation(new List<Elements.Geometry.Solids.SolidOperation>() { extrude });
             var corMatl = new Material("serviceCore", Palette.White, 0.0f, 0.0f);
-            var output = new CoreByEnvelopeOutputs(coreDef.length, coreDef.width, coreDef.rotation);
+
+            output.ServiceCoreLength = coreDef.length;
+            output.ServiceCoreWidth = coreDef.width;
+            output.ServiceCoreRotation = coreDef.rotation;
             output.Model.AddElement(new ServiceCore(coreDef.perimeter,
                                                     Vector3.ZAxis,
                                                     coreDef.elevation,

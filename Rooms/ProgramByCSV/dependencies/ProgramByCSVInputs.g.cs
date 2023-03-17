@@ -22,7 +22,7 @@ namespace ProgramByCSV
 {
     #pragma warning disable // Disable all warnings
 
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v13.0.0.0)")]
     
     public  class ProgramByCSVInputs : S3Args
     
@@ -50,8 +50,9 @@ namespace ProgramByCSV
         }
     
         /// <summary>A CSV list of room definitions.</summary>
-        [Newtonsoft.Json.JsonProperty("Program", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public InputData Program { get; set; }
+        [Newtonsoft.Json.JsonProperty("Program", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public InputData Program { get; set; } = new InputData();
     
         /// <summary>Default is metric units.</summary>
         [Newtonsoft.Json.JsonProperty("Use imperial units", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
@@ -69,7 +70,7 @@ namespace ProgramByCSV
     
     }
     
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v13.0.0.0)")]
     public enum ProgramByCSVInputsSuiteSequence
     {
         [System.Runtime.Serialization.EnumMember(Value = @"Listed")]
@@ -98,7 +99,7 @@ namespace ProgramByCSV
     
     }
     
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v13.0.0.0)")]
     public enum ProgramByCSVInputsRoomSequence
     {
         [System.Runtime.Serialization.EnumMember(Value = @"Listed")]

@@ -29,7 +29,10 @@
         "$hyparUnitType": "length",
         "$hyparOrder": 1
       }
-    }
+    },
+    "required": [
+      "Perimeter"
+    ]
   },
   "outputs": [
     {

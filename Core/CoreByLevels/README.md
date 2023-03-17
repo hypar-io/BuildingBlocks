@@ -21,3 +21,16 @@ Creates a building core by referencing LevelPerimeters supplied by another funct
 <br>
 
 ## Additional Information
+
+
+
+
+
+
+
+
+
+
+
+
+

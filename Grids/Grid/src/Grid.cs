@@ -82,10 +82,10 @@ namespace Grid
         }
 
         /// <summary>
-        /// Extract polygons from a collection of elements. 
+        /// Extract polygons from a collection of elements.
         /// </summary>
         /// <param name="elements">The elements to get polygons from.</param>
-        /// <param name="getDefaultPolygon">A function for extracting the default relevant polygon from an envelope. 
+        /// <param name="getDefaultPolygon">A function for extracting the default relevant polygon from an envelope.
         /// If this returns null, we'll use the 2D convex hull of the geometry of the element's representation </param>
         private static List<Polygon> ExtractPolygonsFromElements<T>(IEnumerable<T> elements, Func<T, Polygon> getDefaultPolygon) where T : GeometricElement
         {
@@ -196,7 +196,8 @@ namespace Grid
 
             if (gridPoints.Count == 0)
             {
-                throw new Exception("No grids were able to be calculated from the given inputs.");
+                output.Errors.Add($"No grid points were able to be calculated from the given inputs for grid area {gridArea.Name}.");
+                return output;
             }
 
             Polygon gridPolygon = null;

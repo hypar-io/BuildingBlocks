@@ -20,10 +20,12 @@ namespace ColumnsFromGrid
         /// <returns>A ColumnsFromGridOutputs instance containing computed results and the model with any new elements.</returns>
         public static ColumnsFromGridOutputs Execute(Dictionary<string, Model> inputModels, ColumnsFromGridInputs input)
         {
+            var output = new ColumnsFromGridOutputs();
             warnings.Clear();
             if (!inputModels.TryGetValue("Grids", out var gridsModel))
             {
-                throw new ArgumentException("No Grids found.");
+                output.Errors.Add("The model output named 'Grids' could not be found. Check the upstream functions for errors.");
+                return output;
             }
 
             var sections = new List<DrainableRoofSection>();
@@ -127,7 +129,6 @@ namespace ColumnsFromGrid
                 }
             }
 
-            var output = new ColumnsFromGridOutputs();
             output.Model.AddElements(columns);
             output.Model.AddElements(proxies);
             output.Model.AddElements(warnings);

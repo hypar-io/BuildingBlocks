@@ -17,15 +17,32 @@ namespace CoreByLevels
         /// <returns>A CoreByLevelsOutputs instance containing computed results and the model with any new elements.</returns>
         public static CoreByLevelsOutputs Execute(Dictionary<string, Model> inputModels, CoreByLevelsInputs input)
         {
+            var outputs = new CoreByLevelsOutputs();
+
             var levels = new List<LevelPerimeter>();
             inputModels.TryGetValue("Levels", out var model);
-            if (model == null || model.AllElementsOfType<LevelPerimeter>().Count() == 0)
+            if (model == null)
             {
-                throw new ArgumentException("No LevelPerimeters found.");
+                outputs.Errors.Add("The model output named 'Levels' could not be found. Check the upstream functions for errors.");
+                return outputs;
             }
+            else if (model.AllElementsOfType<LevelPerimeter>().Count() == 0)
+            {
+                outputs.Errors.Add($"No LevelPerimeters found in the model 'Levels'. Check the output from the function upstream that has a model output 'Levels'.");
+                return outputs;
+            }
+
             levels.AddRange(model.AllElementsOfType<LevelPerimeter>());
             var coreMaker = new CoreMaker(levels, input.Setback, input.Rotation);
-            var outputs = new CoreByLevelsOutputs(coreMaker.Restrooms.Count(), coreMaker.LiftQuantity);
+
+            if (coreMaker.Perimeter == null)
+            {
+                outputs.Errors.Add("No valid service core location found. Please check the input 'Setback' and ensure that it will fit within your LevelPerimeter");
+                return outputs;
+            }
+
+            outputs.Restrooms = coreMaker.Restrooms.Count();
+            outputs.Lifts = coreMaker.LiftQuantity;
 
             outputs.Model.AddElement(new Exclusion(coreMaker.Perimeter, coreMaker.Elevation, Guid.NewGuid(), "Core Exclusion"));
             foreach (var room in coreMaker.Restrooms)

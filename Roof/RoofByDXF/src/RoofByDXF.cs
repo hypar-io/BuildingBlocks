@@ -20,6 +20,7 @@ namespace RoofByDXF
         /// <returns>A RoofByDXFOutputs instance containing computed results and the model with any new elements.</returns>
         public static RoofByDXFOutputs Execute(Dictionary<string, Model> inputModels, RoofByDXFInputs input)
         {
+            var output = new RoofByDXFOutputs();
             DxfFile dxfFile;
             using (FileStream fs = new FileStream(input.DXF.LocalFilePath, FileMode.Open))
             {
@@ -44,7 +45,8 @@ namespace RoofByDXF
             }
             if (polygons.Count == 0)
             {
-                throw new ArgumentException("No LWPolylines found in DXF.");
+                output.Errors.Add($"No LWPolylines found in DXF. Check the DXF file for a closed polyline.");
+                return output;
             }
             var highPoint = input.RoofElevation + input.RoofThickness;
             polygons = polygons.OrderByDescending(p => Math.Abs(p.Area())).ToList();
@@ -98,7 +100,7 @@ namespace RoofByDXF
                     new Transform(),
                     BuiltInMaterials.Concrete,
                     null, false, Guid.NewGuid(), "Roof");
-            var output = new RoofByDXFOutputs(polygon.Area());
+            output.Area = polygon.Area();
             output.Model.AddElement(new MeshElement
             {
                 Mesh = envelope,

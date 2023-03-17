@@ -18,11 +18,18 @@ namespace People
 
             if (!inputModels.TryGetValue("Floors", out var floorsModel))
             {
-                throw new Exception("Floors not found, sorry try again");
+                output.Errors.Add("The model output named 'Floors' could not be found. Check the upstream functions for errors.");
+                return output;
             }
 
             // ###### GET ALL OF THE FLOORS FROM THE MODEL
             var floors = floorsModel.AllElementsOfType<Floor>();
+
+            if (floors.Count() == 0)
+            {
+                output.Errors.Add($"No Floors found in the model 'Floors'. Check the output from the function upstream that has a model output 'Floors'.");
+                return output;
+            }
 
             // ###### ITERATE OVER ALL OF THE FLOORS
             // ###### ###### GENERATE THE X AND Y DOMAINS
@@ -42,7 +49,7 @@ namespace People
                     var point = new Vector3(x, y, 0);
                     if (offsetPerimeter.Contains(point))
                     {
-                        var friend = GetNextFriend(input.IncludeSeatedPeople);
+                        var friend = GetNextFriend(!input.IncludeSeatedPeople);
                         var t = new Transform();
                         t.Rotate(Vector3.ZAxis, random.NextDouble() * 180.0);
                         t.Move(new Vector3(point.X, point.Y, floor.Elevation + floor.Thickness));

@@ -50,7 +50,7 @@ namespace ProgramByCSV
                 var row = new List<string>(line.Trim().Split(','));
 
                 //Skip malformed rows or entries with quantities <= zero;
-                if (row.Count() < 8 || !int.TryParse(row.ElementAt(4).ToString(), out int qVal) || qVal <= 0) 
+                if (row.Count() < 8 || !int.TryParse(row.ElementAt(4).ToString(), out int qVal) || qVal <= 0)
                 {
                     continue;
                 }
@@ -125,7 +125,7 @@ namespace ProgramByCSV
                 var suiteArea = 0.0;
                 foreach (var roomEntry in RoomEntries)
                 {
-                    if (roomEntry.suiteName == suiteID.Name && 
+                    if (roomEntry.suiteName == suiteID.Name &&
                         roomEntry.suiteNumber == suiteID.Number)
                     {
                         suiteRooms.Add(roomEntry);

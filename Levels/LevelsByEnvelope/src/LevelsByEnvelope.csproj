@@ -4,8 +4,9 @@
     <ProjectReference Include="..\dependencies\LevelsByEnvelope.Dependencies.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\dependencies\LevelsByEnvelope.Dependencies.csproj" />
-  </ItemGroup>
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
 
 </Project>

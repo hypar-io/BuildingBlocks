@@ -19,6 +19,7 @@ namespace RoomsByLevels
         /// <returns>A RoomsByLevelsOutputs instance containing computed results and the model with any new elements.</returns>
         public static RoomsByLevelsOutputs Execute(Dictionary<string, Model> inputModels, RoomsByLevelsInputs input)
         {
+            var output = new RoomsByLevelsOutputs();
             var levels = new List<LevelPerimeter>();
             inputModels.TryGetValue("Levels", out var lvlModel);
             if (lvlModel != null)
@@ -27,7 +28,8 @@ namespace RoomsByLevels
             }
             if (levels.Count == 0)
             {
-                throw new ArgumentException("No LevelPerimeters found.");
+                output.Errors.Add($"No LevelPerimeters found in the model 'Levels'. Check the output from the function upstream that has a model output 'Levels'.");
+                return output;
             }
             levels = levels.OrderBy(l => l.Elevation).ToList();
             var stories = new List<Story>();
@@ -145,7 +147,8 @@ namespace RoomsByLevels
                     });
                 }
             }
-            var output = new RoomsByLevelsOutputs(rooms.Count / levels.Count, rooms.Count);
+            output.RoomsPerFloor = rooms.Count / levels.Count;
+            output.RoomTotal = rooms.Count;
             foreach (var room in rooms)
             {
                 output.Model.AddElement(room);
