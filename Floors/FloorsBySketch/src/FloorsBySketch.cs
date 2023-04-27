@@ -7,6 +7,10 @@ namespace FloorsBySketch
 {
     public static class FloorsBySketch
     {
+
+        private readonly static double DEFAULT_FLOOR_THICKNESS = Units.FeetToMeters(1);
+
+        private readonly static double DEFAULT_FLOOR_TO_FLOOR_HEIGHT = Units.FeetToMeters(10);
         /// <summary>
         /// Create floors by drawing them manually.
         /// </summary>
@@ -37,11 +41,11 @@ namespace FloorsBySketch
                     var boundary = floor.Value.Boundary;
                     var elevation = 0.0;
                     var floorsUnderThisFloor = floors.Where(f => f.Profile.Contains(boundary.Centroid()));
-                    if (floorsUnderThisFloor.Count() > 0)
+                    if (floorsUnderThisFloor.Any())
                     {
-                        elevation = floorsUnderThisFloor.Max(f => f.Transform.Origin.Z) + 3.0;
+                        elevation = floorsUnderThisFloor.Max(f => f.GetTopOfSlabElevation()) + DEFAULT_FLOOR_TO_FLOOR_HEIGHT;
                     }
-                    var f = new Floor(floor.Value.Boundary, 0.3, new Transform(0, 0, elevation - 0.3), floorMaterial);
+                    var f = new Floor(floor.Value.Boundary, DEFAULT_FLOOR_THICKNESS, new Transform(0, 0, elevation - DEFAULT_FLOOR_THICKNESS), floorMaterial);
                     f.AdditionalProperties["Original Boundary"] = floor.Value.Boundary;
                     f.AdditionalProperties["Boundary"] = floor.Value.Boundary;
                     f.AdditionalProperties["Creation Id"] = floor.Id;
