@@ -46,6 +46,7 @@ namespace LevelsByEnvelope
             output.RepeatingLevelHeight = input.StandardLevelHeight;
             output.TopLevelHeight = input.PenthouseLevelHeight;
 
+            output.Model.AddElement(levelMaker.LevelGroup);
             output.Model.AddElements(levelMaker.Levels);
             output.Model.AddElements(levelMaker.LevelPerimeters);
             output.Model.AddElements(levelMaker.LevelVolumes);
