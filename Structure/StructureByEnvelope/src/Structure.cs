@@ -34,9 +34,6 @@ namespace Structure
 		/// <returns>A StructureOutputs instance containing computed results.</returns>
 		public static StructureOutputs Execute(Dictionary<string, Model> models, StructureInputs input)
         {
-
-
-
             var output = new StructureOutputs();
             var model = new Model();
             var warnings = new List<string>();
@@ -56,15 +53,13 @@ namespace Structure
                 var cellsModel = models[BAYS_MODEL_NAME];
                 var cellComplexes = cellsModel.AllElementsOfType<CellComplex>();
 
-                if(cellComplexes.Count() == 0)
+                if (cellComplexes.Count() == 0)
                 {
                     output.Errors.Add($"No CellComplexes found in the model '{BAYS_MODEL_NAME}'. Check the output from the function upstream that has a model output '{BAYS_MODEL_NAME}'.");
                     return output;
                 }
-                else
-                {
+
                 cellComplex = cellComplexes.First();
-                }
             }
             else
             {
