@@ -75,8 +75,9 @@
   ],
   "element_types": [
     "https://dev-api.hypar.io/schemas/Envelope",
-    "https://raw.githubusercontent.com/hypar-io/Schemas/master/Level.json",
-    "https://raw.githubusercontent.com/hypar-io/Schemas/master/LevelPerimeter.json",
+    "https://schemas.hypar.io/Level.json",
+    "https://schemas.hypar.io/LevelPerimeter.json",
+    "https://schemas.hypar.io/LevelGroup.json",
     "https://prod-api.hypar.io/schemas/LevelVolume",
     "https://prod-api.hypar.io/schemas/ViewScope"
   ],
