@@ -103,14 +103,14 @@ namespace EmergencyEgress
 
         private static Polyline CorridorCenterLine(CirculationSegment corridor)
         {
-            var offsetDistace = corridor.Geometry.Width / 2;
-            if (corridor.Geometry.Flip)
-            {
-                offsetDistace = -offsetDistace;
-            }
+            double offsetDistance = corridor.Geometry.GetOffset();
             var corridorPolyline = corridor.Geometry.Polyline;
-            var centerLine = corridorPolyline.OffsetOpen(offsetDistace);
-            return centerLine;
+            if (!offsetDistance.ApproximatelyEquals(0))
+            {
+                corridorPolyline = corridorPolyline.OffsetOpen(offsetDistance);
+            }
+            corridorPolyline = corridorPolyline.TransformedPolyline(corridor.Transform);
+            return corridorPolyline;
         }
 
 
@@ -131,7 +131,7 @@ namespace EmergencyEgress
                 foreach (var candidate in centerlines)
                 {
                     var rightVertices = candidate.Centerline.Vertices;
-                    var maxDistance = item.Segment.Geometry.Width + candidate.Segment.Geometry.Width;
+                    var maxDistance = item.Segment.Geometry.GetWidth() + candidate.Segment.Geometry.GetWidth();
                     for (int i = 0; i < leftVertices.Count - 1; i++)
                     {
                         Vector3 closestLeftItem = Vector3.Origin, closestRightItem = Vector3.Origin;
@@ -305,7 +305,8 @@ namespace EmergencyEgress
         {
             var roomExits = new List<RoomEvacuationVariant>();
             //Center of every segment in room boundary is checked against corridors
-            foreach (var roomEdge in room.Boundary.Perimeter.Segments())
+            var perimeter = room.Boundary.Perimeter.TransformedPolygon(room.Transform);
+            foreach (var roomEdge in perimeter.Segments())
             {
                 //exitVertex is already added to the grid by `FindExit`
                 var exitVertex = FindRoomExit(roomEdge, centerlines, grid);
@@ -315,7 +316,7 @@ namespace EmergencyEgress
                     //Note that this is done for every possible exit, so in the end there will be
                     //a lot of possible combinations of exit to it's corners in the grid,
                     //not connected one with another.
-                    var twoFurthest = room.Boundary.Perimeter.Vertices.OrderBy(v =>
+                    var twoFurthest = perimeter.Vertices.OrderBy(v =>
                         (v - exitVertex.Point).Length()).TakeLast(2);
                     var corners = new List<(GridVertex Vertex, Vector3 ExactPosition)>();
                     foreach (var furthest in twoFurthest)
