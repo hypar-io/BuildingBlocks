@@ -22,9 +22,11 @@ namespace ColumnsFromGrid
         {
             var output = new ColumnsFromGridOutputs();
             warnings.Clear();
-            if (!inputModels.TryGetValue("Grids", out var gridsModel))
+            inputModels.TryGetValue("Structure", out var structureModel);
+            inputModels.TryGetValue("Grids", out var gridsModel);
+            if (structureModel == null && gridsModel == null)
             {
-                output.Errors.Add("The model output named 'Grids' could not be found. Check the upstream functions for errors.");
+                output.Errors.Add("The models output named 'Structure' and 'Grids' could not be found. Check the upstream functions for errors.");
                 return output;
             }
 
@@ -34,20 +36,59 @@ namespace ColumnsFromGrid
                 sections = envelopeModel.AllElementsOfType<DrainableRoofSection>().ToList();
             }
 
-            var hasLevels = inputModels.TryGetValue("Levels", out var levelsModel);
-
+            var levelVolumes = new List<LevelVolume>();
+            if (inputModels.TryGetValue("Levels", out var levelsModel))
+            {
+                levelVolumes = levelsModel.AllElementsOfType<LevelVolume>().ToList();
+            }
             var envelopePolygons = GetEnvelopePolygons(inputModels);
-            var grids = gridsModel.AllElementsOfType<Grid2dElement>();
-            var levelVolumes = levelsModel?.AllElementsOfType<LevelVolume>();
+            var grids = gridsModel?.AllElementsOfType<Grid2dElement>() ?? new List<Grid2dElement>();
+            var columns = new List<Column>();
+            if (structureModel != null)
+            {
+                columns = CreateColumnsFromStructure(input, structureModel, sections);
+            }
+            else
+            {
+                columns = CreateColumnsFromGrid(input, gridsModel, sections, envelopePolygons, levelVolumes, grids);
+            }
+            columns.AddRange(CreateAdditionalColumns(input, sections, levelVolumes, grids, columns.Select(c => c.Name).ToHashSet()));
 
+            output.Model.AddElements(columns);
+            output.Model.AddElements(proxies);
+            output.Model.AddElements(warnings);
+
+            return output;
+        }
+
+        private static List<Column> CreateColumnsFromStructure(ColumnsFromGridInputs input, Model structureModel, List<DrainableRoofSection> sections)
+        {
+            var columns = new List<Column>();
+            var columnInstances = structureModel.AllElementsOfType<ElementInstance>().Where(e => e.BaseDefinition is Column);
+            var i = 1;
+            foreach (var columnInstance in columnInstances)
+            {
+                var columnDefinition = columnInstance.BaseDefinition as Column;
+                var bounds = columnDefinition.Profile.Perimeter.Bounds();
+                var size = new SizesValue(bounds.XSize, columnDefinition.Height, bounds.YSize, input.FinishThickness);
+                var column = CreateColumn(size, input, columnInstance.Transform.Concatenated(new Transform(columnInstance.Transform.Origin).Inverted()), columnInstance.Transform.Origin, $"Column-{i}", columnDefinition.Height, sections);
+                columns.Add(column);
+                i++;
+            }
+
+            return columns;
+        }
+
+        private static List<Column> CreateColumnsFromGrid(ColumnsFromGridInputs input, Model gridsModel, List<DrainableRoofSection> sections, List<Polygon> envelopePolygons, IEnumerable<LevelVolume> levelVolumes, IEnumerable<Grid2dElement> grids)
+        {
             var allGridLines = gridsModel.AllElementsOfType<GridLine>();
             var allGridLinesProxies = allGridLines.Proxies(gridsDependencyName);
             var overrides = input.Overrides?.GridlinesOptions ?? new List<GridlinesOptionsOverride>();
             List<string> createColumnsGridLines = GetEnabledByDefaultGridLines(input, grids, allGridLines);
             AttachAllGridLinesOverrides(allGridLinesProxies, overrides, createColumnsGridLines);
+            var defaultSizeValue = new SizesValue(input.Width, input.Height, input.Depth, input.FinishThickness);
 
             var columns = new List<Column>();
-            var usedNames = new HashSet<string>();
             foreach (var grid in grids)
             {
                 var alignedTransform = grid.Transform.Moved(-1 * grid.Transform.Origin);
@@ -83,8 +124,7 @@ namespace ColumnsFromGrid
                                                  .Any(p => p.Identity.Name.Equals(gridNode.Name));
                     if (createColumn && columnIsNotRemoved)
                     {
-                        usedNames.Add(gridNode.Name);
-                        if (hasLevels)
+                        if (levelVolumes.Any())
                         {
                             foreach (var level in levelVolumes)
                             {
@@ -93,27 +133,34 @@ namespace ColumnsFromGrid
                                 profile.Contains(gridNode.Location.Origin, out var containment);
                                 if (containment == Containment.Inside || containment == Containment.CoincidesAtEdge || containment == Containment.CoincidesAtVertex)
                                 {
-                                    columns.Add(CreateColumn(input, alignedTransform, gridNode.Location.Origin + (0, 0, level.Transform.Origin.Z), gridNode.Name, level.Height, sections));
+                                    columns.Add(CreateColumn(defaultSizeValue, input, alignedTransform, gridNode.Location.Origin + (0, 0, level.Transform.Origin.Z), gridNode.Name, level.Height, sections));
                                 }
                             }
                         }
                         else
                         {
-                            columns.Add(CreateColumn(input, alignedTransform, gridNode.Location.Origin, gridNode.Name, null, sections));
+                            columns.Add(CreateColumn(defaultSizeValue, input, alignedTransform, gridNode.Location.Origin, gridNode.Name, null, sections));
                         }
                     }
                 }
             }
 
+            return columns;
+        }
+
+        private static List<Column> CreateAdditionalColumns(ColumnsFromGridInputs input, List<DrainableRoofSection> sections, List<LevelVolume> levelVolumes, IEnumerable<Grid2dElement> grids, HashSet<string> usedColumnNames)
+        {
+            var createdColumns = new List<Column>();
             if (input.Overrides?.Additions?.ColumnPositions != null)
             {
+                var defaultSizeValue = new SizesValue(input.Width, input.Height, input.Depth, input.FinishThickness);
                 var allGridNodes = grids.SelectMany(grid => grid.GridNodes);
                 var i = 1;
                 foreach (var newColumn in input.Overrides.Additions.ColumnPositions)
                 {
                     var location = newColumn.Value.Location;
                     double? height = null;
-                    if (hasLevels)
+                    if (levelVolumes.Any())
                     {
                         var levelAtElevation = levelVolumes.OrderBy(lvl => Math.Abs(lvl.Transform.Origin.Z - location.Z)).FirstOrDefault();
                         if (levelAtElevation != null)
@@ -121,19 +168,15 @@ namespace ColumnsFromGrid
                             height = levelAtElevation.Height;
                         }
                     }
-                    var name = GetColumnName(location, allGridNodes, usedNames, i);
-                    var column = CreateColumn(input, new Transform(), location, name, height, sections);
+                    var name = GetColumnName(location, allGridNodes, usedColumnNames, i);
+                    var column = CreateColumn(defaultSizeValue, input, new Transform(), location, name, height, sections);
                     Identity.AddOverrideIdentity(column, newColumn);
-                    columns.Add(column);
+                    createdColumns.Add(column);
                     i++;
                 }
             }
 
-            output.Model.AddElements(columns);
-            output.Model.AddElements(proxies);
-            output.Model.AddElements(warnings);
-
-            return output;
+            return createdColumns;
         }
 
         private static List<string> GetEnabledByDefaultGridLines(ColumnsFromGridInputs input, IEnumerable<Grid2dElement> grids, IEnumerable<GridLine> gridLines)
@@ -190,15 +233,15 @@ namespace ColumnsFromGrid
             return config;
         }
 
-        private static Column CreateColumn(ColumnsFromGridInputs input, Transform alignedTransform, Vector3 location, string name, double? height, List<DrainableRoofSection> sections)
+        private static Column CreateColumn(SizesValue defaultSizeValue, ColumnsFromGridInputs input, Transform alignedTransform, Vector3 location, string name, double? height, List<DrainableRoofSection> sections)
         {
             var locationOverride = input.Overrides?.ColumnPositions?.FirstOrDefault(p => p.Identity.Name.Equals(name) && (height == null || p.Identity.LevelElevation == height));
-            var sizeOverrideValue = input.Overrides?.Sizes?.FirstOrDefault(p => p.Identity.Name.Equals(name) && (height == null || p.Identity.LevelElevation == height))?.Value;
-            var defaultSizeValue = new SizesValue(input.Width, input.Height, input.Depth);
-
+            var sizeOverride = input.Overrides?.Sizes?.FirstOrDefault(p => p.Identity.Name.Equals(name) && (height == null || p.Identity.LevelElevation == height));
+            var sizeOverrideValue = sizeOverride?.Value;
             var resultLocation = locationOverride?.Value.Location ?? location;
             var width = (sizeOverrideValue ?? defaultSizeValue).Width;
             var depth = (sizeOverrideValue ?? defaultSizeValue).Depth;
+            var finishThickness = (sizeOverrideValue ?? defaultSizeValue).FinishThickness;
             var levelElevation = height;
             if (sizeOverrideValue != null)
             {
@@ -216,7 +259,7 @@ namespace ColumnsFromGrid
             {
                 height = defaultSizeValue.Height;
             }
-            var currentAlignedPerim = Polygon.Rectangle(width, depth).TransformedPolygon(alignedTransform);
+            var currentAlignedPerim = Polygon.Rectangle(width + finishThickness, depth + finishThickness).TransformedPolygon(alignedTransform);
             var column = new Column(resultLocation,
                             height.Value,
                             null,
@@ -229,10 +272,14 @@ namespace ColumnsFromGrid
             {
                 column.AddOverrideIdentity(ColumnPositionsOverride.Name, locationOverride.Id, locationOverride.Identity);
             }
-
+            if (sizeOverride != null)
+            {
+                column.AddOverrideIdentity(SizesOverride.Name, sizeOverride.Id, sizeOverride.Identity);
+            }
             column.AdditionalProperties["Width"] = width;
             column.AdditionalProperties["Depth"] = depth;
             column.AdditionalProperties["Height"] = height;
+            column.AdditionalProperties["Finish Thickness"] = finishThickness;
             if (levelElevation.HasValue)
             {
                 column.AdditionalProperties["Level Elevation"] = levelElevation;

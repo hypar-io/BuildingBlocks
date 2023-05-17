@@ -2,13 +2,13 @@
     "$schema": "https://hypar.io/Schemas/Function.json",
     "id": "bc63cf84-80e7-43a9-b5ef-3fe3ba1bc97e",
     "name": "Columns from Grid",
-    "description": "Create Columns from a grid.",
+    "description": "Create Columns.",
     "language": "C#",
     "model_dependencies": [
         {
             "autohide": false,
             "name": "Grids",
-            "optional": false
+            "optional": true
         },
         {
             "autohide": false,
@@ -22,6 +22,10 @@
         },
         {
             "name": "Levels",
+            "optional": true
+        },
+        {
+            "name": "Structure",
             "optional": true
         }
     ],
@@ -54,6 +58,15 @@
                 "$hyparUnitType": "length",
                 "$hyparOrder": 2,
                 "minimum": 0.2
+            },
+            "Finish Thickness": {
+                "multipleOf": 0.05,
+                "description": "Default finish thickness for structural columns.",
+                "maximum": 2,
+                "type": "number",
+                "$hyparUnitType": "length",
+                "$hyparOrder": 2.2,
+                "minimum": 0.05
             },
             "Create All Columns": {
                 "type": "boolean",
@@ -156,6 +169,14 @@
                     "$hyparUnitType": "length",
                     "$hyparOrder": 2,
                     "minimum": 0.2
+                },
+                "Finish Thickness": {
+                    "multipleOf": 0.05,
+                    "maximum": 2,
+                    "type": "number",
+                    "$hyparUnitType": "length",
+                    "$hyparOrder": 2.2,
+                    "minimum": 0.05
                 }
             }
         }
@@ -173,6 +194,7 @@
     "cli_version": "1.0.1-alpha.1",
     "messages": {
         "en": {
+            "name": "Columns",
             "overrides": {
                 "Gridlines Options": {
                     "name": "Column Options"
