@@ -24,11 +24,6 @@ namespace ColumnsFromGrid
             warnings.Clear();
             inputModels.TryGetValue("Structure", out var structureModel);
             inputModels.TryGetValue("Grids", out var gridsModel);
-            if (structureModel == null && gridsModel == null)
-            {
-                output.Errors.Add("The models output named 'Structure' and 'Grids' could not be found. Check the upstream functions for errors.");
-                return output;
-            }
 
             var sections = new List<DrainableRoofSection>();
             if (inputModels.TryGetValue("Drainable Roof Sections", out var envelopeModel))
@@ -48,7 +43,7 @@ namespace ColumnsFromGrid
             {
                 columns = CreateColumnsFromStructure(input, structureModel, sections);
             }
-            else
+            if (!columns.Any() && gridsModel != null)
             {
                 columns = CreateColumnsFromGrid(input, gridsModel, sections, envelopePolygons, levelVolumes, grids);
             }
