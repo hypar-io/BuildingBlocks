@@ -1,0 +1,48 @@
+{
+  "$schema": "https://hypar.io/Schemas/Function.json",
+  "id": "61dbb9f8-aaae-4295-9112-c8ae81655361",
+  "name": "Levels from Floors",
+  "description": "Construct Levels in between Floors. Useful when importing or manually drawing floors.",
+  "language": "C#",
+  "model_dependencies": [
+    {
+      "name": "Floors"
+    }
+  ],
+  "model_output": "Levels",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "Construct Volume at top level": {
+        "type": "boolean",
+        "description": "Whether or not to construct a level volume at the topmost level of any stack of floors",
+        "default": true
+      },
+      "Default Level Height": {
+        "description": "The distance to the next highest floor will typically determine level height, but if no next floor is present, this value will govern the height.",
+        "type": "number",
+        "$hyparUnitType": "length",
+        "default": 4,
+        "minimum": 0
+      },
+      "Floor Merge Tolerance": {
+        "description": "This number is used to determine if two floors are close enough to be merged into one level. If 0, no merging will occur. This is useful in cases of Revit export, where a given \"floor\" might be modeled as separate floor elements.",
+        "type": "number",
+        "$hyparUnitType": "length",
+        "default": 1.0
+      }
+    }
+  },
+  "repository_url": "https://github.com/hypar-io/function",
+  "source_file_key": null,
+  "preview_image": null,
+  "element_types": [
+    "https://prod-api.hypar.io/schemas/LevelVolume",
+    "https://prod-api.hypar.io/schemas/ViewScope",
+    "https://raw.githubusercontent.com/hypar-io/Schemas/master/LevelPerimeter.json",
+    "https://raw.githubusercontent.com/hypar-io/Schemas/master/Level.json",
+    "https://schemas.hypar.io/SpaceBoundary.json",
+    "https://schemas.hypar.io/FunctionInputAction.json",
+    "https://schemas.hypar.io/FunctionOverrideAction.json"
+  ]
+}
