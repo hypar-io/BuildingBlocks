@@ -15,6 +15,16 @@
       "autohide": false,
       "name": "Circulation",
       "optional": false
+    },
+    {
+      "autohide": false,
+      "name": "Doors",
+      "optional": true
+    },
+    {
+      "autohide": false,
+      "name": "Interior Partitions",
+      "optional": true
     }
   ],
   "input_schema": {
@@ -34,7 +44,9 @@
   "outputs": [],
   "element_types": [
     "https://prod-api.hypar.io/schemas/SpaceBoundary",
-    "https://prod-api.hypar.io/schemas/CirculationSegment"
+    "https://prod-api.hypar.io/schemas/CirculationSegment",
+    "https://schemas.hypar.io/Door.json",
+    "https://schemas.hypar.io/WallCandidate.json"
   ],
   "repository_url": "https://github.com/hypar-io/function",
   "filters": {},

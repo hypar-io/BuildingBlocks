@@ -39,6 +39,18 @@ namespace EmergencyEgress
             var corridors = circulationModel.AllElementsOfType<CirculationSegment>();
             var rooms = spaceZonesModel.AllElementsOfType<SpaceBoundary>();
 
+            List<Door> doors = null;
+            if (inputModels.TryGetValue("Doors", out Model doorsModel))
+            {
+                doors = doorsModel.AllElementsOfType<Door>().ToList();
+            }
+
+            List<WallCandidate> walls = null;
+            if (inputModels.TryGetValue("Interior Partitions", out Model wallsModel))
+            {
+                walls = wallsModel.AllElementsOfType<WallCandidate>().ToList();
+            }
+
             var corridorsByLevel = corridors.GroupBy(c => c.Level);
             var roomsByLevel = rooms.GroupBy(r => r.Level);
 
@@ -79,7 +91,7 @@ namespace EmergencyEgress
                 var roomInfos = new List<List<RoomEvacuationVariant>>();
                 foreach (var room in levelRooms)
                 {
-                    roomInfos.Add(AddRoom(room, centerlines, grid));
+                    roomInfos.Add(AddRoom(room, centerlines, walls, doors, grid));
                 }
 
                 var alg = new AdaptiveGraphRouting(grid, new RoutingConfiguration());
@@ -302,15 +314,17 @@ namespace EmergencyEgress
         private static List<RoomEvacuationVariant> AddRoom(
             SpaceBoundary room,
             List<(CirculationSegment Segment, Polyline Centerline)> centerlines,
+            List<WallCandidate>? walls,
+            List<Door>? doors,
             AdaptiveGrid grid)
         {
             var roomExits = new List<RoomEvacuationVariant>();
             //Center of every segment in room boundary is checked against corridors
-            var perimeter = room.Boundary.Perimeter.TransformedPolygon(room.Transform);
+            var perimeter = room.Boundary.Perimeter.CollinearPointsRemoved().TransformedPolygon(room.Transform);
             foreach (var roomEdge in perimeter.Segments())
             {
                 //exitVertex is already added to the grid by `FindExit`
-                var exitVertex = FindRoomExit(roomEdge, centerlines, grid);
+                var exitVertex = FindRoomExit(roomEdge, centerlines, walls, doors, grid);
                 if (exitVertex != null)
                 {
                     //If it's close enough to corridors - it's two furthest corners are added.
@@ -347,9 +361,22 @@ namespace EmergencyEgress
         private static GridVertex FindRoomExit(
             Line roomEdge,
             List<(CirculationSegment Segment, Polyline Centerline)> centerlines,
+            List<WallCandidate>? walls,
+            List<Door>? doors,
             AdaptiveGrid grid)
         {
-            var midpoint = roomEdge.PointAt(0.5);
+            var door = doors?.FirstOrDefault(d => roomEdge.PointOnLine(d.Transform.Origin, false, 1e-3));
+            var wall = walls?.FirstOrDefault(w => w.Line.PointOnLine(roomEdge.Start, true, 1e-3) &&
+                                             w.Line.PointOnLine(roomEdge.End, true, 1e-3));
+            
+            // There are doors in the workflow and this segment is a wall without a door.
+            if (wall != null && doors != null && door == null)
+            {
+                return null;
+            }
+
+            var midpoint = door?.Transform.Origin ?? roomEdge.PointAt(0.5);
+
             foreach (var line in centerlines)
             {
                 for (int i = 0; i < line.Centerline.Vertices.Count - 1; i++)
