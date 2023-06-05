@@ -48,7 +48,7 @@ namespace LevelBySketch
         }
     
         /// <summary>Perimeter of the Level.</summary>
-        [Newtonsoft.Json.JsonProperty("Perimeter", Required = Newtonsoft.Json.Required.AllowNull)]
+        [Newtonsoft.Json.JsonProperty("Perimeter", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public Polygon Perimeter { get; set; }
     
         /// <summary>Level elevation relative to the zero plane.</summary>

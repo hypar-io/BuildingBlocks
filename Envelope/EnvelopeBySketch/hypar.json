@@ -136,10 +136,7 @@
                     ]
                 }
             }
-        },
-        "required": [
-            "Perimeter"
-        ]
+        }
     },
     "outputs": [
         {
