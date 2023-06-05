@@ -13,6 +13,7 @@ namespace EmergencyEgress
     {
         private const double OffsetFromWall = 0.5;
         private const double VisualizationHeight = 1.5;
+        private const double RoomToWallTolerance = 1e-3;
         private static Material EgressMaterial = new Material("Exit Plan", new Color("Red"));
 
         /// <summary>
@@ -365,9 +366,9 @@ namespace EmergencyEgress
             List<Door>? doors,
             AdaptiveGrid grid)
         {
-            var door = doors?.FirstOrDefault(d => roomEdge.PointOnLine(d.Transform.Origin, false, 1e-3));
-            var wall = walls?.FirstOrDefault(w => w.Line.PointOnLine(roomEdge.Start, true, 1e-3) &&
-                                             w.Line.PointOnLine(roomEdge.End, true, 1e-3));
+            var door = doors?.FirstOrDefault(d => roomEdge.PointOnLine(d.Transform.Origin, false, RoomToWallTolerance));
+            var wall = walls?.FirstOrDefault(w => w.Line.PointOnLine(roomEdge.Start, true, RoomToWallTolerance) &&
+                                             w.Line.PointOnLine(roomEdge.End, true, RoomToWallTolerance));
             
             // There are doors in the workflow and this segment is a wall without a door.
             if (wall != null && doors != null && door == null)
