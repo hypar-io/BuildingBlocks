@@ -16,10 +16,17 @@ namespace LevelBySketch
         /// <returns>A LevelBySketchOutputs instance containing computed results and the model with any new elements.</returns>
         public static LevelBySketchOutputs Execute(Dictionary<string, Model> inputModels, LevelBySketchInputs input)
         {
+            var output = new LevelBySketchOutputs();
+            if (input.Perimeter == null)
+            {
+                output.Warnings.Add("Perimeter is missing");
+                return output;
+            }
+
             var lamina = new Elements.Geometry.Solids.Lamina(input.Perimeter, false);
             var geomRep = new Representation(new List<Elements.Geometry.Solids.SolidOperation>() { lamina });
             var lvlMatl = new Material("level", Palette.White, 0.0f, 0.0f);
-            var output = new LevelBySketchOutputs(input.Perimeter.Area());
+            output.Area = input.Perimeter.Area();
             output.Model.AddElement(new Level(input.LevelElevation, Guid.NewGuid(), ""));
             output.Model.AddElement(new LevelPerimeter(input.Perimeter.Area(), input.LevelElevation, input.Perimeter, Guid.NewGuid(), ""));
             output.Model.AddElement(new Panel(input.Perimeter, 
