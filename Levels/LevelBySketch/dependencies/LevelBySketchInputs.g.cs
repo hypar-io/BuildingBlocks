@@ -22,7 +22,7 @@ namespace LevelBySketch
 {
     #pragma warning disable // Disable all warnings
 
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v13.0.0.0)")]
     
     public  class LevelBySketchInputs : S3Args
     
@@ -48,7 +48,7 @@ namespace LevelBySketch
         }
     
         /// <summary>Perimeter of the Level.</summary>
-        [Newtonsoft.Json.JsonProperty("Perimeter", Required = Newtonsoft.Json.Required.AllowNull)]
+        [Newtonsoft.Json.JsonProperty("Perimeter", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public Polygon Perimeter { get; set; }
     
         /// <summary>Level elevation relative to the zero plane.</summary>

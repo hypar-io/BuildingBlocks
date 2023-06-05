@@ -26,6 +26,12 @@ namespace EnvelopeBySketch
             double envelopeElevation = 0;
             var output = new EnvelopeBySketchOutputs();
 
+            if (input.Perimeter == null)
+            {
+                output.Warnings.Add("Perimeter is missing");
+                return output;
+            }
+            
             var polygon = input.Perimeter;
             if (polygon.IsClockWise())
             {

@@ -305,7 +305,13 @@ namespace CoreByLevels
             var liftSvcFactor = 0;
             foreach (var polygon in makePolys)
             {
-                var lastLevel = Levels.SkipLast((int)liftSvc * liftSvcFactor).Last();
+                var suitableLevels = Levels.SkipLast((int)liftSvc * liftSvcFactor);
+                if (!suitableLevels.Any())
+                {
+                    break;
+                }
+
+                var lastLevel = suitableLevels.Last();
                 var liftHeight = lastLevel.Elevation - Levels.First().Elevation;
                 if (liftHeight > 10.0)
                 {

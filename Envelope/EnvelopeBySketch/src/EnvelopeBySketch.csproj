@@ -1,11 +1,9 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
     <ProjectReference Include="..\dependencies\EnvelopeBySketch.Dependencies.csproj" />
   </ItemGroup>
-
-    <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
-
 </Project>
