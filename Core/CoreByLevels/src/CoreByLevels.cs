@@ -31,6 +31,12 @@ namespace CoreByLevels
                 outputs.Errors.Add($"No LevelPerimeters found in the model 'Levels'. Check the output from the function upstream that has a model output 'Levels'.");
                 return outputs;
             }
+            // number of surfaces = number of levels + additional surface of the highest floor
+            else if (model.AllElementsOfType<LevelPerimeter>().Count() < 3)
+            {
+                outputs.Warnings.Add($"The minimum number of levels required is 2.");
+                return outputs;
+            }
 
             levels.AddRange(model.AllElementsOfType<LevelPerimeter>());
             var coreMaker = new CoreMaker(levels, input.Setback, input.Rotation);
