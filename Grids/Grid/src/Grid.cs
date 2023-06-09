@@ -362,13 +362,39 @@ namespace Grid
 
             if (namingPattern == "{A}")
             {
-                name = ((char)(idx + 65)).ToString(); // nth letter of alphabet
+                name = ConvertToANamingPattern(idx);
             }
             if (namingPattern == "{1}")
             {
                 name = (idx + 1).ToString();
             }
             return name;
+        }
+
+        // The pattern is the following: A-Z, AA-AZ, BA-BZ,..., AAA-AAZ,...
+        private static string ConvertToANamingPattern(int idx)
+        {
+            // Let Q = 26 - number of uppercase characters, N - number of letters in string.
+            // There are Q^N strings of length N. The first string of length N+1 will have 
+            // idx = Q^1 + Q^2 + ... + Q^n, which is equal to Q * (Q^N - 1) / (Q - 1).
+            const int Q = 26; 
+            int N = (int)Math.Ceiling(Math.Log((Q - 1) * (idx + 1) + Q, Q) - 1);
+            char[] chars = new char[N];
+
+            // The goal is to represent idx in string S as a set of characters Ki, where 0 <= Ki < Q.
+            // Such polynomial is unique for each idx.
+            // S = K0 + K1 * Q + K2 * Q^2 + ... + K_n-1_ * Q^(N - 1). 
+            // 
+            // Each letter Ki are calculated in reverse order as reminder of dividing S by Q.
+            // Then the letter is removed by dividing and thus dropping the reminder.
+            for (int i = N - 1; i >= 0; i--)
+            {
+                //Uppercase A has code 65.
+                chars[i] = (char)(idx % Q + 65);
+                idx = (idx / Q) - 1;
+            }
+
+            return new string(chars);
         }
 
         private static void AddGridLinesTexts(
