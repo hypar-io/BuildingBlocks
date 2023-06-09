@@ -4,7 +4,6 @@ using Elements.Spatial;
 using System.Collections.Generic;
 using System;
 using System.Linq;
-using Elements.Geometry.Solids;
 
 namespace Grid
 {
@@ -15,7 +14,7 @@ namespace Grid
         private const double pointsInMeter = 2835;
 
         private static double MinCircleRadius = 0.5;
-        private static double CircleRadius = 1;
+
         // Offset the heads from the base lines.
         private static double lineHeadExtension = 2.0;
 
@@ -197,7 +196,7 @@ namespace Grid
             if (gridPoints.Count == 0)
             {
                 output.Errors.Add($"No grid points were able to be calculated from the given inputs for grid area {gridArea.Name}.");
-                return output;
+                return new List<Grid2dElement>();
             }
 
             Polygon gridPolygon = null;
@@ -262,7 +261,9 @@ namespace Grid
                 {
                     foreach (var vGridLine in vGridLines)
                     {
-                        if (uGridLine.Line.Intersects(vGridLine.Line, out var intersection, includeEnds: true))
+                        var uCurve = uGridLine.Curve;
+                        var vCurve = vGridLine.Curve;
+                        if (Line.Intersects(uCurve.Start, uCurve.End, vCurve.Start, vCurve.End, out var intersection, includeEnds: true))
                         {
                             var gridNodeTransform = new Transform(intersection);
                             gridNodes.Add(new GridNode(gridNodeTransform,
@@ -404,9 +405,9 @@ namespace Grid
         {
             foreach (var gridline in gridlines)
             {
-                var line = gridline.Line;
-                var lineDir = (line.End - line.Start).Unitized();
-                var circleCenter = line.Start - (lineDir * (gridline.Radius + lineHeadExtension));
+                var curve = gridline.Curve;
+                var lineDir = (curve.End - curve.Start).Unitized();
+                var circleCenter = curve.Start - (lineDir * (gridline.Radius + lineHeadExtension));
                 var color = deduplicatedNamesGridLines.Contains(gridline) ? Colors.Red : Colors.Darkgray;
                 texts.Add((circleCenter, Vector3.ZAxis, lineDir, gridline.Name, color));
             }
@@ -469,7 +470,7 @@ namespace Grid
                 {
                     Radius = radius,
                     ExtensionBeginning = lineHeadExtension,
-                    Line = line,
+                    Curve = line,
                     Name = gridGuide.Name,
                     Material = material
                 };
