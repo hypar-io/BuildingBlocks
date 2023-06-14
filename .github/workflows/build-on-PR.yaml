@@ -1,10 +1,10 @@
-name: Build and Test on PR
+name: Build on PR
 
 on:
   pull_request:
 
 jobs:
-  build-and-test:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
