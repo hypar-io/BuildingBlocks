@@ -8,4 +8,8 @@
     <PackageReference Include="GeometryEx" Version="8.2.0" />
   </ItemGroup>
 
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
 </Project>
