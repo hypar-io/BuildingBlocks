@@ -10,4 +10,8 @@
     <ProjectReference Include="..\src\FacadeByEnvelope.csproj" />
   </ItemGroup>
 
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
 </Project>
