@@ -197,7 +197,7 @@ namespace Grid
             if (gridPoints.Count == 0)
             {
                 output.Errors.Add($"No grid points were able to be calculated from the given inputs for grid area {gridArea.Name}.");
-                return output;
+                return new List<Grid2dElement>();
             }
 
             Polygon gridPolygon = null;
