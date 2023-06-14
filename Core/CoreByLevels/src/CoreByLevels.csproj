@@ -8,5 +8,9 @@
     <PackageReference Include="GeometryEx" Version="6.10.0" />
     <PackageReference Include="RoomKit" Version="5.5.0" />
   </ItemGroup>
+  
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
 
 </Project>
