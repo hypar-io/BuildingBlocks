@@ -5,6 +5,5 @@ obj/
 output.json
 input.json
 .vs/**/*.*
-*.g.cs
 
 **/test/results/
