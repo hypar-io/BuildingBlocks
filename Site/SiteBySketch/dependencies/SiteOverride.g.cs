@@ -138,8 +138,9 @@ namespace SiteBySketch
                     if (elementToEdit != null)
                     {
                         resultElements.Remove(elementToEdit);
-                        resultElements.Add(modifyElement(elementToEdit, editedElement));
-                        Identity.AddOverrideIdentity(elementToEdit, editedElement);
+                        var newElement = modifyElement(elementToEdit, editedElement);
+                        resultElements.Add(newElement);
+                        Identity.AddOverrideIdentity(newElement, editedElement);
                     }
                 }
             }
