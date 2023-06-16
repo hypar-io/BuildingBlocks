@@ -96,13 +96,16 @@ namespace CoreByLevels
             {
                 occArea += level.Perimeter.Area();
             }
-            var occupants = (int)Math.Ceiling(occArea / occupantLoad);
-            LiftQuantity = (int)Math.Ceiling(occArea / liftService);
-            if (LiftQuantity > 8)
+            if (occArea > 0)
             {
-                LiftQuantity = 8;
+                var occupants = (int)Math.Ceiling(occArea / occupantLoad);
+                LiftQuantity = (int)Math.Ceiling(occArea / liftService);
+                if (LiftQuantity > 8)
+                {
+                    LiftQuantity = 8;
+                }
+                LiftService = (int)Math.Floor((decimal)occLevels.Count() / LiftQuantity);
             }
-            LiftService = (int)Math.Floor((decimal)occLevels.Count() / LiftQuantity);
             var positions = new List<Vector3> { shell.Centroid() };
             var liftBank = Math.Floor(LiftQuantity * 0.5);
             positions.AddRange(shell.FindInternalPoints((stairLength + (liftBank * liftSize)) * 0.5));
