@@ -4,7 +4,6 @@ using Elements.Spatial;
 using System.Collections.Generic;
 using System;
 using System.Linq;
-using Elements.Geometry.Solids;
 
 namespace Grid
 {
@@ -15,7 +14,7 @@ namespace Grid
         private const double pointsInMeter = 2835;
 
         private static double MinCircleRadius = 0.5;
-        private static double CircleRadius = 1;
+
         // Offset the heads from the base lines.
         private static double lineHeadExtension = 2.0;
 
@@ -262,7 +261,9 @@ namespace Grid
                 {
                     foreach (var vGridLine in vGridLines)
                     {
-                        if (uGridLine.Line.Intersects(vGridLine.Line, out var intersection, includeEnds: true))
+                        var uCurve = uGridLine.Curve;
+                        var vCurve = vGridLine.Curve;
+                        if (Line.Intersects(uCurve.Start, uCurve.End, vCurve.Start, vCurve.End, out var intersection, includeEnds: true))
                         {
                             var gridNodeTransform = new Transform(intersection);
                             gridNodes.Add(new GridNode(gridNodeTransform,
@@ -362,13 +363,39 @@ namespace Grid
 
             if (namingPattern == "{A}")
             {
-                name = ((char)(idx + 65)).ToString(); // nth letter of alphabet
+                name = ConvertToANamingPattern(idx);
             }
             if (namingPattern == "{1}")
             {
                 name = (idx + 1).ToString();
             }
             return name;
+        }
+
+        // The pattern is the following: A-Z, AA-AZ, BA-BZ,..., AAA-AAZ,...
+        private static string ConvertToANamingPattern(int idx)
+        {
+            // Let Q = 26 - number of uppercase characters, N - number of letters in string.
+            // There are Q^N strings of length N. The first string of length N+1 will have 
+            // idx = Q^1 + Q^2 + ... + Q^n, which is equal to Q * (Q^N - 1) / (Q - 1).
+            const int Q = 26; 
+            int N = (int)Math.Ceiling(Math.Log((Q - 1) * (idx + 1) + Q, Q) - 1);
+            char[] chars = new char[N];
+
+            // The goal is to represent idx in string S as a set of characters Ki, where 0 <= Ki < Q.
+            // Such polynomial is unique for each idx.
+            // S = K0 + K1 * Q + K2 * Q^2 + ... + K_n-1_ * Q^(N - 1). 
+            // 
+            // Each letter Ki are calculated in reverse order as reminder of dividing S by Q.
+            // Then the letter is removed by dividing and thus dropping the reminder.
+            for (int i = N - 1; i >= 0; i--)
+            {
+                //Uppercase A has code 65.
+                chars[i] = (char)(idx % Q + 65);
+                idx = (idx / Q) - 1;
+            }
+
+            return new string(chars);
         }
 
         private static void AddGridLinesTexts(
@@ -378,9 +405,9 @@ namespace Grid
         {
             foreach (var gridline in gridlines)
             {
-                var line = gridline.Line;
-                var lineDir = (line.End - line.Start).Unitized();
-                var circleCenter = line.Start - (lineDir * (gridline.Radius + lineHeadExtension));
+                var curve = gridline.Curve;
+                var lineDir = (curve.End - curve.Start).Unitized();
+                var circleCenter = curve.Start - (lineDir * (gridline.Radius + lineHeadExtension));
                 var color = deduplicatedNamesGridLines.Contains(gridline) ? Colors.Red : Colors.Darkgray;
                 texts.Add((circleCenter, Vector3.ZAxis, lineDir, gridline.Name, color));
             }
@@ -443,7 +470,7 @@ namespace Grid
                 {
                     Radius = radius,
                     ExtensionBeginning = lineHeadExtension,
-                    Line = line,
+                    Curve = line,
                     Name = gridGuide.Name,
                     Material = material
                 };
