@@ -224,8 +224,8 @@ namespace CoreByLevels
         private List<CompassBox> MakeStairs(CompassBox bathTopo)
         {
             var stairTopos = new List<CompassBox>();
-            var stairCount = Levels.Count() > 1 ? 2 : 1;
-            for (int i = 0; i < stairCount; i++)
+            var stairsCount = Levels.Count() > 1 ? 2 : 1;
+            for (int i = 0; i < stairsCount; i++)
             {
                 Vector3 from;
                 Vector3 to;
