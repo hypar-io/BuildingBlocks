@@ -31,11 +31,6 @@ namespace CoreByLevels
                 outputs.Errors.Add($"No LevelPerimeters found in the model 'Levels'. Check the output from the function upstream that has a model output 'Levels'.");
                 return outputs;
             }
-            else if (model.AllElementsOfType<LevelPerimeter>().Count() < 3)
-            {
-                outputs.Warnings.Add($"The minimum number of LevelPerimeters required is 3.");
-                return outputs;
-            }
 
             levels.AddRange(model.AllElementsOfType<LevelPerimeter>());
             var coreMaker = new CoreMaker(levels, input.Setback, input.Rotation);

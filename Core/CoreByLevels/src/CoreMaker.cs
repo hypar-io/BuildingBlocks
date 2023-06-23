@@ -183,12 +183,19 @@ namespace CoreByLevels
         /// <returns></returns>
         private CompassBox MakeMech(Vector3 moveTo)
         {
+            var suitableLevels = Levels.SkipLast(1);
+            // we need at least two floors to build a mesh between them
+            if (suitableLevels.Count() < 2)
+            {
+                return null;
+            }
+
             var mechPerim = Polygon.Rectangle(mechLength, mechWidth);
             var mechTopo = new CompassBox(mechPerim);
             mechPerim = mechPerim.MoveFromTo(mechTopo.W, moveTo);
             mechTopo = new CompassBox(mechPerim);
             mechPerim = mechPerim.Rotate(Position, Rotation);
-            var lastLevel = Levels.SkipLast(1).Last();
+            var lastLevel = suitableLevels.Last();
             var mechHeight = lastLevel.Elevation - Levels.First().Elevation;
             var extrude = new Elements.Geometry.Solids.Extrude(mechPerim, mechHeight, Vector3.ZAxis, false);
             var geomRep = new Representation(new List<Elements.Geometry.Solids.SolidOperation>() { extrude });
@@ -217,7 +224,8 @@ namespace CoreByLevels
         private List<CompassBox> MakeStairs(CompassBox bathTopo)
         {
             var stairTopos = new List<CompassBox>();
-            for (int i = 0; i < 2; i++)
+            var stairCount = Levels.Count() > 1 ? 2 : 1;
+            for (int i = 0; i < stairCount; i++)
             {
                 Vector3 from;
                 Vector3 to;
