@@ -12,7 +12,7 @@ namespace FloorsBySketch
     public class FloorsBySketchWorkflowTest
     {
         [Fact]
-        public void TestExecute()
+        public void OverrideTestExecute()
         {
             var input = GetInput();
 
@@ -78,9 +78,9 @@ namespace FloorsBySketch
                 Assert.True(expectedPolygon.IsAlmostEqualTo(polygon, 1E-04));
             }
 
-            result.Model.ToGlTF("../../../FloorsBySketchWorkflowTest/results/FloorsBySketchWorkflowTest.gltf", false);
-            result.Model.ToGlTF("../../../FloorsBySketchWorkflowTest/results/FloorsBySketchWorkflowTest.glb");
-            File.WriteAllText("../../../FloorsBySketchWorkflowTest/results/FloorsBySketchWorkflowTest.json", result.Model.ToJson());
+            //result.Model.ToGlTF("../../../FloorsBySketchWorkflowTest/results/FloorsBySketchWorkflowTest.gltf", false);
+            //result.Model.ToGlTF("../../../FloorsBySketchWorkflowTest/results/FloorsBySketchWorkflowTest.glb");
+            //File.WriteAllText("../../../FloorsBySketchWorkflowTest/results/FloorsBySketchWorkflowTest.json", result.Model.ToJson());
 
         }
 
