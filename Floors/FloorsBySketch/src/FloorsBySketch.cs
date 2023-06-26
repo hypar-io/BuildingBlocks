@@ -64,23 +64,14 @@ namespace FloorsBySketch
             var count = 1;
             foreach (var floorGrp in floors.OrderBy(f => f.Elevation).GroupBy(f => f.Elevation))
             {
-                var letter = 'A';
-                if (floorGrp.Count() == 1)
+                foreach (var floor in floorGrp)
                 {
-                    floorGrp.First().Name = $"Level {count++}";
+                    floor.Name = $"Level {count}";
                 }
-                else
-                {
-                    foreach (var floor in floorGrp)
-                    {
-                        floor.Name = $"Level {count}{letter++}";
-                    }
-                    count++;
-                }
+                count++;
             }
 
             output.Model.AddElements(overridenFloors);
-
             return output;
         }
 

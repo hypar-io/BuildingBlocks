@@ -22,20 +22,20 @@ namespace FloorsBySketch
             var result = FloorsBySketch.Execute(modelDependencies, input);
             int expectedCountOfPolygons = 6;
 
-            var floors = result.Model.AllElementsOfType<Floor>().OrderBy(f => f.Name).ToList();
+            var floors = result.Model.AllElementsOfType<Floor>().OrderBy(f => f.Name).ThenBy(f => f.Profile.Perimeter.Centroid()).ToList();
             Assert.Equal(expectedCountOfPolygons, floors.Count);
 
             var testPolygon1 = new Polygon(
-                new Vector3(30.0024, -29.8964, -0.3048),
-                new Vector3(30.1473, -10.0411, -0.3048),
-                new Vector3(0.1557, -29.6785, -0.3048)
-            );
-
-            var testPolygon2 = new Polygon(
                 new Vector3(-41.5407, -10.5723, -0.3048),
                 new Vector3(-31.6954, -20.5971, -0.3048),
                 new Vector3(-21.4514, -10.5365, -0.3048),
                 new Vector3(-31.2967, -0.5117, -0.3048)
+            );
+
+            var testPolygon2 = new Polygon(
+                new Vector3(30.0024, -29.8964, -0.3048),
+                new Vector3(30.1473, -10.0411, -0.3048),
+                new Vector3(0.1557, -29.6785, -0.3048)
             );
 
             var testPolygon3 = new Polygon(
