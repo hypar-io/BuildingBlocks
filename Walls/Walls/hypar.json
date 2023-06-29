@@ -14,19 +14,19 @@
       "context": "[*discriminator=Elements.StandardWall]",
       "identity": {
         "Rough Location": {
-          "$ref": "https://hypar.io/Schemas/Geometry/Vector3.json"
+          "$ref": "https://schemas.hypar.io/Vector3.json"
         }
       },
       "schema": {
         "CenterLine": {
-          "$ref": "https://prod-api.hypar.io/schemas/Line"
+          "$ref": "https://schemas.hypar.io/Line.json"
         }
       },
       "behaviors": {
         "add": {
           "schema": {
             "CenterLine": {
-              "$ref": "https://prod-api.hypar.io/schemas/Line"
+              "$ref": "https://schemas.hypar.io/Line.json"
             }
           }
         },
@@ -37,7 +37,7 @@
       "context": "[*discriminator=Elements.StandardWall]",
       "identity": {
         "Rough Location": {
-          "$ref": "https://hypar.io/Schemas/Geometry/Vector3.json"
+          "$ref": "https://schemas.hypar.io/Vector3.json"
         }
       },
       "schema": {
