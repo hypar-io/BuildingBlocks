@@ -41,10 +41,9 @@ namespace CoreByEnvelope
             output.ServiceCoreWidth = coreDef.width;
             output.ServiceCoreRotation = coreDef.rotation;
             output.Model.AddElement(new ServiceCore(coreDef.perimeter,
-                                                    Vector3.ZAxis,
                                                     coreDef.elevation,
                                                     coreDef.height,
-                                                    0.0,
+                                                    coreDef.centroid,
                                                     new Transform(0.0, 0.0, coreDef.elevation),
                                                     corMatl,
                                                     corRep,
