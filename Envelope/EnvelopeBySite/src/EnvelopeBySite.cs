@@ -9,8 +9,6 @@ namespace EnvelopeBySite
 {
     public static class EnvelopeBySite
     {
-        private static readonly Plane XY_PLANE = new((0, 0, 0), (0, 0, 1));
-
         /// <summary>
         /// Generates a building Envelope from a Site boundary.
         /// </summary>
@@ -164,7 +162,7 @@ namespace EnvelopeBySite
 
         private static Envelope ModifyEnvelopeFootprint(Envelope envelope, EnvelopeFootprintOverride edit)
         {
-            var newZeroPolygon = edit?.Value?.Perimeter?.Project(XY_PLANE) ?? envelope.Perimeter;
+            var newZeroPolygon = edit?.Value?.Perimeter?.Project(Plane.XY) ?? envelope.Perimeter;
             envelope.UpdateProfile(newZeroPolygon);
             return envelope;
         }
