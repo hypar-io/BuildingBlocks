@@ -767,7 +767,7 @@ namespace Grid
             }
         }
     
-        [Newtonsoft.Json.JsonProperty("Extents", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonProperty("Extents", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public Polygon Extents { get; set; }
     
     }
