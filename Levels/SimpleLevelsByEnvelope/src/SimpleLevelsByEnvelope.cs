@@ -51,13 +51,13 @@ namespace SimpleLevelsByEnvelope
             while (currentLevel < maxElevation - input.TopLevelHeight - minLevelHeight)
             {
                 Console.WriteLine($"Adding Level {levels.Count + 1:0} at elevation {currentLevel}");
-                levels.Add(new Level(currentLevel, Guid.NewGuid(), $"Level {levels.Count + 1:0}"));
+                levels.Add(new Level(currentLevel, null, Guid.NewGuid(), $"Level {levels.Count + 1:0}"));
                 currentLevel += input.BaseLevels[Math.Min(heightIndex++, input.BaseLevels.Count - 1)];
             }
 
             // penthouse + roof level
-            levels.Add(new Level(maxElevation - input.TopLevelHeight, Guid.NewGuid(), "Penthouse Level"));
-            levels.Add(new Level(maxElevation, Guid.NewGuid(), "Roof Level"));
+            levels.Add(new Level(maxElevation - input.TopLevelHeight, null, Guid.NewGuid(), "Penthouse Level"));
+            levels.Add(new Level(maxElevation, null, Guid.NewGuid(), "Roof Level"));
 
             if (minElevation < grade)
             {
@@ -66,11 +66,11 @@ namespace SimpleLevelsByEnvelope
                 var subgradeLevelCounter = 1;
                 while (currentLevel > minElevation + input.SubgradeLevelHeight)
                 {
-                    levels.Add(new Level(currentLevel, Guid.NewGuid(), $"Level B{subgradeLevelCounter:0}"));
+                    levels.Add(new Level(currentLevel, null, Guid.NewGuid(), $"Level B{subgradeLevelCounter:0}"));
                     currentLevel -= input.SubgradeLevelHeight;
                     subgradeLevelCounter++;
                 }
-                levels.Add(new Level(minElevation, Guid.NewGuid(), $"Level B{subgradeLevelCounter:0}"));
+                levels.Add(new Level(minElevation, null, Guid.NewGuid(), $"Level B{subgradeLevelCounter:0}"));
             }
 
             LevelMaterial = BuiltInMaterials.Glass;
