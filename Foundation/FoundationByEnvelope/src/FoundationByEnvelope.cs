@@ -93,7 +93,7 @@ namespace FoundationByEnvelope
 
             var material = BuiltInMaterials.Concrete;
             return new Envelope(perimeter, depth * -1, depth, Vector3.ZAxis,
-                                0.0, new Transform(0.0, 0.0, depth * -1), material,
+                                0.0, null, new Transform(0.0, 0.0, depth * -1), material,
                                 geomRep, false, Guid.NewGuid(), "");
         }
 
