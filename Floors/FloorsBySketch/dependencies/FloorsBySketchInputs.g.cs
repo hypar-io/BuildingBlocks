@@ -80,8 +80,9 @@ namespace FloorsBySketch
             }
         }
     
-        [Newtonsoft.Json.JsonProperty("Boundary", Required = Newtonsoft.Json.Required.AllowNull)]
-        public Polygon Boundary { get; set; }
+        [Newtonsoft.Json.JsonProperty("Boundary", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public Polygon Boundary { get; set; } = new Polygon();
     
         /// <summary>The elevation of the floor</summary>
         [Newtonsoft.Json.JsonProperty("Elevation", Required = Newtonsoft.Json.Required.Always)]
@@ -398,7 +399,7 @@ namespace FloorsBySketch
             }
         }
     
-        [Newtonsoft.Json.JsonProperty("Original Boundary", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonProperty("Original Boundary", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public Polygon OriginalBoundary { get; set; }
     
         [Newtonsoft.Json.JsonProperty("Creation Id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
@@ -428,7 +429,7 @@ namespace FloorsBySketch
             }
         }
     
-        [Newtonsoft.Json.JsonProperty("Boundary", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonProperty("Boundary", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public Polygon Boundary { get; set; }
     
     }
@@ -456,7 +457,7 @@ namespace FloorsBySketch
             }
         }
     
-        [Newtonsoft.Json.JsonProperty("Original Boundary", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonProperty("Original Boundary", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public Polygon OriginalBoundary { get; set; }
     
         [Newtonsoft.Json.JsonProperty("Creation Id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
@@ -515,7 +516,7 @@ namespace FloorsBySketch
             }
         }
     
-        [Newtonsoft.Json.JsonProperty("Original Boundary", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonProperty("Original Boundary", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public Polygon OriginalBoundary { get; set; }
     
         [Newtonsoft.Json.JsonProperty("Creation Id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
@@ -572,7 +573,7 @@ namespace FloorsBySketch
             }
         }
     
-        [Newtonsoft.Json.JsonProperty("Boundary", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonProperty("Boundary", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public Polygon Boundary { get; set; }
     
     }
