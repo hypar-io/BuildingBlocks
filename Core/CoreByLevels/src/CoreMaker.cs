@@ -90,12 +90,7 @@ namespace CoreByLevels
                 return null;
             }
             var shell = offShells.OrderByDescending(s => s.Area()).First();
-            var occLevels = Levels.Where(l => l.Elevation >= 0.0).ToList();
-            var occArea = 0.0;
-            foreach (var level in occLevels)
-            {
-                occArea += level.Perimeter.Area();
-            }
+            var occArea = Levels.Sum(l => l.Perimeter.Area());
             if (occArea > 0)
             {
                 var occupants = (int)Math.Ceiling(occArea / occupantLoad);
@@ -104,7 +99,7 @@ namespace CoreByLevels
                 {
                     LiftQuantity = 8;
                 }
-                LiftService = (int)Math.Floor((decimal)occLevels.Count() / LiftQuantity);
+                LiftService = (int)Math.Floor((decimal)Levels.Count() / LiftQuantity);
             }
             var positions = new List<Vector3> { shell.Centroid() };
             var liftBank = Math.Floor(LiftQuantity * 0.5);
@@ -136,7 +131,6 @@ namespace CoreByLevels
             bathPerim = bathPerim.MoveFromTo(bathTopo.W, moveTo);
             bathTopo = new CompassBox(bathPerim);
             bathPerim = bathPerim.Rotate(Position, Rotation);
-            var bathLevels = Levels.Where(l => l.Elevation >= 0.0);
             var bathMatl = new Material()
             {
                 Name = "bath",
@@ -146,9 +140,9 @@ namespace CoreByLevels
             };
 
             var i = 0;
-            foreach (var level in bathLevels.SkipLast(2))
+            foreach (var level in Levels.SkipLast(2))
             {
-                var bathHeight = bathLevels.ElementAt(i + 1).Elevation - bathLevels.ElementAt(i).Elevation - 1.0;
+                var bathHeight = Levels.ElementAt(i + 1).Elevation - Levels.ElementAt(i).Elevation - 1.0;
                 var extrude = new Elements.Geometry.Solids.Extrude(bathPerim, bathHeight, Vector3.ZAxis, false);
                 var geomRep = new Representation(new List<Elements.Geometry.Solids.SolidOperation>() { extrude });
                 Restrooms.Add(new Room
@@ -162,11 +156,11 @@ namespace CoreByLevels
                     DesignArea = 0.0,
                     DesignRatio = 0.0,
                     Rotation = Rotation,
-                    LevelName = bathLevels.ElementAt(i).Name,
-                    Elevation = bathLevels.ElementAt(i).Elevation,
+                    LevelName = Levels.ElementAt(i).Name,
+                    Elevation = Levels.ElementAt(i).Elevation,
                     Height = bathHeight,
                     Area = bathPerim.Area(),
-                    Transform = new Transform(0.0, 0.0, bathLevels.ElementAt(i).Elevation),
+                    Transform = new Transform(0.0, 0.0, Levels.ElementAt(i).Elevation),
                     Material = bathMatl,
                     Representation = geomRep,
                     Name = "Restroom"
