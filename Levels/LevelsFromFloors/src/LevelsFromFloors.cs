@@ -116,6 +116,11 @@ namespace LevelsFromFloors
                     {
                         var height = nextFloor.Elevation - (currentFloor.Elevation + currentFloor.Thickness);
                         var extrusion = new Extrude(currentFloor.Profile, height, Vector3.ZAxis, false);
+                        var addId = currentFloor.Name ?? $"Level {floorCounter++}";
+                        if (currentFloor.AdditionalProperties.ContainsKey("Creation Id"))
+                        {
+                            addId = currentFloor.AdditionalProperties["Creation Id"].ToString();
+                        }
                         var levelVol = new LevelVolume()
                         {
                             Profile = currentFloor.Profile,
@@ -125,6 +130,7 @@ namespace LevelsFromFloors
                             Material = BuiltInMaterials.Glass,
                             Representation = extrusion,
                             Name = currentFloor.Name ?? $"Level {floorCounter++}",
+                            AddId = addId,
                         };
                         levelVol.AdditionalProperties["Floor"] = currentFloor.Id;
                         levelVol.AdditionalProperties["Floors"] = currentFloor.AdditionalProperties["Source Ids"];

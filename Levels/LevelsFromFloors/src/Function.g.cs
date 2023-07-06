@@ -61,11 +61,11 @@ namespace LevelsFromFloors
             Console.WriteLine($"Time to load assemblies: {sw.Elapsed.TotalSeconds})");
 
             if(this.store == null)
-            {
+            { 
                 this.store = new S3ModelStore<LevelsFromFloorsInputs>(RegionEndpoint.GetBySystemName("us-west-1"));
             }
 
-            var l = new InvocationWrapper<LevelsFromFloorsInputs,LevelsFromFloorsOutputs>(store, LevelsFromFloors.Execute);
+            var l = new InvocationWrapper<LevelsFromFloorsInputs,LevelsFromFloorsOutputs> (store, LevelsFromFloors.Execute);
             var output = await l.InvokeAsync(args);
             return output;
         }
