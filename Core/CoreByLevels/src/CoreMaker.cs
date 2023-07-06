@@ -89,8 +89,10 @@ namespace CoreByLevels
             {
                 return null;
             }
-            var shell = offShells.OrderByDescending(s => s.Area()).First();
-            var occArea = Levels.Sum(l => l.Perimeter.Area());
+            
+            // TODO: remove Math.Abs() after fixing "The current definition will return a negative Area() result if the Polygon is defined Clockwise"
+            var shell = offShells.OrderByDescending(s => Math.Abs(s.Area())).First();
+            var occArea = Levels.Sum(l => Math.Abs(l.Perimeter.Area()));
             if (occArea > 0)
             {
                 var occupants = (int)Math.Ceiling(occArea / occupantLoad);
