@@ -13,15 +13,15 @@ using System.Reflection;
 using System.Threading.Tasks;
 
 [assembly: LambdaSerializer(typeof(Amazon.Lambda.Serialization.Json.JsonSerializer))]
-namespace LevelsFromFloors
+namespace ColumnsFromGrid
 {
     public class Function
     {
         // Cache the model store for use by subsequent
         // executions of this lambda.
-        private IModelStore<LevelsFromFloorsInputs> store;
+        private IModelStore<ColumnsFromGridInputs> store;
 
-        public async Task<LevelsFromFloorsOutputs> Handler(LevelsFromFloorsInputs args, ILambdaContext context)
+        public async Task<ColumnsFromGridOutputs> Handler(ColumnsFromGridInputs args, ILambdaContext context)
         {
             // Preload dependencies (if they exist),
             // so that they are available during model deserialization.
@@ -61,11 +61,11 @@ namespace LevelsFromFloors
             Console.WriteLine($"Time to load assemblies: {sw.Elapsed.TotalSeconds})");
 
             if(this.store == null)
-            { 
-                this.store = new S3ModelStore<LevelsFromFloorsInputs>(RegionEndpoint.GetBySystemName("us-west-1"));
+            {
+                this.store = new S3ModelStore<ColumnsFromGridInputs>(RegionEndpoint.GetBySystemName("us-west-1"));
             }
 
-            var l = new InvocationWrapper<LevelsFromFloorsInputs,LevelsFromFloorsOutputs> (store, LevelsFromFloors.Execute);
+            var l = new InvocationWrapper<ColumnsFromGridInputs,ColumnsFromGridOutputs>(store, ColumnsFromGrid.Execute);
             var output = await l.InvokeAsync(args);
             return output;
         }
