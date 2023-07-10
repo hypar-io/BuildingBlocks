@@ -38,6 +38,7 @@
   "preview_image": null,
   "element_types": [
     "https://prod-api.hypar.io/schemas/LevelVolume",
+    "https://schemas.hypar.io/LevelGroup.json",
     "https://prod-api.hypar.io/schemas/ViewScope",
     "https://raw.githubusercontent.com/hypar-io/Schemas/master/LevelPerimeter.json",
     "https://raw.githubusercontent.com/hypar-io/Schemas/master/Level.json",
