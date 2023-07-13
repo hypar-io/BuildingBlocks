@@ -103,17 +103,17 @@
             },
             "paradigm": "edit",
             "schema": {
-                "Location": {
-                    "$ref": "https://hypar.io/Schemas/Geometry/Vector3.json",
-                    "$hyparRelativeToTransform": true
-                }
+              "Location": {
+                "$ref": "https://schemas.hypar.io/Vector3.json",
+                "$hyparRelativeToTransform": true
+              }
             },
             "behaviors": {
                 "add": {
                     "schema": {
-                        "Location": {
-                            "$ref": "https://hypar.io/Schemas/Geometry/Vector3.json"
-                        }
+                      "Location": {
+                        "$ref": "https://schemas.hypar.io/Vector3.json"
+                      }
                     }
                 },
                 "remove": true
@@ -183,11 +183,11 @@
     },
     "outputs": null,
     "element_types": [
-        "https://prod-api.hypar.io/schemas/Envelope",
-        "https://prod-api.hypar.io/schemas/DrainableRoofSection",
-        "https://prod-api.hypar.io/schemas/Grid2dElement",
-        "http://prod-api.hypar.io/schemas/LevelVolume",
-        "http://prod-api.hypar.io/schemas/WarningMessage"
+      "https://schemas.hypar.io/Envelope.json",
+      "https://schemas.hypar.io/DrainableRoofSection.json",
+      "https://schemas.hypar.io/Grid2dElement.json",
+      "https://schemas.hypar.io/LevelVolume.json",
+      "https://schemas.hypar.io/WarningMessage.json"
     ],
     "repository_url": "https://github.com/hypar-io/function",
     "last_updated": "2022-04-29T07:39:37.519156",

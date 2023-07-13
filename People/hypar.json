@@ -37,6 +37,6 @@
   "source_file_key": null,
   "preview_image": null,
   "element_types": [
-    "https://prod-api.hypar.io/schemas/Floor"
+    "https://schemas.hypar.io/Floor.json"
   ]
 }
