@@ -21,8 +21,17 @@ namespace RoofFunction
         public static RoofFunctionOutputs Execute(Dictionary<string, Model> inputModels, RoofFunctionInputs input)
         {
             var output = new RoofFunctionOutputs();
-            Roof.RoofMaterial.Color = input.RoofColor;
-            Roof.InsulationMaterial.Color = input.InsulationColor;
+            
+            if (input.RoofColor.HasValue)
+            {
+                Roof.RoofMaterial.Color = input.RoofColor.Value;
+            }
+
+            if (input.InsulationColor.HasValue)
+            {
+                Roof.InsulationMaterial.Color = input.InsulationColor.Value;
+            }
+
             var hasFootprints = inputModels.TryGetValue("Masterplan", out var masterplanModel);
             var hasEnvelopes = inputModels.TryGetValue("Envelope", out var envelopeModel);
             var hasLevels = inputModels.TryGetValue("Levels", out var levelsModel);

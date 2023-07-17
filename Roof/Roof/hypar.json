@@ -44,7 +44,7 @@
                     "Green": 0.7215686274509804
                 },
                 "$hyparOrder": 1,
-                "$ref": "https://hypar.io/Schemas/Geometry/Color.json"
+                "$ref": "https://schemas.hypar.io/Color.json"
             },
             "Roof Thickness": {
                 "multipleOf": 0.001,
@@ -72,7 +72,7 @@
                     "Blue": 0.5843137254901961,
                     "Green": 0.9764705882352941
                 },
-                "$ref": "https://hypar.io/Schemas/Geometry/Color.json"
+                "$ref": "https://schemas.hypar.io/Color.json"
             },
             "Keep Roof Below Envelope": {
                 "description": "The height of the envelope is the top of the roof level",
@@ -91,11 +91,11 @@
         }
     ],
     "element_types": [
-        "https://prod-api.hypar.io/schemas/Roof",
-        "https://prod-api.hypar.io/schemas/LevelVolume",
-        "https://prod-api.hypar.io/schemas/Footprint",
-        "https://prod-api.hypar.io/schemas/Envelope",
-        "https://prod-api.hypar.io/schemas/ConceptualMass"
+        "https://schemas.hypar.io/Roof.json",
+        "https://schemas.hypar.io/LevelVolume.json",
+        "https://schemas.hypar.io/Footprint.json",
+        "https://schemas.hypar.io/Envelope.json",
+        "https://schemas.hypar.io/ConceptualMass.json"
     ],
     "repository_url": "https://github.com/hypar-io/function",
     "filters": {},
