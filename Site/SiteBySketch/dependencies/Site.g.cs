@@ -41,7 +41,7 @@ namespace Elements
         }
     
         /// <summary>The perimeter of the site.</summary>
-        [JsonProperty("Perimeter", Required = Newtonsoft.Json.Required.AllowNull)]
+        [JsonProperty("Perimeter", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public Polygon Perimeter { get; set; }
     
         /// <summary>The Area of the site.</summary>

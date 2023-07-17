@@ -98,7 +98,7 @@ namespace LevelsFromFloors
             }
             var uniqueElevations = allFloors.Select(f => f.Elevation + f.Thickness).Distinct().OrderBy(l => l).ToList();
             var levelNameCounter = 1;
-            var levels = uniqueElevations.Select(l => new Level(l, Guid.NewGuid(), $"Level {levelNameCounter++}"));
+            var levels = uniqueElevations.Select(l => new Level(l, null, Guid.NewGuid(), $"Level {levelNameCounter++}"));
             output.Model.AddElements(levels);
             var levelPerimeters = allFloors.Select(f => new LevelPerimeter(f.Profile.Area(), f.Elevation, f.Profile.Perimeter, Guid.NewGuid(), f.Name));
             output.Model.AddElements(levelPerimeters);
