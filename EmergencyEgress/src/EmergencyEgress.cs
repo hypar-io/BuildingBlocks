@@ -376,7 +376,7 @@ namespace EmergencyEgress
                 return null;
             }
 
-            var midpoint = door?.Transform.Origin ?? roomEdge.PointAt(0.5);
+            var midpoint = door?.Transform.Origin ?? roomEdge.Mid();
 
             foreach (var line in centerlines)
             {
