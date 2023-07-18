@@ -249,7 +249,7 @@ namespace FacadeByEnvelope
             // Console.WriteLine($"The line {l} units long will create {divs} panels of {d} width");
             var span = divs * d;
             var halfSpan = span / 2;
-            var mid = line.PointAt(0.5);
+            var mid = line.Mid();
             var dir = line.Direction();
             var start = mid - dir * halfSpan;
             var end = mid + dir * halfSpan;

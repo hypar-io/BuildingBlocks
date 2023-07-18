@@ -89,7 +89,7 @@ namespace Structure
                 var firstLevelPerimeter = firstLevel.Profile.Perimeter;
                 longestEdge = firstLevelPerimeter.Segments().OrderBy(s => s.Length()).Last();
 
-                var longestEdgeTransform = longestEdge.TransformAt(0.5);
+                var longestEdgeTransform = longestEdge.TransformAt(longestEdge.Domain.Mid());
                 var t = new Transform(longestEdge.Start, longestEdgeTransform.XAxis, longestEdge.Direction(), Vector3.ZAxis);
 
                 var toWorld = new Transform(t);
@@ -151,7 +151,7 @@ namespace Structure
                 gridLines = gridsModel.AllElementsOfType<GridLine>();
 
                 // Group by direction.
-                var gridGroups = gridLines.GroupBy(gl => gl.Curve.TransformAt(0).ZAxis).ToList();
+                var gridGroups = gridLines.GroupBy(gl => gl.Curve.TransformAt(longestEdge.Domain.Min).ZAxis).ToList();
                 primaryDirection = gridGroups[0].Key;
                 secondaryDirection = gridGroups[1].Key;
             }
@@ -160,7 +160,7 @@ namespace Structure
                 warnings.Add("Adding the Grids function to your workflow will enable you to position and orient the grid. We'll use the default configuration for now with the grid oriented along the longest edge of the structure.");
                 // Define the primary direction from the longest edge of the site.
                 primaryDirection = longestEdge.Direction();
-                secondaryDirection = longestEdge.TransformAt(0.5).XAxis;
+                secondaryDirection = longestEdge.TransformAt(longestEdge.Domain.Mid()).XAxis;
             }
 
 #if DEBUG
@@ -375,13 +375,10 @@ namespace Structure
                         girderInstance = girderDefinition.CreateInstance(t, $"{girderDefinition.Name}");
                         model.AddElement(girderInstance, false);
 
-                        if (girderDefinition is Beam beam)
+                        var modelCurve = CreateModelCurve(girderDefinition, t);
+                        if (modelCurve != null)
                         {
-                            model.AddElement(new ModelCurve(beam.Curve.Transformed(t), BuiltInMaterials.ZAxis), false);
-                        }
-                        else if (girderDefinition is Joist joist)
-                        {
-                            model.AddElement(new ModelCurve(joist.Curve.Transformed(t), BuiltInMaterials.ZAxis), false);
+                            model.AddElement(modelCurve, false);
                         }
                     }
                     else
@@ -390,13 +387,11 @@ namespace Structure
                         {
                             girderInstance = girderDefinition.CreateInstance(t, $"{girderDefinition.Name}");
                             model.AddElement(girderInstance, false);
-                            if (girderDefinition is Beam beam)
+
+                            var modelCurve = CreateModelCurve(girderDefinition, t);
+                            if (modelCurve != null)
                             {
-                                model.AddElement(new ModelCurve(beam.Curve.Transformed(t), BuiltInMaterials.ZAxis), false);
-                            }
-                            else if (girderDefinition is Joist joist)
-                            {
-                                model.AddElement(new ModelCurve(joist.Curve.Transformed(t), BuiltInMaterials.ZAxis), false);
+                                model.AddElement(modelCurve, false);
                             }
                         }
                     }
@@ -515,13 +510,10 @@ namespace Structure
                             model.AddElement(beamInstance, false);
                             var planDirection = beamDir.IsAlmostEqualTo(Vector3.ZAxis) ? Vector3.XAxis : beamDir.Project(xy).Unitized();
                             beamInstance.AdditionalProperties.Add("LabelConfiguration", new LabelConfiguration(new Color(1, 1, 1, 0), Vector3.Origin, null, null, planDirection));
-                            if (beamDefinition is Beam beam)
+                            var modelCurve = CreateModelCurve(beamDefinition, instanceTransform);
+                            if (modelCurve != null)
                             {
-                                model.AddElement(new ModelCurve(beam.Curve.Transformed(instanceTransform), BuiltInMaterials.ZAxis), false);
-                            }
-                            else if (beamDefinition is Joist joist)
-                            {
-                                model.AddElement(new ModelCurve(joist.Curve.Transformed(instanceTransform), BuiltInMaterials.ZAxis), false);
+                                model.AddElement(modelCurve, false);
                             }
                         }
                     }
@@ -539,6 +531,21 @@ namespace Structure
             output.Model = model;
             output.Warnings = warnings;
             return output;
+        }
+
+        private static ModelCurve CreateModelCurve(GeometricElement sf, Transform t)
+        {
+            BoundedCurve curve = null;
+            if (sf is Beam beam)
+            {
+                curve = beam.Curve.Transformed(t) as BoundedCurve;
+            }
+            else if (sf is Joist joist)
+            {
+                curve = joist.Curve.Transformed(t) as BoundedCurve;
+            }
+
+            return curve == null ? null : new ModelCurve(curve, BuiltInMaterials.ZAxis);
         }
 
         private static void FindOrCreateStructuralFramingDefinition(double memberLength,
@@ -580,8 +587,8 @@ namespace Structure
                 var bbox = new BBox3(bg.SelectMany(b =>
                 {
                     var def = (StructuralFraming)b.BaseDefinition;
-                    var start = b.Transform.OfPoint(def.Curve.PointAt(0));
-                    var end = b.Transform.OfPoint(def.Curve.PointAt(1));
+                    var start = b.Transform.OfPoint(def.Curve.Start);
+                    var end = b.Transform.OfPoint(def.Curve.End);
 
                     if (start.Z > maxZ)
                     {
