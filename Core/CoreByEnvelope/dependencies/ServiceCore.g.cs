@@ -27,14 +27,13 @@ namespace Elements
     public partial class ServiceCore : GeometricElement
     {
         [JsonConstructor]
-        public ServiceCore(Profile @profile, Vector3 @direction, double @elevation, double @height, double @rotation, Transform @transform = null, Material @material = null, Representation @representation = null, bool @isElementDefinition = false, System.Guid @id = default, string @name = null)
+        public ServiceCore(Profile @profile, double @elevation, double @height, Vector3 @centroid, Transform @transform = null, Material @material = null, Representation @representation = null, bool @isElementDefinition = false, System.Guid @id = default, string @name = null)
             : base(transform, material, representation, isElementDefinition, id, name)
         {
             this.Profile = @profile;
-            this.Direction = @direction;
             this.Elevation = @elevation;
             this.Height = @height;
-            this.Rotation = @rotation;
+            this.Centroid = @centroid;
             }
         
         // Empty constructor
@@ -43,27 +42,21 @@ namespace Elements
         {
         }
     
-        /// <summary>The id of the profile to extrude.</summary>
+        /// <summary>The profile of this Core</summary>
         [JsonProperty("Profile", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public Profile Profile { get; set; }
     
-        /// <summary>The direction in which to extrude.</summary>
-        [JsonProperty("Direction", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public Vector3 Direction { get; set; }
-    
-        /// <summary>The elevation of the service core.</summary>
+        /// <summary>The elevation of the core.</summary>
         [JsonProperty("Elevation", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        [System.ComponentModel.DataAnnotations.Range(0D, double.MaxValue)]
         public double Elevation { get; set; }
     
-        /// <summary>The height of the service core.</summary>
+        /// <summary>The height of the core. </summary>
         [JsonProperty("Height", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        [System.ComponentModel.DataAnnotations.Range(0D, double.MaxValue)]
         public double Height { get; set; }
     
-        /// <summary>The rotation in degrees of the service core.</summary>
-        [JsonProperty("Rotation", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public double Rotation { get; set; }
+        /// <summary>A reference location for the centroid of the Core's profile.</summary>
+        [JsonProperty("Centroid", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public Vector3 Centroid { get; set; }
     
     
     }
