@@ -20,7 +20,7 @@ namespace Walls
             if (input.Overrides?.Additions?.Walls != null)
             {
                 // Get identities for additions
-                var additionCenters = input.Overrides.Additions.Walls.Select(x => (x.Value.CenterLine.PointAt(0.5), x.Id)).Cast<(Vector3 RoughLocation, string Id)>().ToList();
+                var additionCenters = input.Overrides.Additions.Walls.Select(x => (x.Value.CenterLine.Mid(), x.Id)).Cast<(Vector3 RoughLocation, string Id)>().ToList();
 
                 // match edit overrides to addition Ids.
                 var editsByAdditionId = input.Overrides.Walls?.Select(wallEdit =>
@@ -54,7 +54,7 @@ namespace Walls
                 foreach (var newWall in input.Overrides.Additions.Walls)
                 {
                     var wallLine = newWall.Value.CenterLine;
-                    var wallCenter = wallLine.PointAt(0.5);
+                    var wallCenter = wallLine.Mid();
 
                     // get matching edit overrides
                     editsByAdditionId.TryGetValue(newWall.Id, out var matchingEdits);
