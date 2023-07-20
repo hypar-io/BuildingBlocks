@@ -4,9 +4,8 @@
     <ProjectReference Include="..\dependencies\EnvelopeBySketch.Dependencies.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Hypar.Elements" Version="0.9.8" />
-    <PackageReference Include="Hypar.Functions" Version="0.9.10" />
-  </ItemGroup>
+    <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
 
 </Project>

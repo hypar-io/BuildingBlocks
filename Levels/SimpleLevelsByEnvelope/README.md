@@ -20,3 +20,7 @@ Creates Levels and LevelPerimeters from one or more Envelopes, with variable lev
 |Subgrade Level Area|Number|Total area of all levels below grade.|
 |Above Grade Level Area|Number|Total area of all levels above or at grade, excluding the roof.|
 
+
+<br>
+
+## Additional Information

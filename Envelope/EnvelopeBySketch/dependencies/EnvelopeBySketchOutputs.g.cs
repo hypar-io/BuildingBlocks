@@ -14,7 +14,7 @@ using System.Collections.Generic;
 
 namespace EnvelopeBySketch
 {
-    public class EnvelopeBySketchOutputs: ResultsBase
+    public class EnvelopeBySketchOutputs: SystemResults
     {
 		/// <summary>
 		/// Height of the building.

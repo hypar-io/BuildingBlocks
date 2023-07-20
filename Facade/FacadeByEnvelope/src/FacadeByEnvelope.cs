@@ -35,7 +35,7 @@ namespace FacadeByEnvelope
         /// <summary>
         /// Adds facade Panels to one or more Masses named 'envelope'.
         /// </summary>
-        /// <param name="model">The model. 
+        /// <param name="model">The model.
         /// Add elements to the model to have them persisted.</param>
         /// <param name="input">The arguments to the execution.</param>
         /// <returns>A FacadeOutputs instance containing computed results.</returns>
@@ -44,19 +44,22 @@ namespace FacadeByEnvelope
             List<Envelope> envelopes;
             List<Level> levels = null;
             var model = new Model();
+            var output = new FacadeByEnvelopeOutputs();
 
             var envelopeModel = models[ENVELOPE_MODEL_NAME];
             envelopes = envelopeModel.AllElementsOfType<Envelope>().Where(e => e.Elevation >= 0.0).ToList();
             if (envelopes.Count() == 0)
             {
-                throw new Exception("No element of type 'Envelope' could be found in the supplied model.");
+                output.Errors.Add($"No Envelopes found in the model 'Envelope'. Check the output from the function upstream that has a model output 'Envelope'.");
+                return output;
             }
 
             var levelsModel = models[LEVELS_MODEL_NAME];
             levels = levelsModel.AllElementsOfType<Level>().ToList();
             if (levels.Count() == 0)
             {
-                throw new Exception("No element of type 'Level' could be found in the supplied model.");
+                output.Errors.Add($"No Levels found in the model 'Levels'. Check the output from the function upstream that has a model output 'Levels'.");
+                return output;
             }
             levels.Sort(new LevelComparer());
 
@@ -101,7 +104,7 @@ namespace FacadeByEnvelope
                 PanelGroundFloor(bottom, top, boundarySegments, input.PanelWidth, model);
             }
 
-            var output = new FacadeByEnvelopeOutputs(panelCount);
+            output.PanelQuantity = panelCount;
             output.Model = model;
             return output;
         }
@@ -138,7 +141,7 @@ namespace FacadeByEnvelope
                             var t = new Transform(bs.Start + new Vector3(0, 0, level1.Elevation), d, d.Cross(Vector3.ZAxis));
                             var l = bs.Length();
 
-                            // If the segment width is within Epsilon of 
+                            // If the segment width is within Epsilon of
                             // the input panel width, then create a
                             // panel with glazing.
                             if (Math.Abs(l - panelWidth) < Vector3.EPSILON)
@@ -246,7 +249,7 @@ namespace FacadeByEnvelope
             // Console.WriteLine($"The line {l} units long will create {divs} panels of {d} width");
             var span = divs * d;
             var halfSpan = span / 2;
-            var mid = line.PointAt(0.5);
+            var mid = line.Mid();
             var dir = line.Direction();
             var start = mid - dir * halfSpan;
             var end = mid + dir * halfSpan;

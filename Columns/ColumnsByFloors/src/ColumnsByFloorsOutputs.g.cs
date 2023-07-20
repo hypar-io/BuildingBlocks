@@ -14,13 +14,13 @@ using System.Collections.Generic;
 
 namespace ColumnsByFloors
 {
-    public class ColumnsByFloorsOutputs: ResultsBase
+    public class ColumnsByFloorsOutputs: SystemResults
     {
 		/// <summary>
 		/// Total quantity of columns.
 		/// </summary>
 		[JsonProperty("Column Quantity")]
-		public double ColumnQuantity {get;}
+		public double ColumnQuantity {get; set;}
 
 
 

@@ -41,8 +41,10 @@ namespace LevelsByEnvelope
             }
             LevelVolumes = MakeLevelVolumes(out var viewScopes);
             ViewScopes = viewScopes;
+            LevelGroup = new LevelGroup(Levels, new Guid(), "Levels By Envelope", grdHeight, new Guid(), "Levels By Envelope");
         }
 
+        public LevelGroup LevelGroup {get; private set;}
         private List<Envelope> Envelopes { get; set; }
         public List<Level> Levels { get; private set; }
         public List<LevelPerimeter> LevelPerimeters { get; private set; }
@@ -67,19 +69,19 @@ namespace LevelsByEnvelope
             var subs = Envelopes.Where(e => e.Elevation < 0.0).ToList();
             if (subs.Count() == 0) // if no subgrade levels created, add the first Level.
             {
-                MakeLevel(envelope, envelope.Elevation);
+                MakeLevel(envelope, stdHeight, envelope.Elevation);
             }
             if (envelope.Height >= grdHeight + (stdHeight * 2))
             {
                 // Temporary Envelope to populate levels above the lobby.
                 envelope = new Envelope(envelope.Profile, grdHeight, envelope.Height - grdHeight,
-                                        Vector3.ZAxis, 0.0, new Transform(0.0, 0.0, grdHeight), null, null,
+                                        Vector3.ZAxis, 0.0, null, new Transform(0.0, 0.0, grdHeight), null, null,
                                         false, Guid.NewGuid(), "");
                 MakeLevels(envelope, stdHeight, true, true);
             }
             else
             {
-                MakeLevel(envelope, envelope.Height);
+                MakeLevel(envelope, stdHeight, envelope.Height);
             }
             Levels = Levels.OrderBy(l => l.Elevation).ToList();
             LevelPerimeters = LevelPerimeters.OrderBy(l => l.Elevation).ToList();
@@ -99,11 +101,11 @@ namespace LevelsByEnvelope
             // Add penthouse level and roof level to highest Envelope.
             var envelope = Envelopes.Last();
             var bldgHeight = envelope.Elevation + envelope.Height;
-            MakeLevel(envelope, bldgHeight);
+            MakeLevel(envelope, pntHeight, bldgHeight);
 
             // Create temporary envelope to populate the region beneath the penthouse level.
             envelope = new Envelope(envelope.Profile.Perimeter, envelope.Elevation, envelope.Height - pntHeight,
-                                    Vector3.ZAxis, 0.0, envelope.Transform, null, envelope.Representation,
+                                    Vector3.ZAxis, 0.0, null, envelope.Transform, null, envelope.Representation,
                                     false, Guid.NewGuid(), "");
             MakeLevels(envelope, stdHeight, false, true);
             Levels = Levels.OrderBy(l => l.Elevation).ToList();
@@ -158,7 +160,7 @@ namespace LevelsByEnvelope
         /// <param name="envelope">Envelope from which to derive the Level perimeter.</param>
         /// <param name="elevation">Elevation of the proposed Level.</param>
         /// <returns>A Level or null if no eligible envelope is found.</returns>
-        public bool MakeLevel(Envelope envelope, double elevation)
+        public bool MakeLevel(Envelope envelope, double height, double elevation)
         {
             var perimeter = envelope.Profile.Perimeter;
             if (perimeter.IsClockWise())
@@ -169,7 +171,7 @@ namespace LevelsByEnvelope
             {
                 return false;
             }
-            Levels.Add(new Level(elevation, Guid.NewGuid(), ""));
+            Levels.Add(new Level(elevation, height, Guid.NewGuid(), ""));
             LevelPerimeters.Add(new LevelPerimeter(perimeter.Area(), elevation, perimeter, Guid.NewGuid(), ""));
             Levels = Levels.OrderBy(l => l.Elevation).ToList();
             LevelPerimeters = LevelPerimeters.OrderBy(l => l.Elevation).ToList();
@@ -191,7 +193,7 @@ namespace LevelsByEnvelope
             }
             if (first)
             {
-                Levels.Add(new Level(envelope.Elevation, Guid.NewGuid(), ""));
+                Levels.Add(new Level(envelope.Elevation, interval,Guid.NewGuid(), ""));
                 LevelPerimeters.Add(new LevelPerimeter(perimeter.Area(), envelope.Elevation, perimeter, Guid.NewGuid(), ""));
             };
             var openHeight = envelope.Height;
@@ -199,14 +201,14 @@ namespace LevelsByEnvelope
             var atHeight = envelope.Elevation + stdHeight;
             while (openHeight >= stdHeight * 2)
             {
-                Levels.Add(new Level(atHeight, Guid.NewGuid(), ""));
+                Levels.Add(new Level(atHeight, interval, Guid.NewGuid(), ""));
                 LevelPerimeters.Add(new LevelPerimeter(perimeter.Area(), atHeight, perimeter, Guid.NewGuid(), ""));
                 openHeight -= stdHeight;
                 atHeight += stdHeight;
             }
             if (last)
             {
-                Levels.Add(new Level(envelope.Elevation + envelope.Height, Guid.NewGuid(), ""));
+                Levels.Add(new Level(envelope.Elevation + envelope.Height, interval, Guid.NewGuid(), ""));
                 LevelPerimeters.Add(new LevelPerimeter(perimeter.Area(), envelope.Elevation + envelope.Height, perimeter, Guid.NewGuid(), ""));
             }
         }
@@ -237,11 +239,14 @@ namespace LevelsByEnvelope
                     bbox.Max += (0, 0, -1);
                     // drop the bottom to encompass floors below
                     bbox.Min += (0, 0, -0.3);
-                    var scope = new ViewScope(
-                       bbox,
-                        new Camera(default, CameraNamedPosition.Top, CameraProjection.Orthographic),
-                        true,
-                        name: thisLevelPerimeter.Name);
+                    var scope = new ViewScope()
+                    {
+                        BoundingBox = bbox,
+                        Camera = new Camera(default, CameraNamedPosition.Top, CameraProjection.Orthographic),
+                        LockRotation = true,
+                        ClipWithBoundingBox = true,
+                        Name = thisLevelPerimeter.Name
+                    };
                     levelVolume.AdditionalProperties["Plan View"] = scope;
                     viewScopes.Add(scope);
                     volumes.Add(levelVolume);

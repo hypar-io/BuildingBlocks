@@ -19,6 +19,7 @@ namespace RoomsByLevels
         /// <returns>A RoomsByLevelsOutputs instance containing computed results and the model with any new elements.</returns>
         public static RoomsByLevelsOutputs Execute(Dictionary<string, Model> inputModels, RoomsByLevelsInputs input)
         {
+            var output = new RoomsByLevelsOutputs();
             var levels = new List<LevelPerimeter>();
             inputModels.TryGetValue("Levels", out var lvlModel);
             if (lvlModel != null)
@@ -27,7 +28,8 @@ namespace RoomsByLevels
             }
             if (levels.Count == 0)
             {
-                throw new ArgumentException("No LevelPerimeters found.");
+                output.Errors.Add($"No LevelPerimeters found in the model 'Levels'. Check the output from the function upstream that has a model output 'Levels'.");
+                return output;
             }
             levels = levels.OrderBy(l => l.Elevation).ToList();
             var stories = new List<Story>();
@@ -99,45 +101,54 @@ namespace RoomsByLevels
                     room.Color = Palette.Aqua;
                     var solid = new Elements.Geometry.Solids.Extrude(room.Perimeter, room.Height, Vector3.ZAxis, false);
                     var geomRep = new Representation(new List<Elements.Geometry.Solids.SolidOperation>() { solid });
-                    rooms.Add(new Elements.Room(room.Perimeter,
-                                                Vector3.ZAxis,
-                                                "", "", "", "",
-                                                input.RoomArea,
-                                                room.Ratio,
-                                                0.0,
-                                                room.Elevation,
-                                                room.Height,
-                                                room.Area,
-                                                null,
-                                                room.ColorAsMaterial,
-                                                geomRep,
-                                                false,
-                                                Guid.NewGuid(),
-                                                room.Name));
+                    rooms.Add(new Elements.Room
+                    {
+                        Perimeter = room.Perimeter,
+                        Direction = Vector3.ZAxis,
+                        SuiteName = "",
+                        SuiteNumber = "",
+                        Department = "",
+                        Number = "",
+                        DesignArea = input.RoomArea,
+                        DesignRatio = room.Ratio,
+                        Rotation = 0.0,
+                        Elevation = room.Elevation,
+                        Height = room.Height,
+                        Area = room.Area,
+                        Transform = null,
+                        Material = room.ColorAsMaterial,
+                        Representation = geomRep,
+                        Name = room.Name
+                    });
                 }
                 foreach (var room in story.Corridors)
                 {
                     room.Color = Palette.White;
                     var solid = new Elements.Geometry.Solids.Extrude(room.Perimeter, room.Height, Vector3.ZAxis, false);
                     var geomRep = new Representation(new List<Elements.Geometry.Solids.SolidOperation>() { solid });
-                    rooms.Add(new Elements.Room(room.Perimeter,
-                                                Vector3.ZAxis,
-                                                "", "", "", "",
-                                                input.RoomArea,
-                                                room.Ratio,
-                                                0.0,
-                                                room.Elevation,
-                                                room.Height,
-                                                room.Area,
-                                                null,
-                                                room.ColorAsMaterial,
-                                                geomRep,
-                                                false,
-                                                Guid.NewGuid(),
-                                                room.Name));
+                    rooms.Add(new Elements.Room
+                    {
+                        Perimeter = room.Perimeter,
+                        Direction = Vector3.ZAxis,
+                        SuiteName = "",
+                        SuiteNumber = "",
+                        Department = "",
+                        Number = "",
+                        DesignArea = input.RoomArea,
+                        DesignRatio = room.Ratio,
+                        Rotation = 0.0,
+                        Elevation = room.Elevation,
+                        Height = room.Height,
+                        Area = room.Area,
+                        Transform = null,
+                        Material = room.ColorAsMaterial,
+                        Representation = geomRep,
+                        Name = room.Name
+                    });
                 }
-            }           
-            var output = new RoomsByLevelsOutputs(rooms.Count / levels.Count, rooms.Count);
+            }
+            output.RoomsPerFloor = rooms.Count / levels.Count;
+            output.RoomTotal = rooms.Count;
             foreach (var room in rooms)
             {
                 output.Model.AddElement(room);

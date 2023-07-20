@@ -5,75 +5,69 @@
 using Elements;
 using Elements.GeoJSON;
 using Elements.Geometry;
+using Elements.Geometry.Solids;
+using Elements.Validators;
+using Elements.Serialization.JSON;
 using Hypar.Functions;
 using Hypar.Functions.Execution;
 using Hypar.Functions.Execution.AWS;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
+using Hypar.Model;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using Line = Elements.Geometry.Line;
+using Polygon = Elements.Geometry.Polygon;
 
 namespace ColumnsByFloors
 {
-    public class ColumnsByFloorsInputs: S3Args
+    #pragma warning disable // Disable all warnings
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v13.0.0.0)")]
+    
+    public  class ColumnsByFloorsInputs : S3Args
+    
     {
-		/// <summary>
-		/// Grid interval in the X direction.
-		/// </summary>
-		[JsonProperty("Grid X-Axis Interval")]
-		public double GridXAxisInterval {get;}
-
-		/// <summary>
-		/// Grid interval in the Y direction.
-		/// </summary>
-		[JsonProperty("Grid Y-Axis Interval")]
-		public double GridYAxisInterval {get;}
-
-		/// <summary>
-		/// Rotation of the grid in degrees.
-		/// </summary>
-		[JsonProperty("Grid Rotation")]
-		public double GridRotation {get;}
-
-		/// <summary>
-		/// Diameter of the columns.
-		/// </summary>
-		[JsonProperty("Column Diameter")]
-		public double ColumnDiameter {get;}
-
-
-
-        /// <summary>
-        /// Construct a ColumnsByFloorsInputs with default inputs.
-        /// This should be used for testing only.
-        /// </summary>
-        public ColumnsByFloorsInputs() : base()
+        [Newtonsoft.Json.JsonConstructor]
+        
+        public ColumnsByFloorsInputs(double @gridXAxisInterval, double @gridYAxisInterval, double @gridRotation, double @columnDiameter, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey):
+        base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
         {
-			this.GridXAxisInterval = 10;
-			this.GridYAxisInterval = 10;
-			this.GridRotation = 90;
-			this.ColumnDiameter = 2;
-
+            var validator = Validator.Instance.GetFirstValidatorForType<ColumnsByFloorsInputs>();
+            if(validator != null)
+            {
+                validator.PreConstruct(new object[]{ @gridXAxisInterval, @gridYAxisInterval, @gridRotation, @columnDiameter});
+            }
+        
+            this.GridXAxisInterval = @gridXAxisInterval;
+            this.GridYAxisInterval = @gridYAxisInterval;
+            this.GridRotation = @gridRotation;
+            this.ColumnDiameter = @columnDiameter;
+        
+            if(validator != null)
+            {
+                validator.PostConstruct(this);
+            }
         }
-
-
-        /// <summary>
-        /// Construct a ColumnsByFloorsInputs specifying all inputs.
-        /// </summary>
-        /// <returns></returns>
-        [JsonConstructor]
-        public ColumnsByFloorsInputs(double gridXAxisInterval, double gridYAxisInterval, double gridRotation, double columnDiameter, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey): base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
-        {
-			this.GridXAxisInterval = gridXAxisInterval;
-			this.GridYAxisInterval = gridYAxisInterval;
-			this.GridRotation = gridRotation;
-			this.ColumnDiameter = columnDiameter;
-
-		}
-
-		public override string ToString()
-		{
-			var json = JsonConvert.SerializeObject(this);
-			return json;
-		}
-	}
+    
+        /// <summary>Grid interval in the X direction.</summary>
+        [Newtonsoft.Json.JsonProperty("Grid X-Axis Interval", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.Range(4.0D, 10.0D)]
+        public double GridXAxisInterval { get; set; } = 7D;
+    
+        /// <summary>Grid interval in the Y direction.</summary>
+        [Newtonsoft.Json.JsonProperty("Grid Y-Axis Interval", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.Range(4.0D, 10.0D)]
+        public double GridYAxisInterval { get; set; } = 7D;
+    
+        /// <summary>Rotation of the grid in degrees.</summary>
+        [Newtonsoft.Json.JsonProperty("Grid Rotation", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.Range(0.0D, 90.0D)]
+        public double GridRotation { get; set; } = 45D;
+    
+        /// <summary>Diameter of the columns.</summary>
+        [Newtonsoft.Json.JsonProperty("Column Diameter", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.Range(0.2D, 2.0D)]
+        public double ColumnDiameter { get; set; } = 1.1D;
+    
+    }
 }

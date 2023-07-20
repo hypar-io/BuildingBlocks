@@ -6,10 +6,10 @@ Creates a grid of columns on each floor with the central intervals spanning the 
 
 |Input Name|Type|Description|
 |---|---|---|
-|Grid X-Axis Interval|Range|Grid interval in the X direction.|
-|Grid Y-Axis Interval|Range|Grid interval in the Y direction.|
-|Grid Rotation|Range|Rotation of the grid in degrees.|
-|Column Diameter|Range|Diameter of the columns.|
+|Grid X-Axis Interval|number|Grid interval in the X direction.|
+|Grid Y-Axis Interval|number|Grid interval in the Y direction.|
+|Grid Rotation|number|Rotation of the grid in degrees.|
+|Column Diameter|number|Diameter of the columns.|
 
 
 <br>
@@ -17,4 +17,15 @@ Creates a grid of columns on each floor with the central intervals spanning the 
 |Output Name|Type|Description|
 |---|---|---|
 |Column Quantity|Number|Total quantity of columns.|
+
+
+<br>
+
+## Additional Information
+
+
+
+
+
+
 

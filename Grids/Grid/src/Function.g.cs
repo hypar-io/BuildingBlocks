@@ -48,6 +48,7 @@ namespace Grid
             {
                 try
                 {
+                    Console.WriteLine($"Assembly Name: {asm.FullName}");
                     Assembly.Load(asm);
                 }
                 catch (Exception e)
@@ -61,7 +62,7 @@ namespace Grid
 
             if(this.store == null)
             {
-                this.store = new S3ModelStore<GridInputs>(RegionEndpoint.USWest1);
+                this.store = new S3ModelStore<GridInputs>(RegionEndpoint.GetBySystemName("us-west-1"));
             }
 
             var l = new InvocationWrapper<GridInputs,GridOutputs>(store, Grid.Execute);

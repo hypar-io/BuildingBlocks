@@ -48,6 +48,7 @@ namespace LevelBySketch
             {
                 try
                 {
+                    Console.WriteLine($"Assembly Name: {asm.FullName}");
                     Assembly.Load(asm);
                 }
                 catch (Exception e)
@@ -61,7 +62,7 @@ namespace LevelBySketch
 
             if(this.store == null)
             {
-                this.store = new S3ModelStore<LevelBySketchInputs>(RegionEndpoint.USWest1);
+                this.store = new S3ModelStore<LevelBySketchInputs>(RegionEndpoint.GetBySystemName("us-west-1"));
             }
 
             var l = new InvocationWrapper<LevelBySketchInputs,LevelBySketchOutputs>(store, LevelBySketch.Execute);

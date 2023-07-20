@@ -2,13 +2,13 @@
     "$schema": "https://hypar.io/Schemas/Function.json",
     "id": "bc63cf84-80e7-43a9-b5ef-3fe3ba1bc97e",
     "name": "Columns from Grid",
-    "description": "Create Columns from a grid.",
+    "description": "Create Columns.",
     "language": "C#",
     "model_dependencies": [
         {
             "autohide": false,
             "name": "Grids",
-            "optional": false
+            "optional": true
         },
         {
             "autohide": false,
@@ -23,6 +23,10 @@
         {
             "name": "Levels",
             "optional": true
+        },
+        {
+            "name": "Structure",
+            "optional": true
         }
     ],
     "model_output": "Columns",
@@ -31,7 +35,7 @@
         "properties": {
             "Height": {
                 "description": "Default height for columns, if it can't be inferred from context.",
-                "default": 10,
+                "default": 4,
                 "type": "number",
                 "$hyparUnitType": "length",
                 "$hyparOrder": 0,
@@ -54,6 +58,15 @@
                 "$hyparUnitType": "length",
                 "$hyparOrder": 2,
                 "minimum": 0.2
+            },
+            "Finish Thickness": {
+                "multipleOf": 0.05,
+                "description": "Default finish thickness for structural columns.",
+                "maximum": 2,
+                "type": "number",
+                "$hyparUnitType": "length",
+                "$hyparOrder": 2.2,
+                "minimum": 0.05
             },
             "Create All Columns": {
                 "type": "boolean",
@@ -90,17 +103,17 @@
             },
             "paradigm": "edit",
             "schema": {
-                "Location": {
-                    "$ref": "https://hypar.io/Schemas/Geometry/Vector3.json",
-                    "$hyparRelativeToTransform": true
-                }
+              "Location": {
+                "$ref": "https://schemas.hypar.io/Vector3.json",
+                "$hyparRelativeToTransform": true
+              }
             },
             "behaviors": {
                 "add": {
                     "schema": {
-                        "Location": {
-                            "$ref": "https://hypar.io/Schemas/Geometry/Vector3.json"
-                        }
+                      "Location": {
+                        "$ref": "https://schemas.hypar.io/Vector3.json"
+                      }
                     }
                 },
                 "remove": true
@@ -143,7 +156,7 @@
                     "minimum": 0.2
                 },
                 "Height": {
-                    "default": 10,
+                    "default": 4,
                     "type": "number",
                     "$hyparUnitType": "length",
                     "$hyparOrder": 0,
@@ -156,23 +169,32 @@
                     "$hyparUnitType": "length",
                     "$hyparOrder": 2,
                     "minimum": 0.2
+                },
+                "Finish Thickness": {
+                    "multipleOf": 0.05,
+                    "maximum": 2,
+                    "type": "number",
+                    "$hyparUnitType": "length",
+                    "$hyparOrder": 2.2,
+                    "minimum": 0.05
                 }
             }
         }
     },
     "outputs": null,
     "element_types": [
-        "https://prod-api.hypar.io/schemas/Envelope",
-        "https://prod-api.hypar.io/schemas/DrainableRoofSection",
-        "https://prod-api.hypar.io/schemas/Grid2dElement",
-        "http://prod-api.hypar.io/schemas/LevelVolume",
-        "http://prod-api.hypar.io/schemas/WarningMessage"
+      "https://schemas.hypar.io/Envelope.json",
+      "https://schemas.hypar.io/DrainableRoofSection.json",
+      "https://schemas.hypar.io/Grid2dElement.json",
+      "https://schemas.hypar.io/LevelVolume.json",
+      "https://schemas.hypar.io/WarningMessage.json"
     ],
     "repository_url": "https://github.com/hypar-io/function",
     "last_updated": "2022-04-29T07:39:37.519156",
     "cli_version": "1.0.1-alpha.1",
     "messages": {
         "en": {
+            "name": "Columns",
             "overrides": {
                 "Gridlines Options": {
                     "name": "Column Options"

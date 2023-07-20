@@ -37,7 +37,8 @@ namespace EnvelopeBySketch
             {
                 if (levelsModel.AllElementsOfType<Level>().Count() == 0)
                 {
-                    throw new ArgumentException("Please create levels");
+                    output.Errors.Add($"No Levels found in the model 'Levels'. Check the output from the function upstream that has a model output 'Levels'.");
+                    return output;
                 }
                 var levels = levelsModel.AllElementsOfType<Level>().ToList();
                 levels.Sort((l1, l2) => l1.Elevation.CompareTo(l2.Elevation));

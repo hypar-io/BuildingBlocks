@@ -17,3 +17,7 @@ Creates floors from level perimeters supplied by another function.
 |Total Area|Number|Aggregate area of all floors.|
 |Floor Quantity|Number|Quantity of floors.|
 
+
+<br>
+
+## Additional Information

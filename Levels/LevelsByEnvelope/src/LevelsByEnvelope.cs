@@ -18,9 +18,16 @@ namespace LevelsByEnvelope
         {
             var envelopes = new List<Envelope>();
             inputModels.TryGetValue("Envelope", out var model);
-            if (model == null || model.AllElementsOfType<Envelope>().Count() == 0)
+            var output = new LevelsByEnvelopeOutputs();
+            if (model == null)
             {
-                throw new ArgumentException("No Envelope found.");
+                output.Errors.Add("The model output named 'Envelope' could not be found. Check the upstream functions for errors.");
+                return output;
+            }
+            else if (model.AllElementsOfType<Envelope>().Count() == 0)
+            {
+                output.Errors.Add($"No Envelopes found in the model 'Envelope'. Check the output from the function upstream that has a model output 'Envelope'.");
+                return output;
             }
             envelopes.AddRange(model.AllElementsOfType<Envelope>());
             var levelMaker = new LevelMaker(envelopes,
@@ -32,11 +39,14 @@ namespace LevelsByEnvelope
             {
                 levelArea += lp.Area;
             }
-            var output = new LevelsByEnvelopeOutputs(levelMaker.Levels.Count(),
-                                                     levelArea,
-                                                     input.GroundLevelHeight,
-                                                     input.StandardLevelHeight,
-                                                     input.PenthouseLevelHeight);
+
+            output.LevelQuantity = levelMaker.Levels.Count();
+            output.TotalLevelArea = levelArea;
+            output.EntryLevelHeight = input.GroundLevelHeight;
+            output.RepeatingLevelHeight = input.StandardLevelHeight;
+            output.TopLevelHeight = input.PenthouseLevelHeight;
+
+            output.Model.AddElement(levelMaker.LevelGroup);
             output.Model.AddElements(levelMaker.Levels);
             output.Model.AddElements(levelMaker.LevelPerimeters);
             output.Model.AddElements(levelMaker.LevelVolumes);

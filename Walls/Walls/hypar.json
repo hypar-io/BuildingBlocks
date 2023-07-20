@@ -29,7 +29,7 @@
         "add": {
           "schema": {
             "CenterLine": {
-              "$ref": "https://prod-api.hypar.io/schemas/Line"
+              "$ref": "https://schemas.hypar.io/Line.json"
             }
           }
         },

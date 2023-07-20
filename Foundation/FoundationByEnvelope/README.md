@@ -6,7 +6,7 @@ Creates a Foundation from a building Envelope.
 
 |Input Name|Type|Description|
 |---|---|---|
-|Min Depth|Range|The minimum foundation depth.|
+|Min Depth|number|The minimum foundation depth.|
 
 
 <br>
@@ -15,3 +15,7 @@ Creates a Foundation from a building Envelope.
 |---|---|---|
 |Depth|Number|The calculated foundation depth.|
 
+
+<br>
+
+## Additional Information

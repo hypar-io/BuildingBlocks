@@ -1,0 +1,144 @@
+{
+    "$schema": "https://hypar.io/Schemas/Function.json",
+    "id": "31ec3b95-5062-47b9-a1e0-e3550bf7e2d1",
+    "name": "Floors by Sketch",
+    "description": "Create floors by drawing them manually.",
+    "language": "C#",
+    "model_dependencies": [],
+    "model_output": "Floors",
+    "input_schema": {
+        "type": "object",
+        "properties": {
+            "Floors": {
+                "$hyparDeprecated": true,
+                "description": "Draw a list of floor profiles",
+                "default": [],
+                "type": "array",
+                "items": {
+                    "$hyparDisplayName": "Floor",
+                    "type": "object",
+                    "$hyparStyle": "row",
+                    "required": [
+                        "Boundary",
+                        "Elevation",
+                        "Thickness"
+                    ],
+                    "properties": {
+                        "Boundary": {
+                            "$ref": "https://schemas.hypar.io/Polygon.json"
+                        },
+                        "Elevation": {
+                            "type": "number",
+                            "description": "The elevation of the floor",
+                            "$hyparUnitType": "length",
+                            "default": 0
+                        },
+                        "Thickness": {
+                            "type": "number",
+                            "description": "The thickness of the floor",
+                            "$hyparUnitType": "length",
+                            "default": 0.3
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "outputs": [
+        {
+            "unit_type": "area",
+            "name": "Area",
+            "description": "The total floor area",
+            "type": "number"
+        }
+    ],
+    "overrides": {
+        "Floors": {
+            "$hyparOrder": 1,
+            "context": "[*discriminator=Elements.Floor]",
+            "identity": {
+                "Original Boundary": {
+                    "$ref": "https://schemas.hypar.io/Polygon.json"
+                },
+                "Creation Id": {
+                    "type": "string",
+                    "format": "uuid"
+                }
+            },
+            "validationRules": [
+                {
+                    "type": "minimumAddedItems",
+                    "value": 1,
+                    "level": "requirement",
+                    "message": "Add a floor to get started"
+                }
+            ],
+            "behaviors": {
+                "add": {
+                    "schema": {
+                        "Boundary": {
+                            "$ref": "https://schemas.hypar.io/Polygon.json",
+                            "$hyparRelativeToTransform": true
+                        }
+                    }
+                },
+                "remove": true,
+                "simultaneousAddEdit": false
+            },
+            "schema": {
+                "Boundary": {
+                    "$ref": "https://schemas.hypar.io/Polygon.json",
+                    "$hyparRelativeToTransform": true
+                }
+            }
+        },
+        "Floor Properties": {
+            "$hyparOrder": 2,
+            "context": "[*discriminator=Elements.Floor]",
+            "identity": {
+                "Original Boundary": {
+                    "$ref": "https://schemas.hypar.io/Polygon.json"
+                },
+                "Creation Id": {
+                    "type": "string",
+                    "format": "uuid"
+                }
+            },
+            "schema": {
+                "Thickness": {
+                    "type": "number",
+                    "description": "The thickness of the floor",
+                    "$hyparUnitType": "length"
+                }
+            }
+        },
+        "Floor Elevation": {
+            "$hyparOrder": 3,
+            "context": "[*discriminator=Elements.Floor]",
+            "identity": {
+                "Original Boundary": {
+                    "$ref": "https://schemas.hypar.io/Polygon.json"
+                },
+                "Creation Id": {
+                    "type": "string",
+                    "format": "uuid"
+                }
+            },
+            "schema": {
+                "Transform": {
+                    "$ref": "https://schemas.hypar.io/Transform.json",
+                    "$hyparConstraints": {
+                        "enableTranslation": [
+                            "z"
+                        ],
+                        "enableRotation": false,
+                        "displayAtCentroid": true
+                    }
+                }
+            }
+        }
+    },
+    "repository_url": "",
+    "source_file_key": null,
+    "preview_image": null
+}

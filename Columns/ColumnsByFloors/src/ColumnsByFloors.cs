@@ -17,11 +17,18 @@ namespace ColumnsByFloors
         /// <returns>A ColumnsByFloorsOutputs instance containing computed results and the model with any new elements.</returns>
         public static ColumnsByFloorsOutputs Execute(Dictionary<string, Model> inputModels, ColumnsByFloorsInputs input)
         {
+            var output = new ColumnsByFloorsOutputs();
             var allFloors = new List<Floor>();
             inputModels.TryGetValue("Floors", out var flrModel);
-            if (flrModel == null || flrModel.AllElementsOfType<Floor>().Count() == 0)
+            if (flrModel == null)
             {
-                throw new ArgumentException("No Floors found.");
+                output.Errors.Add("The model output named 'Floors' could not be found. Check the upstream functions for errors.");
+                return output;
+            }
+            else if (flrModel.AllElementsOfType<Floor>().Count() == 0)
+            {
+                output.Errors.Add($"No Floors found in the model 'Floors'. Check the output from the function upstream that has a model output 'Floors'.");
+                return output;
             }
             allFloors.AddRange(flrModel.AllElementsOfType<Floor>());
             var floorGroups = new List<List<Floor>>();
@@ -56,28 +63,27 @@ namespace ColumnsByFloors
                         ceiling = floors.ElementAt(i + next);
                         next++;
                     } while (!floor.Profile.Perimeter.Intersects(ceiling.Profile.Perimeter));
-                    
+
                     var height = ceiling.Elevation - floor.Elevation - floor.Thickness;
 
                     foreach (var point in grid.Available)
                     {
                         var colPerim = Polygon.Rectangle(input.ColumnDiameter, input.ColumnDiameter).MoveFromTo(Vector3.Origin, point);
-                        if (!floor.Profile.Perimeter.Covers(colPerim) || 
+                        if (!floor.Profile.Perimeter.Covers(colPerim) ||
                             !ceiling.Profile.Perimeter.Covers(colPerim))
                         {
                             continue;
                         }
-                        columns.Add(new Column(point, height,
-                                               new Profile(Polygon.Rectangle(input.ColumnDiameter, input.ColumnDiameter)),
-                                               BuiltInMaterials.Concrete, 
-                                               new Transform(0.0, 0.0, floor.Elevation + floor.Thickness),
-                                               0.0, 0.0, input.GridRotation, 
-                                               false, Guid.NewGuid(), ""));
+
+                        columns.Add(new Column(point, height, new Line(point, point + Vector3.ZAxis * height),
+                         Polygon.Rectangle(input.ColumnDiameter, input.ColumnDiameter), 0, 0, input.GridRotation, new Transform(0, 0, floor.Elevation + floor.Thickness),
+                          BuiltInMaterials.Concrete, null, false, Guid.NewGuid(), "ColumnsByFloors"));
                     }
                 }
             }
-            var output = new ColumnsByFloorsOutputs(columns.Count());
-            columns.ForEach(c => output.Model.AddElement(c));
+
+            output.ColumnQuantity = columns.Count;
+            output.Model.AddElements(columns);
             return output;
         }
     }

@@ -6,13 +6,15 @@
 
   <ItemGroup>
     <PackageReference Include="GeometryEx" Version="7.2.6" />
-    <PackageReference Include="Hypar.Elements" Version="0.8.0-alpha.9" />
-    <PackageReference Include="Hypar.Functions" Version="0.8.0-alpha.9" />
     <PackageReference Include="IxMilia.Dxf" Version="0.7.4" />
   </ItemGroup>
 
   <PropertyGroup>
-    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>    
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
 
 </Project>

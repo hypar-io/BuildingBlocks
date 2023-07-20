@@ -17,16 +17,17 @@ namespace EnvelopeBySite
         /// <returns>A EnvelopeBySiteOutputs instance containing computed results and the model with any new elements.</returns>
         public static EnvelopeBySiteOutputs Execute(Dictionary<string, Model> inputModels, EnvelopeBySiteInputs input)
         {
+            var output = new EnvelopeBySiteOutputs(input.BuildingHeight, input.FoundationDepth);
             // Retrieve site information from incoming models.
             var sites = new List<Site>();
             inputModels.TryGetValue("Site", out var model);
             if (model == null)
             {
-                throw new ArgumentException("No Site found.");
+                output.Errors.Add("The model output named 'Site' could not be found. Check the upstream functions for errors.");
+                return output;
             }
             sites.AddRange(model.AllElementsOfType<Site>());
             sites = sites.OrderByDescending(e => e.Perimeter.Area()).ToList();
-            var output = new EnvelopeBySiteOutputs(input.BuildingHeight, input.FoundationDepth);
 
             // Set input values based on whether we should consider setbacks
             var siteSetback = input.SiteSetback;
@@ -62,7 +63,7 @@ namespace EnvelopeBySite
                 var envMatl = new Material("envelope", Palette.Aqua, 0.0f, 0.0f);
                 var fndXform = new Transform(0.0, 0.0, input.FoundationDepth * -1);
                 var fndEnvelope = new Envelope(fndPerimeter, fndElevation, input.FoundationDepth, Vector3.ZAxis,
-                                                 0.0, fndXform, fndMatl, geomRep, false, Guid.NewGuid(), "")
+                                               0.0, null, fndXform, fndMatl, geomRep, false, Guid.NewGuid(), "")
                 {
                     Perimeter = fndPerimeter.TransformedPolygon(fndXform),
                     SiteCentroid = siteCentroid
@@ -81,7 +82,7 @@ namespace EnvelopeBySite
                 var tierHeight = tiers > 0 ? input.BuildingHeight / (tiers + 1) : input.BuildingHeight;
                 extrude = new Elements.Geometry.Solids.Extrude(zeroPerimeter, tierHeight, Vector3.ZAxis, false);
                 geomRep = new Representation(new List<Elements.Geometry.Solids.SolidOperation>() { extrude });
-                var zeroEnvelope = new Envelope(zeroPerimeter, 0.0, tierHeight, Vector3.ZAxis, 0.0,
+                var zeroEnvelope = new Envelope(zeroPerimeter, 0.0, tierHeight, Vector3.ZAxis, 0.0, null,
                               new Transform(), envMatl, geomRep, false, Guid.NewGuid(), "")
                 {
                     Perimeter = zeroPerimeter,
@@ -122,7 +123,7 @@ namespace EnvelopeBySite
                     extrude = new Elements.Geometry.Solids.Extrude(tierPerimeter, tierHeight, Vector3.ZAxis, false);
                     geomRep = new Representation(new List<Elements.Geometry.Solids.SolidOperation>() { extrude });
                     var elevationXform = new Transform(0.0, 0.0, tierElev);
-                    var tierEnvelope = new Envelope(tierPerimeter, tierElev, tierHeight, Vector3.ZAxis, 0.0,
+                    var tierEnvelope = new Envelope(tierPerimeter, tierElev, tierHeight, Vector3.ZAxis, 0.0, null,
                                   elevationXform, envMatl, geomRep, false, Guid.NewGuid(), "")
                     {
                         Perimeter = tierPerimeter.TransformedPolygon(elevationXform),

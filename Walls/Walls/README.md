@@ -17,5 +17,3 @@ Create Walls by drawing them.
 <br>
 
 ## Additional Information
-
-

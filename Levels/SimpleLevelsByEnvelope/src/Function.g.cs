@@ -48,6 +48,7 @@ namespace SimpleLevelsByEnvelope
             {
                 try
                 {
+                    Console.WriteLine($"Assembly Name: {asm.FullName}");
                     Assembly.Load(asm);
                 }
                 catch (Exception e)
@@ -61,7 +62,7 @@ namespace SimpleLevelsByEnvelope
 
             if(this.store == null)
             {
-                this.store = new S3ModelStore<SimpleLevelsByEnvelopeInputs>(RegionEndpoint.USWest1);
+                this.store = new S3ModelStore<SimpleLevelsByEnvelopeInputs>(RegionEndpoint.GetBySystemName("us-west-1"));
             }
 
             var l = new InvocationWrapper<SimpleLevelsByEnvelopeInputs,SimpleLevelsByEnvelopeOutputs>(store, SimpleLevelsByEnvelope.Execute);
