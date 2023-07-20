@@ -21,7 +21,7 @@ namespace Elements
 {
     #pragma warning disable // Disable all warnings
 
-    /// <summary>A horizontal planer datum with a perimeter.</summary>
+    /// <summary>Represents the envelope boundary at a given level</summary>
     [JsonConverter(typeof(Elements.Serialization.JSON.JsonInheritanceConverter), "discriminator")]
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v13.0.0.0)")]
     public partial class LevelPerimeter : Element
@@ -47,12 +47,12 @@ namespace Elements
         public double Area { get; set; }
     
         /// <summary>The elevation of the level perimeter.</summary>
-        [JsonProperty("Elevation", Required = Newtonsoft.Json.Required.Always)]
+        [JsonProperty("Elevation", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.Range(0D, double.MaxValue)]
         public double Elevation { get; set; }
     
         /// <summary>The perimeter of the level perimeter.</summary>
-        [JsonProperty("Perimeter", Required = Newtonsoft.Json.Required.AllowNull)]
+        [JsonProperty("Perimeter", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public Polygon Perimeter { get; set; }
     
     
