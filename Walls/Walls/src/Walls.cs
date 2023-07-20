@@ -9,6 +9,8 @@ namespace Walls
     public static class Walls
     {
 
+        private const string ADD_ID_PROPERTY_NAME = "Add Id";
+
         private static double DEFAULT_WALL_THICKNESS => Units.InchesToMeters(6);
         private static double DEFAULT_WALL_HEIGHT => Units.FeetToMeters(10);
         private static readonly Material DEFAULT_WALL_MATERIAL = new Material("Wall", Colors.White);
@@ -46,19 +48,19 @@ namespace Walls
             {
                 Material = DEFAULT_WALL_MATERIAL
             };
-            wall.AdditionalProperties["Add Id"] = add.Id;
+            wall.AdditionalProperties[ADD_ID_PROPERTY_NAME] = add.Id;
             Identity.AddOverrideIdentity(wall, add);
             return wall;
         }
 
         private static bool Match(StandardWall wall, WallsIdentity identity)
         {
-            return wall.AdditionalProperties["Add Id"].ToString() == identity.AddId;
+            return wall.AdditionalProperties[ADD_ID_PROPERTY_NAME].ToString() == identity.AddId;
         }
 
         private static bool Match(StandardWall wall, WallPropertiesIdentity identity)
         {
-            return wall.AdditionalProperties["Add Id"].ToString() == identity.AddId;
+            return wall.AdditionalProperties[ADD_ID_PROPERTY_NAME].ToString() == identity.AddId;
         }
 
         private static StandardWall UpdateWall(StandardWall wall, WallsOverride edit)
