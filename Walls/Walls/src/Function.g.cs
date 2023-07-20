@@ -61,11 +61,11 @@ namespace Walls
             Console.WriteLine($"Time to load assemblies: {sw.Elapsed.TotalSeconds})");
 
             if(this.store == null)
-            {
+            { 
                 this.store = new S3ModelStore<WallsInputs>(RegionEndpoint.GetBySystemName("us-west-1"));
             }
 
-            var l = new InvocationWrapper<WallsInputs,WallsOutputs>(store, Walls.Execute);
+            var l = new InvocationWrapper<WallsInputs,WallsOutputs> (store, Walls.Execute);
             var output = await l.InvokeAsync(args);
             return output;
         }

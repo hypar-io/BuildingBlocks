@@ -21,32 +21,31 @@ namespace Elements
 {
     #pragma warning disable // Disable all warnings
 
-    /// <summary>A perimeter excluding other elements.</summary>
+    /// <summary>A horizontal datum representing a building level at a specific elevation.</summary>
     [JsonConverter(typeof(Elements.Serialization.JSON.JsonInheritanceConverter), "discriminator")]
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v13.0.0.0)")]
-    public partial class Exclusion : Element
+    public partial class Level : Element
     {
         [JsonConstructor]
-        public Exclusion(Polygon @perimeter, double @elevation, System.Guid @id = default, string @name = null)
+        public Level(double @elevation, double? @height, System.Guid @id = default, string @name = null)
             : base(id, name)
         {
-            this.Perimeter = @perimeter;
             this.Elevation = @elevation;
+            this.Height = @height;
             }
         
         // Empty constructor
-        public Exclusion()
+        public Level()
             : base()
         {
         }
     
-        /// <summary>The Exclusion perimeter.</summary>
-        [JsonProperty("Perimeter", Required = Newtonsoft.Json.Required.AllowNull)]
-        public Polygon Perimeter { get; set; }
-    
-        /// <summary>The elevation in meters of the Exclusion.</summary>
-        [JsonProperty("Elevation", Required = Newtonsoft.Json.Required.Always)]
+        [JsonProperty("Elevation", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public double Elevation { get; set; }
+    
+        /// <summary>The vertical distance from this level to the next. May be null for a top level, like a roof.</summary>
+        [JsonProperty("Height", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public double? Height { get; set; }
     
     
     }
