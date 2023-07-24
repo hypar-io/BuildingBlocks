@@ -20,6 +20,7 @@ namespace CoreByEnvelope
             public double length;
             public double width;
             public double rotation;
+            public Vector3 centroid;
         }
 
         public const double ROOF_ACCESS_HEIGHT = 3.0;
@@ -71,7 +72,8 @@ namespace CoreByEnvelope
             }
             foreach (var position in positions)
             {
-                perimeter = perimeter.MoveFromTo(perimeter.Centroid(), position);
+                var coreCentroid = perimeter.Centroid();
+                perimeter = perimeter.MoveFromTo(coreCentroid, position);
                 var rotation = coreDef.rotation;
                 while (rotation <= angle + 90.0)
                 {
@@ -80,6 +82,7 @@ namespace CoreByEnvelope
                     {
                         coreDef.perimeter = perimeter;
                         coreDef.rotation = rotation;
+                        coreDef.centroid = position;
                         return coreDef; // Return the first successful interior placement.
                     }
                     rotation += CORE_ROTATE_INCREMENT;

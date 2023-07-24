@@ -57,8 +57,8 @@
     }
   ],
   "element_types": [
-    "https://raw.githubusercontent.com/hypar-io/Schemas/master/LevelPerimeter.json",
-    "https://prod-api.hypar.io/schemas/LevelVolume"
+    "https://schemas.hypar.io/LevelPerimeter.json",
+    "https://schemas.hypar.io/LevelVolume.json"
   ],
   "repository_url": "https://github.com/hypar-io/BuildingBlocks/tree/master/Floors/FloorsByLevels",
   "source_file_key": null,

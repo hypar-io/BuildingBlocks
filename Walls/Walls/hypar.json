@@ -5,20 +5,23 @@
   "description": "Create Walls by drawing them.",
   "language": "C#",
   "model_output": "Walls",
-  "input_schema": {
-    "type": "object",
-    "properties": {}
-  },
+  "model_dependencies": [
+    {
+      "name": "Levels",
+      "optional": true
+    }
+  ],
   "overrides": {
     "Walls": {
       "context": "[*discriminator=Elements.StandardWall]",
       "identity": {
-        "Rough Location": {
-          "$ref": "https://hypar.io/Schemas/Geometry/Vector3.json"
+        "Add Id": {
+          "type": "string"
         }
       },
       "schema": {
         "CenterLine": {
+          "$hyparRelativeToTransform": true,
           "$ref": "https://prod-api.hypar.io/schemas/Line"
         }
       },
@@ -26,7 +29,7 @@
         "add": {
           "schema": {
             "CenterLine": {
-              "$ref": "https://prod-api.hypar.io/schemas/Line"
+              "$ref": "https://schemas.hypar.io/Line.json"
             }
           }
         },
@@ -34,30 +37,135 @@
       }
     },
     "Wall Properties": {
+      "perProperty": true,
       "context": "[*discriminator=Elements.StandardWall]",
       "identity": {
-        "Rough Location": {
-          "$ref": "https://hypar.io/Schemas/Geometry/Vector3.json"
+        "Add Id": {
+          "type": "string"
         }
       },
       "schema": {
         "Height": {
-          "type": "number",
-          "$hyparUnitType": "length",
-          "default": 3.0
+          "type": [
+            "number",
+            "null"
+          ],
+          "multipleOf": 0.1,
+          "$hyparUnitType": "length"
         },
         "Thickness": {
-          "type": "number",
+          "type": [
+            "number",
+            "null"
+          ],
+          "multipleOf": 0.01,
           "$hyparUnitType": "length",
-          "default": 0.15,
           "$hyparPreferredUnits": {
             "imperial": "in",
             "metric": "mm"
+          }
+        },
+        "Levels": {
+          "type": "object",
+          "$hyparStyle": "row",
+          "$hyparShowIf": {
+            "conditions": [
+              {
+                "dependency": "Levels",
+                "present": true
+              }
+            ]
+          },
+          "properties": {
+            "Bottom Level": {
+              "$hyparPickElement": {
+                "dependency": "Levels",
+                "context": "[*discriminator=Elements.Level]"
+              },
+              "type": [
+                "object",
+                "null"
+              ],
+              "properties": {
+                "Id": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "Elevation": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                }
+              }
+            },
+            "Top Level": {
+              "$hyparPickElement": {
+                "dependency": "Levels",
+                "context": "[*discriminator=Elements.Level]"
+              },
+              "type": [
+                "object",
+                "null"
+              ],
+              "properties": {
+                "Id": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "Elevation": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "Openings": {
+          "type": "array",
+          "items": {
+            "$hyparDisplayName": "Opening",
+            "type": "object",
+            "$hyparStyle": "row",
+            "properties": {
+              "Locations": {
+                "type": "array",
+                "$hyparRelativeToTransform": true,
+                "items": {
+                  "$ref": "https://hypar.io/Schemas/Geometry/Line.json"
+                }
+              },
+              "Sill Height": {
+                "type": [
+                  "number",
+                  "null"
+                ],
+                "multipleOf": 0.1,
+                "$hyparUnitType": "length"
+              },
+              "Top-Out Height": {
+                "type": [
+                  "number",
+                  "null"
+                ],
+                "multipleOf": 0.1,
+                "$hyparUnitType": "length"
+              }
+            }
           }
         }
       }
     }
   },
+  "element_types": [
+    "https://prod-api.hypar.io/schemas/Level"
+  ],
   "repository_url": "https://github.com/hypar-io/function",
   "last_updated": "0001-01-01T00:00:00",
   "cli_version": "0.9.6-alpha.3"

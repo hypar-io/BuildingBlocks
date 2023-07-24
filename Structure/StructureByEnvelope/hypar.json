@@ -2319,11 +2319,11 @@
     }
   ],
   "element_types": [
-    "https://raw.githubusercontent.com/hypar-io/Schemas/master/LevelPerimeter.json",
-    "https://prod-api.hypar.io/schemas/LevelVolume",
-    "https://prod-api.hypar.io/schemas/Grid2dElement",
-    "https://prod-api.hypar.io/schemas/ViewScope",
-    "https://prod-api.hypar.io/schemas/LabelConfiguration"
+    "https://schemas.hypar.io/LevelPerimeter.json",
+    "https://schemas.hypar.io/LevelVolume.json",
+    "https://schemas.hypar.io/Grid2dElement.json",
+    "https://schemas.hypar.io/ViewScope.json",
+    "https://schemas.hypar.io/LabelConfiguration.json"
   ],
   "filters": {
     "Structure": {

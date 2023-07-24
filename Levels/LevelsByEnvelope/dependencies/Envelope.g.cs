@@ -27,7 +27,7 @@ namespace Elements
     public partial class Envelope : GeometricElement
     {
         [JsonConstructor]
-        public Envelope(Profile @profile, double @elevation, double @height, Vector3 @direction, double @rotation, Transform @transform = null, Material @material = null, Representation @representation = null, bool @isElementDefinition = false, System.Guid @id = default, string @name = null)
+        public Envelope(Profile @profile, double @elevation, double @height, Vector3 @direction, double @rotation, IList<double> @floorToFloorHeights, Transform @transform = null, Material @material = null, Representation @representation = null, bool @isElementDefinition = false, System.Guid @id = default, string @name = null)
             : base(transform, material, representation, isElementDefinition, id, name)
         {
             this.Profile = @profile;
@@ -35,6 +35,7 @@ namespace Elements
             this.Height = @height;
             this.Direction = @direction;
             this.Rotation = @rotation;
+            this.FloorToFloorHeights = @floorToFloorHeights;
             }
         
         // Empty constructor
@@ -44,7 +45,7 @@ namespace Elements
         }
     
         /// <summary>The profile to extrude.</summary>
-        [JsonProperty("Profile", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [JsonProperty("Profile", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public Profile Profile { get; set; }
     
         /// <summary>The elevation of the envelope.</summary>
@@ -62,6 +63,10 @@ namespace Elements
         /// <summary>The rotation of the envelope, in degrees.</summary>
         [JsonProperty("Rotation", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public double Rotation { get; set; }
+    
+        /// <summary>An optional list of floor-to-floor heights for this envelope. If provided, levels can be generated from these floor-to-floor heights.</summary>
+        [JsonProperty("Floor To Floor Heights", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public IList<double> FloorToFloorHeights { get; set; }
     
     
     }

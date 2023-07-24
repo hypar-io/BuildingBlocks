@@ -6,7 +6,7 @@ Creates the volume of a building service core by extruding a sketch to a height 
 
 |Input Name|Type|Description|
 |---|---|---|
-|Perimeter|https://hypar.io/Schemas/Geometry/Polygon.json|Perimeter of the building service core.|
+|Perimeter|https://schemas.hypar.io/Polygon.json|Perimeter of the building service core.|
 |Core height above roof|number|The projection of the service core above the highest building level.|
 
 

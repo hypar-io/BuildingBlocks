@@ -41,7 +41,7 @@ namespace CoreBySketch
                 var extrude = new Elements.Geometry.Solids.Extrude(input.Perimeter, height, Vector3.ZAxis, false);
                 var geomRep = new Representation(new List<Elements.Geometry.Solids.SolidOperation>() { extrude });
                 var corMatl = new Material("core", new Color(1.0, 1.0, 1.0, 0.6), 0.0f, 0.0f);
-                var svcCore = new ServiceCore(input.Perimeter, Vector3.ZAxis, elevation, height, 0.0, new Transform(0.0, 0.0, elevation), corMatl, geomRep, false, Guid.NewGuid(), "serviceCore");
+                var svcCore = new ServiceCore(input.Perimeter, elevation, height, input.Perimeter.Centroid(), new Transform(0.0, 0.0, elevation), corMatl, geomRep, false, Guid.NewGuid(), "serviceCore");
                 output.Height = height;
                 output.Model.AddElement(svcCore);
                 return output;

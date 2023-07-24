@@ -27,7 +27,7 @@ namespace Elements
     public partial class ViewScope : Element
     {
         [JsonConstructor]
-        public ViewScope(BBox3 @boundingBox, Camera @camera, bool? @lockRotation, bool? @clipWithBoundingBox, bool? @modal, System.Collections.Generic.IDictionary<string, string> @functionVisibility, System.Guid @id = default, string @name = null)
+        public ViewScope(BBox3 @boundingBox, Camera @camera, bool? @lockRotation, bool? @clipWithBoundingBox, bool? @modal, System.Collections.Generic.IDictionary<string, string> @functionVisibility, IList<object> @actions, System.Guid @id = default, string @name = null)
             : base(id, name)
         {
             this.BoundingBox = @boundingBox;
@@ -36,6 +36,7 @@ namespace Elements
             this.ClipWithBoundingBox = @clipWithBoundingBox;
             this.Modal = @modal;
             this.FunctionVisibility = @functionVisibility;
+            this.Actions = @actions;
             }
         
         // Empty constructor
@@ -66,6 +67,9 @@ namespace Elements
     
         [JsonProperty("Function Visibility", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public System.Collections.Generic.IDictionary<string, string> FunctionVisibility { get; set; }
+    
+        [JsonProperty("Actions", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public IList<object> Actions { get; set; }
     
     
     }
