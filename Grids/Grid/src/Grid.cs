@@ -300,12 +300,12 @@ namespace Grid
                     transform, Grid2dElementMaterial, rep, false, Guid.NewGuid(), gridArea.Name);
                 grid2dElement.Extents = boundary;
                 grid2dElement.AdditionalProperties["UGrid"] = new Grid1dInput(
-                    new Polyline(origin, grid.U.Curve.PointAt(1)),
+                    new Polyline(origin, grid.U.Curve.End),
                     uPoints,
                     uOverride?.SubdivisionMode ?? Grid1dInputSubdivisionMode.Manual,
                     uOverride?.SubdivisionSettings);
                 grid2dElement.AdditionalProperties["VGrid"] = new Grid1dInput(
-                    new Polyline(origin, grid.V.Curve.PointAt(1)),
+                    new Polyline(origin, grid.V.Curve.End),
                     vPoints,
                     vOverride?.SubdivisionMode ?? Grid1dInputSubdivisionMode.Manual,
                     vOverride?.SubdivisionSettings);
@@ -376,16 +376,16 @@ namespace Grid
         private static string ConvertToANamingPattern(int idx)
         {
             // Let Q = 26 - number of uppercase characters, N - number of letters in string.
-            // There are Q^N strings of length N. The first string of length N+1 will have 
+            // There are Q^N strings of length N. The first string of length N+1 will have
             // idx = Q^1 + Q^2 + ... + Q^n, which is equal to Q * (Q^N - 1) / (Q - 1).
-            const int Q = 26; 
+            const int Q = 26;
             int N = (int)Math.Ceiling(Math.Log((Q - 1) * (idx + 1) + Q, Q) - 1);
             char[] chars = new char[N];
 
             // The goal is to represent idx in string S as a set of characters Ki, where 0 <= Ki < Q.
             // Such polynomial is unique for each idx.
-            // S = K0 + K1 * Q + K2 * Q^2 + ... + K_n-1_ * Q^(N - 1). 
-            // 
+            // S = K0 + K1 * Q + K2 * Q^2 + ... + K_n-1_ * Q^(N - 1).
+            //
             // Each letter Ki are calculated in reverse order as reminder of dividing S by Q.
             // Then the letter is removed by dividing and thus dropping the reminder.
             for (int i = N - 1; i >= 0; i--)
@@ -457,7 +457,7 @@ namespace Grid
                                                 GridlineNamesIdentityAxis axis,
                                                 double radius)
         {
-            var baseLine = new Line(opposingGrid1d.Curve.PointAt(0), opposingGrid1d.Curve.PointAt(1));
+            var baseLine = new Line(opposingGrid1d.Curve.Start, opposingGrid1d.Curve.End);
 
             var startExtend = origin - baseLine.Start;
             var endExtend = origin - baseLine.End;
@@ -584,7 +584,7 @@ namespace Grid
         private static U GetStandardizedRecords(U u, Grid1dInput uOverride)
         {
             var gridlines = new List<GridLines>();
-            var start = uOverride.Curve.PointAt(0);
+            var start = uOverride.Curve.Start;
             var splitPoints = uOverride.SplitPoints
                                 .Select(p => p.DistanceTo(start))
                                 .OrderBy(d => d)

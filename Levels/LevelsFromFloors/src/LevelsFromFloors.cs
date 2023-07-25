@@ -98,7 +98,7 @@ namespace LevelsFromFloors
             }
             var uniqueElevations = allFloors.Select(f => f.Elevation + f.Thickness).Distinct().OrderBy(l => l).ToList();
             var levelNameCounter = 1;
-            var levels = uniqueElevations.Select(l => new Level(l, Guid.NewGuid(), $"Level {levelNameCounter++}"));
+            var levels = uniqueElevations.Select(l => new Level(l, null, Guid.NewGuid(), $"Level {levelNameCounter++}"));
             output.Model.AddElements(levels);
             var levelPerimeters = allFloors.Select(f => new LevelPerimeter(f.Profile.Area(), f.Elevation, f.Profile.Perimeter, Guid.NewGuid(), f.Name));
             output.Model.AddElements(levelPerimeters);
@@ -116,6 +116,11 @@ namespace LevelsFromFloors
                     {
                         var height = nextFloor.Elevation - (currentFloor.Elevation + currentFloor.Thickness);
                         var extrusion = new Extrude(currentFloor.Profile, height, Vector3.ZAxis, false);
+                        var addId = currentFloor.Name ?? $"Level {floorCounter++}";
+                        if (currentFloor.AdditionalProperties.ContainsKey("Creation Id"))
+                        {
+                            addId = currentFloor.AdditionalProperties["Creation Id"].ToString();
+                        }
                         var levelVol = new LevelVolume()
                         {
                             Profile = currentFloor.Profile,
@@ -125,6 +130,7 @@ namespace LevelsFromFloors
                             Material = BuiltInMaterials.Glass,
                             Representation = extrusion,
                             Name = currentFloor.Name ?? $"Level {floorCounter++}",
+                            AddId = addId,
                         };
                         levelVol.AdditionalProperties["Floor"] = currentFloor.Id;
                         levelVol.AdditionalProperties["Floors"] = currentFloor.AdditionalProperties["Source Ids"];

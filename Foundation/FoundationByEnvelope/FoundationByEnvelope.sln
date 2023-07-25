@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoundationByEnvelope", "src\FoundationByEnvelope.csproj", "{EE235EFA-778B-40CF-B060-BFF31910BE07}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoundationByEnvelope.Tests", "test\FoundationByEnvelope.tests.csproj", "{3FAD546B-A50F-4756-8FCD-32E052725C8B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoundationByEnvelope.Tests", "test\FoundationByEnvelope.Tests.csproj", "{3FAD546B-A50F-4756-8FCD-32E052725C8B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

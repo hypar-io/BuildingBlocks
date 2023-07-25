@@ -57,8 +57,8 @@ namespace EnvelopeBySketch
                 {
                     extrude = new Elements.Geometry.Solids.Extrude(input.Perimeter, input.FoundationDepth, Vector3.ZAxis, false);
                     geomRep = new Representation(new List<Elements.Geometry.Solids.SolidOperation>() { extrude });
-                    envelopes.Add(new Envelope(input.Perimeter, input.FoundationDepth * -1, input.FoundationDepth, Vector3.ZAxis,
-                                    0.0, new Transform(0.0, 0.0, input.FoundationDepth * -1), envMatl, geomRep, false, Guid.NewGuid(), ""));
+                    envelopes.Add(new Envelope(input.Perimeter, input.FoundationDepth * -1, input.FoundationDepth, Vector3.ZAxis, 0.0, null,
+                                               new Transform(0.0, 0.0, input.FoundationDepth * -1), envMatl, geomRep, false, Guid.NewGuid(), ""));
                 }
                 buildingHeight = input.BuildingHeight;
                 foundationDepth = input.FoundationDepth;
@@ -69,7 +69,7 @@ namespace EnvelopeBySketch
 
             extrude = new Elements.Geometry.Solids.Extrude(polygon, tierHeight, Vector3.ZAxis, false);
             geomRep = new Representation(new List<Elements.Geometry.Solids.SolidOperation>() { extrude });
-            envelopes.Add(new Envelope(input.Perimeter, envelopeElevation, tierHeight, Vector3.ZAxis, 0.0,
+            envelopes.Add(new Envelope(input.Perimeter, envelopeElevation, tierHeight, Vector3.ZAxis, 0.0, null,
                           new Transform(), envMatl, geomRep, false, Guid.NewGuid(), ""));
             // Create the remaining Envelope Elements.
             var offsFactor = -1;
@@ -89,7 +89,7 @@ namespace EnvelopeBySketch
                 }
                 extrude = new Elements.Geometry.Solids.Extrude(polygon, tierHeight, Vector3.ZAxis, false);
                 geomRep = new Representation(new List<Elements.Geometry.Solids.SolidOperation>() { extrude });
-                envelopes.Add(new Envelope(tryPer.First(), tierHeight * elevFactor, tierHeight, Vector3.ZAxis, 0.0,
+                envelopes.Add(new Envelope(tryPer.First(), tierHeight * elevFactor, tierHeight, Vector3.ZAxis, 0.0, null,
                               new Transform(0.0, 0.0, tierHeight * elevFactor), envMatl, geomRep, false, Guid.NewGuid(), ""));
                 offsFactor--;
                 elevFactor++;

@@ -11,3 +11,4 @@ input.json
 *.nupkg
 nupkg
 server
+/test/Generated/*

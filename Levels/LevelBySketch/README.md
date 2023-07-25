@@ -6,7 +6,7 @@ Creates a Level from a sketch.
 
 |Input Name|Type|Description|
 |---|---|---|
-|Perimeter|https://hypar.io/Schemas/Geometry/Polygon.json|Perimeter of the Level.|
+|Perimeter|https://schemas.hypar.io/Polygon.json|Perimeter of the Level.|
 |Level Elevation|number|Level elevation relative to the zero plane.|
 
 
