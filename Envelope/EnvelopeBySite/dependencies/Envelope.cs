@@ -29,7 +29,7 @@ namespace Elements
                         Transform @transform,
                         Material @material,
                         Guid @id)
-            : this(@profile, @elevation, @height, @direction, 0.0, transform: @transform, material: @material, id: @id)
+            : this(@profile, @elevation, @height, @direction, 0.0, null, transform: @transform, material: @material, id: @id)
         {
             Site = @site;
             SiteCentroid = @site.Perimeter.Centroid();
