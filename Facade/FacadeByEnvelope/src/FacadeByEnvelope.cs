@@ -94,7 +94,7 @@ namespace FacadeByEnvelope
                                          input.PanelColor);
             }
 
-            var groundFloorEnvelope = envelopes.First(e => e.Elevation == 0.0);
+            var groundFloorEnvelope = envelopes.OrderBy(e => e.Elevation).First(e => e.Elevation >= -Vector3.EPSILON);
             if (groundFloorEnvelope != null)
             {
                 var boundarySegments = groundFloorEnvelope.Profile.Perimeter.Offset(-input.GroundFloorSetback)[0].Segments();
@@ -210,26 +210,28 @@ namespace FacadeByEnvelope
                                              double panelWidth,
                                              Model model)
         {
+            var hight = topElevation - bottomElevation;
             foreach (var segment in boundarySegments)
             {
                 var u = new Grid1d(segment);
-                var v = new Grid1d(new Line(segment.Start, new Vector3(segment.Start.X, segment.Start.Y, segment.Start.Z + topElevation)));
+                var v = new Grid1d(new Line(segment.Start, new Vector3(segment.Start.X, segment.Start.Y, segment.Start.Z + hight)));
+                Transform t = new Transform(0, 0, bottomElevation);
                 var grid2d = new Grid2d(u, v);
                 grid2d.U.DivideByFixedLength(1.5);
                 grid2d.V.DivideByCount(2);
                 foreach (var sep in grid2d.GetCellSeparators(GridDirection.U))
                 {
-                    var mullion = new Beam((Line)sep, Polygon.Rectangle(0.05, 0.05), null, BuiltInMaterials.Black);
+                    var mullion = new Beam((Line)sep, Polygon.Rectangle(0.05, 0.05), t, BuiltInMaterials.Black);
                     model.AddElement(mullion);
                 }
                 foreach (var sep in grid2d.GetCellSeparators(GridDirection.V))
                 {
-                    var mullion = new Beam((Line)sep, Polygon.Rectangle(0.05, 0.05), null, BuiltInMaterials.Black);
+                    var mullion = new Beam((Line)sep, Polygon.Rectangle(0.05, 0.05), t, BuiltInMaterials.Black);
                     model.AddElement(mullion);
                 }
                 var panel = new Panel(new Polygon(new[]{
-                    segment.Start, segment.End , new Vector3(segment.End.X, segment.End.Y, segment.End.Z + topElevation), new Vector3(segment.Start.X, segment.Start.Y, segment.Start.Z + topElevation)
-                }), BuiltInMaterials.Glass);
+                    segment.Start, segment.End , new Vector3(segment.End.X, segment.End.Y, segment.End.Z + hight), new Vector3(segment.Start.X, segment.Start.Y, segment.Start.Z + hight)
+                }), BuiltInMaterials.Glass, t);
                 model.AddElement(panel);
             }
         }
