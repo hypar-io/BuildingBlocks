@@ -57,7 +57,7 @@ namespace EnvelopeBySketch
                 {
                     extrude = new Extrude(input.Perimeter, input.FoundationDepth, Vector3.ZAxis, false);
                     geomRep = new Representation(new List<SolidOperation>() { extrude });
-                    var elevation = envelopeElevation - foundationDepth;
+                    var elevation = envelopeElevation - input.FoundationDepth;
                     envelopes.Add(new Envelope(input.Perimeter, elevation, input.FoundationDepth, Vector3.ZAxis, 0.0, null,
                                   new Transform(0.0, 0.0, elevation), envMatl, geomRep, false, Guid.NewGuid(), ""));
                 }
