@@ -94,7 +94,7 @@ namespace FacadeByEnvelope
                                          input.PanelColor);
             }
 
-            var groundFloorEnvelope = envelopes.OrderBy(e => e.Elevation).First(e => e.Elevation >= -Vector3.EPSILON);
+            var groundFloorEnvelope = envelopes.OrderBy(e => e.Elevation).FirstOrDefault(e => e.Elevation >= -Vector3.EPSILON);
             if (groundFloorEnvelope != null)
             {
                 var boundarySegments = groundFloorEnvelope.Profile.Perimeter.Offset(-input.GroundFloorSetback)[0].Segments();
