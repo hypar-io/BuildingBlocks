@@ -114,12 +114,6 @@ namespace SubdivideSlab
             return output;
         }
 
-        private static ModelCurve ToModelCurve(Curve curve, double elevation)
-        {
-            if (curve == null) return null;
-            return new ModelCurve(curve, null, new Transform(0, 0, elevation));
-        }
-
         private static SlabSubdivision CreateSlabSubdivision(string ID, IList<Curve> boundaries, Floor floor, bool isTrimmed)
         {
             var outerBoundary = boundaries.First();
