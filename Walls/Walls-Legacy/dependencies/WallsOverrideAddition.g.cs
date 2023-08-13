@@ -12,7 +12,7 @@ namespace Walls
 	{
         public static string Name = "Walls Addition";
         public static string Dependency = null;
-        public static string Context = "[*discriminator=Elements.Wall]";
+        public static string Context = "[*discriminator=Elements.StandardWall]";
 		public static string Paradigm = "Edit";
 
         /// <summary>
