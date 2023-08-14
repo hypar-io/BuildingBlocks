@@ -6,13 +6,13 @@ using System.Linq;
 namespace Walls
 {
 	/// <summary>
-	/// Override metadata for WallsOverrideAddition
+	/// Override metadata for WallsOverrideRemoval
 	/// </summary>
-	public partial class WallsOverrideAddition : IOverride
+	public partial class WallsOverrideRemoval : IOverride
 	{
-        public static string Name = "Walls Addition";
+        public static string Name = "Walls Removal";
         public static string Dependency = null;
-        public static string Context = "[*discriminator=Elements.Wall]";
+        public static string Context = "[*discriminator=Elements.StandardWall]";
 		public static string Paradigm = "Edit";
 
         /// <summary>

@@ -62,7 +62,14 @@ namespace Walls
 
             if(this.store == null)
             { 
-                this.store = new S3ModelStore<WallsInputs>(RegionEndpoint.GetBySystemName("us-west-1"));
+                if (args.SignedResourceUrls == null)
+                {
+                    this.store = new S3ModelStore<WallsInputs>(RegionEndpoint.GetBySystemName("us-west-1"));
+                }
+                else
+                {
+                    this.store = new UrlModelStore<WallsInputs>();
+                }
             }
 
             var l = new InvocationWrapper<WallsInputs,WallsOutputs> (store, Walls.Execute);

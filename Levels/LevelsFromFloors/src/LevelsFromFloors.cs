@@ -153,6 +153,12 @@ namespace LevelsFromFloors
                 var currentFloor = floorsOrdered[i];
                 var height = input.DefaultLevelHeight;
                 var extrusion = new Extrude(currentFloor.Profile, height, Vector3.ZAxis, false);
+                var name = currentFloor.Name ?? $"Level {floorCounter++}";
+                var addId = name;
+                if (currentFloor.AdditionalProperties.ContainsKey("Creation Id"))
+                {
+                    addId = currentFloor.AdditionalProperties["Creation Id"].ToString();
+                }
                 var levelVol = new LevelVolume()
                 {
                     Profile = currentFloor.Profile,
@@ -161,7 +167,8 @@ namespace LevelsFromFloors
                     Transform = currentFloor.Transform.Concatenated(new Transform(0, 0, currentFloor.Thickness)),
                     Material = BuiltInMaterials.Glass,
                     Representation = extrusion,
-                    Name = currentFloor.Name ?? $"Level {floorCounter++}"
+                    Name = name,
+                    AddId = addId,
                 };
                 levelVol.AdditionalProperties["Floor"] = currentFloor.Id;
                 levelVol.AdditionalProperties["Floors"] = currentFloor.AdditionalProperties["Source Ids"];
