@@ -22,53 +22,6 @@ namespace Walls
 {
     #pragma warning disable // Disable all warnings
 
-    /// <summary>A polyline that has been thickened into a polygon.</summary>
-    [Newtonsoft.Json.JsonConverter(typeof(Elements.Serialization.JSON.JsonInheritanceConverter), "discriminator")]
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v13.0.0.0)")]
-    
-    public partial class ThickenedPolyline 
-    
-    {
-        [Newtonsoft.Json.JsonConstructor]
-        public ThickenedPolyline(Polyline @polyline, double? @width, bool? @flip, double @leftWidth, double @rightWidth)
-        {
-            var validator = Validator.Instance.GetFirstValidatorForType<ThickenedPolyline>();
-            if(validator != null)
-            {
-                validator.PreConstruct(new object[]{ @polyline, @width, @flip, @leftWidth, @rightWidth});
-            }
-        
-            this.Polyline = @polyline;
-            this.Width = @width;
-            this.Flip = @flip;
-            this.LeftWidth = @leftWidth;
-            this.RightWidth = @rightWidth;
-        
-            if(validator != null)
-            {
-                validator.PostConstruct(this);
-            }
-        }
-    
-        [Newtonsoft.Json.JsonProperty("polyline", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public Polyline Polyline { get; set; }
-    
-        [Newtonsoft.Json.JsonProperty("width", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public double? Width { get; set; }
-    
-        [Newtonsoft.Json.JsonProperty("flip", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public bool? Flip { get; set; }
-    
-        /// <summary>The amount to thicken the polyline on its "left" side, imagining that the polyline is extending away from you. That is, if the polyline starts at (0,0,0) and follows the +Z axis, the left side extends into the -X quadrant.</summary>
-        [Newtonsoft.Json.JsonProperty("leftWidth", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public double LeftWidth { get; set; }
-    
-        /// <summary>The amount to thicken the polyline on its "right" side, imagining that the polyline is extending away from you. That is, if the polyline starts at (0,0,0) and follows the +Z axis, the right side extends into the +X quadrant.</summary>
-        [Newtonsoft.Json.JsonProperty("rightWidth", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public double RightWidth { get; set; }
-    
-    }
-    
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v13.0.0.0)")]
     
     public  class WallsInputs : S3Args
@@ -106,17 +59,18 @@ namespace Walls
         public Overrides() { }
         
         [Newtonsoft.Json.JsonConstructor]
-        public Overrides(OverrideAdditions @additions, OverrideRemovals @removals, IList<WallsOverride> @walls)
+        public Overrides(OverrideAdditions @additions, OverrideRemovals @removals, IList<WallsOverride> @walls, IList<WallPropertiesOverride> @wallProperties)
         {
             var validator = Validator.Instance.GetFirstValidatorForType<Overrides>();
             if(validator != null)
             {
-                validator.PreConstruct(new object[]{ @additions, @removals, @walls});
+                validator.PreConstruct(new object[]{ @additions, @removals, @walls, @wallProperties});
             }
         
             this.Additions = @additions ?? this.Additions;
             this.Removals = @removals ?? this.Removals;
             this.Walls = @walls ?? this.Walls;
+            this.WallProperties = @wallProperties ?? this.WallProperties;
         
             if(validator != null)
             {
@@ -132,6 +86,9 @@ namespace Walls
     
         [Newtonsoft.Json.JsonProperty("Walls", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public IList<WallsOverride> Walls { get; set; } = new List<WallsOverride>();
+    
+        [Newtonsoft.Json.JsonProperty("Wall Properties", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public IList<WallPropertiesOverride> WallProperties { get; set; } = new List<WallPropertiesOverride>();
     
     }
     
@@ -225,6 +182,41 @@ namespace Walls
     
         [Newtonsoft.Json.JsonProperty("Value", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public WallsValue Value { get; set; }
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v13.0.0.0)")]
+    
+    public partial class WallPropertiesOverride 
+    
+    {
+        [Newtonsoft.Json.JsonConstructor]
+        public WallPropertiesOverride(string @id, WallPropertiesIdentity @identity, WallPropertiesValue @value)
+        {
+            var validator = Validator.Instance.GetFirstValidatorForType<WallPropertiesOverride>();
+            if(validator != null)
+            {
+                validator.PreConstruct(new object[]{ @id, @identity, @value});
+            }
+        
+            this.Id = @id;
+            this.Identity = @identity;
+            this.Value = @value;
+        
+            if(validator != null)
+            {
+                validator.PostConstruct(this);
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Id { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("Identity", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public WallPropertiesIdentity Identity { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("Value", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public WallPropertiesValue Value { get; set; }
     
     }
     
@@ -327,17 +319,15 @@ namespace Walls
     
     {
         [Newtonsoft.Json.JsonConstructor]
-        public WallsValue(ThickenedPolyline @geometry, WallsValueLevel @level, double @height)
+        public WallsValue(Line @centerLine)
         {
             var validator = Validator.Instance.GetFirstValidatorForType<WallsValue>();
             if(validator != null)
             {
-                validator.PreConstruct(new object[]{ @geometry, @level, @height});
+                validator.PreConstruct(new object[]{ @centerLine});
             }
         
-            this.Geometry = @geometry;
-            this.Level = @level;
-            this.Height = @height;
+            this.CenterLine = @centerLine;
         
             if(validator != null)
             {
@@ -345,14 +335,74 @@ namespace Walls
             }
         }
     
-        [Newtonsoft.Json.JsonProperty("Geometry", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public ThickenedPolyline Geometry { get; set; }
+        [Newtonsoft.Json.JsonProperty("CenterLine", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public Line CenterLine { get; set; }
     
-        [Newtonsoft.Json.JsonProperty("Level", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public WallsValueLevel Level { get; set; }
+    }
     
-        [Newtonsoft.Json.JsonProperty("Height", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public double Height { get; set; }
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v13.0.0.0)")]
+    
+    public partial class WallPropertiesIdentity 
+    
+    {
+        [Newtonsoft.Json.JsonConstructor]
+        public WallPropertiesIdentity(string @addId)
+        {
+            var validator = Validator.Instance.GetFirstValidatorForType<WallPropertiesIdentity>();
+            if(validator != null)
+            {
+                validator.PreConstruct(new object[]{ @addId});
+            }
+        
+            this.AddId = @addId;
+        
+            if(validator != null)
+            {
+                validator.PostConstruct(this);
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("Add Id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string AddId { get; set; }
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v13.0.0.0)")]
+    
+    public partial class WallPropertiesValue 
+    
+    {
+        [Newtonsoft.Json.JsonConstructor]
+        public WallPropertiesValue(double? @height, double? @thickness, WallPropertiesValueLevels @levels, IList<WallPropertiesValueOpenings> @openings)
+        {
+            var validator = Validator.Instance.GetFirstValidatorForType<WallPropertiesValue>();
+            if(validator != null)
+            {
+                validator.PreConstruct(new object[]{ @height, @thickness, @levels, @openings});
+            }
+        
+            this.Height = @height;
+            this.Thickness = @thickness;
+            this.Levels = @levels;
+            this.Openings = @openings;
+        
+            if(validator != null)
+            {
+                validator.PostConstruct(this);
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("Height", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public double? Height { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("Thickness", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public double? Thickness { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("Levels", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public WallPropertiesValueLevels Levels { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("Openings", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public IList<WallPropertiesValueOpenings> Openings { get; set; }
     
     }
     
@@ -362,17 +412,15 @@ namespace Walls
     
     {
         [Newtonsoft.Json.JsonConstructor]
-        public WallsOverrideAdditionValue(ThickenedPolyline @geometry, WallsOverrideAdditionValueLevel @level, double @height)
+        public WallsOverrideAdditionValue(Line @centerLine)
         {
             var validator = Validator.Instance.GetFirstValidatorForType<WallsOverrideAdditionValue>();
             if(validator != null)
             {
-                validator.PreConstruct(new object[]{ @geometry, @level, @height});
+                validator.PreConstruct(new object[]{ @centerLine});
             }
         
-            this.Geometry = @geometry;
-            this.Level = @level;
-            this.Height = @height;
+            this.CenterLine = @centerLine;
         
             if(validator != null)
             {
@@ -380,34 +428,27 @@ namespace Walls
             }
         }
     
-        [Newtonsoft.Json.JsonProperty("Geometry", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public ThickenedPolyline Geometry { get; set; }
-    
-        [Newtonsoft.Json.JsonProperty("Level", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public WallsOverrideAdditionValueLevel Level { get; set; }
-    
-        [Newtonsoft.Json.JsonProperty("Height", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public double Height { get; set; }
+        [Newtonsoft.Json.JsonProperty("CenterLine", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public Line CenterLine { get; set; }
     
     }
     
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v13.0.0.0)")]
     
-    public partial class WallsValueLevel 
+    public partial class WallPropertiesValueLevels 
     
     {
         [Newtonsoft.Json.JsonConstructor]
-        public WallsValueLevel(string @name, string @buildingName, string @addId)
+        public WallPropertiesValueLevels(WallPropertiesValueBottomLevel @bottomLevel, WallPropertiesValueTopLevel @topLevel)
         {
-            var validator = Validator.Instance.GetFirstValidatorForType<WallsValueLevel>();
+            var validator = Validator.Instance.GetFirstValidatorForType<WallPropertiesValueLevels>();
             if(validator != null)
             {
-                validator.PreConstruct(new object[]{ @name, @buildingName, @addId});
+                validator.PreConstruct(new object[]{ @bottomLevel, @topLevel});
             }
         
-            this.Name = @name;
-            this.BuildingName = @buildingName;
-            this.AddId = @addId;
+            this.BottomLevel = @bottomLevel;
+            this.TopLevel = @topLevel;
         
             if(validator != null)
             {
@@ -415,14 +456,11 @@ namespace Walls
             }
         }
     
-        [Newtonsoft.Json.JsonProperty("Name", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Name { get; set; }
+        [Newtonsoft.Json.JsonProperty("Bottom Level", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public WallPropertiesValueBottomLevel BottomLevel { get; set; }
     
-        [Newtonsoft.Json.JsonProperty("Building Name", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string BuildingName { get; set; }
-    
-        [Newtonsoft.Json.JsonProperty("Add Id", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string AddId { get; set; }
+        [Newtonsoft.Json.JsonProperty("Top Level", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public WallPropertiesValueTopLevel TopLevel { get; set; }
     
         private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
     
@@ -436,21 +474,21 @@ namespace Walls
     
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v13.0.0.0)")]
     
-    public partial class WallsOverrideAdditionValueLevel 
+    public partial class WallPropertiesValueOpenings 
     
     {
         [Newtonsoft.Json.JsonConstructor]
-        public WallsOverrideAdditionValueLevel(string @name, string @buildingName, string @addId)
+        public WallPropertiesValueOpenings(IList<Line> @locations, double? @sillHeight, double? @topOutHeight)
         {
-            var validator = Validator.Instance.GetFirstValidatorForType<WallsOverrideAdditionValueLevel>();
+            var validator = Validator.Instance.GetFirstValidatorForType<WallPropertiesValueOpenings>();
             if(validator != null)
             {
-                validator.PreConstruct(new object[]{ @name, @buildingName, @addId});
+                validator.PreConstruct(new object[]{ @locations, @sillHeight, @topOutHeight});
             }
         
-            this.Name = @name;
-            this.BuildingName = @buildingName;
-            this.AddId = @addId;
+            this.Locations = @locations;
+            this.SillHeight = @sillHeight;
+            this.TopOutHeight = @topOutHeight;
         
             if(validator != null)
             {
@@ -458,14 +496,14 @@ namespace Walls
             }
         }
     
-        [Newtonsoft.Json.JsonProperty("Name", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Name { get; set; }
+        [Newtonsoft.Json.JsonProperty("Locations", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public IList<Line> Locations { get; set; }
     
-        [Newtonsoft.Json.JsonProperty("Building Name", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string BuildingName { get; set; }
+        [Newtonsoft.Json.JsonProperty("Sill Height", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public double? SillHeight { get; set; }
     
-        [Newtonsoft.Json.JsonProperty("Add Id", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string AddId { get; set; }
+        [Newtonsoft.Json.JsonProperty("Top-Out Height", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public double? TopOutHeight { get; set; }
     
         private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
     
@@ -478,17 +516,80 @@ namespace Walls
     }
     
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v13.0.0.0)")]
-    [System.AttributeUsage(System.AttributeTargets.Class, AllowMultiple = true)]
-    internal class JsonInheritanceAttribute : System.Attribute
+    
+    public partial class WallPropertiesValueBottomLevel 
+    
     {
-        public JsonInheritanceAttribute(string key, System.Type type)
+        [Newtonsoft.Json.JsonConstructor]
+        public WallPropertiesValueBottomLevel(string @id, double? @elevation)
         {
-            Key = key;
-            Type = type;
+            var validator = Validator.Instance.GetFirstValidatorForType<WallPropertiesValueBottomLevel>();
+            if(validator != null)
+            {
+                validator.PreConstruct(new object[]{ @id, @elevation});
+            }
+        
+            this.Id = @id;
+            this.Elevation = @elevation;
+        
+            if(validator != null)
+            {
+                validator.PostConstruct(this);
+            }
         }
     
-        public string Key { get; }
+        [Newtonsoft.Json.JsonProperty("Id", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Id { get; set; }
     
-        public System.Type Type { get; }
+        [Newtonsoft.Json.JsonProperty("Elevation", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public double? Elevation { get; set; }
+    
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+    
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v13.0.0.0)")]
+    
+    public partial class WallPropertiesValueTopLevel 
+    
+    {
+        [Newtonsoft.Json.JsonConstructor]
+        public WallPropertiesValueTopLevel(string @id, double? @elevation)
+        {
+            var validator = Validator.Instance.GetFirstValidatorForType<WallPropertiesValueTopLevel>();
+            if(validator != null)
+            {
+                validator.PreConstruct(new object[]{ @id, @elevation});
+            }
+        
+            this.Id = @id;
+            this.Elevation = @elevation;
+        
+            if(validator != null)
+            {
+                validator.PostConstruct(this);
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("Id", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Id { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("Elevation", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public double? Elevation { get; set; }
+    
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+    
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
     }
 }

@@ -61,11 +61,11 @@ namespace CoreByLevels
             Console.WriteLine($"Time to load assemblies: {sw.Elapsed.TotalSeconds})");
 
             if(this.store == null)
-            { 
+            {
                 this.store = new S3ModelStore<CoreByLevelsInputs>(RegionEndpoint.GetBySystemName("us-west-1"));
             }
 
-            var l = new InvocationWrapper<CoreByLevelsInputs,CoreByLevelsOutputs> (store, CoreByLevels.Execute);
+            var l = new InvocationWrapper<CoreByLevelsInputs,CoreByLevelsOutputs>(store, CoreByLevels.Execute);
             var output = await l.InvokeAsync(args);
             return output;
         }
