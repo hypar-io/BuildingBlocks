@@ -1,17 +1,9 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
   </PropertyGroup>
-
   <ItemGroup>
-    <PackageReference Include="Hypar.Elements" Version="2.0.0" />
-    <PackageReference Include="Hypar.Functions" Version="1.7.1" />
-
-    <ProjectReference
-      Include="../../HyparSpace/Libraries/Elements.ThickenedPolyline/Elements.ThickenedPolyline.csproj" />
+    <PackageReference Include="Hypar.Elements" Version="2.0.0-alpha.23" />
+    <PackageReference Include="Hypar.Functions" Version="1.6.0" />
   </ItemGroup>
-
 </Project>

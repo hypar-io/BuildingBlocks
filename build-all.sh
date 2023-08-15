@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Find all hypar.json files and store their paths in an array
-file_paths=($(find . -name 'hypar.json'))
+file_paths=($(find -name 'hypar.json'))
 
 # Array to store failed directories
 failed_directories=()
