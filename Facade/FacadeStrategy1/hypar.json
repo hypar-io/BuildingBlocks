@@ -1,0 +1,34 @@
+{
+  "$schema": "https://hypar.io/Schemas/Function.json",
+  "id": "2fb7622d-65dc-433d-89e5-d5d1f680fa8f",
+  "name": "Facade Strategy 1",
+  "description": "The FacadeStrategy1 function.",
+  "language": "C#",
+  "model_dependencies": [
+    {
+      "name": "Facade Grid"
+    }
+  ],
+  "input_schema": {
+    "type": "object",
+    "required": [
+      "Facade Type"
+    ],
+    "properties": {
+      "Facade Type": {
+        "description": "Which facade type should this function apply to?",
+        "type": "string",
+        "$hyparAutocompleteQuery": {
+          "dependency": "Facade Grid",
+          "query": "[*discriminator=Elements.FacadeType].Name"
+        }
+      },
+      "Color": {
+        "$ref": "https://hypar.io/Schemas/Geometry/Color.json"
+      }
+    }
+  },
+  "repository_url": "https://github.com/hypar-io/function",
+  "last_updated": "0001-01-01T00:00:00",
+  "cli_version": "0.9.10"
+}

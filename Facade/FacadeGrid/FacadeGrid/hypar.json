@@ -1,0 +1,193 @@
+{
+  "$schema": "https://hypar.io/Schemas/Function.json",
+  "id": "304c9cde-98de-42f8-9149-f03859805db7",
+  "name": "Facade Grid",
+  "description": "The FacadeGrid function.",
+  "language": "C#",
+  "model_dependencies": [
+    {
+      "autohide": true,
+      "name": "Levels",
+      "optional": false
+    },
+    {
+      "autohide": true,
+      "name": "Envelope",
+      "optional": true
+    },
+    {
+      "autohide": true,
+      "name": "Masterplan",
+      "optional": true
+    },
+    {
+      "autohide": true,
+      "name": "Grid",
+      "optional": true
+    }
+  ],
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "Display Mode": {
+        "type": "string",
+        "enum": [
+          "By Size",
+          "By Type",
+          "By Type and Size",
+          "Highlight Irregular"
+        ],
+        "default": "By Type and Size"
+      }
+    }
+  },
+  "model_output": "Facade Grid",
+  "overrides": {
+    "Grid Defaults": {
+      "context": "[*discriminator=Elements.Footprint]",
+      "dependency": "Masterplan",
+      "identity": {
+        "Boundary": {
+          "$ref": "https://hypar.io/Schemas/Geometry/Polygon.json"
+        },
+        "Profile": {
+          "$ref": "https://hypar.io/Schemas/Geometry/Profile.json"
+        },
+        "Building Name": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "schema": {
+        "Typical Panel Width": {
+          "type": "number",
+          "default": 3,
+          "$hyparUnitType": "length"
+        },
+        "Facade Type Name": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "$hyparAutocompleteQuery": {
+            "query": "[*discriminator=Elements.FacadeType].Name",
+            "selfDependency": true
+          },
+          "default": null
+        },
+        "Parapet Height": {
+          "type": "number",
+          "default": 0,
+          "$hyparUnitType": "length"
+        }
+      }
+    },
+    "Grid Defaults - Envelope": {
+      "context": "[*discriminator=Elements.Envelope]",
+      "dependency": "Envelope",
+      "identity": {
+        "Boundary": {
+          "$ref": "https://hypar.io/Schemas/Geometry/Polygon.json"
+        },
+        "Profile": {
+          "$ref": "https://hypar.io/Schemas/Geometry/Profile.json"
+        },
+        "Building Name": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "schema": {
+        "Typical Panel Width": {
+          "type": "number",
+          "default": 3,
+          "$hyparUnitType": "length"
+        },
+        "Facade Type Name": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "$hyparAutocompleteQuery": {
+            "query": "[*discriminator=Elements.FacadeType].Name",
+            "selfDependency": true
+          },
+          "default": null
+        },
+        "Parapet Height": {
+          "type": "number",
+          "default": 0,
+          "$hyparUnitType": "length"
+        }
+      }
+    },
+    "Grids": {
+      "context": "[*discriminator=Elements.MassFaceSection]",
+      "identity": {
+        "Normal": {
+          "$ref": "https://hypar.io/Schemas/Geometry/Vector3.json"
+        },
+        "Centroid": {
+          "$ref": "https://hypar.io/Schemas/Geometry/Vector3.json"
+        },
+        "Element Centroid": {
+          "$ref": "https://hypar.io/Schemas/Geometry/Vector3.json"
+        }
+      },
+      "schema": {
+        "Grid": {
+          "description": "Adjust the grid for this portion of the facade.",
+          "$ref": "https://prod-api.hypar.io/schemas/Grid2dInput"
+        },
+        "Facade Type Name": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "$hyparAutocompleteQuery": {
+            "query": "[*discriminator=Elements.FacadeType].Name",
+            "selfDependency": true
+          },
+          "default": null
+        }
+      }
+    }
+  },
+  "outputs": [
+    {
+      "unit_type": "none",
+      "name": "Unique Panel Count",
+      "description": "The number of unique facade panels.",
+      "type": "number"
+    },
+    {
+      "unit_type": "none",
+      "name": "Total Panel Count",
+      "description": "The total number of facade panels.",
+      "type": "number"
+    }
+  ],
+  "element_types": [
+    "https://prod-api.hypar.io/schemas/Footprint",
+    "https://prod-api.hypar.io/schemas/Envelope",
+    "https://prod-api.hypar.io/schemas/LevelVolume",
+    "https://prod-api.hypar.io/schemas/Grid2dElement",
+    "https://prod-api.hypar.io/schemas/MassFaceSection",
+    "https://prod-api.hypar.io/schemas/MassFace"
+  ],
+  "default_camera": {
+    "projection": "orthographic",
+    "angle": [
+      1,
+      1,
+      0
+    ]
+  },
+  "repository_url": "https://github.com/hypar-io/function",
+  "last_updated": "0001-01-01T00:00:00",
+  "cli_version": "0.9.9"
+}

@@ -1,0 +1,58 @@
+{
+  "$schema": "https://hypar.io/Schemas/Function.json",
+  "id": "1e0c31e1-28af-473a-a766-aab1c5b4e728",
+  "name": "Facade Strategy 2",
+  "description": "The FacadeStrategy2 function.",
+  "language": "C#",
+  "model_dependencies": [
+    {
+      "name": "Facade Grid",
+      "autohide": true
+    }
+  ],
+  "overrides": {
+    "Facade Strategy 2 Settings": {
+      "context": "[*discriminator=Elements.FacadeType]",
+      "identity": {
+        "Name": {
+          "type": "string"
+        }
+      },
+      "dependency": "Facade Grid",
+      "schema": {
+        "Apply Facade Strategy 2": {
+          "$hyparOrder": 0,
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "default": false
+        },
+        "Color": {
+          "$hyparShowIf": {
+            "conditions": [
+              {
+                "property": "Apply Facade Strategy 2",
+                "value": true
+              }
+            ]
+          },
+          "$ref": "https://hypar.io/Schemas/Geometry/Color.json",
+          "default": {
+            "Red": 0.7,
+            "Green": 0.7,
+            "Blue": 0.9,
+            "Alpha": 1
+          }
+        }
+      }
+    }
+  },
+  "default_camera": {
+    "named_position": "north",
+    "projection": "orthographic"
+  },
+  "repository_url": "https://github.com/hypar-io/function",
+  "last_updated": "0001-01-01T00:00:00",
+  "cli_version": "0.9.10"
+}

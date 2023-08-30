@@ -1,0 +1,322 @@
+{
+  "$schema": "https://hypar.io/Schemas/Function.json",
+  "id": "8ecb2aee-9a56-47cc-b65f-7b74b61511f9",
+  "name": "Facade",
+  "display_name": "Generic Facade",
+  "description": "Creates a Generic Facade on a Facade Grid",
+  "language": "C#",
+  "model_dependencies": [
+    {
+      "name": "Facade Grid",
+      "autohide": true
+    }
+  ],
+  "overrides": {
+    "Facade Type Settings": {
+      "context": "[*discriminator=Elements.FacadeType]",
+      "identity": {
+        "Name": {
+          "type": "string"
+        }
+      },
+      "dependency": "Facade Grid",
+      "schema": {
+        "Create Generic Facade": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "default": true
+        },
+        "Material": {
+          "$hyparShowIf": {
+            "conditions": [
+              {
+                "property": "Create Generic Facade",
+                "value": true
+              }
+            ]
+          },
+          "type": "object",
+          "properties": {
+            "Color": {
+              "$ref": "https://hypar.io/Schemas/Geometry/Color.json",
+              "default": {
+                "Red": 0.7,
+                "Green": 0.7,
+                "Blue": 0.9,
+                "Alpha": 1
+              }
+            },
+            "Opacity": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1.0,
+              "multipleOf": 0.01,
+              "$hyparUnitType": "ratio",
+              "default": 0.5
+            },
+            "Shine": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1.0,
+              "multipleOf": 0.01,
+              "$hyparUnitType": "ratio",
+              "default": 0.3
+            }
+          }
+        },
+        "Thickness": {
+          "$hyparShowIf": {
+            "conditions": [
+              {
+                "property": "Create Generic Facade",
+                "value": true
+              }
+            ]
+          },
+          "description": "Overall thickness of the panel",
+          "type": "number",
+          "minimum": 0,
+          "maximum": 0.5,
+          "$hyparUnitType": "length",
+          "$hyparPreferredUnits": {
+            "metric": "mm",
+            "imperial": "in"
+          },
+          "default": 0
+        },
+        "Offset": {
+          "$hyparShowIf": {
+            "conditions": [
+              {
+                "property": "Create Generic Facade",
+                "value": true
+              }
+            ]
+          },
+          "description": "Offset from the facade plane",
+          "type": "number",
+          "minimum": 0,
+          "maximum": 0.5,
+          "$hyparUnitType": "length",
+          "$hyparPreferredUnits": {
+            "metric": "mm",
+            "imperial": "in"
+          },
+          "default": 0
+        },
+        "Mullions": {
+          "$hyparShowIf": {
+            "conditions": [
+              {
+                "property": "Create Generic Facade",
+                "value": true
+              }
+            ]
+          },
+          "type": "boolean"
+        },
+        "Mullion Settings": {
+          "$hyparShowIf": {
+            "type": "all",
+            "conditions": [
+              {
+                "property": "Mullions",
+                "value": true
+              },
+              {
+                "property": "Create Generic Facade",
+                "value": true
+              }
+            ]
+          },
+          "type": "object",
+          "properties": {
+            "Width": {
+              "type": "number",
+              "$hyparUnitType": "length",
+              "$hyparPreferredUnits": {
+                "metric": "mm",
+                "imperial": "in"
+              },
+              "default": 0.1
+            },
+            "Depth": {
+              "type": "number",
+              "$hyparUnitType": "length",
+              "$hyparPreferredUnits": {
+                "metric": "mm",
+                "imperial": "in"
+              },
+              "default": 0.2
+            },
+            "Vertical Spacing": {
+              "description": "If set, additional vertical mullions will be created at the specified spacing, if the panel is wider than the spacing value.",
+              "type": [
+                "number",
+                "null"
+              ],
+              "$hyparUnitType": "length",
+              "$hyparPreferredUnits": {
+                "metric": "mm",
+                "imperial": "in"
+              },
+              "default": null
+            },
+            "Horizontal Spacing": {
+              "description": "If set, additional horizontal mullions will be created at the specified spacing, if the panel is wider than the spacing value.",
+              "type": [
+                "number",
+                "null"
+              ],
+              "$hyparUnitType": "length",
+              "$hyparPreferredUnits": {
+                "metric": "mm",
+                "imperial": "in"
+              },
+              "default": null
+            },
+            "Material": {
+              "type": "object",
+              "properties": {
+                "Color": {
+                  "$ref": "https://hypar.io/Schemas/Geometry/Color.json",
+                  "default": {
+                    "Red": 0,
+                    "Green": 0,
+                    "Blue": 0,
+                    "Alpha": 1
+                  }
+                },
+                "Shine": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1.0,
+                  "multipleOf": 0.01,
+                  "$hyparUnitType": "ratio",
+                  "default": 0.0
+                }
+              }
+            }
+          }
+        },
+        "Horizontal Spandrel": {
+          "$hyparShowIf": {
+            "conditions": [
+              {
+                "property": "Create Generic Facade",
+                "value": true
+              }
+            ]
+          },
+          "type": "boolean"
+        },
+        "Horizontal Spandrel Settings": {
+          "$hyparShowIf": {
+            "type": "all",
+            "conditions": [
+              {
+                "property": "Horizontal Spandrel",
+                "value": true
+              },
+              {
+                "property": "Create Generic Facade",
+                "value": true
+              }
+            ]
+          },
+          "type": "object",
+          "properties": {
+            "Height": {
+              "type": "number",
+              "$hyparUnitType": "length",
+              "$hyparPreferredUnits": {
+                "metric": "mm",
+                "imperial": "in"
+              },
+              "default": 1.0
+            },
+            "Material": {
+              "type": "object",
+              "properties": {
+                "Color": {
+                  "$ref": "https://hypar.io/Schemas/Geometry/Color.json"
+                },
+                "Shine": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1.0,
+                  "multipleOf": 0.01,
+                  "$hyparUnitType": "ratio",
+                  "default": 0.0
+                }
+              }
+            }
+          }
+        },
+        "Vertical Spandrel": {
+          "$hyparShowIf": {
+            "conditions": [
+              {
+                "property": "Create Generic Facade",
+                "value": true
+              }
+            ]
+          },
+          "type": "boolean"
+        },
+        "Vertical Spandrel Settings": {
+          "$hyparShowIf": {
+            "type": "all",
+            "conditions": [
+              {
+                "property": "Vertical Spandrel",
+                "value": true
+              },
+              {
+                "property": "Create Generic Facade",
+                "value": true
+              }
+            ]
+          },
+          "type": "object",
+          "properties": {
+            "Width": {
+              "type": "number",
+              "$hyparUnitType": "length",
+              "$hyparPreferredUnits": {
+                "metric": "mm",
+                "imperial": "in"
+              },
+              "default": 1.0
+            },
+            "Material": {
+              "type": "object",
+              "properties": {
+                "Color": {
+                  "$ref": "https://hypar.io/Schemas/Geometry/Color.json"
+                },
+                "Shine": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1.0,
+                  "multipleOf": 0.01,
+                  "$hyparUnitType": "ratio",
+                  "default": 0.0
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "default_camera": {
+    "named_position": "north",
+    "projection": "orthographic"
+  },
+  "repository_url": "https://github.com/hypar-io/function",
+  "last_updated": "0001-01-01T00:00:00",
+  "cli_version": "0.9.10-alpha.3"
+}
