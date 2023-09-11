@@ -188,6 +188,7 @@ namespace LevelsFromFloors
                     Camera = new Camera(default, CameraNamedPosition.Top, CameraProjection.Orthographic),
                     LockRotation = true,
                     Name = scopeName,
+                    ClippingBehavior = ViewScopeClippingBehavior.TopAndBottom,
                     FunctionVisibility = new Dictionary<string, string> { { "Space Planning", "visible" }, { "Levels", "hidden" } },
                     Actions = new List<object> {
                         new FunctionOverrideAction {

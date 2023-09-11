@@ -56,6 +56,12 @@ namespace SimpleLevelsByEnvelope
                 currentLevel += height;
             }
 
+            if (!levels.Any())
+            {
+                output.Errors.Add($"Not enough space in 'Envelope' to create levels. Check 'Envelope' height or levels height.");
+                return output;
+            }
+
             // penthouse + roof level
             var topLevelElevation = maxElevation - input.TopLevelHeight;
             levels.Last().Height = topLevelElevation - levels.Last().Elevation;

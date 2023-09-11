@@ -21,32 +21,28 @@ namespace Elements
 {
     #pragma warning disable // Disable all warnings
 
-    /// <summary>A horizontal datum representing a building level at a specific elevation.</summary>
+    /// <summary>Additional information, per facade grid element instance</summary>
     [JsonConverter(typeof(Elements.Serialization.JSON.JsonInheritanceConverter), "discriminator")]
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v13.0.0.0)")]
-    public partial class Level : Element
+    public partial class FacadeGridMetadata : Element
     {
         [JsonConstructor]
-        public Level(double @elevation, double? @height, System.Guid @id = default, string @name = null)
+        public FacadeGridMetadata(double @area, System.Guid @id = default, string @name = null)
             : base(id, name)
         {
-            this.Elevation = @elevation;
-            this.Height = @height;
+            this.Area = @area;
             }
         
         
         // Empty constructor
-        public Level()
+        public FacadeGridMetadata()
             : base()
         {
         }
     
-        [JsonProperty("Elevation", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public double Elevation { get; set; }
-    
-        /// <summary>The vertical distance from this level to the next. May be null for a top level, like a roof.</summary>
-        [JsonProperty("Height", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public double? Height { get; set; }
+        /// <summary>Area</summary>
+        [JsonProperty("Area", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public double Area { get; set; }
     
     
     }

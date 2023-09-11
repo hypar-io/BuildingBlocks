@@ -27,13 +27,14 @@ namespace Elements
     public partial class ViewScope : Element
     {
         [JsonConstructor]
-        public ViewScope(BBox3 @boundingBox, Camera @camera, bool? @lockRotation, bool? @clipWithBoundingBox, bool? @modal, System.Collections.Generic.IDictionary<string, string> @functionVisibility, IList<object> @actions, System.Guid @id = default, string @name = null)
+        public ViewScope(BBox3 @boundingBox, Camera @camera, bool? @lockRotation, bool? @clipWithBoundingBox, ViewScopeClippingBehavior? @clippingBehavior, bool? @modal, System.Collections.Generic.IDictionary<string, string> @functionVisibility, IList<object> @actions, System.Guid @id = default, string @name = null)
             : base(id, name)
         {
             this.BoundingBox = @boundingBox;
             this.Camera = @camera;
             this.LockRotation = @lockRotation;
             this.ClipWithBoundingBox = @clipWithBoundingBox;
+            this.ClippingBehavior = @clippingBehavior;
             this.Modal = @modal;
             this.FunctionVisibility = @functionVisibility;
             this.Actions = @actions;
@@ -60,6 +61,11 @@ namespace Elements
         /// <summary>Whether this scope should clip to the specified bounding box. If false, it only zooms to the bounding box without clipping.</summary>
         [JsonProperty("Clip With Bounding Box", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public bool? ClipWithBoundingBox { get; set; }
+    
+        /// <summary>When clipping with this box, which sides should actually do the clipping? If null, all six sides will be assumed.</summary>
+        [JsonProperty("Clipping Behavior", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        public ViewScopeClippingBehavior? ClippingBehavior { get; set; }
     
         /// <summary>If true, when the user exits this scope, they'll return to their previous camera settings.</summary>
         [JsonProperty("Modal", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
