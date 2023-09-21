@@ -38,6 +38,15 @@
           "description": "A point",
           "$ref": "https://schemas.hypar.io/Vector3.json"
         }
+      },
+      "Measure Points": {
+        "default": [],
+        "type": "array",
+        "$hyparOrder": 1,
+        "items": {
+          "description": "A point",
+          "$ref": "https://schemas.hypar.io/Vector3.json"
+        }
       }
     }
   },
@@ -45,7 +54,6 @@
   "element_types": [
     "https://schemas.hypar.io/SpaceBoundary.json",
     "https://schemas.hypar.io/CirculationSegment.json",
-    "https://schemas.hypar.io/Door.json",
     "https://schemas.hypar.io/WallCandidate.json"
   ],
   "repository_url": "https://github.com/hypar-io/function",

@@ -29,16 +29,17 @@ namespace EmergencyEgress
     {
         [Newtonsoft.Json.JsonConstructor]
         
-        public EmergencyEgressInputs(IList<Vector3> @exitLocations, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey):
+        public EmergencyEgressInputs(IList<Vector3> @exitLocations, IList<Vector3> @measurePoints, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey):
         base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
         {
             var validator = Validator.Instance.GetFirstValidatorForType<EmergencyEgressInputs>();
             if(validator != null)
             {
-                validator.PreConstruct(new object[]{ @exitLocations});
+                validator.PreConstruct(new object[]{ @exitLocations, @measurePoints});
             }
         
             this.ExitLocations = @exitLocations;
+            this.MeasurePoints = @measurePoints;
         
             if(validator != null)
             {
@@ -48,6 +49,9 @@ namespace EmergencyEgress
     
         [Newtonsoft.Json.JsonProperty("Exit Locations", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public IList<Vector3> ExitLocations { get; set; } = new List<Vector3>();
+    
+        [Newtonsoft.Json.JsonProperty("Measure Points", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public IList<Vector3> MeasurePoints { get; set; } = new List<Vector3>();
     
     }
 }

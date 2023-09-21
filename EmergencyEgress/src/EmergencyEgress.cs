@@ -6,6 +6,7 @@ using System;
 using System.Linq;
 using GridVertex = Elements.Spatial.AdaptiveGrid.Vertex;
 using AdaptiveGraphRouting = Elements.Spatial.AdaptiveGrid.AdaptiveGraphRouting;
+using Elements.Annotations;
 
 namespace EmergencyEgress
 {
@@ -14,7 +15,7 @@ namespace EmergencyEgress
         private const double OffsetFromWall = 0.5;
         private const double VisualizationHeight = 1.5;
         private const double RoomToWallTolerance = 1e-3;
-        private static Material EgressMaterial = new Material("Exit Plan", new Color("Red"));
+        private static Material EgressMaterial = new Material("Exit Plan", new Color("Red")) { EdgeDisplaySettings = new EdgeDisplaySettings { LineWidth = 4, WidthMode = EdgeDisplayWidthMode.ScreenUnits } };
 
         /// <summary>
         /// The EmergencyEgress function.
@@ -92,7 +93,13 @@ namespace EmergencyEgress
                 var roomInfos = new List<List<RoomEvacuationVariant>>();
                 foreach (var room in levelRooms)
                 {
-                    roomInfos.Add(AddRoom(room, centerlines, walls, doors, grid));
+                    foreach (var p in input.MeasurePoints)
+                    {
+                        if (room.Boundary.Perimeter.Contains(p))
+                        {
+                            roomInfos.Add(AddRoom(room, centerlines, walls, doors, grid, p));
+                        }
+                    }
                 }
 
                 var alg = new AdaptiveGraphRouting(grid, new RoutingConfiguration());
@@ -108,7 +115,7 @@ namespace EmergencyEgress
                 output.Model.AddElements(elements);*/
 
                 var bestExits = ChooseRoutes(grid, tree, roomInfos);
-                output.Model.AddElements(Visualize(grid, bestExits, tree));
+                output.Model.AddElements(Visualize(grid, bestExits, tree, output.Model));
             }
 
             return output;
@@ -317,7 +324,8 @@ namespace EmergencyEgress
             List<(CirculationSegment Segment, Polyline Centerline)> centerlines,
             List<WallCandidate>? walls,
             List<Door>? doors,
-            AdaptiveGrid grid)
+            AdaptiveGrid grid,
+            Vector3? targetPoint = null)
         {
             var roomExits = new List<RoomEvacuationVariant>();
             //Center of every segment in room boundary is checked against corridors
@@ -328,22 +336,32 @@ namespace EmergencyEgress
                 var exitVertex = FindRoomExit(roomEdge, centerlines, walls, doors, grid);
                 if (exitVertex != null)
                 {
-                    //If it's close enough to corridors - it's two furthest corners are added.
-                    //Note that this is done for every possible exit, so in the end there will be
-                    //a lot of possible combinations of exit to it's corners in the grid,
-                    //not connected one with another.
-                    var twoFurthest = perimeter.Vertices.OrderBy(v =>
-                        (v - exitVertex.Point).Length()).TakeLast(2);
                     var corners = new List<(GridVertex Vertex, Vector3 ExactPosition)>();
-                    foreach (var furthest in twoFurthest)
+                    if (targetPoint != null)
                     {
-                        //Two reasons why room corners edges are inset from the corners:
-                        //1)For better visualizations.
-                        //2)To prevent vertex unifications if room boundaries overlap.
-                        var direction = (furthest - exitVertex.Point).Unitized();
-                        var shrinked = furthest - direction * OffsetFromWall;
-                        var leaf = grid.AddVertex(shrinked, new ConnectVertexStrategy(exitVertex), cut: false);
-                        corners.Add((leaf, furthest));
+                        //If target point is provided - it's added as a corner.
+                        var leaf = grid.AddVertex(targetPoint.Value, new ConnectVertexStrategy(exitVertex), cut: false);
+                        corners.Add((leaf, targetPoint.Value));
+                    }
+                    else
+                    {
+                        //If it's close enough to corridors - it's two furthest corners are added.
+                        //Note that this is done for every possible exit, so in the end there will be
+                        //a lot of possible combinations of exit to it's corners in the grid,
+                        //not connected one with another.
+                        var twoFurthest = perimeter.Vertices.OrderBy(v =>
+                            (v - exitVertex.Point).Length()).TakeLast(2);
+
+                        foreach (var furthest in twoFurthest)
+                        {
+                            //Two reasons why room corners edges are inset from the corners:
+                            //1)For better visualizations.
+                            //2)To prevent vertex unifications if room boundaries overlap.
+                            var direction = (furthest - exitVertex.Point).Unitized();
+                            var shrinked = furthest - direction * OffsetFromWall;
+                            var leaf = grid.AddVertex(shrinked, new ConnectVertexStrategy(exitVertex), cut: false);
+                            corners.Add((leaf, furthest));
+                        }
                     }
                     roomExits.Add(new RoomEvacuationVariant(exitVertex, corners));
                 }
@@ -369,7 +387,7 @@ namespace EmergencyEgress
             var door = doors?.FirstOrDefault(d => roomEdge.PointOnLine(d.Transform.Origin, false, RoomToWallTolerance));
             var wall = walls?.FirstOrDefault(w => w.Line.PointOnLine(roomEdge.Start, true, RoomToWallTolerance) &&
                                              w.Line.PointOnLine(roomEdge.End, true, RoomToWallTolerance));
-            
+
             // There are doors in the workflow and this segment is a wall without a door.
             if (wall != null && doors != null && door == null)
             {
@@ -565,7 +583,8 @@ namespace EmergencyEgress
         private static List<ModelCurve> Visualize(
             AdaptiveGrid grid,
             List<RoomEvacuationVariant> inputs,
-            IDictionary<ulong, TreeNode> tree)
+            IDictionary<ulong, TreeNode> tree,
+            Model model)
         {
             Dictionary<Edge, double> accumulatedDistances = new Dictionary<Edge, double>();
             List<ModelCurve> visualizations = new List<ModelCurve>();
@@ -597,9 +616,10 @@ namespace EmergencyEgress
                     var shape = new Line(input.Exit.Point, corner.Vertex.Point);
                     var modelCurve = new ModelCurve(shape, EgressMaterial, t);
                     //Attached accumulated distance information to corner lines.
-                    modelCurve.AdditionalProperties["Distance"] = distance + distanceOutside;
+                    var d = distance + distanceOutside;
+                    modelCurve.AdditionalProperties["Distance"] = d;
                     visualizations.Add(modelCurve);
-
+                    model.AddElement(Message.Info(t.OfPoint(corner.Vertex.Point), d.ToString("0.##") + "m"), true);
                     if (!enumerator.MoveNext())
                     {
                         break;
