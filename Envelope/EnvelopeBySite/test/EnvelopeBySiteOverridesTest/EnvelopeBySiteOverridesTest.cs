@@ -8,7 +8,6 @@ using Xunit;
 using System;
 using System.IO;
 using System.Collections.Generic;
-using Elements.Serialization.glTF;
 using System.Linq;
 using Elements.Geometry;
 
@@ -74,11 +73,6 @@ namespace EnvelopeBySite
                 Assert.Equal(expectedHeights[i], envelope.Height, 4);
                 Assert.True(expectedPerimeters[i].IsAlmostEqualTo(envelope.Perimeter, 1E-04));
             }
-
-            //result.Model.ToGlTF("../../../EnvelopeBySiteOverridesTest/EnvelopeBySiteOverridesTest/results/EnvelopeBySiteOverridesTest.gltf", false);
-            //result.Model.ToGlTF("../../../EnvelopeBySiteOverridesTest/EnvelopeBySiteOverridesTest/results/EnvelopeBySiteOverridesTest.glb");
-            //File.WriteAllText("../../../EnvelopeBySiteOverridesTest/EnvelopeBySiteOverridesTest/results/EnvelopeBySiteOverridesTest.json", result.Model.ToJson());
-
         }
 
         public EnvelopeBySiteInputs GetInput()
