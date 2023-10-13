@@ -15,7 +15,7 @@ namespace EmergencyEgress
         private const double OffsetFromWall = 0.5;
         private const double VisualizationHeight = 1.5;
         private const double RoomToWallTolerance = 1e-3;
-        private static Material EgressMaterial = new Material("Exit Plan", new Color("Red")) { EdgeDisplaySettings = new EdgeDisplaySettings { LineWidth = 4, WidthMode = EdgeDisplayWidthMode.ScreenUnits } };
+        private static Material EgressMaterial = new Material("Exit Plan", BuiltInMaterials.YAxis.Color) { EdgeDisplaySettings = new EdgeDisplaySettings { LineWidth = 4, WidthMode = EdgeDisplayWidthMode.ScreenUnits } };
 
         /// <summary>
         /// The EmergencyEgress function.
