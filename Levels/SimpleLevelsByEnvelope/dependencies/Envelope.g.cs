@@ -38,6 +38,7 @@ namespace Elements
             this.FloorToFloorHeights = @floorToFloorHeights;
             }
         
+        
         // Empty constructor
         public Envelope()
             : base()

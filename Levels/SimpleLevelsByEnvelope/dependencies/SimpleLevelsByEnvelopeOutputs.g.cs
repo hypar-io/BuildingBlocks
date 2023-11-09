@@ -20,27 +20,25 @@ namespace SimpleLevelsByEnvelope
 		/// Total number of levels.
 		/// </summary>
 		[JsonProperty("Level Quantity")]
-		public double LevelQuantity {get; set;}
+		public double LevelQuantity { get; set; }
 
 		/// <summary>
 		/// Total aggregate area of all interior levels, excluding the roof.
 		/// </summary>
 		[JsonProperty("Total Level Area")]
-		public double TotalLevelArea {get; set;}
+		public double TotalLevelArea { get; set; }
 
 		/// <summary>
 		/// Total area of all levels below grade.
 		/// </summary>
 		[JsonProperty("Subgrade Level Area")]
-		public double SubgradeLevelArea {get; set;}
+		public double SubgradeLevelArea { get; set; }
 
 		/// <summary>
 		/// Total area of all levels above or at grade, excluding the roof.
 		/// </summary>
 		[JsonProperty("Above Grade Level Area")]
-		public double AboveGradeLevelArea {get; set;}
-
-
+		public double AboveGradeLevelArea { get; set; }
 
         /// <summary>
         /// Construct a SimpleLevelsByEnvelopeOutputs with default inputs.
@@ -48,16 +46,14 @@ namespace SimpleLevelsByEnvelope
         /// </summary>
         public SimpleLevelsByEnvelopeOutputs() : base()
         {
-
         }
-
 
         /// <summary>
         /// Construct a SimpleLevelsByEnvelopeOutputs specifying all inputs.
         /// </summary>
         /// <returns></returns>
         [JsonConstructor]
-        public SimpleLevelsByEnvelopeOutputs(double levelQuantity, double totalLevelArea, double subgradeLevelArea, double aboveGradeLevelArea): base()
+        public SimpleLevelsByEnvelopeOutputs(double levelQuantity, double totalLevelArea, double subgradeLevelArea, double aboveGradeLevelArea) : base()
         {
 			this.LevelQuantity = levelQuantity;
 			this.TotalLevelArea = totalLevelArea;
