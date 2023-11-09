@@ -24,13 +24,13 @@ namespace People
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v13.0.0.0)")]
     
-    public  class PeopleInputs : S3Args
+    public  class PeopleInputs : ArgsBase
     
     {
         [Newtonsoft.Json.JsonConstructor]
         
-        public PeopleInputs(double @peoplePerFloor, bool @includeSeatedPeople, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey):
-        base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
+        public PeopleInputs(double @peoplePerFloor, bool @includeSeatedPeople, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey):
+        base(modelInputKeys, gltfKey, elementsKey, ifcKey)
         {
             var validator = Validator.Instance.GetFirstValidatorForType<PeopleInputs>();
             if(validator != null)
