@@ -36,6 +36,7 @@ namespace Elements
             this.VGridLines = @vGridLines;
             }
         
+        
         // Empty constructor
         public Grid2dElement()
             : base()

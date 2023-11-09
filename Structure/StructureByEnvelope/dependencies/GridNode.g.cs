@@ -35,6 +35,7 @@ namespace Elements
             this.VGridline = @vGridline;
             }
         
+        
         // Empty constructor
         public GridNode()
             : base()

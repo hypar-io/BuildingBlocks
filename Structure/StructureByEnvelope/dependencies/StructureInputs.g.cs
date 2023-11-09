@@ -24,13 +24,13 @@ namespace Structure
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v13.0.0.0)")]
     
-    public  class StructureInputs : S3Args
+    public  class StructureInputs : ArgsBase
     
     {
         [Newtonsoft.Json.JsonConstructor]
         
-        public StructureInputs(double @gridXAxisInterval, double @gridYAxisInterval, double @slabEdgeOffset, bool @displayGrid, StructureInputsTypeOfConstruction @typeOfConstruction, StructureInputsColumnType @columnType, StructureInputsGirderType @girderType, StructureInputsBeamType @beamType, double @beamSpacing, bool @createBeamsOnFirstLevel, double @slabThickness, bool @insertColumnsAtExternalEdges, double @maximumNeighborSpan, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey):
-        base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
+        public StructureInputs(double @gridXAxisInterval, double @gridYAxisInterval, double @slabEdgeOffset, bool @displayGrid, StructureInputsTypeOfConstruction @typeOfConstruction, StructureInputsColumnType @columnType, StructureInputsGirderType @girderType, StructureInputsBeamType @beamType, double @beamSpacing, bool @createBeamsOnFirstLevel, double @slabThickness, bool @insertColumnsAtExternalEdges, double @maximumNeighborSpan, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey):
+        base(modelInputKeys, gltfKey, elementsKey, ifcKey)
         {
             var validator = Validator.Instance.GetFirstValidatorForType<StructureInputs>();
             if(validator != null)
