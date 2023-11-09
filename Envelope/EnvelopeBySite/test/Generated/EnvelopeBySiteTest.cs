@@ -19,7 +19,7 @@ namespace EnvelopeBySite
             var input = GetInput();
 
             var modelDependencies = new Dictionary<string, Model> {
-                {"Site", Model.FromJson(File.ReadAllText(@"/Users/andrewheumann/Dev/BuildingBlocks/Envelope/EnvelopeBySite/test/Generated/EnvelopeBySiteTest/model_dependencies/Site/model.json")) },
+                {"Site", Model.FromJson(File.ReadAllText("../../../Generated/EnvelopeBySiteTest/model_dependencies/Site/model.json")) },
             };
 
             var result = EnvelopeBySite.Execute(modelDependencies, input);
