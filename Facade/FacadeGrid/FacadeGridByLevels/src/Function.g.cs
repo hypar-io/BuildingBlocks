@@ -13,15 +13,15 @@ using System.Reflection;
 using System.Threading.Tasks;
 
 [assembly: LambdaSerializer(typeof(Amazon.Lambda.Serialization.Json.JsonSerializer))]
-namespace Walls
+namespace FacadeGridByLevels
 {
     public class Function
     {
         // Cache the model store for use by subsequent
         // executions of this lambda.
-        private IModelStore<WallsInputs> store;
+        private IModelStore<FacadeGridByLevelsInputs> store;
 
-        public async Task<WallsOutputs> Handler(WallsInputs args, ILambdaContext context)
+        public async Task<FacadeGridByLevelsOutputs> Handler(FacadeGridByLevelsInputs args, ILambdaContext context)
         {
             // Preload dependencies (if they exist),
             // so that they are available during model deserialization.
@@ -62,17 +62,10 @@ namespace Walls
 
             if(this.store == null)
             { 
-                if (args.SignedResourceUrls == null)
-                {
-                    this.store = new S3ModelStore<WallsInputs>(RegionEndpoint.GetBySystemName("us-west-1"));
-                }
-                else
-                {
-                    this.store = new UrlModelStore<WallsInputs>();
-                }
+                this.store = new UrlModelStore<FacadeGridByLevelsInputs>(); 
             }
 
-            var l = new InvocationWrapper<WallsInputs,WallsOutputs> (store, Walls.Execute);
+            var l = new InvocationWrapper<FacadeGridByLevelsInputs,FacadeGridByLevelsOutputs> (store, FacadeGridByLevels.Execute);
             var output = await l.InvokeAsync(args);
             return output;
         }

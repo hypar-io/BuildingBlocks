@@ -139,7 +139,7 @@ namespace Walls
                         topHeight += Units.FeetToMeters(7.5);
                     }
                     var openingHeight = topHeight - sillHeight;
-                    foreach (var line in openingSpec.Locations)
+                    foreach (var line in openingSpec.Locations ?? Enumerable.Empty<Line>())
                     {
                         var pos1 = centerline.Start.DistanceTo(line.Start.ClosestPointOn(centerline));
                         var pos2 = centerline.Start.DistanceTo(line.End.ClosestPointOn(centerline));
