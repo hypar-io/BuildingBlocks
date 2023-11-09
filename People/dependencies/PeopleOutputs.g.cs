@@ -17,16 +17,13 @@ namespace People
     public class PeopleOutputs: SystemResults
     {
 
-
         /// <summary>
         /// Construct a PeopleOutputs with default inputs.
         /// This should be used for testing only.
         /// </summary>
         public PeopleOutputs() : base()
         {
-
         }
-
 
 	}
 }
