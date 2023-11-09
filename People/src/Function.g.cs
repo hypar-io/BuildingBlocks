@@ -63,7 +63,7 @@ namespace People
             {
                 this.store = new UrlModelStore<PeopleInputs>();
             }
-            args.StreamModel = true;
+            
 
             var l = new InvocationWrapper<PeopleInputs,PeopleOutputs> (store, People.Execute);
             var output = await l.InvokeAsync(args);

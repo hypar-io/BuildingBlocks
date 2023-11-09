@@ -4,7 +4,7 @@
   "name": "People",
   "description": "Distribute people on all floors.",
   "language": "C#",
-  "stream_model": true,
+  "stream_model": false,
   "model_dependencies": [
     {
       "autohide": false,
