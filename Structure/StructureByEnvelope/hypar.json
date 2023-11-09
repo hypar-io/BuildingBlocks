@@ -4,6 +4,7 @@
   "name": "Structure",
   "description": "Generates a structural frame from a set of Levels and an Envelope.",
   "language": "C#",
+  "stream_model": true,
   "model_dependencies": [
     {
       "autohide": true,
