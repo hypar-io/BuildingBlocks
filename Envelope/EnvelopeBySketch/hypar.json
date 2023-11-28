@@ -19,7 +19,7 @@
                 "description": "Perimeter of the building envelope.",
                 "$hyparOrder": 0,
                 "type": "object",
-                "$ref": "https://hypar.io/Schemas/Geometry/Polygon.json"
+                "$ref": "https://schemas.hypar.io/Polygon.json"
             },
             "Setback Interval": {
                 "default": 20,
@@ -156,10 +156,10 @@
         }
     ],
     "element_types": [
-        "https://raw.githubusercontent.com/hypar-io/Schemas/master/Origin.json",
-        "https://raw.githubusercontent.com/hypar-io/Schemas/master/Envelope.json",
-        "https://prod-api.hypar.io/schemas/Level",
-        "https://prod-api.hypar.io/schemas/LevelVolume"
+        "https://schemas.hypar.io/Origin.json",
+        "https://schemas.hypar.io/Envelope.json",
+        "https://schemas.hypar.io/Level.json",
+        "https://schemas.hypar.io/LevelVolume.json"
     ],
     "repository_url": "https://github.com/hypar-io/BuildingBlocks/tree/master/Envelope/EnvelopeBySketch",
     "source_file_key": null,

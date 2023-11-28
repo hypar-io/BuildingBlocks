@@ -20,9 +20,7 @@ namespace Structure
 		/// The maximum beam length.
 		/// </summary>
 		[JsonProperty("Maximum Beam Length")]
-		public double MaximumBeamLength {get; set;}
-
-
+		public double MaximumBeamLength { get; set; }
 
         /// <summary>
         /// Construct a StructureOutputs with default inputs.
@@ -30,16 +28,14 @@ namespace Structure
         /// </summary>
         public StructureOutputs() : base()
         {
-
         }
-
 
         /// <summary>
         /// Construct a StructureOutputs specifying all inputs.
         /// </summary>
         /// <returns></returns>
         [JsonConstructor]
-        public StructureOutputs(double maximumBeamLength): base()
+        public StructureOutputs(double maximumBeamLength) : base()
         {
 			this.MaximumBeamLength = maximumBeamLength;
 

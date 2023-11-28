@@ -35,7 +35,7 @@ namespace CoreByLevels
         public double Elevation { get; private set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="levels"></param>
         /// <param name="rotation"></param>
@@ -49,7 +49,7 @@ namespace CoreByLevels
             Lifts = new List<LiftShaft>();
             Rotation = rotation;
             var corePerim = PlaceCore(setback, rotation);
-            Perimeter = corePerim ?? throw new InvalidOperationException("No valid service core location found.");
+            Perimeter = corePerim;
             Elevation = Levels.First().Elevation;
             var coreTopo = new CompassBox(corePerim);
             var bathTopo = MakeBaths(coreTopo.W);
@@ -57,7 +57,7 @@ namespace CoreByLevels
             var stairTopos = MakeStairs(bathTopo);
             MakeLifts(stairTopos, LiftService);
 
-            //Following section for debug. 
+            //Following section for debug.
             //Comment for deployment.
 
             //Mechanicals.Clear();
@@ -78,7 +78,7 @@ namespace CoreByLevels
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="shell"></param>
         /// <returns></returns>
@@ -89,20 +89,20 @@ namespace CoreByLevels
             {
                 return null;
             }
-            var shell = offShells.OrderByDescending(s => s.Area()).First();
-            var occLevels = Levels.Where(l => l.Elevation >= 0.0).ToList();
-            var occArea = 0.0;
-            foreach (var level in occLevels)
+            
+            // TODO: remove Math.Abs() after fixing "The current definition will return a negative Area() result if the Polygon is defined Clockwise"
+            var shell = offShells.OrderByDescending(s => Math.Abs(s.Area())).First();
+            var occArea = Levels.Sum(l => Math.Abs(l.Perimeter.Area()));
+            if (occArea > 0)
             {
-                occArea += level.Perimeter.Area();
+                var occupants = (int)Math.Ceiling(occArea / occupantLoad);
+                LiftQuantity = (int)Math.Ceiling(occArea / liftService);
+                if (LiftQuantity > 8)
+                {
+                    LiftQuantity = 8;
+                }
+                LiftService = (int)Math.Floor((decimal)Levels.Count() / LiftQuantity);
             }
-            var occupants = (int)Math.Ceiling(occArea / occupantLoad);
-            LiftQuantity = (int)Math.Ceiling(occArea / liftService);
-            if (LiftQuantity > 8)
-            {
-                LiftQuantity = 8;
-            }
-            LiftService = (int)Math.Floor((decimal)occLevels.Count() / LiftQuantity);
             var positions = new List<Vector3> { shell.Centroid() };
             var liftBank = Math.Floor(LiftQuantity * 0.5);
             positions.AddRange(shell.FindInternalPoints((stairLength + (liftBank * liftSize)) * 0.5));
@@ -122,7 +122,7 @@ namespace CoreByLevels
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="insertAt"></param>
         /// <returns></returns>
@@ -133,7 +133,6 @@ namespace CoreByLevels
             bathPerim = bathPerim.MoveFromTo(bathTopo.W, moveTo);
             bathTopo = new CompassBox(bathPerim);
             bathPerim = bathPerim.Rotate(Position, Rotation);
-            var bathLevels = Levels.Where(l => l.Elevation >= 0.0);
             var bathMatl = new Material()
             {
                 Name = "bath",
@@ -143,9 +142,9 @@ namespace CoreByLevels
             };
 
             var i = 0;
-            foreach (var level in bathLevels.SkipLast(2))
+            foreach (var level in Levels.SkipLast(2))
             {
-                var bathHeight = bathLevels.ElementAt(i + 1).Elevation - bathLevels.ElementAt(i).Elevation - 1.0;
+                var bathHeight = Levels.ElementAt(i + 1).Elevation - Levels.ElementAt(i).Elevation - 1.0;
                 var extrude = new Elements.Geometry.Solids.Extrude(bathPerim, bathHeight, Vector3.ZAxis, false);
                 var geomRep = new Representation(new List<Elements.Geometry.Solids.SolidOperation>() { extrude });
                 Restrooms.Add(new Room
@@ -159,11 +158,11 @@ namespace CoreByLevels
                     DesignArea = 0.0,
                     DesignRatio = 0.0,
                     Rotation = Rotation,
-                    LevelName = bathLevels.ElementAt(i).Name,
-                    Elevation = bathLevels.ElementAt(i).Elevation,
+                    LevelName = Levels.ElementAt(i).Name,
+                    Elevation = Levels.ElementAt(i).Elevation,
                     Height = bathHeight,
                     Area = bathPerim.Area(),
-                    Transform = new Transform(0.0, 0.0, bathLevels.ElementAt(i).Elevation),
+                    Transform = new Transform(0.0, 0.0, Levels.ElementAt(i).Elevation),
                     Material = bathMatl,
                     Representation = geomRep,
                     Name = "Restroom"
@@ -174,18 +173,25 @@ namespace CoreByLevels
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="moveTo"></param>
         /// <returns></returns>
         private CompassBox MakeMech(Vector3 moveTo)
         {
+            var suitableLevels = Levels.SkipLast(1);
+            // we need at least two floors to build a mesh between them
+            if (suitableLevels.Count() < 2)
+            {
+                return null;
+            }
+
             var mechPerim = Polygon.Rectangle(mechLength, mechWidth);
             var mechTopo = new CompassBox(mechPerim);
             mechPerim = mechPerim.MoveFromTo(mechTopo.W, moveTo);
             mechTopo = new CompassBox(mechPerim);
             mechPerim = mechPerim.Rotate(Position, Rotation);
-            var lastLevel = Levels.SkipLast(1).Last();
+            var lastLevel = suitableLevels.Last();
             var mechHeight = lastLevel.Elevation - Levels.First().Elevation;
             var extrude = new Elements.Geometry.Solids.Extrude(mechPerim, mechHeight, Vector3.ZAxis, false);
             var geomRep = new Representation(new List<Elements.Geometry.Solids.SolidOperation>() { extrude });
@@ -207,14 +213,15 @@ namespace CoreByLevels
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="bathTopo"></param>
         /// <returns></returns>
         private List<CompassBox> MakeStairs(CompassBox bathTopo)
         {
             var stairTopos = new List<CompassBox>();
-            for (int i = 0; i < 2; i++)
+            var stairsCount = Levels.Count() > 1 ? 2 : 1;
+            for (int i = 0; i < stairsCount; i++)
             {
                 Vector3 from;
                 Vector3 to;
@@ -257,7 +264,7 @@ namespace CoreByLevels
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="stairs"></param>
         /// <param name="liftSvc"></param>
@@ -305,7 +312,13 @@ namespace CoreByLevels
             var liftSvcFactor = 0;
             foreach (var polygon in makePolys)
             {
-                var lastLevel = Levels.SkipLast((int)liftSvc * liftSvcFactor).Last();
+                var suitableLevels = Levels.SkipLast((int)liftSvc * liftSvcFactor);
+                if (!suitableLevels.Any())
+                {
+                    break;
+                }
+
+                var lastLevel = suitableLevels.Last();
                 var liftHeight = lastLevel.Elevation - Levels.First().Elevation;
                 if (liftHeight > 10.0)
                 {

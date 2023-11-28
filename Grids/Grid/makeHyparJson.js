@@ -15,7 +15,7 @@ const FUNCTION = {
     ],
     "model_output": "Grids",
     "input_schema": getInputSchema(),
-    "element_types": ["https://prod-api.hypar.io/schemas/GridLine", "https://prod-api.hypar.io/schemas/Envelope", "https://prod-api.hypar.io/schemas/Grid2dElement"],
+    "element_types": ["https://schemas.hypar.io/GridLine.json", "https://schemas.hypar.io/Envelope.json", "https://schemas.hypar.io/Grid2dElement.json"],
     "outputs": [],
     "overrides": getOverrides(),
     "repository_url": "",
@@ -65,7 +65,7 @@ function getInputSchema() {
                         },
                         "Orientation": {
                             "description": "The origin and rotation of your grid",
-                            "$ref": "https://prod-api.hypar.io/schemas/Transform",
+                            "$ref": "https://schemas.hypar.io/Transform.json",
                             "$hyparDeprecated": true,
                             "$hyparConstraints": getOrientationConstraints(),
                             "default": getDefaultOrientation()
@@ -302,7 +302,7 @@ function getOverrides() {
                 // then when you select the element, the input fields will be pre-populated with
                 // the current values.
                 "Transform": {
-                    "$ref": "https://prod-api.hypar.io/schemas/Transform",
+                    "$ref": "https://schemas.hypar.io/Transform.json",
                     "$hyparConstraints": getOrientationConstraints(),
                 },
             }

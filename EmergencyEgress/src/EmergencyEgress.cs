@@ -13,6 +13,7 @@ namespace EmergencyEgress
     {
         private const double OffsetFromWall = 0.5;
         private const double VisualizationHeight = 1.5;
+        private const double RoomToWallTolerance = 1e-3;
         private static Material EgressMaterial = new Material("Exit Plan", new Color("Red"));
 
         /// <summary>
@@ -23,19 +24,33 @@ namespace EmergencyEgress
         /// <returns>A EmergencyEgressOutputs instance containing computed results and the model with any new elements.</returns>
         public static EmergencyEgressOutputs Execute(Dictionary<string, Model> inputModels, EmergencyEgressInputs input)
         {
+            var output = new EmergencyEgressOutputs();
             if (!inputModels.TryGetValue("Space Planning Zones", out Model spaceZonesModel))
             {
-                throw new Exception("Missing Space Planning Zones.");
+                output.Errors.Add("The model output named 'Space Planning Zones' could not be found. Check the upstream functions for errors.");
+                return output;
             }
 
             if (!inputModels.TryGetValue("Circulation", out Model circulationModel))
             {
-                throw new Exception("Missing Circulation.");
+                output.Errors.Add("The model output named 'Circulation' could not be found. Check the upstream functions for errors.");
+                return output;
             }
 
             var corridors = circulationModel.AllElementsOfType<CirculationSegment>();
             var rooms = spaceZonesModel.AllElementsOfType<SpaceBoundary>();
-            var output = new EmergencyEgressOutputs();
+
+            List<Door> doors = null;
+            if (inputModels.TryGetValue("Doors", out Model doorsModel))
+            {
+                doors = doorsModel.AllElementsOfType<Door>().ToList();
+            }
+
+            List<WallCandidate> walls = null;
+            if (inputModels.TryGetValue("Interior Partitions", out Model wallsModel))
+            {
+                walls = wallsModel.AllElementsOfType<WallCandidate>().ToList();
+            }
 
             var corridorsByLevel = corridors.GroupBy(c => c.Level);
             var roomsByLevel = rooms.GroupBy(r => r.Level);
@@ -62,7 +77,7 @@ namespace EmergencyEgress
 
                 foreach (var line in centerlines)
                 {
-                    grid.AddVertices(line.Centerline.Vertices, 
+                    grid.AddVertices(line.Centerline.Vertices,
                         AdaptiveGrid.VerticesInsertionMethod.ConnectAndSelfIntersect);
                 }
 
@@ -77,7 +92,7 @@ namespace EmergencyEgress
                 var roomInfos = new List<List<RoomEvacuationVariant>>();
                 foreach (var room in levelRooms)
                 {
-                    roomInfos.Add(AddRoom(room, centerlines, grid));
+                    roomInfos.Add(AddRoom(room, centerlines, walls, doors, grid));
                 }
 
                 var alg = new AdaptiveGraphRouting(grid, new RoutingConfiguration());
@@ -101,14 +116,14 @@ namespace EmergencyEgress
 
         private static Polyline CorridorCenterLine(CirculationSegment corridor)
         {
-            var offsetDistace = corridor.Geometry.Width / 2;
-            if (corridor.Geometry.Flip)
-            {
-                offsetDistace = -offsetDistace;
-            }
+            double offsetDistance = corridor.Geometry.GetOffset();
             var corridorPolyline = corridor.Geometry.Polyline;
-            var centerLine = corridorPolyline.OffsetOpen(offsetDistace);
-            return centerLine;
+            if (!offsetDistance.ApproximatelyEquals(0))
+            {
+                corridorPolyline = corridorPolyline.OffsetOpen(offsetDistance);
+            }
+            corridorPolyline = corridorPolyline.TransformedPolyline(corridor.Transform);
+            return corridorPolyline;
         }
 
 
@@ -129,7 +144,7 @@ namespace EmergencyEgress
                 foreach (var candidate in centerlines)
                 {
                     var rightVertices = candidate.Centerline.Vertices;
-                    var maxDistance = item.Segment.Geometry.Width + candidate.Segment.Geometry.Width;
+                    var maxDistance = item.Segment.Geometry.GetWidth() + candidate.Segment.Geometry.GetWidth();
                     for (int i = 0; i < leftVertices.Count - 1; i++)
                     {
                         Vector3 closestLeftItem = Vector3.Origin, closestRightItem = Vector3.Origin;
@@ -139,8 +154,7 @@ namespace EmergencyEgress
                         Action<Line, Vector3, int, int, bool> check =
                             (Line line, Vector3 point, int leftIndex, int rightIndex, bool left) =>
                             {
-                                var d = point.DistanceTo(line, out Vector3 closest);
-                                if (d < maxDistance && d < closestDistance)
+                                if (CanConnect(point, line, Math.Min(maxDistance, closestDistance), out var closest, out var d))
                                 {
                                     closestDistance = d;
                                     (closestLeftItem, closestRightItem) = left ? (closest, point) : (point, closest);
@@ -174,112 +188,114 @@ namespace EmergencyEgress
                             }
                         }
 
-                        if (closestLeftProximity != -1 && closestRightProximity != -1)
+                        if (closestLeftProximity == -1 || closestRightProximity == -1)
                         {
-                            bool leftExist = grid.TryGetVertexIndex(closestLeftItem, out var leftId, grid.Tolerance);
-                            bool rightExist = grid.TryGetVertexIndex(closestRightItem, out var rightId, grid.Tolerance);
-                            if (leftExist && rightExist)
+                            continue;
+                        }
+
+                        bool leftExist = grid.TryGetVertexIndex(closestLeftItem, out var leftId);
+                        bool rightExist = grid.TryGetVertexIndex(closestRightItem, out var rightId);
+                        if (leftExist && rightExist)
+                        {
+                            if (leftId != rightId)
                             {
-                                if (leftId != rightId)
+                                grid.AddEdge(leftId, rightId);
+                            }
+                        }
+                        else
+                        {
+                            GridVertex leftVertex = null;
+                            if (!leftExist)
+                            {
+                                grid.TryGetVertexIndex(leftVertices[closestLeftProximity], out var leftCon);
+                                grid.TryGetVertexIndex(leftVertices[closestLeftProximity + 1], out var rightCon);
+                                var segment = new Line(leftVertices[closestLeftProximity], leftVertices[closestLeftProximity + 1]);
+                                var vertex = grid.GetVertex(leftCon);
+                                while (vertex.Id != rightCon)
                                 {
-                                    grid.AddEdge(leftId, rightId);
+                                    GridVertex otherVertex = null;
+                                    Edge edge = null;
+                                    foreach (var e in vertex.Edges)
+                                    {
+                                        otherVertex = grid.GetVertex(e.OtherVertexId(vertex.Id));
+                                        var edgeDirection = (otherVertex.Point - vertex.Point).Unitized();
+                                        if (edgeDirection.Dot(segment.Direction()).ApproximatelyEquals(1))
+                                        {
+                                            edge = e;
+                                            break;
+                                        }
+                                    }
+
+                                    if (edge == null)
+                                    {
+                                        throw new Exception("End edge is not reached");
+                                    }
+
+                                    var edgeLine = new Line(vertex.Point, otherVertex.Point);
+                                    if (edgeLine.PointOnLine(closestLeftItem))
+                                    {
+                                        leftVertex = grid.CutEdge(edge, closestLeftItem);
+                                        break;
+                                    }
+
+                                    vertex = otherVertex;
                                 }
                             }
                             else
                             {
-                                GridVertex leftVertex = null;
-                                if (!leftExist)
+                                leftVertex = grid.GetVertex(leftId);
+                            }
+
+                            if (!rightExist)
+                            {
+                                grid.TryGetVertexIndex(rightVertices[closestRightProximity], out var leftCon);
+                                grid.TryGetVertexIndex(rightVertices[closestRightProximity + 1], out var rightCon);
+                                var vertex = grid.GetVertex(leftCon);
+                                var connections = new List<GridVertex>();
+                                if (!closestLeftItem.IsAlmostEqualTo(closestRightItem, grid.Tolerance))
                                 {
-                                    grid.TryGetVertexIndex(leftVertices[closestLeftProximity], out var leftCon, grid.Tolerance);
-                                    grid.TryGetVertexIndex(leftVertices[closestLeftProximity + 1], out var rightCon, grid.Tolerance);
-                                    var segment = new Line(leftVertices[closestLeftProximity], leftVertices[closestLeftProximity + 1]);
-                                    var vertex = grid.GetVertex(leftCon);
-                                    while (vertex.Id != rightCon)
+                                    connections.Add(leftVertex);
+                                }
+
+                                var segment = new Line(rightVertices[closestRightProximity], rightVertices[closestRightProximity + 1]);
+                                while (vertex.Id != rightCon)
+                                {
+                                    GridVertex otherVertex = null;
+                                    Edge edge = null;
+                                    foreach (var e in vertex.Edges)
                                     {
-                                        GridVertex otherVertex = null;
-                                        Edge edge = null;
-                                        foreach (var e in vertex.Edges)
+                                        otherVertex = grid.GetVertex(e.OtherVertexId(vertex.Id));
+                                        var edgeDirection = (otherVertex.Point - vertex.Point).Unitized();
+                                        if (edgeDirection.Dot(segment.Direction()).ApproximatelyEquals(1))
                                         {
-                                            otherVertex = grid.GetVertex(e.OtherVertexId(vertex.Id));
-                                            var edgeDirection = (otherVertex.Point - vertex.Point).Unitized();
-                                            if (edgeDirection.Dot(segment.Direction()).ApproximatelyEquals(1))
-                                            {
-                                                edge = e;
-                                                break;
-                                            }
-                                        }
-
-                                        if (edge == null)
-                                        {
-                                            throw new Exception("End edge is not reached");
-                                        }
-
-                                        var edgeLine = new Line(vertex.Point, otherVertex.Point);
-                                        if (edgeLine.PointOnLine(closestLeftItem))
-                                        {
-                                            leftVertex = grid.CutEdge(edge, closestLeftItem);
+                                            edge = e;
                                             break;
                                         }
-
-                                        vertex = otherVertex;
                                     }
-                                }
-                                else
-                                {
-                                    leftVertex = grid.GetVertex(leftId);
-                                }
 
-                                if (!rightExist)
-                                {
-                                    grid.TryGetVertexIndex(rightVertices[closestRightProximity], out var leftCon, grid.Tolerance);
-                                    grid.TryGetVertexIndex(rightVertices[closestRightProximity + 1], out var rightCon, grid.Tolerance);
-                                    var vertex = grid.GetVertex(leftCon);
-                                    var connections = new List<GridVertex>();
-                                    if (!closestLeftItem.IsAlmostEqualTo(closestRightItem, grid.Tolerance))
+                                    if (edge == null)
                                     {
-                                        connections.Add(leftVertex);
+                                        throw new Exception("End edge is not reached");
                                     }
 
-                                    var segment = new Line(rightVertices[closestRightProximity], rightVertices[closestRightProximity + 1]);
-                                    while (vertex.Id != rightCon)
+                                    var edgeLine = new Line(vertex.Point, otherVertex.Point);
+                                    if (edgeLine.PointOnLine(closestRightItem))
                                     {
-                                        GridVertex otherVertex = null;
-                                        Edge edge = null;
-                                        foreach (var e in vertex.Edges)
-                                        {
-                                            otherVertex = grid.GetVertex(e.OtherVertexId(vertex.Id));
-                                            var edgeDirection = (otherVertex.Point - vertex.Point).Unitized();
-                                            if (edgeDirection.Dot(segment.Direction()).ApproximatelyEquals(1))
-                                            {
-                                                edge = e;
-                                                break;
-                                            }
-                                        }
-
-                                        if (edge == null)
-                                        {
-                                            throw new Exception("End edge is not reached");
-                                        }
-
-                                        var edgeLine = new Line(vertex.Point, otherVertex.Point);
-                                        if (edgeLine.PointOnLine(closestRightItem))
-                                        {
-                                            connections.Add(vertex);
-                                            connections.Add(otherVertex);
-                                            grid.AddVertex(closestRightItem, 
-                                                           new ConnectVertexStrategy(connections.ToArray()),
-                                                           cut: false);
-                                            grid.RemoveEdge(edge);
-                                            break;
-                                        }
-
-                                        vertex = otherVertex;
+                                        connections.Add(vertex);
+                                        connections.Add(otherVertex);
+                                        grid.AddVertex(closestRightItem,
+                                                       new ConnectVertexStrategy(connections.ToArray()),
+                                                       cut: false);
+                                        grid.RemoveEdge(edge);
+                                        break;
                                     }
+
+                                    vertex = otherVertex;
                                 }
-                                else if (leftVertex.Id != rightId)
-                                {
-                                    grid.AddEdge(leftVertex.Id, rightId);
-                                }
+                            }
+                            else if (leftVertex.Id != rightId)
+                            {
+                                grid.AddEdge(leftVertex.Id, rightId);
                             }
                         }
                     }
@@ -290,7 +306,7 @@ namespace EmergencyEgress
         /// <summary>
         /// Add SpaceBoundary, representing a room, to the grid.
         /// There are no defined exits. in the room. Every segment middle point is considered.
-        /// This is very simple approaches that ignores voids or obstacles inside room and won't work for complex rooms. 
+        /// This is very simple approaches that ignores voids or obstacles inside room and won't work for complex rooms.
         /// </summary>
         /// <param name="room">Room geometry.</param>
         /// <param name="centerlines">Corridor segments with precalculated center lines.</param>
@@ -299,21 +315,24 @@ namespace EmergencyEgress
         private static List<RoomEvacuationVariant> AddRoom(
             SpaceBoundary room,
             List<(CirculationSegment Segment, Polyline Centerline)> centerlines,
+            List<WallCandidate>? walls,
+            List<Door>? doors,
             AdaptiveGrid grid)
         {
             var roomExits = new List<RoomEvacuationVariant>();
             //Center of every segment in room boundary is checked against corridors
-            foreach (var roomEdge in room.Boundary.Perimeter.Segments())
+            var perimeter = room.Boundary.Perimeter.CollinearPointsRemoved().TransformedPolygon(room.Transform);
+            foreach (var roomEdge in perimeter.Segments())
             {
                 //exitVertex is already added to the grid by `FindExit`
-                var exitVertex = FindRoomExit(roomEdge, centerlines, grid);
+                var exitVertex = FindRoomExit(roomEdge, centerlines, walls, doors, grid);
                 if (exitVertex != null)
                 {
                     //If it's close enough to corridors - it's two furthest corners are added.
-                    //Note that this is done for every possible exit, so in the end there will be 
+                    //Note that this is done for every possible exit, so in the end there will be
                     //a lot of possible combinations of exit to it's corners in the grid,
                     //not connected one with another.
-                    var twoFurthest = room.Boundary.Perimeter.Vertices.OrderBy(v =>
+                    var twoFurthest = perimeter.Vertices.OrderBy(v =>
                         (v - exitVertex.Point).Length()).TakeLast(2);
                     var corners = new List<(GridVertex Vertex, Vector3 ExactPosition)>();
                     foreach (var furthest in twoFurthest)
@@ -343,18 +362,31 @@ namespace EmergencyEgress
         private static GridVertex FindRoomExit(
             Line roomEdge,
             List<(CirculationSegment Segment, Polyline Centerline)> centerlines,
+            List<WallCandidate>? walls,
+            List<Door>? doors,
             AdaptiveGrid grid)
         {
-            var midpoint = roomEdge.PointAt(0.5);
+            var door = doors?.FirstOrDefault(d => roomEdge.PointOnLine(d.Transform.Origin, false, RoomToWallTolerance));
+            var wall = walls?.FirstOrDefault(w => w.Line.PointOnLine(roomEdge.Start, true, RoomToWallTolerance) &&
+                                             w.Line.PointOnLine(roomEdge.End, true, RoomToWallTolerance));
+            
+            // There are doors in the workflow and this segment is a wall without a door.
+            if (wall != null && doors != null && door == null)
+            {
+                return null;
+            }
+
+            var midpoint = door?.Transform.Origin ?? roomEdge.Mid();
+
             foreach (var line in centerlines)
             {
                 for (int i = 0; i < line.Centerline.Vertices.Count - 1; i++)
                 {
                     var segment = new Line(line.Centerline.Vertices[i], line.Centerline.Vertices[i + 1]);
-                    if (midpoint.DistanceTo(segment, out var closest) < line.Segment.Geometry.Width / 2 + 0.1)
+                    if (CanConnect(midpoint, segment, line.Segment.Geometry.GetWidth() / 2 + 0.1, out var closest, out _))
                     {
                         GridVertex exitVertex = null;
-                        grid.TryGetVertexIndex(segment.Start, out var id, grid.Tolerance);
+                        grid.TryGetVertexIndex(segment.Start, out var id);
                         var vertex = grid.GetVertex(id);
 
                         //We know corridor line but it can already be split into several edges.
@@ -398,7 +430,7 @@ namespace EmergencyEgress
                                 var edgeLine = new Line(vertex.Point, otherVertex.Point);
                                 if (edgeLine.PointOnLine(closest))
                                 {
-                                    exitVertex = grid.AddVertex(closest, 
+                                    exitVertex = grid.AddVertex(closest,
                                                                 new ConnectVertexStrategy(vertex, otherVertex),
                                                                 cut: false);
                                     grid.RemoveEdge(edge);
@@ -443,7 +475,7 @@ namespace EmergencyEgress
                 var exitOnLevel = new Vector3(exit.X, exit.Y, closest.Z);
                 var distance = exitOnLevel.DistanceTo(closest);
 
-                //TODO: do something better. 
+                //TODO: do something better.
                 //This is a way to filter exit points that are near other levels.
                 //It's done by distance but there should be a better way.
                 if (distance < 2)
@@ -613,6 +645,18 @@ namespace EmergencyEgress
             d += tail.Point.DistanceTo(head.Point);
             accumulatedDistances[edge] = d;
             return d;
+        }
+
+        private static bool CanConnect(Vector3 point,
+                                       Line segment,
+                                       double maxDistance,
+                                       out Vector3 closest,
+                                       out double dist)
+        {
+            dist = point.DistanceTo(segment, out closest);
+            var dot = (closest - point).Unitized().Dot(segment.Direction());
+            bool aligned = dot.ApproximatelyEquals(0) || Math.Abs(dot).ApproximatelyEquals(1);
+            return dist < maxDistance && aligned;
         }
     }
 }

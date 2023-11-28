@@ -1,0 +1,193 @@
+{
+    "$schema": "https://hypar.io/Schemas/Function.json",
+    "id": "9e23d11b-1736-4a0c-8268-daee4b50ffd9",
+    "name": "Facade Grid by Levels",
+    "description": "Create a grid of panels from Levels and an Envelope.",
+    "language": "C#",
+    "model_dependencies": [
+        {
+            "autohide": true,
+            "name": "Levels",
+            "optional": false
+        },
+        {
+            "name": "Conceptual Mass",
+            "optional": true
+        }
+    ],
+    "model_output": "Facade Grid",
+    "input_schema": {
+        "type": "object",
+        "properties": {
+            "Offset From Facade": {
+                "description": "Optionally, offset the facade grid at a distance from the base envelope.",
+                "default": 0,
+                "type": "number",
+                "$hyparUnitType": "length",
+                "$hyparOrder": 2
+            },
+            "Remainder Position": {
+                "description": "Where do you want off panels to be positioned?",
+                "default": "At Both Ends",
+                "type": "string",
+                "$hyparOrder": 3,
+                "$hyparShowIf": {
+                    "type": "any",
+                    "conditions": [
+                        {
+                            "property": "Mode",
+                            "value": "Fixed Width"
+                        },
+                        {
+                            "property": "Mode",
+                            "value": "Pattern"
+                        }
+                    ]
+                },
+                "enum": [
+                    "At Start",
+                    "At Both Ends",
+                    "At Middle",
+                    "At End"
+                ]
+            },
+            "Target Facade Panel Width": {
+                "default": 3,
+                "$hyparShowIf": {
+                    "conditions": [
+                        {
+                            "property": "Mode",
+                            "value": "Approximate Width"
+                        }
+                    ]
+                },
+                "description": "The Target width of the facade panels.",
+                "maximum": 10,
+                "$hyparOrder": 0,
+                "type": "number",
+                "$hyparUnitType": "length",
+                "minimum": 1
+            },
+            "Mode": {
+                "description": "What general strategy should be use for creating panels?",
+                "default": "Approximate Width",
+                "$hyparOrder": 1,
+                "type": "string",
+                "enum": [
+                    "Approximate Width",
+                    "Fixed Width",
+                    "Pattern"
+                ]
+            },
+            "Display Mode": {
+                "default": "Color By Type",
+                "type": "string",
+                "$hyparOrder": 4,
+                "enum": [
+                    "Color By Type",
+                    "Solid Color",
+                    "Edges Only"
+                ]
+            },
+            "Fixed Width Settings": {
+                "type": "object",
+                "$hyparOrder": 5,
+                "$hyparShowIf": {
+                    "conditions": [
+                        {
+                            "property": "Mode",
+                            "value": "Fixed Width"
+                        }
+                    ]
+                },
+                "properties": {
+                    "Height Shift": {
+                        "description": "If set to a value other than 0, will shift the setting out point for each set of panels by a multiple of the elevation of the level.",
+                        "default": 0,
+                        "type": "number",
+                        "$hyparOrder": 1
+                    },
+                    "Panel Width": {
+                        "default": 3,
+                        "description": "The width of the facade panels.",
+                        "maximum": 10,
+                        "type": "number",
+                        "$hyparUnitType": "length",
+                        "$hyparOrder": 0,
+                        "minimum": 1
+                    }
+                }
+            },
+            "Pattern Settings": {
+                "default": {
+                    "Panel Width Pattern": [
+                        2,
+                        3
+                    ],
+                    "Pattern Mode": "Cycle"
+                },
+                "type": "object",
+                "$hyparOrder": 6,
+                "$hyparShowIf": {
+                    "conditions": [
+                        {
+                            "property": "Mode",
+                            "value": "Pattern"
+                        }
+                    ]
+                },
+                "properties": {
+                    "Panel Width Pattern": {
+                        "default": [
+                            2,
+                            3
+                        ],
+                        "type": "array",
+                        "$hyparOrder": 0,
+                        "items": {
+                            "type": "number",
+                            "$hyparUnitType": "length",
+                            "$hyparStyle": "number",
+                            "minimum": 0.1
+                        }
+                    },
+                    "Pattern Mode": {
+                        "description": "How should the pattern repeat? Cycle = ABCABCABC, Flip = ABCBABCBA",
+                        "default": "Cycle",
+                        "type": "string",
+                        "$hyparOrder": 1,
+                        "enum": [
+                            "Cycle",
+                            "Flip"
+                        ]
+                    }
+                }
+            }
+        }
+    },
+    "outputs": [
+        {
+            "unit_type": "none",
+            "name": "Unique Panel Count",
+            "description": "The number of unique facade panels.",
+            "type": "number"
+        },
+        {
+            "unit_type": "none",
+            "name": "Total Panel Count",
+            "description": "The total number of facade panels.",
+            "type": "number"
+        }
+    ],
+    "element_types": [
+        "https://prod-api.hypar.io/schemas/LevelVolume",
+        "https://prod-api.hypar.io/schemas/LevelEdge",
+        "https://prod-api.hypar.io/schemas/FacadeGridMetadata"
+    ],
+    "default_camera": {
+        "named_position": "north",
+        "projection": "orthographic"
+    },
+    "repository_url": "https://github.com/hypar-io/function",
+    "source_file_key": null
+}

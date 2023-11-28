@@ -35,7 +35,7 @@ namespace FacadeByEnvelope
         /// <summary>
         /// Adds facade Panels to one or more Masses named 'envelope'.
         /// </summary>
-        /// <param name="model">The model. 
+        /// <param name="model">The model.
         /// Add elements to the model to have them persisted.</param>
         /// <param name="input">The arguments to the execution.</param>
         /// <returns>A FacadeOutputs instance containing computed results.</returns>
@@ -44,19 +44,22 @@ namespace FacadeByEnvelope
             List<Envelope> envelopes;
             List<Level> levels = null;
             var model = new Model();
+            var output = new FacadeByEnvelopeOutputs();
 
             var envelopeModel = models[ENVELOPE_MODEL_NAME];
             envelopes = envelopeModel.AllElementsOfType<Envelope>().Where(e => e.Elevation >= 0.0).ToList();
             if (envelopes.Count() == 0)
             {
-                throw new Exception("No element of type 'Envelope' could be found in the supplied model.");
+                output.Errors.Add($"No Envelopes found in the model 'Envelope'. Check the output from the function upstream that has a model output 'Envelope'.");
+                return output;
             }
 
             var levelsModel = models[LEVELS_MODEL_NAME];
             levels = levelsModel.AllElementsOfType<Level>().ToList();
             if (levels.Count() == 0)
             {
-                throw new Exception("No element of type 'Level' could be found in the supplied model.");
+                output.Errors.Add($"No Levels found in the model 'Levels'. Check the output from the function upstream that has a model output 'Levels'.");
+                return output;
             }
             levels.Sort(new LevelComparer());
 
@@ -91,7 +94,7 @@ namespace FacadeByEnvelope
                                          input.PanelColor);
             }
 
-            var groundFloorEnvelope = envelopes.First(e => e.Elevation == 0.0);
+            var groundFloorEnvelope = envelopes.OrderBy(e => e.Elevation).FirstOrDefault(e => e.Elevation >= -Vector3.EPSILON);
             if (groundFloorEnvelope != null)
             {
                 var boundarySegments = groundFloorEnvelope.Profile.Perimeter.Offset(-input.GroundFloorSetback)[0].Segments();
@@ -101,7 +104,7 @@ namespace FacadeByEnvelope
                 PanelGroundFloor(bottom, top, boundarySegments, input.PanelWidth, model);
             }
 
-            var output = new FacadeByEnvelopeOutputs(panelCount);
+            output.PanelQuantity = panelCount;
             output.Model = model;
             return output;
         }
@@ -138,7 +141,7 @@ namespace FacadeByEnvelope
                             var t = new Transform(bs.Start + new Vector3(0, 0, level1.Elevation), d, d.Cross(Vector3.ZAxis));
                             var l = bs.Length();
 
-                            // If the segment width is within Epsilon of 
+                            // If the segment width is within Epsilon of
                             // the input panel width, then create a
                             // panel with glazing.
                             if (Math.Abs(l - panelWidth) < Vector3.EPSILON)
@@ -207,26 +210,28 @@ namespace FacadeByEnvelope
                                              double panelWidth,
                                              Model model)
         {
+            var hight = topElevation - bottomElevation;
             foreach (var segment in boundarySegments)
             {
                 var u = new Grid1d(segment);
-                var v = new Grid1d(new Line(segment.Start, new Vector3(segment.Start.X, segment.Start.Y, segment.Start.Z + topElevation)));
+                var v = new Grid1d(new Line(segment.Start, new Vector3(segment.Start.X, segment.Start.Y, segment.Start.Z + hight)));
+                Transform t = new Transform(0, 0, bottomElevation);
                 var grid2d = new Grid2d(u, v);
                 grid2d.U.DivideByFixedLength(1.5);
                 grid2d.V.DivideByCount(2);
                 foreach (var sep in grid2d.GetCellSeparators(GridDirection.U))
                 {
-                    var mullion = new Beam((Line)sep, Polygon.Rectangle(0.05, 0.05), null, BuiltInMaterials.Black);
+                    var mullion = new Beam((Line)sep, Polygon.Rectangle(0.05, 0.05), t, BuiltInMaterials.Black);
                     model.AddElement(mullion);
                 }
                 foreach (var sep in grid2d.GetCellSeparators(GridDirection.V))
                 {
-                    var mullion = new Beam((Line)sep, Polygon.Rectangle(0.05, 0.05), null, BuiltInMaterials.Black);
+                    var mullion = new Beam((Line)sep, Polygon.Rectangle(0.05, 0.05), t, BuiltInMaterials.Black);
                     model.AddElement(mullion);
                 }
                 var panel = new Panel(new Polygon(new[]{
-                    segment.Start, segment.End , new Vector3(segment.End.X, segment.End.Y, segment.End.Z + topElevation), new Vector3(segment.Start.X, segment.Start.Y, segment.Start.Z + topElevation)
-                }), BuiltInMaterials.Glass);
+                    segment.Start, segment.End , new Vector3(segment.End.X, segment.End.Y, segment.End.Z + hight), new Vector3(segment.Start.X, segment.Start.Y, segment.Start.Z + hight)
+                }), BuiltInMaterials.Glass, t);
                 model.AddElement(panel);
             }
         }
@@ -246,7 +251,7 @@ namespace FacadeByEnvelope
             // Console.WriteLine($"The line {l} units long will create {divs} panels of {d} width");
             var span = divs * d;
             var halfSpan = span / 2;
-            var mid = line.PointAt(0.5);
+            var mid = line.Mid();
             var dir = line.Direction();
             var start = mid - dir * halfSpan;
             var end = mid + dir * halfSpan;

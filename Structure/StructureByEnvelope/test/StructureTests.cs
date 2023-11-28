@@ -34,8 +34,6 @@ namespace Structure.tests
                 0.1254,
                 false,
                 maximumNeighborSpan: 2,
-                bucketName: "",
-                uploadsBucket: "",
                 modelInputKeys: new Dictionary<string, string>(), gltfKey: "", elementsKey: "", ifcKey: "");
             var outputs = Structure.Execute(
                 new Dictionary<string, Model>

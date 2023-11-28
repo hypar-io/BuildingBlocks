@@ -15,6 +15,16 @@
       "autohide": false,
       "name": "Circulation",
       "optional": false
+    },
+    {
+      "autohide": false,
+      "name": "Doors",
+      "optional": true
+    },
+    {
+      "autohide": false,
+      "name": "Interior Partitions",
+      "optional": true
     }
   ],
   "input_schema": {
@@ -26,15 +36,17 @@
         "$hyparOrder": 0,
         "items": {
           "description": "A point",
-          "$ref": "https://hypar.io/Schemas/Geometry/Vector3.json"
+          "$ref": "https://schemas.hypar.io/Vector3.json"
         }
       }
     }
   },
   "outputs": [],
   "element_types": [
-    "https://prod-api.hypar.io/schemas/SpaceBoundary",
-    "https://prod-api.hypar.io/schemas/CirculationSegment"
+    "https://schemas.hypar.io/SpaceBoundary.json",
+    "https://schemas.hypar.io/CirculationSegment.json",
+    "https://schemas.hypar.io/Door.json",
+    "https://schemas.hypar.io/WallCandidate.json"
   ],
   "repository_url": "https://github.com/hypar-io/function",
   "filters": {},

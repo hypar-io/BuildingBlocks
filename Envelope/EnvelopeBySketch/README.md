@@ -6,7 +6,7 @@ Creates building Envelope elements derived from a polygon sketch and setback set
 
 |Input Name|Type|Description|
 |---|---|---|
-|Perimeter|https://hypar.io/Schemas/Geometry/Polygon.json|Perimeter of the building envelope.|
+|Perimeter|https://schemas.hypar.io/Polygon.json|Perimeter of the building envelope.|
 |Setback Interval|number|Vertical distance between envelope setbacks.|
 |Use Setbacks|boolean||
 |Setback Depth|number|Offset depth from previous setback.|
@@ -26,3 +26,5 @@ Creates building Envelope elements derived from a polygon sketch and setback set
 <br>
 
 ## Additional Information
+
+

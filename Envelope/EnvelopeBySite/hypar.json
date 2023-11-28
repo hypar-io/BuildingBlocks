@@ -119,12 +119,12 @@
           "type": "number"
         },
         "Site Centroid": {
-          "$ref": "https://hypar.io/Schemas/Geometry/Vector3.json"
+          "$ref": "https://schemas.hypar.io/Vector3.json"
         }
       },
       "schema": {
         "Perimeter": {
-          "$ref": "https://hypar.io/Schemas/Geometry/Polygon.json"
+          "$ref": "https://schemas.hypar.io/Polygon.json"
         }
       }
     }
@@ -144,8 +144,8 @@
     }
   ],
   "element_types": [
-    "https://raw.githubusercontent.com/hypar-io/Schemas/master/Site.json",
-    "https://raw.githubusercontent.com/hypar-io/Schemas/master/Envelope.json"
+    "https://schemas.hypar.io/Site.json",
+    "https://schemas.hypar.io/Envelope.json"
   ],
   "repository_url": "https://github.com/hypar-io/BuildingBlocks/tree/master/Envelope/EnvelopeBySite",
   "last_updated": "0001-01-01T00:00:00",

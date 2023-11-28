@@ -4,11 +4,10 @@
     <Company>Hypar, Inc.</Company>
     <Copyright>Hypar, Inc. 2022</Copyright>
     <RepositoryType>git</RepositoryType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <RepositoryUrl>https://github.com/hypar-io/BuildingBlocks</RepositoryUrl>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <RepositoryType>git</RepositoryType>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
-
 </Project>

@@ -4,7 +4,6 @@ using Elements.Spatial;
 using System.Collections.Generic;
 using System;
 using System.Linq;
-using Elements.Geometry.Solids;
 
 namespace Grid
 {
@@ -15,7 +14,7 @@ namespace Grid
         private const double pointsInMeter = 2835;
 
         private static double MinCircleRadius = 0.5;
-        private static double CircleRadius = 1;
+
         // Offset the heads from the base lines.
         private static double lineHeadExtension = 2.0;
 
@@ -51,10 +50,12 @@ namespace Grid
                 extentPolygons = ExtractPolygonsFromElements(roofs, (e) => e.Profile?.Perimeter?.TransformedPolygon(e.Transform));
             }
 
+            inputModels.TryGetValue("Conceptual Mass", out var conceptualMassModel);
             inputModels.TryGetValue("Levels", out var levelsModel);
-            if (levelsModel != null && extentPolygons.Count == 0)
+            var levelVolumesModel = conceptualMassModel ?? levelsModel;
+            if (levelVolumesModel != null && extentPolygons.Count == 0)
             {
-                var levelVolumes = levelsModel.AllElementsOfType<LevelVolume>();
+                var levelVolumes = levelVolumesModel.AllElementsOfType<LevelVolume>();
                 extentPolygons = ExtractPolygonsFromElements(levelVolumes, (e) => e.Profile?.Perimeter?.TransformedPolygon(e.Transform));
             }
 
@@ -80,10 +81,10 @@ namespace Grid
         }
 
         /// <summary>
-        /// Extract polygons from a collection of elements. 
+        /// Extract polygons from a collection of elements.
         /// </summary>
         /// <param name="elements">The elements to get polygons from.</param>
-        /// <param name="getDefaultPolygon">A function for extracting the default relevant polygon from an envelope. 
+        /// <param name="getDefaultPolygon">A function for extracting the default relevant polygon from an envelope.
         /// If this returns null, we'll use the 2D convex hull of the geometry of the element's representation </param>
         private static List<Polygon> ExtractPolygonsFromElements<T>(IEnumerable<T> elements, Func<T, Polygon> getDefaultPolygon) where T : GeometricElement
         {
@@ -194,7 +195,8 @@ namespace Grid
 
             if (gridPoints.Count == 0)
             {
-                throw new Exception("No grids were able to be calculated from the given inputs.");
+                output.Errors.Add($"No grid points were able to be calculated from the given inputs for grid area {gridArea.Name}.");
+                return new List<Grid2dElement>();
             }
 
             Polygon gridPolygon = null;
@@ -259,7 +261,9 @@ namespace Grid
                 {
                     foreach (var vGridLine in vGridLines)
                     {
-                        if (uGridLine.Line.Intersects(vGridLine.Line, out var intersection, includeEnds: true))
+                        var uCurve = uGridLine.Curve;
+                        var vCurve = vGridLine.Curve;
+                        if (Line.Intersects(uCurve.Start, uCurve.End, vCurve.Start, vCurve.End, out var intersection, includeEnds: true))
                         {
                             var gridNodeTransform = new Transform(intersection);
                             gridNodes.Add(new GridNode(gridNodeTransform,
@@ -296,12 +300,12 @@ namespace Grid
                     transform, Grid2dElementMaterial, rep, false, Guid.NewGuid(), gridArea.Name);
                 grid2dElement.Extents = boundary;
                 grid2dElement.AdditionalProperties["UGrid"] = new Grid1dInput(
-                    new Polyline(origin, grid.U.Curve.PointAt(1)),
+                    new Polyline(origin, grid.U.Curve.End),
                     uPoints,
                     uOverride?.SubdivisionMode ?? Grid1dInputSubdivisionMode.Manual,
                     uOverride?.SubdivisionSettings);
                 grid2dElement.AdditionalProperties["VGrid"] = new Grid1dInput(
-                    new Polyline(origin, grid.V.Curve.PointAt(1)),
+                    new Polyline(origin, grid.V.Curve.End),
                     vPoints,
                     vOverride?.SubdivisionMode ?? Grid1dInputSubdivisionMode.Manual,
                     vOverride?.SubdivisionSettings);
@@ -359,13 +363,39 @@ namespace Grid
 
             if (namingPattern == "{A}")
             {
-                name = ((char)(idx + 65)).ToString(); // nth letter of alphabet
+                name = ConvertToANamingPattern(idx);
             }
             if (namingPattern == "{1}")
             {
                 name = (idx + 1).ToString();
             }
             return name;
+        }
+
+        // The pattern is the following: A-Z, AA-AZ, BA-BZ,..., AAA-AAZ,...
+        private static string ConvertToANamingPattern(int idx)
+        {
+            // Let Q = 26 - number of uppercase characters, N - number of letters in string.
+            // There are Q^N strings of length N. The first string of length N+1 will have
+            // idx = Q^1 + Q^2 + ... + Q^n, which is equal to Q * (Q^N - 1) / (Q - 1).
+            const int Q = 26;
+            int N = (int)Math.Ceiling(Math.Log((Q - 1) * (idx + 1) + Q, Q) - 1);
+            char[] chars = new char[N];
+
+            // The goal is to represent idx in string S as a set of characters Ki, where 0 <= Ki < Q.
+            // Such polynomial is unique for each idx.
+            // S = K0 + K1 * Q + K2 * Q^2 + ... + K_n-1_ * Q^(N - 1).
+            //
+            // Each letter Ki are calculated in reverse order as reminder of dividing S by Q.
+            // Then the letter is removed by dividing and thus dropping the reminder.
+            for (int i = N - 1; i >= 0; i--)
+            {
+                //Uppercase A has code 65.
+                chars[i] = (char)(idx % Q + 65);
+                idx = (idx / Q) - 1;
+            }
+
+            return new string(chars);
         }
 
         private static void AddGridLinesTexts(
@@ -375,9 +405,9 @@ namespace Grid
         {
             foreach (var gridline in gridlines)
             {
-                var line = gridline.Line;
-                var lineDir = (line.End - line.Start).Unitized();
-                var circleCenter = line.Start - (lineDir * (gridline.Radius + lineHeadExtension));
+                var curve = gridline.Curve;
+                var lineDir = (curve.End - curve.Start).Unitized();
+                var circleCenter = curve.Start - (lineDir * (gridline.Radius + lineHeadExtension));
                 var color = deduplicatedNamesGridLines.Contains(gridline) ? Colors.Red : Colors.Darkgray;
                 texts.Add((circleCenter, Vector3.ZAxis, lineDir, gridline.Name, color));
             }
@@ -427,7 +457,7 @@ namespace Grid
                                                 GridlineNamesIdentityAxis axis,
                                                 double radius)
         {
-            var baseLine = new Line(opposingGrid1d.Curve.PointAt(0), opposingGrid1d.Curve.PointAt(1));
+            var baseLine = new Line(opposingGrid1d.Curve.Start, opposingGrid1d.Curve.End);
 
             var startExtend = origin - baseLine.Start;
             var endExtend = origin - baseLine.End;
@@ -440,7 +470,7 @@ namespace Grid
                 {
                     Radius = radius,
                     ExtensionBeginning = lineHeadExtension,
-                    Line = line,
+                    Curve = line,
                     Name = gridGuide.Name,
                     Material = material
                 };
@@ -554,7 +584,7 @@ namespace Grid
         private static U GetStandardizedRecords(U u, Grid1dInput uOverride)
         {
             var gridlines = new List<GridLines>();
-            var start = uOverride.Curve.PointAt(0);
+            var start = uOverride.Curve.Start;
             var splitPoints = uOverride.SplitPoints
                                 .Select(p => p.DistanceTo(start))
                                 .OrderBy(d => d)

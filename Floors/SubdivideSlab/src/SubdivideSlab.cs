@@ -23,9 +23,16 @@ namespace SubdivideSlab
         {
             var allFloors = new List<Floor>();
             inputModels.TryGetValue("Floors", out var flrModel);
-            if (flrModel == null || flrModel.AllElementsOfType<Floor>().Count() == 0)
+            var output = new SubdivideSlabOutputs();
+            if (flrModel == null)
             {
-                throw new ArgumentException("No Floors found.");
+                output.Errors.Add("The model output named 'Floors' could not be found. Check the upstream functions for errors.");
+                return output;
+            }
+            else if (flrModel.AllElementsOfType<Floor>().Count() == 0)
+            {
+                output.Errors.Add($"No Floors found in the model 'Floors'. Check the output from the function upstream that has a model output 'Floors'.");
+                return output;
             }
             allFloors.AddRange(flrModel.AllElementsOfType<Floor>());
             List<SlabSubdivision> subdivisions = new List<SlabSubdivision>();
@@ -47,7 +54,8 @@ namespace SubdivideSlab
                 {
                     var longestEdge = perimeter.Segments().OrderByDescending(p => p.Length()).First();
                     var xAxis = (longestEdge.End - longestEdge.Start).Unitized();
-                    if(perimeter.IsClockWise()) {
+                    if (perimeter.IsClockWise())
+                    {
                         xAxis = xAxis * -1;
                     }
                     transform = new Transform(Vector3.Origin, xAxis, Vector3.ZAxis, 0);
@@ -90,7 +98,7 @@ namespace SubdivideSlab
                 }
             }
 
-            var output = new SubdivideSlabOutputs(subdivisions.Count);
+            output.Count = subdivisions.Count;
             output.Model.AddElements(subdivisions);
             foreach (var subdiv in subdivisions)
             {

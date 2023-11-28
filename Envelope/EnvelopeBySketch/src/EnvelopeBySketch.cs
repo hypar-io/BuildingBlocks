@@ -37,7 +37,8 @@ namespace EnvelopeBySketch
             {
                 if (levelsModel.AllElementsOfType<Level>().Count() == 0)
                 {
-                    throw new ArgumentException("Please create levels");
+                    output.Errors.Add($"No Levels found in the model 'Levels'. Check the output from the function upstream that has a model output 'Levels'.");
+                    return output;
                 }
                 var levels = levelsModel.AllElementsOfType<Level>().ToList();
                 levels.Sort((l1, l2) => l1.Elevation.CompareTo(l2.Elevation));
@@ -54,10 +55,11 @@ namespace EnvelopeBySketch
                 // Create the foundation Envelope.
                 if (input.FoundationDepth > 0)
                 {
-                    extrude = new Elements.Geometry.Solids.Extrude(input.Perimeter, input.FoundationDepth, Vector3.ZAxis, false);
-                    geomRep = new Representation(new List<Elements.Geometry.Solids.SolidOperation>() { extrude });
-                    envelopes.Add(new Envelope(input.Perimeter, input.FoundationDepth * -1, input.FoundationDepth, Vector3.ZAxis,
-                                    0.0, new Transform(0.0, 0.0, input.FoundationDepth * -1), envMatl, geomRep, false, Guid.NewGuid(), ""));
+                    extrude = new Extrude(input.Perimeter, input.FoundationDepth, Vector3.ZAxis, false);
+                    geomRep = new Representation(new List<SolidOperation>() { extrude });
+                    var elevation = envelopeElevation - input.FoundationDepth;
+                    envelopes.Add(new Envelope(input.Perimeter, elevation, input.FoundationDepth, Vector3.ZAxis, 0.0, null,
+                                  new Transform(0.0, 0.0, elevation), envMatl, geomRep, false, Guid.NewGuid(), ""));
                 }
                 buildingHeight = input.BuildingHeight;
                 foundationDepth = input.FoundationDepth;
@@ -66,10 +68,10 @@ namespace EnvelopeBySketch
             }
             var tierHeight = tiers > 1 ? buildingHeight / tiers : buildingHeight;
 
-            extrude = new Elements.Geometry.Solids.Extrude(polygon, tierHeight, Vector3.ZAxis, false);
-            geomRep = new Representation(new List<Elements.Geometry.Solids.SolidOperation>() { extrude });
-            envelopes.Add(new Envelope(input.Perimeter, envelopeElevation, tierHeight, Vector3.ZAxis, 0.0,
-                          new Transform(), envMatl, geomRep, false, Guid.NewGuid(), ""));
+            extrude = new Extrude(polygon, tierHeight, Vector3.ZAxis, false);
+            geomRep = new Representation(new List<SolidOperation>() { extrude });
+            envelopes.Add(new Envelope(input.Perimeter, envelopeElevation, tierHeight, Vector3.ZAxis, 0.0, null,
+                          new Transform(0, 0, envelopeElevation), envMatl, geomRep, false, Guid.NewGuid(), ""));
             // Create the remaining Envelope Elements.
             var offsFactor = -1;
             var elevFactor = 1;
@@ -86,10 +88,11 @@ namespace EnvelopeBySketch
                 {
                     polygon = polygon.Reversed();
                 }
-                extrude = new Elements.Geometry.Solids.Extrude(polygon, tierHeight, Vector3.ZAxis, false);
-                geomRep = new Representation(new List<Elements.Geometry.Solids.SolidOperation>() { extrude });
-                envelopes.Add(new Envelope(tryPer.First(), tierHeight * elevFactor, tierHeight, Vector3.ZAxis, 0.0,
-                              new Transform(0.0, 0.0, tierHeight * elevFactor), envMatl, geomRep, false, Guid.NewGuid(), ""));
+                extrude = new Extrude(polygon, tierHeight, Vector3.ZAxis, false);
+                geomRep = new Representation(new List<SolidOperation>() { extrude });
+                var elevation = envelopeElevation + (tierHeight * elevFactor);
+                envelopes.Add(new Envelope(tryPer.First(), elevation, tierHeight, Vector3.ZAxis, 0.0, null,
+                              new Transform(0.0, 0.0, elevation), envMatl, geomRep, false, Guid.NewGuid(), ""));
                 offsFactor--;
                 elevFactor++;
             }

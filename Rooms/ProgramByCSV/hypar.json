@@ -49,7 +49,10 @@
         "default": "Listed",
         "$hyparOrder": 3
       }
-    }
+    },
+    "required": [
+      "Program"
+    ]
   },
   "outputs": [
     {

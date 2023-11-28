@@ -10,7 +10,11 @@
   </ItemGroup>
 
   <PropertyGroup>
-    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>    
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
 
 </Project>

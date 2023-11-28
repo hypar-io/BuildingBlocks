@@ -7,6 +7,14 @@ namespace FloorsBySketch
 {
     public static class FloorsBySketch
     {
+        private const string ORIGINAL_BOUNDARY_KEY = "Original Boundary";
+        private const string BOUNDARY_KEY = "Boundary";
+        private const string CREATION_ID_KEY = "Creation Id";
+        private const double IDENTITY_CENTROID_DISTANCE_TOLERANCE = 0.01;
+
+        private readonly static double DEFAULT_FLOOR_THICKNESS = Units.FeetToMeters(1);
+
+        private readonly static double DEFAULT_FLOOR_TO_FLOOR_HEIGHT = Units.FeetToMeters(10);
         /// <summary>
         /// Create floors by drawing them manually.
         /// </summary>
@@ -25,101 +33,90 @@ namespace FloorsBySketch
             foreach (var floorInput in input.Floors)
             {
                 var f = new Floor(floorInput.Boundary, floorInput.Thickness, new Transform(0, 0, floorInput.Elevation), floorMaterial);
-                f.AdditionalProperties["Original Boundary"] = floorInput.Boundary;
-                f.AdditionalProperties["Boundary"] = floorInput.Boundary;
+                f.AdditionalProperties[ORIGINAL_BOUNDARY_KEY] = floorInput.Boundary;
+                f.AdditionalProperties[BOUNDARY_KEY] = floorInput.Boundary;
                 floors.Add(f);
             }
 
-            if (input.Overrides?.Additions?.Floors != null)
-            {
-                foreach (var floor in input.Overrides.Additions.Floors)
-                {
-                    var boundary = floor.Value.Boundary;
-                    var elevation = 0.0;
-                    var floorsUnderThisFloor = floors.Where(f => f.Profile.Contains(boundary.Centroid()));
-                    if (floorsUnderThisFloor.Count() > 0)
-                    {
-                        elevation = floorsUnderThisFloor.Max(f => f.Transform.Origin.Z) + 3.0;
-                    }
-                    var f = new Floor(floor.Value.Boundary, 0.3, new Transform(0, 0, elevation - 0.3), floorMaterial);
-                    f.AdditionalProperties["Original Boundary"] = floor.Value.Boundary;
-                    f.AdditionalProperties["Boundary"] = floor.Value.Boundary;
-                    f.AdditionalProperties["Creation Id"] = floor.Id;
-                    floors.Add(f);
-                    Identity.AddOverrideIdentity(f, floor);
+            var overridenFloors = input.Overrides.Floors.CreateElements(
+                input.Overrides.Additions.Floors,
+                input.Overrides.Removals.Floors,
+                (addition) => CreateFloor(addition.Id, addition.Value.Boundary, floors, floorMaterial),
+                (floor, identity) => IdentityMatch(floor, identity.CreationId.ToString(), identity.OriginalBoundary.Centroid()),
+                (floor, edit) => UpdateFloorBoundary(floor, edit),
+                floors
+            );
 
-                }
-            }
-            if (input.Overrides?.FloorProperties != null)
-            {
-                foreach (var floorPropertyOverride in input.Overrides.FloorProperties)
-                {
-                    var identityMatch = floors.FirstOrDefault(f => IdentityMatch(f, floorPropertyOverride));
-                    if (identityMatch != null)
-                    {
-                        identityMatch.Thickness = floorPropertyOverride.Value.Thickness;
-                        Identity.AddOverrideIdentity(identityMatch, floorPropertyOverride);
-                    }
-                }
-            }
+            overridenFloors = input.Overrides.FloorProperties.Apply(
+                overridenFloors,
+                (floor, identity) => IdentityMatch(floor, identity.CreationId.ToString(), identity.OriginalBoundary.Centroid()),
+                (floor, edit) => UpdateThickness(floor, edit)
+            );
 
-            if (input.Overrides?.FloorElevation != null)
-            {
-                foreach (var floorElevationOverride in input.Overrides.FloorElevation)
-                {
-                    var identityMatch = floors.FirstOrDefault(f => IdentityMatch(f, floorElevationOverride));
-                    if (identityMatch != null)
-                    {
-                        identityMatch.Transform = floorElevationOverride.Value.Transform;
-                        Identity.AddOverrideIdentity(identityMatch, floorElevationOverride);
-                    }
-                }
-            }
+            overridenFloors = input.Overrides.FloorElevation.Apply(
+                overridenFloors,
+                (floor, identity) => IdentityMatch(floor, identity.CreationId.ToString(), identity.OriginalBoundary.Centroid()),
+                (floor, edit) => UpdateElevation(floor, edit)
+            );
 
-            if (input.Overrides?.Floors != null)
-            {
-                foreach (var floorEditOverride in input.Overrides.Floors)
-                {
-                    var identityMatch = floors.FirstOrDefault(f => IdentityMatch(f, floorEditOverride));
-                    if (identityMatch != null)
-                    {
-                        identityMatch.Profile = floorEditOverride.Value.Boundary;
-                        identityMatch.AdditionalProperties["Boundary"] = floorEditOverride.Value.Boundary;
-                        Identity.AddOverrideIdentity(identityMatch, floorEditOverride);
-                    }
-                }
-            }
             var areaSum = floors.Sum(f => f.Profile.Area());
             var output = new FloorsBySketchOutputs(areaSum);
             var count = 1;
             foreach (var floorGrp in floors.OrderBy(f => f.Elevation).GroupBy(f => f.Elevation))
             {
-                var letter = 'A';
-                if (floorGrp.Count() == 1)
+                foreach (var floor in floorGrp)
                 {
-                    floorGrp.First().Name = $"Level {count++}";
+                    floor.Name = $"Level {count}";
                 }
-                else
-                {
-                    foreach (var floor in floorGrp)
-                    {
-                        floor.Name = $"Level {count}{letter++}";
-                    }
-                    count++;
-                }
+                count++;
             }
 
-            output.Model.AddElements(floors);
-
+            output.Model.AddElements(overridenFloors);
             return output;
         }
 
-        private static bool IdentityMatch(Floor f, IOverride floorPropertyOverride)
+        private static Floor CreateFloor(string additionId, Polygon additionBoundary, List<Floor> floors, Material floorMaterial)
         {
-            dynamic identity = floorPropertyOverride.GetIdentity();
-            f.AdditionalProperties.TryGetValue("Creation Id", out var creationId);
-            return creationId as string == identity.CreationId.ToString() ||
-            creationId == null && f.Profile.Perimeter.Centroid().DistanceTo(identity.OriginalBoundary.Centroid()) < 0.001;
+            var elevation = 0.0;
+            var floorsUnderThisFloor = floors.Where(f => f.Profile.Contains(additionBoundary.Centroid()));
+            if (floorsUnderThisFloor.Any())
+            {
+                elevation = floorsUnderThisFloor.Max(f => f.GetTopOfSlabElevation()) + DEFAULT_FLOOR_TO_FLOOR_HEIGHT;
+            }
+
+            var floor = new Floor(additionBoundary, DEFAULT_FLOOR_THICKNESS, new Transform(0, 0, elevation - DEFAULT_FLOOR_THICKNESS), floorMaterial);
+            floor.AdditionalProperties[ORIGINAL_BOUNDARY_KEY] = additionBoundary;
+            floor.AdditionalProperties[BOUNDARY_KEY] = additionBoundary;
+            floor.AdditionalProperties[CREATION_ID_KEY] = additionId;
+            floors.Add(floor);
+
+            return floor;
+        }
+
+        private static Floor UpdateFloorBoundary(Floor floor, FloorsOverride edit)
+        {
+            floor.Profile = edit.Value.Boundary;
+            floor.AdditionalProperties[BOUNDARY_KEY] = edit.Value.Boundary;
+            return floor;
+        }
+
+        private static Floor UpdateElevation(Floor floor, FloorElevationOverride edit)
+        {
+            floor.Transform = edit.Value.Transform ?? floor.Transform;
+            return floor;
+        }
+
+        private static Floor UpdateThickness(Floor floor, FloorPropertiesOverride edit)
+        {
+            floor.Thickness = edit.Value.Thickness;
+            return floor;
+        }
+
+        private static bool IdentityMatch(Floor f, string identityCreationId, Vector3 identityCentroid)
+        {
+            f.AdditionalProperties.TryGetValue(CREATION_ID_KEY, out var creationId);
+            return creationId as string == identityCreationId ||
+                creationId == null && f.Profile.Perimeter.Centroid().DistanceTo(identityCentroid) < IDENTITY_CENTROID_DISTANCE_TOLERANCE;
         }
     }
 }

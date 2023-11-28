@@ -22,15 +22,15 @@ namespace SimpleLevelsByEnvelope
 {
     #pragma warning disable // Disable all warnings
 
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v12.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v13.0.0.0)")]
     
-    public  class SimpleLevelsByEnvelopeInputs : S3Args
+    public  class SimpleLevelsByEnvelopeInputs : ArgsBase
     
     {
         [Newtonsoft.Json.JsonConstructor]
         
-        public SimpleLevelsByEnvelopeInputs(IList<double> @baseLevels, double @topLevelHeight, double @subgradeLevelHeight, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey):
-        base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
+        public SimpleLevelsByEnvelopeInputs(IList<double> @baseLevels, double @topLevelHeight, double @subgradeLevelHeight, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey):
+        base(modelInputKeys, gltfKey, elementsKey, ifcKey)
         {
             var validator = Validator.Instance.GetFirstValidatorForType<SimpleLevelsByEnvelopeInputs>();
             if(validator != null)

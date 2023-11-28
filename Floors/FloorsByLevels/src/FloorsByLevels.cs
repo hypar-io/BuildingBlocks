@@ -21,19 +21,24 @@ namespace FloorsByLevels
             // Extract LevelVolumes from Levels dependency
             var levels = new List<LevelPerimeter>();
             inputModels.TryGetValue("Levels", out var model);
+            var output = new FloorsByLevelsOutputs();
             if (model == null ||
                 (
                     model.AllElementsOfType<LevelPerimeter>().Count() == 0 &&
                     model.AllElementsOfType<LevelVolume>().Count() == 0
                 )
             )
+
             {
-                throw new ArgumentException("No LevelPerimeters found.");
+                output.Errors.Add($"No LevelPerimeters found in the model 'Levels'. Check the output from the function upstream that has a model output 'Levels'.");
+                return output;
             }
             var levelVolumes = model.AllElementsOfType<LevelVolume>();
             var floorMaterial = new Material("Concrete", new Color(0.34, 0.34, 0.34, 1.0), 0.3, 0.3);
 
             levels.AddRange(model.AllElementsOfType<LevelPerimeter>());
+
+
 
             // Extract shafts from Core dependency, if it exists
             var shafts = new List<Polygon>();
@@ -116,7 +121,8 @@ namespace FloorsByLevels
             }
             floors = floors.OrderBy(f => f.Elevation).ToList();
             floors.First().Transform.Move(new Vector3(0.0, 0.0, input.FloorThickness));
-            var output = new FloorsByLevelsOutputs(floorArea, floors.Count());
+            output.TotalArea = floorArea;
+            output.FloorQuantity = floors.Count();
             output.Model.AddElements(floors);
             return output;
         }

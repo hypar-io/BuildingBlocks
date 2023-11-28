@@ -19,10 +19,20 @@ namespace SimpleLevelsByEnvelope
         public static SimpleLevelsByEnvelopeOutputs Execute(Dictionary<string, Model> inputModels, SimpleLevelsByEnvelopeInputs input)
         {
             inputModels.TryGetValue("Envelope", out var model);
-            if (model == null || model.AllElementsOfType<Envelope>().Count() == 0)
+            var output = new SimpleLevelsByEnvelopeOutputs();
+
+            if (model == null)
             {
-                throw new ArgumentException("No Envelope found.");
+                output.Errors.Add("The model output named 'Envelope' could not be found. Check the upstream functions for errors.");
+                return output;
             }
+            else if (!model.AllElementsOfType<Envelope>().Any())
+            {
+                output.Errors.Add($"No Envelopes found in the model 'Envelope'. Check the output from the function upstream that has a model output 'Envelope'.");
+                return output;
+            }
+
+
             var envelopes = model.AllElementsOfType<Envelope>();
             CorrectEnvelopeHeightsAndElevations(envelopes);
             var envelopesOrdered = envelopes.OrderBy(e => e.Elevation);
@@ -41,13 +51,22 @@ namespace SimpleLevelsByEnvelope
             while (currentLevel < maxElevation - input.TopLevelHeight - minLevelHeight)
             {
                 Console.WriteLine($"Adding Level {levels.Count + 1:0} at elevation {currentLevel}");
-                levels.Add(new Level(currentLevel, Guid.NewGuid(), $"Level {levels.Count + 1:0}"));
-                currentLevel += input.BaseLevels[Math.Min(heightIndex++, input.BaseLevels.Count - 1)];
+                var height = input.BaseLevels[Math.Min(heightIndex++, input.BaseLevels.Count - 1)];
+                levels.Add(new Level(currentLevel, height, Guid.NewGuid(), Guid.NewGuid(), $"Level {levels.Count + 1:0}"));
+                currentLevel += height;
+            }
+
+            if (!levels.Any())
+            {
+                output.Errors.Add($"Not enough space in 'Envelope' to create levels. Check 'Envelope' height or levels height.");
+                return output;
             }
 
             // penthouse + roof level
-            levels.Add(new Level(maxElevation - input.TopLevelHeight, Guid.NewGuid(), "Penthouse Level"));
-            levels.Add(new Level(maxElevation, Guid.NewGuid(), "Roof Level"));
+            var topLevelElevation = maxElevation - input.TopLevelHeight;
+            levels.Last().Height = topLevelElevation - levels.Last().Elevation;
+            levels.Add(new Level(maxElevation - input.TopLevelHeight, input.TopLevelHeight, Guid.NewGuid(), Guid.NewGuid(), "Penthouse Level"));
+            levels.Add(new Level(maxElevation, null, Guid.NewGuid(), Guid.NewGuid(), "Roof Level"));
 
             if (minElevation < grade)
             {
@@ -56,11 +75,12 @@ namespace SimpleLevelsByEnvelope
                 var subgradeLevelCounter = 1;
                 while (currentLevel > minElevation + input.SubgradeLevelHeight)
                 {
-                    levels.Add(new Level(currentLevel, Guid.NewGuid(), $"Level B{subgradeLevelCounter:0}"));
+                    levels.Add(new Level(currentLevel, input.SubgradeLevelHeight, Guid.NewGuid(), Guid.NewGuid(), $"Level B{subgradeLevelCounter:0}"));
                     currentLevel -= input.SubgradeLevelHeight;
                     subgradeLevelCounter++;
                 }
-                levels.Add(new Level(minElevation, Guid.NewGuid(), $"Level B{subgradeLevelCounter:0}"));
+                var lowestLevelHeight = currentLevel + input.SubgradeLevelHeight - minElevation;
+                levels.Add(new Level(minElevation, lowestLevelHeight, Guid.NewGuid(), Guid.NewGuid(), $"Level B{subgradeLevelCounter:0}"));
             }
 
             LevelMaterial = BuiltInMaterials.Glass;
@@ -101,7 +121,7 @@ namespace SimpleLevelsByEnvelope
                 { // if this was a subgrade envelope, let's not consider levels above grade.
                     continue;
                 }
-                // We want to make sure we start a level at the very base of the envelope. 
+                // We want to make sure we start a level at the very base of the envelope.
                 var aboveGradeLevelsWithinEnvelope = aboveGradeLevels.Where(l => l.Elevation > min + minLevelHeight && l.Elevation < max - minLevelHeight).ToList();
                 var nameForMin = aboveGradeLevels.LastOrDefault(l => l.Elevation < min + minLevelHeight)?.Name ?? "";
                 for (int i = -1; i < aboveGradeLevelsWithinEnvelope.Count(); i++)
@@ -124,8 +144,10 @@ namespace SimpleLevelsByEnvelope
                     areaTotal += levelArea;
                 }
             }
-
-            var output = new SimpleLevelsByEnvelopeOutputs(levels.Count, areaTotal, subGradeArea, aboveGradeArea);
+            output.LevelQuantity = levels.Count;
+            output.TotalLevelArea = areaTotal;
+            output.SubgradeLevelArea = subGradeArea;
+            output.AboveGradeLevelArea = aboveGradeArea;
             output.Model.AddElements(scopes);
             output.Model.AddElements(levels.OrderByDescending(l => l.Elevation));
             output.Model.AddElements(levelPerimeters);

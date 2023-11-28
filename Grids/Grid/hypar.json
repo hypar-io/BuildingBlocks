@@ -21,6 +21,10 @@
       "optional": true
     },
     {
+      "name": "Conceptual Mass",
+      "optional": true
+    },
+    {
       "autohide": false,
       "name": "Floors",
       "optional": true
@@ -181,7 +185,7 @@
             },
             "Orientation": {
               "description": "The origin and rotation of your grid",
-              "$ref": "https://prod-api.hypar.io/schemas/Transform",
+              "$ref": "https://schemas.hypar.io/Transform.json",
               "$hyparDeprecated": true,
               "$hyparConstraints": {
                 "enableTranslation": [
@@ -499,7 +503,7 @@
       "paradigm": "edit",
       "schema": {
         "Transform": {
-          "$ref": "https://prod-api.hypar.io/schemas/Transform",
+          "$ref": "https://schemas.hypar.io/Transform.json",
           "$hyparConstraints": {
             "enableTranslation": [
               "x",
@@ -526,7 +530,7 @@
       "paradigm": "edit",
       "schema": {
         "Extents": {
-          "$ref": "https://hypar.io/Schemas/Geometry/Polygon.json"
+          "$ref": "https://schemas.hypar.io/Polygon.json"
         }
       }
     },
@@ -540,7 +544,7 @@
       "paradigm": "edit",
       "schema": {
         "UGrid": {
-          "$ref": "https://prod-api.hypar.io/schemas/Grid1dInput",
+          "$ref": "https://schemas.hypar.io/Grid1dInput.json",
           "$hyparCanEditGridCurve": true
         }
       }
@@ -555,7 +559,7 @@
       "paradigm": "edit",
       "schema": {
         "VGrid": {
-          "$ref": "https://prod-api.hypar.io/schemas/Grid1dInput",
+          "$ref": "https://schemas.hypar.io/Grid1dInput.json",
           "$hyparCanEditGridCurve": true
         }
       }
@@ -584,10 +588,10 @@
   },
   "outputs": [],
   "element_types": [
-    "https://prod-api.hypar.io/schemas/Envelope",
-    "https://prod-api.hypar.io/schemas/Grid2dElement",
-    "http://prod-api.hypar.io/schemas/Roof",
-    "https://prod-api.hypar.io/schemas/LevelVolume"
+    "https://schemas.hypar.io/Envelope.json",
+    "https://schemas.hypar.io/Grid2dElement.json",
+    "https://schemas.hypar.io/Roof.json",
+    "https://schemas.hypar.io/LevelVolume.json"
   ],
   "repository_url": "",
   "source_file_key": null,

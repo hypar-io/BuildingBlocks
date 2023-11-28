@@ -11,4 +11,7 @@
     <ProjectReference Include="..\src\EmergencyEgress.csproj" />
   </ItemGroup>
 
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
 </Project>
