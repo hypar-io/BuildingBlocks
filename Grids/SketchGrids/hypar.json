@@ -68,7 +68,7 @@
     }
   ],
   "element_types": [
-    "https://prod-api.hypar.io/schemas/ConceptualMass"
+    "https://schemas.hypar.io/ConceptualMass.json"
   ],
   "model_output": "Grids",
   "repository_url": "https://github.com/hypar-io/function",

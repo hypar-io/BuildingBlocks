@@ -17,16 +17,13 @@ namespace SketchGrids
     public class SketchGridsOutputs: SystemResults
     {
 
-
         /// <summary>
         /// Construct a SketchGridsOutputs with default inputs.
         /// This should be used for testing only.
         /// </summary>
         public SketchGridsOutputs() : base()
         {
-
         }
-
 
 	}
 }

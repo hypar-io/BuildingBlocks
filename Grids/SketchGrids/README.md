@@ -15,3 +15,7 @@ Generate grids automatically from conceptual masses or sketch grid lines.
 |Output Name|Type|Description|
 |---|---|---|
 
+
+<br>
+
+## Additional Information
