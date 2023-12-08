@@ -290,15 +290,16 @@ namespace SketchGrids
     
     {
         [Newtonsoft.Json.JsonConstructor]
-        public GridLinesValue(Line @curve)
+        public GridLinesValue(Line @curve, string @name)
         {
             var validator = Validator.Instance.GetFirstValidatorForType<GridLinesValue>();
             if(validator != null)
             {
-                validator.PreConstruct(new object[]{ @curve});
+                validator.PreConstruct(new object[]{ @curve, @name});
             }
         
             this.Curve = @curve;
+            this.Name = @name;
         
             if(validator != null)
             {
@@ -308,6 +309,10 @@ namespace SketchGrids
     
         [Newtonsoft.Json.JsonProperty("Curve", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public Line Curve { get; set; }
+    
+        /// <summary>The name of the grid line.</summary>
+        [Newtonsoft.Json.JsonProperty("Name", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Name { get; set; }
     
     }
     
@@ -317,15 +322,16 @@ namespace SketchGrids
     
     {
         [Newtonsoft.Json.JsonConstructor]
-        public GridLinesOverrideAdditionValue(Line @curve)
+        public GridLinesOverrideAdditionValue(Line @curve, string @name)
         {
             var validator = Validator.Instance.GetFirstValidatorForType<GridLinesOverrideAdditionValue>();
             if(validator != null)
             {
-                validator.PreConstruct(new object[]{ @curve});
+                validator.PreConstruct(new object[]{ @curve, @name});
             }
         
             this.Curve = @curve;
+            this.Name = @name;
         
             if(validator != null)
             {
@@ -335,6 +341,10 @@ namespace SketchGrids
     
         [Newtonsoft.Json.JsonProperty("Curve", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public Line Curve { get; set; }
+    
+        /// <summary>The name of the grid line.</summary>
+        [Newtonsoft.Json.JsonProperty("Name", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Name { get; set; }
     
     }
 }

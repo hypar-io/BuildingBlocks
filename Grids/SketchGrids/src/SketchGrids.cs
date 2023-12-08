@@ -34,7 +34,8 @@ namespace SketchGrids
                 var gridLine = new GridLine()
                 {
                     Curve = addition.Value.Curve,
-                    Material = gridMaterial
+                    Material = gridMaterial,
+                    Name = addition.Value.Name
                 };
                 gridLine.AdditionalProperties["Creation Id"] = addition.Id;
                 return gridLine;
@@ -44,10 +45,9 @@ namespace SketchGrids
             }, (gl, glo) =>
             {
                 gl.Curve = glo.Value.Curve;
+                gl.Name = glo.Value.Name;
                 return gl;
             });
-
-            output.Model.AddElements(gridLines);
 
             if (inputModels.ContainsKey("Conceptual Mass"))
             {
@@ -175,9 +175,19 @@ namespace SketchGrids
 
             output.Model.AddElements(gridLines);
 
+            var texts = new List<(Vector3 location, Vector3 facingDirection, Vector3 lineDirection, string text, Color? color)>();
+            var start = 0;
+            foreach (var gridLine in gridLines)
+            {
+                var t = gridLine.GetCircleTransform();
+                texts.Add(((t.Origin.X, t.Origin.Y), Vector3.ZAxis, Vector3.XAxis, $"{gridLine.Name ?? "XXX"}", Colors.Black));
+                start++;
+            }
+            output.Model.AddElement(new ModelText(texts, FontSize.PT60, scale: 50));
+
             var network = Network<GridLine>.FromSegmentableItems(gridLines, (gl) => { return (Line)gl.Curve; }, out var allNodeLocations, out _);
 
-            var r = new Random();
+            var r = new Random(); // testY
 
             var closedRegions = network.FindAllClosedRegions(allNodeLocations);
             foreach (var cr in closedRegions)

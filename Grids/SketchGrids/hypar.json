@@ -22,7 +22,7 @@
   },
   "filters": {
     "Grids": {
-      "context": "[*discriminator=Elements.GridLine]",
+      "context": "[*discriminator=Elements.ModelText|discriminator=Elements.GridLine]",
       "default": true
     },
     "Grid Cells": {
@@ -43,6 +43,10 @@
           "$ref": "https://hypar.io/Schemas/Geometry/Line.json",
           "$hyparAllowIntersection": true,
           "$hyparContinueDrawing": true
+        },
+        "Name": {
+          "description": "The name of the grid line.",
+          "type": "string"
         }
       },
       "behaviors": {
@@ -52,6 +56,10 @@
               "$ref": "https://hypar.io/Schemas/Geometry/Line.json",
               "$hyparAllowIntersection": true,
               "$hyparContinueDrawing": true
+            },
+            "Name": {
+              "description": "The name of the grid line.",
+              "type": "string"
             }
           }
         },
