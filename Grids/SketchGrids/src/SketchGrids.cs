@@ -38,23 +38,24 @@ namespace SketchGrids
                 CreateGridLinesForConceptualMass(inputModels, input, gridMaterial, gridLines);
             }
 
-            gridLines = input.Overrides.GridLines.CreateElements(input.Overrides.Additions.GridLines, input.Overrides.Removals.GridLines, (addition) =>
+            gridLines = input.Overrides.GridLines.CreateElements(input.Overrides.Additions.GridLines, input.Overrides.Removals.GridLines,
+            (add) =>
             {
                 var gridLine = new GridLine()
                 {
-                    Curve = addition.Value.Curve,
+                    Curve = add.Value.Curve,
                     Material = gridMaterial,
-                    Name = addition.Value.Name ?? "XXX"
+                    Name = add.Value.Name ?? "XXX"
                 };
-                gridLine.AdditionalProperties["Creation Id"] = addition.Id;
+                gridLine.AdditionalProperties["Creation Id"] = add.Id;
                 return gridLine;
-            }, (gl, gli) =>
+            }, (gl, identity) =>
             {
-                return Guid.Parse((string)gl.AdditionalProperties["Creation Id"]) == gli.CreationId;
-            }, (gl, glo) =>
+                return Guid.Parse((string)gl.AdditionalProperties["Creation Id"]) == identity.CreationId;
+            }, (gl, @override) =>
             {
-                gl.Curve = glo.Value.Curve;
-                gl.Name = glo.Value.Name ?? "XXX";
+                gl.Curve = @override.Value.Curve;
+                gl.Name = @override.Value.Name ?? "XXX";
                 return gl;
             }, gridLines);
 
@@ -177,33 +178,8 @@ namespace SketchGrids
             foreach (var profileVoid in allVoids)
             {
                 var holeGridLines = new List<Line>();
-                var offsetHull = profileVoid.Offset(1)[0];
-                // foreach (var segment in profileVoid.Offset(input.OffsetDistanceFromConceptualMass)[0].Segments())
-                // {
-                //     var d = segment.Direction();
-                //     var startRay = new Ray(segment.Start, d.Negate());
-                //     var endRay = new Ray(segment.End, d);
-                //     var startX = new List<Vector3>();
-                //     var endX = new List<Vector3>();
-                //     foreach (var gridLine in gridLines)
-                //     {
-                //         if (startRay.Intersects(gridLine.Curve as Line, out Vector3 startResult))
-                //         {
-                //             startX.Add(startResult);
-                //         }
-                //         if (endRay.Intersects(gridLine.Curve as Line, out Vector3 endResult))
-                //         {
-                //             endX.Add(endResult);
-                //         }    
-                //     }
-                //     startX.Sort(new DistanceComparer(segment.Start));
-                //     endX.Sort(new DistanceComparer(segment.End));
+                var offsetHull = profileVoid.Offset(input.OffsetDistanceFromConceptualMass)[0];
 
-                //     var newGridLine = new Line(startX[0], endX[0]);
-
-                //     // Add these to a separate collection so we don't test against them.
-                //     holeGridLines.Add(newGridLine);
-                // }
                 foreach (var segment in offsetHull.Segments())
                 {
                     holeGridLines.Add(segment);
