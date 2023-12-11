@@ -42,11 +42,12 @@
         "Curve": {
           "$ref": "https://hypar.io/Schemas/Geometry/Line.json",
           "$hyparAllowIntersection": true,
-          "$hyparContinueDrawing": true
+          "$hyparContinueDrawing": false
         },
         "Name": {
           "description": "The name of the grid line.",
-          "type": "string"
+          "type": "string",
+          "default": "XXX"
         }
       },
       "behaviors": {
@@ -55,11 +56,12 @@
             "Curve": {
               "$ref": "https://hypar.io/Schemas/Geometry/Line.json",
               "$hyparAllowIntersection": true,
-              "$hyparContinueDrawing": true
+              "$hyparContinueDrawing": false
             },
             "Name": {
               "description": "The name of the grid line.",
-              "type": "string"
+              "type": "string",
+              "default": "XXX"
             }
           }
         },

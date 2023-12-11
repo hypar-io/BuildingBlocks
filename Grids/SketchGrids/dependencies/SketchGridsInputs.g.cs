@@ -312,7 +312,7 @@ namespace SketchGrids
     
         /// <summary>The name of the grid line.</summary>
         [Newtonsoft.Json.JsonProperty("Name", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Name { get; set; }
+        public string Name { get; set; } = "XXX";
     
     }
     
@@ -344,7 +344,7 @@ namespace SketchGrids
     
         /// <summary>The name of the grid line.</summary>
         [Newtonsoft.Json.JsonProperty("Name", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Name { get; set; }
+        public string Name { get; set; } = "XXX";
     
     }
 }

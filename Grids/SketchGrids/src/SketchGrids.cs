@@ -22,6 +22,8 @@ namespace SketchGrids
             {
                 WidthMode = EdgeDisplayWidthMode.ScreenUnits,
                 LineWidth = 1,
+                DashSize = 40,
+                // DashMode = EdgeDisplayDashMode.ScreenUnits
             };
 
             var gridMaterial = new Material("Grid Line", Colors.Darkgray)
@@ -29,13 +31,20 @@ namespace SketchGrids
                 EdgeDisplaySettings = edgeDisplaySettings
             };
 
-            var gridLines = input.Overrides.GridLines.CreateElements(input.Overrides.Additions.GridLines, input.Overrides.Removals.GridLines, (addition) =>
+            var gridLines = new List<GridLine>();
+
+            if (inputModels.ContainsKey("Conceptual Mass"))
+            {
+                CreateGridLinesForConceptualMass(inputModels, input, gridMaterial, gridLines);
+            }
+
+            gridLines = input.Overrides.GridLines.CreateElements(input.Overrides.Additions.GridLines, input.Overrides.Removals.GridLines, (addition) =>
             {
                 var gridLine = new GridLine()
                 {
                     Curve = addition.Value.Curve,
                     Material = gridMaterial,
-                    Name = addition.Value.Name
+                    Name = addition.Value.Name ?? "XXX"
                 };
                 gridLine.AdditionalProperties["Creation Id"] = addition.Id;
                 return gridLine;
@@ -45,143 +54,17 @@ namespace SketchGrids
             }, (gl, glo) =>
             {
                 gl.Curve = glo.Value.Curve;
-                gl.Name = glo.Value.Name;
+                gl.Name = glo.Value.Name ?? "XXX";
                 return gl;
-            });
-
-            if (inputModels.ContainsKey("Conceptual Mass"))
-            {
-                var conceptualMasses = inputModels["Conceptual Mass"].AllElementsOfType<ConceptualMass>();
-
-                // Find the outer bounds of all the conceptual masses.
-                // This will be used to extend grids to cover the whole mass.
-                // var hull = ConvexHull.FromPolylines(conceptualMasses.Select(m => m.Profile.Perimeter));
-                // var offsetHull = hull.Offset(2)[0];
-
-                // TODO: Create an input for structural offset
-                var gridIndex = 0;
-                var allVoids = new List<Polygon>();
-
-                foreach (var conceptualMass in conceptualMasses)
-                {
-                    var offsetHull = conceptualMass.Profile.Perimeter.Offset(1)[0];
-
-                    conceptualMass.UpdateRepresentations();
-                    conceptualMass.UpdateBoundsAndComputeSolid();
-
-                    if (conceptualMass.Skeleton != null)
-                    {
-                        // Create grids for the skeleton
-                        if (input.AddSkeletonGrids)
-                        {
-                            foreach (var edge in conceptualMass.Skeleton)
-                            {
-                                var newGridLine = edge.ExtendTo(offsetHull);
-                                CheckAndCreateGridline(newGridLine, gridLines, ref gridIndex, gridMaterial);
-                            }
-                        }
-
-                        var allPerimeters = new List<Polygon>();
-
-                        if (conceptualMass.Profile != null && conceptualMass.Profile.Voids != null)
-                        {
-                            allPerimeters.Add(conceptualMass.Profile.Perimeter);
-                            foreach (var profileVoid in conceptualMass.Profile.Voids)
-                            {
-                                allVoids.Add(profileVoid);
-                            }
-                        }
-
-                        // Offset perimeters to the inside.
-                        foreach (var cutPerimeter in allPerimeters)
-                        {
-                            foreach (var segment in cutPerimeter.Offset(-input.OffsetDistanceFromConceptualMass)[0].Segments())
-                            {
-                                var newGridLine = segment.ExtendTo(offsetHull);
-                                CheckAndCreateGridline(newGridLine, gridLines, ref gridIndex, gridMaterial);
-                            }
-                        }
-
-                        // TODO: Are there ever holes in a skeleton mass?
-                        // Offset holes to the outside.
-                        // foreach (var cutVoid in allVoids)
-                        // {
-                        //     foreach (var segment in cutVoid.Offset(-structuralOffset)[0].Segments())
-                        //     {
-                        //         var newGridLine = segment.ExtendTo(offsetHull);
-                        //         CheckAndCreateGridline(newGridLine, gridLines, ref gridIndex, gridMaterial);
-                        //     }
-                        // }
-                    }
-                    else
-                    {
-                        foreach (var segment in conceptualMass.Profile.Perimeter.Offset(-input.OffsetDistanceFromConceptualMass)[0].Segments())
-                        {
-                            var newGridLine = segment.ExtendTo(offsetHull);
-                            CheckAndCreateGridline(newGridLine, gridLines, ref gridIndex, gridMaterial);
-                        }
-
-                        if (conceptualMass.Profile.Voids != null)
-                        {
-                            allVoids.AddRange(conceptualMass.Profile.Voids);
-                        }
-                    }
-                }
-
-                // We process the voids last so that we have all grids
-                // created from the faces of the conceptual masses to respond
-                // to. This will create the shortest spanning edge grids for holes.
-                foreach (var profileVoid in allVoids)
-                {
-                    var holeGridLines = new List<Line>();
-                    var offsetHull = profileVoid.Offset(1)[0];
-                    // foreach (var segment in profileVoid.Offset(input.OffsetDistanceFromConceptualMass)[0].Segments())
-                    // {
-                    //     var d = segment.Direction();
-                    //     var startRay = new Ray(segment.Start, d.Negate());
-                    //     var endRay = new Ray(segment.End, d);
-                    //     var startX = new List<Vector3>();
-                    //     var endX = new List<Vector3>();
-                    //     foreach (var gridLine in gridLines)
-                    //     {
-                    //         if (startRay.Intersects(gridLine.Curve as Line, out Vector3 startResult))
-                    //         {
-                    //             startX.Add(startResult);
-                    //         }
-                    //         if (endRay.Intersects(gridLine.Curve as Line, out Vector3 endResult))
-                    //         {
-                    //             endX.Add(endResult);
-                    //         }    
-                    //     }
-                    //     startX.Sort(new DistanceComparer(segment.Start));
-                    //     endX.Sort(new DistanceComparer(segment.End));
-
-                    //     var newGridLine = new Line(startX[0], endX[0]);
-
-                    //     // Add these to a separate collection so we don't test against them.
-                    //     holeGridLines.Add(newGridLine);
-                    // }
-                    foreach (var segment in offsetHull.Segments())
-                    {
-                        holeGridLines.Add(segment);
-                    }
-
-                    foreach (var holeGridLine in holeGridLines)
-                    {
-                        CheckAndCreateGridline(holeGridLine, gridLines, ref gridIndex, gridMaterial);
-                    }
-                }
-            }
+            }, gridLines);
 
             output.Model.AddElements(gridLines);
 
             var texts = new List<(Vector3 location, Vector3 facingDirection, Vector3 lineDirection, string text, Color? color)>();
-            var start = 0;
             foreach (var gridLine in gridLines)
             {
                 var t = gridLine.GetCircleTransform();
                 texts.Add(((t.Origin.X, t.Origin.Y), Vector3.ZAxis, Vector3.XAxis, $"{gridLine.Name ?? "XXX"}", Colors.Black));
-                start++;
             }
             output.Model.AddElement(new ModelText(texts, FontSize.PT60, scale: 50));
 
@@ -189,7 +72,7 @@ namespace SketchGrids
 
             var r = new Random(); // testY
 
-            var closedRegions = network.FindAllClosedRegions(allNodeLocations);
+            var closedRegions = network.FindAllClosedRegions(allNodeLocations).SkipLast(1);
             foreach (var cr in closedRegions)
             {
                 try
@@ -225,6 +108,133 @@ namespace SketchGrids
             return output;
         }
 
+        private static void CreateGridLinesForConceptualMass(Dictionary<string, Model> inputModels,
+                                                             SketchGridsInputs input,
+                                                             Material gridMaterial,
+                                                             List<GridLine> gridLines)
+        {
+            var conceptualMasses = inputModels["Conceptual Mass"].AllElementsOfType<ConceptualMass>();
+
+            // Find the outer bounds of all the conceptual masses.
+            // This will be used to extend grids to cover the whole mass.
+            // var hull = ConvexHull.FromPolylines(conceptualMasses.Select(m => m.Profile.Perimeter));
+            // var offsetHull = hull.Offset(2)[0];
+
+            // TODO: Create an input for structural offset
+            var gridIndex = 0;
+            var allVoids = new List<Polygon>();
+
+            foreach (var conceptualMass in conceptualMasses)
+            {
+                var offsetHull = conceptualMass.Profile.Perimeter.Offset(1)[0];
+
+                conceptualMass.UpdateRepresentations();
+                conceptualMass.UpdateBoundsAndComputeSolid();
+
+                if (conceptualMass.Skeleton != null)
+                {
+                    // Create grids for the skeleton
+                    if (input.AddSkeletonGrids)
+                    {
+                        foreach (var edge in conceptualMass.Skeleton)
+                        {
+                            var newGridLine = edge.ExtendTo(offsetHull);
+                            CheckAndCreateGridline(newGridLine, gridLines, ref gridIndex, gridMaterial);
+                        }
+                    }
+
+                    var allPerimeters = new List<Polygon>();
+
+                    if (conceptualMass.Profile != null && conceptualMass.Profile.Voids != null)
+                    {
+                        allPerimeters.Add(conceptualMass.Profile.Perimeter);
+                        foreach (var profileVoid in conceptualMass.Profile.Voids)
+                        {
+                            allVoids.Add(profileVoid);
+                        }
+                    }
+
+                    // Offset perimeters to the inside.
+                    foreach (var cutPerimeter in allPerimeters)
+                    {
+                        foreach (var segment in cutPerimeter.Offset(-input.OffsetDistanceFromConceptualMass)[0].Segments())
+                        {
+                            var newGridLine = segment.ExtendTo(offsetHull);
+                            CheckAndCreateGridline(newGridLine, gridLines, ref gridIndex, gridMaterial);
+                        }
+                    }
+
+                    // TODO: Are there ever holes in a skeleton mass?
+                    // Offset holes to the outside.
+                    // foreach (var cutVoid in allVoids)
+                    // {
+                    //     foreach (var segment in cutVoid.Offset(-structuralOffset)[0].Segments())
+                    //     {
+                    //         var newGridLine = segment.ExtendTo(offsetHull);
+                    //         CheckAndCreateGridline(newGridLine, gridLines, ref gridIndex, gridMaterial);
+                    //     }
+                    // }
+                }
+                else
+                {
+                    foreach (var segment in conceptualMass.Profile.Perimeter.Offset(-input.OffsetDistanceFromConceptualMass)[0].Segments())
+                    {
+                        var newGridLine = segment.ExtendTo(offsetHull);
+                        CheckAndCreateGridline(newGridLine, gridLines, ref gridIndex, gridMaterial);
+                    }
+
+                    if (conceptualMass.Profile.Voids != null)
+                    {
+                        allVoids.AddRange(conceptualMass.Profile.Voids);
+                    }
+                }
+            }
+
+            // We process the voids last so that we have all grids
+            // created from the faces of the conceptual masses to respond
+            // to. This will create the shortest spanning edge grids for holes.
+            foreach (var profileVoid in allVoids)
+            {
+                var holeGridLines = new List<Line>();
+                var offsetHull = profileVoid.Offset(1)[0];
+                // foreach (var segment in profileVoid.Offset(input.OffsetDistanceFromConceptualMass)[0].Segments())
+                // {
+                //     var d = segment.Direction();
+                //     var startRay = new Ray(segment.Start, d.Negate());
+                //     var endRay = new Ray(segment.End, d);
+                //     var startX = new List<Vector3>();
+                //     var endX = new List<Vector3>();
+                //     foreach (var gridLine in gridLines)
+                //     {
+                //         if (startRay.Intersects(gridLine.Curve as Line, out Vector3 startResult))
+                //         {
+                //             startX.Add(startResult);
+                //         }
+                //         if (endRay.Intersects(gridLine.Curve as Line, out Vector3 endResult))
+                //         {
+                //             endX.Add(endResult);
+                //         }    
+                //     }
+                //     startX.Sort(new DistanceComparer(segment.Start));
+                //     endX.Sort(new DistanceComparer(segment.End));
+
+                //     var newGridLine = new Line(startX[0], endX[0]);
+
+                //     // Add these to a separate collection so we don't test against them.
+                //     holeGridLines.Add(newGridLine);
+                // }
+                foreach (var segment in offsetHull.Segments())
+                {
+                    holeGridLines.Add(segment);
+                }
+
+                foreach (var holeGridLine in holeGridLines)
+                {
+                    CheckAndCreateGridline(holeGridLine, gridLines, ref gridIndex, gridMaterial);
+                }
+            }
+        }
+
         private static void CheckAndCreateGridline(Line newGridLine, List<GridLine> gridLines, ref int gridIndex, Material gridMaterial)
         {
             var directionReference = new Vector3(1, -1);
@@ -233,6 +243,7 @@ namespace SketchGrids
             {
                 return;
             }
+
             var d = newGridLine.Direction();
             var dot = directionReference.Dot(d);
 
@@ -242,6 +253,7 @@ namespace SketchGrids
                 Name = gridIndex.ToString(),
                 Material = gridMaterial
             };
+            gl.AdditionalProperties["Creation Id"] = Guid.NewGuid().ToString();
             gridLines.Add(gl);
             gridIndex++;
         }
