@@ -263,15 +263,15 @@ namespace SketchGrids
     
     {
         [Newtonsoft.Json.JsonConstructor]
-        public GridLinesIdentity(System.Guid @creationId)
+        public GridLinesIdentity(Line @curve)
         {
             var validator = Validator.Instance.GetFirstValidatorForType<GridLinesIdentity>();
             if(validator != null)
             {
-                validator.PreConstruct(new object[]{ @creationId});
+                validator.PreConstruct(new object[]{ @curve});
             }
         
-            this.CreationId = @creationId;
+            this.Curve = @curve;
         
             if(validator != null)
             {
@@ -279,8 +279,8 @@ namespace SketchGrids
             }
         }
     
-        [Newtonsoft.Json.JsonProperty("Creation Id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Guid CreationId { get; set; }
+        [Newtonsoft.Json.JsonProperty("Curve", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public Line Curve { get; set; }
     
     }
     

@@ -33,9 +33,8 @@
     "Grid Lines": {
       "context": "[*discriminator=Elements.GridLine]",
       "identity": {
-        "Creation Id": {
-          "type": "string",
-          "format": "uuid"
+        "Curve": {
+          "$ref": "https://hypar.io/Schemas/Geometry/Line.json"
         }
       },
       "schema": {

@@ -51,7 +51,7 @@ namespace SketchGrids
                 return gridLine;
             }, (gl, identity) =>
             {
-                return Guid.Parse((string)gl.AdditionalProperties["Creation Id"]) == identity.CreationId;
+                return identity.Curve != null && ((Line)gl.Curve).IsAlmostEqualTo(identity.Curve, false);
             }, (gl, @override) =>
             {
                 gl.Curve = @override.Value.Curve;
@@ -97,12 +97,6 @@ namespace SketchGrids
         {
             var conceptualMasses = inputModels["Conceptual Mass"].AllElementsOfType<ConceptualMass>();
 
-            // Find the outer bounds of all the conceptual masses.
-            // This will be used to extend grids to cover the whole mass.
-            // var hull = ConvexHull.FromPolylines(conceptualMasses.Select(m => m.Profile.Perimeter));
-            // var offsetHull = hull.Offset(2)[0];
-
-            // TODO: Create an input for structural offset
             var gridIndex = 0;
             var allVoids = new List<Polygon>();
 
@@ -121,7 +115,7 @@ namespace SketchGrids
                         foreach (var edge in conceptualMass.Skeleton)
                         {
                             var newGridLine = edge.ExtendTo(offsetHull);
-                            CheckAndCreateGridline(newGridLine, gridLines, ref gridIndex, gridMaterial);
+                            CheckAndCreateGridline(newGridLine, gridLines, ref gridIndex, gridMaterial, input);
                         }
                     }
 
@@ -142,7 +136,7 @@ namespace SketchGrids
                         foreach (var segment in cutPerimeter.Offset(-input.OffsetDistanceFromConceptualMass)[0].Segments())
                         {
                             var newGridLine = segment.ExtendTo(offsetHull);
-                            CheckAndCreateGridline(newGridLine, gridLines, ref gridIndex, gridMaterial);
+                            CheckAndCreateGridline(newGridLine, gridLines, ref gridIndex, gridMaterial, input);
                         }
                     }
 
@@ -162,7 +156,7 @@ namespace SketchGrids
                     foreach (var segment in conceptualMass.Profile.Perimeter.Offset(-input.OffsetDistanceFromConceptualMass)[0].Segments())
                     {
                         var newGridLine = segment.ExtendTo(offsetHull);
-                        CheckAndCreateGridline(newGridLine, gridLines, ref gridIndex, gridMaterial);
+                        CheckAndCreateGridline(newGridLine, gridLines, ref gridIndex, gridMaterial, input);
                     }
 
                     if (conceptualMass.Profile.Voids != null)
@@ -187,32 +181,46 @@ namespace SketchGrids
 
                 foreach (var holeGridLine in holeGridLines)
                 {
-                    CheckAndCreateGridline(holeGridLine, gridLines, ref gridIndex, gridMaterial);
+                    CheckAndCreateGridline(holeGridLine, gridLines, ref gridIndex, gridMaterial, input);
                 }
             }
         }
 
-        private static void CheckAndCreateGridline(Line newGridLine, List<GridLine> gridLines, ref int gridIndex, Material gridMaterial)
+        private static void CheckAndCreateGridline(Line newGridLine,
+                                                   List<GridLine> gridLines,
+                                                   ref int gridIndex,
+                                                   Material gridMaterial,
+                                                   SketchGridsInputs input)
         {
-            var directionReference = new Vector3(1, -1);
-
             if (gridLines.Any(gl => (gl.Curve as Line).IsAlmostEqualTo(newGridLine, false)))
             {
                 return;
             }
 
-            var d = newGridLine.Direction();
-            var dot = directionReference.Dot(d);
+            GridLinesOverride matchingEditOverride = null;
+            if (input.Overrides?.GridLines != null)
+            {
+                matchingEditOverride = input.Overrides.GridLines.FirstOrDefault((glo) => glo.Identity.Curve != null && glo.Identity.Curve.IsAlmostEqualTo(newGridLine, false));
+                if (matchingEditOverride != null)
+                {
+                    Console.WriteLine($"Found matching edit override for grid line {newGridLine}.");
+                    newGridLine = matchingEditOverride.Value.Curve;
+                }
+            }
 
             var gl = new GridLine()
             {
-                Curve = dot >= 0 ? newGridLine : new Line(newGridLine.End, newGridLine.Start),
+                Curve = newGridLine,
                 Name = gridIndex.ToString(),
                 Material = gridMaterial
             };
-            gl.AdditionalProperties["Creation Id"] = Guid.NewGuid().ToString();
             gridLines.Add(gl);
             gridIndex++;
+
+            if (matchingEditOverride != null)
+            {
+                Identity.AddOverrideIdentity(gl, matchingEditOverride);
+            }
         }
     }
 }
