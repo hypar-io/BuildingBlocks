@@ -69,24 +69,6 @@ namespace SketchGrids
             }
             output.Model.AddElement(new ModelText(texts, FontSize.PT60, scale: 50));
 
-            var network = Network<GridLine>.FromSegmentableItems(gridLines, (gl) => { return (Line)gl.Curve; }, out var allNodeLocations, out _);
-
-            var r = new Random(); // testY
-
-            var closedRegions = network.FindAllClosedRegions(allNodeLocations).SkipLast(1);
-            foreach (var cr in closedRegions)
-            {
-                try
-                {
-                    var p = new Panel(new Polygon(cr.Select(r => allNodeLocations[r]).ToList()), r.NextMaterial());
-                    output.Model.AddElement(p);
-                }
-                catch
-                {
-                    continue;
-                }
-            }
-
             return output;
         }
 

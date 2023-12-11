@@ -20,15 +20,6 @@
       }
     }
   },
-  "filters": {
-    "Grids": {
-      "context": "[*discriminator=Elements.ModelText|discriminator=Elements.GridLine]",
-      "default": true
-    },
-    "Grid Cells": {
-      "context": "[*discriminator=Elements.Panel]"
-    }
-  },
   "overrides": {
     "Grid Lines": {
       "context": "[*discriminator=Elements.GridLine]",
