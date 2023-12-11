@@ -86,25 +86,6 @@ namespace SketchGrids
                 }
             }
 
-            // TODO: Draw some annotations.
-            // var bbox = new BBox3(allNodeLocations);
-
-            // var vectorEqualityComparer = new VectorEqualityComparer();
-            // var gridLineGroups = gridLines.GroupBy(gl => (gl.Curve as Line).Direction().Unitized(), vectorEqualityComparer);
-            // var directionComparer = new DirectionComparer(bbox.Min);
-
-            // foreach (var gridLineGroup in gridLineGroups)
-            // {
-            //     var grids = gridLineGroup.ToList();
-            //     var orderedGrids = grids.OrderBy(gl => gl.Curve.PointAt(0), directionComparer).ToList();
-            //     for (var i = 0; i < orderedGrids.Count - 1; i++)
-            //     {
-            //         var dim = new AlignedDimension(orderedGrids[i].Curve.PointAt(0), orderedGrids[i + 1].Curve.PointAt(0), 0);
-            //         output.Model.AddElement(dim);
-            //         // output.Model.AddElements(dim.ToModelArrowsAndText(Colors.Black));
-            //     }
-            // }
-
             return output;
         }
 
