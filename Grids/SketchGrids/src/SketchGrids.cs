@@ -203,7 +203,6 @@ namespace SketchGrids
                 matchingEditOverride = input.Overrides.GridLines.FirstOrDefault((glo) => glo.Identity.Curve != null && glo.Identity.Curve.IsAlmostEqualTo(newGridLine, false));
                 if (matchingEditOverride != null)
                 {
-                    Console.WriteLine($"Found matching edit override for grid line {newGridLine}.");
                     newGridLine = matchingEditOverride.Value.Curve;
                 }
             }
