@@ -70,7 +70,7 @@ namespace FacadeGridByLevels
                             }
                             break;
                         case FacadeGridByLevelsInputsMode.Pattern:
-                            uGrid.DivideByPattern(input.PatternSettings.PanelWidthPattern, PatternMode(input.PatternSettings.PatternMode), DivisionMode(input.RemainderPosition));
+                            uGrid.DivideByPattern(input.PatternSettings.PanelWidthPattern.Select(wp => Math.Max(wp, 0.1)).ToArray(), PatternMode(input.PatternSettings.PatternMode), DivisionMode(input.RemainderPosition));
                             break;
                     }
                     foreach (var cell in uGrid.Cells)
@@ -125,6 +125,11 @@ namespace FacadeGridByLevels
 
             var output = new FacadeGridByLevelsOutputs(basePanels.Count, outputModel.AllElementsOfType<ElementInstance>().Count());
             output.Model = outputModel;
+
+            if (input.PatternSettings.PanelWidthPattern.Any(wp => wp < 0.1))
+            {
+                output.Warnings.Add("Panel Width Pattern values less than 0.1 m will be replaced by the minimum possible value of 0.1 m.");
+            }
             return output;
         }
 
