@@ -148,7 +148,9 @@
                             "type": "number",
                             "$hyparUnitType": "length",
                             "$hyparStyle": "number",
-                            "minimum": 0.1
+                            "minimum": 0.1,
+                            "multipleOf": 0.01,
+                            "default": 0.5
                         }
                     },
                     "Pattern Mode": {
