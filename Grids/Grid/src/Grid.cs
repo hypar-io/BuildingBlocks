@@ -708,9 +708,9 @@ namespace Grid
                     continue;
                 }
 
-                var angle = new Vector3(axis.End - axis.Start).AngleTo(Vector3.XAxis);
+                var angle = axis.Direction().AngleTo(Vector3.XAxis);
 
-                if (angle < 45)
+                if (angle <= 45 && axes.x == null) // in case where both x and y will have the same angle of 45 degrees
                 {
                     axes.x = axis;
                 }
