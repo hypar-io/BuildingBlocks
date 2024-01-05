@@ -70,13 +70,13 @@ namespace Grid
     
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v13.0.0.0)")]
     
-    public  class GridInputs : S3Args
+    public  class GridInputs : ArgsBase
     
     {
         [Newtonsoft.Json.JsonConstructor]
         
-        public GridInputs(GridInputsMode @mode, double @bubbleRadius, IList<GridAreas> @gridAreas, bool @showDebugGeometry, Overrides @overrides, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey):
-        base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
+        public GridInputs(GridInputsMode @mode, double @bubbleRadius, IList<GridAreas> @gridAreas, bool @showDebugGeometry, Overrides @overrides, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey):
+        base(modelInputKeys, gltfKey, elementsKey, ifcKey)
         {
             var validator = Validator.Instance.GetFirstValidatorForType<GridInputs>();
             if(validator != null)
