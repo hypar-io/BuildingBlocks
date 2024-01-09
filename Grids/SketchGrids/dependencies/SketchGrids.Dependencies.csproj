@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Hypar.Elements" Version="2.1.0" />
+    <PackageReference Include="Hypar.Functions" Version="1.10.0" />
+  </ItemGroup>
+</Project>
