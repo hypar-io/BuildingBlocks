@@ -88,8 +88,6 @@ namespace Grid
         /// If this returns null, we'll use the 2D convex hull of the geometry of the element's representation </param>
         private static List<Polygon> ExtractPolygonsFromElements<T>(IEnumerable<T> elements, Func<T, Polygon> getDefaultPolygon) where T : GeometricElement
         {
-            List<string> warnings = new List<string>();
-
             var polygons = new List<Polygon>();
             foreach (var element in elements)
             {
