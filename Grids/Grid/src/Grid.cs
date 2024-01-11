@@ -91,8 +91,17 @@ namespace Grid
             var polygons = new List<Polygon>();
             foreach (var element in elements)
             {
-                var polygon = getDefaultPolygon(element) ?? ConvexHull.FromPoints(element.Representation.SolidOperations.SelectMany(o => o.Solid.Vertices.Select(v => new Vector3(v.Value.Point.X, v.Value.Point.Y))));
-                polygons.Add(polygon);
+                var polygon = getDefaultPolygon(element) ??
+                              ConvexHull.FromPoints(
+                                  element?.Representation?.SolidOperations?
+                                         .SelectMany(o => o?.Solid?.Vertices?
+                                                          .Select(v => new Vector3(v.Value.Point.X, v.Value.Point.Y)) ?? Enumerable.Empty<Vector3>())
+                                         .Where(v => v != null)
+                              );
+                if (polygon != null)
+                {
+                    polygons.Add(polygon);
+                }
             }
             return polygons;
         }
