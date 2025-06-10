@@ -33,6 +33,7 @@ namespace Elements
             this.Elevation = @elevation;
             }
         
+        
         // Empty constructor
         public Level()
             : base()

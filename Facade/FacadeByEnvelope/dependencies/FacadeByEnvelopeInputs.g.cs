@@ -24,13 +24,13 @@ namespace FacadeByEnvelope
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v13.0.0.0)")]
     
-    public  class FacadeByEnvelopeInputs : S3Args
+    public  class FacadeByEnvelopeInputs : ArgsBase
     
     {
         [Newtonsoft.Json.JsonConstructor]
         
-        public FacadeByEnvelopeInputs(double @panelWidth, double @glassLeftRightInset, double @glassTopBottomInset, Color @panelColor, double @groundFloorSetback, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey):
-        base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
+        public FacadeByEnvelopeInputs(double @panelWidth, double @glassLeftRightInset, double @glassTopBottomInset, Color @panelColor, double @groundFloorSetback, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey):
+        base(modelInputKeys, gltfKey, elementsKey, ifcKey)
         {
             var validator = Validator.Instance.GetFirstValidatorForType<FacadeByEnvelopeInputs>();
             if(validator != null)

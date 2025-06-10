@@ -30,6 +30,8 @@ namespace FacadeByEnvelope
         private static string ENVELOPE_MODEL_NAME = "Envelope";
         private static string LEVELS_MODEL_NAME = "Levels";
 
+        private static string CONCEPTUAL_MASS_NAME = "Conceptual Mass";
+
         private static Material _glazing = new Material("Glazing", new Color(1.0, 1.0, 1.0, 0.7), 0.8f, 1.0f);
 
         /// <summary>
@@ -41,67 +43,132 @@ namespace FacadeByEnvelope
         /// <returns>A FacadeOutputs instance containing computed results.</returns>
         public static FacadeByEnvelopeOutputs Execute(Dictionary<string, Model> models, FacadeByEnvelopeInputs input)
         {
-            List<Envelope> envelopes;
+            List<Envelope> envelopes = null;
             List<Level> levels = null;
             var model = new Model();
             var output = new FacadeByEnvelopeOutputs();
 
-            var envelopeModel = models[ENVELOPE_MODEL_NAME];
-            envelopes = envelopeModel.AllElementsOfType<Envelope>().Where(e => e.Elevation >= 0.0).ToList();
-            if (envelopes.Count() == 0)
+            if (models.TryGetValue(ENVELOPE_MODEL_NAME, out var envelopesModel))
             {
-                output.Errors.Add($"No Envelopes found in the model 'Envelope'. Check the output from the function upstream that has a model output 'Envelope'.");
-                return output;
+                envelopes = [.. envelopesModel.AllElementsOfType<Envelope>().Where(e => e.Elevation >= 0.0)];
+            }
+            if (envelopes == null || envelopes.Count == 0)
+            {
+                Console.WriteLine($"No Envelopes found in the model 'Envelope'. Check the output from the function upstream that has a model output 'Envelope'.");
+                // return output;
             }
 
             var levelsModel = models[LEVELS_MODEL_NAME];
-            levels = levelsModel.AllElementsOfType<Level>().ToList();
-            if (levels.Count() == 0)
+            levels = [.. levelsModel.AllElementsOfType<Level>()];
+            if (levels.Count == 0)
             {
                 output.Errors.Add($"No Levels found in the model 'Levels'. Check the output from the function upstream that has a model output 'Levels'.");
-                return output;
             }
             levels.Sort(new LevelComparer());
+
+            List<ConceptualMass> masses = null;
+            if (models.TryGetValue(CONCEPTUAL_MASS_NAME, out var massesModel))
+            {
+                masses = [.. massesModel.AllElementsOfType<ConceptualMass>()];
+            }
+
+            if (masses != null && masses.Count == 0 && envelopes != null && envelopes.Count == 0)
+            {
+                output.Errors.Add($"There were no conceptual masses or envelopes. There's nothing to do.");
+                return output;
+            }
+            foreach (var mass in masses)
+            {
+                // Log the mass and its properties
+                Console.WriteLine($"Mass: {mass.Name}, Level: {mass.Level}, TopLevel: {mass.TopLevel}, Height: {mass.Height}, Boundary: {mass.Boundary}");
+            }
 
             List<Level> envLevels = null;
 
             var wireframeMaterial = new Material("wireframe", new Color(0.5, 0.5, 0.5, 1.0));
 
             var panelCount = 0;
-            foreach (var envelope in envelopes)
-            {
-                var boundarySegments = envelope.Profile.Perimeter.Segments();
-                Level last = null;
-                if (envLevels != null)
-                {
-                    // If levels don't correspond exactly with the change
-                    // in envelopes, then we need the last level of the previous
-                    // set to become the first level of the next set.
-                    last = envLevels.Last();
-                }
-                envLevels = levels.Where(l => l.Elevation >= envelope.Elevation && l.Elevation <= envelope.Elevation + envelope.Height).ToList();
-                if (last != null)
-                {
-                    envLevels.Insert(0, last);
-                }
 
-                panelCount = PanelLevels(envLevels,
-                                         boundarySegments,
-                                         input.PanelWidth,
-                                         input.GlassLeftRightInset,
-                                         input.GlassTopBottomInset,
-                                         model,
-                                         input.PanelColor);
+            // Log all the levels and their elevations
+            foreach (var level in levels)
+            {
+                Console.WriteLine($"Level: {level.Name}, Elevation: {level.Elevation}");
             }
 
-            var groundFloorEnvelope = envelopes.OrderBy(e => e.Elevation).FirstOrDefault(e => e.Elevation >= -Vector3.EPSILON);
-            if (groundFloorEnvelope != null)
+            // TODO: Refactor this to use the same code for sorting levels.
+            if (masses != null)
             {
-                var boundarySegments = groundFloorEnvelope.Profile.Perimeter.Offset(-input.GroundFloorSetback)[0].Segments();
-                var groundLevels = levels.Where(l => l.Elevation >= groundFloorEnvelope.Elevation && l.Elevation <= groundFloorEnvelope.Elevation + groundFloorEnvelope.Height).ToList();
-                var bottom = groundLevels.First().Elevation;
-                var top = groundLevels.Count > 1 ? groundLevels[1].Elevation : groundFloorEnvelope.Elevation + groundFloorEnvelope.Height;
-                PanelGroundFloor(bottom, top, boundarySegments, input.PanelWidth, model);
+                foreach (var mass in masses)
+                {
+                    var boundarySegments = mass.Boundary.Perimeter.Segments();
+
+                    var bottomLevel = levels.First(l => mass.Level == l.Id);
+                    var topLevel = levels.First(l => mass.TopLevel == l.Id);
+                    // var massLevels = levels.Where(l => l.Elevation >= bottomLevel.Elevation && l.Elevation <= topLevel.Elevation);
+                    var bottomElevation = bottomLevel.Elevation;
+                    var topElevation = topLevel.Elevation;
+                    var height = mass.Height;
+
+                    Level last = null;
+                    if (envLevels != null)
+                    {
+                        // If levels don't correspond exactly with the change
+                        // in envelopes, then we need the last level of the previous
+                        // set to become the first level of the next set.
+                        last = envLevels.Last();
+                    }
+                    envLevels = [.. levels.Where(l => l.Elevation >= bottomElevation && l.Elevation <= topElevation)];
+                    if (last != null)
+                    {
+                        envLevels.Insert(0, last);
+                    }
+
+                    panelCount = PanelLevels(envLevels,
+                                             boundarySegments,
+                                             input.PanelWidth,
+                                             input.GlassLeftRightInset,
+                                             input.GlassTopBottomInset,
+                                             model,
+                                             input.PanelColor);
+                }
+            }
+            else if (envelopes != null)
+            {
+                foreach (var envelope in envelopes)
+                {
+                    var boundarySegments = envelope.Profile.Perimeter.Segments();
+                    Level last = null;
+                    if (envLevels != null)
+                    {
+                        // If levels don't correspond exactly with the change
+                        // in envelopes, then we need the last level of the previous
+                        // set to become the first level of the next set.
+                        last = envLevels.Last();
+                    }
+                    envLevels = levels.Where(l => l.Elevation >= envelope.Elevation && l.Elevation <= envelope.Elevation + envelope.Height).ToList();
+                    if (last != null)
+                    {
+                        envLevels.Insert(0, last);
+                    }
+
+                    panelCount = PanelLevels(envLevels,
+                                             boundarySegments,
+                                             input.PanelWidth,
+                                             input.GlassLeftRightInset,
+                                             input.GlassTopBottomInset,
+                                             model,
+                                             input.PanelColor);
+                }
+
+                var groundFloorEnvelope = envelopes.OrderBy(e => e.Elevation).FirstOrDefault(e => e.Elevation >= -Vector3.EPSILON);
+                if (groundFloorEnvelope != null)
+                {
+                    var boundarySegments = groundFloorEnvelope.Profile.Perimeter.Offset(-input.GroundFloorSetback)[0].Segments();
+                    var groundLevels = levels.Where(l => l.Elevation >= groundFloorEnvelope.Elevation && l.Elevation <= groundFloorEnvelope.Elevation + groundFloorEnvelope.Height).ToList();
+                    var bottom = groundLevels.First().Elevation;
+                    var top = groundLevels.Count > 1 ? groundLevels[1].Elevation : groundFloorEnvelope.Elevation + groundFloorEnvelope.Height;
+                    PanelGroundFloor(bottom, top, boundarySegments, input.PanelWidth, model);
+                }
             }
 
             output.PanelQuantity = panelCount;
@@ -120,7 +187,7 @@ namespace FacadeByEnvelope
             var panelMat = new Material("panel", panelColor, 0.8f, 0.5f);
             var panelCount = 0;
 
-            for (var i = 1; i < envLevels.Count - 1; i++)
+            for (var i = 0; i < envLevels.Count - 1; i++)
             {
                 var level1 = envLevels[i];
                 var level2 = envLevels[i + 1];
@@ -229,9 +296,9 @@ namespace FacadeByEnvelope
                     var mullion = new Beam((Line)sep, Polygon.Rectangle(0.05, 0.05), t, BuiltInMaterials.Black);
                     model.AddElement(mullion);
                 }
-                var panel = new Panel(new Polygon(new[]{
+                var panel = new Panel(new Polygon([
                     segment.Start, segment.End , new Vector3(segment.End.X, segment.End.Y, segment.End.Z + hight), new Vector3(segment.Start.X, segment.Start.Y, segment.Start.Z + hight)
-                }), BuiltInMaterials.Glass, t);
+                ]), BuiltInMaterials.Glass, t);
                 model.AddElement(panel);
             }
         }

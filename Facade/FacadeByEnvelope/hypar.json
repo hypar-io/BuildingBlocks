@@ -7,11 +7,15 @@
   "model_dependencies": [
     {
       "name": "Envelope",
-      "optional": false
+      "optional": true
     },
     {
       "name": "Levels",
       "optional": false
+    },
+    {
+      "name": "Conceptual Mass",
+      "optional": true
     }
   ],
   "model_output": "Facade",

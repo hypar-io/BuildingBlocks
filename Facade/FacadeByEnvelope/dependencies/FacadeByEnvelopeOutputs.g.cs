@@ -20,9 +20,7 @@ namespace FacadeByEnvelope
 		/// Total facade panels.
 		/// </summary>
 		[JsonProperty("Panel Quantity")]
-		public double PanelQuantity {get; set;}
-
-
+		public double PanelQuantity { get; set; }
 
         /// <summary>
         /// Construct a FacadeByEnvelopeOutputs with default inputs.
@@ -30,16 +28,14 @@ namespace FacadeByEnvelope
         /// </summary>
         public FacadeByEnvelopeOutputs() : base()
         {
-
         }
-
 
         /// <summary>
         /// Construct a FacadeByEnvelopeOutputs specifying all inputs.
         /// </summary>
         /// <returns></returns>
         [JsonConstructor]
-        public FacadeByEnvelopeOutputs(double panelQuantity): base()
+        public FacadeByEnvelopeOutputs(double panelQuantity) : base()
         {
 			this.PanelQuantity = panelQuantity;
 

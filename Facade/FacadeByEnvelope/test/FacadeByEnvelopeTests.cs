@@ -26,24 +26,28 @@ namespace FacadeByEnvelope.Tests
             var inputs
                 = new FacadeByEnvelopeInputs(
                     panelWidth: 3.0,
-                    glassLeftRightInset: 3.0,
-                    glassTopBottomInset: 3.0,
+                    glassLeftRightInset: 1.0,
+                    glassTopBottomInset: 1.0,
                     panelColor: Colors.Yellow,
                     groundFloorSetback: 1.0,
-                    "", "", new Dictionary<string, string>(), "", "", "");
-            var envModel = Model.FromJson(System.IO.File.ReadAllText(INPUT + "Envelope.json"));
+                    new Dictionary<string, string>(), "", "", "");
+            // var envModel = Model.FromJson(System.IO.File.ReadAllText(INPUT + "Envelope.json"));
             var lvlModel = Model.FromJson(System.IO.File.ReadAllText(INPUT + "Levels.json"));
+            var massModel = Model.FromJson(System.IO.File.ReadAllText(INPUT + "ConceptualMass.json"));
+
             var outputs = FacadeByEnvelope.Execute(
                 new Dictionary<string, Model>
                 {
-                    {"Envelope", envModel},
-                    {"Levels", lvlModel}
+                    // {"Envelope", envModel},
+                    {"Levels", lvlModel},
+                    {"Conceptual Mass", massModel}
                 },
                 inputs);
             System.IO.File.WriteAllText(OUTPUT + "FacadeByEnvelope.json", outputs.Model.ToJson());
-            outputs.Model.AddElements(envModel.Elements.Values);
-            outputs.Model.AddElements(lvlModel.Elements.Values);
-            outputs.Model.ToGlTF(OUTPUT + "FacadeByEnvelope.glb");
+            // outputs.Model.AddElements(envModel.Elements.Values);
+            // outputs.Model.AddElements(lvlModel.Elements.Values);
+            // outputs.Model.AddElements(massModel.Elements.Values);
+            outputs.Model.ToGlTF(OUTPUT + "FacadeByEnvelope.gltf", false);
         }
     }
 }

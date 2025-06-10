@@ -37,6 +37,7 @@ namespace Elements
             this.Rotation = @rotation;
             }
         
+        
         // Empty constructor
         public Envelope()
             : base()

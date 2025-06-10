@@ -33,6 +33,7 @@ namespace Elements
             this.Thickness = @thickness;
             }
         
+        
         // Empty constructor
         public FacadePanel()
             : base()

@@ -1,0 +1,80 @@
+{
+    "Transform": {
+        "Matrix": {
+            "Components": [
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0
+            ]
+        }
+    },
+    "Elements": {
+        "309420e8-bd32-4cec-a23b-eb4b6ee5242a": {
+            "discriminator": "Elements.ConceptualMass",
+            "Name": "Building",
+            "Id": "309420e8-bd32-4cec-a23b-eb4b6ee5242a",
+            "Boundary": {
+                "discriminator": "Elements.Geometry.Profile",
+                "Id": "0ea53e23-0c16-419b-b802-c68fea13b56c",
+                "Perimeter": {
+                    "discriminator": "Elements.Geometry.Polygon",
+                    "Vertices": [
+                        {
+                            "X": -9.906,
+                            "Y": -9.906,
+                            "Z": 0
+                        },
+                        {
+                            "X": 9.906,
+                            "Y": -9.906,
+                            "Z": 0
+                        },
+                        {
+                            "X": 9.906,
+                            "Y": 9.906,
+                            "Z": 0
+                        },
+                        {
+                            "X": -9.906,
+                            "Y": 9.906,
+                            "Z": 0
+                        }
+                    ]
+                }
+            },
+            "Transform": {
+                "Matrix": {
+                    "Components": [
+                        1,
+                        0,
+                        0,
+                        -0.7785141567845504,
+                        0,
+                        1,
+                        0,
+                        3.638849651012061,
+                        0,
+                        0,
+                        1,
+                        0
+                    ]
+                }
+            },
+            "Level": "7698d6b7-5728-4c22-a028-bc1e1af980ce",
+            "Top Level": "cad7ed36-1f39-429d-951d-8d53b305310f",
+            "Height": 9.144000000000002,
+            "OptionIds": [
+                "5d1c5155-3c10-4850-858f-3624abebb38c"
+            ]
+        }
+    }
+}
