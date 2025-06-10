@@ -26,9 +26,9 @@ namespace FacadeByEnvelope.Tests
             var inputs
                 = new FacadeByEnvelopeInputs(
                     panelWidth: 3.0,
-                    glassLeftRightInset: 1.0,
+                    glassLeftRightInset: 0.1,
                     glassTopBottomInset: 1.0,
-                    panelColor: Colors.Yellow,
+                    panelColor: Colors.Red,
                     groundFloorSetback: 1.0,
                     new Dictionary<string, string>(), "", "", "");
             // var envModel = Model.FromJson(System.IO.File.ReadAllText(INPUT + "Envelope.json"));

@@ -77,23 +77,12 @@ namespace FacadeByEnvelope
                 output.Errors.Add($"There were no conceptual masses or envelopes. There's nothing to do.");
                 return output;
             }
-            foreach (var mass in masses)
-            {
-                // Log the mass and its properties
-                Console.WriteLine($"Mass: {mass.Name}, Level: {mass.Level}, TopLevel: {mass.TopLevel}, Height: {mass.Height}, Boundary: {mass.Boundary}");
-            }
 
             List<Level> envLevels = null;
 
-            var wireframeMaterial = new Material("wireframe", new Color(0.5, 0.5, 0.5, 1.0));
+            // var wireframeMaterial = new Material("wireframe", new Color(0.5, 0.5, 0.5, 1.0));
 
             var panelCount = 0;
-
-            // Log all the levels and their elevations
-            foreach (var level in levels)
-            {
-                Console.WriteLine($"Level: {level.Name}, Elevation: {level.Elevation}");
-            }
 
             // TODO: Refactor this to use the same code for sorting levels.
             if (masses != null)
@@ -192,17 +181,26 @@ namespace FacadeByEnvelope
                 var level1 = envLevels[i];
                 var level2 = envLevels[i + 1];
 
+                // Create the master representations.
+                CreateFacadePanelRepresentationInstances(panelWidth,
+                                                        level2.Elevation - level1.Elevation,
+                                                        glassLeftRight,
+                                                        glassTopBottom,
+                                                        0.1,
+                                                        panelWidth,
+                                                        panelMat,
+                                                        out RepresentationInstance masterPanel,
+                                                        out RepresentationInstance masterGlazing,
+                                                        out Polygon outer,
+                                                        out Polygon inner);
                 foreach (var s in boundarySegments)
                 {
-                    FacadePanel masterPanel = null;
-                    Panel masterGlazing = null;
-
                     var d = s.Direction();
                     var bottomSegments = DivideByLengthFromCenter(s, panelWidth);
 
                     try
                     {
-                        for (var j = 0; j < bottomSegments.Count(); j++)
+                        for (var j = 0; j < bottomSegments.Count; j++)
                         {
                             var bs = bottomSegments[j];
                             var t = new Transform(bs.Start + new Vector3(0, 0, level1.Elevation), d, d.Cross(Vector3.ZAxis));
@@ -213,33 +211,20 @@ namespace FacadeByEnvelope
                             // panel with glazing.
                             if (Math.Abs(l - panelWidth) < Vector3.EPSILON)
                             {
-                                if (masterPanel == null)
-                                {
-                                    // Create a master panel for each level.
-                                    // This panel will be instanced at every location.
-                                    CreateFacadePanel($"FP_{i}",
-                                                            panelWidth,
-                                                            level2.Elevation - level1.Elevation,
-                                                            glassLeftRight,
-                                                            glassTopBottom,
-                                                            0.1,
-                                                            panelWidth,
-                                                            panelMat,
-                                                            t,
-                                                            out masterPanel,
-                                                            out masterGlazing);
-                                    model.AddElement(masterPanel);
-                                    model.AddElement(masterGlazing);
-                                }
-
                                 // Create a panel instance.
-                                var panelInstance = masterPanel.CreateInstance(t, $"FP_{i}_{j}");
-                                model.AddElement(panelInstance, false);
-                                var glazingInstance = masterGlazing.CreateInstance(t, $"FG_{i}_{j}");
-                                model.AddElement(glazingInstance, false);
+                                var panelInstance = new FacadePanel(0.1, t, panelMat, name: $"FP_{i}_{j}")
+                                {
+                                    RepresentationInstances = [masterPanel]
+                                };
+                                model.AddElement(panelInstance);
 
+                                var glazingInstance = new Panel(inner, BuiltInMaterials.Glass, t, null, name: $"FG_{i}_{j}")
+                                {
+                                    RepresentationInstances = [masterGlazing]
+                                };
+                                model.AddElement(glazingInstance);
                             }
-                            // Otherwise, create a panel with not glazing.
+                            // Otherwise, create a panel with no glazing.
                             else
                             {
                                 CreateStandardPanel($"FP_{i}_{j}",
@@ -378,17 +363,17 @@ namespace FacadeByEnvelope
             facadePanel = new FacadePanel(thickness, lowerLeft, material, representation, false, Guid.NewGuid(), name);
         }
 
-        private static void CreateFacadePanel(string name,
-                                                        double width,
-                                                        double height,
-                                                        double leftRightInset,
-                                                        double topBottomInset,
-                                                        double thickness,
-                                                        double defaultWidth,
-                                                        Material material,
-                                                        Transform lowerLeft,
-                                                        out FacadePanel facadePanel,
-                                                        out Panel glazing)
+        private static void CreateFacadePanelRepresentationInstances(double width,
+                                                                     double height,
+                                                                     double leftRightInset,
+                                                                     double topBottomInset,
+                                                                     double thickness,
+                                                                     double defaultWidth,
+                                                                     Material material,
+                                                                     out RepresentationInstance facadePanel,
+                                                                     out RepresentationInstance glazing,
+                                                                     out Polygon outer,
+                                                                     out Polygon inner)
         {
             var a = new Vector3(0, 0, 0);
             var b = new Vector3(width, 0, 0);
@@ -399,14 +384,13 @@ namespace FacadeByEnvelope
             var b1 = new Vector3(width - leftRightInset, topBottomInset, 0);
             var c1 = new Vector3(width - leftRightInset, height - topBottomInset, 0);
             var d1 = new Vector3(leftRightInset, height - topBottomInset, 0);
-            var inner = new Polygon(new[] { d1, c1, b1, a1 });
-            var profile = new Profile(new Polygon(new[] { a, b, c, d }.Shrink(0.01)), inner);
-            glazing = new Panel(inner, _glazing, lowerLeft, isElementDefinition: true);
-
-
+            inner = new Polygon([d1, c1, b1, a1]);
+            outer = new Polygon(new[] { a, b, c, d }.Shrink(0.01));
+            var profile = new Profile(outer, inner);
+            var glazingOp = new Lamina(profile, false);
+            glazing = new RepresentationInstance(new SolidRepresentation(glazingOp), BuiltInMaterials.Glass);
             var solidOps = new List<SolidOperation>() { new Extrude(profile, thickness, Vector3.ZAxis, false) };
-            var representation = new Representation(solidOps);
-            facadePanel = new FacadePanel(thickness, lowerLeft, material, representation, true, Guid.NewGuid(), name);
+            facadePanel = new RepresentationInstance(new SolidRepresentation(solidOps), material);
         }
     }
 }
