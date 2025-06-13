@@ -248,7 +248,7 @@ namespace FacadeByEnvelope
 
                         if (i == envLevels.Count - 2)
                         {
-                            var parapet = new StandardWall(new Line(new Vector3(s.Start.X, s.Start.Y, level2.Elevation), new Vector3(s.End.X, s.End.Y, level2.Elevation)), 0.1, 0.9, panelMat);
+                            var parapet = new StandardWall(new Line(new Vector3(s.Start.X, s.Start.Y, 0), new Vector3(s.End.X, s.End.Y, 0)), 0.1, 0.9, panelMat, new Transform(0,0,level2.Elevation));
                             model.AddElement(parapet);
                         }
                     }
