@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Elements;
 using Elements.Geometry;
@@ -27,12 +28,12 @@ namespace FacadeByEnvelope
     public static class FacadeByEnvelope
     {
         private const int Elevation = 10;
-        private static string ENVELOPE_MODEL_NAME = "Envelope";
-        private static string LEVELS_MODEL_NAME = "Levels";
+        private static readonly string ENVELOPE_MODEL_NAME = "Envelope";
+        private static readonly string LEVELS_MODEL_NAME = "Levels";
 
-        private static string CONCEPTUAL_MASS_NAME = "Conceptual Mass";
+        private static readonly string CONCEPTUAL_MASS_NAME = "Conceptual Mass";
 
-        private static Material _glazing = new Material("Glazing", new Color(1.0, 1.0, 1.0, 0.7), 0.8f, 1.0f);
+        private static readonly Material GLAZING = new("Glazing", new Color(1.0, 1.0, 1.0, 0.7), 0.8f, 1.0f);
 
         /// <summary>
         /// Adds facade Panels to one or more Masses named 'envelope'.
@@ -43,44 +44,51 @@ namespace FacadeByEnvelope
         /// <returns>A FacadeOutputs instance containing computed results.</returns>
         public static FacadeByEnvelopeOutputs Execute(Dictionary<string, Model> models, FacadeByEnvelopeInputs input)
         {
+            // Log all the properties of the input.
+            Debug.WriteLine($"Panel Width: {input.PanelWidth}");
+            Debug.WriteLine($"Glass Left/Right Inset: {input.GlassLeftRightInset}");
+            Debug.WriteLine($"Glass Top/Bottom Inset: {input.GlassTopBottomInset}");
+            Debug.WriteLine($"Panel Color: {input.PanelColor}");
+            Debug.WriteLine($"Ground Floor Setback: {input.GroundFloorSetback}");
+
             List<Envelope> envelopes = null;
             List<Level> levels = null;
+            List<ConceptualMass> masses = null;
+
             var model = new Model();
             var output = new FacadeByEnvelopeOutputs();
 
             if (models.TryGetValue(ENVELOPE_MODEL_NAME, out var envelopesModel))
             {
                 envelopes = [.. envelopesModel.AllElementsOfType<Envelope>().Where(e => e.Elevation >= 0.0)];
+                if (envelopes == null || envelopes.Count == 0)
+                {
+                    Console.WriteLine($"No Envelopes found in the model 'Envelope'. Check the output from the function upstream that has a model output 'Envelope'.");
+                    // return output;
+                }
             }
-            if (envelopes == null || envelopes.Count == 0)
+            else if (models.TryGetValue(CONCEPTUAL_MASS_NAME, out var massesModel))
             {
-                Console.WriteLine($"No Envelopes found in the model 'Envelope'. Check the output from the function upstream that has a model output 'Envelope'.");
-                // return output;
+                masses = [.. massesModel.AllElementsOfType<ConceptualMass>()];
+                if (masses != null && masses.Count == 0 && envelopes != null && envelopes.Count == 0)
+                {
+                    output.Errors.Add($"There were no conceptual masses or envelopes found in the model. There's nothing to do.");
+                    return output;
+                }
             }
 
-            var levelsModel = models[LEVELS_MODEL_NAME];
-            levels = [.. levelsModel.AllElementsOfType<Level>()];
+            if (models.TryGetValue(LEVELS_MODEL_NAME, out var levelsModel))
+            {
+                levels = [.. levelsModel.AllElementsOfType<Level>()];
+            }
+
             if (levels.Count == 0)
             {
                 output.Errors.Add($"No Levels found in the model 'Levels'. Check the output from the function upstream that has a model output 'Levels'.");
             }
             levels.Sort(new LevelComparer());
 
-            List<ConceptualMass> masses = null;
-            if (models.TryGetValue(CONCEPTUAL_MASS_NAME, out var massesModel))
-            {
-                masses = [.. massesModel.AllElementsOfType<ConceptualMass>()];
-            }
-
-            if (masses != null && masses.Count == 0 && envelopes != null && envelopes.Count == 0)
-            {
-                output.Errors.Add($"There were no conceptual masses or envelopes. There's nothing to do.");
-                return output;
-            }
-
             List<Level> envLevels = null;
-
-            // var wireframeMaterial = new Material("wireframe", new Color(0.5, 0.5, 0.5, 1.0));
 
             var panelCount = 0;
 
@@ -89,11 +97,10 @@ namespace FacadeByEnvelope
             {
                 foreach (var mass in masses)
                 {
-                    var boundarySegments = mass.Boundary.Perimeter.Segments();
+                    var boundarySegments = mass.Boundary.Perimeter.TransformedPolygon(mass.Transform).Segments();
 
                     var bottomLevel = levels.First(l => mass.Level == l.Id);
                     var topLevel = levels.First(l => mass.TopLevel == l.Id);
-                    // var massLevels = levels.Where(l => l.Elevation >= bottomLevel.Elevation && l.Elevation <= topLevel.Elevation);
                     var bottomElevation = bottomLevel.Elevation;
                     var topElevation = topLevel.Elevation;
                     var height = mass.Height;
@@ -300,7 +307,6 @@ namespace FacadeByEnvelope
             }
 
             var divs = (int)(l / d);
-            // Console.WriteLine($"The line {l} units long will create {divs} panels of {d} width");
             var span = divs * d;
             var halfSpan = span / 2;
             var mid = line.Mid();
@@ -323,25 +329,6 @@ namespace FacadeByEnvelope
             }
 
             return lines;
-        }
-
-        private static ModelCurve CreateFacadePanelWireframe(string name,
-                                                        double width,
-                                                        double height,
-                                                        Transform lowerLeft,
-                                                        Model model,
-                                                        Material material)
-        {
-            var ll = new Vector3(0, 0, 0);
-            var lr = new Vector3(width, 0, 0);
-            var ur = new Vector3(width, height, 0);
-            var ul = new Vector3(0, height, 0);
-
-            var p = new Polygon(new[] { ll, lr, ur, ul });
-            var mc = new ModelCurve(p, material, lowerLeft);
-            model.AddElement(mc);
-
-            return mc;
         }
 
         private static void CreateStandardPanel(string name,
@@ -387,7 +374,7 @@ namespace FacadeByEnvelope
             inner = new Polygon([d1, c1, b1, a1]);
             outer = new Polygon(new[] { a, b, c, d }.Shrink(0.01));
             var profile = new Profile(outer, inner);
-            var glazingOp = new Lamina(profile, false);
+            var glazingOp = new Lamina(inner, false);
             glazing = new RepresentationInstance(new SolidRepresentation(glazingOp), BuiltInMaterials.Glass);
             var solidOps = new List<SolidOperation>() { new Extrude(profile, thickness, Vector3.ZAxis, false) };
             facadePanel = new RepresentationInstance(new SolidRepresentation(solidOps), material);
