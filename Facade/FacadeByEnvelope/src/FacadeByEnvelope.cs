@@ -225,7 +225,7 @@ namespace FacadeByEnvelope
                                 };
                                 model.AddElement(panelInstance);
 
-                                var glazingInstance = new Panel(inner, BuiltInMaterials.Glass, t, null, name: $"FG_{i}_{j}")
+                                var glazingInstance = new Panel(inner, GLAZING, t, null, name: $"FG_{i}_{j}")
                                 {
                                     RepresentationInstances = [masterGlazing]
                                 };
@@ -290,7 +290,7 @@ namespace FacadeByEnvelope
                 }
                 var panel = new Panel(new Polygon([
                     segment.Start, segment.End , new Vector3(segment.End.X, segment.End.Y, segment.End.Z + hight), new Vector3(segment.Start.X, segment.Start.Y, segment.Start.Z + hight)
-                ]), BuiltInMaterials.Glass, t);
+                ]), GLAZING, t);
                 model.AddElement(panel);
             }
         }
@@ -375,7 +375,7 @@ namespace FacadeByEnvelope
             outer = new Polygon(new[] { a, b, c, d }.Shrink(0.01));
             var profile = new Profile(outer, inner);
             var glazingOp = new Lamina(inner, false);
-            glazing = new RepresentationInstance(new SolidRepresentation(glazingOp), BuiltInMaterials.Glass);
+            glazing = new RepresentationInstance(new SolidRepresentation(glazingOp), GLAZING);
             var solidOps = new List<SolidOperation>() { new Extrude(profile, thickness, Vector3.ZAxis, false) };
             facadePanel = new RepresentationInstance(new SolidRepresentation(solidOps), material);
         }
