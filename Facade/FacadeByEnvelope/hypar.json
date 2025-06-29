@@ -31,6 +31,15 @@
         "description": "The width of each facade panel..",
         "$hyparUnitType": "length"
       },
+      "Panel Thickness": {
+        "type": "number",
+        "minimum": 0.05,
+        "maximum": 1,
+        "step": 0.05,
+        "default": 0.1,
+        "description": "The thickness of each facade panel..",
+        "$hyparUnitType": "length"
+      },
       "Glass Left-Right Inset": {
         "type": "number",
         "minimum": 0.01,

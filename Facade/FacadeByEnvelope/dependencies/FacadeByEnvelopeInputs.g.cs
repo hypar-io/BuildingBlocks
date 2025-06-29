@@ -29,16 +29,17 @@ namespace FacadeByEnvelope
     {
         [Newtonsoft.Json.JsonConstructor]
         
-        public FacadeByEnvelopeInputs(double @panelWidth, double @glassLeftRightInset, double @glassTopBottomInset, Color @panelColor, double @groundFloorSetback, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey):
+        public FacadeByEnvelopeInputs(double @panelWidth, double @panelThickness, double @glassLeftRightInset, double @glassTopBottomInset, Color @panelColor, double @groundFloorSetback, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey):
         base(modelInputKeys, gltfKey, elementsKey, ifcKey)
         {
             var validator = Validator.Instance.GetFirstValidatorForType<FacadeByEnvelopeInputs>();
             if(validator != null)
             {
-                validator.PreConstruct(new object[]{ @panelWidth, @glassLeftRightInset, @glassTopBottomInset, @panelColor, @groundFloorSetback});
+                validator.PreConstruct(new object[]{ @panelWidth, @panelThickness, @glassLeftRightInset, @glassTopBottomInset, @panelColor, @groundFloorSetback});
             }
         
             this.PanelWidth = @panelWidth;
+            this.PanelThickness = @panelThickness;
             this.GlassLeftRightInset = @glassLeftRightInset;
             this.GlassTopBottomInset = @glassTopBottomInset;
             this.PanelColor = @panelColor;
@@ -54,6 +55,11 @@ namespace FacadeByEnvelope
         [Newtonsoft.Json.JsonProperty("Panel Width", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.Range(0.5D, 4D)]
         public double PanelWidth { get; set; } = 1D;
+    
+        /// <summary>The thickness of each facade panel..</summary>
+        [Newtonsoft.Json.JsonProperty("Panel Thickness", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.Range(0.05D, 1D)]
+        public double PanelThickness { get; set; } = 0.1D;
     
         /// <summary>The inset of the glass panel from the left and right of the outer frame.</summary>
         [Newtonsoft.Json.JsonProperty("Glass Left-Right Inset", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
