@@ -33,7 +33,7 @@ namespace FacadeByEnvelope
 
         private static readonly string CONCEPTUAL_MASS_NAME = "Conceptual Mass";
 
-        private static readonly Material GLAZING = new("Glazing", new Color(1.0, 1.0, 1.0, 0.7), 0.8f, 1.0f);
+        private static readonly Material GLAZING = BuiltInMaterials.Glass; // new("Glazing", new Color(1.0, 1.0, 1.0, 0.7), 0.8f, 1.0f);
 
         /// <summary>
         /// Adds facade Panels to one or more Masses named 'envelope'.
@@ -97,7 +97,9 @@ namespace FacadeByEnvelope
             {
                 foreach (var mass in masses)
                 {
-                    var boundarySegments = mass.Boundary.Perimeter.TransformedPolygon(mass.Transform).Segments();
+                    var massT = new Transform(new Vector3(mass.Transform.Origin.X, mass.Transform.Origin.Y, 0), mass.Transform.XAxis, mass.Transform.ZAxis);
+
+                    var boundarySegments = mass.Boundary.Perimeter.TransformedPolygon(massT).Segments();
 
                     var bottomLevel = levels.First(l => mass.Level == l.Id);
                     var topLevel = levels.First(l => mass.TopLevel == l.Id);
@@ -105,19 +107,11 @@ namespace FacadeByEnvelope
                     var topElevation = topLevel.Elevation;
                     var height = mass.Height;
 
-                    Level last = null;
-                    if (envLevels != null)
-                    {
-                        // If levels don't correspond exactly with the change
-                        // in envelopes, then we need the last level of the previous
-                        // set to become the first level of the next set.
-                        last = envLevels.Last();
-                    }
                     envLevels = [.. levels.Where(l => l.Elevation >= bottomElevation && l.Elevation <= topElevation)];
-                    if (last != null)
-                    {
-                        envLevels.Insert(0, last);
-                    }
+
+                    // If we're finding levels from multiple envelopes, we'll have
+                    // duplicates. Make the collection distinct.
+                    envLevels = [.. envLevels.DistinctBy((l) => l.Elevation)];
 
                     panelCount = PanelLevels(envLevels,
                                              boundarySegments,
@@ -125,7 +119,8 @@ namespace FacadeByEnvelope
                                              input.GlassLeftRightInset,
                                              input.GlassTopBottomInset,
                                              model,
-                                             input.PanelColor);
+                                             input.PanelColor,
+                                             input.PanelThickness);
                 }
             }
             else if (envelopes != null)
@@ -153,7 +148,8 @@ namespace FacadeByEnvelope
                                              input.GlassLeftRightInset,
                                              input.GlassTopBottomInset,
                                              model,
-                                             input.PanelColor);
+                                             input.PanelColor,
+                                             input.PanelThickness);
                 }
 
                 var groundFloorEnvelope = envelopes.OrderBy(e => e.Elevation).FirstOrDefault(e => e.Elevation >= -Vector3.EPSILON);
@@ -178,7 +174,8 @@ namespace FacadeByEnvelope
                                        double glassLeftRight,
                                        double glassTopBottom,
                                        Model model,
-                                       Color panelColor)
+                                       Color panelColor,
+                                       double panelThickness = 0.1)
         {
             var panelMat = new Material("panel", panelColor, 0.8f, 0.5f);
             var panelCount = 0;
@@ -190,16 +187,16 @@ namespace FacadeByEnvelope
 
                 // Create the master representations.
                 CreateFacadePanelRepresentationInstances(panelWidth,
-                                                        level2.Elevation - level1.Elevation,
-                                                        glassLeftRight,
-                                                        glassTopBottom,
-                                                        0.1,
-                                                        panelWidth,
-                                                        panelMat,
-                                                        out RepresentationInstance masterPanel,
-                                                        out RepresentationInstance masterGlazing,
-                                                        out Polygon outer,
-                                                        out Polygon inner);
+                                                    level2.Elevation - level1.Elevation,
+                                                    glassLeftRight,
+                                                    glassTopBottom,
+                                                    panelThickness,
+                                                    panelWidth,
+                                                    panelMat,
+                                                    out RepresentationInstance masterPanel,
+                                                    out RepresentationInstance masterGlazing,
+                                                    out Polygon outer,
+                                                    out Polygon inner);
                 foreach (var s in boundarySegments)
                 {
                     var d = s.Direction();
@@ -237,7 +234,7 @@ namespace FacadeByEnvelope
                                 CreateStandardPanel($"FP_{i}_{j}",
                                                     l,
                                                     level2.Elevation - level1.Elevation,
-                                                    0.1,
+                                                    panelThickness,
                                                     t,
                                                     panelMat,
                                                     out FacadePanel panel);
@@ -246,11 +243,11 @@ namespace FacadeByEnvelope
                             panelCount++;
                         }
 
-                        if (i == envLevels.Count - 2)
-                        {
-                            var parapet = new StandardWall(new Line(new Vector3(s.Start.X, s.Start.Y, 0), new Vector3(s.End.X, s.End.Y, 0)), 0.1, 0.9, panelMat, new Transform(0,0,level2.Elevation));
-                            model.AddElement(parapet);
-                        }
+                        // if (i == envLevels.Count - 2)
+                        // {
+                        //     var parapet = new StandardWall(new Line(new Vector3(s.Start.X, s.Start.Y, 0), new Vector3(s.End.X, s.End.Y, 0)), 0.1, 0.9, panelMat, new Transform(0,0,level2.Elevation));
+                        //     model.AddElement(parapet);
+                        // }
                     }
                     catch (Exception ex)
                     {
