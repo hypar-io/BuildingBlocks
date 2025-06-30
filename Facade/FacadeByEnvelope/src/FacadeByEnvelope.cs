@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using Elements;
@@ -197,9 +198,22 @@ namespace FacadeByEnvelope
                                                     out RepresentationInstance masterGlazing,
                                                     out Polygon outer,
                                                     out Polygon inner);
-                foreach (var s in boundarySegments)
+                for(var k=0; k<boundarySegments.Length; k++)
                 {
+                    var s0 = boundarySegments[k == 0 ? boundarySegments.Length - 1 : k-1 ];
+                    var d0 = s0.Direction().Negate();
+
+                    var s1 = boundarySegments[k == boundarySegments.Length - 1 ? 0 : k + 1];
+                    var d1 = s1.Direction();
+
+                    var s = boundarySegments[k];
                     var d = s.Direction();
+
+                    // Console.WriteLine($"d0: {d0}, d: {d}");
+                    // Calculate the plane which is the half angle miter between the two segments.
+                    var miterAngleStart = d.PlaneAngleTo(d0)/2;
+                    var miterAngleEnd = d.PlaneAngleTo(d1)/2;
+
                     var bottomSegments = DivideByLengthFromCenter(s, panelWidth);
 
                     try
@@ -231,12 +245,17 @@ namespace FacadeByEnvelope
                             // Otherwise, create a panel with no glazing.
                             else
                             {
+                                var tStandard = new Transform(bs.Start + new Vector3(0, 0, level1.Elevation), d, Vector3.ZAxis);
+
                                 CreateStandardPanel($"FP_{i}_{j}",
                                                     l,
                                                     level2.Elevation - level1.Elevation,
                                                     panelThickness,
-                                                    t,
+                                                    tStandard,
                                                     panelMat,
+                                                    miterAngleStart,
+                                                    miterAngleEnd,
+                                                    j == 0,
                                                     out FacadePanel panel);
                                 model.AddElement(panel);
                             }
@@ -334,15 +353,29 @@ namespace FacadeByEnvelope
                                                         double thickness,
                                                         Transform lowerLeft,
                                                         Material material,
+                                                        double miterAngleStart,
+                                                        double miterAngleEnd,
+                                                        bool start,
                                                         out FacadePanel facadePanel)
         {
+            var o = Vector3.YAxis.Negate();
             var a = new Vector3(0, 0, 0);
             var b = new Vector3(width, 0, 0);
-            var c = new Vector3(width, height, 0);
-            var d = new Vector3(0, height, 0);
+            var extend = Math.Tan(Units.DegreesToRadians(start? 90- miterAngleStart : miterAngleEnd)) * thickness;
+            Vector3 c, d = new();
+            if (start)
+            {
+                c = b + o * thickness;
+                d = a + (o * thickness) + Vector3.XAxis * -extend;
+            }
+            else
+            {
+                c = b + o * thickness + Vector3.XAxis * extend;
+                d = a + (o * thickness);
+            }
 
-            var profile = new Profile(new Polygon(new[] { a, b, c, d }.Shrink(0.01)));
-            var solidOps = new List<SolidOperation>() { new Extrude(profile, thickness, Vector3.ZAxis, false) };
+            var profile = new Profile(new Polygon([a, b, c, d]));
+            var solidOps = new List<SolidOperation>() { new Extrude(profile, height, Vector3.ZAxis, false) };
             var representation = new Representation(solidOps);
             facadePanel = new FacadePanel(thickness, lowerLeft, material, representation, false, Guid.NewGuid(), name);
         }
