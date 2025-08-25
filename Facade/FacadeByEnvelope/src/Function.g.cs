@@ -63,7 +63,7 @@ namespace FacadeByEnvelope
             {
                 this.store = new UrlModelStore<FacadeByEnvelopeInputs>();
             }
-            
+            args.StreamModel = true;
 
             var l = new InvocationWrapper<FacadeByEnvelopeInputs,FacadeByEnvelopeOutputs> (store, FacadeByEnvelope.Execute);
             var output = await l.InvokeAsync(args);

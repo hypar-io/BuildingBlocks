@@ -4,6 +4,7 @@
   "name": "Facade By Envelope",
   "description": "Creates a Facade for an Envelope.",
   "language": "C#",
+  "stream_model": true,
   "model_dependencies": [
     {
       "name": "Envelope",

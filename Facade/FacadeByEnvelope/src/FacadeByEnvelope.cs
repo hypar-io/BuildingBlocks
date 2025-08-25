@@ -234,12 +234,14 @@ namespace FacadeByEnvelope
                                 {
                                     RepresentationInstances = [masterPanel]
                                 };
+                                panelInstance.AdditionalProperties.Add("Level", level1.Id);
                                 model.AddElement(panelInstance);
 
                                 var glazingInstance = new Panel(inner, GLAZING, t, null, name: $"FG_{i}_{j}")
                                 {
                                     RepresentationInstances = [masterGlazing]
                                 };
+                                glazingInstance.AdditionalProperties.Add("Level", level1.Id);
                                 model.AddElement(glazingInstance);
                             }
                             // Otherwise, create a panel with no glazing.
@@ -257,6 +259,7 @@ namespace FacadeByEnvelope
                                                     miterAngleEnd,
                                                     j == 0,
                                                     out FacadePanel panel);
+                                panel.AdditionalProperties.Add("Level", level1.Id);
                                 model.AddElement(panel);
                             }
                             panelCount++;
